@@ -421,7 +421,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     static FastInteger FromBig(EInteger bigintVal) {
       if (bigintVal.CanFitInInt32()) {
-        return new FastInteger(bigintVal.AsInt32Unchecked());
+        return new FastInteger(bigintVal.ToInt32Unchecked());
       }
       if (bigintVal.signum() > 0) {
         FastInteger fi = new FastInteger(0);
@@ -458,17 +458,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         case (0 << 2) | 1:
           return -val.mnum.CompareToInt(this.smallValue);
         case (0 << 2) | 2:
-          return this.AsBigInteger().compareTo(val.largeValue);
+          return this.AsEInteger().compareTo(val.largeValue);
         case (1 << 2) | 0:
           return this.mnum.CompareToInt(val.smallValue);
         case (1 << 2) | 1:
           return this.mnum.compareTo(val.mnum);
         case (1 << 2) | 2:
-          return this.AsBigInteger().compareTo(val.largeValue);
+          return this.AsEInteger().compareTo(val.largeValue);
         case (2 << 2) | 0:
         case (2 << 2) | 1:
         case (2 << 2) | 2:
-          return this.largeValue.compareTo(val.AsBigInteger());
+          return this.largeValue.compareTo(val.AsEInteger());
         default: throw new IllegalStateException();
       }
     }
@@ -540,7 +540,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           EInteger bigrem;
           EInteger bigquo;
 {
-EInteger[] divrem = this.AsBigInteger().DivRem(divisor.AsBigInteger());
+EInteger[] divrem = this.AsEInteger().DivRem(divisor.AsEInteger());
 bigquo = divrem[0];
 bigrem = divrem[1]; }
           int smallquo = bigquo.AsInt32Checked();
@@ -552,7 +552,7 @@ bigrem = divrem[1]; }
         EInteger bigrem;
         EInteger bigquo;
 {
-EInteger[] divrem = this.AsBigInteger().DivRem(divisor.AsBigInteger());
+EInteger[] divrem = this.AsEInteger().DivRem(divisor.AsEInteger());
 bigquo = divrem[0];
 bigrem = divrem[1]; }
         int smallquo = bigquo.AsInt32Checked();
@@ -673,7 +673,7 @@ bigrem = divrem[1]; }
           } else {
             integerMode = 2;
             largeValue = EInteger.FromInt64(smallValue);
-            valValue = val.AsBigInteger();
+            valValue = val.AsEInteger();
             largeValue = largeValue.Subtract(valValue);
           }
           break;
@@ -687,12 +687,12 @@ bigrem = divrem[1]; }
           } else {
             integerMode = 2;
             largeValue = mnum.ToEInteger();
-            valValue = val.AsBigInteger();
+            valValue = val.AsEInteger();
             largeValue = largeValue.Subtract(valValue);
           }
           break;
         case 2:
-          valValue = val.AsBigInteger();
+          valValue = val.AsEInteger();
           this.largeValue = this.largeValue.Subtract(valValue);
           break;
         default: throw new IllegalStateException();
@@ -801,7 +801,7 @@ bigrem = divrem[1]; }
           } else {
             integerMode = 2;
             largeValue = EInteger.FromInt64(smallValue);
-            valValue = val.AsBigInteger();
+            valValue = val.AsEInteger();
             largeValue = largeValue.Add(valValue);
           }
           break;
@@ -811,12 +811,12 @@ bigrem = divrem[1]; }
           } else {
             integerMode = 2;
             largeValue = mnum.ToEInteger();
-            valValue = val.AsBigInteger();
+            valValue = val.AsEInteger();
             largeValue = largeValue.Add(valValue);
           }
           break;
         case 2:
-          valValue = val.AsBigInteger();
+          valValue = val.AsEInteger();
           this.largeValue = this.largeValue.Add(valValue);
           break;
         default: throw new IllegalStateException();
@@ -997,17 +997,7 @@ bigrem = divrem[1]; }
 
     private static final String HexAlphabet = "0123456789ABCDEF";
 
-    private static void ReverseChars(char[] chars, int offset, int length) {
-      int half = length >> 1;
-      int right = offset + length - 1;
-      for (int i = 0; i < half; i++, right--) {
-        char value = chars[offset + i];
-        chars[offset + i] = chars[right];
-        chars[right] = value;
-      }
-    }
-
-    private static String IntToString(int value) {
+    static String IntToString(int value) {
       if (value == Integer.MIN_VALUE) {
         return "-2147483648";
       }
@@ -1015,24 +1005,32 @@ bigrem = divrem[1]; }
         return "0";
       }
       boolean neg = value < 0;
-      char[] chars = new char[24];
-      int count = 0;
+      char[] chars = new char[12];
+      int count = 11;
       if (neg) {
-        chars[0] = '-';
-        ++count;
         value = -value;
       }
-      while (value != 0) {
-        char digit = HexAlphabet.charAt((int)(value % 10));
-        chars[count++] = digit;
-        value /= 10;
+      while (value > 43698) {
+        int intdivvalue = value / 10;
+        char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+        chars[count--] = digit;
+        value = intdivvalue;
+      }
+      while (value > 9) {
+          int intdivvalue = (value * 26215) >> 18;
+          char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+          chars[count--] = digit;
+          value = intdivvalue;
+      }
+      if (value != 0) {
+          chars[count--] = HexAlphabet.charAt((int)value);
       }
       if (neg) {
-        ReverseChars(chars, 1, count - 1);
+        chars[count]='-';
       } else {
-        ReverseChars(chars, 0, count);
+        ++count;
       }
-      return new String(chars, 0, count);
+      return new String(chars, count, 12 - count);
     }
 
     /**
@@ -1098,10 +1096,10 @@ bigrem = divrem[1]; }
       }
     }
 
-    EInteger AsBigInteger() {
+    EInteger AsEInteger() {
       switch (this.integerMode) {
         case 0:
-          return EInteger.FromInt64(this.smallValue);
+          return EInteger.FromInt32(this.smallValue);
         case 1:
           return this.mnum.ToEInteger();
         case 2:

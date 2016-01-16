@@ -98,7 +98,7 @@ int olderDiscarded) {
         if (fastint.signum() <= 0) {
           return;
         }
-        EInteger bi = fastint.AsBigInteger();
+        EInteger bi = fastint.AsEInteger();
         while (bi.signum() > 0) {
           int count = 1000000;
           if (bi.compareTo(EInteger.FromInt64(1000000)) < 0) {
@@ -169,7 +169,7 @@ bigrem = divrem[1]; }
       int startCount = Math.min(4, digits - 1);
       if (startCount > 0) {
         EInteger bigrem;
-        EInteger radixPower = DecimalUtility.FindPowerOfTen(startCount);
+        EInteger radixPower = NumberUtility.FindPowerOfTen(startCount);
         EInteger bigquo;
 {
 EInteger[] divrem = this.shiftedBigInt.DivRem(radixPower);
@@ -308,7 +308,7 @@ bigrem = divrem[1]; }
       if (digitDiff.CompareToInt(9) <= 0) {
         EInteger bigrem;
         int diffInt = digitDiff.AsInt32();
-        EInteger radixPower = DecimalUtility.FindPowerOfTen(diffInt);
+        EInteger radixPower = NumberUtility.FindPowerOfTen(diffInt);
         EInteger bigquo;
 {
 EInteger[] divrem = this.shiftedBigInt.DivRem(radixPower);
@@ -334,7 +334,7 @@ bigrem = divrem[1]; }
       if (digitDiff.CompareToInt(Integer.MAX_VALUE) <= 0) {
         EInteger bigrem;
         EInteger radixPower =
-        DecimalUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
+        NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
         EInteger bigquo;
 {
 EInteger[] divrem = this.shiftedBigInt.DivRem(radixPower);
@@ -561,8 +561,8 @@ bigrem = divrem[1]; }
             ") is less than 0");
         }
         this.knownBitLength = this.CalcKnownDigitLength();
-        EInteger bigintDiff = this.knownBitLength.AsBigInteger();
-        EInteger bitsBig = bits.AsBigInteger();
+        EInteger bigintDiff = this.knownBitLength.AsEInteger();
+        EInteger bitsBig = bits.AsEInteger();
         bigintDiff = bigintDiff.Subtract(bitsBig);
         if (bigintDiff.signum() > 0) {
           // current length is greater than the

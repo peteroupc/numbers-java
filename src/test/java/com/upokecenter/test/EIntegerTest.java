@@ -399,12 +399,12 @@ String result) {
     public void TestAsInt32Checked() {
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).AsInt32Checked());
+        BigValueOf(Integer.MIN_VALUE).ToInt32Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).AsInt32Checked());
+        BigValueOf(Integer.MAX_VALUE).ToInt32Checked());
       try {
-        BigValueOf(Integer.MIN_VALUE - 1L).AsInt32Checked();
+        BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -413,7 +413,7 @@ String result) {
         throw new IllegalStateException("", ex);
       }
       try {
-        BigValueOf(Integer.MAX_VALUE + 1L).AsInt32Checked();
+        BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -422,7 +422,7 @@ String result) {
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString("999999999999999999999999999999999").AsInt32Checked();
+        BigFromString("999999999999999999999999999999999").ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -432,12 +432,12 @@ String result) {
       }
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).AsInt32Checked());
+        BigValueOf(Integer.MIN_VALUE).ToInt32Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).AsInt32Checked());
+        BigValueOf(Integer.MAX_VALUE).ToInt32Checked());
       try {
-        BigValueOf(Integer.MIN_VALUE - 1L).AsInt32Checked();
+        BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -446,7 +446,7 @@ String result) {
         throw new IllegalStateException("", ex);
       }
       try {
-        BigValueOf(Integer.MAX_VALUE + 1L).AsInt32Checked();
+        BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -460,14 +460,14 @@ String result) {
     public void TestAsInt64Checked() {
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MIN_VALUE).AsInt64Checked());
+        BigValueOf(Long.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Long.MAX_VALUE,
-        BigValueOf(Long.MAX_VALUE).AsInt64Checked());
+        BigValueOf(Long.MAX_VALUE).ToInt64Checked());
       try {
         EInteger bigintTemp = BigValueOf(Long.MIN_VALUE);
         bigintTemp = bigintTemp.Subtract(EInteger.FromInt64(1));
-        bigintTemp.AsInt64Checked();
+        bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -478,7 +478,7 @@ String result) {
       try {
         EInteger bigintTemp = BigValueOf(Long.MAX_VALUE);
         bigintTemp = bigintTemp.Add(EInteger.FromInt64(1));
-        bigintTemp.AsInt64Checked();
+        bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -488,38 +488,38 @@ String result) {
       }
       Assert.assertEquals(
         ((long)0xFFFFFFF200000000L),
-  BigValueOf(((long)0xFFFFFFF200000000L)).AsInt64Checked());
+  BigValueOf(((long)0xFFFFFFF200000000L)).ToInt64Checked());
       Assert.assertEquals(
         ((long)0xFFFFFFF280000000L),
-  BigValueOf(((long)0xFFFFFFF280000000L)).AsInt64Checked());
+  BigValueOf(((long)0xFFFFFFF280000000L)).ToInt64Checked());
       Assert.assertEquals(
         ((long)0xFFFFFFF280000001L),
-  BigValueOf(((long)0xFFFFFFF280000001L)).AsInt64Checked());
+  BigValueOf(((long)0xFFFFFFF280000001L)).ToInt64Checked());
       Assert.assertEquals(
         ((long)0xFFFFFFF27FFFFFFFL),
-  BigValueOf(((long)0xFFFFFFF27FFFFFFFL)).AsInt64Checked());
+  BigValueOf(((long)0xFFFFFFF27FFFFFFFL)).ToInt64Checked());
       Assert.assertEquals(
         0x0000000380000001L,
-        BigValueOf(0x0000000380000001L).AsInt64Checked());
+        BigValueOf(0x0000000380000001L).ToInt64Checked());
       Assert.assertEquals(
         0x0000000382222222L,
-        BigValueOf(0x0000000382222222L).AsInt64Checked());
-      Assert.assertEquals(-8L, BigValueOf(-8L).AsInt64Checked());
-      Assert.assertEquals(-32768L, BigValueOf(-32768L).AsInt64Checked());
+        BigValueOf(0x0000000382222222L).ToInt64Checked());
+      Assert.assertEquals(-8L, BigValueOf(-8L).ToInt64Checked());
+      Assert.assertEquals(-32768L, BigValueOf(-32768L).ToInt64Checked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).AsInt64Checked());
+        BigValueOf(Integer.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).AsInt64Checked());
+        BigValueOf(Integer.MAX_VALUE).ToInt64Checked());
       Assert.assertEquals(
         0x80000000L,
-        BigValueOf(0x80000000L).AsInt64Checked());
+        BigValueOf(0x80000000L).ToInt64Checked());
       Assert.assertEquals(
         0x90000000L,
-        BigValueOf(0x90000000L).AsInt64Checked());
+        BigValueOf(0x90000000L).ToInt64Checked());
       try {
-        BigFromString("999999999999999999999999999999999").AsInt64Checked();
+        BigFromString("999999999999999999999999999999999").ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -529,14 +529,14 @@ String result) {
       }
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MIN_VALUE).AsInt64Checked());
+        BigValueOf(Long.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Long.MAX_VALUE,
-        BigValueOf(Long.MAX_VALUE).AsInt64Checked());
+        BigValueOf(Long.MAX_VALUE).ToInt64Checked());
       try {
         EInteger bigintTemp = BigValueOf(Long.MIN_VALUE);
         bigintTemp = bigintTemp.Subtract(EInteger.FromInt64(1));
-        bigintTemp.AsInt64Checked();
+        bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -547,7 +547,7 @@ String result) {
       try {
         EInteger bigintTemp = BigValueOf(Long.MAX_VALUE);
         bigintTemp = bigintTemp.Add(EInteger.FromInt64(1));
-        bigintTemp.AsInt64Checked();
+        bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -558,39 +558,39 @@ String result) {
       long longV = ((long)0xFFFFFFF200000000L);
       Assert.assertEquals(
 longV,
-BigValueOf(longV).AsInt64Checked());
+BigValueOf(longV).ToInt64Checked());
       longV = ((long)0xFFFFFFF280000000L);
       Assert.assertEquals(
 longV,
-BigValueOf(longV).AsInt64Checked());
+BigValueOf(longV).ToInt64Checked());
       longV = ((long)0xFFFFFFF280000001L);
       Assert.assertEquals(
 longV,
-BigValueOf(longV).AsInt64Checked());
+BigValueOf(longV).ToInt64Checked());
       longV = ((long)0xFFFFFFF27FFFFFFFL);
       Assert.assertEquals(
 longV,
-BigValueOf(longV).AsInt64Checked());
+BigValueOf(longV).ToInt64Checked());
       Assert.assertEquals(
         0x0000000380000001L,
-        BigValueOf(0x0000000380000001L).AsInt64Checked());
+        BigValueOf(0x0000000380000001L).ToInt64Checked());
       Assert.assertEquals(
         0x0000000382222222L,
-        BigValueOf(0x0000000382222222L).AsInt64Checked());
-      Assert.assertEquals(-8L, BigValueOf(-8L).AsInt64Checked());
-      Assert.assertEquals(-32768L, BigValueOf(-32768L).AsInt64Checked());
+        BigValueOf(0x0000000382222222L).ToInt64Checked());
+      Assert.assertEquals(-8L, BigValueOf(-8L).ToInt64Checked());
+      Assert.assertEquals(-32768L, BigValueOf(-32768L).ToInt64Checked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).AsInt64Checked());
+        BigValueOf(Integer.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).AsInt64Checked());
+        BigValueOf(Integer.MAX_VALUE).ToInt64Checked());
       Assert.assertEquals(
         0x80000000L,
-        BigValueOf(0x80000000L).AsInt64Checked());
+        BigValueOf(0x80000000L).ToInt64Checked());
       Assert.assertEquals(
         0x90000000L,
-        BigValueOf(0x90000000L).AsInt64Checked());
+        BigValueOf(0x90000000L).ToInt64Checked());
     }
     @Test
     public void TestBigIntegerModPow() {
@@ -1558,19 +1558,19 @@ BigValueOf(longV).AsInt64Checked());
 
     @Test
     public void TestIntValueUnchecked() {
-      Assert.assertEquals(0L, EInteger.FromInt64(0).AsInt32Unchecked());
+      Assert.assertEquals(0L, EInteger.FromInt64(0).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).AsInt32Unchecked());
+        BigValueOf(Integer.MIN_VALUE).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).AsInt32Unchecked());
+        BigValueOf(Integer.MAX_VALUE).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MIN_VALUE - 1L).AsInt32Unchecked());
+        BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MAX_VALUE + 1L).AsInt32Unchecked());
+        BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Unchecked());
     }
 
     @Test
@@ -1610,60 +1610,60 @@ BigValueOf(longV).AsInt64Checked());
     }
     @Test
     public void TestLongValueUnchecked() {
-      Assert.assertEquals(0L, EInteger.FromInt64(0).AsInt64Unchecked());
+      Assert.assertEquals(0L, EInteger.FromInt64(0).ToInt64Unchecked());
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MIN_VALUE).AsInt64Unchecked());
+        BigValueOf(Long.MIN_VALUE).ToInt64Unchecked());
       Assert.assertEquals(
         Long.MAX_VALUE,
-        BigValueOf(Long.MAX_VALUE).AsInt64Unchecked());
+        BigValueOf(Long.MAX_VALUE).ToInt64Unchecked());
       {
         Object objectTemp = Long.MAX_VALUE;
         Object objectTemp2 = BigValueOf(Long.MIN_VALUE)
-                .Subtract(EInteger.FromInt64(1)).AsInt64Unchecked();
+                .Subtract(EInteger.FromInt64(1)).ToInt64Unchecked();
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MAX_VALUE).Add(EInteger.FromInt64(1)).AsInt64Unchecked());
+        BigValueOf(Long.MAX_VALUE).Add(EInteger.FromInt64(1)).ToInt64Unchecked());
       long aa = ((long)0xFFFFFFF200000000L);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).AsInt64Unchecked());
+              BigValueOf(aa).ToInt64Unchecked());
       aa = ((long)0xFFFFFFF280000000L);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).AsInt64Unchecked());
+              BigValueOf(aa).ToInt64Unchecked());
       aa = ((long)0xFFFFFFF200000001L);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).AsInt64Unchecked());
+              BigValueOf(aa).ToInt64Unchecked());
       aa = ((long)0xFFFFFFF27FFFFFFFL);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).AsInt64Unchecked());
+              BigValueOf(aa).ToInt64Unchecked());
       Assert.assertEquals(
         0x0000000380000001L,
-        BigValueOf(0x0000000380000001L).AsInt64Unchecked());
+        BigValueOf(0x0000000380000001L).ToInt64Unchecked());
       Assert.assertEquals(
         0x0000000382222222L,
-        BigValueOf(0x0000000382222222L).AsInt64Unchecked());
-      Assert.assertEquals(-8L, BigValueOf(-8L).AsInt64Unchecked());
+        BigValueOf(0x0000000382222222L).ToInt64Unchecked());
+      Assert.assertEquals(-8L, BigValueOf(-8L).ToInt64Unchecked());
       Assert.assertEquals(
         -32768L,
-        BigValueOf(-32768L).AsInt64Unchecked());
+        BigValueOf(-32768L).ToInt64Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).AsInt64Unchecked());
+        BigValueOf(Integer.MIN_VALUE).ToInt64Unchecked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).AsInt64Unchecked());
+        BigValueOf(Integer.MAX_VALUE).ToInt64Unchecked());
       Assert.assertEquals(
         0x80000000L,
-        BigValueOf(0x80000000L).AsInt64Unchecked());
+        BigValueOf(0x80000000L).ToInt64Unchecked());
       Assert.assertEquals(
         0x90000000L,
-        BigValueOf(0x90000000L).AsInt64Unchecked());
+        BigValueOf(0x90000000L).ToInt64Unchecked());
     }
 
     @Test

@@ -121,7 +121,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         if (afterDivision) {
           int radix = this.GetHelper().GetRadix();
-          mant = DecimalUtility.ReduceTrailingZeros(
+          mant = NumberUtility.ReduceTrailingZeros(
             mant,
             fastExp,
             radix,
@@ -130,17 +130,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             null);
           thisValue = this.GetHelper().CreateNewWithFlags(
             mant,
-            fastExp.AsBigInteger(),
+            fastExp.AsEInteger(),
             thisFlags);
         }
       } else if (afterDivision && exp.signum() < 0) {
         FastInteger fastExp = FastInteger.FromBig(exp);
         int radix = this.GetHelper().GetRadix();
-        mant = DecimalUtility.ReduceTrailingZeros(
+        mant = NumberUtility.ReduceTrailingZeros(
           mant, fastExp, radix, null, null, new FastInteger(0));
         thisValue = this.GetHelper().CreateNewWithFlags(
           mant,
-          fastExp.AsBigInteger(),
+          fastExp.AsEInteger(),
           thisFlags);
       }
       return thisValue;
@@ -397,7 +397,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             FastInteger.FromBig(pc.getEMax()).Increment().Subtract(fastPrecision);
           return this.GetHelper().CreateNewWithFlags(
             overflowMant,
-            clamp.AsBigInteger(),
+            clamp.AsEInteger(),
             neg ? BigNumberFlags.FlagNegative : 0);
         }
       }

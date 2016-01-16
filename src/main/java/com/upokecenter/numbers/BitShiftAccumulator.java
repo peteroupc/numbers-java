@@ -39,8 +39,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         this.ShiftToDigitsInt(bits.AsInt32());
       } else {
         this.knownBitLength = this.CalcKnownBitLength();
-        EInteger bigintDiff = this.knownBitLength.AsBigInteger();
-        EInteger bitsBig = bits.AsBigInteger();
+        EInteger bigintDiff = this.knownBitLength.AsEInteger();
+        EInteger bitsBig = bits.AsEInteger();
         bigintDiff = bigintDiff.Subtract(bitsBig);
         if (bigintDiff.signum() > 0) {
           // current length is greater than the
@@ -111,7 +111,7 @@ int olderDiscarded) {
       if (fastint.CanFitInInt32()) {
         this.ShiftRightInt(fastint.AsInt32());
       } else {
-        EInteger bi = fastint.AsBigInteger();
+        EInteger bi = fastint.AsEInteger();
         while (bi.signum() > 0) {
           int count = 1000000;
           if (bi.compareTo(EInteger.FromInt64(1000000)) < 0) {

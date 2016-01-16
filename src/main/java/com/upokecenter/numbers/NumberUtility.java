@@ -7,8 +7,8 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
-  final class DecimalUtility {
-private DecimalUtility() {
+  final class NumberUtility {
+private NumberUtility() {
 }
     private static final EInteger[] ValueBigIntPowersOfTen = {
       EInteger.FromInt64(1), EInteger.FromInt64(10), EInteger.FromInt64(100), EInteger.FromInt64(1000),
@@ -270,7 +270,7 @@ private DecimalUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-       this.inputsInts[0] = input.CanFitInInt32() ? input.AsInt32Checked() : -1;
+       this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() : -1;
             this.outputs[0] = output;
             ++this.size;
           } else {
@@ -281,7 +281,7 @@ private DecimalUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-       this.inputsInts[0] = input.CanFitInInt32() ? input.AsInt32Checked() : -1;
+       this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() : -1;
             this.outputs[0] = output;
           }
         }
@@ -289,10 +289,10 @@ private DecimalUtility() {
     }
 
     private static final PowerCache ValuePowerOfFiveCache = new
-    DecimalUtility.PowerCache();
+    NumberUtility.PowerCache();
 
     private static final PowerCache ValuePowerOfTenCache = new
-      DecimalUtility.PowerCache();
+      NumberUtility.PowerCache();
 
     static EInteger FindPowerOfFiveFromBig(EInteger diff) {
       int sign = diff.signum();

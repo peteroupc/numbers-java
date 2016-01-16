@@ -7,7 +7,7 @@ the public-domain code from the library
 CryptoPP by Wei Dai.
 
 Any copyright is dedicated to the Public Domain.
-http://creativecommons.org/publicdomain.Divide(ValueZero)/1.0/
+http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
@@ -25,12 +25,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     private static final int RecursionLimit = 10;
 
     private static final int ShortMask = 0xffff;
-
-    private static final EInteger ValueOne = new EInteger(
-      1, new short[] { 1, 0 }, false);
-
-    private static final EInteger ValueTen = new EInteger(
-      1, new short[] { 10, 0 }, false);
 
     private static final int[] ValueCharToDigit = { 36, 36, 36, 36, 36, 36,
       36,
@@ -53,6 +47,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       97612892, 93368853, 89478484, 85899344, 82595523, 79536430, 76695843,
       74051159, 71582787, 69273665, 67108863, 65075261, 63161282, 61356674,
       59652322 };
+
+    private static final EInteger ValueOne = new EInteger(
+      1, new short[] { 1, 0 }, false);
+
+    private static final EInteger ValueTen = new EInteger(
+      1, new short[] { 10, 0 }, false);
 
     private static final EInteger ValueZero = new EInteger(
       0, new short[] { 0, 0 }, false);
@@ -97,6 +97,18 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
+      }
+
+    /**
+     * Gets a value indicating whether this object&#x27;s value is a power of two.
+     * @return True if this object's value is a power of two; otherwise, false.
+     */
+    public final boolean isPowerOfTwo() {
+        if (this.negative) {
+          return false;
+        }
+        return (this.wordCount == 0) ? false : (this.GetUnsignedBitLength()
+          - 1 == this.GetLowBit());
       }
 
     /**
@@ -216,21 +228,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       short[] retreg;
       boolean retnegative;
       int retwordcount;
-      {
-        retnegative = intValue < 0;
-        if ((intValue >> 15) == 0) {
-          retreg = new short[2];
-          if (retnegative) {
-            intValue = -intValue;
-          }
-          retreg[0] = (short)(intValue & 0xffff);
-          retwordcount = 1;
-        } else if (intValue == Integer.MIN_VALUE) {
-          retreg = new short[2];
-          retreg[0] = 0;
-          retreg[1] = ((short)0x8000);
-          retwordcount = 2;
-        } else {
+      retnegative = intValue < 0;
+      if ((intValue >> 15) == 0) {
+        retreg = new short[2];
+        if (retnegative) {
+          intValue = -intValue;
+        }
+        retreg[0] = (short)(intValue & 0xffff);
+        retwordcount = 1;
+      } else if (intValue == Integer.MIN_VALUE) {
+        retreg = new short[2];
+        retreg[0] = 0;
+        retreg[1] = ((short)0x8000);
+        retwordcount = 2;
+      } else {
+        {
           retreg = new short[2];
           if (retnegative) {
             intValue = -intValue;
@@ -651,6 +663,23 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           int wcount = (sumreg[1] == 0) ? 1 : 2;
           return new EInteger(wcount, sumreg, this.negative);
         }
+        if (augendCount <= 2 && addendCount <= 2) {
+          int a = ((int)this.words[0]) & 0xffff;
+          a |= (((int)this.words[1]) & 0xffff) << 16;
+          int b = ((int)bigintAugend.words[0]) & 0xffff;
+          b |= (((int)bigintAugend.words[1]) & 0xffff) << 16;
+          long longResult = ((long)a) & 0xFFFFFFFFL;
+          longResult += ((long)b) & 0xFFFFFFFFL;
+          if ((longResult >> 32) == 0) {
+            a = ((int)longResult);
+            sumreg = new short[2];
+            sumreg[0] = ((short)(a & 0xffff));
+            sumreg[1] = ((short)((a >> 16) & 0xffff));
+            int wcount = (sumreg[1] == 0) ? 1 : 2;
+            return new EInteger(wcount, sumreg, this.negative);
+          }
+        }
+        //        DebugUtility.Log("" + this + " + " + bigintAugend);
         sumreg = new short[(
           int)Math.max(
                     this.words.length,
@@ -824,23 +853,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return A 32-bit signed integer.
      * @throws java.lang.ArithmeticException This object's value is too big to fit a
      * 32-bit signed integer.
-     */
+     * @deprecated Renamed to ToInt32Checked.
+ */
+@Deprecated
     public int AsInt32Checked() {
-      int count = this.wordCount;
-      if (count == 0) {
-        return 0;
-      }
-      if (count > 2) {
-        throw new ArithmeticException();
-      }
-      if (count == 2 && (this.words[1] & 0x8000) != 0) {
-        if (this.negative && this.words[1] == ((short)0x8000) &&
-            this.words[0] == 0) {
-          return Integer.MIN_VALUE;
-        }
-        throw new ArithmeticException();
-      }
-      return this.AsInt32Unchecked();
+      return ToInt32Checked();
     }
 
     /**
@@ -849,60 +866,37 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * two's complement representation (in which case the return value might
      * have a different sign than this object's value).
      * @return A 32-bit signed integer.
-     */
+     * @deprecated Renamed to ToInt32Unchecked.
+ */
+@Deprecated
     public int AsInt32Unchecked() {
-      int c = (int)this.wordCount;
-      if (c == 0) {
-        return 0;
-      }
-      int intRetValue = ((int)this.words[0]) & 0xffff;
-      if (c > 1) {
-        intRetValue |= (((int)this.words[1]) & 0xffff) << 16;
-      }
-      if (this.negative) {
-        intRetValue = (intRetValue - 1);
-        intRetValue = (~intRetValue);
-      }
-      return intRetValue;
+      return ToInt32Unchecked();
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this object&#x27;s
-     * value, except for its sign. If the value is negative, finds the
-     * number of bits in a value equal to this object's absolute value minus
-     * 1.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0 or negative 1.
-     */
-    public int GetSignedBitLength() {
-      int wc = this.wordCount;
-      if (wc != 0) {
-        if (this.negative) {
-          return this.Abs().Subtract(EInteger.FromInt64(1)).GetSignedBitLength();
-        }
-        int numberValue = ((int)this.words[wc - 1]) & 0xffff;
-        wc = (wc - 1) << 4;
-        if (numberValue == 0) {
-          return wc;
-        }
-        wc += 16;
-        {
-          if ((numberValue >> 8) == 0) {
-            numberValue <<= 8;
-            wc -= 8;
-          }
-          if ((numberValue >> 12) == 0) {
-            numberValue <<= 4;
-            wc -= 4;
-          }
-          if ((numberValue >> 14) == 0) {
-            numberValue <<= 2;
-            wc -= 2;
-          }
-          return ((numberValue >> 15) == 0) ? wc - 1 : wc;
-        }
-      }
-      return 0;
+     * Converts this object's value to a 64-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * 64-bit signed integer.
+     * @deprecated Renamed to ToInt64Checked.
+ */
+@Deprecated
+    public long AsInt64Checked() {
+      return ToInt64Checked();
+    }
+
+    /**
+     * Converts this object's value to a 64-bit signed integer. If the value can't
+     * fit in a 64-bit integer, returns the lower 64 bits of this object's
+     * two's complement representation (in which case the return value might
+     * have a different sign than this object's value).
+     * @return A 64-bit signed integer.
+     * @deprecated Renamed to ToInt64Unchecked.
+ */
+@Deprecated
+    public long AsInt64Unchecked() {
+      return ToInt64Unchecked();
     }
 
     /**
@@ -911,7 +905,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * less; otherwise, false.
      */
     public boolean CanFitInInt32() {
-      int c = (int)this.wordCount;
+      int c = this.wordCount;
       if (c > 2) {
         return false;
       }
@@ -967,18 +961,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return True if this object's value is a power of two; otherwise, false.
-     */
-    public final boolean isPowerOfTwo() {
-        if (this.negative) {
-          return false;
-        }
-        return (this.wordCount == 0) ? false : (this.GetUnsignedBitLength()
-          - 1 == this.GetLowBit());
-      }
-
-    /**
      * Divides this instance by the value of an arbitrary-precision integer. The
      * result is rounded down (the fractional part is discarded). Except if
      * the result is 0, it will be negative if this object is positive and
@@ -1008,8 +990,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       if (words1Size <= 2 && words2Size <= 2 && this.CanFitInInt32() &&
           bigintDivisor.CanFitInInt32()) {
-        int valueASmall = this.AsInt32Checked();
-        int valueBSmall = bigintDivisor.AsInt32Checked();
+        int valueASmall = this.ToInt32Checked();
+        int valueBSmall = bigintDivisor.ToInt32Checked();
         if (valueASmall != Integer.MIN_VALUE || valueBSmall != -1) {
           int result = valueASmall / valueBSmall;
           return EInteger.FromInt64(result);
@@ -1168,7 +1150,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     *
+     * Returns the greatest common divisor of two integers. The greatest common
+     * divisor (GCD) is also known as the greatest common factor (GCF).
+     * @param bigintSecond Another arbitrary-precision integer.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.NullPointerException The parameter {@code bigintSecond} is
+     * null.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -1223,13 +1210,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      *
+     * @return A 32-bit signed integer.
      */
     public int GetDigitCount() {
       if (this.isZero()) {
         return 1;
       }
       if (this.HasSmallValue()) {
-        long value = this.AsInt64Checked();
+        long value = this.ToInt64Checked();
         if (value == Long.MIN_VALUE) {
           return 19;
         }
@@ -1441,6 +1429,95 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
+     * Returns whether a bit is set in the two's-complement representation of this
+     * object's value.
+     * @param index Zero based index of the bit to test. 0 means the least
+     * significant bit.
+     * @return True if a bit is set in the two's-complement representation of this
+     * object's value; otherwise, false.
+     */
+    public boolean GetSignedBit(int index) {
+      if (index < 0) {
+        throw new IllegalArgumentException("index");
+      }
+      if (this.wordCount == 0) {
+        return false;
+      }
+      if (this.negative) {
+        int tcindex = 0;
+        int wordpos = index / 16;
+        if (wordpos >= this.words.length) {
+          return true;
+        }
+        while (tcindex < wordpos && this.words[tcindex] == 0) {
+          ++tcindex;
+        }
+        short tc;
+        {
+          tc = this.words[wordpos];
+          if (tcindex == wordpos) {
+            --tc;
+          }
+          tc = (short)~tc;
+        }
+        return (boolean)(((tc >> (int)(index & 15)) & 1) != 0);
+      }
+      return this.GetUnsignedBit(index);
+    }
+
+    /**
+     * Finds the minimum number of bits needed to represent this object&#x27;s
+     * value, except for its sign. If the value is negative, finds the
+     * number of bits in a value equal to this object's absolute value minus
+     * 1.
+     * @return The number of bits in this object's value. Returns 0 if this
+     * object's value is 0 or negative 1.
+     */
+    public int GetSignedBitLength() {
+      int wc = this.wordCount;
+      if (wc != 0) {
+        if (this.negative) {
+          return this.Abs().Subtract(EInteger.FromInt64(1)).GetSignedBitLength();
+        }
+        int numberValue = ((int)this.words[wc - 1]) & 0xffff;
+        wc = (wc - 1) << 4;
+        if (numberValue == 0) {
+          return wc;
+        }
+        wc += 16;
+        {
+          if ((numberValue >> 8) == 0) {
+            numberValue <<= 8;
+            wc -= 8;
+          }
+          if ((numberValue >> 12) == 0) {
+            numberValue <<= 4;
+            wc -= 4;
+          }
+          if ((numberValue >> 14) == 0) {
+            numberValue <<= 2;
+            wc -= 2;
+          }
+          return ((numberValue >> 15) == 0) ? wc - 1 : wc;
+        }
+      }
+      return 0;
+    }
+
+    /**
+     * Not documented yet.
+     * @param n A 32-bit signed integer.
+     * @return A Boolean object.
+     */
+    public boolean GetUnsignedBit(int n) {
+      if (n < 0) {
+        throw new IllegalArgumentException("n (" + n + ") is less than 0");
+      }
+      return ((n >> 4) < this.words.length) && ((boolean)(((this.words[(n >>
+                    4)] >> (int)(n & 15)) & 1) != 0));
+    }
+
+    /**
      * Finds the minimum number of bits needed to represent this object&#x27;s
      * absolute value.
      * @return The number of bits in this object's value. Returns 0 if this
@@ -1475,75 +1552,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return wc;
       }
       return 0;
-    }
-
-    /**
-     * Converts this object's value to a 64-bit signed integer, throwing an
-     * exception if it can't fit.
-     * @return A 64-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
-     * 64-bit signed integer.
-     */
-    public long AsInt64Checked() {
-      int count = this.wordCount;
-      if (count == 0) {
-        return (long)0;
-      }
-      if (count > 4) {
-        throw new ArithmeticException();
-      }
-      if (count == 4 && (this.words[3] & 0x8000) != 0) {
-        if (this.negative && this.words[3] == ((short)0x8000) &&
-            this.words[2] == 0 && this.words[1] == 0 &&
-            this.words[0] == 0) {
-          return Long.MIN_VALUE;
-        }
-        throw new ArithmeticException();
-      }
-      return this.AsInt64Unchecked();
-    }
-
-    /**
-     * Converts this object's value to a 64-bit signed integer. If the value can't
-     * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's complement representation (in which case the return value might
-     * have a different sign than this object's value).
-     * @return A 64-bit signed integer.
-     */
-    public long AsInt64Unchecked() {
-      int c = (int)this.wordCount;
-      if (c == 0) {
-        return (long)0;
-      }
-      long ivv = 0;
-      int intRetValue = ((int)this.words[0]) & 0xffff;
-      if (c > 1) {
-        intRetValue |= (((int)this.words[1]) & 0xffff) << 16;
-      }
-      if (c > 2) {
-        int intRetValue2 = ((int)this.words[2]) & 0xffff;
-        if (c > 3) {
-          intRetValue2 |= (((int)this.words[3]) & 0xffff) << 16;
-        }
-        if (this.negative) {
-          if (intRetValue == 0) {
-            intRetValue = (intRetValue - 1);
-            intRetValue2 = (intRetValue2 - 1);
-          } else {
-            intRetValue = (intRetValue - 1);
-          }
-          intRetValue = (~intRetValue);
-          intRetValue2 = (~intRetValue2);
-        }
-        ivv = ((long)intRetValue) & 0xFFFFFFFFL;
-        ivv |= ((long)intRetValue2) << 32;
-        return ivv;
-      }
-      ivv = ((long)intRetValue) & 0xFFFFFFFFL;
-      if (this.negative) {
-        ivv = -ivv;
-      }
-      return ivv;
     }
 
     /**
@@ -1640,8 +1648,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           int ba = ((int)this.words[0]) & 0xffff;
           int bb = ((int)bigintMult.words[0]) & 0xffff;
           ba = (ba * bb);
-          productreg[0 ] = ((short)(ba & 0xffff));
-          productreg[1 ] = ((short)((ba >> 16) & 0xffff));
+          productreg[0] = ((short)(ba & 0xffff));
+          productreg[1] = ((short)((ba >> 16) & 0xffff));
           short preg = productreg[1];
           wc = (preg == 0) ? 1 : 2;
           return new EInteger(
@@ -2036,43 +2044,6 @@ this.negative ^ bigintMult.negative);
     }
 
     /**
-     * Returns whether a bit is set in the two's-complement representation of this
-     * object's value.
-     * @param index Zero based index of the bit to test. 0 means the least
-     * significant bit.
-     * @return True if a bit is set in the two's-complement representation of this
-     * object's value; otherwise, false.
-     */
-    public boolean GetSignedBit(int index) {
-      if (index < 0) {
-        throw new IllegalArgumentException("index");
-      }
-      if (this.wordCount == 0) {
-        return false;
-      }
-      if (this.negative) {
-        int tcindex = 0;
-        int wordpos = index / 16;
-        if (wordpos >= this.words.length) {
-          return true;
-        }
-        while (tcindex < wordpos && this.words[tcindex] == 0) {
-          ++tcindex;
-        }
-        short tc;
-        {
-          tc = this.words[wordpos];
-          if (tcindex == wordpos) {
-            --tc;
-          }
-          tc = (short)~tc;
-        }
-        return (boolean)(((tc >> (int)(index & 15)) & 1) != 0);
-      }
-      return this.GetUnsignedBit(index);
-    }
-
-    /**
      * Returns a byte array of this integer&#x27;s value. The byte array will take
      * the form of the number's two's-complement representation, using the
      * fewest bytes necessary to store its value unambiguously. If this
@@ -2146,6 +2117,107 @@ this.negative ^ bigintMult.negative);
         }
         return bytes;
       }
+    }
+
+    /**
+     *
+     */
+    public int ToInt32Checked() {
+      int count = this.wordCount;
+      if (count == 0) {
+        return 0;
+      }
+      if (count > 2) {
+        throw new ArithmeticException();
+      }
+      if (count == 2 && (this.words[1] & 0x8000) != 0) {
+        if (this.negative && this.words[1] == ((short)0x8000) &&
+            this.words[0] == 0) {
+          return Integer.MIN_VALUE;
+        }
+        throw new ArithmeticException();
+      }
+      return this.ToInt32Unchecked();
+    }
+
+    /**
+     *
+     */
+    public int ToInt32Unchecked() {
+      int c = (int)this.wordCount;
+      if (c == 0) {
+        return 0;
+      }
+      int intRetValue = ((int)this.words[0]) & 0xffff;
+      if (c > 1) {
+        intRetValue |= (((int)this.words[1]) & 0xffff) << 16;
+      }
+      if (this.negative) {
+        intRetValue = (intRetValue - 1);
+        intRetValue = (~intRetValue);
+      }
+      return intRetValue;
+    }
+
+    /**
+     *
+     */
+    public long ToInt64Checked() {
+      int count = this.wordCount;
+      if (count == 0) {
+        return (long)0;
+      }
+      if (count > 4) {
+        throw new ArithmeticException();
+      }
+      if (count == 4 && (this.words[3] & 0x8000) != 0) {
+        if (this.negative && this.words[3] == ((short)0x8000) &&
+            this.words[2] == 0 && this.words[1] == 0 &&
+            this.words[0] == 0) {
+          return Long.MIN_VALUE;
+        }
+        throw new ArithmeticException();
+      }
+      return this.ToInt64Unchecked();
+    }
+
+    /**
+     *
+     */
+    public long ToInt64Unchecked() {
+      int c = (int)this.wordCount;
+      if (c == 0) {
+        return (long)0;
+      }
+      long ivv = 0;
+      int intRetValue = ((int)this.words[0]) & 0xffff;
+      if (c > 1) {
+        intRetValue |= (((int)this.words[1]) & 0xffff) << 16;
+      }
+      if (c > 2) {
+        int intRetValue2 = ((int)this.words[2]) & 0xffff;
+        if (c > 3) {
+          intRetValue2 |= (((int)this.words[3]) & 0xffff) << 16;
+        }
+        if (this.negative) {
+          if (intRetValue == 0) {
+            intRetValue = (intRetValue - 1);
+            intRetValue2 = (intRetValue2 - 1);
+          } else {
+            intRetValue = (intRetValue - 1);
+          }
+          intRetValue = (~intRetValue);
+          intRetValue2 = (~intRetValue2);
+        }
+        ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+        ivv |= ((long)intRetValue2) << 32;
+        return ivv;
+      }
+      ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+      if (this.negative) {
+        ivv = -ivv;
+      }
+      return ivv;
     }
 
     /**
@@ -2377,7 +2449,7 @@ this.negative ^ bigintMult.negative);
         this.ToRadixString(10);
     }
 
-    private static int Add(
+    private static int AddInternal(
       short[] c,
       int cstart,
       short[] words1,
@@ -2683,7 +2755,7 @@ this.negative ^ bigintMult.negative);
             }
           }
           if (
-            Add(
+            AddInternal(
               resultArr,
               resultStart + words1Count,
               resultArr,
@@ -5129,19 +5201,6 @@ count);
       return (s == 0) ? wc : (((s >> 8) == 0) ? wc + 1 : wc + 2);
     }
 
-    /**
-     * Not documented yet.
-     * @param n A 32-bit signed integer.
-     * @return A Boolean object.
-     */
-    public boolean GetUnsignedBit(int n) {
-      if (n < 0) {
-        throw new IllegalArgumentException("n (" + n + ") is less than 0");
-      }
-      return ((n >> 4) < this.words.length) && ((boolean)(((this.words[(n >>
-                    4)] >> (int)(n & 15)) & 1) != 0));
-    }
-
     private boolean HasSmallValue() {
       int c = (int)this.wordCount;
       if (c > 4) {
@@ -5167,7 +5226,7 @@ count);
     }
 
     private String SmallValueToString() {
-      long value = this.AsInt64Unchecked();
+      long value = this.ToInt64Unchecked();
       if (value == Long.MIN_VALUE) {
         return "-9223372036854775808";
       }
@@ -5180,37 +5239,53 @@ count);
       int intvalue = ((int)value);
       if ((long)intvalue == value) {
         chars = new char[12];
+        count = 11;
         if (neg) {
-          chars[0] = '-';
-          ++count;
           intvalue = -intvalue;
         }
-        while (intvalue != 0) {
+        while (intvalue > 43698) {
           int intdivvalue = intvalue / 10;
           char digit = Digits.charAt((int)(intvalue - (intdivvalue * 10)));
-          chars[count++] = digit;
+          chars[count--] = digit;
           intvalue = intdivvalue;
         }
+        while (intvalue > 9) {
+          int intdivvalue = (intvalue * 26215) >> 18;
+          char digit = Digits.charAt((int)(intvalue - (intdivvalue * 10)));
+          chars[count--] = digit;
+          intvalue = intdivvalue;
+        }
+        if (intvalue != 0) {
+          chars[count--] = Digits.charAt(intvalue);
+        }
+        if (neg) {
+          chars[count] = '-';
+        } else {
+          ++count;
+        }
+        return new String(chars, count, 12 - count);
       } else {
         chars = new char[24];
+        count = 23;
         if (neg) {
-          chars[0] = '-';
-          ++count;
           value = -value;
         }
-        while (value != 0) {
+        while (value > 9) {
           long divvalue = value / 10;
           char digit = Digits.charAt((int)(value - (divvalue * 10)));
-          chars[count++] = digit;
+          chars[count--] = digit;
           value = divvalue;
         }
+        if (value != 0) {
+          chars[count--] = Digits.charAt((int)value);
+        }
+        if (neg) {
+          chars[count] = '-';
+        } else {
+          ++count;
+        }
+        return new String(chars, count, 24 - count);
       }
-      if (neg) {
-        ReverseChars(chars, 1, count - 1);
-      } else {
-        ReverseChars(chars, 0, count);
-      }
-      return new String(chars, 0, count);
     }
 
     private EInteger[] SqrtRemInternal(boolean useRem) {
@@ -5225,7 +5300,7 @@ count);
       EInteger thisValue = this;
       int powerBits = (thisValue.GetUnsignedBitLength() + 1) / 2;
       if (thisValue.CanFitInInt32()) {
-        int smallValue = thisValue.AsInt32Checked();
+        int smallValue = thisValue.ToInt32Checked();
         // No need to check for ValueZero; already done above
         int smallintX = 0;
         int smallintY = 1 << powerBits;

@@ -93,6 +93,25 @@ import com.upokecenter.numbers.*;
     public void TestAbs() {
       // not implemented yet
     }
+
+    private static void TestAddCloseExponent(FastRandom fr, int exp) {
+for (int i = 0; i < 1000; ++i) {
+  EInteger exp1 = EInteger.FromInt32(exp)
+    .Add(EInteger.FromInt32(fr.NextValue(32)-16));
+  EInteger exp2 = exp1
+    .Add(EInteger.FromInt32(fr.NextValue(18)-30));
+  EInteger mant1 = EInteger.FromInt32(fr.NextValue(0x10000000));
+  EInteger mant2 = EInteger.FromInt32(fr.NextValue(0x10000000));
+  EFloat decA = EFloat.Create(mant1, exp1);
+  EFloat decB = EFloat.Create(mant2, exp2);
+  EFloat decC = decA.Add(decB);
+  EFloat decD = decC.Subtract(decA);
+  TestCommon.CompareTestEqual(decD, decB);
+  decD = decC.Subtract(decB);
+  TestCommon.CompareTestEqual(decD, decA);
+}
+}
+
     @Test
     public void TestAdd() {
       try {
@@ -104,6 +123,12 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
+      FastRandom fr = new FastRandom();
+      TestAddCloseExponent(fr, 0);
+      TestAddCloseExponent(fr, 100);
+      TestAddCloseExponent(fr, -100);
+      TestAddCloseExponent(fr, Integer.MIN_VALUE);
+      TestAddCloseExponent(fr, Integer.MAX_VALUE);
     }
     @Test
     public void TestCompareTo() {

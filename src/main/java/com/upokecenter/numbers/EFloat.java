@@ -381,6 +381,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return value.exponent;
       }
 
+      public FastInteger2 GetMantissaFastInt(EFloat value) {
+        return FastInteger2.FromBig(value.unsignedMantissa);
+      }
+
+      public FastInteger2 GetExponentFastInt(EFloat value) {
+        return FastInteger2.FromBig(value.exponent);
+      }
+
     /**
      * This is an internal method.
      * @param bigint An arbitrary-precision integer.
@@ -438,21 +446,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (tmpbigint.signum() < 0) {
           tmpbigint = tmpbigint.Negate();
           if (power.CanFitInInt32()) {
-            tmpbigint = DecimalUtility.ShiftLeftInt(tmpbigint, power.AsInt32());
+            tmpbigint = NumberUtility.ShiftLeftInt(tmpbigint, power.AsInt32());
             tmpbigint = tmpbigint.Negate();
           } else {
-            tmpbigint = DecimalUtility.ShiftLeft(
+            tmpbigint = NumberUtility.ShiftLeft(
               tmpbigint,
-              power.AsBigInteger());
+              power.AsEInteger());
             tmpbigint = tmpbigint.Negate();
           }
           return tmpbigint;
         }
-        return power.CanFitInInt32() ? DecimalUtility.ShiftLeftInt(
+        return power.CanFitInInt32() ? NumberUtility.ShiftLeftInt(
           tmpbigint,
-          power.AsInt32()) : DecimalUtility.ShiftLeft(
+          power.AsInt32()) : NumberUtility.ShiftLeft(
           tmpbigint,
-          power.AsBigInteger());
+          power.AsEInteger());
       }
 
     /**
@@ -476,6 +484,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         EInteger exponent,
         int flags) {
         return EFloat.CreateWithFlags(mantissa, exponent, flags);
+      }
+
+      public EFloat CreateNewWithFlagsFastInt(
+        FastInteger2 fmantissa,
+        FastInteger2 fexponent,
+        int flags) {
+ return CreateWithFlags(fmantissa.AsEInteger(), fexponent.AsEInteger(),
+          flags);
       }
 
     /**
@@ -541,7 +557,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (neg) {
           bigmantissa = bigmantissa.Negate();
         }
-        bigmantissa = DecimalUtility.ShiftLeft(bigmantissa, curexp);
+        bigmantissa = NumberUtility.ShiftLeft(bigmantissa, curexp);
         if (neg) {
           bigmantissa = bigmantissa.Negate();
         }
@@ -743,8 +759,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         // This will be an infinite loop if both elements
         // of the bits array are 0, but the check for
         // 0 was already done above
-        while (!DecimalUtility.HasBitSet(mantissaBits, 52)) {
-          DecimalUtility.ShiftLeftOne(mantissaBits);
+        while (!NumberUtility.HasBitSet(mantissaBits, 52)) {
+          NumberUtility.ShiftLeftOne(mantissaBits);
           bigexponent.Decrement();
         }
       } else {
@@ -757,7 +773,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       // Round half-even
       if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    DecimalUtility.HasBitSet(mantissaBits, 0))) {
+                    NumberUtility.HasBitSet(mantissaBits, 0))) {
         // Add 1 to the bits
         mantissaBits[0] = ((int)(mantissaBits[0] + 1));
         if (mantissaBits[0] == 0) {
@@ -791,7 +807,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         mantissaBits = FastInteger.GetLastWords(accum.getShiftedInt(), 2);
         // Round half-even
         if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    DecimalUtility.HasBitSet(mantissaBits, 0))) {
+                    NumberUtility.HasBitSet(mantissaBits, 0))) {
           // Add 1 to the bits
           mantissaBits[0] = ((int)(mantissaBits[0] + 1));
           if (mantissaBits[0] == 0) {
@@ -942,7 +958,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         value[1] |= 0x100000;
       }
       if ((value[1] | value[0]) != 0) {
-      floatExponent += DecimalUtility.ShiftAwayTrailingZerosTwoElements(value);
+      floatExponent += NumberUtility.ShiftAwayTrailingZerosTwoElements(value);
       } else {
         return neg ? EFloat.NegativeZero : EFloat.Zero;
       }
@@ -958,6 +974,98 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
     public EDecimal ToExtendedDecimal() {
       return EDecimal.FromExtendedFloat(this);
+    }
+
+    /**
+     *
+     * @return A 32-bit signed integer.
+     */
+    public int ToInt32Checked() {
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.unsignedMantissa.isZero()) {
+        return 0;
+      }
+      if (this.exponent.isZero()) {
+        if (this.unsignedMantissa.CanFitInInt32()) {
+          int ret = this.unsignedMantissa.ToInt32Unchecked();
+          if (this.isNegative()) {
+ ret = -ret;
+}
+          return ret;
+        }
+      }
+      return this.ToEIntegerExact().ToInt32Checked();
+    }
+
+    /**
+     *
+     * @return A 32-bit signed integer.
+     */
+    public int ToInt32Unchecked() {
+      if (!this.isFinite()) {
+        return 0;
+      }
+      if (this.unsignedMantissa.isZero()) {
+        return 0;
+      }
+      if (this.exponent.isZero()) {
+        if (this.unsignedMantissa.CanFitInInt32()) {
+          int ret = this.unsignedMantissa.ToInt32Unchecked();
+          if (this.isNegative()) {
+ ret = -ret;
+}
+          return ret;
+        }
+      }
+      return this.ToEIntegerExact().ToInt32Unchecked();
+    }
+
+    /**
+     *
+     * @return A 64-bit signed integer.
+     */
+    public long ToInt64Checked() {
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.unsignedMantissa.isZero()) {
+        return 0;
+      }
+      if (this.exponent.isZero()) {
+        if (this.unsignedMantissa.CanFitInInt32()) {
+          int ret = this.unsignedMantissa.ToInt32Unchecked();
+          if (this.isNegative()) {
+ ret = -ret;
+}
+          return ret;
+        }
+      }
+      return this.ToEIntegerExact().ToInt64Checked();
+    }
+
+    /**
+     *
+     * @return A 64-bit signed integer.
+     */
+    public long ToInt64Unchecked() {
+      if (!this.isFinite()) {
+        return 0;
+      }
+      if (this.unsignedMantissa.isZero()) {
+        return 0;
+      }
+      if (this.isFinite() && this.exponent.isZero()) {
+        if (this.unsignedMantissa.CanFitInInt32()) {
+          int ret = this.unsignedMantissa.ToInt32Unchecked();
+          if (this.isNegative()) {
+ ret = -ret;
+}
+          return ret;
+        }
+      }
+      return this.ToEIntegerExact().ToInt64Unchecked();
     }
 
     /**
@@ -1494,6 +1602,23 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return The product of the two binary floats.
      */
     public EFloat Multiply(EFloat otherValue) {
+      if (this.isFinite() && otherValue.isFinite()) {
+        EInteger exp = this.exponent.Add(otherValue.exponent);
+        int newflags = otherValue.flags ^ this.flags;
+        if (this.unsignedMantissa.CanFitInInt32() &&
+          otherValue.unsignedMantissa.CanFitInInt32()) {
+            int integerA = this.unsignedMantissa.ToInt32Unchecked();
+            int integerB = otherValue.unsignedMantissa.ToInt32Unchecked();
+            long longA=((long)integerA)*((long)integerB);
+            int sign=(longA == 0) ? 0 : (newflags == 0 ? 1 : -1);
+            return CreateWithFlags(EInteger.FromInt64(longA), exp, newflags);
+        } else {
+            EInteger eintA = this.unsignedMantissa.Multiply(
+             otherValue.unsignedMantissa);
+            int sign=(eintA.isZero()) ? 0 : (newflags == 0 ? 1 : -1);
+            return CreateWithFlags(eintA, exp, newflags);
+        }
+      }
       return this.Multiply(otherValue, EContext.Unlimited);
     }
 
@@ -2403,7 +2528,7 @@ EContext ctx) {
       EInteger bigExp = this.getExponent();
       bigExp = bigExp.Add(bigPlaces);
       if (bigExp.signum() > 0) {
-        EInteger mant = DecimalUtility.ShiftLeft(
+        EInteger mant = NumberUtility.ShiftLeft(
           this.unsignedMantissa,
           bigExp);
         return CreateWithFlags(
