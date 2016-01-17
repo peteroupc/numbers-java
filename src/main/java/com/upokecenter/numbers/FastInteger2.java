@@ -147,7 +147,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      *
-     * @return A string object.
+     * @return A text string.
      */
     @Override public String toString() {
       switch (this.integerMode) {
@@ -193,7 +193,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           return (val == this.smallValue) ? 0 : (this.smallValue < val ? -1 :
           1);
         case 2:
-          return this.largeValue.compareTo(EInteger.FromInt64(val));
+          return this.largeValue.compareTo(EInteger.FromInt32(val));
         default: return 0;
       }
     }

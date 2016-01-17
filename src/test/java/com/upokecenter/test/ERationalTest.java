@@ -35,26 +35,26 @@ import com.upokecenter.numbers.*;
           continue;
         }
         num = num.Abs();
-        ERational rat = new ERational(num, EInteger.FromInt64(1));
+        ERational rat = new ERational(num, EInteger.FromInt32(1));
         ERational rat2 = new ERational(num, EInteger.FromInt64(2));
         TestCommon.CompareTestLess(rat2, rat);
         TestCommon.CompareTestGreater(rat, rat2);
       }
       TestCommon.CompareTestLess(
-        new ERational(EInteger.FromInt64(1), EInteger.FromInt64(2)),
-        new ERational(EInteger.FromInt64(4), EInteger.FromInt64(1)));
+        new ERational(EInteger.FromInt32(1), EInteger.FromInt64(2)),
+        new ERational(EInteger.FromInt64(4), EInteger.FromInt32(1)));
       for (int i = 0; i < 100; ++i) {
         EInteger num = RandomObjects.RandomBigInteger(r);
         EInteger den = RandomObjects.RandomBigInteger(r);
         if (den.isZero()) {
-          den = EInteger.FromInt64(1);
+          den = EInteger.FromInt32(1);
         }
         ERational rat = new ERational(num, den);
         for (int j = 0; j < 10; ++j) {
           EInteger num2 = num;
           EInteger den2 = den;
           EInteger mult = RandomObjects.RandomBigInteger(r);
-          if (mult.isZero() || mult.equals(EInteger.FromInt64(1))) {
+          if (mult.isZero() || mult.equals(EInteger.FromInt32(1))) {
             mult = EInteger.FromInt64(2);
           }
           num2 = num2.Multiply(mult);
@@ -70,7 +70,18 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestCompareToDecimal() {
-      // not implemented yet
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 100; ++i) {
+        ERational er = RandomObjects.RandomRational(fr);
+        int exp = -100000 + fr.NextValue(200000);
+        EDecimal ed = EDecimal.Create(
+          RandomObjects.RandomBigInteger(fr),
+          EInteger.FromInt32(exp));
+        ERational er2 = ERational.FromEDecimal(ed);
+        int c2r = er.compareTo(er2);
+        int c2d = er.CompareToDecimal(ed);
+        Assert.assertEquals(c2r, c2d);
+      }
     }
     @Test
     public void TestCreate() {
@@ -219,10 +230,10 @@ import com.upokecenter.numbers.*;
         ERational er2;
         er = new ERational(
           RandomObjects.RandomBigInteger(fr),
-          EInteger.FromInt64(1));
+          EInteger.FromInt32(1));
         er2 = new ERational(
           RandomObjects.RandomBigInteger(fr),
-          EInteger.FromInt64(1));
+          EInteger.FromInt32(1));
         if (er2.isZero() || !er2.isFinite()) {
           continue;
         }
@@ -257,7 +268,24 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestToEInteger() {
-      // not implemented yet
+      try {
+        ERational.PositiveInfinity.ToEInteger();
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        ERational.NegativeInfinity.ToEInteger();
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
     @Test
     public void TestToEIntegerExact() {
@@ -302,7 +330,7 @@ import com.upokecenter.numbers.*;
     public void TestToDouble() {
       // test for correct rounding
       double dbl;
-      dbl = ERational.FromExtendedDecimal(
+      dbl = ERational.FromEDecimal(
         EDecimal.FromString(
        "1.972579273363468721491642554610734805464744567871093749999999999999"))
         .ToDouble();
@@ -314,19 +342,19 @@ stringTemp);
 }
     }
     @Test
-    public void TestToExtendedDecimal() {
+    public void TestToEDecimal() {
       // not implemented yet
     }
     @Test
-    public void TestToExtendedDecimalExactIfPossible() {
+    public void TestToEDecimalExactIfPossible() {
       // not implemented yet
     }
     @Test
-    public void TestToExtendedFloat() {
+    public void TestToEFloat() {
       // not implemented yet
     }
     @Test
-    public void TestToExtendedFloatExactIfPossible() {
+    public void TestToEFloatExactIfPossible() {
       // not implemented yet
     }
     @Test

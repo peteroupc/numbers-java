@@ -5,40 +5,10 @@ import org.junit.Test;
 import com.upokecenter.numbers.*;
 
   public class EFloatTest {
-    @Test
-    public void TestMovePointRight() {
-      EFloat ef;
-      EFloat ef2;
-      ef = EFloat.FromInt32(0x100).MovePointRight(4);
-      ef2 = EFloat.FromInt32(0x1000);
-      Assert.assertEquals(0, ef.compareTo(ef2));
-    }
-    @Test
-    public void TestMovePointLeft() {
-      EFloat ef;
-      EFloat ef2;
-      ef = EFloat.FromInt32(0x150).MovePointLeft(4);
-      ef2 = EFloat.FromInt32(0x15);
-      Assert.assertEquals(0, ef.compareTo(ef2));
-    }
-
-    @Test
-    public void TestFloatDecimalRoundTrip() {
-      FastRandom r = new FastRandom();
-      for (int i = 0; i < 5000; ++i) {
-        EFloat ef = RandomObjects.RandomExtendedFloat(r);
-        EDecimal ed = ef.ToExtendedDecimal();
-        EFloat ef2 = ed.ToExtendedFloat();
-        // Tests that values converted from float to decimal and
-        // back have the same numerical value
-        TestCommon.CompareTestEqual(ef, ef2);
-      }
-    }
-
     public static EFloat FromBinary(String str) {
       int smallExponent = 0;
       int index = 0;
-      EInteger ret = EInteger.FromInt64(0);
+      EInteger ret = EInteger.FromInt32(0);
       while (index < str.length()) {
         if (str.charAt(index) == '0') {
           ++index;
@@ -54,10 +24,10 @@ import com.upokecenter.numbers.*;
         if (str.charAt(index) == '1') {
           ++index;
           if (ret.isZero()) {
-            ret = EInteger.FromInt64(1);
+            ret = EInteger.FromInt32(1);
           } else {
             ret = ret.ShiftLeft(1);
-            ret = ret.Add(EInteger.FromInt64(1));
+            ret = ret.Add(EInteger.FromInt32(1));
           }
         } else if (str.charAt(index) == '0') {
           ++index;
@@ -72,10 +42,10 @@ import com.upokecenter.numbers.*;
           ++index;
           --smallExponent;
           if (ret.isZero()) {
-            ret = EInteger.FromInt64(1);
+            ret = EInteger.FromInt32(1);
           } else {
             ret = ret.ShiftLeft(1);
-            ret = ret.Add(EInteger.FromInt64(1));
+            ret = ret.Add(EInteger.FromInt32(1));
           }
         } else if (str.charAt(index) == '0') {
           ++index;
@@ -86,31 +56,13 @@ import com.upokecenter.numbers.*;
           break;
         }
       }
-      return EFloat.Create(ret, EInteger.FromInt64(smallExponent));
+      return EFloat.Create(ret, EInteger.FromInt32(smallExponent));
     }
 
     @Test
     public void TestAbs() {
       // not implemented yet
     }
-
-    private static void TestAddCloseExponent(FastRandom fr, int exp) {
-for (int i = 0; i < 1000; ++i) {
-  EInteger exp1 = EInteger.FromInt32(exp)
-    .Add(EInteger.FromInt32(fr.NextValue(32)-16));
-  EInteger exp2 = exp1
-    .Add(EInteger.FromInt32(fr.NextValue(18)-30));
-  EInteger mant1 = EInteger.FromInt32(fr.NextValue(0x10000000));
-  EInteger mant2 = EInteger.FromInt32(fr.NextValue(0x10000000));
-  EFloat decA = EFloat.Create(mant1, exp1);
-  EFloat decB = EFloat.Create(mant2, exp2);
-  EFloat decC = decA.Add(decB);
-  EFloat decD = decC.Subtract(decA);
-  TestCommon.CompareTestEqual(decD, decB);
-  decD = decC.Subtract(decB);
-  TestCommon.CompareTestEqual(decD, decA);
-}
-}
 
     @Test
     public void TestAdd() {
@@ -164,11 +116,11 @@ for (int i = 0; i < 1000; ++i) {
     @Test
     public void TestDivide() {
       try {
- EDecimal.FromString("1").Divide(EDecimal.FromString("3"), null);
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+        EDecimal.FromString("1").Divide(EDecimal.FromString("3"), null);
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
     @Test
     public void TestDivideToExponent() {
@@ -207,14 +159,6 @@ throw new IllegalStateException("", ex);
     public void TestExponent() {
       // not implemented yet
     }
-    @Test
-    public void TestFromBigInteger() {
-      // not implemented yet
-    }
-    @Test
-    public void TestFromDouble() {
-      // not implemented yet
-    }
 
     @Test
     public void TestExtendedFloatDouble() {
@@ -236,16 +180,6 @@ throw new IllegalStateException("", ex);
         TestExtendedFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
       }
     }
-
-    private static void TestExtendedFloatDoubleCore(double d, String s) {
-      double oldd = d;
-      EFloat bf = EFloat.FromDouble(d);
-      if (s != null) {
-        Assert.assertEquals(s, bf.toString());
-      }
-      d = bf.ToDouble();
-      Assert.assertEquals((double)oldd, d, 0);
-    }
     @Test
     public void TestExtendedFloatSingle() {
       FastRandom rand = new FastRandom();
@@ -259,14 +193,25 @@ throw new IllegalStateException("", ex);
       }
     }
 
-    private static void TestExtendedFloatSingleCore(float d, String s) {
-      float oldd = d;
-      EFloat bf = EFloat.FromSingle(d);
-      if (s != null) {
-        Assert.assertEquals(s, bf.toString());
+    @Test
+    public void TestFloatDecimalRoundTrip() {
+      FastRandom r = new FastRandom();
+      for (int i = 0; i < 5000; ++i) {
+        EFloat ef = RandomObjects.RandomExtendedFloat(r);
+        EDecimal ed = ef.ToEDecimal();
+        EFloat ef2 = ed.ToEFloat();
+        // Tests that values converted from float to decimal and
+        // back have the same numerical value
+        TestCommon.CompareTestEqual(ef, ef2);
       }
-      d = bf.ToSingle();
-      Assert.assertEquals((float)oldd, d, 0f);
+    }
+    @Test
+    public void TestFromBigInteger() {
+      // not implemented yet
+    }
+    @Test
+    public void TestFromDouble() {
+      // not implemented yet
     }
 
     @Test
@@ -284,13 +229,265 @@ throw new IllegalStateException("", ex);
     @Test
     public void TestFromString() {
       try {
- EFloat.FromString("2", 0, 1, null);
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+        EFloat.FromString("0..1");
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("0.1x+222");
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("0.1g-222");
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("2", 0, 1, null);
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
       try {
         EFloat.FromString("");
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(null);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      Assert.assertEquals(EFloat.Zero, EFloat.FromString("0"));
+      Assert.assertEquals(EFloat.Zero, EFloat.FromString("0", null));
+      try {
+        EFloat.FromString(null, null);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("");
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(null, 0, 1);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", -1, 1);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 2, 1);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 0, -1);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 0, 2);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 1, 1);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(null, 0, 1, null);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", -1, 1, null);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 2, 1, null);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 0, -1, null);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 0, 2, null);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString("x", 1, 1, null);
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "Infinity",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "-Infinity",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "NaN",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "sNaN",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "Infinity",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "-Infinity",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "NaN",
+          EContext.Unlimited.WithSimplified(true));
+        Assert.fail("Should have failed");
+      } catch (NumberFormatException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.FromString(
+          "sNaN",
+          EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         System.out.print("");
@@ -387,20 +584,20 @@ throw new IllegalStateException("", ex);
         }
         int cmp = TestCommon.CompareTestReciprocal(bigintA, bigintB);
         if (cmp < 0) {
-     TestCommon.CompareTestEqual(
-bigintB,
-EFloat.Max(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintB,
+     EFloat.Max(bigintA, bigintB));
         } else if (cmp > 0) {
-     TestCommon.CompareTestEqual(
-bigintA,
-EFloat.Max(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintA,
+     EFloat.Max(bigintA, bigintB));
         } else {
-     TestCommon.CompareTestEqual(
-bigintA,
-EFloat.Max(bigintA, bigintB));
-     TestCommon.CompareTestEqual(
-bigintB,
-EFloat.Max(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintA,
+     EFloat.Max(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintB,
+     EFloat.Max(bigintA, bigintB));
         }
       }
     }
@@ -455,20 +652,20 @@ EFloat.Max(bigintA, bigintB));
         }
         int cmp = TestCommon.CompareTestReciprocal(bigintA, bigintB);
         if (cmp < 0) {
-     TestCommon.CompareTestEqual(
-bigintA,
-EFloat.Min(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintA,
+     EFloat.Min(bigintA, bigintB));
         } else if (cmp > 0) {
-     TestCommon.CompareTestEqual(
-bigintB,
-EFloat.Min(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintB,
+     EFloat.Min(bigintA, bigintB));
         } else {
-     TestCommon.CompareTestEqual(
-bigintA,
-EFloat.Min(bigintA, bigintB));
-     TestCommon.CompareTestEqual(
-bigintB,
-EFloat.Min(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintA,
+     EFloat.Min(bigintA, bigintB));
+          TestCommon.CompareTestEqual(
+     bigintB,
+     EFloat.Min(bigintA, bigintB));
         }
       }
     }
@@ -492,6 +689,22 @@ EFloat.Min(bigintA, bigintB));
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
+    }
+    @Test
+    public void TestMovePointLeft() {
+      EFloat ef;
+      EFloat ef2;
+      ef = EFloat.FromInt32(0x150).MovePointLeft(4);
+      ef2 = EFloat.FromInt32(0x15);
+      Assert.assertEquals(0, ef.compareTo(ef2));
+    }
+    @Test
+    public void TestMovePointRight() {
+      EFloat ef;
+      EFloat ef2;
+      ef = EFloat.FromInt32(0x100).MovePointRight(4);
+      ef2 = EFloat.FromInt32(0x1000);
+      Assert.assertEquals(0, ef.compareTo(ef2));
     }
     @Test
     public void TestMultiply() {
@@ -598,6 +811,10 @@ EFloat.Min(bigintA, bigintB));
       }
     }
     @Test
+    public void TestToDouble() {
+      // not implemented yet
+    }
+    @Test
     public void TestToEInteger() {
       try {
         EFloat.PositiveInfinity.ToEInteger();
@@ -635,21 +852,51 @@ EFloat.Min(bigintA, bigintB));
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
+      EFloat flo = EFloat.Create(999, -1);
+      try {
+        flo.ToEInteger();
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.PositiveInfinity.ToEInteger();
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NegativeInfinity.ToEInteger();
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
     @Test
     public void TestToEIntegerExact() {
-      // not implemented yet
-    }
-    @Test
-    public void TestToDouble() {
-      // not implemented yet
+      EFloat flo = EFloat.Create(999, -1);
+      try {
+        flo.ToEIntegerExact();
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
     @Test
     public void TestToEngineeringString() {
       // not implemented yet
     }
     @Test
-    public void TestToExtendedDecimal() {
+    public void TestToEDecimal() {
       // not implemented yet
     }
     @Test
@@ -667,5 +914,42 @@ EFloat.Min(bigintA, bigintB));
     @Test
     public void TestUnsignedMantissa() {
       // not implemented yet
+    }
+
+    private static void TestAddCloseExponent(FastRandom fr, int exp) {
+      for (int i = 0; i < 1000; ++i) {
+        EInteger exp1 = EInteger.FromInt32(exp)
+          .Add(EInteger.FromInt32(fr.NextValue(32) - 16));
+        EInteger exp2 = exp1 .Add(EInteger.FromInt32(fr.NextValue(18) - 30));
+        EInteger mant1 = EInteger.FromInt32(fr.NextValue(0x10000000));
+        EInteger mant2 = EInteger.FromInt32(fr.NextValue(0x10000000));
+        EFloat decA = EFloat.Create(mant1, exp1);
+        EFloat decB = EFloat.Create(mant2, exp2);
+        EFloat decC = decA.Add(decB);
+        EFloat decD = decC.Subtract(decA);
+        TestCommon.CompareTestEqual(decD, decB);
+        decD = decC.Subtract(decB);
+        TestCommon.CompareTestEqual(decD, decA);
+      }
+    }
+
+    private static void TestExtendedFloatDoubleCore(double d, String s) {
+      double oldd = d;
+      EFloat bf = EFloat.FromDouble(d);
+      if (s != null) {
+        Assert.assertEquals(s, bf.toString());
+      }
+      d = bf.ToDouble();
+      Assert.assertEquals((double)oldd, d, 0);
+    }
+
+    private static void TestExtendedFloatSingleCore(float d, String s) {
+      float oldd = d;
+      EFloat bf = EFloat.FromSingle(d);
+      if (s != null) {
+        Assert.assertEquals(s, bf.toString());
+      }
+      d = bf.ToSingle();
+      Assert.assertEquals((float)oldd, d, 0f);
     }
   }

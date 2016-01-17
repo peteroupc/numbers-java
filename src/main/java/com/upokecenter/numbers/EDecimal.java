@@ -101,8 +101,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * A not-a-number value.
      */
     public static final EDecimal NaN = CreateWithFlags(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
         BigNumberFlags.FlagQuietNaN);
 
     /**
@@ -110,8 +110,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
     public static final EDecimal NegativeInfinity =
       CreateWithFlags(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
         BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
 
     /**
@@ -120,8 +120,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     public static final EDecimal NegativeZero =
       CreateWithFlags(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
         BigNumberFlags.FlagNegative);
 
     /**
@@ -129,15 +129,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
 
     public static final EDecimal One =
-      EDecimal.Create(EInteger.FromInt64(1), EInteger.FromInt64(0));
+      EDecimal.Create(EInteger.FromInt32(1), EInteger.FromInt32(0));
 
     /**
      * Positive infinity, greater than any other number.
      */
     public static final EDecimal PositiveInfinity =
       CreateWithFlags(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
         BigNumberFlags.FlagInfinity);
 
     /**
@@ -147,8 +147,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
     public static final EDecimal SignalingNaN =
       CreateWithFlags(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
         BigNumberFlags.FlagSignalingNaN);
 
     /**
@@ -156,14 +156,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
 
     public static final EDecimal Ten =
-      EDecimal.Create(EInteger.FromInt64(10), EInteger.FromInt64(0));
+      EDecimal.Create(EInteger.FromInt64(10), EInteger.FromInt32(0));
 
     /**
      * Represents the number 0.
      */
 
     public static final EDecimal Zero =
-      EDecimal.Create(EInteger.FromInt64(0), EInteger.FromInt64(0));
+      EDecimal.Create(EInteger.FromInt32(0), EInteger.FromInt32(0));
     private static final int MaxSafeInt = 214748363;
 
     private static final IRadixMath<EDecimal> ExtendedMathValue = new
@@ -176,7 +176,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         new ExtendedOrSimpleRadixMath<EDecimal>(new
                     DecimalMathHelper()));
 
-    private static final EInteger ValueOneShift62 = EInteger.FromInt64(1).ShiftLeft(62);
+    private static final EInteger ValueOneShift62 =
+      EInteger.FromInt32(1).ShiftLeft(62);
 
     private static final int[] ValueTenPowers = {
       1, 10, 100, 1000, 10000, 100000,
@@ -258,8 +259,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * value is negative (including a negative NaN).
      */
     public final EInteger getMantissa() {
-     return this.isNegative() ? (this.unsignedMantissa.AsEInteger().Negate()) :
-             this.unsignedMantissa.AsEInteger();
+        return this.isNegative() ? (this.unsignedMantissa.AsEInteger().Negate()) :
+                this.unsignedMantissa.AsEInteger();
       }
 
     /**
@@ -286,7 +287,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
     public static EDecimal Create(int mantissaSmall, int exponentSmall) {
       if (mantissaSmall == Integer.MIN_VALUE) {
-        return Create(EInteger.FromInt64(mantissaSmall), EInteger.FromInt64(exponentSmall));
+        return Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
       } else if (mantissaSmall < 0) {
         return new EDecimal(new FastInteger2(mantissaSmall).Negate(),
           new FastInteger2(exponentSmall),
@@ -468,7 +469,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (neg) {
           bigmantissa=(bigmantissa).Negate();
         }
-        return EDecimal.Create(bigmantissa, EInteger.FromInt64(floatExponent));
+        return EDecimal.Create(bigmantissa, EInteger.FromInt32(floatExponent));
       }
     }
 
@@ -478,7 +479,18 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return An arbitrary-precision decimal number with the exponent set to 0.
      */
     public static EDecimal FromEInteger(EInteger bigint) {
-      return EDecimal.Create(bigint, EInteger.FromInt64(0));
+      return EDecimal.Create(bigint, EInteger.FromInt32(0));
+    }
+
+    /**
+     * Not documented yet.
+     * @param ef Not documented yet.
+     * @return An EDecimal object.
+     * @deprecated Renamed to FromEFloat.
+ */
+@Deprecated
+    public static EDecimal FromExtendedFloat(EFloat ef) {
+      return FromEFloat(ef);
     }
 
     /**
@@ -488,7 +500,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return An arbitrary-precision decimal number.
      * @throws java.lang.NullPointerException The parameter {@code bigfloat} is null.
      */
-    public static EDecimal FromExtendedFloat(EFloat bigfloat) {
+    public static EDecimal FromEFloat(EFloat bigfloat) {
       if (bigfloat == null) {
         throw new NullPointerException("bigfloat");
       }
@@ -552,7 +564,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return EDecimal.Zero;
       }
       if (valueSmaller == Integer.MIN_VALUE) {
-        return Create(EInteger.FromInt64(valueSmaller), EInteger.FromInt64(0));
+        return Create(EInteger.FromInt32(valueSmaller), EInteger.FromInt32(0));
       }
       if (valueSmaller < 0) {
         return new EDecimal(new FastInteger2(valueSmaller).Negate(),
@@ -584,7 +596,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
       }
       EInteger bigint = EInteger.FromInt64(valueSmall);
-      return EDecimal.Create(bigint, EInteger.FromInt64(0));
+      return EDecimal.Create(bigint, EInteger.FromInt32(0));
     }
 
     /**
@@ -646,7 +658,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       if (floatExponent > 0) {
         // Value is an integer
-        EInteger bigmantissa = EInteger.FromInt64(valueFpMantissa);
+        EInteger bigmantissa = EInteger.FromInt32(valueFpMantissa);
         bigmantissa = bigmantissa.ShiftLeft(floatExponent);
         if (neg) {
           bigmantissa=(bigmantissa).Negate();
@@ -654,13 +666,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return EDecimal.FromEInteger(bigmantissa);
       } else {
         // Value has a fractional part
-        EInteger bigmantissa = EInteger.FromInt64(valueFpMantissa);
+        EInteger bigmantissa = EInteger.FromInt32(valueFpMantissa);
         EInteger bigexponent = NumberUtility.FindPowerOfFive(-floatExponent);
         bigmantissa = bigmantissa.Multiply(bigexponent);
         if (neg) {
           bigmantissa=(bigmantissa).Negate();
         }
-        return EDecimal.Create(bigmantissa, EInteger.FromInt64(floatExponent));
+        return EDecimal.Create(bigmantissa, EInteger.FromInt32(floatExponent));
       }
     }
 
@@ -888,7 +900,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           if (mant != null && (mantBufferMult != 1 || mantBuffer != 0)) {
             mant.Multiply(mantBufferMult).AddInt(mantBuffer);
           }
-          EInteger bigmant = (mant == null) ? (EInteger.FromInt64(mantInt)) :
+          EInteger bigmant = (mant == null) ? (EInteger.FromInt32(mantInt)) :
             mant.AsEInteger();
           flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
             BigNumberFlags.FlagQuietNaN;
@@ -966,11 +978,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           }
           int flags3 = (negative ? BigNumberFlags.FlagNegative : 0) |
             BigNumberFlags.FlagSignalingNaN;
-          EInteger bigmant = (mant == null) ? (EInteger.FromInt64(mantInt)) :
+          EInteger bigmant = (mant == null) ? (EInteger.FromInt32(mantInt)) :
             mant.AsEInteger();
           return CreateWithFlags(
             bigmant,
-            EInteger.FromInt64(0),
+            EInteger.FromInt32(0),
             flags3);
         }
       }
@@ -1097,10 +1109,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (i != endStr) {
         throw new NumberFormatException();
       }
-      EInteger bigNewScale = (newScale == null) ? (EInteger.FromInt64(newScaleInt)) :
+      EInteger bigNewScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) :
         newScale.AsEInteger();
       EDecimal ret = new EDecimal(
-FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
+FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
           mant.AsEInteger()),
         FastInteger2.FromBig(bigNewScale),
         negative ? BigNumberFlags.FlagNegative : 0);
@@ -1250,11 +1262,36 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
     }
 
     /**
-     * Gets the absolute value of this object.
-     * @return An arbitrary-precision decimal number.
+     * Finds the absolute value of this object (if it&#x27;s negative, it becomes
+     * positive).
+     * @return An arbitrary-precision decimal number. Returns signaling NaN if this
+     * value is signaling NaN.
      */
     public EDecimal Abs() {
-      return this.Abs(null);
+      if (this.isNegative()) {
+        EDecimal er = new EDecimal(this.unsignedMantissa, this.exponent,
+          this.flags & ~BigNumberFlags.FlagNegative,
+          Math.abs(this.sign));
+        return er;
+      }
+      return this;
+    }
+
+    /**
+     * Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
+     * @return An EDecimal object.
+     * @throws java.lang.NullPointerException The parameter {@code other} is null.
+     */
+    public EDecimal CopySign(EDecimal other) {
+      if (other == null) {
+        throw new NullPointerException("other");
+      }
+      if (this.isNegative()) {
+        return other.isNegative() ? this : this.Negate();
+      } else {
+        return other.isNegative() ? this.Negate() : this;
+      }
     }
 
     /**
@@ -1265,7 +1302,8 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case
      * the precision is unlimited and no rounding is needed.
-     * @return The absolute value of this object.
+     * @return The absolute value of this object. Signals FlagInvalid and returns
+     * quiet NaN if this value is signaling NaN.
      */
     public EDecimal Abs(EContext context) {
       return ((context == null || context == EContext.Unlimited) ?
@@ -1279,7 +1317,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      */
     public EDecimal Add(EDecimal otherValue) {
       if (this.isFinite() && otherValue != null && otherValue.isFinite() &&
-        ((this.flags | otherValue.flags) & BigNumberFlags.FlagNegative) == 0&&
+        ((this.flags | otherValue.flags) & BigNumberFlags.FlagNegative) == 0 &&
             this.exponent.compareTo(otherValue.exponent) == 0) {
         FastInteger2 result = FastInteger2.Add(this.unsignedMantissa,
               otherValue.unsignedMantissa);
@@ -1378,7 +1416,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
       }
       if (other.getExponent().compareTo(EInteger.FromInt64(1000)) > 0) {
         // Very high exponents
-        EInteger bignum = EInteger.FromInt64(1).ShiftLeft(999);
+        EInteger bignum = EInteger.FromInt32(1).ShiftLeft(999);
         if (this.Abs(null).compareTo(EDecimal.FromEInteger(bignum)) <=
             0) {
           // this object's absolute value is less
@@ -1396,8 +1434,8 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
         }
         if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0 &&
                 otherAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0) {
-          thisAdjExp = thisAdjExp.Add(EInteger.FromInt64(1));
-          otherAdjExp = otherAdjExp.Add(EInteger.FromInt64(1));
+          thisAdjExp = thisAdjExp.Add(EInteger.FromInt32(1));
+          otherAdjExp = thisAdjExp.Add(EInteger.FromInt32(1));
           EInteger ratio = otherAdjExp.Divide(thisAdjExp);
           // Check the ratio of the binary exponent to the decimal exponent.
           // If the ratio is less than 3, the decimal's absolute value is
@@ -1418,7 +1456,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
           }
         }
       }
-      EDecimal otherDec = EDecimal.FromExtendedFloat(other);
+      EDecimal otherDec = EDecimal.FromEFloat(other);
       return this.compareTo(otherDec);
     }
 
@@ -1441,6 +1479,128 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
       EDecimal other,
       EContext ctx) {
       return GetMathValue(ctx).CompareToWithContext(this, other, true, ctx);
+    }
+
+    /**
+     * Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
+     * @return A 32-bit signed integer.
+     */
+    public int CompareToTotalMagnitude(EDecimal other) {
+      if (other == null) {
+        return -1;
+      }
+      int iThis = 0;
+      int iOther = 0;
+      int cmp;
+      if (this.IsSignalingNaN()) {
+        iThis = 2;
+      } else if (this.IsNaN()) {
+        iThis = 3;
+      } else if (this.IsInfinity()) {
+        iThis = 1;
+      }
+      if (other.IsSignalingNaN()) {
+        iOther = 2;
+      } else if (other.IsNaN()) {
+        iOther = 3;
+      } else if (other.IsInfinity()) {
+        iOther = 1;
+      }
+      if (iThis > iOther) {
+        return 1;
+      } else if (iThis < iOther) {
+        return -1;
+      }
+      if (iThis >= 2) {
+        cmp = this.unsignedMantissa.compareTo(
+         other.unsignedMantissa);
+        return cmp;
+      } else if (iThis == 1) {
+        return 0;
+      } else {
+        cmp = this.Abs().compareTo(other.Abs());
+        if (cmp == 0) {
+          cmp = this.exponent.compareTo(
+           other.exponent);
+          return cmp;
+        }
+        return cmp;
+      }
+    }
+
+    /**
+     * Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return A 32-bit signed integer.
+     */
+    public int CompareToTotal(EDecimal other, EContext ctx) {
+      if (other == null) {
+        return -1;
+      }
+      if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
+        return CompareToTotal(other);
+      }
+      if (ctx != null && ctx.isSimplified()) {
+        return this.RoundToPrecision(ctx)
+          .CompareToTotal(other.RoundToPrecision(ctx));
+      } else {
+        return CompareToTotal(other);
+      }
+    }
+
+    /**
+     * Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
+     * @return A 32-bit signed integer.
+     */
+    public int CompareToTotal(EDecimal other) {
+      if (other == null) {
+        return -1;
+      }
+      boolean neg1 = this.isNegative();
+      boolean neg2 = other.isNegative();
+      if (neg1 != neg2) {
+        return neg1 ? -1 : 1;
+      }
+      int iThis = 0;
+      int iOther = 0;
+      int cmp;
+      if (this.IsSignalingNaN()) {
+        iThis = 2;
+      } else if (this.IsNaN()) {
+        iThis = 3;
+      } else if (this.IsInfinity()) {
+        iThis = 1;
+      }
+      if (other.IsSignalingNaN()) {
+        iOther = 2;
+      } else if (other.IsNaN()) {
+        iOther = 3;
+      } else if (other.IsInfinity()) {
+        iOther = 1;
+      }
+      if (iThis > iOther) {
+        return neg1 ? -1 : 1;
+      } else if (iThis < iOther) {
+        return neg1 ? 1 : -1;
+      }
+      if (iThis >= 2) {
+        cmp = this.unsignedMantissa.compareTo(
+         other.unsignedMantissa);
+        return neg1 ? -cmp : cmp;
+      } else if (iThis == 1) {
+        return 0;
+      } else {
+        cmp = this.compareTo(other);
+        if (cmp == 0) {
+          cmp = this.exponent.compareTo(
+           other.exponent);
+          return neg1 ? -cmp : cmp;
+        }
+        return cmp;
+      }
     }
 
     /**
@@ -1510,10 +1670,49 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * @param divisor An arbitrary-precision decimal number to divide by.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
-     */
+     * @deprecated Renamed to DivRemNaturalScale.
+ */
+@Deprecated
     public EDecimal[] DivideAndRemainderNaturalScale(EDecimal
       divisor) {
-      return this.DivideAndRemainderNaturalScale(divisor, null);
+      return this.DivRemNaturalScale(divisor, null);
+    }
+
+    /**
+     * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+     * and the formula in RemainderNaturalScale.
+     * @param divisor An arbitrary-precision decimal number to divide by.
+     * @param ctx A precision context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only in
+     * the division portion of the remainder calculation; as a result, it's
+     * possible for the remainder to have a higher precision than given in
+     * this context. Flags will be set on the given context only if the
+     * context's HasFlags is true and the integer part of the division
+     * result doesn't fit the precision and exponent range without rounding.
+     * Can be null, in which the precision is unlimited and no additional
+     * rounding, other than the rounding down to an integer after division,
+     * is needed.
+     * @return A 2 element array consisting of the quotient and remainder in that
+     * order.
+     * @deprecated Renamed to DivRemNaturalScale.
+ */
+@Deprecated
+    public EDecimal[] DivideAndRemainderNaturalScale(
+      EDecimal divisor,
+      EContext ctx) {
+      return this.DivRemNaturalScale(divisor, ctx);
+    }
+
+    /**
+     * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+     * and the formula in RemainderNaturalScale.
+     * @param divisor An arbitrary-precision decimal number to divide by.
+     * @return A 2 element array consisting of the quotient and remainder in that
+     * order.
+     */
+    public EDecimal[] DivRemNaturalScale(EDecimal
+      divisor) {
+      return this.DivRemNaturalScale(divisor, null);
     }
 
     /**
@@ -1533,7 +1732,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      */
-    public EDecimal[] DivideAndRemainderNaturalScale(
+    public EDecimal[] DivRemNaturalScale(
       EDecimal divisor,
       EContext ctx) {
       EDecimal[] result = new EDecimal[2];
@@ -1615,7 +1814,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
       EContext ctx) {
       return this.DivideToExponent(
         divisor,
-        EInteger.FromInt64(desiredExponentInt),
+        EInteger.FromInt32(desiredExponentInt),
         ctx);
     }
 
@@ -1672,7 +1871,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
       ERounding rounding) {
       return this.DivideToExponent(
         divisor,
-        EInteger.FromInt64(desiredExponentInt),
+        EInteger.FromInt32(desiredExponentInt),
         EContext.ForRounding(rounding));
     }
 
@@ -1733,10 +1932,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * exponent (expressed as a 64-bit signed integer) to the result, using
      * the half-even rounding mode.
      * @param divisor An arbitrary-precision decimal number to divide by.
-     * @param exponent The desired exponent. A negative number places the cutoff
-     * point to the right of the usual decimal point (so a negative number
-     * means the number of decimal places to round to). A positive number
-     * places the cutoff point to the left of the usual decimal point.
+     * @param desiredExponentSmall The desired exponent. A negative number places
+     * the cutoff point to the right of the usual decimal point (so a
+     * negative number means the number of decimal places to round to). A
+     * positive number places the cutoff point to the left of the usual
+     * decimal point.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1754,10 +1954,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * exponent (expressed as a 32-bit signed integer) to the result, using
      * the half-even rounding mode.
      * @param divisor An arbitrary-precision decimal number to divide by.
-     * @param exponent The desired exponent. A negative number places the cutoff
-     * point to the right of the usual decimal point (so a negative number
-     * means the number of decimal places to round to). A positive number
-     * places the cutoff point to the left of the usual decimal point.
+     * @param desiredExponentInt The desired exponent. A negative number places the
+     * cutoff point to the right of the usual decimal point (so a negative
+     * number means the number of decimal places to round to). A positive
+     * number places the cutoff point to the left of the usual decimal
+     * point.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -2046,7 +2247,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointLeft(int places) {
-      return this.MovePointLeft(EInteger.FromInt64(places), null);
+      return this.MovePointLeft(EInteger.FromInt32(places), null);
     }
 
     /**
@@ -2061,7 +2262,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt64(mantInt)) :
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointLeft(int places, EContext ctx) {
-      return this.MovePointLeft(EInteger.FromInt64(places), ctx);
+      return this.MovePointLeft(EInteger.FromInt32(places), ctx);
     }
 
     /**
@@ -2102,7 +2303,7 @@ EContext ctx) {
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointRight(int places) {
-      return this.MovePointRight(EInteger.FromInt64(places), null);
+      return this.MovePointRight(EInteger.FromInt32(places), null);
     }
 
     /**
@@ -2117,7 +2318,7 @@ EContext ctx) {
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointRight(int places, EContext ctx) {
-      return this.MovePointRight(EInteger.FromInt64(places), ctx);
+      return this.MovePointRight(EInteger.FromInt32(places), ctx);
     }
 
     /**
@@ -2159,7 +2360,7 @@ EContext ctx) {
         mant = mant.Multiply(bigPower);
         return CreateWithFlags(
 mant,
-EInteger.FromInt64(0),
+EInteger.FromInt32(0),
 this.flags).RoundToPrecision(ctx);
       }
       return CreateWithFlags(
@@ -2295,10 +2496,13 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Gets an object with the same value as this one, but with the sign reversed.
      * @return An arbitrary-precision decimal number. If this value is positive
-     * zero, returns positive zero.
+     * zero, returns negative zero. Returns signaling NaN if this value is
+     * signaling NaN.
      */
     public EDecimal Negate() {
-      return this.Negate(null);
+      return new EDecimal(this.unsignedMantissa, this.exponent,
+          this.flags ^ BigNumberFlags.FlagNegative,
+          -this.sign);
     }
 
     /**
@@ -2310,7 +2514,8 @@ this.flags).RoundToPrecision(ctx);
      * in addition to the pre-existing flags). Can be null, in which case
      * the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number. If this value is positive
-     * zero, returns positive zero.
+     * zero, returns positive zero. Signals FlagInvalid and returns quiet
+     * NaN if this value is signaling NaN.
      */
     public EDecimal Negate(EContext context) {
       return ((context == null || context == EContext.Unlimited) ?
@@ -2441,13 +2646,13 @@ this.flags).RoundToPrecision(ctx);
      */
     public EInteger Precision() {
       if (!this.isFinite()) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (this.isZero()) {
-        return EInteger.FromInt64(1);
+        return EInteger.FromInt32(1);
       }
       int digcount = this.unsignedMantissa.AsEInteger().GetDigitCount();
-      return EInteger.FromInt64(digcount);
+      return EInteger.FromInt32(digcount);
     }
 
     /**
@@ -2490,7 +2695,7 @@ this.flags).RoundToPrecision(ctx);
       EInteger desiredExponent,
       EContext ctx) {
       return this.Quantize(
-        EDecimal.Create(EInteger.FromInt64(1), desiredExponent),
+        EDecimal.Create(EInteger.FromInt32(1), desiredExponent),
         ctx);
     }
 
@@ -2501,12 +2706,12 @@ this.flags).RoundToPrecision(ctx);
      * come after the decimal point. A fixed-point decimal arithmetic in
      * which no digits come after the decimal point (a desired exponent of
      * 0) is considered an "integer arithmetic".</p>
-     * @param desiredExponentSmall The desired exponent for the result. The
-     * exponent is the number of fractional digits in the result, expressed
-     * as a negative number. Can also be positive, which eliminates
-     * lower-order places from the number. For example, -3 means round to
-     * the thousandth (10^-3, 0.0001), and 3 means round to the thousand
-     * (10^3, 1000). A value of 0 rounds the number to an integer.
+     * @param desiredExponentInt The desired exponent for the result. The exponent
+     * is the number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param rounding A rounding mode to use in case the result needs to be
      * rounded to fit the given exponent.
      * @return A decimal number with the same value as this object but with the
@@ -2523,7 +2728,7 @@ this.flags).RoundToPrecision(ctx);
         return ret;
       }
       return this.Quantize(
-      EDecimal.Create(EInteger.FromInt64(1), EInteger.FromInt64(desiredExponentInt)),
+      EDecimal.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
       EContext.ForRounding(rounding));
     }
 
@@ -2546,12 +2751,12 @@ this.flags).RoundToPrecision(ctx);
      * A fixed-point decimal arithmetic in which no digits come after the
      * decimal point (a desired exponent of 0) is considered an "integer
      * arithmetic". </p>
-     * @param desiredExponentSmall The desired exponent for the result. The
-     * exponent is the number of fractional digits in the result, expressed
-     * as a negative number. Can also be positive, which eliminates
-     * lower-order places from the number. For example, -3 means round to
-     * the thousandth (10^-3, 0.0001), and 3 means round to the thousand
-     * (10^3, 1000). A value of 0 rounds the number to an integer.
+     * @param desiredExponentInt The desired exponent for the result. The exponent
+     * is the number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx A precision context to control precision and rounding of the
      * result. If HasFlags of the context is true, will also store the flags
      * resulting from the operation (the flags are in addition to the
@@ -2576,7 +2781,7 @@ this.flags).RoundToPrecision(ctx);
         }
       }
       return this.Quantize(
-      EDecimal.Create(EInteger.FromInt64(1), EInteger.FromInt64(desiredExponentInt)),
+      EDecimal.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
       ctx);
     }
 
@@ -2824,7 +3029,7 @@ this.flags).RoundToPrecision(ctx);
           return ret;
         }
       }
-      return this.RoundToExponent(EInteger.FromInt64(exponentSmall), ctx);
+      return this.RoundToExponent(EInteger.FromInt32(exponentSmall), ctx);
     }
 
     /**
@@ -2910,7 +3115,7 @@ EContext.ForRounding(rounding));
     public EDecimal RoundToExponentExact(
       int exponentSmall,
       EContext ctx) {
-      return this.RoundToExponentExact(EInteger.FromInt64(exponentSmall), ctx);
+      return this.RoundToExponentExact(EInteger.FromInt32(exponentSmall), ctx);
     }
 
     /**
@@ -2930,8 +3135,8 @@ EContext.ForRounding(rounding));
      * rounding, and 0 is outside of the valid range of the precision
      * context.
      */
-    public EDecimal RoundToIntegralExact(EContext ctx) {
-      return GetMathValue(ctx).RoundToExponentExact(this, EInteger.FromInt64(0), ctx);
+    public EDecimal RoundToIntegerExact(EContext ctx) {
+      return GetMathValue(ctx).RoundToExponentExact(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
@@ -2951,9 +3156,56 @@ EContext.ForRounding(rounding));
      * range, the new exponent must be changed to 0 when rounding, and 0 is
      * outside of the valid range of the precision context.
      */
+    public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) {
+      return GetMathValue(ctx)
+        .RoundToExponentNoRoundedFlag(this, EInteger.FromInt32(0), ctx);
+    }
+
+    /**
+     * Returns a decimal number with the same value as this object but rounded to
+     * an integer, and signals an invalid operation if the result would be
+     * inexact.
+     * @param ctx A precision context to control precision, rounding, and exponent
+     * range of the result. If HasFlags of the context is true, will also
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null, in which case the
+     * default rounding mode is HalfEven.
+     * @return A decimal number rounded to the closest integer representable in the
+     * given precision. Signals FlagInvalid and returns not-a-number (NaN)
+     * if the result can't fit the given precision without rounding. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * defines an exponent range, the new exponent must be changed to 0 when
+     * rounding, and 0 is outside of the valid range of the precision
+     * context.
+     * @deprecated Renamed to RoundToIntegerExact.
+ */
+@Deprecated
+    public EDecimal RoundToIntegralExact(EContext ctx) {
+      return GetMathValue(ctx).RoundToExponentExact(this, EInteger.FromInt32(0), ctx);
+    }
+
+    /**
+     * Returns a decimal number with the same value as this object but rounded to
+     * an integer, without adding the FlagInexact or FlagRounded flags.
+     * @param ctx A precision context to control precision and rounding of the
+     * result. If HasFlags of the context is true, will also store the flags
+     * resulting from the operation (the flags are in addition to the
+     * pre-existing flags), except that this function will never add the
+     * FlagRounded and FlagInexact flags (the only difference between this
+     * and RoundToExponentExact). Can be null, in which case the default
+     * rounding mode is HalfEven.
+     * @return A decimal number rounded to the closest integer representable in the
+     * given precision. If the result can't fit the precision, additional
+     * digits are discarded to make it fit. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the precision context defines an exponent
+     * range, the new exponent must be changed to 0 when rounding, and 0 is
+     * outside of the valid range of the precision context.
+     * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
+ */
+@Deprecated
     public EDecimal RoundToIntegralNoRoundedFlag(EContext ctx) {
       return GetMathValue(ctx)
-        .RoundToExponentNoRoundedFlag(this, EInteger.FromInt64(0), ctx);
+        .RoundToExponentNoRoundedFlag(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
@@ -2978,7 +3230,7 @@ EContext.ForRounding(rounding));
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal ScaleByPowerOfTen(int places) {
-      return this.ScaleByPowerOfTen(EInteger.FromInt64(places), null);
+      return this.ScaleByPowerOfTen(EInteger.FromInt32(places), null);
     }
 
     /**
@@ -2992,7 +3244,7 @@ EContext.ForRounding(rounding));
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal ScaleByPowerOfTen(int places, EContext ctx) {
-      return this.ScaleByPowerOfTen(EInteger.FromInt64(places), ctx);
+      return this.ScaleByPowerOfTen(EInteger.FromInt32(places), ctx);
     }
 
     /**
@@ -3029,6 +3281,25 @@ EContext ctx) {
         this.unsignedMantissa,
         FastInteger2.FromBig(bigExp),
         this.flags).RoundToPrecision(ctx);
+    }
+
+    /**
+     * Finds the square root of this object&#x27;s value.
+     * @param ctx A precision context to control precision, rounding, and exponent
+     * range of the result. If HasFlags of the context is true, will also
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). <i>This parameter cannot be
+     * null, as the square root function's results are generally not exact
+     * for many inputs.</i> (Unlike in the General Decimal Arithmetic
+     * Specification, any rounding mode is allowed.)
+     * @return The square root. Signals the flag FlagInvalid and returns NaN if
+     * this object is less than 0 (the square root would be a complex
+     * number, but the return value is still NaN). Signals FlagInvalid and
+     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
+     * the precision is unlimited (the context's Precision property is 0).
+     */
+    public EDecimal Sqrt(EContext ctx) {
+      return GetMathValue(ctx).SquareRoot(this, ctx);
     }
 
     /**
@@ -3125,7 +3396,7 @@ EContext ctx) {
         return this.isNegative() ? Double.NEGATIVE_INFINITY :
           Double.POSITIVE_INFINITY;
       }
-      return this.ToExtendedFloatInternal(true).ToDouble();
+      return this.ToEFloatInternal(true).ToDouble();
     }
 
     /**
@@ -3167,9 +3438,18 @@ EContext ctx) {
      * convert it to a 32-bit or 64-bit floating point number (float or
      * double).
      * @return An arbitrary-precision binary float.
-     */
+     * @deprecated Renamed to ToEFloat.
+ */
+@Deprecated
     public EFloat ToExtendedFloat() {
-      return this.ToExtendedFloatInternal(false);
+      return this.ToEFloatInternal(false);
+    }
+
+    /**
+     *
+     */
+    public EFloat ToEFloat() {
+      return this.ToEFloatInternal(false);
     }
 
     /**
@@ -3190,8 +3470,8 @@ EContext ctx) {
         if (this.unsignedMantissa.CanFitInInt32()) {
           int retInt = this.unsignedMantissa.AsInt32();
           if (this.isNegative()) {
- retInt = -retInt;
-}
+            retInt = -retInt;
+          }
           return retInt;
         }
       }
@@ -3213,8 +3493,8 @@ EContext ctx) {
         if (this.unsignedMantissa.CanFitInInt32()) {
           int retInt = this.unsignedMantissa.AsInt32();
           if (this.isNegative()) {
- retInt = -retInt;
-}
+            retInt = -retInt;
+          }
           return retInt;
         }
       }
@@ -3235,8 +3515,8 @@ EContext ctx) {
         if (this.unsignedMantissa.CanFitInInt32()) {
           int retInt = this.unsignedMantissa.AsInt32();
           if (this.isNegative()) {
- retInt = -retInt;
-}
+            retInt = -retInt;
+          }
           return retInt;
         }
       }
@@ -3258,8 +3538,8 @@ EContext ctx) {
         if (this.unsignedMantissa.CanFitInInt32()) {
           int retInt = this.unsignedMantissa.AsInt32();
           if (this.isNegative()) {
- retInt = -retInt;
-}
+            retInt = -retInt;
+          }
           return retInt;
         }
       }
@@ -3311,7 +3591,7 @@ EContext ctx) {
         return this.isNegative() ? Float.NEGATIVE_INFINITY :
           Float.POSITIVE_INFINITY;
       }
-      return this.ToExtendedFloatInternal(true).ToSingle();
+      return this.ToEFloatInternal(true).ToSingle();
     }
 
     /**
@@ -3331,7 +3611,7 @@ EContext ctx) {
      */
     public EDecimal Ulp() {
       return (!this.isFinite()) ? EDecimal.One :
-        EDecimal.Create(EInteger.FromInt64(1), this.getExponent());
+        EDecimal.Create(EInteger.FromInt32(1), this.getExponent());
     }
 
     static EDecimal CreateWithFlags(
@@ -3390,16 +3670,16 @@ EContext ctx) {
 
     private static EInteger GetAdjustedExponentBinary(EFloat ef) {
       if (!ef.isFinite()) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (ef.isZero()) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
-      EInteger ret = ef.getExponent();
+      EInteger retEInt = ef.getExponent();
       int smallPrecision = ef.getUnsignedMantissa().GetSignedBitLength();
       --smallPrecision;
-      ret = ret.Add(EInteger.FromInt64(smallPrecision));
-      return ret;
+      retEInt = retEInt.Add(EInteger.FromInt32(smallPrecision));
+      return retEInt;
     }
 
     private static IRadixMath<EDecimal> GetMathValue(EContext ctx) {
@@ -3418,16 +3698,16 @@ EContext ctx) {
 
     private EInteger GetAdjustedExponent() {
       if (!this.isFinite()) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (this.isZero()) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
-      EInteger ret = this.getExponent();
+      EInteger retEInt = this.getExponent();
       int smallPrecision = this.getUnsignedMantissa().GetDigitCount();
       --smallPrecision;
-      ret = ret.Add(EInteger.FromInt64(smallPrecision));
-      return ret;
+      retEInt = retEInt.Add(EInteger.FromInt32(smallPrecision));
+      return retEInt;
     }
 
     private EDecimal RoundToExponentFast(int exponentSmall, ERounding
@@ -3484,7 +3764,7 @@ EContext ctx) {
       }
       int sign = this.getExponent().signum();
       if (this.isZero()) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (sign == 0) {
         EInteger bigmantissa = this.getMantissa();
@@ -3515,7 +3795,7 @@ EContext ctx) {
       }
     }
 
-    private EFloat ToExtendedFloatInternal(boolean oddRounding) {
+    private EFloat ToEFloatInternal(boolean oddRounding) {
       if (this.IsNaN() || this.IsInfinity()) {
         return EFloat.CreateWithFlags(
           this.unsignedMantissa.AsEInteger(),
@@ -3589,7 +3869,7 @@ EContext ctx) {
         if (oddRounding) {
           // Round to odd to avoid the double-rounding problem
           if (!remainder.isZero() && bigmantissa.isEven()) {
-            bigmantissa = bigmantissa.Add(EInteger.FromInt64(1));
+           bigmantissa = bigmantissa.Add(EInteger.FromInt32(1));
           }
         } else {
           // Round half-even
@@ -3600,7 +3880,7 @@ EContext ctx) {
           // of five are odd
           if (cmp > 0) {
             // Greater than half
-            bigmantissa = bigmantissa.Add(EInteger.FromInt64(1));
+           bigmantissa = bigmantissa.Add(EInteger.FromInt32(1));
           }
         }
         if (neg) {
@@ -3617,10 +3897,10 @@ EContext ctx) {
           return negative ? "-Infinity" : "Infinity";
         }
         if ((this.flags & BigNumberFlags.FlagSignalingNaN) != 0) {
-        return this.unsignedMantissa.isValueZero() ? (negative ? "-sNaN" :
-            "sNaN"
+          return this.unsignedMantissa.isValueZero() ? (negative ? "-sNaN" :
+              "sNaN"
 ) : (negative ? "-sNaN" + this.unsignedMantissa :
-                  "sNaN" + this.unsignedMantissa);
+                    "sNaN" + this.unsignedMantissa);
         }
         if ((this.flags & BigNumberFlags.FlagQuietNaN) != 0) {
           return this.unsignedMantissa.isValueZero() ? (negative ? "-NaN" : "NaN"
@@ -3992,7 +4272,7 @@ EContext ctx) {
           }
           tmpden = bigquo;
         }
-        return tmpden.compareTo(EInteger.FromInt64(1)) == 0;
+        return tmpden.compareTo(EInteger.FromInt32(1)) == 0;
       }
 
       public EInteger MultiplyByRadixPower(
@@ -4008,7 +4288,7 @@ EContext ctx) {
           return tmpbigint;
         }
         EInteger bigtmp = null;
-        if (tmpbigint.compareTo(EInteger.FromInt64(1)) != 0) {
+        if (tmpbigint.compareTo(EInteger.FromInt32(1)) != 0) {
           if (fitsInInt32) {
             bigtmp = NumberUtility.FindPowerOfTen(powerInt);
             tmpbigint = tmpbigint.Multiply(bigtmp);

@@ -161,7 +161,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         throw new NullPointerException("bytes");
       }
       if (bytes.length == 0) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       int len = bytes.length;
       int wordLength = ((int)len + 1) >> 1;
@@ -203,7 +203,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       while (newwordCount != 0 && newreg[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ? EInteger.FromInt64(0) : (new
+      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new
                     EInteger(
                     newwordCount,
                     newreg,
@@ -421,7 +421,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       int effectiveLength = endIndex - index;
       if (effectiveLength == 0) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       short[] bigint;
       if (radix == 16) {
@@ -535,7 +535,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
       }
       int count = CountWords(bigint, bigint.length);
-      return (count == 0) ? EInteger.FromInt64(0) : new EInteger(
+      return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
         count,
         bigint,
         negative);
@@ -631,7 +631,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           int a = ((int)this.words[0]) & 0xffff;
           int b = ((int)bigintAugend.words[0]) & 0xffff;
           if (a == b) {
-            return EInteger.FromInt64(0);
+            return EInteger.FromInt32(0);
           }
           if (a > b) {
             a -= b;
@@ -752,7 +752,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         int sumwordCount = CountWords(sumreg, sumreg.length);
         if (sumwordCount == 0) {
-          return EInteger.FromInt64(0);
+          return EInteger.FromInt32(0);
         }
         if (needShorten) {
           sumreg = ShortenArray(sumreg, sumwordCount);
@@ -841,7 +841,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       int count = CountWords(diffReg, diffReg.length);
       if (count == 0) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       diffReg = ShortenArray(diffReg, count);
       return new EInteger(count, diffReg, diffNeg);
@@ -986,7 +986,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (words1Size < words2Size) {
         // dividend is less than divisor (includes case
         // where dividend is 0)
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (words1Size <= 2 && words2Size <= 2 && this.CanFitInInt32() &&
           bigintDivisor.CanFitInInt32()) {
@@ -1012,7 +1012,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           new EInteger(
             quotwordCount,
             quotReg,
-            this.negative ^ bigintDivisor.negative)) : EInteger.FromInt64(0);
+            this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
       }
       // ---- General case
       words1Size += words1Size & 1;
@@ -1039,7 +1039,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         new EInteger(
           quotwordCount,
           quotReg,
-          this.negative ^ bigintDivisor.negative)) : EInteger.FromInt64(0);
+          this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
     }
 
     /**
@@ -1065,7 +1065,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (words1Size < words2Size) {
         // dividend is less than divisor (includes case
         // where dividend is 0)
-        return new EInteger[] { EInteger.FromInt64(0), this };
+        return new EInteger[] { EInteger.FromInt32(0), this };
       }
       if (words2Size == 1) {
         // divisor is small, use a fast path
@@ -1083,7 +1083,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           --count;
         }
         if (count == 0) {
-          return new EInteger[] { EInteger.FromInt64(0), this };
+          return new EInteger[] { EInteger.FromInt32(0), this };
         }
         quotient = ShortenArray(quotient, count);
         EInteger bigquo = new EInteger(
@@ -1118,9 +1118,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       int quoCount = CountWords(quotientreg, quotientreg.length);
       bigRemainderreg = ShortenArray(bigRemainderreg, remCount);
       quotientreg = ShortenArray(quotientreg, quoCount);
-      EInteger bigrem = (remCount == 0) ? EInteger.FromInt64(0) : new
+      EInteger bigrem = (remCount == 0) ? EInteger.FromInt32(0) : new
         EInteger(remCount, bigRemainderreg, this.negative);
-      EInteger bigquo2 = (quoCount == 0) ? EInteger.FromInt64(0) : new
+      EInteger bigquo2 = (quoCount == 0) ? EInteger.FromInt32(0) : new
         EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
       return new EInteger[] { bigquo2, bigrem };
     }
@@ -1169,11 +1169,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return thisValue;
       }
       bigintSecond = bigintSecond.Abs();
-      if (bigintSecond.equals(EInteger.FromInt64(1)) ||
+      if (bigintSecond.equals(EInteger.FromInt32(1)) ||
           thisValue.equals(bigintSecond)) {
         return bigintSecond;
       }
-      if (thisValue.equals(EInteger.FromInt64(1))) {
+      if (thisValue.equals(EInteger.FromInt32(1))) {
         return thisValue;
       }
       if (thisValue.wordCount <= 10 && bigintSecond.wordCount <= 10) {
@@ -1477,7 +1477,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       int wc = this.wordCount;
       if (wc != 0) {
         if (this.negative) {
-          return this.Abs().Subtract(EInteger.FromInt64(1)).GetSignedBitLength();
+          return this.Abs().Subtract(EInteger.FromInt32(1)).GetSignedBitLength();
         }
         int numberValue = ((int)this.words[wc - 1]) & 0xffff;
         wc = (wc - 1) << 4;
@@ -1601,7 +1601,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (mod.signum() <= 0) {
         throw new IllegalArgumentException("mod (" + mod + ") is not greater than 0");
       }
-      EInteger r = EInteger.FromInt64(1);
+      EInteger r = EInteger.FromInt32(1);
       EInteger v = this;
       while (!pow.isZero()) {
         if (!pow.isEven()) {
@@ -1628,7 +1628,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         throw new NullPointerException("bigintMult");
       }
       if (this.wordCount == 0 || bigintMult.wordCount == 0) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (this.wordCount == 1 && this.words[0] == 1) {
         return this.negative ? bigintMult.Negate() : bigintMult;
@@ -1769,7 +1769,7 @@ this.negative ^ bigintMult.negative);
       EInteger thisVar = this;
       if (powerSmall == 0) {
         // however 0 to the power of 0 is undefined
-        return EInteger.FromInt64(1);
+        return EInteger.FromInt32(1);
       }
       if (powerSmall == 1) {
         return this;
@@ -1780,7 +1780,7 @@ this.negative ^ bigintMult.negative);
       if (powerSmall == 3) {
         return (thisVar.Multiply(thisVar)).Multiply(thisVar);
       }
-      EInteger r = EInteger.FromInt64(1);
+      EInteger r = EInteger.FromInt32(1);
       while (powerSmall != 0) {
         if ((powerSmall & 1) != 0) {
           r = r.Multiply(thisVar);
@@ -1812,9 +1812,9 @@ this.negative ^ bigintMult.negative);
       }
       EInteger thisVar = this;
       if (sign == 0) {
-        return EInteger.FromInt64(1);
+        return EInteger.FromInt32(1);
       }
-      if (power.equals(EInteger.FromInt64(1))) {
+      if (power.equals(EInteger.FromInt32(1))) {
         return this;
       }
       if (power.wordCount == 1 && power.words[0] == 2) {
@@ -1823,7 +1823,7 @@ this.negative ^ bigintMult.negative);
       if (power.wordCount == 1 && power.words[0] == 3) {
         return (thisVar.Multiply(thisVar)).Multiply(thisVar);
       }
-      EInteger r = EInteger.FromInt64(1);
+      EInteger r = EInteger.FromInt32(1);
       while (!power.isZero()) {
         if (!power.isEven()) {
           r = r.Multiply(thisVar);
@@ -1893,7 +1893,7 @@ this.negative ^ bigintMult.negative);
         words2Size);
       int count = CountWords(remainderReg, remainderReg.length);
       if (count == 0) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       remainderReg = ShortenArray(remainderReg, count);
       return new EInteger(count, remainderReg, this.negative);
@@ -1984,7 +1984,7 @@ this.negative ^ bigintMult.negative);
         retWordCount = ret.length;
       } else {
         if (shiftWords >= numWords) {
-          return EInteger.FromInt64(0);
+          return EInteger.FromInt32(0);
         }
         ret = new short[this.words.length];
         System.arraycopy(this.words, shiftWords, ret, 0, numWords - shiftWords);
@@ -1998,7 +1998,7 @@ this.negative ^ bigintMult.negative);
         --retWordCount;
       }
       if (retWordCount == 0) {
-        return EInteger.FromInt64(0);
+        return EInteger.FromInt32(0);
       }
       if (shiftWords > 2) {
         ret = ShortenArray(ret, retWordCount);
@@ -2120,7 +2120,11 @@ this.negative ^ bigintMult.negative);
     }
 
     /**
-     *
+     * Converts this object's value to a 32-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * 32-bit signed integer.
      */
     public int ToInt32Checked() {
       int count = this.wordCount;
@@ -2141,7 +2145,11 @@ this.negative ^ bigintMult.negative);
     }
 
     /**
-     *
+     * Converts this object's value to a 32-bit signed integer. If the value can't
+     * fit in a 32-bit integer, returns the lower 32 bits of this object's
+     * two's complement representation (in which case the return value might
+     * have a different sign than this object's value).
+     * @return A 32-bit signed integer.
      */
     public int ToInt32Unchecked() {
       int c = (int)this.wordCount;
@@ -2160,7 +2168,11 @@ this.negative ^ bigintMult.negative);
     }
 
     /**
-     *
+     * Converts this object's value to a 64-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * 64-bit signed integer.
      */
     public long ToInt64Checked() {
       int count = this.wordCount;
@@ -2182,7 +2194,11 @@ this.negative ^ bigintMult.negative);
     }
 
     /**
-     *
+     * Converts this object's value to a 64-bit signed integer. If the value can't
+     * fit in a 64-bit integer, returns the lower 64 bits of this object's
+     * two's complement representation (in which case the return value might
+     * have a different sign than this object's value).
+     * @return A 64-bit signed integer.
      */
     public long ToInt64Unchecked() {
       int c = (int)this.wordCount;
@@ -5290,10 +5306,10 @@ count);
 
     private EInteger[] SqrtRemInternal(boolean useRem) {
       if (this.signum() <= 0) {
-        return new EInteger[] { EInteger.FromInt64(0), EInteger.FromInt64(0) };
+        return new EInteger[] { EInteger.FromInt32(0), EInteger.FromInt32(0) };
       }
-      if (this.equals(EInteger.FromInt64(1))) {
-        return new EInteger[] { EInteger.FromInt64(1), EInteger.FromInt64(0) };
+      if (this.equals(EInteger.FromInt32(1))) {
+        return new EInteger[] { EInteger.FromInt32(1), EInteger.FromInt32(0) };
       }
       EInteger bigintX;
       EInteger bigintY;
@@ -5311,14 +5327,14 @@ count);
           smallintY >>= 1;
         } while (smallintY < smallintX);
         if (!useRem) {
-          return new EInteger[] { EInteger.FromInt64(smallintX), null };
+          return new EInteger[] { EInteger.FromInt32(smallintX), null };
         }
         smallintY = smallintX * smallintX;
         smallintY = smallValue - smallintY;
-        return new EInteger[] { EInteger.FromInt64(smallintX), EInteger.FromInt64(smallintY) };
+        return new EInteger[] { EInteger.FromInt32(smallintX), EInteger.FromInt32(smallintY) };
       }
-      bigintX = EInteger.FromInt64(0);
-      bigintY = EInteger.FromInt64(1).ShiftLeft(powerBits);
+      bigintX = EInteger.FromInt32(0);
+      bigintY = EInteger.FromInt32(1).ShiftLeft(powerBits);
       do {
         bigintX = bigintY;
         bigintY = thisValue.Divide(bigintX);

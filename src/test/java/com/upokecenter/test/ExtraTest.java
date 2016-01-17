@@ -78,16 +78,16 @@ import com.upokecenter.numbers.*;
 
       Assert.assertEquals(
         ERational.PositiveInfinity,
-        ERational.FromExtendedDecimal(EDecimal.PositiveInfinity));
+        ERational.FromEDecimal(EDecimal.PositiveInfinity));
       Assert.assertEquals(
         ERational.NegativeInfinity,
-        ERational.FromExtendedDecimal(EDecimal.NegativeInfinity));
+        ERational.FromEDecimal(EDecimal.NegativeInfinity));
       Assert.assertEquals(
         ERational.PositiveInfinity,
-        ERational.FromExtendedFloat(EFloat.PositiveInfinity));
+        ERational.FromEFloat(EFloat.PositiveInfinity));
       Assert.assertEquals(
         ERational.NegativeInfinity,
-        ERational.FromExtendedFloat(EFloat.NegativeInfinity));
+        ERational.FromEFloat(EFloat.NegativeInfinity));
 
   if (!(((ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail();
 
@@ -96,77 +96,28 @@ import com.upokecenter.numbers.*;
   if (!(((ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
 
   if (!(((ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
-      try {
-        EDecimal.PositiveInfinity.ToEInteger();
-        Assert.fail("Should have failed");
-      } catch (ArithmeticException ex) {
-        System.out.print("");
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-      try {
-        EDecimal.NegativeInfinity.ToEInteger();
-        Assert.fail("Should have failed");
-      } catch (ArithmeticException ex) {
-        System.out.print("");
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-      try {
-        EFloat.PositiveInfinity.ToEInteger();
-        Assert.fail("Should have failed");
-      } catch (ArithmeticException ex) {
-        System.out.print("");
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-      try {
-        EFloat.NegativeInfinity.ToEInteger();
-        Assert.fail("Should have failed");
-      } catch (ArithmeticException ex) {
-        System.out.print("");
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-      try {
-        ERational.PositiveInfinity.ToEInteger();
-        Assert.fail("Should have failed");
-      } catch (ArithmeticException ex) {
-        System.out.print("");
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-      try {
-        ERational.NegativeInfinity.ToEInteger();
-        Assert.fail("Should have failed");
-      } catch (ArithmeticException ex) {
-        System.out.print("");
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
     }
-
+    /*
     @Test
-    public void TestExtendedMiscellaneous() {
-      Assert.assertEquals(EDecimal.One, EDecimal.FromInt32(1));
-
-      Assert.assertEquals(
-        EFloat.Zero,
-        EDecimal.Zero.ToExtendedFloat());
-      Assert.assertEquals(
-        EFloat.NegativeZero,
-        EDecimal.NegativeZero.ToExtendedFloat());
-      if (0.0f != EFloat.Zero.ToSingle()) {
-        Assert.fail("Failed " + EFloat.Zero.ToDouble());
+    public void TestEIntegerAnd() {
+      try {
+        EInteger.And(EInteger.FromInt32(0), null);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
       }
-      if (0.0f != EFloat.Zero.ToDouble()) {
-        Assert.fail("Failed " + EFloat.Zero.ToDouble());
+      try {
+        EInteger.And(null, EInteger.FromInt32(0));
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        System.out.print("");
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
       }
     }
+    */
   }
