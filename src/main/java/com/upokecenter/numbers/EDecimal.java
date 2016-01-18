@@ -63,7 +63,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * throw an exception.</p> <p>When an arithmetic operation signals the
      * flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not
      * throw an exception too, unless the flag's trap is enabled in the
-     * precision context (see EContext's Traps property).</p> <p>If an
+     * arithmetic context (see EContext's Traps property).</p> <p>If an
      * operation requires creating an intermediate value that might be too
      * big to fit in memory (or might require more than 2 gigabytes of
      * memory to store -- due to the current use of a 32-bit integer
@@ -156,7 +156,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
 
     public static final EDecimal Ten =
-      EDecimal.Create(EInteger.FromInt64(10), EInteger.FromInt32(0));
+      EDecimal.Create(EInteger.FromInt32(10), EInteger.FromInt32(0));
 
     /**
      * Represents the number 0.
@@ -694,11 +694,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Creates a decimal number from a string that represents a number. See
      * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
@@ -750,11 +750,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @param str A text string, a portion of which represents a number.
      * @param offset A zero-based index that identifies the start of the number.
      * @param length The length of the number within the string.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
@@ -1126,11 +1126,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Gets the greater value between two decimal numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return The larger value of the two objects.
      */
     public static EDecimal Max(
@@ -1157,11 +1157,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * absolute values are equal, has the same effect as Max.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number.
      */
     public static EDecimal MaxMagnitude(
@@ -1188,11 +1188,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Gets the lesser value between two decimal numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return The smaller value of the two objects.
      */
     public static EDecimal Min(
@@ -1219,11 +1219,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * absolute values are equal, has the same effect as Min.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number.
      */
     public static EDecimal MinMagnitude(
@@ -1248,11 +1248,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
 
     /**
      * Finds the constant &#x3c0;.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as &#x3c0; can never be represented exactly.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as &#x3c0; can never be represented exactly.</i>
      * @return π rounded to the given precision. Signals FlagInvalid and returns
      * not-a-number (NaN) if the parameter {@code ctx} is null or the
      * precision is unlimited (the context's Precision property is 0).
@@ -1278,9 +1278,10 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
     }
 
     /**
-     * Not documented yet.
-     * @param other The parameter {@code other} is not documented yet.
-     * @return An EDecimal object.
+     * Returns a number with the same value as this one, but copying the sign
+     * (positive or negative) of another number.
+     * @param other A number whose sign will be copied.
+     * @return An arbitrary-precision decimal number.
      * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EDecimal CopySign(EDecimal other) {
@@ -1297,11 +1298,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
     /**
      * Finds the absolute value of this object (if it&#x27;s negative, it becomes
      * positive).
-     * @param context A precision context to control precision, rounding, and
-     * exponent range of the result. If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the precision is unlimited and no rounding is needed.
+     * @param context An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return The absolute value of this object. Signals FlagInvalid and returns
      * quiet NaN if this value is signaling NaN.
      */
@@ -1321,7 +1322,7 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
             this.exponent.compareTo(otherValue.exponent) == 0) {
         FastInteger2 result = FastInteger2.Add(this.unsignedMantissa,
               otherValue.unsignedMantissa);
-        int sign = (result.isValueZero()) ? 0 : -1;
+        int sign = (result.isValueZero()) ? 0 : 1;
         return new EDecimal(result, this.exponent, 0, sign);
       }
       return this.Add(otherValue, EContext.Unlimited);
@@ -1331,11 +1332,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Finds the sum of this object and another object. The result&#x27;s exponent
      * is set to the lower of the exponents of the two operands.
      * @param otherValue The number to add to.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return The sum of thisValue and the other object.
      */
     public EDecimal Add(
@@ -1467,10 +1468,10 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * is a quiet NaN or signaling NaN, this method will return a quiet NaN
      * and will signal a FlagInvalid flag.</p>
      * @param other An arbitrary-precision decimal number.
-     * @param ctx A precision context. The precision, rounding, and exponent range
-     * are ignored. If HasFlags of the context is true, will store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null.
+     * @param ctx An arithmetic context. The precision, rounding, and exponent
+     * range are ignored. If {@code HasFlags} of the context is true, will
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
      * other value, or 1 if this object is greater.
@@ -1610,10 +1611,10 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * signaling NaN, this method returns a quiet NaN, and will signal a
      * FlagInvalid flag if either is a signaling NaN.</p>
      * @param other An arbitrary-precision decimal number.
-     * @param ctx A precision context. The precision, rounding, and exponent range
-     * are ignored. If HasFlags of the context is true, will store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null.
+     * @param ctx An arithmetic context. The precision, rounding, and exponent
+     * range are ignored. If {@code HasFlags} of the context is true, will
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
      * other value, or 1 if this object is greater.
@@ -1645,11 +1646,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * result is this object&#x27;s exponent minus the divisor&#x27;s
      * exponent.
      * @param divisor An arbitrary-precision decimal number to divide by.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1682,16 +1683,16 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
      * @param divisor An arbitrary-precision decimal number to divide by.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only in
      * the division portion of the remainder calculation; as a result, it's
      * possible for the remainder to have a higher precision than given in
      * this context. Flags will be set on the given context only if the
-     * context's HasFlags is true and the integer part of the division
-     * result doesn't fit the precision and exponent range without rounding.
-     * Can be null, in which the precision is unlimited and no additional
-     * rounding, other than the rounding down to an integer after division,
-     * is needed.
+     * context's {@code HasFlags} is true and the integer part of the
+     * division result doesn't fit the precision and exponent range without
+     * rounding. Can be null, in which the precision is unlimited and no
+     * additional rounding, other than the rounding down to an integer after
+     * division, is needed.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      * @deprecated Renamed to DivRemNaturalScale.
@@ -1719,16 +1720,16 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
      * @param divisor An arbitrary-precision decimal number to divide by.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only in
      * the division portion of the remainder calculation; as a result, it's
      * possible for the remainder to have a higher precision than given in
      * this context. Flags will be set on the given context only if the
-     * context's HasFlags is true and the integer part of the division
-     * result doesn't fit the precision and exponent range without rounding.
-     * Can be null, in which the precision is unlimited and no additional
-     * rounding, other than the rounding down to an integer after division,
-     * is needed.
+     * context's {@code HasFlags} is true and the integer part of the
+     * division result doesn't fit the precision and exponent range without
+     * rounding. Can be null, in which the precision is unlimited and no
+     * additional rounding, other than the rounding down to an integer after
+     * division, is needed.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      */
@@ -1752,15 +1753,15 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * negative number means the number of decimal places to round to). A
      * positive number places the cutoff point to the left of the usual
      * decimal point.
-     * @param ctx A precision context object to control the rounding mode to use if
-     * the result must be scaled down to have the same exponent as this
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls
      * the Quantize method with both arguments equal to the result of the
      * operation (and can signal FlagInvalid and return NaN if the result
-     * doesn't fit the given precision). If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * doesn't fit the given precision). If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1790,15 +1791,15 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * number means the number of decimal places to round to). A positive
      * number places the cutoff point to the left of the usual decimal
      * point.
-     * @param ctx A precision context object to control the rounding mode to use if
-     * the result must be scaled down to have the same exponent as this
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls
      * the Quantize method with both arguments equal to the result of the
      * operation (and can signal FlagInvalid and return NaN if the result
-     * doesn't fit the given precision). If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * doesn't fit the given precision). If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1883,15 +1884,15 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * point to the right of the usual decimal point (so a negative number
      * means the number of decimal places to round to). A positive number
      * places the cutoff point to the left of the usual decimal point.
-     * @param ctx A precision context object to control the rounding mode to use if
-     * the result must be scaled down to have the same exponent as this
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls
      * the Quantize method with both arguments equal to the result of the
      * operation (and can signal FlagInvalid and return NaN if the result
-     * doesn't fit the given precision). If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * doesn't fit the given precision). If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -2019,13 +2020,13 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * result (which is initially rounded down), with the preferred exponent
      * set to this value&#x27;s exponent minus the divisor&#x27;s exponent.
      * @param divisor The divisor.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the integer part of the result. Flags will be
-     * set on the given context only if the context's HasFlags is true and
-     * the integer part of the result doesn't fit the precision and exponent
-     * range without rounding. Can be null, in which the precision is
-     * unlimited and no additional rounding, other than the rounding down to
-     * an integer after division, is needed.
+     * set on the given context only if the context's {@code HasFlags} is
+     * true and the integer part of the result doesn't fit the precision and
+     * exponent range without rounding. Can be null, in which the precision
+     * is unlimited and no additional rounding, other than the rounding down
+     * to an integer after division, is needed.
      * @return The integer part of the quotient of the two objects. Signals
      * FlagInvalid and returns not-a-number (NaN) if the return value would
      * overflow the exponent range. Signals FlagDivideByZero and returns
@@ -2044,11 +2045,12 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Divides this object by another object, and returns the integer part of the
      * result, with the exponent set to 0.
      * @param divisor The divisor.
-     * @param ctx A precision context object to control the precision. The rounding
-     * and exponent range settings of this context are ignored. If HasFlags
-     * of the context is true, will also store the flags resulting from the
-     * operation (the flags are in addition to the pre-existing flags). Can
-     * be null, in which case the precision is unlimited.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored. If
+     * {@code HasFlags} of the context is true, will also store the flags
+     * resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null, in which case the precision is
+     * unlimited.
      * @return The integer part of the quotient of the two objects. The exponent
      * will be set to 0. Signals FlagDivideByZero and returns infinity if
      * the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
@@ -2108,13 +2110,13 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
     /**
      * Finds e (the base of natural logarithms) raised to the power of this
      * object&#x27;s value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the exponential function's results are generally not
-     * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
-     * any rounding mode is allowed.)
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the exponential function's results are generally
+     * not exact.</i> (Unlike in the General Decimal Arithmetic
+     * Specification, any rounding mode is allowed.)
      * @return Exponential of this object. If this object's value is 1, returns an
      * approximation to " e" within the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -2199,13 +2201,13 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to
      * equal this object&#x27;s value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the ln function's results are generally not exact.</i>
-     * (Unlike in the General Decimal Arithmetic Specification, any rounding
-     * mode is allowed.)
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the ln function's results are generally not
+     * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
+     * any rounding mode is allowed.)
      * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the result would be a complex number with
      * a real part equal to Ln of this object's absolute value and an
@@ -2223,13 +2225,13 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Finds the base-10 logarithm of this object, that is, the power (exponent)
      * that the number 10 must be raised to in order to equal this
      * object&#x27;s value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the ln function's results are generally not exact.</i>
-     * (Unlike in the General Decimal Arithmetic Specification, any rounding
-     * mode is allowed.)
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the ln function's results are generally not
+     * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
+     * any rounding mode is allowed.)
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -2254,11 +2256,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Returns a number similar to this number but with the decimal point moved to
      * the left.
      * @param places The number of decimal places to move to the left.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointLeft(int places, EContext ctx) {
@@ -2279,11 +2281,11 @@ FastInteger2.FromBig((mant == null) ? (EInteger.FromInt32(mantInt)) :
      * Returns a number similar to this number but with the decimal point moved to
      * the left.
      * @param bigPlaces The number of decimal places to move to the left.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointLeft(
@@ -2310,11 +2312,11 @@ EContext ctx) {
      * Returns a number similar to this number but with the decimal point moved to
      * the right.
      * @param places The number of decimal places to move to the right.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal MovePointRight(int places, EContext ctx) {
@@ -2335,11 +2337,11 @@ EContext ctx) {
      * Returns a number similar to this number but with the decimal point moved to
      * the right.
      * @param bigPlaces The number of decimal places to move to the right.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return A number whose scale is increased by {@code bigPlaces}, but not to
      * more than 0.
      */
@@ -2411,11 +2413,11 @@ this.flags).RoundToPrecision(ctx);
      * if both operands have the same sign, and negative if they have
      * different signs.
      * @param op Another decimal number.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return The product of the two decimal numbers.
      */
     public EDecimal Multiply(EDecimal op, EContext ctx) {
@@ -2438,12 +2440,12 @@ this.flags).RoundToPrecision(ctx);
      * Multiplies by one value, and then adds another value.
      * @param op The value to multiply.
      * @param augend The value to add.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed. If the precision
-     * doesn't indicate a simplified arithmetic, rounding and
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed. If
+     * the precision doesn't indicate a simplified arithmetic, rounding and
      * precision/exponent adjustment is done only once, namely, after
      * multiplying and adding.
      * @return The result thisValue * multiplicand + augend.
@@ -2459,12 +2461,12 @@ this.flags).RoundToPrecision(ctx);
      * Multiplies by one value, and then subtracts another value.
      * @param op The value to multiply.
      * @param subtrahend The value to subtract.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed. If the precision
-     * doesn't indicate a simplified arithmetic, rounding and
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed. If
+     * the precision doesn't indicate a simplified arithmetic, rounding and
      * precision/exponent adjustment is done only once, namely, after
      * multiplying and subtracting.
      * @return The result thisValue * multiplicand - subtrahend.
@@ -2508,11 +2510,11 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a decimal number with the same value as this object but with the
      * sign reversed.
-     * @param context A precision context to control precision, rounding, and
-     * exponent range of the result. If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the precision is unlimited and rounding isn't needed.
+     * @param context An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number. If this value is positive
      * zero, returns positive zero. Signals FlagInvalid and returns quiet
      * NaN if this value is signaling NaN.
@@ -2524,11 +2526,11 @@ this.flags).RoundToPrecision(ctx);
 
     /**
      * Finds the largest value that&#x27;s smaller than the given value.
-     * @param ctx A precision context object to control the precision and exponent
-     * range of the result. The rounding mode from this context is ignored.
-     * If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags).
+     * @param ctx An arithmetic context object to control the precision and
+     * exponent range of the result. The rounding mode from this context is
+     * ignored. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags).
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
@@ -2541,11 +2543,11 @@ this.flags).RoundToPrecision(ctx);
 
     /**
      * Finds the smallest value that&#x27;s greater than the given value.
-     * @param ctx A precision context object to control the precision and exponent
-     * range of the result. The rounding mode from this context is ignored.
-     * If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags).
+     * @param ctx An arithmetic context object to control the precision and
+     * exponent range of the result. The rounding mode from this context is
+     * ignored. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags).
      * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the
      * parameter {@code ctx} is null, the precision is 0, or {@code ctx} has
@@ -2562,11 +2564,11 @@ this.flags).RoundToPrecision(ctx);
      * sign as the other value if both values are equal.
      * @param otherValue An arbitrary-precision decimal number that the return
      * value will approach.
-     * @param ctx A precision context object to control the precision and exponent
-     * range of the result. The rounding mode from this context is ignored.
-     * If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags).
+     * @param ctx An arithmetic context object to control the precision and
+     * exponent range of the result. The rounding mode from this context is
+     * ignored. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags).
      * @return Returns the next value that is closer to the other object' s value
      * than this object's value. Signals FlagInvalid and returns NaN if the
      * parameter {@code ctx} is null, the precision is 0, or {@code ctx} has
@@ -2598,11 +2600,11 @@ this.flags).RoundToPrecision(ctx);
      * Raises this object&#x27;s value to the given exponent.
      * @param exponent An arbitrary-precision decimal number expressing the
      * exponent to raise this object's value to.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return This^exponent. Signals the flag FlagInvalid and returns NaN if this
      * object and exponent are both 0; or if this value is less than 0 and
      * the exponent either has a fractional part or is infinity. Signals
@@ -2617,11 +2619,11 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Raises this object&#x27;s value to the given exponent.
      * @param exponentSmall The exponent to raise this object's value to.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return This^exponent. Signals the flag FlagInvalid and returns NaN if this
      * object and exponent are both 0.
      */
@@ -2670,8 +2672,8 @@ this.flags).RoundToPrecision(ctx);
      * <code>  // After performing arithmetic operations, adjust  // the
      * number to 5 digits after the decimal point number = number.Quantize(
      * EInteger.FromInt32(-5),  // five digits after the decimal point
-     * PrecisionContext.ForPrecision(25)  // 25-digit precision); </code><p>
-     * A fixed-point decimal arithmetic in which no digits come after the
+     * EContext.ForPrecision(25)  // 25-digit precision); </code><p> A
+     * fixed-point decimal arithmetic in which no digits come after the
      * decimal point (a desired exponent of 0) is considered an "integer
      * arithmetic". </p>
      * @param desiredExponent The desired exponent for the result. The exponent is
@@ -2680,11 +2682,11 @@ this.flags).RoundToPrecision(ctx);
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A decimal number with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if this object is infinity, if the rounded result can't fit the given
@@ -2746,22 +2748,21 @@ this.flags).RoundToPrecision(ctx);
      * digits before and exactly 5 digits after the decimal point:</p>
      * <code>  // After performing arithmetic operations, adjust  // the
      * number to 5 digits after the decimal point number = number.Quantize(
-     * -5,  // five digits after the decimal point
-     * PrecisionContext.ForPrecision(25)  // 25-digit precision); </code><p>
-     * A fixed-point decimal arithmetic in which no digits come after the
-     * decimal point (a desired exponent of 0) is considered an "integer
-     * arithmetic". </p>
+     * -5,  // five digits after the decimal point EContext.ForPrecision(25)
+     *  // 25-digit precision); </code><p> A fixed-point decimal arithmetic
+     * in which no digits come after the decimal point (a desired exponent
+     * of 0) is considered an "integer arithmetic". </p>
      * @param desiredExponentInt The desired exponent for the result. The exponent
      * is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A decimal number with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if this object is infinity, if the rounded result can't fit the given
@@ -2805,15 +2806,15 @@ this.flags).RoundToPrecision(ctx);
      * number. For example, -3 means round to the thousandth (10^-3,
      * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0
      * rounds the number to an integer.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A decimal number with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding, or if
-     * the precision context defines an exponent range and the given
+     * the arithmetic context defines an exponent range and the given
      * exponent is outside that range.
      */
     public EDecimal Quantize(
@@ -2826,11 +2827,11 @@ this.flags).RoundToPrecision(ctx);
      * Removes trailing zeros from this object&#x27;s mantissa. For example, 1.00
      * becomes 1. <p>If this object's value is 0, changes the exponent to
      * 0.</p>
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and rounding isn't needed.
      * @return This value with trailing zeros removed. Note that if the result has
      * a very high exponent and the context says to clamp high exponents,
      * there may still be some trailing zeros in the mantissa.
@@ -2843,14 +2844,14 @@ this.flags).RoundToPrecision(ctx);
      * Finds the remainder that results when dividing two arbitrary-precision
      * decimal numbers.
      * @param divisor The number to divide by.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used both in
      * the division portion and in the remainder portion of the remainder
-     * calculation. If HasFlags of the context is true, will also store the
-     * flags resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the precision is
-     * unlimited and no additional rounding (other than the rounding from
-     * integer division) is needed.
+     * calculation. If {@code HasFlags} of the context is true, will also
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and no additional rounding (other than the
+     * rounding from integer division) is needed.
      * @return The remainder of the two objects. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
      * the given precision.
@@ -2875,16 +2876,16 @@ this.flags).RoundToPrecision(ctx);
      * Calculates the remainder of a number by the formula "this" - (("this" /
      * "divisor") * "divisor").
      * @param divisor The number to divide by.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only in
      * the division portion of the remainder calculation; as a result, it's
      * possible for the return value to have a higher precision than given
      * in this context. Flags will be set on the given context only if the
-     * context's HasFlags is true and the integer part of the division
-     * result doesn't fit the precision and exponent range without rounding.
-     * Can be null, in which the precision is unlimited and no additional
-     * rounding, other than the rounding down to an integer after division,
-     * is needed.
+     * context's {@code HasFlags} is true and the integer part of the
+     * division result doesn't fit the precision and exponent range without
+     * rounding. Can be null, in which the precision is unlimited and no
+     * additional rounding, other than the rounding down to an integer after
+     * division, is needed.
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal RemainderNaturalScale(
@@ -2913,12 +2914,12 @@ this.flags).RoundToPrecision(ctx);
      * value.</li></ul> This function is also known as the "IEEE Remainder"
      * function.
      * @param divisor The number to divide by.
-     * @param ctx A precision context object to control the precision. The rounding
-     * and exponent range settings of this context are ignored (the rounding
-     * mode is always treated as HalfEven). If HasFlags of the context is
-     * true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which the precision is unlimited.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored (the
+     * rounding mode is always treated as HalfEven). If {@code HasFlags} of
+     * the context is true, will also store the flags resulting from the
+     * operation (the flags are in addition to the pre-existing flags). Can
+     * be null, in which the precision is unlimited.
      * @return The distance of the closest multiple. Signals FlagInvalid and
      * returns not-a-number (NaN) if the divisor is 0, or either the result
      * of integer division (the quotient) or the remainder wouldn't fit the
@@ -2940,18 +2941,18 @@ this.flags).RoundToPrecision(ctx);
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A decimal number rounded to the closest value representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
      * not-a-number (NaN) if the precision context defines an exponent
      * range, the new exponent must be changed to the given exponent when
      * rounding, and the given exponent is outside of the valid range of the
-     * precision context.
+     * arithmetic context.
      */
     public EDecimal RoundToExponent(
       EInteger exponent,
@@ -3004,18 +3005,18 @@ this.flags).RoundToPrecision(ctx);
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A decimal number rounded to the closest value representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
      * not-a-number (NaN) if the precision context defines an exponent
      * range, the new exponent must be changed to the given exponent when
      * rounding, and the given exponent is outside of the valid range of the
-     * precision context.
+     * arithmetic context.
      */
     public EDecimal RoundToExponent(
       int exponentSmall,
@@ -3069,18 +3070,18 @@ EContext.ForRounding(rounding));
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A decimal number rounded to the closest value representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to the
      * given exponent when rounding, and the given exponent is outside of
-     * the valid range of the precision context.
+     * the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponentExact(
       EInteger exponent,
@@ -3099,18 +3100,18 @@ EContext.ForRounding(rounding));
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A decimal number rounded to the closest value representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to the
      * given exponent when rounding, and the given exponent is outside of
-     * the valid range of the precision context.
+     * the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponentExact(
       int exponentSmall,
@@ -3122,17 +3123,17 @@ EContext.ForRounding(rounding));
      * Returns a decimal number with the same value as this object but rounded to
      * an integer, and signals an invalid operation if the result would be
      * inexact.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A decimal number rounded to the closest integer representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to 0 when
-     * rounding, and 0 is outside of the valid range of the precision
+     * rounding, and 0 is outside of the valid range of the arithmetic
      * context.
      */
     public EDecimal RoundToIntegerExact(EContext ctx) {
@@ -3142,10 +3143,10 @@ EContext.ForRounding(rounding));
     /**
      * Returns a decimal number with the same value as this object but rounded to
      * an integer, without adding the FlagInexact or FlagRounded flags.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags), except that this function will never add the
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags), except that this function will never add the
      * FlagRounded and FlagInexact flags (the only difference between this
      * and RoundToExponentExact). Can be null, in which case the default
      * rounding mode is HalfEven.
@@ -3154,7 +3155,7 @@ EContext.ForRounding(rounding));
      * digits are discarded to make it fit. Signals FlagInvalid and returns
      * not-a-number (NaN) if the precision context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is
-     * outside of the valid range of the precision context.
+     * outside of the valid range of the arithmetic context.
      */
     public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) {
       return GetMathValue(ctx)
@@ -3165,17 +3166,17 @@ EContext.ForRounding(rounding));
      * Returns a decimal number with the same value as this object but rounded to
      * an integer, and signals an invalid operation if the result would be
      * inexact.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A decimal number rounded to the closest integer representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to 0 when
-     * rounding, and 0 is outside of the valid range of the precision
+     * rounding, and 0 is outside of the valid range of the arithmetic
      * context.
      * @deprecated Renamed to RoundToIntegerExact.
  */
@@ -3187,10 +3188,10 @@ EContext.ForRounding(rounding));
     /**
      * Returns a decimal number with the same value as this object but rounded to
      * an integer, without adding the FlagInexact or FlagRounded flags.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags), except that this function will never add the
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags), except that this function will never add the
      * FlagRounded and FlagInexact flags (the only difference between this
      * and RoundToExponentExact). Can be null, in which case the default
      * rounding mode is HalfEven.
@@ -3199,7 +3200,7 @@ EContext.ForRounding(rounding));
      * digits are discarded to make it fit. Signals FlagInvalid and returns
      * not-a-number (NaN) if the precision context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is
-     * outside of the valid range of the precision context.
+     * outside of the valid range of the arithmetic context.
      * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
  */
 @Deprecated
@@ -3211,11 +3212,11 @@ EContext.ForRounding(rounding));
     /**
      * Rounds this object&#x27;s value to a given precision, using the given
      * rounding mode and range of exponent.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return The closest value to this object's value, rounded to the specified
      * precision. Returns the same value as this object if {@code ctx} is
      * null or the precision and exponent range are unlimited.
@@ -3236,11 +3237,11 @@ EContext.ForRounding(rounding));
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param places The power of 10 to scale by.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return An arbitrary-precision decimal number.
      */
     public EDecimal ScaleByPowerOfTen(int places, EContext ctx) {
@@ -3259,11 +3260,11 @@ EContext.ForRounding(rounding));
     /**
      * Returns a number similar to this number but with its scale adjusted.
      * @param bigPlaces The power of 10 to scale by.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return A number whose scale is increased by {@code bigPlaces}.
      */
     public EDecimal ScaleByPowerOfTen(
@@ -3285,13 +3286,13 @@ EContext ctx) {
 
     /**
      * Finds the square root of this object&#x27;s value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the square root function's results are generally not exact
-     * for many inputs.</i> (Unlike in the General Decimal Arithmetic
-     * Specification, any rounding mode is allowed.)
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the square root function's results are generally
+     * not exact for many inputs.</i> (Unlike in the General Decimal
+     * Arithmetic Specification, any rounding mode is allowed.)
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
@@ -3304,13 +3305,13 @@ EContext ctx) {
 
     /**
      * Finds the square root of this object&#x27;s value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the square root function's results are generally not exact
-     * for many inputs.</i> (Unlike in the General Decimal Arithmetic
-     * Specification, any rounding mode is allowed.)
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the square root function's results are generally
+     * not exact for many inputs.</i> (Unlike in the General Decimal
+     * Arithmetic Specification, any rounding mode is allowed.)
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
@@ -3334,11 +3335,11 @@ EContext ctx) {
     /**
      * Subtracts an arbitrary-precision decimal number from this instance.
      * @param otherValue The number to subtract from this instance's value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited and no rounding is needed.
      * @return The difference of the two objects.
      * @throws java.lang.NullPointerException The parameter {@code otherValue} is
      * null.

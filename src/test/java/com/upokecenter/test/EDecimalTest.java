@@ -150,6 +150,7 @@ for (int i = 0; i < 1000; ++i) {
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702433323694842767208349696");
         Assert.assertEquals(a.toString(), b.toString());
         TestCommon.CompareTestEqual(a,b,"");
+        Assert.assertEquals(a.signum(), b.signum());
       }
 
     @Test
@@ -160,6 +161,19 @@ for (int i = 0; i < 1000; ++i) {
         EDecimal bigintB = RandomObjects.RandomExtendedDecimal(r);
         EDecimal bigintC = RandomObjects.RandomExtendedDecimal(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
+      }
+      // Test equivalence of EInteger and EDecimal for integers
+      for (int i = 0; i < 3000; ++i) {
+        EInteger bigintA = RandomObjects.RandomBigInteger(r);
+        EInteger bigintB = RandomObjects.RandomBigInteger(r);
+        EInteger bigintC = bigintA.Add(bigintB);
+        EDecimal
+  ba1 = EDecimal.FromEInteger(bigintA).Add(EDecimal.FromEInteger(bigintB));
+        EDecimal ba2 = EDecimal.FromEInteger(bigintC);
+        Assert.assertEquals(ba1.signum(), ba2.signum());
+        Assert.assertEquals(ba1.toString(), ba2.toString());
+        TestCommon.CompareTestEqual(ba1,ba2,bigintA.toString() + ","
+          +bigintB.toString());
       }
       TestCommon.CompareTestLess(EDecimal.Zero, EDecimal.NaN);
       TestCommon.CompareTestLess(
