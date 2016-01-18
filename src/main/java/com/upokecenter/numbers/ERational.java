@@ -66,7 +66,7 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * The rational number ten.
      */
-    public static final ERational Ten = FromEInteger(EInteger.FromInt64(10));
+    public static final ERational Ten = FromEInteger(EInteger.FromInt32(10));
 
     /**
      * A rational number for zero.
@@ -260,6 +260,30 @@ boolean negative) {
      */
     public static ERational FromDouble(double flt) {
       return FromEFloat(EFloat.FromDouble(flt));
+    }
+
+    /**
+     * Converts an arbitrary-precision decimal number to a rational number.
+     * @param ef An arbitrary-precision decimal number.
+     * @return An arbitrary-precision rational number.
+     * @throws java.lang.NullPointerException The parameter {@code ef} is null.
+     * @deprecated Renamed to FromEDecimal.
+ */
+@Deprecated
+    public static ERational FromExtendedDecimal(EDecimal ef) {
+      return FromEDecimal(ef);
+    }
+
+    /**
+     * Not documented yet.
+     * @param ef An arbitrary-precision binary float.
+     * @return An arbitrary-precision rational number.
+     * @throws java.lang.NullPointerException The parameter {@code ef} is null.
+     * @deprecated Renamed to FromEFloat.
+ */
+@Deprecated
+    public static ERational FromExtendedFloat(EFloat ef) {
+      return FromEFloat(ef);
     }
 
     /**
@@ -743,9 +767,10 @@ boolean negative) {
     }
 
     /**
-     * Not documented yet.
-     * @param other The parameter {@code other} is not documented yet.
-     * @return An ERational object.
+     * Returns a number with the same value as this one, but copying the sign
+     * (positive or negative) of another number.
+     * @param other A number whose sign will be copied.
+     * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public ERational CopySign(ERational other) {
@@ -1116,7 +1141,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     /**
      * Converts this rational number to a decimal number and rounds the result to
      * the given precision.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return An arbitrary-precision decimal.
      */
     public EDecimal ToEDecimal(EContext ctx) {
@@ -1142,13 +1167,13 @@ ctx);
      * Converts this rational number to a decimal number, but if the result would
      * have a nonterminating decimal expansion, rounds that result to the
      * given precision.
-     * @param ctx A precision context object to control the precision. The rounding
-     * and exponent range settings of this context are ignored. This context
-     * will be used only if the exact result would have a nonterminating
-     * decimal expansion. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case this
-     * method is the same as ToExtendedDecimal.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored.
+     * This context will be used only if the exact result would have a
+     * nonterminating decimal expansion. If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case this method is the same as ToExtendedDecimal.
      * @return An arbitrary-precision decimal.
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
@@ -1223,7 +1248,7 @@ ctx);
     /**
      * Converts this rational number to a binary number and rounds the result to
      * the given precision.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloat(EContext ctx) {
@@ -1249,13 +1274,13 @@ ctx);
      * Converts this rational number to a binary number, but if the result would
      * have a nonterminating binary expansion, rounds that result to the
      * given precision.
-     * @param ctx A precision context object to control the precision. The rounding
-     * and exponent range settings of this context are ignored. This context
-     * will be used only if the exact result would have a nonterminating
-     * binary expansion. If HasFlags of the context is true, will also store
-     * the flags resulting from the operation (the flags are in addition to
-     * the pre-existing flags). Can be null, in which case this method is
-     * the same as ToExtendedFloat.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored.
+     * This context will be used only if the exact result would have a
+     * nonterminating binary expansion. If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case this method is the same as ToExtendedFloat.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {

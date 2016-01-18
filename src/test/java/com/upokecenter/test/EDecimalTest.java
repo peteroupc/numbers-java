@@ -236,6 +236,13 @@ EDecimal.FromString("8451910"));
           EDecimal.SignalingNaN.CompareToBinary(EFloat.Zero);
         Assert.assertEquals(1, numberTemp);
       }
+      FastRandom r = new FastRandom();
+      for (int i = 0; i < 3000; ++i) {
+        EInteger bigintA = RandomObjects.RandomBigInteger(r);
+        int cmp = EDecimal.FromEInteger(bigintA).CompareToBinary(
+            EFloat.FromEInteger(bigintA));
+        Assert.assertEquals(0, cmp);
+      }
     }
     @Test
     public void TestCompareToSignal() {
