@@ -6,6 +6,10 @@ Parts of the code were adapted by Peter O. from
 the public-domain code from the library
 CryptoPP by Wei Dai.
 
+Parts of the GCD function adapted by Peter O.
+from public domain GCD code by Christian
+Stigen Larsen (http://csl.sublevel3.org).
+
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
@@ -68,8 +72,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Gets a value not documented yet.
-     * @return A value not documented yet.
+     * Gets the number 1 as an arbitrary-precision integer.
+     * @return The number 1 as an arbitrary-precision integer.
      */
     public static EInteger getOne() {
         return ValueOne;
@@ -211,9 +215,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Not documented yet.
-     * @param intValue The parameter {@code intValue} is not documented yet.
-     * @return An EInteger object.
+     * Converts a 32-bit signed integer to an arbitrary-precision integer.
+     * @param intValue A 32-bit signed integer.
+     * @return An arbitrary-precision integer with the same value as the 64-bit
+     * number.
      */
     public static EInteger FromInt32(int intValue) {
       if (intValue == 0) {
@@ -257,8 +262,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Converts a 64-bit signed integer to a big integer.
-     * @param longerValue The parameter {@code longerValue} is not documented yet.
+     * Converts a 64-bit signed integer to an arbitrary-precision integer.
+     * @param longerValue A 64-bit signed integer.
      * @return An arbitrary-precision integer with the same value as the 64-bit
      * number.
      */
@@ -781,7 +786,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (Compare(minuend.words, 0, subtrahend.words, 0, (int)words1Size) >=
             0) {
           // words1 is at least as high as words2
-          Subtract(
+          SubtractTwoByTwo(
             diffReg,
             0,
             minuend.words,
@@ -791,7 +796,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             words1Size);
         } else {
           // words1 is less than words2
-          Subtract(
+          SubtractTwoByTwo(
             diffReg,
             0,
             subtrahend.words,
@@ -804,7 +809,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else if (words1Size > words2Size) {
         // words1 is greater than words2
         borrow = (
-          short)Subtract(
+          short)SubtractTwoByTwo(
           diffReg,
           0,
           minuend.words,
@@ -822,7 +827,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else {
         // words1 is less than words2
         borrow = (
-          short)Subtract(
+          short)SubtractTwoByTwo(
           diffReg,
           0,
           subtrahend.words,
@@ -911,6 +916,22 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       if (c == 2 && (this.words[1] & 0x8000) != 0) {
         return this.negative && this.words[1] == ((short)0x8000) &&
+          this.words[0] == 0;
+      }
+      return true;
+    }
+
+    /**
+     * Not documented yet.
+     * @return A Boolean object.
+     */
+    public boolean CanFitInInt64() {
+      int c = this.wordCount;
+      if (c > 4) {
+        return false;
+      }
+      if (c == 4 && (this.words[3] & 0x8000) != 0) {
+        return this.negative && this.words[3] == ((short)0x8000) &&
           this.words[0] == 0;
       }
       return true;
@@ -1149,6 +1170,50 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       return false;
     }
 
+    private static EInteger LeftShiftBigIntVar(EInteger ei, EInteger bigShift) {
+      if (ei.isZero()) {
+ return ei;
+}
+      while (bigShift.signum() > 0) {
+           int shift = 1000000;
+           if (bigShift.compareTo(EInteger.FromInt64(1000000)) < 0) {
+            shift = bigShift.ToInt32Checked();
+           }
+           ei = ei.ShiftLeft(shift);
+           bigShift = bigShift.Subtract(EInteger.FromInt32(shift));
+      }
+      return ei;
+    }
+
+    private static EInteger GcdLong(long u, long v) {
+      // Adapted from Christian Stigen Larsen's
+      // public domain GCD code
+
+      int shl = 0;
+      while (u != 0 && v != 0 && u != v) {
+        boolean eu = (u & 1L) == 0;
+        boolean ev = (v & 1L) == 0;
+        if (eu && ev) {
+          ++shl;
+          u >>= 1;
+          v >>= 1;
+        } else if (eu && !ev) {
+          u >>= 1;
+        } else if (!eu && ev) {
+          v >>= 1;
+        } else if (u >= v) {
+          u = (u - v) >> 1;
+        } else {
+          long tmp = u;
+          u = (v - u) >> 1;
+          v = tmp;
+        }
+      }
+      EInteger eret = (u == 0) ?
+        EInteger.FromInt64(v << shl) : EInteger.FromInt64(u << shl);
+      return eret;
+    }
+
     /**
      * Returns the greatest common divisor of two integers. The greatest common
      * divisor (GCD) is also known as the greatest common factor (GCF).
@@ -1176,35 +1241,90 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (thisValue.equals(EInteger.FromInt32(1))) {
         return thisValue;
       }
-      if (thisValue.wordCount <= 10 && bigintSecond.wordCount <= 10) {
-        int expOfTwo = Math.min(
-          thisValue.GetLowBit(),
-          bigintSecond.GetLowBit());
-        while (true) {
-          EInteger bigintA = (thisValue.Subtract(bigintSecond)).Abs();
-          if (bigintA.isZero()) {
-            if (expOfTwo != 0) {
-              thisValue = thisValue.ShiftLeft(expOfTwo);
-            }
-            return thisValue;
-          }
-          int setbit = bigintA.GetLowBit();
-          bigintA = bigintA.ShiftRight(setbit);
-          bigintSecond = (thisValue.compareTo(bigintSecond) < 0) ? thisValue :
-            bigintSecond;
-          thisValue = bigintA;
-        }
+      if (thisValue.CanFitInInt64() && bigintSecond.CanFitInInt64()) {
+        long u = thisValue.ToInt64Unchecked();
+        long v = bigintSecond.ToInt64Unchecked();
+        return GcdLong(u, v);
       } else {
-        EInteger temp;
-        while (!thisValue.isZero()) {
-          if (thisValue.compareTo(bigintSecond) < 0) {
-            temp = thisValue;
-            thisValue = bigintSecond;
-            bigintSecond = temp;
+        // Big integer version of code above
+        int bshl = 0;
+        EInteger ebshl = null;
+        short[] bu = thisValue.Copy();
+        short[] bv = bigintSecond.Copy();
+        int buc = thisValue.wordCount;
+        int bvc = bigintSecond.wordCount;
+        while (buc != 0 && bvc != 0 && !WordsEqual(bu, buc, bv, bvc)) {
+          if (buc <= 3 && bvc <= 3) {
+            return GcdLong(
+              WordsToLongUnchecked(bu, buc),
+              WordsToLongUnchecked(bv, bvc));
           }
-          thisValue = thisValue.Remainder(bigintSecond);
+          if ((bu[0]&0x0f) == 0 && (bv[0]&0x0f) == 0) {
+            if (bshl < 0) {
+              ebshl = ebshl.Add(EInteger.FromInt32(4));
+            } else if (bshl == Integer.MAX_VALUE - 3) {
+              ebshl = EInteger.FromInt32(Integer.MAX_VALUE - 3);
+              ebshl = ebshl.Add(EInteger.FromInt32(4));
+              bshl=-1;
+            } else {
+              bshl+=4;
+            }
+            buc = WordsShiftRightFour(bu, buc);
+            bvc = WordsShiftRightFour(bv, bvc);
+            continue;
+          }
+          boolean eu = (bu[0]&0x01) == 0;
+          boolean ev = (bv[0]&0x01) == 0;
+          if (eu && ev) {
+            if (bshl < 0) {
+              ebshl = ebshl.Add(EInteger.FromInt32(1));
+            } else if (bshl == Integer.MAX_VALUE) {
+              ebshl = EInteger.FromInt32(Integer.MAX_VALUE);
+              ebshl = ebshl.Add(EInteger.FromInt32(1));
+              bshl=-1;
+            } else {
+              ++bshl;
+            }
+            buc = WordsShiftRightOne(bu, buc);
+            bvc = WordsShiftRightOne(bv, bvc);
+          } else if (eu && !ev) {
+            buc = (Math.abs(buc-bvc)>1 && (bu[0]&0x0f) == 0) ?
+              (WordsShiftRightFour(bu, buc)) : (WordsShiftRightOne(bu,
+              buc));
+          } else if (!eu && ev) {
+            if ((bv[0]&0xff) == 0 && Math.abs(buc-bvc)>1) {
+              //DebugUtility.Log("bv8");
+              bvc = WordsShiftRightEight(bv, bvc);
+            } else {
+ bvc = ((bv[0]&0x0f) == 0 && Math.abs(buc-bvc)>1) ? (WordsShiftRightFour(bv,
+   bvc)) : (WordsShiftRightOne(bv, bvc));
+}
+          } else if (WordsCompare(bu, buc, bv, bvc) >= 0) {
+            buc = WordsSubtract(bu, buc, bv, bvc);
+            buc = (Math.abs(buc-bvc)>1 && (bu[0]&0x02) == 0) ?
+              (WordsShiftRightTwo(bu, buc)) : (WordsShiftRightOne(bu, buc));
+          } else {
+            short[] butmp = bv;
+            short[] bvtmp = bu;
+            int buctmp = bvc;
+            int bvctmp = buc;
+            buctmp = WordsSubtract(butmp, buctmp, bvtmp, bvctmp);
+            buctmp = WordsShiftRightOne(butmp, buctmp);
+            bu = butmp;
+            bv = bvtmp;
+            buc = buctmp;
+            bvc = bvctmp;
+          }
         }
-        return bigintSecond;
+        EInteger buVar = new EInteger(buc, bu, false);
+        EInteger bvVar = new EInteger(bvc, bv, false);
+        if (bshl >= 0) {
+         buVar = buVar.isZero() ? (bvVar.ShiftLeft(bshl)) : (buVar.ShiftLeft(bshl));
+        } else {
+         buVar = buVar.isZero() ?
+          LeftShiftBigIntVar(bvVar, ebshl) : LeftShiftBigIntVar(buVar, ebshl);
+        }
+        return buVar;
       }
     }
 
@@ -1401,6 +1521,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * value is 0 or odd.
      */
     public int GetLowBit() {
+      // TODO: Consider GetLowBitLong method
       int retSetBit = 0;
       for (int i = 0; i < this.wordCount; ++i) {
         int c = ((int)this.words[i]) & 0xffff;
@@ -1602,14 +1723,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         throw new IllegalArgumentException("mod (" + mod + ") is not greater than 0");
       }
       EInteger r = EInteger.FromInt32(1);
-      EInteger v = this;
+      EInteger eiv = this;
       while (!pow.isZero()) {
         if (!pow.isEven()) {
-          r = (r.Multiply(v)).Mod(mod);
+          r = (r.Multiply(eiv)).Mod(mod);
         }
         pow = pow.ShiftRight(1);
         if (!pow.isZero()) {
-          v = (v.Multiply(v)).Mod(mod);
+          eiv = (eiv.Multiply(eiv)).Mod(mod);
         }
       }
       return r;
@@ -1944,6 +2065,194 @@ this.negative ^ bigintMult.negative);
         TwosComplement(ret, 0, (int)ret.length);
         return new EInteger(CountWords(ret, ret.length), ret, true);
       }
+    }
+
+    private short[] Copy() {
+      short[] words = new short[this.words.length];
+      System.arraycopy(this.words, 0, words, 0, this.wordCount);
+      return words;
+    }
+
+    private static int WordsCompare(
+       short[] words,
+       int wordCount,
+       short[] words2,
+       int wordCount2) {
+        // NOTE: Assumes the number is nonnegative
+      int size = wordCount;
+      if (size == 0) {
+        return (wordCount2 == 0) ? 0 : -1;
+      } else if (wordCount2 == 0) {
+        return 1;
+      }
+      if (size == wordCount2) {
+        if (size == 1 && words[0] == words2[0]) {
+          return 0;
+        } else {
+          while ((size--) != 0) {
+            int an = ((int)words[size]) & 0xffff;
+            int bn = ((int)words2[size]) & 0xffff;
+            if (an > bn) {
+              return 1;
+            }
+            if (an < bn) {
+              return -1;
+            }
+          }
+          return 0;
+        }
+      }
+      return (size > wordCount2) ? 1 : -1;
+    }
+
+    private static long WordsToLongUnchecked(short[] words, int wordCount) {
+         // NOTE: Assumes the number is nonnegative
+      int c = (int)wordCount;
+      if (c == 0) {
+        return (long)0;
+      }
+      long ivv = 0;
+      int intRetValue = ((int)words[0]) & 0xffff;
+      if (c > 1) {
+        intRetValue |= (((int)words[1]) & 0xffff) << 16;
+      }
+      if (c > 2) {
+        int intRetValue2 = ((int)words[2]) & 0xffff;
+        if (c > 3) {
+          intRetValue2 |= (((int)words[3]) & 0xffff) << 16;
+        }
+        ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+        ivv |= ((long)intRetValue2) << 32;
+        return ivv;
+      }
+      ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+      return ivv;
+    }
+
+    private static boolean WordsEqual(
+       short[] words,
+       int wordCount,
+       short[] words2,
+       int wordCount2) {
+         // NOTE: Assumes the number is nonnegative
+        if (wordCount == wordCount2) {
+          for (int i = 0; i < wordCount; ++i) {
+            if (words[i]!=words2[i]) {
+ return false;
+}
+          }
+          return true;
+        }
+        return false;
+    }
+    private static boolean WordsIsEven(short[] words, int wordCount) {
+      return wordCount == 0 || (words[0]&0x01) == 0;
+    }
+
+    private static int WordsShiftRightTwo(short[] words, int wordCount) {
+      // NOTE: Assumes the number is nonnegative
+      if (wordCount != 0) {
+        int u;
+        int carry = 0;
+        for (int i = wordCount - 1; i >= 0; --i) {
+          int w = words[i];
+          u = ((w & 0xfffc) >> 2) | carry;
+          carry = ((w << 14) & 0xc000);
+          words[i] = ((short)u);
+        }
+        if (words[wordCount-1]==0) {
+          --wordCount;
+        }
+      }
+      return wordCount;
+    }
+
+    private static int WordsShiftRightEight(short[] words, int wordCount) {
+      // NOTE: Assumes the number is nonnegative
+      if (wordCount != 0) {
+        int u;
+        int carry = 0;
+        for (int i = wordCount - 1; i >= 0; --i) {
+          int w = words[i];
+          u = ((w & 0xff00) >> 8) | carry;
+          carry = ((w << 8) & 0xff00);
+          words[i] = ((short)u);
+        }
+        if (words[wordCount-1]==0) {
+          --wordCount;
+        }
+      }
+      return wordCount;
+    }
+
+    private static int WordsShiftRightFour(short[] words, int wordCount) {
+      // NOTE: Assumes the number is nonnegative
+      if (wordCount != 0) {
+        int u;
+        int carry = 0;
+        for (int i = wordCount - 1; i >= 0; --i) {
+          int w = words[i];
+          u = ((w & 0xfff0) >> 4) | carry;
+          carry = ((w << 12) & 0xf000);
+          words[i] = ((short)u);
+        }
+        if (words[wordCount-1]==0) {
+          --wordCount;
+        }
+      }
+      return wordCount;
+    }
+
+    private static int WordsShiftRightOne(short[] words, int wordCount) {
+      // NOTE: Assumes the number is nonnegative
+      if (wordCount != 0) {
+        int u;
+        int carry = 0;
+        for (int i = wordCount - 1; i >= 0; --i) {
+          int w = words[i];
+          u = ((w & 0xfffe) >> 1) | carry;
+          carry = ((w << 15) & 0x8000);
+          words[i] = ((short)u);
+        }
+        if (words[wordCount-1]==0) {
+          --wordCount;
+        }
+      }
+      return wordCount;
+    }
+
+    private static int WordsSubtract(short[] words, int wordCount,
+       short[] subtrahendWords, int subtrahendCount) {
+      // NOTE: Assumes this value is at least as high as the subtrahend
+      // and both numbers are nonnegative
+         short borrow;
+      if ((subtrahendCount & 1) == 0) {
+       borrow = (short)SubtractTwoByTwo(
+          words,
+          0,
+          words,
+          0,
+          subtrahendWords,
+          0,
+          subtrahendCount);
+      } else {
+       borrow = (short)SubtractOneByOne(
+          words,
+          0,
+          words,
+          0,
+          subtrahendWords,
+          0,
+          subtrahendCount);
+      }
+      if (borrow != 0) {
+       Decrement(words, subtrahendCount,
+         (int)(wordCount - subtrahendCount), borrow);
+      }
+      while (wordCount != 0 && words[wordCount - 1] == 0) {
+        --wordCount;
+      }
+      return wordCount;
     }
 
     /**
@@ -3988,7 +4297,7 @@ this.negative ^ bigintMult.negative);
               valueTBstart,
               words2Count) >= 0) {
             tempArr[words1Count] -= (
-              short)Subtract(
+              short)SubtractTwoByTwo(
               tempArr,
               tempStart + words1Count - words2Count,
               tempArr,
@@ -4070,7 +4379,7 @@ this.negative ^ bigintMult.negative);
                 2,
                 n);
             }
-            Subtract(
+            SubtractTwoByTwo(
               tempArr,
               valueRstart2,
               tempArr,
@@ -4085,7 +4394,7 @@ this.negative ^ bigintMult.negative);
               valueTBstart,
               n) >= 0) {
               tempArr[valueRstart2 + n] -= (
-                short)Subtract(
+                short)SubtractTwoByTwo(
                 tempArr,
                 valueRstart2,
                 tempArr,
@@ -5099,7 +5408,7 @@ count);
       return reg;
     }
 
-    private static int Subtract(
+    private static int SubtractTwoByTwo(
       short[] c,
       int cstart,
       short[] words1,
@@ -5107,6 +5416,7 @@ count);
       short[] words2,
       int bstart,
       int n) {
+        // NOTE: Assumes that n is an even number
       {
         int u;
         u = 0;

@@ -37,7 +37,7 @@ private RandomObjects() {
       EInteger bigintA = RandomBigInteger(rand);
       EInteger bigintB = RandomBigInteger(rand);
       if (bigintB.isZero()) {
-        bigintB = EInteger.FromInt64(1);
+        bigintB = EInteger.FromInt32(1);
       }
       return new ERational(bigintA, bigintB);
     }
@@ -110,7 +110,7 @@ private RandomObjects() {
       return Float.intBitsToFloat(r);
     }
 
-    public static EDecimal RandomExtendedDecimal(FastRandom r) {
+    public static EDecimal RandomEDecimal(FastRandom r) {
       if (r.NextValue(100) == 0) {
         int x = r.NextValue(3);
         if (x == 0) {
@@ -148,7 +148,7 @@ private RandomObjects() {
       }
     }
 
-    public static EFloat RandomExtendedFloat(FastRandom r) {
+    public static EFloat RandomEFloat(FastRandom r) {
       if (r.NextValue(100) == 0) {
         int x = r.NextValue(3);
         if (x == 0) {

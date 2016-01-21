@@ -157,9 +157,9 @@ for (int i = 0; i < 1000; ++i) {
     public void TestCompareTo() {
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomExtendedDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomExtendedDecimal(r);
-        EDecimal bigintC = RandomObjects.RandomExtendedDecimal(r);
+        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintC = RandomObjects.RandomEDecimal(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       // Test equivalence of EInteger and EDecimal for integers
@@ -393,7 +393,70 @@ EDecimal.FromString("8451910"));
 
     @Test
     public void TestDivide() {
-      // not implemented yet
+      {
+String stringTemp = EDecimal.FromString("1"
+).Divide(EDecimal.FromInt32(8)).toString();
+Assert.assertEquals(
+"0.125",
+stringTemp);
+}
+      {
+String stringTemp = EDecimal.FromString("10"
+).Divide(EDecimal.FromInt32(80)).toString();
+Assert.assertEquals(
+"0.125",
+stringTemp);
+}
+      {
+String stringTemp = EDecimal.FromString("10000"
+).Divide(EDecimal.FromInt32(80000)).toString();
+Assert.assertEquals(
+"0.125",
+stringTemp);
+}
+      {
+String stringTemp = EDecimal.FromString("1000"
+).Divide(EDecimal.FromInt32(8)).toString();
+Assert.assertEquals(
+"125",
+stringTemp);
+}
+      {
+String stringTemp = EDecimal.FromString("1"
+).Divide(EDecimal.FromInt32(256)).toString();
+Assert.assertEquals(
+"0.00390625",
+stringTemp);
+}
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 5000; ++i) {
+        EDecimal ed1 = RandomObjects.RandomEDecimal(fr);
+        EDecimal ed2 = RandomObjects.RandomEDecimal(fr);
+        if (!ed1.isFinite() || !ed2.isFinite()) {
+          continue;
+        }
+        EDecimal ed3 = ed1.Multiply(ed2);
+        if (!(ed3.isFinite()))Assert.fail();
+        EDecimal ed4;
+        ed4 = ed3.Divide(ed1);
+        if (!ed1.isZero()) {
+          TestCommon.CompareTestEqual(ed4, ed2);
+        } else {
+          if (!(ed4.IsNaN()))Assert.fail();
+        }
+        ed4 = ed3.Divide(ed2);
+        if (!ed2.isZero()) {
+          TestCommon.CompareTestEqual(ed4, ed1);
+        } else {
+          if (!(ed4.IsNaN()))Assert.fail();
+        }
+      }
+      try {
+        EDecimal.FromString("1").Divide(EDecimal.FromString("3"), null);
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
     @Test
     public void TestDivideToExponent() {
@@ -415,8 +478,8 @@ EDecimal.FromString("8451910"));
     public void TestEquals() {
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomExtendedDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomExtendedDecimal(r);
+        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
         TestCommon.AssertEqualsHashCode(bigintA, bigintB);
       }
     }
@@ -672,42 +735,42 @@ EDecimal.FromString("8451910"));
     }
 
     @Test
-    public void TestExtendedDecimalDouble() {
-      TestExtendedDecimalDoubleCore(3.5, "3.5");
-      TestExtendedDecimalDoubleCore(7, "7");
-      TestExtendedDecimalDoubleCore(1.75, "1.75");
-      TestExtendedDecimalDoubleCore(3.5, "3.5");
-      TestExtendedDecimalDoubleCore((double)Integer.MIN_VALUE, "-2147483648");
-      TestExtendedDecimalDoubleCore(
+    public void TestEDecimalDouble() {
+      TestEDecimalDoubleCore(3.5, "3.5");
+      TestEDecimalDoubleCore(7, "7");
+      TestEDecimalDoubleCore(1.75, "1.75");
+      TestEDecimalDoubleCore(3.5, "3.5");
+      TestEDecimalDoubleCore((double)Integer.MIN_VALUE, "-2147483648");
+      TestEDecimalDoubleCore(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
       FastRandom rand = new FastRandom();
       for (int i = 0; i < 2047; ++i) {
         // Try a random double with a given
         // exponent
-      TestExtendedDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
+      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
           null);
-      TestExtendedDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
+      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
           null);
-      TestExtendedDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
+      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
           null);
-      TestExtendedDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
+      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
           null);
       }
     }
     @Test
-    public void TestExtendedDecimalSingle() {
+    public void TestEDecimalSingle() {
       FastRandom rand = new FastRandom();
       for (int i = 0; i < 255; ++i) {
         // Try a random float with a given
         // exponent
-      TestExtendedDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
+      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
           null);
-      TestExtendedDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
+      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
           null);
-      TestExtendedDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
+      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
           null);
-      TestExtendedDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
+      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
           null);
       }
     }
@@ -1378,7 +1441,7 @@ EDecimal.FromString("8451910"));
       }
     }
     @Test
-    public void TestFromExtendedFloat() {
+    public void TestFromEFloat() {
       Assert.assertEquals(
         EDecimal.Zero,
         EDecimal.FromEFloat(EFloat.Zero));
@@ -1732,8 +1795,8 @@ throw new IllegalStateException("", ex);
       }
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomExtendedDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomExtendedDecimal(r);
+        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -1799,8 +1862,8 @@ throw new IllegalStateException("", ex);
       }
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomExtendedDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomExtendedDecimal(r);
+        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -3833,7 +3896,7 @@ EDecimal.FromString(ValueTestStrings[i]).ToPlainString());
       TestCommon.CompareTestEqual(ca, cb);
     }
 
-    private static void TestExtendedDecimalDoubleCore(double d, String s) {
+    private static void TestEDecimalDoubleCore(double d, String s) {
       double oldd = d;
       EDecimal bf = EDecimal.FromDouble(d);
       if (s != null) {
@@ -3843,7 +3906,7 @@ EDecimal.FromString(ValueTestStrings[i]).ToPlainString());
       Assert.assertEquals((double)oldd, d, 0);
     }
 
-    private static void TestExtendedDecimalSingleCore(float d, String s) {
+    private static void TestEDecimalSingleCore(float d, String s) {
       float oldd = d;
       EDecimal bf = EDecimal.FromSingle(d);
       if (s != null) {

@@ -96,8 +96,8 @@ import com.upokecenter.numbers.*;
     public static void AssertAdd(EInteger bi, EInteger bi2, String s) {
       EIntegerTest.AssertBigIntegersEqual(s, bi.Add(bi2));
       EIntegerTest.AssertBigIntegersEqual(s, bi2.Add(bi));
-      EInteger negbi = EInteger.FromInt64(0).Subtract(bi);
-      EInteger negbi2 = EInteger.FromInt64(0).Subtract(bi2);
+      EInteger negbi = EInteger.FromInt32(0).Subtract(bi);
+      EInteger negbi2 = EInteger.FromInt32(0).Subtract(bi2);
       EIntegerTest.AssertBigIntegersEqual(s, bi.Subtract(negbi2));
       EIntegerTest.AssertBigIntegersEqual(s, bi2.Subtract(negbi));
     }
@@ -183,7 +183,7 @@ String rem) {
     public static void DoTestPow(String m1, int m2, String result) {
       EInteger bigintA = BigFromString(m1);
       AssertBigIntegersEqual(result, bigintA.Pow(m2));
-      AssertBigIntegersEqual(result, bigintA.PowBigIntVar(EInteger.FromInt64(m2)));
+      AssertBigIntegersEqual(result, bigintA.PowBigIntVar(EInteger.FromInt32(m2)));
     }
 
     public static void DoTestRemainder(
@@ -466,7 +466,7 @@ String result) {
         BigValueOf(Long.MAX_VALUE).ToInt64Checked());
       try {
         EInteger bigintTemp = BigValueOf(Long.MIN_VALUE);
-        bigintTemp = bigintTemp.Subtract(EInteger.FromInt64(1));
+        bigintTemp = bigintTemp.Subtract(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -477,7 +477,7 @@ String result) {
       }
       try {
         EInteger bigintTemp = BigValueOf(Long.MAX_VALUE);
-        bigintTemp = bigintTemp.Add(EInteger.FromInt64(1));
+        bigintTemp = bigintTemp.Add(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -535,7 +535,7 @@ String result) {
         BigValueOf(Long.MAX_VALUE).ToInt64Checked());
       try {
         EInteger bigintTemp = BigValueOf(Long.MIN_VALUE);
-        bigintTemp = bigintTemp.Subtract(EInteger.FromInt64(1));
+        bigintTemp = bigintTemp.Subtract(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -546,7 +546,7 @@ String result) {
       }
       try {
         EInteger bigintTemp = BigValueOf(Long.MAX_VALUE);
-        bigintTemp = bigintTemp.Add(EInteger.FromInt64(1));
+        bigintTemp = bigintTemp.Add(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -595,7 +595,7 @@ BigValueOf(longV).ToInt64Checked());
     @Test
     public void TestBigIntegerModPow() {
       try {
-        EInteger.FromInt64(1).ModPow(null, null);
+        EInteger.FromInt32(1).ModPow(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -604,7 +604,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(null, EInteger.FromInt64(0));
+        EInteger.FromInt32(1).ModPow(null, EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -613,7 +613,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(EInteger.FromInt64(0), null);
+        EInteger.FromInt32(1).ModPow(EInteger.FromInt32(0), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -622,7 +622,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(BigFromString("-1"), BigFromString("1"));
+        EInteger.FromInt32(1).ModPow(BigFromString("-1"), BigFromString("1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -631,7 +631,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(BigFromString("0"), BigFromString("0"));
+        EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -640,7 +640,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(BigFromString("0"), BigFromString("-1"));
+        EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -649,7 +649,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(BigFromString("1"), BigFromString("0"));
+        EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -658,7 +658,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ModPow(BigFromString("1"), BigFromString("-1"));
+        EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -694,8 +694,8 @@ BigValueOf(longV).ToInt64Checked());
           continue;
         }
         int c = intA / intB;
-        EInteger bigintA = EInteger.FromInt64(intA);
-        EInteger bigintB = EInteger.FromInt64(intB);
+        EInteger bigintA = EInteger.FromInt32(intA);
+        EInteger bigintB = EInteger.FromInt32(intB);
         EInteger bigintC = bigintA.Divide(bigintB);
         Assert.assertEquals(bigintC.AsInt32Checked(), c);
       }
@@ -714,7 +714,7 @@ BigValueOf(longV).ToInt64Checked());
     @Test
     public void TestDivRem2() {
       try {
-        EInteger.FromInt64(1).DivRem(EInteger.FromInt64(0));
+        EInteger.FromInt32(1).DivRem(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -723,7 +723,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).DivRem(null);
+        EInteger.FromInt32(1).DivRem(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -734,19 +734,19 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestEquals() {
-      if (EInteger.FromInt64(1).equals(null))Assert.fail();
-      if (EInteger.FromInt64(0).equals(null))Assert.fail();
-      if (EInteger.FromInt64(1).equals(EInteger.FromInt64(0)))Assert.fail();
-      if (EInteger.FromInt64(0).equals(EInteger.FromInt64(1)))Assert.fail();
+      if (EInteger.FromInt32(1).equals(null))Assert.fail();
+      if (EInteger.FromInt32(0).equals(null))Assert.fail();
+      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0)))Assert.fail();
+      if (EInteger.FromInt32(0).equals(EInteger.FromInt32(1)))Assert.fail();
       TestCommon.AssertEqualsHashCode(
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
         EInteger.FromString("-0"));
       TestCommon.AssertEqualsHashCode(
         EInteger.FromString("0"),
         EInteger.FromString("-0"));
       TestCommon.AssertEqualsHashCode(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(1));
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(1));
       FastRandom r = new FastRandom();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomObjects.RandomBigInteger(r);
@@ -768,7 +768,7 @@ BigValueOf(longV).ToInt64Checked());
       }
 
       try {
-        EInteger.FromInt64(0).GetSignedBit(-1);
+        EInteger.FromInt32(0).GetSignedBit(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -814,7 +814,7 @@ BigValueOf(longV).ToInt64Checked());
       }
 
       try {
-        EInteger.FromInt64(1).Mod(EInteger.FromInt64(-1));
+        EInteger.FromInt32(1).Mod(EInteger.FromInt64(-1));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -823,7 +823,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Add(null);
+        EInteger.FromInt32(1).Add(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -832,7 +832,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Subtract(null);
+        EInteger.FromInt32(1).Subtract(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -841,7 +841,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Divide(null);
+        EInteger.FromInt32(1).Divide(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -850,7 +850,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Divide(EInteger.FromInt64(0));
+        EInteger.FromInt32(1).Divide(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -859,7 +859,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Remainder(EInteger.FromInt64(0));
+        EInteger.FromInt32(1).Remainder(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -868,7 +868,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Mod(EInteger.FromInt64(0));
+        EInteger.FromInt32(1).Mod(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         System.out.print("");
@@ -877,7 +877,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Remainder(null);
+        EInteger.FromInt32(1).Remainder(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -885,13 +885,13 @@ BigValueOf(longV).ToInt64Checked());
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      Assert.assertEquals(EInteger.FromInt64(1), (EInteger.FromInt64(13)).Mod(EInteger.FromInt64(4)));
+      Assert.assertEquals(EInteger.FromInt32(1), (EInteger.FromInt64(13)).Mod(EInteger.FromInt64(4)));
       Assert.assertEquals(EInteger.FromInt64(3), (EInteger.FromInt64(-13)).Mod(EInteger.FromInt64(4)));
     }
     @Test
     public void TestFromBytes() {
       Assert.assertEquals(
-        EInteger.FromInt64(0), EInteger.FromBytes(new byte[] { }, false));
+        EInteger.FromInt32(0), EInteger.FromBytes(new byte[] { }, false));
 
       try {
         EInteger.FromBytes(null, false);
@@ -1285,10 +1285,21 @@ BigValueOf(longV).ToInt64Checked());
       }
     }
 
+    @Test(timeout = 10000)
+    public void TestGcdHang() {
+      {
+String stringTemp = BigFromString("781631509928000000").Gcd(
+          BigFromString("1000000")).toString();
+Assert.assertEquals(
+"1000000",
+stringTemp);
+}
+    }
+
     @Test
     public void TestGcd() {
       try {
-        EInteger.FromInt64(0).Gcd(null);
+        EInteger.FromInt32(0).Gcd(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -1297,14 +1308,14 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       {
-        String stringTemp = EInteger.FromInt64(0).Gcd(BigFromString(
+        String stringTemp = EInteger.FromInt32(0).Gcd(BigFromString(
         "244")).toString();
         Assert.assertEquals(
         "244",
         stringTemp);
       }
       {
-        String stringTemp = EInteger.FromInt64(0).Gcd(BigFromString(
+        String stringTemp = EInteger.FromInt32(0).Gcd(BigFromString(
         "-244")).toString();
         Assert.assertEquals(
         "244",
@@ -1312,40 +1323,40 @@ BigValueOf(longV).ToInt64Checked());
       }
       {
         String stringTemp = BigFromString(
-        "244").Gcd(EInteger.FromInt64(0)).toString();
+        "244").Gcd(EInteger.FromInt32(0)).toString();
         Assert.assertEquals(
         "244",
         stringTemp);
       }
       {
         String stringTemp = BigFromString(
-        "-244").Gcd(EInteger.FromInt64(0)).toString();
+        "-244").Gcd(EInteger.FromInt32(0)).toString();
         Assert.assertEquals(
         "244",
         stringTemp);
       }
       {
-        String stringTemp = EInteger.FromInt64(1).Gcd(BigFromString("244")).toString();
+        String stringTemp = EInteger.FromInt32(1).Gcd(BigFromString("244")).toString();
         Assert.assertEquals(
         "1",
         stringTemp);
       }
       {
-        String stringTemp = EInteger.FromInt64(1).Gcd(BigFromString(
+        String stringTemp = EInteger.FromInt32(1).Gcd(BigFromString(
         "-244")).toString();
         Assert.assertEquals(
         "1",
         stringTemp);
       }
       {
-        String stringTemp = BigFromString("244").Gcd(EInteger.FromInt64(1)).toString();
+        String stringTemp = BigFromString("244").Gcd(EInteger.FromInt32(1)).toString();
         Assert.assertEquals(
         "1",
         stringTemp);
       }
       {
         String stringTemp = BigFromString(
-        "-244").Gcd(EInteger.FromInt64(1)).toString();
+        "-244").Gcd(EInteger.FromInt32(1)).toString();
         Assert.assertEquals(
         "1",
         stringTemp);
@@ -1388,7 +1399,7 @@ BigValueOf(longV).ToInt64Checked());
             break;
           }
         }
-        EInteger bigprime = EInteger.FromInt64(prime);
+        EInteger bigprime = EInteger.FromInt32(prime);
         EInteger ba = RandomBigInteger(rand);
         if (ba.isZero()) {
           continue;
@@ -1398,76 +1409,76 @@ BigValueOf(longV).ToInt64Checked());
           bigprime,
           bigprime.Gcd(ba));
       }
-      TestGcdPair(EInteger.FromInt64(-1867), EInteger.FromInt64(-4456), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-1867), EInteger.FromInt64(-4456), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(4604), EInteger.FromInt64(-4516), EInteger.FromInt64(4));
-      TestGcdPair(EInteger.FromInt64(-1756), EInteger.FromInt64(4525), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(1568), EInteger.FromInt64(-4955), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(2519), EInteger.FromInt64(2845), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-1756), EInteger.FromInt64(4525), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(1568), EInteger.FromInt64(-4955), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(2519), EInteger.FromInt64(2845), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-1470), EInteger.FromInt64(132), EInteger.FromInt64(6));
-      TestGcdPair(EInteger.FromInt64(-2982), EInteger.FromInt64(2573), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-244), EInteger.FromInt64(-3929), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-3794), EInteger.FromInt64(-2325), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-2667), EInteger.FromInt64(2123), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-2982), EInteger.FromInt64(2573), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-244), EInteger.FromInt64(-3929), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-3794), EInteger.FromInt64(-2325), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-2667), EInteger.FromInt64(2123), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-3712), EInteger.FromInt64(-1850), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(2329), EInteger.FromInt64(3874), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(2329), EInteger.FromInt64(3874), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(1384), EInteger.FromInt64(-4278), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(213), EInteger.FromInt64(-1217), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(1163), EInteger.FromInt64(2819), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(1921), EInteger.FromInt64(-579), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(3886), EInteger.FromInt64(-13), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-3270), EInteger.FromInt64(-3760), EInteger.FromInt64(10));
+      TestGcdPair(EInteger.FromInt64(213), EInteger.FromInt64(-1217), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(1163), EInteger.FromInt64(2819), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(1921), EInteger.FromInt64(-579), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(3886), EInteger.FromInt64(-13), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-3270), EInteger.FromInt64(-3760), EInteger.FromInt32(10));
       TestGcdPair(EInteger.FromInt64(-3528), EInteger.FromInt64(1822), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(1547), EInteger.FromInt64(-333), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(1547), EInteger.FromInt64(-333), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(2402), EInteger.FromInt64(2850), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(4519), EInteger.FromInt64(1296), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(4519), EInteger.FromInt64(1296), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(1821), EInteger.FromInt64(2949), EInteger.FromInt64(3));
       TestGcdPair(EInteger.FromInt64(-2634), EInteger.FromInt64(-4353), EInteger.FromInt64(3));
-      TestGcdPair(EInteger.FromInt64(-1728), EInteger.FromInt64(199), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-1728), EInteger.FromInt64(199), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-4646), EInteger.FromInt64(-1418), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(-35), EInteger.FromInt64(-3578), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-35), EInteger.FromInt64(-3578), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-2244), EInteger.FromInt64(-3250), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(-3329), EInteger.FromInt64(1039), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-3329), EInteger.FromInt64(1039), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-3064), EInteger.FromInt64(-4730), EInteger.FromInt64(2));
       TestGcdPair(EInteger.FromInt64(-1214), EInteger.FromInt64(4130), EInteger.FromInt64(2));
       TestGcdPair(EInteger.FromInt64(-3038), EInteger.FromInt64(-3184), EInteger.FromInt64(2));
       TestGcdPair(EInteger.FromInt64(-209), EInteger.FromInt64(-1617), EInteger.FromInt64(11));
       TestGcdPair(EInteger.FromInt64(-1101), EInteger.FromInt64(-2886), EInteger.FromInt64(3));
-      TestGcdPair(EInteger.FromInt64(-3021), EInteger.FromInt64(-4499), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-3021), EInteger.FromInt64(-4499), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(3108), EInteger.FromInt64(1815), EInteger.FromInt64(3));
-      TestGcdPair(EInteger.FromInt64(1195), EInteger.FromInt64(4618), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-3643), EInteger.FromInt64(2156), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(1195), EInteger.FromInt64(4618), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-3643), EInteger.FromInt64(2156), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-2067), EInteger.FromInt64(-3780), EInteger.FromInt64(3));
-      TestGcdPair(EInteger.FromInt64(4251), EInteger.FromInt64(1607), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(4251), EInteger.FromInt64(1607), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(438), EInteger.FromInt64(741), EInteger.FromInt64(3));
-      TestGcdPair(EInteger.FromInt64(-3692), EInteger.FromInt64(-2135), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-1076), EInteger.FromInt64(2149), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-3692), EInteger.FromInt64(-2135), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-1076), EInteger.FromInt64(2149), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-3224), EInteger.FromInt64(-1532), EInteger.FromInt64(4));
-      TestGcdPair(EInteger.FromInt64(-3713), EInteger.FromInt64(1721), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(3038), EInteger.FromInt64(-2657), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(4977), EInteger.FromInt64(-110), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-3305), EInteger.FromInt64(-922), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-3713), EInteger.FromInt64(1721), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(3038), EInteger.FromInt64(-2657), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(4977), EInteger.FromInt64(-110), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-3305), EInteger.FromInt64(-922), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(1902), EInteger.FromInt64(2481), EInteger.FromInt64(3));
       TestGcdPair(EInteger.FromInt64(-4804), EInteger.FromInt64(-1378), EInteger.FromInt64(2));
       TestGcdPair(EInteger.FromInt64(-1446), EInteger.FromInt64(-4226), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(-1409), EInteger.FromInt64(3303), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-1626), EInteger.FromInt64(-3193), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(912), EInteger.FromInt64(-421), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(751), EInteger.FromInt64(-1755), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(3135), EInteger.FromInt64(-3581), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-4941), EInteger.FromInt64(-2885), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(-1409), EInteger.FromInt64(3303), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-1626), EInteger.FromInt64(-3193), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(912), EInteger.FromInt64(-421), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(751), EInteger.FromInt64(-1755), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(3135), EInteger.FromInt64(-3581), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-4941), EInteger.FromInt64(-2885), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(4744), EInteger.FromInt64(3240), EInteger.FromInt64(8));
       TestGcdPair(EInteger.FromInt64(3488), EInteger.FromInt64(4792), EInteger.FromInt64(8));
       TestGcdPair(EInteger.FromInt64(3632), EInteger.FromInt64(3670), EInteger.FromInt64(2));
       TestGcdPair(EInteger.FromInt64(-4821), EInteger.FromInt64(-1749), EInteger.FromInt64(3));
-      TestGcdPair(EInteger.FromInt64(4666), EInteger.FromInt64(2013), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(4666), EInteger.FromInt64(2013), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(810), EInteger.FromInt64(-3466), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(2199), EInteger.FromInt64(161), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(2199), EInteger.FromInt64(161), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-1137), EInteger.FromInt64(-1620), EInteger.FromInt64(3));
       TestGcdPair(EInteger.FromInt64(-472), EInteger.FromInt64(66), EInteger.FromInt64(2));
-      TestGcdPair(EInteger.FromInt64(3825), EInteger.FromInt64(2804), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-2895), EInteger.FromInt64(1942), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(1576), EInteger.FromInt64(-4209), EInteger.FromInt64(1));
-      TestGcdPair(EInteger.FromInt64(-277), EInteger.FromInt64(-4415), EInteger.FromInt64(1));
+      TestGcdPair(EInteger.FromInt64(3825), EInteger.FromInt64(2804), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-2895), EInteger.FromInt64(1942), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(1576), EInteger.FromInt64(-4209), EInteger.FromInt32(1));
+      TestGcdPair(EInteger.FromInt64(-277), EInteger.FromInt64(-4415), EInteger.FromInt32(1));
       for (int i = 0; i < 1000; ++i) {
         prime = rand.NextValue(0x7fffffff);
         if (rand.NextValue(2) == 0) {
@@ -1477,8 +1488,8 @@ BigValueOf(longV).ToInt64Checked());
         if (rand.NextValue(2) == 0) {
           intB = -intB;
         }
-        EInteger biga = EInteger.FromInt64(prime);
-        EInteger bigb = EInteger.FromInt64(intB);
+        EInteger biga = EInteger.FromInt32(prime);
+        EInteger bigb = EInteger.FromInt32(intB);
         EInteger ba = biga.Gcd(bigb);
         EInteger bb = bigb.Gcd(biga);
         Assert.assertEquals(ba, bb);
@@ -1500,10 +1511,10 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestGetSignedBit() {
-      if (EInteger.FromInt64(0).GetSignedBit(0))Assert.fail();
-      if (EInteger.FromInt64(0).GetSignedBit(1))Assert.fail();
-      if (!(EInteger.FromInt64(1).GetSignedBit(0)))Assert.fail();
-      if (EInteger.FromInt64(1).GetSignedBit(1))Assert.fail();
+      if (EInteger.FromInt32(0).GetSignedBit(0))Assert.fail();
+      if (EInteger.FromInt32(0).GetSignedBit(1))Assert.fail();
+      if (!(EInteger.FromInt32(1).GetSignedBit(0)))Assert.fail();
+      if (EInteger.FromInt32(1).GetSignedBit(1))Assert.fail();
       for (int i = 0; i < 32; ++i) {
         if (!(BigValueOf(-1).GetSignedBit(i)))Assert.fail();
       }
@@ -1558,7 +1569,7 @@ BigValueOf(longV).ToInt64Checked());
 
     @Test
     public void TestIntValueUnchecked() {
-      Assert.assertEquals(0L, EInteger.FromInt64(0).ToInt32Unchecked());
+      Assert.assertEquals(0L, EInteger.FromInt32(0).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
         BigValueOf(Integer.MIN_VALUE).ToInt32Unchecked());
@@ -1610,7 +1621,7 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestLongValueUnchecked() {
-      Assert.assertEquals(0L, EInteger.FromInt64(0).ToInt64Unchecked());
+      Assert.assertEquals(0L, EInteger.FromInt32(0).ToInt64Unchecked());
       Assert.assertEquals(
         Long.MIN_VALUE,
         BigValueOf(Long.MIN_VALUE).ToInt64Unchecked());
@@ -1620,12 +1631,12 @@ BigValueOf(longV).ToInt64Checked());
       {
         Object objectTemp = Long.MAX_VALUE;
         Object objectTemp2 = BigValueOf(Long.MIN_VALUE)
-                .Subtract(EInteger.FromInt64(1)).ToInt64Unchecked();
+                .Subtract(EInteger.FromInt32(1)).ToInt64Unchecked();
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MAX_VALUE).Add(EInteger.FromInt64(1)).ToInt64Unchecked());
+        BigValueOf(Long.MAX_VALUE).Add(EInteger.FromInt32(1)).ToInt64Unchecked());
       long aa = ((long)0xFFFFFFF200000000L);
       Assert.assertEquals(
               aa,
@@ -1668,7 +1679,7 @@ BigValueOf(longV).ToInt64Checked());
 
     @Test
     public void TestMiscellaneous() {
-      Assert.assertEquals(1, EInteger.FromInt64(0).GetDigitCount());
+      Assert.assertEquals(1, EInteger.FromInt32(0).GetDigitCount());
       EInteger minValue = EInteger.FromInt64(Integer.MIN_VALUE);
       EInteger minValueTimes2 = minValue.Add(minValue);
       Assert.assertEquals(Integer.MIN_VALUE, minValue.AsInt32Checked());
@@ -1681,7 +1692,7 @@ BigValueOf(longV).ToInt64Checked());
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      EInteger verybig = EInteger.FromInt64(1).ShiftLeft(80);
+      EInteger verybig = EInteger.FromInt32(1).ShiftLeft(80);
       try {
         System.out.println(verybig.AsInt32Checked());
         Assert.fail("Should have failed");
@@ -1701,7 +1712,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).PowBigIntVar(null);
+        EInteger.FromInt32(1).PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -1710,7 +1721,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).Pow(-1);
+        EInteger.FromInt32(1).Pow(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -1719,7 +1730,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        (EInteger.FromInt64(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar(null);
+        (EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -1727,18 +1738,18 @@ BigValueOf(longV).ToInt64Checked());
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      if (EInteger.FromInt64(1).equals(EInteger.FromInt64(0)))Assert.fail();
-      if (verybig.equals(EInteger.FromInt64(0)))Assert.fail();
-      if (EInteger.FromInt64(1).equals(EInteger.FromInt64(0).Subtract(EInteger.FromInt64(1))))Assert.fail();
-      Assert.assertEquals(1, EInteger.FromInt64(1).compareTo(null));
-      EInteger[] tmpsqrt = EInteger.FromInt64(0).SqrtRem();
-      Assert.assertEquals(EInteger.FromInt64(0), tmpsqrt[0]);
+      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0)))Assert.fail();
+      if (verybig.equals(EInteger.FromInt32(0)))Assert.fail();
+      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))))Assert.fail();
+      Assert.assertEquals(1, EInteger.FromInt32(1).compareTo(null));
+      EInteger[] tmpsqrt = EInteger.FromInt32(0).SqrtRem();
+      Assert.assertEquals(EInteger.FromInt32(0), tmpsqrt[0]);
     }
 
     @Test
     public void TestMod() {
       try {
-        EInteger.FromInt64(1).Mod(null);
+        EInteger.FromInt32(1).Mod(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -1777,7 +1788,7 @@ BigValueOf(longV).ToInt64Checked());
     @Test
     public void TestMultiply() {
       try {
-        EInteger.FromInt64(1).Multiply(null);
+        EInteger.FromInt32(1).Multiply(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         System.out.print("");
@@ -1788,28 +1799,28 @@ BigValueOf(longV).ToInt64Checked());
       FastRandom r = new FastRandom();
       for (int i = 0; i < 10000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
-        EInteger bigintB = bigintA.Add(EInteger.FromInt64(1));
+        EInteger bigintB = bigintA.Add(EInteger.FromInt32(1));
         EInteger bigintC = bigintA.Multiply(bigintB);
         // Test near-squaring
         if (bigintA.isZero() || bigintB.isZero()) {
-          Assert.assertEquals(EInteger.FromInt64(0), bigintC);
+          Assert.assertEquals(EInteger.FromInt32(0), bigintC);
         }
-        if (bigintA.equals(EInteger.FromInt64(1))) {
+        if (bigintA.equals(EInteger.FromInt32(1))) {
           Assert.assertEquals(bigintB, bigintC);
         }
-        if (bigintB.equals(EInteger.FromInt64(1))) {
+        if (bigintB.equals(EInteger.FromInt32(1))) {
           Assert.assertEquals(bigintA, bigintC);
         }
         bigintB = bigintA;
         // Test squaring
         bigintC = bigintA.Multiply(bigintB);
         if (bigintA.isZero() || bigintB.isZero()) {
-          Assert.assertEquals(EInteger.FromInt64(0), bigintC);
+          Assert.assertEquals(EInteger.FromInt32(0), bigintC);
         }
-        if (bigintA.equals(EInteger.FromInt64(1))) {
+        if (bigintA.equals(EInteger.FromInt32(1))) {
           Assert.assertEquals(bigintB, bigintC);
         }
-        if (bigintB.equals(EInteger.FromInt64(1))) {
+        if (bigintB.equals(EInteger.FromInt32(1))) {
           Assert.assertEquals(bigintA, bigintC);
         }
       }
@@ -1931,7 +1942,7 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestShiftLeft() {
-      EInteger bigint = EInteger.FromInt64(1);
+      EInteger bigint = EInteger.FromInt32(1);
       bigint = bigint.ShiftLeft(100);
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(12), bigint.ShiftRight(-12));
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(-12), bigint.ShiftRight(12));
@@ -1953,19 +1964,19 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestShiftRight() {
-      EInteger bigint = EInteger.FromInt64(1);
+      EInteger bigint = EInteger.FromInt32(1);
       bigint = bigint.ShiftLeft(80);
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(12), bigint.ShiftRight(-12));
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(-12), bigint.ShiftRight(12));
       FastRandom r = new FastRandom();
-      EInteger minusone = EInteger.FromInt64(0);
-      minusone = minusone.Subtract(EInteger.FromInt64(1));
+      EInteger minusone = EInteger.FromInt32(0);
+      minusone = minusone.Subtract(EInteger.FromInt32(1));
       for (int i = 0; i < 1000; ++i) {
         int smallint = r.NextValue(0x7fffffff);
-        EInteger bigintA = EInteger.FromInt64(smallint);
+        EInteger bigintA = EInteger.FromInt32(smallint);
         String str = bigintA.toString();
         for (int j = 32; j < 80; ++j) {
-          DoTestShiftRight2(str, j, EInteger.FromInt64(0));
+          DoTestShiftRight2(str, j, EInteger.FromInt32(0));
           DoTestShiftRight2("-" + str, j, minusone);
         }
       }
@@ -2028,11 +2039,11 @@ BigValueOf(longV).ToInt64Checked());
           bigintA = bigintA.Negate();
         }
         if (bigintA.signum() == 0) {
-          bigintA = EInteger.FromInt64(1);
+          bigintA = EInteger.FromInt32(1);
         }
         EInteger sr = bigintA.Sqrt();
         EInteger srsqr = sr.Multiply(sr);
-        sr = sr.Add(EInteger.FromInt64(1));
+        sr = sr.Add(EInteger.FromInt32(1));
         EInteger sronesqr = sr.Multiply(sr);
         if (srsqr.compareTo(bigintA) > 0) {
           Assert.fail(srsqr + " not " + bigintA +
@@ -2050,7 +2061,16 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestSubtract() {
-      // not implemented yet
+EInteger ei1 =
+  EInteger.FromString("5903310052234442839693218602919688229567185544510721229016780853271484375"
+);
+      EInteger ei2 = EInteger.FromString("710542735760100185871124267578125");
+      {
+String stringTemp = ei1.Subtract(ei2).toString() ;
+Assert.assertEquals(
+"5903310052234442839693218602919688229566475001774961128830909729003906250",
+stringTemp);
+}
     }
     @Test
     public void TestToByteArray() {
@@ -2061,7 +2081,7 @@ BigValueOf(longV).ToInt64Checked());
     public void TestToRadixString() {
       FastRandom fr = new FastRandom();
       try {
-        EInteger.FromInt64(1).ToRadixString(-1);
+        EInteger.FromInt32(1).ToRadixString(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -2070,7 +2090,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ToRadixString(0);
+        EInteger.FromInt32(1).ToRadixString(0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -2079,7 +2099,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ToRadixString(1);
+        EInteger.FromInt32(1).ToRadixString(1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -2088,7 +2108,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ToRadixString(37);
+        EInteger.FromInt32(1).ToRadixString(37);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -2097,7 +2117,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ToRadixString(Integer.MIN_VALUE);
+        EInteger.FromInt32(1).ToRadixString(Integer.MIN_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -2106,7 +2126,7 @@ BigValueOf(longV).ToInt64Checked());
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt64(1).ToRadixString(Integer.MAX_VALUE);
+        EInteger.FromInt32(1).ToRadixString(Integer.MAX_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         System.out.print("");
@@ -2182,7 +2202,7 @@ BigValueOf(longV).ToInt64Checked());
     public void TestZero() {
       // not implemented yet
       {
-        String stringTemp = EInteger.FromInt64(0).toString();
+        String stringTemp = EInteger.FromInt32(0).toString();
         Assert.assertEquals(
           "0",
           stringTemp);
@@ -2255,7 +2275,7 @@ BigValueOf(longV).ToInt64Checked());
           Assert.assertEquals("TestMultiplyDivide " + bigintA + "; " + bigintB + ";\n" + bigintC,bigintA,bigintD);
         }
         if (!bigintRem.isZero()) {
-          Assert.assertEquals("TestMultiplyDivide " + bigintA + "; " + bigintB,EInteger.FromInt64(0),bigintRem);
+          Assert.assertEquals("TestMultiplyDivide " + bigintA + "; " + bigintB,EInteger.FromInt32(0),bigintRem);
         }
         bigintE = bigintC.Divide(bigintB);
         if (!bigintD.equals(bigintE)) {
@@ -2282,7 +2302,7 @@ BigValueOf(longV).ToInt64Checked());
           Assert.assertEquals("TestMultiplyDivide " + bigintA + "; " + bigintB,bigintB,bigintD);
         }
         if (!bigintRem.isZero()) {
-          Assert.assertEquals("TestMultiplyDivide " + bigintA + "; " + bigintB,EInteger.FromInt64(0),bigintRem);
+          Assert.assertEquals("TestMultiplyDivide " + bigintA + "; " + bigintB,EInteger.FromInt32(0),bigintRem);
         }
       }
       if (!bigintB.isZero()) {

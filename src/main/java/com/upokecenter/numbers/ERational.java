@@ -1085,8 +1085,14 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * exceeds the range of a 64-bit floating point number.
      */
     public double ToDouble() {
-      return
-  this.ToEFloat(EContext.Binary64.WithRounding(ERounding.Odd))
+      if (!this.isFinite()) {
+        return this.ToEFloat(EContext.Binary64).ToDouble();
+      }
+      if (this.isNegative() && this.isZero()) {
+        return EFloat.NegativeZero.ToDouble();
+      }
+      return EFloat.FromEInteger(this.getNumerator())
+        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary64)
         .ToDouble();
     }
 

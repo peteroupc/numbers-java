@@ -513,55 +513,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       return this;
     }
 
-    int RepeatedSubtract(FastInteger divisor) {
-      if (this.integerMode == 1) {
-        int count = 0;
-        if (divisor.integerMode == 1) {
-          while (this.mnum.compareTo(divisor.mnum) >= 0) {
-            this.mnum.Subtract(divisor.mnum);
-            ++count;
-          }
-          return count;
-        }
-        if (divisor.integerMode == 0 && divisor.smallValue >= 0) {
-          if (this.mnum.CanFitInInt32()) {
-            int small = this.mnum.ToInt32();
-            count = small / divisor.smallValue;
-            this.mnum.SetInt(small % divisor.smallValue);
-          } else {
-            MutableNumber dmnum = new MutableNumber(divisor.smallValue);
-            while (this.mnum.compareTo(dmnum) >= 0) {
-              this.mnum.Subtract(dmnum);
-              ++count;
-            }
-          }
-          return count;
-        } else {
-          EInteger bigrem;
-          EInteger bigquo;
-{
-EInteger[] divrem = this.AsEInteger().DivRem(divisor.AsEInteger());
-bigquo = divrem[0];
-bigrem = divrem[1]; }
-          int smallquo = bigquo.AsInt32Checked();
-          this.integerMode = 2;
-          this.largeValue = bigrem;
-          return smallquo;
-        }
-      } else {
-        EInteger bigrem;
-        EInteger bigquo;
-{
-EInteger[] divrem = this.AsEInteger().DivRem(divisor.AsEInteger());
-bigquo = divrem[0];
-bigrem = divrem[1]; }
-        int smallquo = bigquo.AsInt32Checked();
-        this.integerMode = 2;
-        this.largeValue = bigrem;
-        return smallquo;
-      }
-    }
-
     /**
      * Sets this object&#x27;s value to the current value times another integer.
      * @param val The integer to multiply by.
@@ -593,8 +544,8 @@ bigrem = divrem[1]; }
                 // if either operand is negative
                 // convert to big integer
                 this.integerMode = 2;
-                this.largeValue = EInteger.FromInt64(this.smallValue);
-                this.largeValue = this.largeValue.Multiply(EInteger.FromInt64(val));
+                this.largeValue = EInteger.FromInt32(this.smallValue);
+                this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
               }
             } else {
               smallValue *= val;
@@ -604,13 +555,13 @@ bigrem = divrem[1]; }
             if (val < 0) {
               this.integerMode = 2;
               this.largeValue = this.mnum.ToEInteger();
-              this.largeValue = this.largeValue.Multiply(EInteger.FromInt64(val));
+              this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
             } else {
               mnum.Multiply(val);
             }
             break;
           case 2:
-            this.largeValue = this.largeValue.Multiply(EInteger.FromInt64(val));
+            this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
             break;
           default: throw new IllegalStateException();
         }
@@ -665,14 +616,14 @@ bigrem = divrem[1]; }
                 (vsv > 0 && Integer.MIN_VALUE + vsv > this.smallValue)) {
               // would overflow, convert to large
               this.integerMode = 2;
-              this.largeValue = EInteger.FromInt64(this.smallValue);
-              this.largeValue = this.largeValue.Subtract(EInteger.FromInt64(vsv));
+              this.largeValue = EInteger.FromInt32(this.smallValue);
+              this.largeValue = this.largeValue.Subtract(EInteger.FromInt32(vsv));
             } else {
               this.smallValue -= vsv;
             }
           } else {
             integerMode = 2;
-            largeValue = EInteger.FromInt64(smallValue);
+            largeValue = EInteger.FromInt32(smallValue);
             valValue = val.AsEInteger();
             largeValue = largeValue.Subtract(valValue);
           }
@@ -714,8 +665,8 @@ bigrem = divrem[1]; }
                 (val > 0 && Integer.MIN_VALUE + val > this.smallValue)) {
           // would overflow, convert to large
           this.integerMode = 2;
-          this.largeValue = EInteger.FromInt64(this.smallValue);
-          this.largeValue = this.largeValue.Subtract(EInteger.FromInt64(val));
+          this.largeValue = EInteger.FromInt32(this.smallValue);
+          this.largeValue = this.largeValue.Subtract(EInteger.FromInt32(val));
         } else {
           this.smallValue -= val;
         }
@@ -792,7 +743,7 @@ bigrem = divrem[1]; }
                 this.mnum.Add(val.smallValue);
               } else {
                 this.integerMode = 2;
-                this.largeValue = EInteger.FromInt64(this.smallValue);
+                this.largeValue = EInteger.FromInt32(this.smallValue);
                 this.largeValue = this.largeValue.Add(EInteger.FromInt64(val.smallValue));
               }
             } else {
@@ -800,7 +751,7 @@ bigrem = divrem[1]; }
             }
           } else {
             integerMode = 2;
-            largeValue = EInteger.FromInt64(smallValue);
+            largeValue = EInteger.FromInt32(smallValue);
             valValue = val.AsEInteger();
             largeValue = largeValue.Add(valValue);
           }
@@ -955,8 +906,8 @@ bigrem = divrem[1]; }
               this.mnum.Add(val);
             } else {
               this.integerMode = 2;
-              this.largeValue = EInteger.FromInt64(this.smallValue);
-              this.largeValue = this.largeValue.Add(EInteger.FromInt64(val));
+              this.largeValue = EInteger.FromInt32(this.smallValue);
+              this.largeValue = this.largeValue.Add(EInteger.FromInt32(val));
             }
           } else {
             smallValue += val;
@@ -968,12 +919,12 @@ bigrem = divrem[1]; }
           } else {
             integerMode = 2;
             largeValue = mnum.ToEInteger();
-            valValue = EInteger.FromInt64(val);
+            valValue = EInteger.FromInt32(val);
             largeValue = largeValue.Add(valValue);
           }
           break;
         case 2:
-          valValue = EInteger.FromInt64(val);
+          valValue = EInteger.FromInt32(val);
           this.largeValue = this.largeValue.Add(valValue);
           break;
         default: throw new IllegalStateException();
@@ -1089,9 +1040,9 @@ bigrem = divrem[1]; }
           return (val == this.smallValue) ? 0 : (this.smallValue < val ? -1 :
           1);
         case 1:
-          return this.mnum.ToEInteger().compareTo(EInteger.FromInt64(val));
+          return this.mnum.ToEInteger().compareTo(EInteger.FromInt32(val));
         case 2:
-          return this.largeValue.compareTo(EInteger.FromInt64(val));
+          return this.largeValue.compareTo(EInteger.FromInt32(val));
         default: return 0;
       }
     }

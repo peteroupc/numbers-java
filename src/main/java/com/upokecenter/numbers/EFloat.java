@@ -22,7 +22,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * will throw an exception.</p> <p>When an arithmetic operation signals
      * the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not
      * throw an exception too, unless the operation's trap is enabled in the
-     * precision context (see PrecisionContext's Traps property).</p> <p>An
+     * precision context (see EContext's Traps property).</p> <p>An
      * arbitrary-precision binary float value can be serialized in one of
      * the following ways:</p> <ul> <li>By calling the toString() method.
      * However, not all strings can be converted back to an
@@ -111,7 +111,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
 
     public static final EFloat Ten =
-      EFloat.Create(EInteger.FromInt64(10), EInteger.FromInt32(0));
+      EFloat.Create(EInteger.FromInt32(10), EInteger.FromInt32(0));
 
     /**
      * Represents the number 0.
@@ -261,7 +261,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @param signaling Whether the return value will be signaling (true) or quiet
      * (false).
      * @param negative Whether the return value is negative.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return An arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code diag} is null.
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
@@ -435,28 +435,28 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Creates a binary float from a string that represents a number. Note that if
      * the string contains a negative exponent, the resulting value might
-     * not be exact. However, the resulting binary float will contain enough
-     * precision to accurately convert it to a 32-bit or 64-bit floating
-     * point number (float or double). <p>The format of the string generally
-     * consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
-     * minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
-     * <li>One or more digits, with a single optional decimal point after
-     * the first digit and before the last digit.</li> <li>Optionally,
-     * "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
-     * one or more digits specifying the exponent.</li></ul> <p>The string
-     * can also be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN")
-     * followed by any number of digits, or signaling NaN ("sNaN") followed
-     * by any number of digits, all in any combination of upper and lower
-     * case.</p> <p>All characters mentioned above are the corresponding
-     * characters in the Basic Latin range. In particular, the digits must
-     * be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not
-     * allowed to contain white space characters, including spaces.</p>
+     * not be exact, in which case the resulting binary float will be an
+     * approximation of this decimal number's value. <p>The format of the
+     * string generally consists of:</p> <ul> <li>An optional plus sign ("+"
+     * , U+002B) or minus sign ("-", U+002D) (if '-' , the value is
+     * negative.)</li> <li>One or more digits, with a single optional
+     * decimal point after the first digit and before the last digit.</li>
+     * <li>Optionally, "E+"/"e+" (positive exponent) or "E-"/"e-" (negative
+     * exponent) plus one or more digits specifying the exponent.</li></ul>
+     * <p>The string can also be "-INF", "-Infinity", "Infinity", "INF",
+     * quiet NaN ("NaN") followed by any number of digits, or signaling NaN
+     * ("sNaN") followed by any number of digits, all in any combination of
+     * upper and lower case.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular, the
+     * digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
+     * is not allowed to contain white space characters, including
+     * spaces.</p>
      * @param str A text string.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @param ctx A PrecisionContext object specifying the precision, rounding, and
+     * @param ctx An EContext object specifying the precision, rounding, and
      * exponent range to apply to the parsed number. Can be null.
      * @return The parsed number, converted to arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
@@ -492,7 +492,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Not documented yet.
      * @param str A text string.
-     * @param ctx A PrecisionContext object specifying the precision, rounding, and
+     * @param ctx An EContext object specifying the precision, rounding, and
      * exponent range to apply to the parsed number. Can be null.
      * @return The parsed number, converted to arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
@@ -522,10 +522,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Gets the greater value between two binary floats.
      * @param first An arbitrary-precision binary float.
      * @param second Another arbitrary-precision binary float.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The larger value of the two objects.
      */
     public static EFloat Max(
@@ -552,10 +552,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * absolute values are equal, has the same effect as Max.
      * @param first Another arbitrary-precision binary float.
      * @param second An arbitrary-precision binary float. (3).
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat MaxMagnitude(
@@ -582,10 +582,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Gets the lesser value between two binary floats.
      * @param first An arbitrary-precision binary float.
      * @param second Another arbitrary-precision binary float.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The smaller value of the two objects.
      */
     public static EFloat Min(
@@ -612,10 +612,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * absolute values are equal, has the same effect as Min.
      * @param first Another arbitrary-precision binary float.
      * @param second An arbitrary-precision binary float. (3).
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat MinMagnitude(
@@ -640,11 +640,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Finds the constant &#x3c0;.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as &#x3c0; can never be represented exactly.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as &#x3c0; can never be represented exactly.</i>
      * @return π rounded to the given precision.
      * @throws IllegalArgumentException The parameter {@code ctx} is null or the
      * precision is unlimited (the context's Precision property is 0).
@@ -670,10 +670,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Finds the absolute value of this object (if it&#x27;s negative, it becomes
      * positive).
-     * @param context A precision context to control precision, rounding, and
-     * exponent range of the result. If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null.
+     * @param context An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The absolute value of this object. Signals FlagInvalid and returns
      * quiet NaN if this value is signaling NaN.
      */
@@ -694,10 +694,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Finds the sum of this object and another object. The result&#x27;s exponent
      * is set to the lower of the exponents of the two operands.
      * @param otherValue The number to add to.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The sum of thisValue and the other object.
      */
     public EFloat Add(
@@ -732,10 +732,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * is a quiet NaN or signaling NaN, this method will return a quiet NaN
      * and will signal a FlagInvalid flag.</p>
      * @param other An arbitrary-precision binary float.
-     * @param ctx A precision context. The precision, rounding, and exponent range
-     * are ignored. If HasFlags of the context is true, will store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null.
+     * @param ctx An arithmetic context. The precision, rounding, and exponent
+     * range are ignored. If {@code HasFlags} of the context is true, will
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
      * other value, or 1 if this object is greater.
@@ -747,10 +747,24 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Not documented yet.
-     * @param other The parameter {@code other} is not documented yet.
-     * @param ctx The parameter {@code ctx} is not documented yet.
-     * @return A 32-bit signed integer.
+     * Compares the values of this object and another object, imposing a total
+     * ordering on all possible values. In this method: <ul> <li>For objects
+     * with the same value, the one with the higher exponent has a greater
+     * "absolute value".</li> <li>Negative zero is less than positive
+     * zero.</li> <li>Quiet NaN has a higher "absolute value" than signaling
+     * NaN. If both objects are quiet NaN or both are signaling NaN, the one
+     * with the higher diagnostic information has a greater "absolute
+     * value".</li> <li>NaN has a higher "absolute value" than
+     * infinity.</li> <li>Infinity has a higher "absolute value" than any
+     * finite number.</li> <li>Negative numbers are less than positive
+     * numbers.</li></ul>
+     * @param other An arbitrary-precision binary float to compare with this one.
+     * @param ctx An arithmetic context. Flags will be set in this context only if
+     * {@code HasFlags} and {@code IsSimplified} of the context are true and
+     * only if an operand needed to be rounded before carrying out the
+     * operation. Can be null.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
      */
     public int CompareToTotal(EFloat other, EContext ctx) {
       if (other == null) {
@@ -768,9 +782,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Not documented yet.
-     * @param other The parameter {@code other} is not documented yet.
-     * @return A 32-bit signed integer.
+     * Compares the values of this object and another object, imposing a total
+     * ordering on all possible values. In this method: <ul> <li>For objects
+     * with the same value, the one with the higher exponent has a greater
+     * "absolute value".</li> <li>Negative zero is less than positive
+     * zero.</li> <li>Quiet NaN has a higher "absolute value" than signaling
+     * NaN. If both objects are quiet NaN or both are signaling NaN, the one
+     * with the higher diagnostic information has a greater "absolute
+     * value".</li> <li>NaN has a higher "absolute value" than
+     * infinity.</li> <li>Infinity has a higher "absolute value" than any
+     * finite number.</li> <li>Negative numbers are less than positive
+     * numbers.</li></ul>
+     * @param other An arbitrary-precision binary float to compare with this one.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
+     * Does not signal flags if either value is signaling NaN.
      */
     public int CompareToTotal(EFloat other) {
       if (other == null) {
@@ -821,9 +847,19 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Not documented yet.
-     * @param other The parameter {@code other} is not documented yet.
-     * @return A 32-bit signed integer.
+     * Compares the absolute values of this object and another object, imposing a
+     * total ordering on all possible values (ignoring their signs). In this
+     * method: <ul> <li>For objects with the same value, the one with the
+     * higher exponent has a greater "absolute value".</li> <li>Negative
+     * zero and positive zero are considered equal.</li> <li>Quiet NaN has a
+     * higher "absolute value" than signaling NaN. If both objects are quiet
+     * NaN or both are signaling NaN, the one with the higher diagnostic
+     * information has a greater "absolute value".</li> <li>NaN has a higher
+     * "absolute value" than infinity.</li> <li>Infinity has a higher
+     * "absolute value" than any finite number.</li></ul>
+     * @param other An arbitrary-precision binary float to compare with this one.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
      */
     public int CompareToTotalMagnitude(EFloat other) {
       if (other == null) {
@@ -875,10 +911,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * signaling NaN, this method returns a quiet NaN, and will signal a
      * FlagInvalid flag if either is a signaling NaN.</p>
      * @param other An arbitrary-precision binary float.
-     * @param ctx A precision context. The precision, rounding, and exponent range
-     * are ignored. If HasFlags of the context is true, will store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null.
+     * @param ctx An arithmetic context. The precision, rounding, and exponent
+     * range are ignored. If {@code HasFlags} of the context is true, will
+     * store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
      * other value, or 1 if this object is greater.
@@ -890,9 +926,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Not documented yet.
-     * @param other The parameter {@code other} is not documented yet.
-     * @return An EFloat object.
+     * Returns a number with the same value as this one, but copying the sign
+     * (positive or negative) of another number.
+     * @param other A number whose sign will be copied.
+     * @return An arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EFloat CopySign(EFloat other) {
@@ -928,10 +965,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * binary float object. The preferred exponent for the result is this
      * object's exponent minus the divisor's exponent.
      * @param divisor The divisor.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -965,16 +1002,16 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
      * @param divisor An arbitrary-precision decimal number to divide by.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only in
      * the division portion of the remainder calculation; as a result, it's
      * possible for the remainder to have a higher precision than given in
      * this context. Flags will be set on the given context only if the
-     * context's HasFlags is true and the integer part of the division
-     * result doesn't fit the precision and exponent range without rounding.
-     * Can be null, in which the precision is unlimited and no additional
-     * rounding, other than the rounding down to an integer after division,
-     * is needed.
+     * context's {@code HasFlags} is true and the integer part of the
+     * division result doesn't fit the precision and exponent range without
+     * rounding. Can be null, in which the precision is unlimited and no
+     * additional rounding, other than the rounding down to an integer after
+     * division, is needed.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      * @deprecated Renamed to DivRemNaturalScale.
@@ -994,15 +1031,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * the cutoff point to the right of the usual decimal point. A positive
      * number places the cutoff point to the left of the usual decimal
      * point.
-     * @param ctx A precision context object to control the rounding mode to use if
-     * the result must be scaled down to have the same exponent as this
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls
      * the Quantize method with both arguments equal to the result of the
      * operation (and can signal FlagInvalid and return NaN if the result
-     * doesn't fit the given precision). If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * doesn't fit the given precision). If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1056,15 +1093,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @param exponent The desired exponent. A negative number places the cutoff
      * point to the right of the usual decimal point. A positive number
      * places the cutoff point to the left of the usual decimal point.
-     * @param ctx A precision context object to control the rounding mode to use if
-     * the result must be scaled down to have the same exponent as this
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls
      * the Quantize method with both arguments equal to the result of the
      * operation (and can signal FlagInvalid and return NaN if the result
-     * doesn't fit the given precision). If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * doesn't fit the given precision). If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1130,11 +1167,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * result, with the preferred exponent set to this value's exponent
      * minus the divisor's exponent.
      * @param divisor The divisor.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the integer part of the result. Flags will be
-     * set on the given context only if the context's HasFlags is true and
-     * the integer part of the result doesn't fit the precision and exponent
-     * range without rounding.
+     * set on the given context only if the context's {@code HasFlags} is
+     * true and the integer part of the result doesn't fit the precision and
+     * exponent range without rounding.
      * @return The integer part of the quotient of the two objects. Returns null if
      * the return value would overflow the exponent range. A caller can
      * handle a null return value by treating it as positive infinity if
@@ -1156,11 +1193,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Divides this object by another object, and returns the integer part of the
      * result, with the exponent set to 0.
      * @param divisor The divisor.
-     * @param ctx A precision context object to control the precision. The rounding
-     * and exponent range settings of this context are ignored. If HasFlags
-     * of the context is true, will also store the flags resulting from the
-     * operation (the flags are in addition to the pre-existing flags). Can
-     * be null.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored. If
+     * {@code HasFlags} of the context is true, will also store the flags
+     * resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null.
      * @return The integer part of the quotient of the two objects. The exponent
      * will be set to 0. Signals FlagDivideByZero and returns infinity if
      * the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
@@ -1212,13 +1249,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * and the formula in RemainderNaturalScale. This is meant to be similar
      * to the divideAndRemainder method in Java's BigDecimal.
      * @param divisor The number to divide by.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only in
      * the division portion of the remainder calculation; as a result, it's
      * possible for the remainder to have a higher precision than given in
      * this context. Flags will be set on the given context only if the
-     * context's HasFlags is true and the integer part of the division
-     * result doesn't fit the precision and exponent range without rounding.
+     * context's {@code HasFlags} is true and the integer part of the
+     * division result doesn't fit the precision and exponent range without
+     * rounding.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      */
@@ -1274,12 +1312,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Finds e (the base of natural logarithms) raised to the power of this
      * object's value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the exponential function's results are generally not
-     * exact.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the exponential function's results are generally
+     * not exact.</i>
      * @return Exponential of this object. If this object's value is 1, returns an
      * approximation to " e" within the given precision.
      * @throws IllegalArgumentException The parameter {@code ctx} is null or the
@@ -1363,11 +1401,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to
      * equal this object's value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the ln function's results are generally not exact.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the ln function's results are generally not
+     * exact.</i>
      * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the result would be a complex number with
      * a real part equal to Ln of this object's absolute value and an
@@ -1383,11 +1422,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Finds the base-10 logarithm of this object, that is, the power (exponent)
      * that the number 10 must be raised to in order to equal this
      * object&#x27;s value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the ln function's results are generally not exact.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the ln function's results are generally not
+     * exact.</i>
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -1412,10 +1452,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Returns a number similar to this number but with the radix point moved to
      * the left.
      * @param places A 32-bit signed integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float.
      */
     public EFloat MovePointLeft(int places, EContext ctx) {
@@ -1436,10 +1476,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Returns a number similar to this number but with the radix point moved to
      * the left.
      * @param bigPlaces An arbitrary-precision integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float.
      */
     public EFloat MovePointLeft(
@@ -1466,10 +1506,10 @@ EContext ctx) {
      * Returns a number similar to this number but with the radix point moved to
      * the right.
      * @param places A 32-bit signed integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float.
      */
     public EFloat MovePointRight(int places, EContext ctx) {
@@ -1490,10 +1530,10 @@ EContext ctx) {
      * Returns a number similar to this number but with the radix point moved to
      * the right.
      * @param bigPlaces An arbitrary-precision integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return A number whose scale is increased by {@code bigPlaces}, but not to
      * more than 0.
      */
@@ -1556,10 +1596,10 @@ this.flags).RoundToPrecision(ctx);
      * if both operands have the same sign, and negative if they have
      * different signs.
      * @param op Another binary float.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The product of the two binary floats.
      */
     public EFloat Multiply(
@@ -1584,10 +1624,10 @@ this.flags).RoundToPrecision(ctx);
      * Multiplies by one value, and then adds another value.
      * @param op The value to multiply.
      * @param augend The value to add.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The result thisValue * multiplicand + augend.
      */
     public EFloat MultiplyAndAdd(
@@ -1601,10 +1641,10 @@ this.flags).RoundToPrecision(ctx);
      * Multiplies by one value, and then subtracts another value.
      * @param op The value to multiply.
      * @param subtrahend The value to subtract.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The result thisValue * multiplicand - subtrahend.
      * @throws java.lang.NullPointerException The parameter {@code op} or {@code
      * subtrahend} is null.
@@ -1644,10 +1684,10 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a binary float with the same value as this object but with the sign
      * reversed.
-     * @param context A precision context to control precision, rounding, and
-     * exponent range of the result. If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null.
+     * @param context An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float. If this value is positive zero,
      * returns positive zero. Signals FlagInvalid and returns quiet NaN if
      * this value is signaling NaN.
@@ -1658,11 +1698,11 @@ this.flags).RoundToPrecision(ctx);
 
     /**
      * Finds the largest value that's smaller than the given value.
-     * @param ctx A precision context object to control the precision and exponent
-     * range of the result. The rounding mode from this context is ignored.
-     * If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags).
+     * @param ctx An arithmetic context object to control the precision and
+     * exponent range of the result. The rounding mode from this context is
+     * ignored. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags).
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity.
      * @throws IllegalArgumentException The parameter {@code ctx} is null, the
@@ -1674,11 +1714,11 @@ this.flags).RoundToPrecision(ctx);
 
     /**
      * Finds the smallest value that's greater than the given value.
-     * @param ctx A precision context object to control the precision and exponent
-     * range of the result. The rounding mode from this context is ignored.
-     * If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags).
+     * @param ctx An arithmetic context object to control the precision and
+     * exponent range of the result. The rounding mode from this context is
+     * ignored. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags).
      * @return Returns the smallest value that's greater than the given value.
      * @throws IllegalArgumentException The parameter {@code ctx} is null, the
      * precision is 0, or {@code ctx} has an unlimited exponent range.
@@ -1691,11 +1731,11 @@ this.flags).RoundToPrecision(ctx);
      * Finds the next value that is closer to the other object's value than this
      * object's value.
      * @param otherValue An arbitrary-precision binary float.
-     * @param ctx A precision context object to control the precision and exponent
-     * range of the result. The rounding mode from this context is ignored.
-     * If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags).
+     * @param ctx An arithmetic context object to control the precision and
+     * exponent range of the result. The rounding mode from this context is
+     * ignored. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags).
      * @return Returns the next value that is closer to the other object' s value
      * than this object's value.
      * @throws IllegalArgumentException The parameter {@code ctx} is null, the
@@ -1724,7 +1764,7 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Raises this object's value to the given exponent.
      * @param exponent An arbitrary-precision binary float.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return This^exponent. Signals the flag FlagInvalid and returns NaN if this
      * object and exponent are both 0; or if this value is less than 0 and
      * the exponent either has a fractional part or is infinity.
@@ -1739,10 +1779,10 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Raises this object&#x27;s value to the given exponent.
      * @param exponentSmall A 32-bit signed integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags).
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags).
      * @return This^exponent. Signals the flag FlagInvalid and returns NaN if this
      * object and exponent are both 0.
      */
@@ -1779,7 +1819,7 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a binary float with the same value but a new exponent.
      * @param desiredExponent An arbitrary-precision integer.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return A binary float with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if an overflow error occurred, or the rounded result can't fit the
@@ -1797,7 +1837,7 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a binary float with the same value but a new exponent.
      * @param desiredExponentSmall A 32-bit signed integer.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return A binary float with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if an overflow error occurred, or the rounded result can't fit the
@@ -1822,17 +1862,17 @@ this.flags).RoundToPrecision(ctx);
      * number. For example, -3 means round to the thousandth (10^-3,
      * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0
      * rounds the number to an integer.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A binary float with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if an overflow error occurred, or the result can't fit the given
      * precision without rounding. Signals FlagInvalid and returns
      * not-a-number (NaN) if the new exponent is outside of the valid range
-     * of the precision context, if it defines an exponent range.
+     * of the arithmetic context, if it defines an exponent range.
      */
     public EFloat Quantize(
       EFloat otherValue,
@@ -1844,10 +1884,10 @@ this.flags).RoundToPrecision(ctx);
      * Removes trailing zeros from this object&#x27;s mantissa. For example, 1.00
      * becomes 1. <p>If this object's value is 0, changes the exponent to
      * 0.</p>
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return This value with trailing zeros removed. Note that if the result has
      * a very high exponent and the context says to clamp high exponents,
      * there may still be some trailing zeros in the mantissa.
@@ -1860,7 +1900,7 @@ this.flags).RoundToPrecision(ctx);
      * Finds the remainder that results when dividing two arbitrary-precision
      * binary floats.
      * @param divisor An arbitrary-precision binary float.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return The remainder of the two objects.
      */
     public EFloat Remainder(
@@ -1884,12 +1924,13 @@ this.flags).RoundToPrecision(ctx);
      * * divisor). This is meant to be similar to the remainder operation in
      * Java's BigDecimal.
      * @param divisor Another arbitrary-precision binary float.
-     * @param ctx A precision context object to control the precision, rounding,
+     * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the integer part of the result. This context
      * will be used only in the division portion of the remainder
      * calculation. Flags will be set on the given context only if the
-     * context's HasFlags is true and the integer part of the division
-     * result doesn't fit the precision and exponent range without rounding.
+     * context's {@code HasFlags} is true and the integer part of the
+     * division result doesn't fit the precision and exponent range without
+     * rounding.
      * @return An arbitrary-precision binary float.
      */
     public EFloat RemainderNaturalScale(
@@ -1918,11 +1959,12 @@ this.flags).RoundToPrecision(ctx);
      * value.</li></ul> This function is also known as the "IEEE Remainder"
      * function.
      * @param divisor The divisor.
-     * @param ctx A precision context object to control the precision. The rounding
-     * and exponent range settings of this context are ignored (the rounding
-     * mode is always treated as HalfEven). If HasFlags of the context is
-     * true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored (the
+     * rounding mode is always treated as HalfEven). If {@code HasFlags} of
+     * the context is true, will also store the flags resulting from the
+     * operation (the flags are in addition to the pre-existing flags). Can
+     * be null.
      * @return The distance of the closest multiple. Signals FlagInvalid and
      * returns not-a-number (NaN) if the divisor is 0, or either the result
      * of integer division (the quotient) or the remainder wouldn't fit the
@@ -1943,18 +1985,18 @@ this.flags).RoundToPrecision(ctx);
      * places from the number. For example, -3 means round to the sixteenth
      * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
      * 1000b). A value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A binary number rounded to the closest value representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the precision context defines an exponent
+     * not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when
      * rounding, and the given exponent is outside of the valid range of the
-     * precision context.
+     * arithmetic context.
      */
     public EFloat RoundToExponent(
       EInteger exponent,
@@ -1971,18 +2013,18 @@ this.flags).RoundToPrecision(ctx);
      * places number. For example, -3 means round to the sixteenth (10b^-3,
      * 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null, in which case the
-     * default rounding mode is HalfEven.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A binary number rounded to the closest value representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the precision context defines an exponent
+     * not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when
      * rounding, and the given exponent is outside of the valid range of the
-     * precision context.
+     * arithmetic context.
      */
     public EFloat RoundToExponent(
       int exponentSmall,
@@ -2000,11 +2042,11 @@ this.flags).RoundToPrecision(ctx);
      * places from the number. For example, -3 means round to the sixteenth
      * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
      * 1000b). A value of 0 rounds the number to an integer.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return A binary number rounded to the closest value representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to the
      * given exponent when rounding, and the given exponent is outside of
      * the valid range of the precision context.
@@ -2025,11 +2067,11 @@ this.flags).RoundToPrecision(ctx);
      * places number. For example, -3 means round to the sixteenth (10b^-3,
      * 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A
      * value of 0 rounds the number to an integer.
-     * @param ctx A PrecisionContext object.
+     * @param ctx An EContext object.
      * @return A binary number rounded to the closest value representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to the
      * given exponent when rounding, and the given exponent is outside of
      * the valid range of the precision context.
@@ -2044,17 +2086,17 @@ this.flags).RoundToPrecision(ctx);
      * Returns a binary number with the same value as this object but rounded to an
      * integer, and signals an invalid operation if the result would be
      * inexact.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A binary number rounded to the closest integer representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to 0 when
-     * rounding, and 0 is outside of the valid range of the precision
+     * rounding, and 0 is outside of the valid range of the arithmetic
      * context.
      */
     public EFloat RoundToIntegerExact(EContext ctx) {
@@ -2064,10 +2106,10 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a binary number with the same value as this object but rounded to an
      * integer, without adding the FlagInexact or FlagRounded flags.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags), except that this function will never add the
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags), except that this function will never add the
      * FlagRounded and FlagInexact flags (the only difference between this
      * and RoundToExponentExact). Can be null, in which case the default
      * rounding mode is HalfEven.
@@ -2076,7 +2118,7 @@ this.flags).RoundToPrecision(ctx);
      * digits are discarded to make it fit. Signals FlagInvalid and returns
      * not-a-number (NaN) if the precision context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is
-     * outside of the valid range of the precision context.
+     * outside of the valid range of the arithmetic context.
      */
     public EFloat RoundToIntegerNoRoundedFlag(EContext ctx) {
       return MathValue.RoundToExponentNoRoundedFlag(this, EInteger.FromInt32(0), ctx);
@@ -2086,17 +2128,17 @@ this.flags).RoundToPrecision(ctx);
      * Returns a binary number with the same value as this object but rounded to an
      * integer, and signals an invalid operation if the result would be
      * inexact.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A binary number rounded to the closest integer representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the precision context
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context
      * defines an exponent range, the new exponent must be changed to 0 when
-     * rounding, and 0 is outside of the valid range of the precision
+     * rounding, and 0 is outside of the valid range of the arithmetic
      * context.
      * @deprecated Renamed to RoundToIntegerExact.
  */
@@ -2108,10 +2150,10 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a binary number with the same value as this object but rounded to an
      * integer, without adding the FlagInexact or FlagRounded flags.
-     * @param ctx A precision context to control precision and rounding of the
-     * result. If HasFlags of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags), except that this function will never add the
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags), except that this function will never add the
      * FlagRounded and FlagInexact flags (the only difference between this
      * and RoundToExponentExact). Can be null, in which case the default
      * rounding mode is HalfEven.
@@ -2120,7 +2162,7 @@ this.flags).RoundToPrecision(ctx);
      * digits are discarded to make it fit. Signals FlagInvalid and returns
      * not-a-number (NaN) if the precision context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is
-     * outside of the valid range of the precision context.
+     * outside of the valid range of the arithmetic context.
      * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
  */
 @Deprecated
@@ -2153,10 +2195,10 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param places A 32-bit signed integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ScaleByPowerOfTwo(int places, EContext ctx) {
@@ -2175,10 +2217,10 @@ this.flags).RoundToPrecision(ctx);
     /**
      * Returns a number similar to this number but with its scale adjusted.
      * @param bigPlaces An arbitrary-precision integer.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return A number whose scale is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(
@@ -2200,12 +2242,12 @@ EContext ctx) {
 
     /**
      * Finds the square root of this object's value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the square root function's results are generally not exact
-     * for many inputs.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the square root function's results are generally
+     * not exact for many inputs.</i>
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN).
@@ -2218,12 +2260,12 @@ EContext ctx) {
 
     /**
      * Finds the square root of this object's value.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). <i>This parameter cannot be
-     * null, as the square root function's results are generally not exact
-     * for many inputs.</i>
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * cannot be null, as the square root function's results are generally
+     * not exact for many inputs.</i>
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN).
@@ -2247,10 +2289,10 @@ EContext ctx) {
     /**
      * Subtracts an arbitrary-precision binary float from this instance.
      * @param otherValue An arbitrary-precision binary float.
-     * @param ctx A precision context to control precision, rounding, and exponent
-     * range of the result. If HasFlags of the context is true, will also
-     * store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.
+     * @param ctx An arithmetic context to control precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null.
      * @return The difference of the two objects.
      * @throws java.lang.NullPointerException The parameter {@code otherValue} is
      * null.
@@ -2833,16 +2875,16 @@ EContext ctx) {
      * @param den Another arbitrary-precision integer.
      * @return A Boolean object.
      */
-      public boolean HasTerminatingRadixExpansion(EInteger num, EInteger den) {
-        EInteger gcd = num.Gcd(den);
-        if (gcd.isZero()) {
-          return false;
+      public FastInteger DivisionShift(EInteger num, EInteger den) {
+        if (den.isZero()) {
+          return null;
         }
-        den = den.Divide(gcd);
-        while (den.isEven()) {
-          den = den.ShiftRight(1);
+        if (den.GetUnsignedBit(0) && den.compareTo(EInteger.FromInt32(1)) != 0) {
+          return null;
         }
-        return den.equals(EInteger.FromInt32(1));
+        int lowBit = den.GetLowBit();
+        den = den.ShiftRight(lowBit);
+        return den.equals(EInteger.FromInt32(1)) ? new FastInteger(lowBit) : null;
       }
 
     /**

@@ -86,9 +86,9 @@ import com.upokecenter.numbers.*;
     public void TestCompareTo() {
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomExtendedFloat(r);
-        EFloat bigintB = RandomObjects.RandomExtendedFloat(r);
-        EFloat bigintC = RandomObjects.RandomExtendedFloat(r);
+        EFloat bigintA = RandomObjects.RandomEFloat(r);
+        EFloat bigintB = RandomObjects.RandomEFloat(r);
+        EFloat bigintC = RandomObjects.RandomEFloat(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       TestCommon.CompareTestLess(EFloat.Zero, EFloat.NaN);
@@ -116,10 +116,68 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestDivide() {
       try {
-        EDecimal.FromString("1").Divide(EDecimal.FromString("3"), null);
+        EFloat.FromString("1").Divide(EFloat.FromString("3"), null);
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
+      }
+      {
+String stringTemp = EFloat.FromString(
+"1").Divide(EFloat.FromInt32(8)).toString();
+Assert.assertEquals(
+"0.125",
+stringTemp);
+}
+      {
+String stringTemp = EFloat.FromString(
+"10").Divide(EFloat.FromInt32(80)).toString();
+Assert.assertEquals(
+"0.125",
+stringTemp);
+}
+      {
+String stringTemp = EFloat.FromString(
+"10000").Divide(EFloat.FromInt32(80000)).toString();
+Assert.assertEquals(
+"0.125",
+stringTemp);
+}
+      {
+String stringTemp = EFloat.FromString(
+"1000").Divide(EFloat.FromInt32(8)).toString();
+Assert.assertEquals(
+"125",
+stringTemp);
+}
+      {
+String stringTemp = EFloat.FromString(
+"1").Divide(EFloat.FromInt32(256)).toString();
+Assert.assertEquals(
+"0.00390625",
+stringTemp);
+}
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 5000; ++i) {
+        EFloat ed1 = RandomObjects.RandomEFloat(fr);
+        EFloat ed2 = RandomObjects.RandomEFloat(fr);
+        if (!ed1.isFinite() || !ed2.isFinite()) {
+          continue;
+        }
+        EFloat ed3 = ed1.Multiply(ed2);
+        if (!(ed3.isFinite()))Assert.fail();
+        EFloat ed4;
+        ed4 = ed3.Divide(ed1);
+        if (!ed1.isZero()) {
+          TestCommon.CompareTestEqual(ed4, ed2);
+        } else {
+          if (!(ed4.IsNaN()))Assert.fail();
+        }
+        ed4 = ed3.Divide(ed2);
+        if (!ed2.isZero()) {
+          TestCommon.CompareTestEqual(ed4, ed1);
+        } else {
+          if (!(ed4.IsNaN()))Assert.fail();
+        }
       }
     }
     @Test
@@ -142,8 +200,8 @@ import com.upokecenter.numbers.*;
     public void TestEquals() {
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomExtendedFloat(r);
-        EFloat bigintB = RandomObjects.RandomExtendedFloat(r);
+        EFloat bigintA = RandomObjects.RandomEFloat(r);
+        EFloat bigintB = RandomObjects.RandomEFloat(r);
         TestCommon.AssertEqualsHashCode(bigintA, bigintB);
       }
     }
@@ -161,48 +219,59 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
-    public void TestExtendedFloatDouble() {
-      TestExtendedFloatDoubleCore(3.5, "3.5");
-      TestExtendedFloatDoubleCore(7, "7");
-      TestExtendedFloatDoubleCore(1.75, "1.75");
-      TestExtendedFloatDoubleCore(3.5, "3.5");
-      TestExtendedFloatDoubleCore((double)Integer.MIN_VALUE, "-2147483648");
-      TestExtendedFloatDoubleCore(
+    public void TestEFloatDouble() {
+      TestEFloatDoubleCore(3.5, "3.5");
+      TestEFloatDoubleCore(7, "7");
+      TestEFloatDoubleCore(1.75, "1.75");
+      TestEFloatDoubleCore(3.5, "3.5");
+      TestEFloatDoubleCore((double)Integer.MIN_VALUE, "-2147483648");
+      TestEFloatDoubleCore(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
       FastRandom rand = new FastRandom();
       for (int i = 0; i < 2047; ++i) {
         // Try a random double with a given
         // exponent
-        TestExtendedFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
-        TestExtendedFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
-        TestExtendedFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
-        TestExtendedFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
+        TestEFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
+        TestEFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
+        TestEFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
+        TestEFloatDoubleCore(RandomObjects.RandomDouble(rand, i), null);
       }
     }
     @Test
-    public void TestExtendedFloatSingle() {
+    public void TestEFloatSingle() {
       FastRandom rand = new FastRandom();
       for (int i = 0; i < 255; ++i) {
         // Try a random float with a given
         // exponent
-        TestExtendedFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
-        TestExtendedFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
-        TestExtendedFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
-        TestExtendedFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
+        TestEFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
+        TestEFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
+        TestEFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
+        TestEFloatSingleCore(RandomObjects.RandomSingle(rand, i), null);
       }
+    }
+
+    @Test
+    public void TestFloatDecimalSpecific() {
+      String str =
+
+  "874952453585761710286297571153092638434027760916318352601207433388312948219720355694692773665688395541653.74728887385887787786487024277448654174804687500"
+        ;
+      EDecimal ed = EDecimal.FromString(str);
+      EFloat ef2 = ed.ToEFloat();
+      Assert.assertEquals(ef2.toString(), 0, ed.CompareToBinary(ef2));
     }
 
     @Test
     public void TestFloatDecimalRoundTrip() {
       FastRandom r = new FastRandom();
       for (int i = 0; i < 5000; ++i) {
-        EFloat ef = RandomObjects.RandomExtendedFloat(r);
+        EFloat ef = RandomObjects.RandomEFloat(r);
         EDecimal ed = ef.ToEDecimal();
-        EFloat ef2 = ed.ToEFloat();
-        // Tests that values converted from float to decimal and
-        // back have the same numerical value
-        TestCommon.CompareTestEqual(ef, ef2);
+          EFloat ef2 = ed.ToEFloat();
+          // Tests that values converted from float to decimal and
+          // back have the same numerical value
+          TestCommon.CompareTestEqual(ef, ef2);
       }
     }
     @Test
@@ -577,8 +646,8 @@ import com.upokecenter.numbers.*;
       }
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomExtendedFloat(r);
-        EFloat bigintB = RandomObjects.RandomExtendedFloat(r);
+        EFloat bigintA = RandomObjects.RandomEFloat(r);
+        EFloat bigintB = RandomObjects.RandomEFloat(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -645,8 +714,8 @@ import com.upokecenter.numbers.*;
 
       FastRandom r = new FastRandom();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomExtendedFloat(r);
-        EFloat bigintB = RandomObjects.RandomExtendedFloat(r);
+        EFloat bigintA = RandomObjects.RandomEFloat(r);
+        EFloat bigintB = RandomObjects.RandomEFloat(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -878,6 +947,115 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
     }
+    public EFloat RandomDoubleEFloat(FastRandom rnd) {
+      return RandomDoubleEFloat(rnd, false);
+    }
+
+    public EFloat RandomDoubleEFloat(FastRandom rnd, boolean subnormal) {
+      StringBuilder sb = new StringBuilder();
+      if (rnd.NextValue(2) == 0) {
+        sb.append('-');
+      }
+      sb.append(subnormal ? '0' : '1');
+      int subSize = 52;
+      int[] oneChances = { 99, 1, 50, 50, 50 };
+      int oneChance = oneChances[rnd.NextValue(oneChances.length)];
+      if (subnormal) {
+        subSize = rnd.NextValue(51);
+      }
+      for (int i = 0; i < 52; ++i) {
+        sb.append(((i < 52 - subSize) || (rnd.NextValue(100) >= oneChance))?
+          '0' : '1');
+      }
+      int expo = 0, exponent;
+      if (subnormal) {
+        exponent = -1074;
+      } else {
+        expo = rnd.NextValue(2046) - 1023;
+        exponent = expo - 52;
+      }
+      //System.out.println("" + sb + " exp=" + exponent);
+      EInteger eiExponent = EInteger.FromInt64(exponent);
+      return EFloat.Create(
+        EInteger.FromRadixString(sb.toString(), 2),
+        eiExponent);
+    }
+
+    public static String OutputDouble(double dbl) {
+      EFloat ef = EFloat.FromDouble(dbl);
+      return dbl + " [" + ef.getMantissa().Abs().ToRadixString(2) +
+        "," + ef.getExponent() + "]";
+    }
+    public static String OutputEF(EFloat ef) {
+      return ef.ToDouble() + " [" + ef.getMantissa().Abs().ToRadixString(2) +
+        "," + ef.getExponent() + "]";
+    }
+
+    public static void TestDoubleRounding(EFloat expected, EFloat input,
+      EFloat src) {
+      if (!input.isFinite() || !expected.isFinite()) {
+        return;
+      }
+      double expectedDouble = expected.ToDouble();
+      if (((Double)(expectedDouble)).isInfinite()) {
+        return;
+      }
+      String str = input.toString();
+      if (input.ToDouble() != expectedDouble) {
+  Assert.fail(
+  "\nexpected "+OutputDouble(expectedDouble)+",\ngot----- "+
+        OutputDouble(input.ToDouble())+"\nsrc-----="+OutputEF(src)+
+        "\nexpected="+OutputEF(expected)+"\ninput---="+OutputEF(input));
+      }
+      double inputDouble = EDecimal.FromString(str).ToDouble();
+      if (inputDouble != expectedDouble) {
+  Assert.fail(
+  "\nexpected "+OutputDouble(expectedDouble)+",\ngot----- "+
+        OutputDouble(inputDouble)+"\nsrc-----="+OutputEF(src)+
+        "\nexpected="+OutputEF(expected)+"\ninput---="+OutputEF(input));
+      }
+    }
+
+    private static EFloat quarter = EFloat.FromString("0.25");
+    private static EFloat half = EFloat.FromString("0.5");
+    private static EFloat threequarter = EFloat.FromString("0.75");
+
+    private static void TestToDoubleRoundingOne(EFloat efa) {
+      boolean isEven = efa.getUnsignedMantissa().isEven();
+      EFloat efprev = efa.NextMinus(EContext.Binary64);
+      EFloat efnext = efa.NextPlus(EContext.Binary64);
+      EFloat efnextgap = efnext.Subtract(efa);
+      EFloat efprevgap = efa.Subtract(efprev);
+   EFloat efprev1q = efprev.Add(
+     efprevgap.Multiply(quarter));
+   EFloat efprev2q = efprev.Add(
+     efprevgap.Multiply(half));
+   EFloat efprev3q = efprev.Add(
+     efprevgap.Multiply(threequarter));
+      EFloat efnext1q = efa.Add(efnextgap.Multiply(quarter));
+      EFloat efnext2q = efa.Add(efnextgap.Multiply(half));
+      EFloat efnext3q = efa.Add(efnextgap.Multiply(threequarter));
+      TestDoubleRounding(efprev, efprev, efa);
+      TestDoubleRounding(efprev, efprev1q, efa);
+      TestDoubleRounding(isEven ? efa : efprev, efprev2q, efa);
+      TestDoubleRounding(efa, efprev3q, efa);
+      TestDoubleRounding(efa, efa, efa);
+      TestDoubleRounding(efa, efnext1q, efa);
+      TestDoubleRounding(isEven ? efa : efnext, efnext2q, efa);
+      TestDoubleRounding(efnext, efnext3q, efa);
+      TestDoubleRounding(efnext, efnext, efa);
+    }
+
+    @Test
+    public void TestToDoubleRounding() {
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 500; ++i) {
+        EFloat efa = RandomDoubleEFloat(fr, i >= 250);
+        TestToDoubleRoundingOne(efa);
+      }
+      TestToDoubleRoundingOne(EFloat.Create(0, -1074));
+    }
+
     @Test
     public void TestToEIntegerExact() {
       EFloat flo = EFloat.Create(999, -1);
@@ -933,7 +1111,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    private static void TestExtendedFloatDoubleCore(double d, String s) {
+    private static void TestEFloatDoubleCore(double d, String s) {
       double oldd = d;
       EFloat bf = EFloat.FromDouble(d);
       if (s != null) {
@@ -943,7 +1121,7 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals((double)oldd, d, 0);
     }
 
-    private static void TestExtendedFloatSingleCore(float d, String s) {
+    private static void TestEFloatSingleCore(float d, String s) {
       float oldd = d;
       EFloat bf = EFloat.FromSingle(d);
       if (s != null) {

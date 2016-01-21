@@ -38,7 +38,7 @@ int olderDigits);
 
     IShiftAccumulator CreateShiftAccumulator(EInteger value);
 
-    boolean HasTerminatingRadixExpansion(EInteger num, EInteger den);
+    FastInteger DivisionShift(EInteger num, EInteger den);
 
     EInteger MultiplyByRadixPower(EInteger value, FastInteger power);
   }
