@@ -497,7 +497,7 @@ negative ? -1 : 1);
 
     /**
      * Not documented yet.
-     * @param ef Not documented yet.
+     * @param ef The parameter {@code ef} is not documented yet.
      * @return An EDecimal object.
      * @deprecated Renamed to FromEFloat.
  */
@@ -3550,7 +3550,12 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Creates a binary floating-point number from this object&#x27;s value. Note
+     * that if the binary floating-point number contains a negative
+     * exponent, the resulting value might not be exact, in which case the
+     * resulting binary float will be an approximation of this decimal
+     * number's value.
+     * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloat() {
       return this.ToEFloatInternal(EContext.Unlimited);

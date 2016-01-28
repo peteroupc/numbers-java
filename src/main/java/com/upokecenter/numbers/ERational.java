@@ -1215,7 +1215,10 @@ ctx);
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number.
+     * @return The exact value of the rational number, or not-a-number (NaN) if the
+     * result can't be exact because it has a nonterminating decimal
+     * expansion.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -1224,7 +1227,10 @@ ctx);
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number and rounds the result to
+     * the given precision.
+     * @param ctx An EContext object.
+     * @return An arbitrary-precision decimal.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -1233,7 +1239,17 @@ ctx);
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number, but if the result would
+     * have a nonterminating decimal expansion, rounds that result to the
+     * given precision.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored.
+     * This context will be used only if the exact result would have a
+     * nonterminating decimal expansion. If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case this method is the same as ToExtendedDecimal.
+     * @return An arbitrary-precision decimal.
      * @deprecated Renamed to ToEDecimalExactIfPossible.
  */
 @Deprecated
@@ -1322,7 +1338,10 @@ ctx);
     }
 
     /**
-     *
+     * Converts this rational number to a binary number.
+     * @return The exact value of the rational number, or not-a-number (NaN) if the
+     * result can't be exact because it has a nonterminating binary
+     * expansion.
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -1331,7 +1350,10 @@ ctx);
     }
 
     /**
-     *
+     * Converts this rational number to a binary number and rounds the result to
+     * the given precision.
+     * @param ctx An EContext object.
+     * @return An arbitrary-precision binary float.
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -1340,7 +1362,17 @@ ctx);
     }
 
     /**
-     *
+     * Converts this rational number to a binary number, but if the result would
+     * have a nonterminating binary expansion, rounds that result to the
+     * given precision.
+     * @param ctx An arithmetic context object to control the precision. The
+     * rounding and exponent range settings of this context are ignored.
+     * This context will be used only if the exact result would have a
+     * nonterminating binary expansion. If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case this method is the same as ToExtendedFloat.
+     * @return An arbitrary-precision binary float.
      * @deprecated Renamed to ToEFloatExactIfPossible.
  */
 @Deprecated
