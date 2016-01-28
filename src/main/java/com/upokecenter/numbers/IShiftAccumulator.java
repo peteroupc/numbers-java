@@ -30,5 +30,5 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     void ShiftRightInt(int bits);
 
-    void ShiftToDigits(FastInteger bits);
+    void ShiftToDigits(FastInteger bits, FastInteger preShift, boolean truncate);
   }

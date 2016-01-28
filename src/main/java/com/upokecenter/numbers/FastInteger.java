@@ -69,12 +69,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (this.wordCount == 1 && (this.data[0] >> 31) == 0) {
           return EInteger.FromInt64((int)this.data[0]);
         }
+        if (this.wordCount == 2 && (this.data[1] >> 31) == 0) {
+          long longV = ((long)this.data[0]);
+          longV &= 0xFFFFFFFFL;
+          longV |= (((long)this.data[1]) << 32);
+          return EInteger.FromInt64(longV);
+        }
         byte[] bytes = new byte[(this.wordCount * 4) + 1];
-        for (int i = 0; i < this.wordCount; ++i) {
-          bytes[i * 4] = (byte)(this.data[i] & 0xff);
-          bytes[(i * 4) + 1] = (byte)((this.data[i] >> 8) & 0xff);
-          bytes[(i * 4) + 2] = (byte)((this.data[i] >> 16) & 0xff);
-          bytes[(i * 4) + 3] = (byte)((this.data[i] >> 24) & 0xff);
+        int i = 0;
+        int j = 0;
+        for (i = 0, j = 0; i < this.wordCount; ++i) {
+          int d = this.data[i];
+          bytes[j++] = (byte)(d & 0xff);
+          bytes[j++] = (byte)((d >> 8) & 0xff);
+          bytes[j++] = (byte)((d >> 16) & 0xff);
+          bytes[j++] = (byte)((d >> 24) & 0xff);
         }
         bytes[bytes.length - 1] = (byte)0;
         return EInteger.FromBytes(bytes, true);
@@ -94,6 +103,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       int ToInt32() {
         return this.wordCount == 0 ? 0 : this.data[0];
       }
+
+    public static MutableNumber FromLong(long longVal) {
+      if (longVal < 0) {
+        throw new IllegalArgumentException();
+      }
+      if (longVal == 0) {
+ return new MutableNumber(0);
+}
+      MutableNumber mbi = new MutableNumber(0);
+      mbi.data[0 ] = ((int)longVal);
+        int mbd = ((int)(longVal >> 32));
+      mbi.data[1 ] = mbd;
+      mbi.wordCount = (mbd == 0) ? 1 : 2;
+      return mbi;
+    }
 
       MutableNumber Copy() {
         MutableNumber mbi = new MutableNumber(0);
@@ -121,6 +145,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           }
           int result0, result1, result2, result3;
           if (multiplicand < 65536) {
+            if (this.wordCount == 2 && (this.data[1 ]>>16) == 0) {
+              long longV = ((long)this.data[0]);
+              longV &= 0xFFFFFFFFL;
+              longV |= (((long)this.data[1]) << 32);
+              longV = (longV * multiplicand);
+              this.data[0 ] = ((int)longV);
+              this.data[1 ] = ((int)(longV >> 32));
+              carry = 0;
+            } else if (this.wordCount == 1) {
+              long longV = ((long)this.data[0]);
+              longV &= 0xFFFFFFFFL;
+              longV = (longV * multiplicand);
+              this.data[0 ] = ((int)longV);
+              carry = ((int)(longV >> 32));
+            } else {
             for (int i = 0; i < this.wordCount; ++i) {
               int x0 = this.data[i];
               int x1 = x0;
@@ -150,7 +189,15 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
               this.data[i] = x2;
               carry = x1;
             }
+            }
           } else {
+            if (this.wordCount == 1) {
+              long longV = ((long)this.data[0]);
+              longV &= 0xFFFFFFFFL;
+              longV = (longV * multiplicand);
+              this.data[0 ] = ((int)longV);
+              carry = ((int)(longV >> 32));
+            } else {
             for (int i = 0; i < this.wordCount; ++i) {
               int x0 = this.data[i];
               int x1 = x0;
@@ -191,6 +238,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
               }
               this.data[i] = x2;
               carry = x1;
+            }
             }
           }
           if (carry != 0) {
@@ -398,6 +446,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     private MutableNumber mnum;  // if integerMode is 1
     private EInteger largeValue;  // if integerMode is 2
     private int integerMode;
+
+    private boolean frozen;
+
     private static final EInteger ValueInt32MinValue =
       EInteger.FromInt64(Integer.MIN_VALUE);
 
@@ -410,12 +461,22 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       this.smallValue = value;
     }
 
-    static FastInteger Copy(FastInteger value) {
+    FastInteger Copy() {
+      FastInteger fi = new FastInteger(this.smallValue);
+      fi.integerMode = this.integerMode;
+      fi.largeValue = this.largeValue;
+      fi.mnum = (this.mnum == null || this.integerMode != 1) ? null :
+      this.mnum.Copy();
+      return fi;
+    }
+
+    static FastInteger CopyFrozen(FastInteger value) {
       FastInteger fi = new FastInteger(value.smallValue);
       fi.integerMode = value.integerMode;
       fi.largeValue = value.largeValue;
       fi.mnum = (value.mnum == null || value.integerMode != 1) ? null :
       value.mnum.Copy();
+      fi.frozen = true;
       return fi;
     }
 
@@ -448,6 +509,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
     }
 
+    private void CheckFrozen() {
+    }
+
      public int compareTo(FastInteger val) {
       switch ((this.integerMode << 2) | val.integerMode) {
           case (0 << 2) | 0: {
@@ -474,6 +538,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     FastInteger Abs() {
+      if (this.frozen) {
+ throw new IllegalStateException();
+}
       switch (this.integerMode) {
         case 0:
           if (this.smallValue == Integer.MIN_VALUE) {
@@ -508,6 +575,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     FastInteger SetInt(int val) {
+      this.CheckFrozen();
       this.smallValue = val;
       this.integerMode = 0;
       return this;
@@ -519,38 +587,34 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return This instance.
      */
     FastInteger Multiply(int val) {
+      this.CheckFrozen();
       if (val == 0) {
         this.smallValue = 0;
         this.integerMode = 0;
       } else {
         switch (this.integerMode) {
-          case 0:
-            boolean apos = this.smallValue > 0L;
-            boolean bpos = val > 0L;
-            if (
-              (apos && ((!bpos && (Integer.MIN_VALUE / this.smallValue) > val) ||
-                    (bpos && this.smallValue > (Integer.MAX_VALUE / val)))) ||
-              (!apos && ((!bpos && this.smallValue != 0L &&
-                    (Integer.MAX_VALUE / this.smallValue) > val) ||
-                    (bpos && this.smallValue < (Integer.MIN_VALUE / val))))) {
+          case 0: {
+            long amult = ((long)val) *((long)this.smallValue);
+            if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
               // would overflow, convert to large
+             boolean apos = this.smallValue > 0L;
+             boolean bpos = val > 0L;
               if (apos && bpos) {
                 // if both operands are nonnegative
                 // convert to mutable big integer
                 this.integerMode = 1;
-                this.mnum = new MutableNumber(this.smallValue);
-                this.mnum.Multiply(val);
+                this.mnum = MutableNumber.FromLong(amult);
               } else {
                 // if either operand is negative
                 // convert to big integer
                 this.integerMode = 2;
-                this.largeValue = EInteger.FromInt32(this.smallValue);
-                this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
+                this.largeValue = EInteger.FromInt64(amult);
               }
             } else {
-              smallValue *= val;
+              this.smallValue = ((int)amult);
             }
             break;
+          }
           case 1:
             if (val < 0) {
               this.integerMode = 2;
@@ -575,6 +639,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return This instance.
      */
     FastInteger Negate() {
+      this.CheckFrozen();
       switch (this.integerMode) {
         case 0:
           if (this.smallValue == Integer.MIN_VALUE) {
@@ -607,6 +672,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return This instance.
      */
     FastInteger Subtract(FastInteger val) {
+      this.CheckFrozen();
       EInteger valValue;
       switch (this.integerMode) {
         case 0:
@@ -657,6 +723,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return This instance.
      */
     FastInteger SubtractInt(int val) {
+      this.CheckFrozen();
       if (val == Integer.MIN_VALUE) {
         return this.AddBig(ValueNegativeInt32MinValue);
       }
@@ -681,6 +748,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return This instance.
      */
     FastInteger AddBig(EInteger bigintVal) {
+      this.CheckFrozen();
       switch (this.integerMode) {
           case 0: {
             return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.AsInt32Checked()) :
@@ -706,6 +774,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return This instance.
      */
     FastInteger SubtractBig(EInteger bigintVal) {
+      this.CheckFrozen();
       if (this.integerMode == 2) {
         this.largeValue = this.largeValue.Subtract(bigintVal);
         return this;
@@ -728,6 +797,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     FastInteger Add(FastInteger val) {
+      this.CheckFrozen();
       EInteger valValue;
       switch (this.integerMode) {
         case 0:
@@ -785,6 +855,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     FastInteger Remainder(int divisor) {
       // Mod operator will always result in a
       // number that fits an int for int divisors
+      this.CheckFrozen();
       if (divisor != 0) {
         switch (this.integerMode) {
           case 0:
@@ -811,6 +882,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     FastInteger Increment() {
+      this.CheckFrozen();
       if (this.integerMode == 0) {
         if (this.smallValue != Integer.MAX_VALUE) {
           ++this.smallValue;
@@ -824,6 +896,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     FastInteger Decrement() {
+      this.CheckFrozen();
       if (this.integerMode == 0) {
         if (this.smallValue != Integer.MIN_VALUE) {
           --this.smallValue;
@@ -838,6 +911,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     FastInteger Divide(int divisor) {
+      this.CheckFrozen();
       if (divisor != 0) {
         switch (this.integerMode) {
           case 0:
@@ -893,7 +967,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
 
     FastInteger AddInt(int val) {
-      EInteger valValue;
+      this.CheckFrozen();
+     EInteger valValue;
       switch (this.integerMode) {
         case 0:
           if ((this.smallValue < 0 && (int)val < Integer.MIN_VALUE -
@@ -946,6 +1021,34 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
     }
 
+    boolean CanFitInInt64() {
+      switch (this.integerMode) {
+        case 0:
+          return true;
+        case 1:
+          return this.AsEInteger().CanFitInInt64();
+          case 2: {
+            return this.largeValue.CanFitInInt64();
+          }
+        default:
+          throw new IllegalStateException();
+      }
+    }
+
+    long AsInt64() {
+      switch (this.integerMode) {
+        case 0:
+          return (long)this.smallValue;
+        case 1:
+          return this.AsEInteger().ToInt64Unchecked();
+          case 2: {
+            return this.largeValue.ToInt64Unchecked();
+          }
+        default:
+          throw new IllegalStateException();
+      }
+    }
+
     private static final String HexAlphabet = "0123456789ABCDEF";
 
     static String IntToString(int value) {
@@ -977,7 +1080,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           chars[count--] = HexAlphabet.charAt((int)value);
       }
       if (neg) {
-        chars[count]='-';
+        chars[count ] = '-';
       } else {
         ++count;
       }

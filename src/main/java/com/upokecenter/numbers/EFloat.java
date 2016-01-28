@@ -126,8 +126,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
  private static final EInteger ValueOneShift23 =
       EInteger.FromInt32(1).ShiftLeft(23);
+
  private static final EInteger ValueOneShift52 =
       EInteger.FromInt32(1).ShiftLeft(52);
+
     private final EInteger exponent;
     private final int flags;
     private final EInteger unsignedMantissa;
@@ -660,8 +662,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
     public EFloat Abs() {
       if (this.isNegative()) {
-        EFloat er = new EFloat(this.unsignedMantissa, this.exponent,
-          this.flags & ~BigNumberFlags.FlagNegative);
+        EFloat er = new EFloat(
+this.unsignedMantissa,
+this.exponent,
+this.flags & ~BigNumberFlags.FlagNegative);
         return er;
       }
       return this;
@@ -771,13 +775,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return -1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
-        return CompareToTotal(other);
+        return this.CompareToTotal(other);
       }
       if (ctx != null && ctx.isSimplified()) {
         return this.RoundToPrecision(ctx)
           .CompareToTotal(other.RoundToPrecision(ctx));
       } else {
-        return CompareToTotal(other);
+        return this.CompareToTotal(other);
       }
     }
 
@@ -807,33 +811,33 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (neg1 != neg2) {
         return neg1 ? -1 : 1;
       }
-      int iThis = 0;
-      int iOther = 0;
+      int valueIThis = 0;
+      int valueIOther = 0;
       int cmp;
       if (this.IsSignalingNaN()) {
-        iThis = 2;
+        valueIThis = 2;
       } else if (this.IsNaN()) {
-        iThis = 3;
+        valueIThis = 3;
       } else if (this.IsInfinity()) {
-        iThis = 1;
+        valueIThis = 1;
       }
       if (other.IsSignalingNaN()) {
-        iOther = 2;
+        valueIOther = 2;
       } else if (other.IsNaN()) {
-        iOther = 3;
+        valueIOther = 3;
       } else if (other.IsInfinity()) {
-        iOther = 1;
+        valueIOther = 1;
       }
-      if (iThis > iOther) {
+      if (valueIThis > valueIOther) {
         return neg1 ? -1 : 1;
-      } else if (iThis < iOther) {
+      } else if (valueIThis < valueIOther) {
         return neg1 ? 1 : -1;
       }
-      if (iThis >= 2) {
+      if (valueIThis >= 2) {
         cmp = this.unsignedMantissa.compareTo(
          other.unsignedMantissa);
         return neg1 ? -cmp : cmp;
-      } else if (iThis == 1) {
+      } else if (valueIThis == 1) {
         return 0;
       } else {
         cmp = this.compareTo(other);
@@ -865,33 +869,33 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (other == null) {
         return -1;
       }
-      int iThis = 0;
-      int iOther = 0;
+      int valueIThis = 0;
+      int valueIOther = 0;
       int cmp;
       if (this.IsSignalingNaN()) {
-        iThis = 2;
+        valueIThis = 2;
       } else if (this.IsNaN()) {
-        iThis = 3;
+        valueIThis = 3;
       } else if (this.IsInfinity()) {
-        iThis = 1;
+        valueIThis = 1;
       }
       if (other.IsSignalingNaN()) {
-        iOther = 2;
+        valueIOther = 2;
       } else if (other.IsNaN()) {
-        iOther = 3;
+        valueIOther = 3;
       } else if (other.IsInfinity()) {
-        iOther = 1;
+        valueIOther = 1;
       }
-      if (iThis > iOther) {
+      if (valueIThis > valueIOther) {
         return 1;
-      } else if (iThis < iOther) {
+      } else if (valueIThis < valueIOther) {
         return -1;
       }
-      if (iThis >= 2) {
+      if (valueIThis >= 2) {
         cmp = this.unsignedMantissa.compareTo(
          other.unsignedMantissa);
         return cmp;
-      } else if (iThis == 1) {
+      } else if (valueIThis == 1) {
         return 0;
       } else {
         cmp = this.Abs().compareTo(other.Abs());
@@ -1583,7 +1587,7 @@ this.flags).RoundToPrecision(ctx);
         } else {
           EInteger eintA = this.unsignedMantissa.Multiply(
            otherValue.unsignedMantissa);
-          int sign = (eintA.isZero()) ? 0 : (newflags == 0 ? 1 : -1);
+          int sign = eintA.isZero() ? 0 : (newflags == 0 ? 1 : -1);
           return CreateWithFlags(eintA, exp, newflags);
         }
       }
@@ -1677,8 +1681,10 @@ this.flags).RoundToPrecision(ctx);
      * signaling NaN.
      */
     public EFloat Negate() {
-      return new EFloat(this.unsignedMantissa, this.exponent,
-          this.flags ^ BigNumberFlags.FlagNegative);
+      return new EFloat(
+this.unsignedMantissa,
+this.exponent,
+this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
@@ -1898,7 +1904,10 @@ this.flags).RoundToPrecision(ctx);
 
     /**
      * Finds the remainder that results when dividing two arbitrary-precision
-     * binary floats.
+     * binary floats. The remainder is the value that remains when the
+     * absolute value of this object is divided by the absolute value of the
+     * other object; the remainder has the same sign (positive or negative)
+     * as this object's value.
      * @param divisor An arbitrary-precision binary float.
      * @param ctx An EContext object.
      * @return The remainder of the two objects.
@@ -2409,7 +2418,7 @@ EContext ctx) {
           FastInteger.WordsToEInteger(mantissaBits),
           0,
           0);
-        FastInteger fi = FastInteger.Copy(bigexponent).SubtractInt(-1074).Abs();
+        FastInteger fi = bigexponent.Copy().SubtractInt(-1074).Abs();
         accum.ShiftRight(fi);
         bitsAfterLeftmost = accum.getOlderDiscardedDigits();
         bitLeftmost = accum.getLastDiscardedDigit();
@@ -2499,7 +2508,7 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A 32-bit signed integer.
      */
     public int ToInt32Checked() {
@@ -2522,7 +2531,7 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A 32-bit signed integer.
      */
     public int ToInt32Unchecked() {
@@ -2545,7 +2554,7 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A 64-bit signed integer.
      */
     public long ToInt64Checked() {
@@ -2568,7 +2577,7 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A 64-bit signed integer.
      */
     public long ToInt64Unchecked() {
@@ -2683,7 +2692,7 @@ EContext ctx) {
         // Shift while number remains subnormal
         BitShiftAccumulator accum =
           BitShiftAccumulator.FromInt32(fastSmallMant.AsInt32());
-        FastInteger fi = FastInteger.Copy(bigexponent).SubtractInt(-149).Abs();
+        FastInteger fi = bigexponent.Copy().SubtractInt(-149).Abs();
         accum.ShiftRight(fi);
         bitsAfterLeftmost = accum.getOlderDiscardedDigits();
         bitLeftmost = accum.getLastDiscardedDigit();
@@ -2838,12 +2847,12 @@ EContext ctx) {
         return value.exponent;
       }
 
-      public FastInteger2 GetMantissaFastInt(EFloat value) {
-        return FastInteger2.FromBig(value.unsignedMantissa);
+      public FastIntegerFixed GetMantissaFastInt(EFloat value) {
+        return FastIntegerFixed.FromBig(value.unsignedMantissa);
       }
 
-      public FastInteger2 GetExponentFastInt(EFloat value) {
-        return FastInteger2.FromBig(value.exponent);
+      public FastIntegerFixed GetExponentFastInt(EFloat value) {
+        return FastIntegerFixed.FromBig(value.exponent);
       }
 
     /**
@@ -2858,6 +2867,23 @@ EContext ctx) {
         int lastDigit,
         int olderDigits) {
         return new BitShiftAccumulator(bigint, lastDigit, olderDigits);
+      }
+
+      public IShiftAccumulator CreateShiftAccumulatorWithDigitsFastInt(
+        FastIntegerFixed fastInt,
+        int lastDigit,
+        int olderDigits) {
+        if (fastInt.CanFitInInt32()) {
+     return new BitShiftAccumulator(
+fastInt.AsInt32(),
+lastDigit,
+olderDigits);
+        } else {
+  return new BitShiftAccumulator(
+fastInt.AsEInteger(),
+lastDigit,
+olderDigits);
+        }
       }
 
     /**
@@ -2944,11 +2970,13 @@ EContext ctx) {
       }
 
       public EFloat CreateNewWithFlagsFastInt(
-        FastInteger2 fmantissa,
-        FastInteger2 fexponent,
+        FastIntegerFixed fmantissa,
+        FastIntegerFixed fexponent,
         int flags) {
-        return CreateWithFlags(fmantissa.AsEInteger(), fexponent.AsEInteger(),
-                 flags);
+        return CreateWithFlags(
+fmantissa.AsEInteger(),
+fexponent.AsEInteger(),
+flags);
       }
 
     /**

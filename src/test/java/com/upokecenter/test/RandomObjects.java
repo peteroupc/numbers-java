@@ -21,7 +21,7 @@ private RandomObjects() {
       for (int i = 0; i < x; ++i) {
         bytes[i] = ((byte)rand.NextValue(256));
       }
-      return (bytes);
+      return bytes;
     }
 
     public static byte[] RandomByteStringShort(FastRandom rand) {
@@ -30,12 +30,12 @@ private RandomObjects() {
       for (int i = 0; i < x; ++i) {
         bytes[i] = ((byte)rand.NextValue(256));
       }
-      return (bytes);
+      return bytes;
     }
 
     public static ERational RandomRational(FastRandom rand) {
-      EInteger bigintA = RandomBigInteger(rand);
-      EInteger bigintB = RandomBigInteger(rand);
+      EInteger bigintA = RandomEInteger(rand);
+      EInteger bigintB = RandomEInteger(rand);
       if (bigintB.isZero()) {
         bigintB = EInteger.FromInt32(1);
       }
@@ -66,8 +66,9 @@ private RandomObjects() {
           sb.append((char)x);
         }
       }
-      return (sb.toString());
+      return sb.toString();
     }
+
     public static long RandomInt64(FastRandom rand) {
       long r = rand.NextValue(0x10000);
       r |= ((long)rand.NextValue(0x10000)) << 16;
@@ -129,7 +130,7 @@ private RandomObjects() {
       return EDecimal.FromString(str);
     }
 
-    public static EInteger RandomBigInteger(FastRandom r) {
+    public static EInteger RandomEInteger(FastRandom r) {
       int selection = r.NextValue(100);
       if (selection < 40) {
         StringAndBigInt sabi = StringAndBigInt.Generate(r, 16);
@@ -162,7 +163,7 @@ private RandomObjects() {
         }
       }
       return EFloat.Create(
-RandomBigInteger(r),
+RandomEInteger(r),
 EInteger.FromInt64(r.NextValue(400) - 200));
     }
 
@@ -195,7 +196,7 @@ EInteger.FromInt64(r.NextValue(400) - 200));
           sb.append((char)('0' + r.NextValue(10)));
         }
       }
-      return (EInteger.FromString(sb.toString()));
+      return EInteger.FromString(sb.toString());
     }
 
     public static String RandomDecimalString(FastRandom r) {

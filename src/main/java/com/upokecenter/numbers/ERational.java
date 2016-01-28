@@ -1220,7 +1220,7 @@ ctx);
  */
 @Deprecated
     public EDecimal ToExtendedDecimal() {
-      return ToEDecimal();
+      return this.ToEDecimal();
     }
 
     /**
@@ -1229,7 +1229,7 @@ ctx);
  */
 @Deprecated
     public EDecimal ToExtendedDecimal(EContext ctx) {
-      return ToEDecimal(ctx);
+      return this.ToEDecimal(ctx);
     }
 
     /**
@@ -1238,7 +1238,7 @@ ctx);
  */
 @Deprecated
     public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx) {
-      return ToEDecimalExactIfPossible(ctx);
+      return this.ToEDecimalExactIfPossible(ctx);
     }
 
     /**
@@ -1327,7 +1327,7 @@ ctx);
  */
 @Deprecated
     public EFloat ToExtendedFloat() {
-      return ToEFloat();
+      return this.ToEFloat();
     }
 
     /**
@@ -1336,7 +1336,7 @@ ctx);
  */
 @Deprecated
     public EFloat ToExtendedFloat(EContext ctx) {
-      return ToEFloat(ctx);
+      return this.ToEFloat(ctx);
     }
 
     /**
@@ -1345,7 +1345,7 @@ ctx);
  */
 @Deprecated
     public EFloat ToExtendedFloatExactIfPossible(EContext ctx) {
-      return ToEFloatExactIfPossible(ctx);
+      return this.ToEFloatExactIfPossible(ctx);
     }
 
     /**

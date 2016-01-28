@@ -27,18 +27,64 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     public FastInteger GetDigitLength() {
       this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
-      return FastInteger.Copy(this.knownBitLength);
+      return FastInteger.CopyFrozen(this.knownBitLength);
     }
 
-    public void ShiftToDigits(FastInteger bits) {
+        private void VerifyKnownLength() {
+    }
+
+    public void ShiftToDigits(
+FastInteger bits,
+FastInteger preShift,
+boolean truncate) {
       if (bits.signum() < 0) {
         throw new IllegalArgumentException("bits's sign (" + bits.signum() +
           ") is less than 0");
       }
+      if (preShift != null && preShift.signum() > 0) {
+        this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
+        // DebugUtility.Log("bits=" + bits + " pre=" + preShift + " known=" +
+        // (//kbl) + " [" + this.shiftedBigInt + "]");
+        if (this.knownBitLength.compareTo(bits) <= 0) {
+          // Known digit length is already small enough
+          if (truncate) {
+            this.TruncateRight(preShift);
+          } else {
+            this.ShiftRight(preShift);
+          }
+          this.VerifyKnownLength();
+          return;
+        } else {
+          FastInteger bitDiff = this.knownBitLength.Copy()
+            .Subtract(bits);
+          // DebugUtility.Log("bitDiff=" + bitDiff);
+          int cmp = bitDiff.compareTo(preShift);
+          if (cmp <= 0) {
+            // Difference between desired digit length and current
+            // length is smaller than the shift, make it the shift
+           if (truncate) {
+             this.TruncateRight(preShift);
+           } else {
+             this.ShiftRight(preShift);
+           }
+          this.VerifyKnownLength();
+           return;
+          } else {
+           if (truncate) {
+             this.TruncateRight(bitDiff);
+           } else {
+             this.ShiftRight(bitDiff);
+           }
+          this.VerifyKnownLength();
+           return;
+          }
+        }
+      }
       if (bits.CanFitInInt32()) {
         this.ShiftToDigitsInt(bits.AsInt32());
+          this.VerifyKnownLength();
       } else {
-        this.knownBitLength = this.CalcKnownBitLength();
+        this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
         EInteger bigintDiff = this.knownBitLength.AsEInteger();
         EInteger bitsBig = bits.AsEInteger();
         bigintDiff = bigintDiff.Subtract(bitsBig);
@@ -47,6 +93,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           // desired bit length
           this.ShiftRight(FastInteger.FromBig(bigintDiff));
         }
+          this.VerifyKnownLength();
       }
     }
 
@@ -54,7 +101,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     private boolean isSmall;
 
     public final EInteger getShiftedInt() {
-        return this.isSmall ? (EInteger.FromInt64(this.shiftedSmall)) :
+        return this.isSmall ? (EInteger.FromInt32(this.shiftedSmall)) :
         this.shiftedBigInt;
       }
 
@@ -88,12 +135,27 @@ int olderDiscarded) {
       this.bitLeftmost = (lastDiscarded != 0) ? 1 : 0;
     }
 
+    public BitShiftAccumulator(
+int smallint,
+int lastDiscarded,
+int olderDiscarded) {
+        this.shiftedSmall = smallint;
+        if (this.shiftedSmall < 0) {
+          throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
+            ") is less than 0");
+        }
+        this.isSmall = true;
+      this.discardedBitCount = new FastInteger(0);
+      this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
+      this.bitLeftmost = (lastDiscarded != 0) ? 1 : 0;
+    }
+
     public static BitShiftAccumulator FromInt32(int smallNumber) {
       if (smallNumber < 0) {
         throw new IllegalArgumentException("smallNumber (" + smallNumber +
           ") is less than 0");
       }
-      BitShiftAccumulator bsa = new BitShiftAccumulator(EInteger.FromInt64(0), 0, 0);
+      BitShiftAccumulator bsa = new BitShiftAccumulator(EInteger.FromInt32(0), 0, 0);
       bsa.shiftedSmall = smallNumber;
       bsa.discardedBitCount = new FastInteger(0);
       bsa.isSmall = true;
@@ -118,7 +180,7 @@ int olderDiscarded) {
             count = bi.AsInt32Checked();
           }
           this.ShiftRightInt(count);
-          bi = bi.Subtract(EInteger.FromInt64(count));
+          bi = bi.Subtract(EInteger.FromInt32(count));
           if (this.isSmall ? this.shiftedSmall == 0 :
           this.shiftedBigInt.isZero()) {
             break;
@@ -140,7 +202,7 @@ int olderDiscarded) {
         this.knownBitLength = new FastInteger(1);
         return;
       }
-      this.knownBitLength = (this.knownBitLength == null) ? (this.GetDigitLength()) : this.knownBitLength;
+      this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
       this.discardedBitCount.AddInt(bits);
       int cmp = this.knownBitLength.CompareToInt(bits);
       if (cmp < 0) {
@@ -217,7 +279,7 @@ int olderDiscarded) {
           return;
         }
       }
-      this.knownBitLength = (this.knownBitLength == null) ? (this.GetDigitLength()) : this.knownBitLength;
+      this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
       if (this.knownBitLength.CompareToInt(bits) <= 0) {
         return;
       }
@@ -229,7 +291,7 @@ int olderDiscarded) {
           bs -= bits;
         } else {
           FastInteger bitShift =
-          FastInteger.Copy(this.knownBitLength).SubtractInt(bits);
+          this.knownBitLength.Copy().SubtractInt(bits);
           if (!bitShift.CanFitInInt32()) {
             this.ShiftRight(bitShift);
             return;
@@ -337,7 +399,7 @@ int olderDiscarded) {
           return;
         }
       }
-      this.knownBitLength = (this.knownBitLength == null) ? (this.GetDigitLength()) : this.knownBitLength;
+      this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
       if (this.knownBitLength.CompareToInt(bits) <= 0) {
         return;
       }

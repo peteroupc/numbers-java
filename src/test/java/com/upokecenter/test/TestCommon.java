@@ -234,6 +234,7 @@ String msg) {
       }
       return new String(chars, count, 12 - count);
     }
+
     public static String LongToString(long longValue) {
       if (longValue == Long.MIN_VALUE) {
         return "-9223372036854775808";
@@ -288,7 +289,7 @@ String msg) {
       Object o1,
       Object o2,
       String s) {
-      return (s + ":\n" + o1 + " and\n" + o2);
+      return s + ":\n" + o1 + " and\n" + o2;
     }
 
     public static String ObjectMessages(
@@ -296,7 +297,7 @@ String msg) {
       Object o2,
       Object o3,
       String s) {
-      return (s + ":\n" + o1 + " and\n" + o2 + " and\n" + o3);
+      return s + ":\n" + o1 + " and\n" + o2 + " and\n" + o3;
     }
 
     public static String Repeat(char c, int num) {

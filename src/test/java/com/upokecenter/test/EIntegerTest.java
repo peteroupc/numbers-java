@@ -5,7 +5,8 @@ import org.junit.Test;
 import com.upokecenter.numbers.*;
 
   public class EIntegerTest {
-    private static long[] BitLengths = { -4294967297L, 33L, -4294967296L, 32L,
+private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
+      32L,
     -4294967295L, 32L, -2147483649L, 32L, -2147483648L, 31L, -2147483647L,
         31L,
       -1073741825L, 31L, -1073741824L, 30L, -1073741823L, 30L, -536870913L, 30L,
@@ -63,7 +64,7 @@ import com.upokecenter.numbers.*;
       1073741825L, 31L, 2147483647L, 31L, 2147483648L, 32L, 2147483649L, 32L,
       4294967295L, 32L, 4294967296L, 33L, 4294967297L, 33 };
 
-    private static long[] LowBits = { 0L, -1L, 1L, 0L, 2L, 1L, 3L, 0L, 4L,
+    private static long[] valueLowBits = { 0L, -1L, 1L, 0L, 2L, 1L, 3L, 0L, 4L,
       2L, 5L, 0L,
       7L, 0L, 8L, 3L, 9L, 0L, 15L, 0L, 16L, 4L, 17L, 0L, 31L, 0L, 32L, 5L,
         33L, 0L, 63L, 0L, 64L,
@@ -150,7 +151,7 @@ String rem) {
         try {
           EInteger quo;
           {
-            EInteger[] divrem = (bigintA).DivRem(bigintB);
+            EInteger[] divrem = bigintA.DivRem(bigintB);
             quo = divrem[0];
             rembi = divrem[1];
           }
@@ -164,7 +165,7 @@ String rem) {
       } else {
         EInteger quo;
         {
-          EInteger[] divrem = (bigintA).DivRem(bigintB);
+          EInteger[] divrem = bigintA.DivRem(bigintB);
           quo = divrem[0];
           rembi = divrem[1];
         }
@@ -749,8 +750,8 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1));
       FastRandom r = new FastRandom();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomBigInteger(r);
-        EInteger bigintB = RandomObjects.RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintB = RandomObjects.RandomEInteger(r);
         TestCommon.AssertEqualsHashCode(bigintA, bigintB);
       }
     }
@@ -1503,10 +1504,16 @@ stringTemp);
     @Test
     public void TestGetDigitCount() {
       FastRandom r = new FastRandom();
+      {
+Object objectTemp = 39;
+Object objectTemp2 = EInteger.FromString(
+"101754295360222878437145684059582837272").GetDigitCount();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         String str = bigintA.Abs().toString();
-        Assert.assertEquals(str.length(), bigintA.GetDigitCount());
+        Assert.assertEquals(str, str.length(), bigintA.GetDigitCount());
       }
     }
     @Test
@@ -1522,17 +1529,17 @@ stringTemp);
 
     @Test
     public void TestGetSignedBitLength() {
-      for (int i = 0; i < BitLengths.length; i += 2) {
-        Assert.assertEquals(TestCommon.LongToString(BitLengths[i]), (int)BitLengths[i + 1], BigValueOf(BitLengths[i]).GetSignedBitLength());
+      for (int i = 0; i < valueBitLengths.length; i += 2) {
+        Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(valueBitLengths[i]).GetSignedBitLength());
       }
     }
 
     @Test
     public void TestGetUnsignedBit() {
-      for (int i = 0; i < LowBits.length; i += 2) {
-        int lowbit = (int)LowBits[i + 1];
-        EInteger posint = BigValueOf(LowBits[i]);
-        EInteger negint = BigValueOf(-LowBits[i]);
+      for (int i = 0; i < valueLowBits.length; i += 2) {
+        int lowbit = (int)valueLowBits[i + 1];
+        EInteger posint = BigValueOf(valueLowBits[i]);
+        EInteger negint = BigValueOf(-valueLowBits[i]);
         for (int j = 0; j < lowbit; ++j) {
           if (posint.GetUnsignedBit(j))Assert.fail();
           if (negint.GetUnsignedBit(j))Assert.fail();
@@ -1546,24 +1553,24 @@ stringTemp);
 
     @Test
     public void TestGetUnsignedBitLength() {
-      for (int i = 0; i < BitLengths.length; i += 2) {
-        if (BitLengths[i] < 0) {
+      for (int i = 0; i < valueBitLengths.length; i += 2) {
+        if (valueBitLengths[i] < 0) {
           continue;
         }
-        Assert.assertEquals(TestCommon.LongToString(BitLengths[i]), (int)BitLengths[i + 1], BigValueOf(BitLengths[i]).GetUnsignedBitLength());
-        Assert.assertEquals(TestCommon.LongToString(-BitLengths[i]), (int)BitLengths[i + 1], BigValueOf(-BitLengths[i]).GetUnsignedBitLength());
+        Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(valueBitLengths[i]).GetUnsignedBitLength());
+        Assert.assertEquals(TestCommon.LongToString(-valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(-valueBitLengths[i]).GetUnsignedBitLength());
       }
     }
 
     @Test
     public void TestGetLowBit() {
-      for (int i = 0; i < LowBits.length; i += 2) {
+      for (int i = 0; i < valueLowBits.length; i += 2) {
         Assert.assertEquals(
-          (int)LowBits[i + 1],
-          BigValueOf(LowBits[i]).GetLowBit());
+          (int)valueLowBits[i + 1],
+          BigValueOf(valueLowBits[i]).GetLowBit());
         Assert.assertEquals(
-          (int)LowBits[i + 1],
-          BigValueOf(-LowBits[i]).GetLowBit());
+          (int)valueLowBits[i + 1],
+          BigValueOf(-valueLowBits[i]).GetLowBit());
       }
     }
 
@@ -1591,6 +1598,13 @@ stringTemp);
         EInteger bigintA = RandomBigInteger(r);
         EInteger mod = bigintA.Remainder(BigValueOf(2));
         Assert.assertEquals(mod.isZero(), bigintA.isEven());
+        if (bigintA.isEven()) {
+          bigintA = bigintA.Add(EInteger.FromInt32(1));
+          if (!(!bigintA.isEven()))Assert.fail();
+        } else {
+          bigintA = bigintA.Add(EInteger.FromInt32(1));
+          if (!(bigintA.isEven()))Assert.fail();
+        }
       }
     }
     @Test
@@ -2057,16 +2071,25 @@ stringTemp);
     }
     @Test
     public void TestSqrtWithRemainder() {
-      // not implemented yet
+      EInteger[] eintarr;
+      eintarr = EInteger.FromInt32(0).SqrtRem();
+      Assert.assertEquals(EInteger.FromInt32(0), eintarr[0]);
+      Assert.assertEquals(EInteger.FromInt32(0), eintarr[1]);
+      eintarr = EInteger.FromInt32(-1).SqrtRem();
+      Assert.assertEquals(EInteger.FromInt32(0), eintarr[0]);
+      Assert.assertEquals(EInteger.FromInt32(0), eintarr[1]);
+      eintarr = EInteger.FromInt32(1).SqrtRem();
+      Assert.assertEquals(EInteger.FromInt32(1), eintarr[0]);
+      Assert.assertEquals(EInteger.FromInt32(0), eintarr[1]);
     }
     @Test
     public void TestSubtract() {
 EInteger ei1 =
-  EInteger.FromString("5903310052234442839693218602919688229567185544510721229016780853271484375"
-);
+  EInteger.FromString(
+"5903310052234442839693218602919688229567185544510721229016780853271484375");
       EInteger ei2 = EInteger.FromString("710542735760100185871124267578125");
       {
-String stringTemp = ei1.Subtract(ei2).toString() ;
+String stringTemp = ei1.Subtract(ei2).toString();
 Assert.assertEquals(
 "5903310052234442839693218602919688229566475001774961128830909729003906250",
 stringTemp);
@@ -2216,6 +2239,7 @@ stringTemp);
     static EInteger BigFromString(String str) {
       return EInteger.FromString(str);
     }
+
     static EInteger BigValueOf(long value) {
       return EInteger.FromInt64(value);
     }
@@ -2267,7 +2291,7 @@ stringTemp);
       EInteger bigintD;
       if (!bigintB.isZero()) {
         {
-          EInteger[] divrem = (bigintC).DivRem(bigintB);
+          EInteger[] divrem = bigintC.DivRem(bigintB);
           bigintD = divrem[0];
           bigintRem = divrem[1];
         }
@@ -2294,7 +2318,7 @@ stringTemp);
       }
       if (!bigintA.isZero()) {
         {
-          EInteger[] divrem = (bigintC).DivRem(bigintA);
+          EInteger[] divrem = bigintC.DivRem(bigintA);
           bigintD = divrem[0];
           bigintRem = divrem[1];
         }
@@ -2307,7 +2331,7 @@ stringTemp);
       }
       if (!bigintB.isZero()) {
         {
-          EInteger[] divrem = (bigintA).DivRem(bigintB);
+          EInteger[] divrem = bigintA.DivRem(bigintB);
           bigintC = divrem[0];
           bigintRem = divrem[1];
         }

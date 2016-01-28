@@ -28,7 +28,7 @@ import com.upokecenter.numbers.*;
       }
       TestCommon.CompareTestLess(ERational.Zero, ERational.NaN);
       for (int i = 0; i < 100; ++i) {
-        EInteger num = RandomObjects.RandomBigInteger(r);
+        EInteger num = RandomObjects.RandomEInteger(r);
         if (num.isZero()) {
           // Skip if number is 0; 0/1 and 0/2 are
           // equal in that case
@@ -44,8 +44,8 @@ import com.upokecenter.numbers.*;
         new ERational(EInteger.FromInt32(1), EInteger.FromInt64(2)),
         new ERational(EInteger.FromInt64(4), EInteger.FromInt32(1)));
       for (int i = 0; i < 100; ++i) {
-        EInteger num = RandomObjects.RandomBigInteger(r);
-        EInteger den = RandomObjects.RandomBigInteger(r);
+        EInteger num = RandomObjects.RandomEInteger(r);
+        EInteger den = RandomObjects.RandomEInteger(r);
         if (den.isZero()) {
           den = EInteger.FromInt32(1);
         }
@@ -53,7 +53,7 @@ import com.upokecenter.numbers.*;
         for (int j = 0; j < 10; ++j) {
           EInteger num2 = num;
           EInteger den2 = den;
-          EInteger mult = RandomObjects.RandomBigInteger(r);
+          EInteger mult = RandomObjects.RandomEInteger(r);
           if (mult.isZero() || mult.equals(EInteger.FromInt32(1))) {
             mult = EInteger.FromInt64(2);
           }
@@ -75,7 +75,7 @@ import com.upokecenter.numbers.*;
         ERational er = RandomObjects.RandomRational(fr);
         int exp = -100000 + fr.NextValue(200000);
         EDecimal ed = EDecimal.Create(
-          RandomObjects.RandomBigInteger(fr),
+          RandomObjects.RandomEInteger(fr),
           EInteger.FromInt32(exp));
         ERational er2 = ERational.FromEDecimal(ed);
         int c2r = er.compareTo(er2);
@@ -229,10 +229,10 @@ import com.upokecenter.numbers.*;
         ERational er;
         ERational er2;
         er = new ERational(
-          RandomObjects.RandomBigInteger(fr),
+          RandomObjects.RandomEInteger(fr),
           EInteger.FromInt32(1));
         er2 = new ERational(
-          RandomObjects.RandomBigInteger(fr),
+          RandomObjects.RandomEInteger(fr),
           EInteger.FromInt32(1));
         if (er2.isZero() || !er2.isFinite()) {
           continue;

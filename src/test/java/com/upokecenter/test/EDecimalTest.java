@@ -106,9 +106,9 @@ import com.upokecenter.numbers.*;
     private static void TestAddCloseExponent(FastRandom fr, int exp) {
 for (int i = 0; i < 1000; ++i) {
   EInteger exp1 = EInteger.FromInt32(exp)
-    .Add(EInteger.FromInt32(fr.NextValue(32)-16));
+    .Add(EInteger.FromInt32(fr.NextValue(32) -16));
   EInteger exp2 = exp1
-    .Add(EInteger.FromInt32(fr.NextValue(18)-9));
+    .Add(EInteger.FromInt32(fr.NextValue(18) -9));
   EInteger mant1 = EInteger.FromInt32(fr.NextValue(0x10000000));
   EInteger mant2 = EInteger.FromInt32(fr.NextValue(0x10000000));
   EDecimal decA = EDecimal.Create(mant1, exp1);
@@ -149,7 +149,7 @@ for (int i = 0; i < 1000; ++i) {
         EDecimal b = EDecimal.FromString(
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702433323694842767208349696");
         Assert.assertEquals(a.toString(), b.toString());
-        TestCommon.CompareTestEqual(a,b,"");
+        TestCommon.CompareTestEqual(a, b, "");
         Assert.assertEquals(a.signum(), b.signum());
       }
 
@@ -164,16 +164,18 @@ for (int i = 0; i < 1000; ++i) {
       }
       // Test equivalence of EInteger and EDecimal for integers
       for (int i = 0; i < 3000; ++i) {
-        EInteger bigintA = RandomObjects.RandomBigInteger(r);
-        EInteger bigintB = RandomObjects.RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintB = RandomObjects.RandomEInteger(r);
         EInteger bigintC = bigintA.Add(bigintB);
         EDecimal
   ba1 = EDecimal.FromEInteger(bigintA).Add(EDecimal.FromEInteger(bigintB));
         EDecimal ba2 = EDecimal.FromEInteger(bigintC);
         Assert.assertEquals(ba1.signum(), ba2.signum());
         Assert.assertEquals(ba1.toString(), ba2.toString());
-        TestCommon.CompareTestEqual(ba1,ba2,bigintA.toString() + ","
-          +bigintB.toString());
+        TestCommon.CompareTestEqual(
+ba1,
+ba2,
+bigintA.toString() + "/" +bigintB.toString());
       }
       TestCommon.CompareTestLess(EDecimal.Zero, EDecimal.NaN);
       TestCommon.CompareTestLess(
@@ -238,7 +240,7 @@ EDecimal.FromString("8451910"));
       }
       FastRandom r = new FastRandom();
       for (int i = 0; i < 3000; ++i) {
-        EInteger bigintA = RandomObjects.RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         int cmp = EDecimal.FromEInteger(bigintA).CompareToBinary(
             EFloat.FromEInteger(bigintA));
         Assert.assertEquals(0, cmp);
@@ -394,36 +396,36 @@ EDecimal.FromString("8451910"));
     @Test
     public void TestDivide() {
       {
-String stringTemp = EDecimal.FromString("1"
-).Divide(EDecimal.FromInt32(8)).toString();
+String stringTemp = EDecimal.FromString(
+"1").Divide(EDecimal.FromInt32(8)).toString();
 Assert.assertEquals(
 "0.125",
 stringTemp);
 }
       {
-String stringTemp = EDecimal.FromString("10"
-).Divide(EDecimal.FromInt32(80)).toString();
+String stringTemp = EDecimal.FromString(
+"10").Divide(EDecimal.FromInt32(80)).toString();
 Assert.assertEquals(
 "0.125",
 stringTemp);
 }
       {
-String stringTemp = EDecimal.FromString("10000"
-).Divide(EDecimal.FromInt32(80000)).toString();
+String stringTemp = EDecimal.FromString(
+"10000").Divide(EDecimal.FromInt32(80000)).toString();
 Assert.assertEquals(
 "0.125",
 stringTemp);
 }
       {
-String stringTemp = EDecimal.FromString("1000"
-).Divide(EDecimal.FromInt32(8)).toString();
+String stringTemp = EDecimal.FromString(
+"1000").Divide(EDecimal.FromInt32(8)).toString();
 Assert.assertEquals(
 "125",
 stringTemp);
 }
       {
-String stringTemp = EDecimal.FromString("1"
-).Divide(EDecimal.FromInt32(256)).toString();
+String stringTemp = EDecimal.FromString(
+"1").Divide(EDecimal.FromInt32(256)).toString();
 Assert.assertEquals(
 "0.00390625",
 stringTemp);
@@ -748,14 +750,18 @@ stringTemp);
       for (int i = 0; i < 2047; ++i) {
         // Try a random double with a given
         // exponent
-      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
-          null);
-      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
-          null);
-      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
-          null);
-      TestEDecimalDoubleCore(RandomObjects.RandomDouble(rand, i),
-          null);
+      TestEDecimalDoubleCore(
+RandomObjects.RandomDouble(rand, i),
+null);
+      TestEDecimalDoubleCore(
+RandomObjects.RandomDouble(rand, i),
+null);
+      TestEDecimalDoubleCore(
+RandomObjects.RandomDouble(rand, i),
+null);
+      TestEDecimalDoubleCore(
+RandomObjects.RandomDouble(rand, i),
+null);
       }
     }
     @Test
@@ -764,19 +770,30 @@ stringTemp);
       for (int i = 0; i < 255; ++i) {
         // Try a random float with a given
         // exponent
-      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
-          null);
-      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
-          null);
-      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
-          null);
-      TestEDecimalSingleCore(RandomObjects.RandomSingle(rand, i),
-          null);
+      TestEDecimalSingleCore(
+RandomObjects.RandomSingle(rand, i),
+null);
+      TestEDecimalSingleCore(
+RandomObjects.RandomSingle(rand, i),
+null);
+      TestEDecimalSingleCore(
+RandomObjects.RandomSingle(rand, i),
+null);
+      TestEDecimalSingleCore(
+RandomObjects.RandomSingle(rand, i),
+null);
       }
     }
     @Test
-    public void TestFromBigInteger() {
-      // not implemented yet
+    public void TestFromEInteger() {
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 5000; ++i) {
+        EInteger ei = RandomObjects.RandomEInteger(fr);
+        EDecimal edec = EDecimal.FromEInteger(ei);
+        Assert.assertEquals(EInteger.FromInt32(0), edec.getExponent());
+        Assert.assertEquals(ei, edec.getMantissa());
+        Assert.assertEquals(ei, edec.ToEInteger());
+      }
     }
     @Test
     public void TestFromDouble() {
@@ -1715,6 +1732,20 @@ throw new IllegalStateException("", ex);
 }
       }
     }
+
+    @Test
+    public void TestFromStringDecimal() {
+      {
+String stringTemp =
+  EDecimal.FromString(
+"-89675213981993819.5183499484258059",
+EContext.CliDecimal).toString();
+Assert.assertEquals(
+"-89675213981993819.51834994843",
+stringTemp);
+}
+    }
+
     @Test
     public void TestIsFinite() {
       // not implemented yet

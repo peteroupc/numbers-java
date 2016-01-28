@@ -7,10 +7,14 @@ If you like this, you should donate to Peter O.
 at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
-  final class FastInteger2 implements Comparable<FastInteger2> {
+  final class FastIntegerFixed implements Comparable<FastIntegerFixed> {
     private int smallValue;  // if integerMode is 0
     private EInteger largeValue;  // if integerMode is 2
     private int integerMode;
+
+    public static final FastIntegerFixed Zero = new FastIntegerFixed(0);
+    public static final FastIntegerFixed One = new FastIntegerFixed(1);
+
     private static final EInteger ValueInt32MinValue =
       EInteger.FromInt64(Integer.MIN_VALUE);
 
@@ -19,34 +23,55 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     private static final EInteger ValueNegativeInt32MinValue=(ValueInt32MinValue).Negate();
 
-    FastInteger2(int value) {
+    FastIntegerFixed(int value) {
       this.smallValue = value;
     }
 
     @Override public boolean equals(Object obj) {
-      FastInteger2 fi = ((obj instanceof FastInteger2) ? (FastInteger2)obj : null);
+      FastIntegerFixed fi = ((obj instanceof FastIntegerFixed) ? (FastIntegerFixed)obj : null);
       if (fi == null) {
  return false;
 }
-      return this.integerMode == fi.integerMode &&
-        this.smallValue == fi.smallValue &&
-        (this.largeValue == null ? fi.largeValue == null :
-          this.largeValue.equals(fi.largeValue));
+      if (this.integerMode != fi.integerMode) {
+        return false;
+      }
+      if (this.integerMode == 0) {
+        if (this.smallValue != fi.smallValue) {
+ return false;
+}
+      } else if (this.integerMode == 1) {
+        if (!this.largeValue.equals(fi.largeValue)) {
+ return false;
+}
+      }
+      return true;
     }
 
     @Override public int hashCode() {
       int hash = (31 + this.integerMode);
-      hash = (hash * 31 + this.smallValue);
-      hash = (hash * 31 +
-        (this.largeValue == null ? 0 : this.largeValue.hashCode()));
+      if (this.integerMode == 0) {
+       hash = (hash * 31 + this.smallValue);
+      } else if (this.integerMode == 1) {
+       hash = (hash * 31 + this.largeValue.hashCode());
+      }
       return hash;
     }
 
-    static FastInteger2 FromBig(EInteger bigintVal) {
-      if (bigintVal.CanFitInInt32()) {
-        return new FastInteger2(bigintVal.ToInt32Unchecked());
+    static FastIntegerFixed FromLong(long longVal) {
+      if (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) {
+        return new FastIntegerFixed((int)longVal);
       }
-      FastInteger2 fi = new FastInteger2(0);
+      FastIntegerFixed fi = new FastIntegerFixed(0);
+      fi.integerMode = 2;
+      fi.largeValue = EInteger.FromInt64(longVal);
+      return fi;
+    }
+
+    static FastIntegerFixed FromBig(EInteger bigintVal) {
+      if (bigintVal.CanFitInInt32()) {
+        return new FastIntegerFixed(bigintVal.ToInt32Unchecked());
+      }
+      FastIntegerFixed fi = new FastIntegerFixed(0);
       fi.integerMode = 2;
       fi.largeValue = bigintVal;
       return fi;
@@ -57,15 +82,43 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         this.smallValue : this.largeValue.ToInt32Unchecked();
     }
 
-    public static FastInteger2 FromFastInteger(FastInteger fi) {
+    public static FastIntegerFixed FromFastInteger(FastInteger fi) {
       if (fi.CanFitInInt32()) {
-        return new FastInteger2(fi.AsInt32());
+        return new FastIntegerFixed(fi.AsInt32());
       } else {
-        return FastInteger2.FromBig(fi.AsEInteger());
+        return FastIntegerFixed.FromBig(fi.AsEInteger());
       }
     }
 
-    public static FastInteger2 Add(FastInteger2 a, FastInteger2 b) {
+    public FastInteger ToFastInteger() {
+      if (this.integerMode == 0) {
+ return new FastInteger(this.smallValue);
+} else {
+ return FastInteger.FromBig(this.largeValue);
+}
+    }
+
+    public FastIntegerFixed Increment() {
+      if (this.integerMode == 0 && this.smallValue != Integer.MAX_VALUE) {
+        return new FastIntegerFixed(this.smallValue + 1);
+      } else {
+        return Add(this, FastIntegerFixed.One);
+      }
+    }
+
+    public int Mod(int value) {
+      if (value < 0) {
+        throw new UnsupportedOperationException();
+      }
+      if (this.integerMode == 0 && this.smallValue >= 0) {
+        return this.smallValue % value;
+      } else {
+      EInteger retval = this.AsEInteger().Remainder(EInteger.FromInt32(value));
+        return retval.ToInt32Checked();
+      }
+    }
+
+    public static FastIntegerFixed Add(FastIntegerFixed a, FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (a.smallValue == 0) {
  return b;
@@ -76,31 +129,33 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if ((a.smallValue < 0 && b.smallValue >= Integer.MIN_VALUE -
             a.smallValue) || (a.smallValue > 0 && b.smallValue <=
             Integer.MAX_VALUE - a.smallValue)) {
-        return new FastInteger2(a.smallValue + b.smallValue);
+        return new FastIntegerFixed(a.smallValue + b.smallValue);
       }
     }
       EInteger bigA = a.AsEInteger();
       EInteger bigB = b.AsEInteger();
-      return FastInteger2.FromBig(bigA.Add(bigB));
+      return FastIntegerFixed.FromBig(bigA.Add(bigB));
     }
 
-    public static FastInteger2 Subtract(FastInteger2 a, FastInteger2 b) {
+    public static FastIntegerFixed Subtract(
+FastIntegerFixed a,
+FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (b.smallValue == 0) {
  return a;
 }
-      if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue)||
+      if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
           (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
                   a.smallValue)) {
-        return new FastInteger2(a.smallValue - b.smallValue);
+        return new FastIntegerFixed(a.smallValue - b.smallValue);
       }
     }
       EInteger bigA = a.AsEInteger();
       EInteger bigB = b.AsEInteger();
-      return FastInteger2.FromBig(bigA.Subtract(bigB));
+      return FastIntegerFixed.FromBig(bigA.Subtract(bigB));
     }
 
-    public int compareTo(FastInteger2 val) {
+    public int compareTo(FastIntegerFixed val) {
       switch ((this.integerMode << 2) | val.integerMode) {
         case (0 << 2) | 0:
           {
@@ -118,26 +173,23 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A FastInteger2 object.
      */
-    FastInteger2 Negate() {
+    FastIntegerFixed Negate() {
       switch (this.integerMode) {
         case 0:
           if (this.smallValue == Integer.MIN_VALUE) {
-            return FastInteger2.FromBig(ValueNegativeInt32MinValue);
+            return FastIntegerFixed.FromBig(ValueNegativeInt32MinValue);
           } else {
-            return new FastInteger2(-smallValue);
+            return new FastIntegerFixed(-smallValue);
           }
         case 2:
-          return FastInteger2.FromBig((this.largeValue).Negate());
+          return FastIntegerFixed.FromBig((this.largeValue).Negate());
         default: throw new IllegalStateException();
       }
     }
 
-    /**
-     *
-     */
     final boolean isEvenNumber() {
         switch (this.integerMode) {
           case 0:
@@ -154,7 +206,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A text string.
      */
     @Override public String toString() {
@@ -167,9 +219,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
     }
 
-    /**
-     *
-     */
     final int signum() {
         switch (this.integerMode) {
           case 0:
@@ -181,9 +230,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
       }
 
-    /**
-     *
-     */
     final boolean isValueZero() {
         switch (this.integerMode) {
           case 0:
@@ -194,6 +240,30 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             return false;
         }
       }
+
+    boolean CanFitInInt64() {
+      switch (this.integerMode) {
+        case 0:
+          return true;
+          case 2: {
+            return this.largeValue.CanFitInInt64();
+          }
+        default:
+          throw new IllegalStateException();
+      }
+    }
+
+    long AsInt64() {
+      switch (this.integerMode) {
+        case 0:
+          return (long)this.smallValue;
+          case 2: {
+            return this.largeValue.ToInt64Unchecked();
+          }
+        default:
+          throw new IllegalStateException();
+      }
+    }
 
     int CompareToInt(int val) {
       switch (this.integerMode) {
