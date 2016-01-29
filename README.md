@@ -23,6 +23,8 @@ project, add the following to the `dependencies` section in your `pom.xml` file:
 </dependency>
 ```
 
+(Use `0.2.0-SNAPSHOT` instead of `0.1.0` to get a more recent version for testing and feedback.)
+
 In other Java-based environments, the library can be referred to by its
 group ID (`com.github.peteroupc`), artifact ID (`numbers`), and version, as given above.
 
