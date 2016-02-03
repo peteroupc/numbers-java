@@ -3956,6 +3956,7 @@ ERounding rounding) {
      * @return An EFloat object.
      */
     public EFloat ToEFloat(EContext ec) {
+      // TODO: Investigate speeding up Binary64 case
       EInteger bigintExp = this.getExponent();
       EInteger bigintMant = this.getUnsignedMantissa();
       if (this.IsNaN()) {

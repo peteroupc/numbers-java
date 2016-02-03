@@ -24,6 +24,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * "==" operator.</p>
      */
   public final class EInteger implements Comparable<EInteger> {
+      // TODO: Investigate using 32-bit words instead of 16-bit
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private static final int RecursionLimit = 10;
