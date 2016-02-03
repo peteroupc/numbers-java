@@ -3227,6 +3227,20 @@ EContext.ForRounding(rounding));
     }
 
     /**
+     *
+     * @deprecated This overload is unnecessary because this method works regardless of
+* rounding mode.
+ */
+@Deprecated
+    public EDecimal RoundToExponentExact(
+      int exponentSmall,
+      ERounding rounding) {
+ return this.RoundToExponentExact(
+EInteger.FromInt32(exponentSmall),
+EContext.Unlimited);
+    }
+
+    /**
      * Returns a decimal number with the same value as this object but rounded to
      * an integer, and signals an invalid operation if the result would be
      * inexact.
@@ -3424,7 +3438,9 @@ EContext ctx) {
      * number, but the return value is still NaN). Signals FlagInvalid and
      * returns not-a-number (NaN) if the parameter {@code ctx} is null or
      * the precision is unlimited (the context's Precision property is 0).
-     */
+     * @deprecated Renamed to Sqrt.
+ */
+@Deprecated
     public EDecimal SquareRoot(EContext ctx) {
       return GetMathValue(ctx).SquareRoot(this, ctx);
     }

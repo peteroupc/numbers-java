@@ -2073,6 +2073,18 @@ this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
+     *
+     * @deprecated This overload is unnecessary because this method works regardless of
+* rounding mode.
+ */
+@Deprecated
+    public EFloat RoundToExponentExact(
+      EInteger exponent,
+      ERounding rounding) {
+      return MathValue.RoundToExponentExact(this, exponent, EContext.Unlimited);
+    }
+
+    /**
      * Returns a binary number with the same value as this object but rounded to
      * the given exponent, and signals an invalid operation if the result
      * would be inexact.
@@ -2288,7 +2300,9 @@ EContext ctx) {
      * number, but the return value is still NaN).
      * @throws IllegalArgumentException The parameter {@code ctx} is null or the
      * precision is unlimited (the context's Precision property is 0).
-     */
+     * @deprecated Renamed to Sqrt.
+ */
+@Deprecated
     public EFloat SquareRoot(EContext ctx) {
       return MathValue.SquareRoot(this, ctx);
     }
