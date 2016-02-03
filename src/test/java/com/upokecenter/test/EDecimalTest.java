@@ -3,6 +3,7 @@ package com.upokecenter.test;
 import org.junit.Assert;
 import org.junit.Test;
 import com.upokecenter.numbers.*;
+import java.util.*;
 
   public class EDecimalTest {
     private static final String[] ValueTestStrings = { "1.265e-4",
@@ -109,8 +110,8 @@ for (int i = 0; i < 1000; ++i) {
     .Add(EInteger.FromInt32(fr.NextValue(32) -16));
   EInteger exp2 = exp1
     .Add(EInteger.FromInt32(fr.NextValue(18) -9));
-  EInteger mant1 = EInteger.FromInt32(fr.NextValue(0x10000000));
-  EInteger mant2 = EInteger.FromInt32(fr.NextValue(0x10000000));
+  EInteger mant1 = RandomObjects.RandomEInteger(fr);
+  EInteger mant2 = RandomObjects.RandomEInteger(fr);
   EDecimal decA = EDecimal.Create(mant1, exp1);
   EDecimal decB = EDecimal.Create(mant2, exp2);
   EDecimal decC = decA.Add(decB);
@@ -143,8 +144,9 @@ for (int i = 0; i < 1000; ++i) {
 
     @Test
     public void TestAddThenCompare() {
-        EDecimal a = EDecimal.FromString(
-  "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702414428117526594285731840").Add(
+      EDecimal a = EDecimal.FromString(
+  "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702414428117526594285731840");
+      a = a.Add(
         EDecimal.FromString("18895577316172922617856"));
         EDecimal b = EDecimal.FromString(
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702433323694842767208349696");
@@ -784,6 +786,7 @@ RandomObjects.RandomSingle(rand, i),
 null);
       }
     }
+
     @Test
     public void TestFromEInteger() {
       FastRandom fr = new FastRandom();
@@ -1474,7 +1477,6 @@ null);
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-
       EFloat bf;
       bf = EFloat.FromInt64(20);
       {
@@ -2101,9 +2103,33 @@ stringTemp);
         throw new IllegalStateException("", ex);
       }
     }
+
+    @Test
+    public void TestCopySign() {
+      FastRandom r = new FastRandom();
+      for (int i = 0; i < 1000; ++i) {
+        EDecimal ed = RandomObjects.RandomEDecimal(r);
+        ed = ed.CopySign(EDecimal.Zero);
+        if (ed.isNegative())Assert.fail();
+        ed = ed.CopySign(EDecimal.NegativeZero);
+        if (!(ed.isNegative()))Assert.fail();
+      }
+      if (EDecimal.SignalingNaN.CopySign(EDecimal.Zero).isNegative())Assert.fail();
+      if (!(
+        EDecimal.SignalingNaN.CopySign(EDecimal.NegativeZero).isNegative()))Assert.fail();
+    }
+
     @Test
     public void TestNegate() {
-      // not implemented yet
+      FastRandom r = new FastRandom();
+      for (int i = 0; i < 1000; ++i) {
+        EDecimal ed = RandomObjects.RandomEDecimal(r);
+        ed = ed.CopySign(EDecimal.Zero);
+        if (!(ed.Negate().isNegative()))Assert.fail();
+        ed = ed.CopySign(EDecimal.NegativeZero);
+        if (!(ed.isNegative()))Assert.fail();
+      }
+      if (!(EDecimal.SignalingNaN.Negate().isNegative()))Assert.fail();
     }
     @Test
     public void TestNextMinus() {
@@ -2186,7 +2212,12 @@ stringTemp);
     }
     @Test
     public void TestPlus() {
-      // not implemented yet
+      Assert.assertEquals(
+EDecimal.Zero,
+EDecimal.NegativeZero.Plus(EContext.Basic));
+      Assert.assertEquals(
+EDecimal.Zero,
+EDecimal.NegativeZero.Plus(null));
     }
     @Test
     public void TestPow() {
@@ -3894,6 +3925,16 @@ EDecimal.FromString(ValueTestStrings[i]).ToEngineeringString());
         Assert.assertEquals(
 ValueTestStrings[i + 3],
 EDecimal.FromString(ValueTestStrings[i]).ToPlainString());
+      }
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 1000; ++i) {
+        // Generate arbitrary-precision integers for exponent
+        // and mantissa
+        EInteger mantBig = RandomObjects.RandomEInteger(fr);
+        EInteger expBig = RandomObjects.RandomEInteger(fr);
+        EDecimal dec = EDecimal.Create(mantBig, expBig);
+        String decstr = dec.toString();
+        Assert.assertEquals(dec, EDecimal.FromString(decstr));
       }
     }
     @Test

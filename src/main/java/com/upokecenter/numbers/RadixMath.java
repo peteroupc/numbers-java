@@ -1468,7 +1468,7 @@ negflag);
           this.helper.GetMantissa(thisValue).Multiply(mantissaOp2),
           newexp,
           thisFlags);
-      if (ctx != null && ctx != EContext.Unlimited) {
+      if (ctx != null && ctx != EContext.UnlimitedHalfEven) {
         ret = this.RoundToPrecision(ret, ctx);
       }
       return ret;
@@ -1514,7 +1514,7 @@ EContext ctx) {
       if (augend == null) {
         throw new NullPointerException("augend");
       }
-      EContext ctx2 = EContext.Unlimited.WithBlankFlags();
+      EContext ctx2 = EContext.UnlimitedHalfEven.WithBlankFlags();
       T ret = this.MultiplyAddHandleSpecial(
 thisValue,
 multiplicand,
@@ -2265,7 +2265,7 @@ EInteger.FromInt32(0));
                     EContext.FlagInvalid)) != 0) {
         return this.SignalInvalid(ctx);
       }
-      ctx2 = ctx == null ? EContext.Unlimited.WithBlankFlags() :
+      ctx2 = ctx == null ? EContext.UnlimitedHalfEven.WithBlankFlags() :
         ctx.WithBlankFlags();
       T ret2 = this.Add(
         thisValue,
@@ -2679,13 +2679,13 @@ helper);
     }
 
     private static boolean IsNullOrSimpleContext(EContext ctx) {
-      return ctx == null || ctx == EContext.Unlimited ||
+      return ctx == null || ctx == EContext.UnlimitedHalfEven ||
        (!ctx.getHasExponentRange() && !ctx.getHasMaxPrecision() && ctx.getTraps() == 0 &&
         !ctx.getHasFlags());
     }
 
     private static boolean IsSimpleContext(EContext ctx) {
-      return ctx != null && (ctx == EContext.Unlimited ||
+      return ctx != null && (ctx == EContext.UnlimitedHalfEven ||
        (!ctx.getHasExponentRange() && !ctx.getHasMaxPrecision() && ctx.getTraps() == 0 &&
         !ctx.getHasFlags()));
     }
@@ -4331,7 +4331,11 @@ EContext ctx) {
       if (unlimitedPrecisionExp &&
          (lastDiscarded | olderDiscarded) == 0 &&
          (shift == null || shift.isValueZero())) {
-        return thisValue;
+        if (!(adjustNegativeZero &&
+          (thisFlags & BigNumberFlags.FlagNegative) != 0 &&
+          this.helper.GetMantissa(thisValue).isZero())) {
+          return thisValue;
+        }
       }
       if (unlimitedPrecisionExp &&
         (ctx == null || (!ctx.getHasFlags() && ctx.getTraps() == 0)) &&
@@ -4377,7 +4381,7 @@ EContext ctx) {
           }
         }
       }
-      ctx = (ctx == null) ? (EContext.Unlimited.WithRounding(ERounding.HalfEven)) : ctx;
+      ctx = (ctx == null) ? (EContext.UnlimitedHalfEven.WithRounding(ERounding.HalfEven)) : ctx;
       boolean binaryPrec = ctx.isPrecisionInBits();
       // get the precision
       FastInteger fastPrecision = ctx.getPrecision().CanFitInInt32() ? new

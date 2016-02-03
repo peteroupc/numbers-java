@@ -65,7 +65,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     public static final int FlagUnderflow = 8;
 
     /**
-     * Basic precision context, 9 digits precision, rounding mode half-up,
+     * A basic arithmetic context, 9 digits precision, rounding mode half-up,
      * unlimited exponent range. The default rounding mode is HalfUp.
      */
 
@@ -73,19 +73,19 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       EContext.ForPrecisionAndRounding(9, ERounding.HalfUp);
 
     /**
-     * Precision context for Java's BigDecimal format. The default rounding mode is
-     * HalfUp.
+     * An arithmetic context for Java's BigDecimal format. The default rounding
+     * mode is HalfUp.
      */
 
     public static final EContext BigDecimalJava =
       new EContext(0, ERounding.HalfUp, 0, 0, true)
       .WithExponentClamp(true).WithAdjustExponent(false)
       .WithBigExponentRange(
-EInteger.FromInt64(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
-EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
+EInteger.FromInt32(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
+EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
     /**
-     * Precision context for the IEEE-754-2008 binary128 format, 113 bits
+     * An arithmetic context for the IEEE-754-2008 binary128 format, 113 bits
      * precision. The default rounding mode is HalfEven.
      */
 
@@ -94,8 +94,8 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithExponentClamp(true).WithExponentRange(-16382, 16383);
 
     /**
-     * Precision context for the IEEE-754-2008 binary16 format, 11 bits precision.
-     * The default rounding mode is HalfEven.
+     * An arithmetic context for the IEEE-754-2008 binary16 format, 11 bits
+     * precision. The default rounding mode is HalfEven.
      */
 
     public static final EContext Binary16 =
@@ -103,8 +103,8 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithExponentClamp(true).WithExponentRange(-14, 15);
 
     /**
-     * Precision context for the IEEE-754-2008 binary32 format, 24 bits precision.
-     * The default rounding mode is HalfEven.
+     * An arithmetic context for the IEEE-754-2008 binary32 format, 24 bits
+     * precision. The default rounding mode is HalfEven.
      */
 
     public static final EContext Binary32 =
@@ -112,8 +112,8 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithExponentClamp(true).WithExponentRange(-126, 127);
 
     /**
-     * Precision context for the IEEE-754-2008 binary64 format, 53 bits precision.
-     * The default rounding mode is HalfEven.
+     * An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
+     * precision. The default rounding mode is HalfEven.
      */
 
     public static final EContext Binary64 =
@@ -121,9 +121,9 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithExponentClamp(true).WithExponentRange(-1022, 1023);
 
     /**
-     * Precision context for the Common Language Infrastructure (.NET Framework)
-     * decimal format, 96 bits precision, and a valid exponent range of -28
-     * to 0. The default rounding mode is HalfEven.
+     * An arithmetic context for the Common Language Infrastructure (.NET
+     * Framework) decimal format, 96 bits precision, and a valid exponent
+     * range of -28 to 0. The default rounding mode is HalfEven.
      */
 
     public static final EContext CliDecimal =
@@ -131,7 +131,7 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithPrecisionInBits(true);
 
     /**
-     * Precision context for the IEEE-754-2008 decimal128 format. The default
+     * An arithmetic context for the IEEE-754-2008 decimal128 format. The default
      * rounding mode is HalfEven.
      */
 
@@ -139,7 +139,7 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       new EContext(34, ERounding.HalfEven, -6143, 6144, true);
 
     /**
-     * Precision context for the IEEE-754-2008 decimal32 format. The default
+     * An arithmetic context for the IEEE-754-2008 decimal32 format. The default
      * rounding mode is HalfEven.
      */
 
@@ -147,7 +147,7 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       new EContext(7, ERounding.HalfEven, -95, 96, true);
 
     /**
-     * Precision context for the IEEE-754-2008 decimal64 format. The default
+     * An arithmetic context for the IEEE-754-2008 decimal64 format. The default
      * rounding mode is HalfEven.
      */
 
@@ -155,11 +155,18 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       new EContext(16, ERounding.HalfEven, -383, 384, true);
 
     /**
-     * No specific limit on precision. Rounding mode HalfUp.
+     * No specific (theoretical) limit on precision. Rounding mode HalfUp.
      */
 
     public static final EContext Unlimited =
       EContext.ForPrecision(0);
+
+    /**
+     * No specific (theoretical) limit on precision. Rounding mode HalfEven.
+     */
+
+    public static final EContext UnlimitedHalfEven =
+      EContext.ForPrecision(0).WithRounding(ERounding.HalfEven);
 
     private boolean adjustExponent;
 
@@ -185,7 +192,7 @@ EInteger.FromInt64(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
     /**
      * Initializes a new instance of the <see cref='T:PeterO.Numbers.EContext'/>
-     * class. HasFlags will be set to false.
+     * class. <code>HasFlags</code> will be set to false.
      * @param precision The parameter {@code precision} is not documented yet.
      * @param rounding The parameter {@code rounding} is not documented yet.
      * @param exponentMinSmall The parameter {@code exponentMinSmall} is not
@@ -209,16 +216,16 @@ boolean clampNormalExponents) {
         throw new IllegalArgumentException("exponentMinSmall (" + exponentMinSmall +
           ") is more than " + exponentMaxSmall);
       }
-      this.bigintPrecision = precision == 0 ? EInteger.FromInt64(0) :
-        EInteger.FromInt64(precision);
+      this.bigintPrecision = precision == 0 ? EInteger.FromInt32(0) :
+        EInteger.FromInt32(precision);
       this.rounding = rounding;
       this.clampNormalExponents = clampNormalExponents;
       this.hasExponentRange = true;
       this.adjustExponent = true;
-      this.exponentMax = exponentMaxSmall == 0 ? EInteger.FromInt64(0) :
-        EInteger.FromInt64(exponentMaxSmall);
-      this.exponentMin = exponentMinSmall == 0 ? EInteger.FromInt64(0) :
-        EInteger.FromInt64(exponentMinSmall);
+      this.exponentMax = exponentMaxSmall == 0 ? EInteger.FromInt32(0) :
+        EInteger.FromInt32(exponentMaxSmall);
+      this.exponentMin = exponentMinSmall == 0 ? EInteger.FromInt32(0) :
+        EInteger.FromInt32(exponentMinSmall);
     }
 
     /**
@@ -266,7 +273,7 @@ boolean clampNormalExponents) {
      * will be 0.
      */
     public final EInteger getEMax() {
-        return this.hasExponentRange ? this.exponentMax : EInteger.FromInt64(0);
+        return this.hasExponentRange ? this.exponentMax : EInteger.FromInt32(0);
       }
 
     /**
@@ -280,18 +287,18 @@ boolean clampNormalExponents) {
      * scientific notation with one digit before the decimal point.
      */
     public final EInteger getEMin() {
-        return this.hasExponentRange ? this.exponentMin : EInteger.FromInt64(0);
+        return this.hasExponentRange ? this.exponentMin : EInteger.FromInt32(0);
       }
 
     /**
      * Gets the flags that are set from converting numbers according to this
-     * precision context. If HasFlags is false, this value will be 0. This
-     * value is a combination of bit fields. To retrieve a particular flag,
-     * use the AND operation on the return value of this method. For
-     * example: <code>(this.getFlags() &amp; PrecisionContext.FlagInexact) != 0</code>
-     * returns TRUE if the Inexact flag is set.
+     * arithmetic context. If <code>HasFlags</code> is false, this value will be
+     * 0. This value is a combination of bit fields. To retrieve a
+     * particular flag, use the AND operation on the return value of this
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+     * 0</code> returns TRUE if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
-     * precision context. If HasFlags is false, this value will be 0.
+     * arithmetic context. If HasFlags is false, this value will be 0.
      */
     public final int getFlags() {
         return this.flags;
@@ -376,12 +383,12 @@ public final void setFlags(int value) {
 
     /**
      * Gets the traps that are set for each flag in the context. Whenever a flag is
-     * signaled, even if HasFlags is false, and the flag's trap is enabled,
-     * the operation will throw a TrapException. <p>For example, if Traps
-     * equals FlagInexact and FlagSubnormal, a TrapException will be thrown
-     * if an operation's return value is not the same as the exact result
-     * (FlagInexact) or if the return value's exponent is lower than the
-     * lowest allowed (FlagSubnormal).</p>
+     * signaled, even if <code>HasFlags</code> is false, and the flag's trap is
+     * enabled, the operation will throw a TrapException. <p>For example, if
+     * Traps equals FlagInexact and FlagSubnormal, a TrapException will be
+     * thrown if an operation's return value is not the same as the exact
+     * result (FlagInexact) or if the return value's exponent is lower than
+     * the lowest allowed (FlagSubnormal).</p>
      * @return The traps that are set for each flag in the context.
      */
     public final int getTraps() {
@@ -389,8 +396,8 @@ public final void setFlags(int value) {
       }
 
     /**
-     * Creates a new precision context using the given maximum number of digits, an
-     * unlimited exponent range, and the HalfUp rounding mode.
+     * Creates a new arithmetic context using the given maximum number of digits,
+     * an unlimited exponent range, and the HalfUp rounding mode.
      * @param precision Maximum number of digits (precision).
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -404,8 +411,8 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Creates a new PrecisionContext object initialized with an unlimited exponent
-     * range, and the given rounding mode and maximum precision.
+     * Creates a new EContext object initialized with an unlimited exponent range,
+     * and the given rounding mode and maximum precision.
      * @param precision Maximum number of digits (precision).
      * @param rounding An ERounding object.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -436,8 +443,8 @@ ERounding.Down,
 false).WithUnlimitedExponents();
 
     /**
-     * Creates a new PrecisionContext object initialized with an unlimited
-     * precision, an unlimited exponent range, and the given rounding mode.
+     * Creates a new EContext object initialized with an unlimited precision, an
+     * unlimited exponent range, and the given rounding mode.
      * @param rounding The rounding mode for the new precision context.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -457,8 +464,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Initializes a new PrecisionContext that is a copy of another
-     * PrecisionContext.
+     * Initializes a new EContext that is a copy of another EContext.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext Copy() {
@@ -484,13 +490,13 @@ false).WithUnlimitedExponents();
 
     /**
      * Determines whether a number can have the given Exponent property under this
-     * precision context.
+     * arithmetic context.
      * @param exponent An arbitrary-precision integer indicating the desired
      * exponent.
      * @return True if a number can have the given Exponent property under this
-     * precision context; otherwise, false. If this context allows unlimited
-     * precision, returns true for the exponent EMax and any exponent less
-     * than EMax.
+     * arithmetic context; otherwise, false. If this context allows
+     * unlimited precision, returns true for the exponent EMax and any
+     * exponent less than EMax.
      * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
      */
     public boolean ExponentWithinRange(EInteger exponent) {
@@ -509,7 +515,7 @@ false).WithUnlimitedExponents();
         EInteger bigint = exponent;
         if (this.adjustExponent) {
           bigint = bigint.Add(this.bigintPrecision);
-          bigint = bigint.Subtract(EInteger.FromInt64(1));
+          bigint = bigint.Subtract(EInteger.FromInt32(1));
         }
         return (bigint.compareTo(this.getEMin()) >= 0) &&
           (exponent.compareTo(this.getEMax()) <= 0);
@@ -531,8 +537,8 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext and sets the copy's "AdjustExponent" property
-     * to the given value.
+     * Copies this EContext and sets the copy's "AdjustExponent" property to the
+     * given value.
      * @param adjustExponent The parameter {@code adjustExponent} is not documented
      * yet.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -544,7 +550,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this precision context and sets the copy's exponent range.
+     * Copies this arithmetic context and sets the copy's exponent range.
      * @param exponentMin Desired minimum exponent (EMin).
      * @param exponentMax Desired maximum exponent (EMax).
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -573,7 +579,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext and gives it a particular precision value.
+     * Copies this EContext and gives it a particular precision value.
      * @param bigintPrecision The parameter {@code bigintPrecision} is not
      * documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -594,7 +600,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext with HasFlags set to true and a Flags value of
+     * Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
      * 0.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -606,7 +612,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this precision context and sets the copy&#x27;s
+     * Copies this arithmetic context and sets the copy&#x27;s
      * &#x22;ClampNormalExponents&#x22; flag to the given value.
      * @param clamp The parameter {@code clamp} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -618,7 +624,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this precision context and sets the copy&#x27;s exponent range.
+     * Copies this arithmetic context and sets the copy&#x27;s exponent range.
      * @param exponentMinSmall Desired minimum exponent (EMin).
      * @param exponentMaxSmall Desired maximum exponent (EMax).
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -632,13 +638,13 @@ false).WithUnlimitedExponents();
       }
       EContext pc = this.Copy();
       pc.hasExponentRange = true;
-      pc.exponentMin = EInteger.FromInt64(exponentMinSmall);
-      pc.exponentMax = EInteger.FromInt64(exponentMaxSmall);
+      pc.exponentMin = EInteger.FromInt32(exponentMinSmall);
+      pc.exponentMax = EInteger.FromInt32(exponentMaxSmall);
       return pc;
     }
 
     /**
-     * Copies this PrecisionContext with HasFlags set to false and a Flags value of
+     * Copies this EContext with <code>HasFlags</code> set to false and a Flags value of
      * 0.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -650,7 +656,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext and gives it a particular precision value.
+     * Copies this EContext and gives it a particular precision value.
      * @param precision Desired precision. 0 means unlimited precision.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -660,13 +666,13 @@ false).WithUnlimitedExponents();
           ") is less than 0");
       }
       EContext pc = this.Copy();
-      pc.bigintPrecision = EInteger.FromInt64(precision);
+      pc.bigintPrecision = EInteger.FromInt32(precision);
       return pc;
     }
 
     /**
-     * Copies this PrecisionContext and sets the copy's "IsPrecisionInBits"
-     * property to the given value.
+     * Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
+     * given value.
      * @param isPrecisionBits The parameter {@code isPrecisionBits} is not
      * documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -678,7 +684,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext with the specified rounding mode.
+     * Copies this EContext with the specified rounding mode.
      * @param rounding The parameter {@code rounding} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -689,8 +695,8 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext and sets the copy's "IsSimplified" property to
-     * the given value.
+     * Copies this EContext and sets the copy's "IsSimplified" property to the
+     * given value.
      * @param simplified The parameter {@code simplified} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -701,7 +707,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext with Traps set to the given value.
+     * Copies this EContext with Traps set to the given value.
      * @param traps Flags representing the traps to enable. See the property
      * "Traps".
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -714,7 +720,7 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this PrecisionContext with an unlimited exponent range.
+     * Copies this EContext with an unlimited exponent range.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithUnlimitedExponents() {

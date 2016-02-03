@@ -263,7 +263,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @param signaling Whether the return value will be signaling (true) or quiet
      * (false).
      * @param negative Whether the return value is negative.
-     * @param ctx An EContext object.
+     * @param ctx An arithmetic context to control the precision (in bits) of the
+     * diagnostic information. The rounding and exponent range of this
+     * context will be ignored. Can be null. The only flag that can be
+     * signaled in this context is FlagInvalid, which happens if diagnostic
+     * information needs to be truncated and too much memory is required to
+     * do so.
      * @return An arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code diag} is null.
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
@@ -459,7 +464,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @param ctx An EContext object specifying the precision, rounding, and
-     * exponent range to apply to the parsed number. Can be null.
+     * exponent range (in bits) to apply to the parsed number. Can be null.
      * @return The parsed number, converted to arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is
@@ -478,7 +483,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         str,
         offset,
         length,
-        ctx).ToEFloat();
+        EContext.Unlimited.WithSimplified(ctx != null && ctx.isSimplified()))
+        .ToEFloat(ctx);
     }
 
     /**
@@ -691,7 +697,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * @return The sum of the two objects.
      */
     public EFloat Add(EFloat otherValue) {
-      return this.Add(otherValue, EContext.Unlimited);
+      return this.Add(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -1538,8 +1544,8 @@ EContext ctx) {
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null.
-     * @return A number whose scale is increased by {@code bigPlaces}, but not to
-     * more than 0.
+     * @return A number whose exponent is increased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointRight(
 EInteger bigPlaces,
@@ -1591,7 +1597,7 @@ this.flags).RoundToPrecision(ctx);
           return CreateWithFlags(eintA, exp, newflags);
         }
       }
-      return this.Multiply(otherValue, EContext.Unlimited);
+      return this.Multiply(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -2182,8 +2188,10 @@ this.flags ^ BigNumberFlags.FlagNegative);
     /**
      * Rounds this object&#x27;s value to a given precision, using the given
      * rounding mode and range of exponent.
-     * @param ctx A context for controlling the precision, rounding mode, and
-     * exponent range. Can be null.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null.
      * @return The closest value to this object's value, rounded to the specified
      * precision. Returns the same value as this object if {@code ctx} is
      * null or the precision and exponent range are unlimited.
@@ -2217,7 +2225,7 @@ this.flags ^ BigNumberFlags.FlagNegative);
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param bigPlaces An arbitrary-precision integer.
-     * @return An arbitrary-precision binary float.
+     * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) {
       return this.ScaleByPowerOfTwo(bigPlaces, null);
@@ -2230,7 +2238,7 @@ this.flags ^ BigNumberFlags.FlagNegative);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null.
-     * @return A number whose scale is increased by {@code bigPlaces}.
+     * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(
 EInteger bigPlaces,
@@ -2324,13 +2332,13 @@ EContext ctx) {
     }
 
     /**
-     * Converts this value to a 64-bit floating-point number. The half-even
-     * rounding mode is used. <p>If this value is a NaN, sets the high bit
-     * of the 64-bit floating point number's mantissa for a quiet NaN, and
-     * clears it for a signaling NaN. Then the next highest bit of the
-     * mantissa is cleared for a quiet NaN, and set for a signaling NaN.
-     * Then the other bits of the mantissa are set to the lowest bits of
-     * this object's unsigned mantissa.</p>
+     * Converts this value to its closest equivalent as a 64-bit floating-point
+     * number. The half-even rounding mode is used. <p>If this value is a
+     * NaN, sets the high bit of the 64-bit floating point number's mantissa
+     * for a quiet NaN, and clears it for a signaling NaN. Then the next
+     * highest bit of the mantissa is cleared for a quiet NaN, and set for a
+     * signaling NaN. Then the other bits of the mantissa are set to the
+     * lowest bits of this object's unsigned mantissa.</p>
      * @return The closest 64-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 64-bit floating point number.
@@ -2459,8 +2467,8 @@ EContext ctx) {
     }
 
     /**
-     * Not documented yet.
-     * @return An EDecimal object.
+     * Converts this value to an arbitrary-precision decimal number.
+     * @return An arbitrary-precision decimal number.
      */
     public EDecimal ToEDecimal() {
       return EDecimal.FromEFloat(this);
@@ -2489,8 +2497,8 @@ EContext ctx) {
     }
 
     /**
-     * Converts this value to an extended decimal, then returns the value of that
-     * decimal's ToEngineeringString method.
+     * Converts this value to an arbitrary-precision decimal number, then returns
+     * the value of that decimal's ToEngineeringString method.
      * @return A text string.
      */
     public String ToEngineeringString() {
@@ -2498,8 +2506,8 @@ EContext ctx) {
     }
 
     /**
-     * Not documented yet.
-     * @return An EDecimal object.
+     * Converts this value to an arbitrary-precision decimal number.
+     * @return An arbitrary-precision decimal number.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -2607,14 +2615,78 @@ EContext ctx) {
       return this.ToEDecimal().ToPlainString();
     }
 
+    private String ToDebugString() {
+      return "[" + this.getMantissa().ToRadixString(2) +"," +
+        this.getMantissa().GetUnsignedBitLength() +"," + this.getExponent() + "]";
+    }
+
     /**
-     * Converts this value to a 32-bit floating-point number. The half-even
-     * rounding mode is used. <p>If this value is a NaN, sets the high bit
-     * of the 32-bit floating point number's mantissa for a quiet NaN, and
-     * clears it for a signaling NaN. Then the next highest bit of the
-     * mantissa is cleared for a quiet NaN, and set for a signaling NaN.
-     * Then the other bits of the mantissa are set to the lowest bits of
-     * this object's unsigned mantissa.</p>
+     * Returns a string representation of this number's value after rounding to the
+     * given precision. If the number after rounding is neither infinity nor
+     * not-a-number (NaN), returns the shortest decimal form (in terms of
+     * nonzero decimal digits) of this number's value that results in the
+     * rounded number after the decimal form is converted to binary
+     * floating-point format.
+     * @param ctx An arithmetic context to control precision (in bits), rounding,
+     * and exponent range of the rounded number. If {@code HasFlags} of the
+     * context is true, will also store the flags resulting from the
+     * operation (the flags are in addition to the pre-existing flags). Can
+     * be null. If this parameter is null or defines no maximum precision,
+     * returns the same value as the toString() method.
+     * @return Shortest decimal form of this number's value for the given
+     * arithmetic context. The text string will be in exponential notation
+     * if the number's first nonzero decimal digit is more than five digits
+     * after the decimal point, or if the number's exponent is greater than
+     * 0 and its value is 10, 000, 000 or greater.
+     */
+    public String ToShortestString(EContext ctx) {
+      if (ctx == null || !ctx.getHasMaxPrecision()) {
+        return this.toString();
+      }
+      if (!this.isFinite()) {
+        return this.ToEDecimal().ToEFloat(ctx).toString();
+      }
+      EContext ctx2 = ctx.WithNoFlags();
+      EFloat valueEfRnd = this.RoundToPrecision(ctx);
+      if (valueEfRnd.IsInfinity()) {
+        return valueEfRnd.toString();
+      }
+      // NOTE: The original EFloat is converted to decimal,
+      // not the rounded version, to avoid double rounding issues
+      EDecimal dec = this.ToEDecimal();
+      if (ctx.getPrecision().compareTo(EInteger.FromInt32(10)) >= 0) {
+        // Preround the decimal so the significand has closer to the
+        // number of decimal digits of the maximum possible
+        // decimal significand, to speed up further rounding
+        EInteger roundedPrec = ctx.getPrecision().ShiftRight(1).Add(
+          EInteger.FromInt32(3));
+        dec = dec.RoundToPrecision(
+          ctx2.WithRounding(ERounding.Odd).WithBigPrecision(roundedPrec));
+      }
+      int precision = dec.getUnsignedMantissa().GetDigitCount();
+      EInteger eprecision = EInteger.FromInt32(0);
+      while (true) {
+        EInteger nextPrecision = eprecision.Add(EInteger.FromInt32(1));
+        EContext nextCtx = ctx2.WithBigPrecision(nextPrecision);
+        EDecimal nextDec = dec.RoundToPrecision(nextCtx);
+        EFloat newFloat = nextDec.ToEFloat(ctx2);
+        if (newFloat.compareTo(valueEfRnd) == 0) {
+          return (nextDec.getExponent().signum() > 0 &&
+              nextDec.Abs().compareTo(EDecimal.FromInt32(10000000)) < 0) ?
+                nextDec.ToPlainString() : nextDec.toString();
+        }
+        eprecision = nextPrecision;
+      }
+    }
+
+    /**
+     * Converts this value to its closest equivalent as 32-bit floating-point
+     * number. The half-even rounding mode is used. <p>If this value is a
+     * NaN, sets the high bit of the 32-bit floating point number's mantissa
+     * for a quiet NaN, and clears it for a signaling NaN. Then the next
+     * highest bit of the mantissa is cleared for a quiet NaN, and set for a
+     * signaling NaN. Then the other bits of the mantissa are set to the
+     * lowest bits of this object's unsigned mantissa.</p>
      * @return The closest 32-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 32-bit floating point number.
@@ -2728,9 +2800,12 @@ EContext ctx) {
     }
 
     /**
-     * Converts this value to a string.
+     * Converts this number's value to a text string.
      * @return A string representation of this object. The value is converted to
-     * decimal and the decimal form of this number's value is returned.
+     * decimal and the decimal form of this number's value is returned. The
+     * text string will be in exponential notation if the converted number's
+     * scale is positive or if the number's first nonzero decimal digit is
+     * more than five digits after the decimal point.
      */
     @Override public String toString() {
       return EDecimal.FromEFloat(this).toString();

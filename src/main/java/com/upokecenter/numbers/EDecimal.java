@@ -356,7 +356,12 @@ new FastIntegerFixed(exponentSmall),
      * @param signaling Whether the return value will be signaling (true) or quiet
      * (false).
      * @param negative Whether the return value is negative.
-     * @param ctx A context object for arbitrary-precision arithmetic settings.
+     * @param ctx An arithmetic context to control the precision (in decimal
+     * digits) of the diagnostic information. The rounding and exponent
+     * range of this context will be ignored. Can be null. The only flag
+     * that can be signaled in this context is FlagInvalid, which happens if
+     * diagnostic information needs to be truncated and too much memory is
+     * required to do so.
      * @return An arbitrary-precision decimal number.
      * @throws java.lang.NullPointerException The parameter {@code diag} is null or
      * is less than 0.
@@ -1347,7 +1352,7 @@ Math.abs(this.sign));
      * quiet NaN if this value is signaling NaN.
      */
     public EDecimal Abs(EContext context) {
-      return ((context == null || context == EContext.Unlimited) ?
+      return ((context == null || context == EContext.UnlimitedHalfEven) ?
         ExtendedMathValue : MathValue).Abs(this, context);
     }
 
@@ -1366,7 +1371,7 @@ otherValue.unsignedMantissa);
         int sign = result.isValueZero() ? 0 : 1;
         return new EDecimal(result, this.exponent, 0, sign);
       }
-      return this.Add(otherValue, EContext.Unlimited);
+      return this.Add(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -2424,8 +2429,8 @@ EContext ctx) {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return A number whose scale is increased by {@code bigPlaces}, but not to
-     * more than 0.
+     * @return A number whose exponent is increased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EDecimal MovePointRight(
 EInteger bigPlaces,
@@ -2495,7 +2500,7 @@ newflags,
 sign);
         }
       }
-      return this.Multiply(otherValue, EContext.Unlimited);
+      return this.Multiply(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -2613,7 +2618,7 @@ this.flags ^ BigNumberFlags.FlagNegative,
      * NaN if this value is signaling NaN.
      */
     public EDecimal Negate(EContext context) {
-      return ((context == null || context == EContext.Unlimited) ?
+      return ((context == null || context == EContext.UnlimitedHalfEven) ?
         ExtendedMathValue : MathValue).Negate(this, context);
     }
 
@@ -3367,7 +3372,7 @@ EContext.ForRounding(rounding));
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return A number whose scale is increased by {@code bigPlaces}.
+     * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EDecimal ScaleByPowerOfTen(
 EInteger bigPlaces,
@@ -3431,7 +3436,7 @@ EContext ctx) {
      * @return The difference of the two objects.
      */
     public EDecimal Subtract(EDecimal otherValue) {
-      return this.Subtract(otherValue, EContext.Unlimited);
+      return this.Subtract(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -3464,13 +3469,13 @@ EContext ctx) {
     }
 
     /**
-     * Converts this value to a 64-bit floating-point number. The half-even
-     * rounding mode is used. <p>If this value is a NaN, sets the high bit
-     * of the 64-bit floating point number's mantissa for a quiet NaN, and
-     * clears it for a signaling NaN. Then the next highest bit of the
-     * mantissa is cleared for a quiet NaN, and set for a signaling NaN.
-     * Then the other bits of the mantissa are set to the lowest bits of
-     * this object's unsigned mantissa.</p>
+     * Converts this value to its closest equivalent as a 64-bit floating-point
+     * number. The half-even rounding mode is used. <p>If this value is a
+     * NaN, sets the high bit of the 64-bit floating point number's mantissa
+     * for a quiet NaN, and clears it for a signaling NaN. Then the next
+     * highest bit of the mantissa is cleared for a quiet NaN, and set for a
+     * signaling NaN. Then the other bits of the mantissa are set to the
+     * lowest bits of this object's unsigned mantissa.</p>
      * @return The closest 64-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 64-bit floating point number.
@@ -3501,7 +3506,7 @@ EContext ctx) {
           Double.POSITIVE_INFINITY;
        }
       }
-      return this.ToEFloatInternal(EContext.Binary64).ToDouble();
+      return this.ToEFloat(EContext.Binary64).ToDouble();
     }
 
     /**
@@ -3546,7 +3551,7 @@ EContext ctx) {
  */
 @Deprecated
     public EFloat ToExtendedFloat() {
-      return this.ToEFloatInternal(EContext.Unlimited);
+      return this.ToEFloat(EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -3558,7 +3563,7 @@ EContext ctx) {
      * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloat() {
-      return this.ToEFloatInternal(EContext.Unlimited);
+      return this.ToEFloat(EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -3611,7 +3616,11 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Converts this number to a 64-bit signed integer, if possible, without
+     * truncating or rounding it.
+     * @return A 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This number's value is infinity,
+     * not-a-number, or doesn't fit into a 64-bit signed integer.
      */
     public long ToInt64Checked() {
       if (!this.isFinite()) {
@@ -3664,13 +3673,13 @@ EContext ctx) {
     }
 
     /**
-     * Converts this value to a 32-bit floating-point number. The half-even
-     * rounding mode is used. <p>If this value is a NaN, sets the high bit
-     * of the 32-bit floating point number's mantissa for a quiet NaN, and
-     * clears it for a signaling NaN. Then the next highest bit of the
-     * mantissa is cleared for a quiet NaN, and set for a signaling NaN.
-     * Then the other bits of the mantissa are set to the lowest bits of
-     * this object's unsigned mantissa.</p>
+     * Converts this value to its closest equivalent as a 32-bit floating-point
+     * number. The half-even rounding mode is used. <p>If this value is a
+     * NaN, sets the high bit of the 32-bit floating point number's mantissa
+     * for a quiet NaN, and clears it for a signaling NaN. Then the next
+     * highest bit of the mantissa is cleared for a quiet NaN, and set for a
+     * signaling NaN. Then the other bits of the mantissa are set to the
+     * lowest bits of this object's unsigned mantissa.</p>
      * @return The closest 32-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 32-bit floating point number.
@@ -3700,13 +3709,16 @@ EContext ctx) {
         return this.isNegative() ? Float.NEGATIVE_INFINITY :
           Float.POSITIVE_INFINITY;
       }
-      return this.ToEFloatInternal(EContext.Binary32).ToSingle();
+      return this.ToEFloat(EContext.Binary32).ToSingle();
     }
 
     /**
      * Converts this value to a string. Returns a value compatible with this
      * class's FromString method.
-     * @return A string representation of this object.
+     * @return A string representation of this object. The text string will be in
+     * exponential notation if the exponent is greater than 0 or if the
+     * number's first nonzero digit is more than five digits after the
+     * decimal point.
      */
     @Override public String toString() {
       return this.ToStringInternal(0);
@@ -3792,7 +3804,7 @@ EContext ctx) {
     }
 
     private static IRadixMath<EDecimal> GetMathValue(EContext ctx) {
-      if (ctx == null || ctx == EContext.Unlimited) {
+      if (ctx == null || ctx == EContext.UnlimitedHalfEven) {
         return ExtendedMathValue;
       }
       return (!ctx.isSimplified() && ctx.getTraps() == 0) ? ExtendedMathValue :
@@ -3922,7 +3934,12 @@ ERounding rounding) {
       return this.isNegative() ? ef.Negate() : ef;
     }
 
-    private EFloat ToEFloatInternal(EContext ec) {
+    /**
+     * Not documented yet.
+     * @param ec The parameter {@code ec} is not documented yet.
+     * @return An EFloat object.
+     */
+    public EFloat ToEFloat(EContext ec) {
       EInteger bigintExp = this.getExponent();
       EInteger bigintMant = this.getUnsignedMantissa();
       if (this.IsNaN()) {
@@ -3933,10 +3950,10 @@ this.isNegative(),
 ec);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity;
+        return EFloat.PositiveInfinity.RoundToPrecision(ec);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity;
+        return EFloat.NegativeInfinity.RoundToPrecision(ec);
       }
       if (bigintMant.isZero()) {
         return this.isNegative() ? EFloat.NegativeZero.RoundToPrecision(ec) :
@@ -3971,7 +3988,7 @@ ec);
         EInteger desiredHigh;
         EInteger desiredLow;
         boolean haveCopy = false;
-        ec = (ec == null) ? (EContext.Unlimited) : ec;
+        ec = (ec == null) ? (EContext.UnlimitedHalfEven) : ec;
         EContext originalEc = ec;
         if (!ec.getHasMaxPrecision()) {
           EInteger num = bigmantissa;
@@ -3992,7 +4009,10 @@ ec);
             divisor = den;
           }
         }
+        // NOTE: Precision added by 2 to accommodate rounding
+        // to odd
         EInteger valueEcPrec = ec.getHasMaxPrecision() ? ec.getPrecision().Add(EInteger.FromInt32(2)) : EInteger.FromInt32(0);
+        int valueEcPrecInt = 0;
         if (!valueEcPrec.CanFitInInt32()) {
           EInteger precm1 = valueEcPrec.Subtract(EInteger.FromInt32(1));
           desiredLow = EInteger.FromInt32(1);
@@ -4007,12 +4027,15 @@ ec);
           desiredHigh = desiredLow.ShiftLeft(1);
         } else {
           int prec = valueEcPrec.ToInt32Checked();
+          valueEcPrecInt = prec;
           desiredHigh = EInteger.FromInt32(1).ShiftLeft(prec);
           int precm1 = prec - 1;
           desiredLow = EInteger.FromInt32(1).ShiftLeft(precm1);
         }
+        // DebugUtility.Log("=>{0}\r\n->{1}", bigmantissa, divisor);
         EInteger[] quorem = ec.getHasMaxPrecision() ?
           bigmantissa.DivRem(divisor) : null;
+        // DebugUtility.Log("=>{0}\r\n->{1}", quorem[0], desiredHigh);
         FastInteger adjust = new FastInteger(0);
         if (!ec.getHasMaxPrecision()) {
           int term = divisor.GetLowBit();
@@ -4021,29 +4044,98 @@ ec);
           quorem = bigmantissa.DivRem(divisor);
         } else if (quorem[0].compareTo(desiredHigh) >= 0) {
           do {
-            divisor = divisor.ShiftLeft(1);
+            boolean optimized = false;
+            if (divisor.compareTo(bigmantissa) < 0) {
+              if (ec.getClampNormalExponents() && valueEcPrecInt > 0 &&
+                  valueEcPrecInt != Integer.MAX_VALUE) {
+               int valueBmBits = bigmantissa.GetUnsignedBitLength();
+               int divBits = divisor.GetUnsignedBitLength();
+               if (divBits < valueBmBits) {
+                int bitdiff = valueBmBits - divBits;
+                if (bitdiff > valueEcPrecInt + 1) {
+                  bitdiff -= valueEcPrecInt + 1;
+                  divisor = divisor.ShiftLeft(bitdiff);
+                  adjust.AddInt(bitdiff);
+                  optimized = true;
+                }
+               }
+              }
+            } else {
+              if (ec.getClampNormalExponents() && valueEcPrecInt > 0) {
+                int valueBmBits = bigmantissa.GetUnsignedBitLength();
+                int divBits = divisor.GetUnsignedBitLength();
+             if (valueBmBits >= divBits && valueEcPrecInt <= Integer.MAX_VALUE -
+                  divBits) {
+                  int vbb = divBits + valueEcPrecInt;
+                  if (valueBmBits < vbb) {
+                    valueBmBits = vbb - valueBmBits;
+                    divisor = divisor.ShiftLeft(valueBmBits);
+                    adjust.AddInt(valueBmBits);
+                    optimized = true;
+                  }
+                }
+              }
+            }
+            if (!optimized) {
+              divisor = divisor.ShiftLeft(1);
+              adjust.Increment();
+            }
+// DebugUtility.Log("deshigh\n==>" + (//
+// bigmantissa) + "\n-->" + (//
+// divisor));
+// DebugUtility.Log("deshigh " + (//
+// bigmantissa.GetUnsignedBitLength()) + "/" + (//
+// divisor.GetUnsignedBitLength()));
             quorem = bigmantissa.DivRem(divisor);
-            adjust.Increment();
+            if (quorem[1].isZero()) {
+              int valueBmBits = quorem[0].GetUnsignedBitLength();
+              int divBits = desiredLow.GetUnsignedBitLength();
+              if (valueBmBits < divBits) {
+                valueBmBits = divBits - valueBmBits;
+                quorem[0] = quorem[0].ShiftLeft(valueBmBits);
+                adjust.AddInt(valueBmBits);
+              }
+            }
+  // DebugUtility.Log("quorem[0]="+quorem[0]);
+     // DebugUtility.Log("quorem[1]="+quorem[1]);
+        // DebugUtility.Log("desiredLow="+desiredLow);
+           // DebugUtility.Log("desiredHigh="+desiredHigh);
           } while (quorem[0].compareTo(desiredHigh) >= 0);
         } else if (quorem[0].compareTo(desiredLow) < 0) {
           do {
+            boolean optimized = false;
             if (bigmantissa.compareTo(divisor) < 0) {
-              quorem[0] = EInteger.FromInt32(0);
-              quorem[1] = bigmantissa;
               int valueBmBits = bigmantissa.GetUnsignedBitLength();
               int divBits = divisor.GetUnsignedBitLength();
               if (valueBmBits < divBits) {
                 valueBmBits = divBits - valueBmBits;
                 bigmantissa = bigmantissa.ShiftLeft(valueBmBits);
                 adjust.SubtractInt(valueBmBits);
-              } else {
-                bigmantissa = bigmantissa.ShiftLeft(1);
-                adjust.Decrement();
+                optimized = true;
               }
             } else {
+              if (ec.getClampNormalExponents() && valueEcPrecInt > 0) {
+                int valueBmBits = bigmantissa.GetUnsignedBitLength();
+                int divBits = divisor.GetUnsignedBitLength();
+             if (valueBmBits >= divBits && valueEcPrecInt <= Integer.MAX_VALUE -
+                  divBits) {
+                  int vbb = divBits + valueEcPrecInt;
+                  if (valueBmBits < vbb) {
+                    valueBmBits = vbb - valueBmBits;
+                    bigmantissa = bigmantissa.ShiftLeft(valueBmBits);
+                    adjust.SubtractInt(valueBmBits);
+                    optimized = true;
+                  }
+                }
+              }
+            }
+            if (!optimized) {
               bigmantissa = bigmantissa.ShiftLeft(1);
               adjust.Decrement();
             }
+            // DebugUtility.Log("deslow " + (//
+            // bigmantissa.GetUnsignedBitLength()) + "/" + (//
+            // divisor.GetUnsignedBitLength()));
             quorem = bigmantissa.DivRem(divisor);
             if (quorem[1].isZero()) {
               int valueBmBits = quorem[0].GetUnsignedBitLength();
@@ -4056,6 +4148,7 @@ ec);
             }
           } while (quorem[0].compareTo(desiredLow) < 0);
         }
+        boolean inexact = !quorem[1].isZero();
         // Round to odd to avoid rounding errors
         if (!quorem[1].isZero() && quorem[0].isEven()) {
           quorem[0 ] = quorem[0].Add(EInteger.FromInt32(1));

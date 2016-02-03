@@ -185,6 +185,9 @@ private NumberUtility() {
       public EInteger[] FindCachedPowerOrSmaller(EInteger bi) {
         EInteger[] ret = null;
         EInteger minValue = null;
+        if (bi.CanFitInInt32()) {
+          return this.FindCachedPowerIntOrSmaller(bi.ToInt32Checked());
+        }
         synchronized (this.outputs) {
           for (int i = 0; i < this.size; ++i) {
             if (this.inputs[i].compareTo(bi) <= 0 && (minValue == null ||
@@ -220,6 +223,9 @@ private NumberUtility() {
       }
 
       public EInteger GetCachedPower(EInteger bi) {
+        if (bi.CanFitInInt32()) {
+          return this.GetCachedPowerInt(bi.ToInt32Checked());
+        }
         synchronized (this.outputs) {
           for (int i = 0; i < this.size; ++i) {
             if (bi.equals(this.inputs[i])) {
