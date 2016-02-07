@@ -2074,14 +2074,15 @@ this.flags ^ BigNumberFlags.FlagNegative);
 
     /**
      *
-     * @deprecated This overload is unnecessary because this method works regardless of
-* rounding mode.
- */
-@Deprecated
+     */
     public EFloat RoundToExponentExact(
       EInteger exponent,
       ERounding rounding) {
-      return MathValue.RoundToExponentExact(this, exponent, EContext.Unlimited);
+        // TODO: Edit doc for RoundToExponentExact
+      return MathValue.RoundToExponentExact(
+this,
+exponent,
+EContext.Unlimited.WithRounding(rounding));
     }
 
     /**

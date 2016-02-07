@@ -488,6 +488,48 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           bigint[currentDigit] = ((short)word);
           --currentDigit;
         }
+      } else if (radix == 2) {
+        // Special case for binary radix
+        int leftover = effectiveLength & 15;
+        int wordCount = effectiveLength >> 4;
+        if (leftover != 0) {
+          ++wordCount;
+        }
+        bigint = new short[wordCount + (wordCount & 1)];
+        int currentDigit = wordCount - 1;
+        // Get most significant digits if effective
+        // length is not divisible by 4
+        if (leftover != 0) {
+          int extraWord = 0;
+          for (int i = 0; i < leftover; ++i) {
+            extraWord <<= 1;
+            char c = str.charAt(index + i);
+            int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
+            if (digit >= 2) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            extraWord |= digit;
+          }
+          bigint[currentDigit] = ((short)extraWord);
+          --currentDigit;
+          index += leftover;
+        }
+        while (index < endIndex) {
+          int word = 0;
+          int idx = index + 15;
+          for (int i = 0; i < 16; ++i) {
+            char c = str.charAt(idx);
+            int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
+            if (digit >= 2) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            --idx;
+            word |= digit << i;
+          }
+          index += 16;
+          bigint[currentDigit] = ((short)word);
+          --currentDigit;
+        }
       } else {
         bigint = new short[4];
         boolean haveSmallInt = true;

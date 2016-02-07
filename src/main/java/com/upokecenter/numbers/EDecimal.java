@@ -3228,16 +3228,14 @@ EContext.ForRounding(rounding));
 
     /**
      *
-     * @deprecated This overload is unnecessary because this method works regardless of
-* rounding mode.
- */
-@Deprecated
+     */
     public EDecimal RoundToExponentExact(
       int exponentSmall,
       ERounding rounding) {
+        // TODO: Edit doc for RoundToExponentExact
  return this.RoundToExponentExact(
 EInteger.FromInt32(exponentSmall),
-EContext.Unlimited);
+EContext.Unlimited.WithRounding(rounding));
     }
 
     /**
