@@ -8,36 +8,38 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * Represents an arbitrary-precision decimal floating-point number. <p><b>About
-     * decimal arithmetic</b></p> <p> Decimal (base-10) arithmetic, such as
-     * that provided by this class, is appropriate for calculations
-     * involving such real-world data as prices and other sums of money, tax
-     * rates, and measurements. These calculations often involve multiplying
-     * or dividing one decimal with another decimal, or performing other
-     * operations on decimal numbers. Many of these calculations also rely
-     * on rounding behavior in which the result after rounding is a decimal
-     * number (for example, multiplying a price by a premium rate, then
-     * rounding, should result in a decimal amount of money). </p> <p>On the
-     * other hand, most implementations of <code>float</code> and <code>double</code>,
-     * including in C# and Java, store numbers in a binary (base-2)
-     * floating-point format and use binary floating-point arithmetic. Many
-     * decimal numbers can't be represented exactly in binary floating-point
-     * format (regardless of its length). Applying binary arithmetic to
-     * numbers intended to be decimals can sometimes lead to unintuitive
-     * results, as is shown in the description for the FromDouble() method
-     * of this class.</p> <p><b>About EDecimal instances</b></p> <p> Each
-     * instance of this class consists of an integer mantissa and an integer
-     * exponent, both arbitrary-precision. The value of the number equals
-     * mantissa * 10^exponent.</p> <p>The mantissa is the value of the
-     * digits that make up a number, ignoring the decimal point and
-     * exponent. For example, in the number 2356.78, the mantissa is 235678.
-     * The exponent is where the "floating" decimal point of the number is
-     * located. A positive exponent means "move it to the right", and a
-     * negative exponent means "move it to the left." In the example 2,
-     * 356.78, the exponent is -2, since it has 2 decimal places and the
-     * decimal point is "moved to the left by 2." Therefore, in the
-     * arbitrary-precision decimal representation, this number would be
-     * stored as 235678 * 10^-2.</p> <p>The mantissa and exponent format
+     * Represents an arbitrary-precision decimal floating-point number. (The "E"
+     * stands for "extended", meaning that instances of this class can be
+     * values other than numbers proper, such as infinity and not-a-number.)
+     * <p><b>About decimal arithmetic</b></p> <p> Decimal (base-10)
+     * arithmetic, such as that provided by this class, is appropriate for
+     * calculations involving such real-world data as prices and other sums
+     * of money, tax rates, and measurements. These calculations often
+     * involve multiplying or dividing one decimal with another decimal, or
+     * performing other operations on decimal numbers. Many of these
+     * calculations also rely on rounding behavior in which the result after
+     * rounding is a decimal number (for example, multiplying a price by a
+     * premium rate, then rounding, should result in a decimal amount of
+     * money). </p> <p>On the other hand, most implementations of
+     * <code>float</code> and <code>double</code>, including in C# and Java, store
+     * numbers in a binary (base-2) floating-point format and use binary
+     * floating-point arithmetic. Many decimal numbers can't be represented
+     * exactly in binary floating-point format (regardless of its length).
+     * Applying binary arithmetic to numbers intended to be decimals can
+     * sometimes lead to unintuitive results, as is shown in the description
+     * for the FromDouble() method of this class.</p> <p><b>About EDecimal
+     * instances</b></p> <p> Each instance of this class consists of an
+     * integer mantissa and an integer exponent, both arbitrary-precision.
+     * The value of the number equals mantissa * 10^exponent.</p> <p>The
+     * mantissa is the value of the digits that make up a number, ignoring
+     * the decimal point and exponent. For example, in the number 2356.78,
+     * the mantissa is 235678. The exponent is where the "floating" decimal
+     * point of the number is located. A positive exponent means "move it to
+     * the right", and a negative exponent means "move it to the left." In
+     * the example 2, 356.78, the exponent is -2, since it has 2 decimal
+     * places and the decimal point is "moved to the left by 2." Therefore,
+     * in the arbitrary-precision decimal representation, this number would
+     * be stored as 235678 * 10^-2.</p> <p>The mantissa and exponent format
      * preserves trailing zeros in the number's value. This may give rise to
      * multiple ways to store the same value. For example, 1.00 and 1 would
      * be stored differently, even though they have the same value. In the
@@ -3227,7 +3229,10 @@ EContext.ForRounding(rounding));
     }
 
     /**
-     *
+     * Not documented yet.
+     * @param exponentSmall Not documented yet.
+     * @param rounding Not documented yet.
+     * @return An EDecimal object.
      */
     public EDecimal RoundToExponentExact(
       int exponentSmall,

@@ -425,38 +425,43 @@ boolean negative) {
     }
 
     /**
-     *
-     * @param str Not documented yet.
-     * @return An ERational object.
+     * Creates a rational number from a string that represents a number. See
+     * <code>FromString(String, int, int)</code> for more information.
+     * @param str A string that represents a number.
+     * @return An arbitrary-precision rational number with the same value as the
+     * given string.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * formatted number string.
      */
     public static ERational FromString(String str) {
-      return FromString(str, 0, str == null ? 0 : str.length());
-    }
-
-    /**
-     *
-     * @param str Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An ERational object.
-     */
-    public static ERational FromString(String str, EContext ctx) {
       return FromString(str, 0, str == null ? 0 : str.length());
     }
 
     private static final int MaxSafeInt = 214748363;
 
     /**
-     *
-     * @param str Not documented yet.
-     * @param offset A zero-based index showing where the desired portion of {@code
-     * str} begins.
-     * @param length The length, in code units, of the desired portion of {@code
-     * str} (but not more than {@code str} 's length).
-     * @return An ERational object.
-     * @throws NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     * greater than "str"'s length, or "str"'s length minus "offset" is less
-     * than "length".
+     * <p>Creates a rational number from a string that represents a number.</p>
+     * <p>The format of the string generally consists of:</p> <ul> <li>An
+     * optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-'
+     * , the value is negative.)</li> <li>The numerator in the form of one
+     * or more digits.</li> <li>Optionally, "/" followed by the denominator
+     * in the form of one or more digits. If a denominator is not given,
+     * it's equal to 1.</li></ul> <p>The string can also be "-INF",
+     * "-Infinity", "Infinity", "INF" , quiet NaN ("NaN" /"-NaN") followed
+     * by any number of digits, or signaling NaN ("sNaN" /"-sNaN") followed
+     * by any number of digits, all in any combination of upper and lower
+     * case.</p> <p>All characters mentioned above are the corresponding
+     * characters in the Basic Latin range. In particular, the digits must
+     * be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not
+     * allowed to contain white space characters, including spaces.</p>
+     * @param str A text string, a portion of which represents a number.
+     * @param offset A zero-based index that identifies the start of the number.
+     * @param length The length of the number within the string.
+     * @return Not documented yet.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * formatted number string.
      */
     public static ERational FromString(
       String str,
@@ -725,6 +730,130 @@ boolean negative) {
         numer == null ? EInteger.FromInt32(numerInt) : numer.AsEInteger(),
         newScale == null ? EInteger.FromInt32(newScaleInt) : newScale.AsEInteger());
       return negative ? erat.Negate() : erat;
+    }
+
+    /**
+     * Compares the absolute values of this object and another object, imposing a
+     * total ordering on all possible values (ignoring their signs). In this
+     * method: <ul> <li>For objects with the same value, the one with the
+     * higher denominator has a greater "absolute value".</li> <li>Negative
+     * zero and positive zero are considered equal.</li> <li>Quiet NaN has a
+     * higher "absolute value" than signaling NaN. If both objects are quiet
+     * NaN or both are signaling NaN, the one with the higher diagnostic
+     * information has a greater "absolute value".</li> <li>NaN has a higher
+     * "absolute value" than infinity.</li> <li>Infinity has a higher
+     * "absolute value" than any finite number.</li></ul>
+     * @param other An arbitrary-precision rational number to compare with this
+     * one.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
+     */
+    public int CompareToTotalMagnitude(ERational other) {
+      if (other == null) {
+        return -1;
+      }
+      int valueIThis = 0;
+      int valueIOther = 0;
+      int cmp;
+      if (this.IsSignalingNaN()) {
+        valueIThis = 2;
+      } else if (this.IsNaN()) {
+        valueIThis = 3;
+      } else if (this.IsInfinity()) {
+        valueIThis = 1;
+      }
+      if (other.IsSignalingNaN()) {
+        valueIOther = 2;
+      } else if (other.IsNaN()) {
+        valueIOther = 3;
+      } else if (other.IsInfinity()) {
+        valueIOther = 1;
+      }
+      if (valueIThis > valueIOther) {
+        return 1;
+      } else if (valueIThis < valueIOther) {
+        return -1;
+      }
+      if (valueIThis >= 2) {
+        cmp = this.unsignedNumerator.compareTo(
+         other.unsignedNumerator);
+        return cmp;
+      } else if (valueIThis == 1) {
+        return 0;
+      } else {
+        cmp = this.Abs().compareTo(other.Abs());
+        if (cmp == 0) {
+          cmp = this.denominator.compareTo(
+           other.denominator);
+          return cmp;
+        }
+        return cmp;
+      }
+    }
+
+    /**
+     * Compares the values of this object and another object, imposing a total
+     * ordering on all possible values. In this method: <ul> <li>For objects
+     * with the same value, the one with the higher denominator has a
+     * greater "absolute value".</li> <li>Negative zero is less than
+     * positive zero.</li> <li>Quiet NaN has a higher "absolute value" than
+     * signaling NaN. If both objects are quiet NaN or both are signaling
+     * NaN, the one with the higher diagnostic information has a greater
+     * "absolute value".</li> <li>NaN has a higher "absolute value" than
+     * infinity.</li> <li>Infinity has a higher "absolute value" than any
+     * finite number.</li> <li>Negative numbers are less than positive
+     * numbers.</li></ul>
+     * @param other An arbitrary-precision rational number to compare with this
+     * one.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
+     */
+    public int CompareToTotal(ERational other) {
+      if (other == null) {
+        return -1;
+      }
+      boolean neg1 = this.isNegative();
+      boolean neg2 = other.isNegative();
+      if (neg1 != neg2) {
+        return neg1 ? -1 : 1;
+      }
+      int valueIThis = 0;
+      int valueIOther = 0;
+      int cmp;
+      if (this.IsSignalingNaN()) {
+        valueIThis = 2;
+      } else if (this.IsNaN()) {
+        valueIThis = 3;
+      } else if (this.IsInfinity()) {
+        valueIThis = 1;
+      }
+      if (other.IsSignalingNaN()) {
+        valueIOther = 2;
+      } else if (other.IsNaN()) {
+        valueIOther = 3;
+      } else if (other.IsInfinity()) {
+        valueIOther = 1;
+      }
+      if (valueIThis > valueIOther) {
+        return neg1 ? -1 : 1;
+      } else if (valueIThis < valueIOther) {
+        return neg1 ? 1 : -1;
+      }
+      if (valueIThis >= 2) {
+        cmp = this.unsignedNumerator.compareTo(
+         other.unsignedNumerator);
+        return neg1 ? -cmp : cmp;
+      } else if (valueIThis == 1) {
+        return 0;
+      } else {
+        cmp = this.compareTo(other);
+        if (cmp == 0) {
+          cmp = this.denominator.compareTo(
+           other.denominator);
+          return neg1 ? -cmp : cmp;
+        }
+        return cmp;
+      }
     }
 
     /**

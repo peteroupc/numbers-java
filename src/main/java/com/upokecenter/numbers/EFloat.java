@@ -8,9 +8,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * Represents an arbitrary-precision binary floating-point number. Consists of
-     * an integer mantissa and an integer exponent, both
-     * arbitrary-precision. The value of the number equals mantissa *
+     * Represents an arbitrary-precision binary floating-point number. (The "E"
+     * stands for "extended", meaning that instances of this class can be
+     * values other than numbers proper, such as infinity and not-a-number.)
+     * Each number consists of an integer mantissa and an integer exponent,
+     * both arbitrary-precision. The value of the number equals mantissa *
      * 2^exponent. This class also supports values for negative zero,
      * not-a-number (NaN) values, and infinity. <p>Passing a signaling NaN
      * to any arithmetic operation shown here will signal the flag
@@ -2073,7 +2075,10 @@ this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
-     *
+     * Not documented yet.
+     * @param exponent Not documented yet.
+     * @param rounding Not documented yet.
+     * @return An EFloat object.
      */
     public EFloat RoundToExponentExact(
       EInteger exponent,
