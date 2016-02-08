@@ -8,10 +8,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * Arbitrary-precision rational number. This class cannot be inherited.
-     * <p><b>Thread safety:</b>Instances of this class are immutable, so
-     * they are inherently safe for use by multiple threads. Multiple
-     * instances of this object with the same properties are
+     * Arbitrary-precision rational number. This class cannot be inherited. (The
+     * "E" stands for "extended", meaning that instances of this class can
+     * be values other than numbers proper, such as infinity and
+     * not-a-number.) <p><b>Thread safety:</b>Instances of this class are
+     * immutable, so they are inherently safe for use by multiple threads.
+     * Multiple instances of this object with the same properties are
      * interchangeable, so they should not be compared using the "=="
      * operator (which only checks if each side of the operator is the same
      * instance).</p>
@@ -395,7 +397,7 @@ boolean negative) {
     /**
      * Not documented yet.
      * @param smallint The parameter {@code smallint} is not documented yet.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number.
      */
     public static ERational FromInt32(int smallint) {
       return new ERational(EInteger.FromInt32(smallint), EInteger.FromInt32(1));
@@ -404,7 +406,7 @@ boolean negative) {
     /**
      * Not documented yet.
      * @param longInt The parameter {@code longInt} is not documented yet.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number.
      */
     public static ERational FromInt64(long longInt) {
       return new ERational(EInteger.FromInt64(longInt), EInteger.FromInt32(1));
@@ -423,8 +425,311 @@ boolean negative) {
     }
 
     /**
-     * Not documented yet.
+     *
+     * @param str Not documented yet.
      * @return An ERational object.
+     */
+    public static ERational FromString(String str) {
+      return FromString(str, 0, str == null ? 0 : str.length());
+    }
+
+    /**
+     *
+     * @param str Not documented yet.
+     * @param ctx Not documented yet.
+     * @return An ERational object.
+     */
+    public static ERational FromString(String str, EContext ctx) {
+      return FromString(str, 0, str == null ? 0 : str.length());
+    }
+
+    private static final int MaxSafeInt = 214748363;
+
+    /**
+     *
+     * @param str Not documented yet.
+     * @param offset A zero-based index showing where the desired portion of {@code
+     * str} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * str} (but not more than {@code str} 's length).
+     * @return An ERational object.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     * greater than "str"'s length, or "str"'s length minus "offset" is less
+     * than "length".
+     */
+    public static ERational FromString(
+      String str,
+      int offset,
+      int length) {
+      int tmpoffset = offset;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      if (tmpoffset < 0) {
+        throw new NumberFormatException("offset (" + tmpoffset + ") is less than " +
+                    "0");
+      }
+      if (tmpoffset > str.length()) {
+        throw new NumberFormatException("offset (" + tmpoffset + ") is more than " +
+                    str.length());
+      }
+      if (length < 0) {
+        throw new NumberFormatException("length (" + length + ") is less than " +
+                    "0");
+      }
+      if (length > str.length()) {
+        throw new NumberFormatException("length (" + length + ") is more than " +
+                    str.length());
+      }
+      if (str.length() - tmpoffset < length) {
+        throw new NumberFormatException("str's length minus " + tmpoffset + " (" +
+                    (str.length() - tmpoffset) + ") is less than " + length);
+      }
+      if (length == 0) {
+        throw new NumberFormatException();
+      }
+      boolean negative = false;
+      int endStr = tmpoffset + length;
+      if (str.charAt(0) == '+' || str.charAt(0) == '-') {
+        negative = str.charAt(0) == '-';
+        ++tmpoffset;
+      }
+      int numerInt = 0;
+      FastInteger numer = null;
+      int numerBuffer = 0;
+      int numerBufferMult = 1;
+      int denomBuffer = 0;
+      int denomBufferMult = 1;
+      boolean haveDigits = false;
+      boolean haveDenominator = false;
+      int newScaleInt = 0;
+      FastInteger newScale = null;
+      int i = tmpoffset;
+      if (i + 8 == endStr) {
+        if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
+            (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') &&
+            (str.charAt(i + 2) == 'F' || str.charAt(i + 2) == 'f') &&
+            (str.charAt(i + 3) == 'I' || str.charAt(i + 3) == 'i') && (str.charAt(i + 4) == 'N' ||
+                    str.charAt(i + 4) == 'n') && (str.charAt(i + 5) ==
+                    'I' || str.charAt(i + 5) == 'i') &&
+            (str.charAt(i + 6) == 'T' || str.charAt(i + 6) == 't') && (str.charAt(i + 7) == 'Y' ||
+                    str.charAt(i + 7) == 'y')) {
+          return negative ? NegativeInfinity : PositiveInfinity;
+        }
+      }
+      if (i + 3 == endStr) {
+        if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
+            (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') && (str.charAt(i + 2) == 'F' ||
+                    str.charAt(i + 2) == 'f')) {
+          return negative ? NegativeInfinity : PositiveInfinity;
+        }
+      }
+      if (i + 3 <= endStr) {
+        // Quiet NaN
+        if ((str.charAt(i) == 'N' || str.charAt(i) == 'n') && (str.charAt(i + 1) == 'A' || str.charAt(i +
+                1) == 'a') && (str.charAt(i + 2) == 'N' || str.charAt(i + 2) == 'n')) {
+          int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
+            BigNumberFlags.FlagQuietNaN;
+          if (i + 3 == endStr) {
+            return (!negative) ? NaN : NaN.Negate();
+          }
+          i += 3;
+          FastInteger digitCount = new FastInteger(0);
+          for (; i < endStr; ++i) {
+            if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+              int thisdigit = (int)(str.charAt(i) - '0');
+              haveDigits = haveDigits || thisdigit != 0;
+              if (numerInt > MaxSafeInt) {
+                if (numer == null) {
+                  numer = new FastInteger(numerInt);
+                  numerBuffer = thisdigit;
+                  numerBufferMult = 10;
+                } else {
+                  if (numerBufferMult >= 1000000000) {
+                    numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+                    numerBuffer = thisdigit;
+                    numerBufferMult = 10;
+                  } else {
+                    numerBufferMult *= 10;
+                    numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                    numerBuffer += thisdigit;
+                  }
+                }
+              } else {
+                numerInt *= 10;
+                numerInt += thisdigit;
+              }
+            } else {
+              throw new NumberFormatException();
+            }
+          }
+          if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
+            numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+          }
+          EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
+            numer.AsEInteger();
+          return CreateNaN(bignumer, false, negative);
+        }
+      }
+      if (i + 4 <= endStr) {
+        // Signaling NaN
+        if ((str.charAt(i) == 'S' || str.charAt(i) == 's') && (str.charAt(i + 1) == 'N' || str.charAt(i +
+                    1) == 'n') && (str.charAt(i + 2) == 'A' || str.charAt(i + 2) == 'a') &&
+                (str.charAt(i + 3) == 'N' || str.charAt(i + 3) == 'n')) {
+          if (i + 4 == endStr) {
+            int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
+              BigNumberFlags.FlagSignalingNaN;
+            return (!negative) ? SignalingNaN : SignalingNaN.Negate();
+          }
+          i += 4;
+          FastInteger digitCount = new FastInteger(0);
+          for (; i < endStr; ++i) {
+            if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+              int thisdigit = (int)(str.charAt(i) - '0');
+              haveDigits = haveDigits || thisdigit != 0;
+              if (numerInt > MaxSafeInt) {
+                if (numer == null) {
+                  numer = new FastInteger(numerInt);
+                  numerBuffer = thisdigit;
+                  numerBufferMult = 10;
+                } else {
+                  if (numerBufferMult >= 1000000000) {
+                    numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+                    numerBuffer = thisdigit;
+                    numerBufferMult = 10;
+                  } else {
+                    numerBufferMult *= 10;
+                    numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                    numerBuffer += thisdigit;
+                  }
+                }
+              } else {
+                numerInt *= 10;
+                numerInt += thisdigit;
+              }
+            } else {
+              throw new NumberFormatException();
+            }
+          }
+          if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
+            numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+          }
+          int flags3 = (negative ? BigNumberFlags.FlagNegative : 0) |
+            BigNumberFlags.FlagSignalingNaN;
+          EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
+            numer.AsEInteger();
+          return CreateWithFlags(
+            bignumer,
+            EInteger.FromInt32(0),
+            flags3);
+        }
+      }
+      // Ordinary number
+      for (; i < endStr; ++i) {
+        if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+          int thisdigit = (int)(str.charAt(i) - '0');
+          if (numerInt > MaxSafeInt) {
+            if (numer == null) {
+              numer = new FastInteger(numerInt);
+              numerBuffer = thisdigit;
+              numerBufferMult = 10;
+            } else {
+              if (numerBufferMult >= 1000000000) {
+                numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+                numerBuffer = thisdigit;
+                numerBufferMult = 10;
+              } else {
+                // multiply numerBufferMult and numerBuffer each by 10
+             numerBufferMult = (numerBufferMult << 3) + (numerBufferMult <<
+                  1);
+                numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                numerBuffer += thisdigit;
+              }
+            }
+          } else {
+            numerInt *= 10;
+            numerInt += thisdigit;
+          }
+          haveDigits = true;
+        } else if (str.charAt(i) == '/') {
+          haveDenominator = true;
+          ++i;
+          break;
+        } else {
+          throw new NumberFormatException();
+        }
+      }
+      if (!haveDigits) {
+        throw new NumberFormatException();
+      }
+      if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
+        numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+      }
+      if (haveDenominator) {
+        FastInteger denom = null;
+        int denomInt = 0;
+        tmpoffset = 1;
+        haveDigits = false;
+        if (i == endStr) {
+          throw new NumberFormatException();
+        }
+        for (; i < endStr; ++i) {
+          if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            haveDigits = true;
+            int thisdigit = (int)(str.charAt(i) - '0');
+            if (denomInt > MaxSafeInt) {
+              if (denom == null) {
+                denom = new FastInteger(denomInt);
+                denomBuffer = thisdigit;
+                denomBufferMult = 10;
+              } else {
+                if (denomBufferMult >= 1000000000) {
+                  denom.Multiply(denomBufferMult).AddInt(denomBuffer);
+                  denomBuffer = thisdigit;
+                  denomBufferMult = 10;
+                } else {
+                  // multiply denomBufferMult and denomBuffer each by 10
+             denomBufferMult = (denomBufferMult << 3) + (denomBufferMult <<
+                    1);
+                  denomBuffer = (denomBuffer << 3) + (denomBuffer << 1);
+                  denomBuffer += thisdigit;
+                }
+              }
+            } else {
+              denomInt *= 10;
+              denomInt += thisdigit;
+            }
+          } else {
+            throw new NumberFormatException();
+          }
+        }
+        if (!haveDigits) {
+          throw new NumberFormatException();
+        }
+        if (denom != null && (denomBufferMult != 1 || denomBuffer != 0)) {
+          denom.Multiply(denomBufferMult).AddInt(denomBuffer);
+        }
+        if (denom == null) {
+          newScaleInt = denomInt;
+        } else {
+          newScale = denom;
+        }
+      } else {
+        newScaleInt = 1;
+      }
+      if (i != endStr) {
+        throw new NumberFormatException();
+      }
+      ERational erat = Create(
+        numer == null ? EInteger.FromInt32(numerInt) : numer.AsEInteger(),
+        newScale == null ? EInteger.FromInt32(newScaleInt) : newScale.AsEInteger());
+      return negative ? erat.Negate() : erat;
+    }
+
+    /**
+     * Not documented yet.
+     * @return An arbitrary-precision rational number.
      */
     public ERational Abs() {
       if (this.isNegative()) {
@@ -972,8 +1277,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     }
 
     /**
-     * Not documented yet.
-     * @return An ERational object.
+     * Returns a rational number with the sign reversed.
+     * @return An arbitrary-precision rational number.
      */
     public ERational Negate() {
       ERational er = new ERational(this.unsignedNumerator, this.denominator);
@@ -1173,13 +1478,13 @@ ctx);
      * Converts this rational number to a decimal number, but if the result would
      * have a nonterminating decimal expansion, rounds that result to the
      * given precision.
-     * @param ctx An arithmetic context object to control the precision. The
-     * rounding and exponent range settings of this context are ignored.
-     * This context will be used only if the exact result would have a
-     * nonterminating decimal expansion. If {@code HasFlags} of the context
-     * is true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case this method is the same as ToExtendedDecimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating decimal expansion. If
+     * {@code HasFlags} of the context is true, will also store the flags
+     * resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null, in which case this method is the
+     * same as ToExtendedDecimal.
      * @return An arbitrary-precision decimal.
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
@@ -1270,7 +1575,13 @@ ctx);
     /**
      * Converts this rational number to a binary number and rounds the result to
      * the given precision.
-     * @param ctx An EContext object.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating binary expansion. If
+     * {@code HasFlags} of the context is true, will also store the flags
+     * resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null, in which case this method is the
+     * same as ToExtendedFloat.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloat(EContext ctx) {
@@ -1296,13 +1607,13 @@ ctx);
      * Converts this rational number to a binary number, but if the result would
      * have a nonterminating binary expansion, rounds that result to the
      * given precision.
-     * @param ctx An arithmetic context object to control the precision. The
-     * rounding and exponent range settings of this context are ignored.
-     * This context will be used only if the exact result would have a
-     * nonterminating binary expansion. If {@code HasFlags} of the context
-     * is true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case this method is the same as ToExtendedFloat.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating binary expansion. If
+     * {@code HasFlags} of the context is true, will also store the flags
+     * resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null, in which case this method is the
+     * same as ToExtendedFloat.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {
@@ -1395,9 +1706,10 @@ ctx);
 
     /**
      * Converts this object to a text string.
-     * @return A string representation of this object. The result can be Infinity,
-     * NaN, or sNaN (with a minus sign before it for negative values), or a
-     * number of the following form: [-]numerator/denominator.
+     * @return A string representation of this object. If this object's value is
+     * infinity or not-a-number, the result is the analogous return value of
+     * the EDecimal.toString method. Otherwise, the return value has the
+     * following form: [-]numerator/denominator.
      */
     @Override public String toString() {
       if (!this.isFinite()) {
