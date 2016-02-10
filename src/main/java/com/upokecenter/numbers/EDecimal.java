@@ -230,7 +230,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return True if this object is finite (not infinity or NaN); otherwise,
+     * @return true if this object is finite (not infinity or NaN), otherwise,
      * false.
      */
     public final boolean isFinite() {
@@ -241,7 +241,7 @@ private static final FastIntegerFixed FastIntZero = new
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return True if this object is negative, including negative zero; otherwise,
+     * @return true if this object is negative, including negative zero, otherwise,
      * false.
      */
     public final boolean isNegative() {
@@ -250,7 +250,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return True if this object's value equals 0; otherwise, false.
+     * @return true if this object's value equals 0, otherwise, false.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -704,7 +704,7 @@ FastIntZero,
     }
 
     /**
-     * Creates a decimal number from a string that represents a number. See
+     * Creates a decimal number from a text string that represents a number. See
      * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
@@ -718,7 +718,7 @@ FastIntZero,
     }
 
     /**
-     * Creates a decimal number from a string that represents a number. See
+     * Creates a decimal number from a text string that represents a number. See
      * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
      * @param ctx An arithmetic context to control precision, rounding, and
@@ -737,7 +737,7 @@ FastIntZero,
     }
 
     /**
-     * Creates a decimal number from a string that represents a number. See
+     * Creates a decimal number from a text string that represents a number. See
      * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
      * @param offset A zero-based index showing where the desired portion of {@code
@@ -758,7 +758,7 @@ FastIntZero,
     }
 
     /**
-     * <p>Creates a decimal number from a string that represents a number.</p>
+     * <p>Creates a decimal number from a text string that represents a number.</p>
      * <p>The format of the string generally consists of:</p> <ul> <li>An
      * optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-'
      * , the value is negative.)</li> <li>One or more digits, with a single
@@ -1298,9 +1298,10 @@ sign);
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
      * cannot be null, as &#x3c0; can never be represented exactly.</i>
-     * @return π rounded to the given precision. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the parameter {@code ctx} is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * @return The constant π rounded to the given precision. Signals FlagInvalid
+     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
+     * or the precision is unlimited (the context's Precision property is
+     * 0).
      */
     public static EDecimal PI(EContext ctx) {
       return GetMathValue(ctx).Pi(ctx);
@@ -2108,7 +2109,7 @@ ERounding.HalfEven);
      * Divides this object by another object, and returns the integer part of the
      * result (which is initially rounded down), with the preferred exponent
      * set to this value&#x27;s exponent minus the divisor&#x27;s exponent.
-     * @param divisor The divisor.
+     * @param divisor The number to divide by.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the integer part of the result. Flags will be
      * set on the given context only if the context's {@code HasFlags} is
@@ -2133,7 +2134,7 @@ ERounding.HalfEven);
     /**
      * Divides this object by another object, and returns the integer part of the
      * result, with the exponent set to 0.
-     * @param divisor The divisor.
+     * @param divisor The number to divide by.
      * @param ctx An arithmetic context object to control the precision. The
      * rounding and exponent range settings of this context are ignored. If
      * {@code HasFlags} of the context is true, will also store the flags
@@ -2155,7 +2156,7 @@ ERounding.HalfEven);
     /**
      * Divides this object by another decimal number and returns a result with the
      * same exponent as this object (the dividend).
-     * @param divisor The divisor.
+     * @param divisor The number to divide by.
      * @param rounding The rounding mode to use if the result must be scaled down
      * to have the same exponent as this value.
      * @return The quotient of the two numbers. Signals FlagDivideByZero and
@@ -2178,8 +2179,8 @@ ERounding.HalfEven);
      * Determines whether this object&#x27;s mantissa and exponent are equal to
      * those of another object.
      * @param other An arbitrary-precision decimal number.
-     * @return True if this object's mantissa and exponent are equal to those of
-     * another object; otherwise, false.
+     * @return true if this object's mantissa and exponent are equal to those of
+     * another object, otherwise, false.
      */
     public boolean equals(EDecimal other) {
       return this.EqualsInternal(other);
@@ -2190,7 +2191,7 @@ ERounding.HalfEven);
      * those of another object and that other object is an
      * arbitrary-precision decimal number.
      * @param obj An arbitrary object.
-     * @return True if the objects are equal; otherwise, false.
+     * @return true if the objects are equal, otherwise, false.
      */
     @Override public boolean equals(Object obj) {
       return this.EqualsInternal(((obj instanceof EDecimal) ? (EDecimal)obj : null));
@@ -2205,7 +2206,7 @@ ERounding.HalfEven);
      * flags are in addition to the pre-existing flags). <i>This parameter
      * cannot be null, as the exponential function's results are generally
      * not exact.</i> (Unlike in the General Decimal Arithmetic
-     * Specification, any rounding mode is allowed.)
+     * Specification, any rounding mode is allowed.).
      * @return Exponential of this object. If this object's value is 1, returns an
      * approximation to " e" within the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -2233,7 +2234,7 @@ ERounding.HalfEven);
     /**
      * Gets a value indicating whether this object is positive or negative
      * infinity.
-     * @return True if this object is positive or negative infinity; otherwise,
+     * @return true if this object is positive or negative infinity, otherwise,
      * false.
      */
     public boolean IsInfinity() {
@@ -2242,7 +2243,7 @@ ERounding.HalfEven);
 
     /**
      * Gets a value indicating whether this object is not a number (NaN).
-     * @return True if this object is not a number (NaN); otherwise, false.
+     * @return true if this object is not a number (NaN), otherwise, false.
      */
     public boolean IsNaN() {
       return (this.flags & (BigNumberFlags.FlagQuietNaN |
@@ -2251,7 +2252,7 @@ ERounding.HalfEven);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return True if this object is negative infinity; otherwise, false.
+     * @return true if this object is negative infinity, otherwise, false.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -2261,7 +2262,7 @@ ERounding.HalfEven);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return True if this object is positive infinity; otherwise, false.
+     * @return true if this object is positive infinity, otherwise, false.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -2270,7 +2271,7 @@ ERounding.HalfEven);
 
     /**
      * Gets a value indicating whether this object is a quiet not-a-number value.
-     * @return True if this object is a quiet not-a-number value; otherwise, false.
+     * @return true if this object is a quiet not-a-number value, otherwise, false.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -2279,7 +2280,7 @@ ERounding.HalfEven);
     /**
      * Gets a value indicating whether this object is a signaling not-a-number
      * value.
-     * @return True if this object is a signaling not-a-number value; otherwise,
+     * @return true if this object is a signaling not-a-number value, otherwise,
      * false.
      */
     public boolean IsSignalingNaN() {
@@ -2296,7 +2297,7 @@ ERounding.HalfEven);
      * flags are in addition to the pre-existing flags). <i>This parameter
      * cannot be null, as the ln function's results are generally not
      * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
-     * any rounding mode is allowed.)
+     * any rounding mode is allowed.).
      * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the result would be a complex number with
      * a real part equal to Ln of this object's absolute value and an
@@ -2320,7 +2321,7 @@ ERounding.HalfEven);
      * flags are in addition to the pre-existing flags). <i>This parameter
      * cannot be null, as the ln function's results are generally not
      * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
-     * any rounding mode is allowed.)
+     * any rounding mode is allowed.).
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -3067,9 +3068,16 @@ ctx == null ? ERounding.HalfEven : ctx.getRounding());
     }
 
     /**
-     * Not documented yet.
-     * @param exponent The parameter {@code exponent} is not documented yet.
-     * @return An EDecimal object.
+     * Returns a decimal number with the same value as this object but rounded to a
+     * new exponent if necessary, using the HalfEven rounding mode.
+     * @param exponent The minimum exponent the result can have. This is the
+     * maximum number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
+     * @return A decimal number rounded to the closest value representable for the
+     * given exponent.
      */
     public EDecimal RoundToExponent(
       EInteger exponent) {
@@ -3079,10 +3087,17 @@ EContext.ForRounding(ERounding.HalfEven));
     }
 
     /**
-     * Not documented yet.
-     * @param exponent The parameter {@code exponent} is not documented yet.
-     * @param rounding An ERounding object.
-     * @return An EDecimal object.
+     * Returns a decimal number with the same value as this object but rounded to a
+     * new exponent if necessary, using the given rounding mode.
+     * @param exponent The minimum exponent the result can have. This is the
+     * maximum number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
+     * @param rounding Desired mode for rounding this number's value.
+     * @return A decimal number rounded to the closest value representable for the
+     * given exponent.
      */
     public EDecimal RoundToExponent(
       EInteger exponent,
@@ -3093,10 +3108,16 @@ EContext.ForRounding(rounding));
     }
 
     /**
-     * Not documented yet.
-     * @param exponentSmall The parameter {@code exponentSmall} is not documented
-     * yet.
-     * @return An EDecimal object.
+     * Returns a decimal number with the same value as this object but rounded to a
+     * new exponent if necessary, using the HalfEven rounding mode.
+     * @param exponentSmall The minimum exponent the result can have. This is the
+     * maximum number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
+     * @return A decimal number rounded to the closest value representable for the
+     * given exponent.
      */
     public EDecimal RoundToExponent(
       int exponentSmall) {
@@ -3171,8 +3192,8 @@ EContext.ForRounding(rounding));
 
     /**
      * Returns a decimal number with the same value as this object but rounded to
-     * the given exponent, and signals an invalid operation if the result
-     * would be inexact.
+     * the given exponent, and signals an inexact flag if the result would
+     * be inexact.
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
@@ -3201,7 +3222,7 @@ EContext.ForRounding(rounding));
 
     /**
      * Returns a decimal number with the same value as this object but rounded to
-     * an integer, and signals an invalid operation if the result would be
+     * an integer, and signals an inexact flag if the result would be
      * inexact.
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
@@ -3229,10 +3250,18 @@ EContext.ForRounding(rounding));
     }
 
     /**
-     * Not documented yet.
-     * @param exponentSmall Not documented yet.
-     * @param rounding Not documented yet.
-     * @return An EDecimal object.
+     * Returns a decimal number with the same value as this object but rounded to
+     * an integer, and signals an inexact flag if the result would be
+     * inexact.
+     * @param exponentSmall The minimum exponent the result can have. This is the
+     * maximum number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
+     * @param rounding Desired mode for rounding this object's value.
+     * @return A decimal number rounded to the closest value representable using
+     * the given exponent.
      */
     public EDecimal RoundToExponentExact(
       int exponentSmall,
@@ -3245,7 +3274,7 @@ EContext.Unlimited.WithRounding(rounding));
 
     /**
      * Returns a decimal number with the same value as this object but rounded to
-     * an integer, and signals an invalid operation if the result would be
+     * an integer, and signals an inexact flag if the result would be
      * inexact.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -3288,7 +3317,7 @@ EContext.Unlimited.WithRounding(rounding));
 
     /**
      * Returns a decimal number with the same value as this object but rounded to
-     * an integer, and signals an invalid operation if the result would be
+     * an integer, and signals an inexact flag if the result would be
      * inexact.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -3416,7 +3445,7 @@ EContext ctx) {
      * flags are in addition to the pre-existing flags). <i>This parameter
      * cannot be null, as the square root function's results are generally
      * not exact for many inputs.</i> (Unlike in the General Decimal
-     * Arithmetic Specification, any rounding mode is allowed.)
+     * Arithmetic Specification, any rounding mode is allowed.).
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
@@ -3435,7 +3464,7 @@ EContext ctx) {
      * flags are in addition to the pre-existing flags). <i>This parameter
      * cannot be null, as the square root function's results are generally
      * not exact for many inputs.</i> (Unlike in the General Decimal
-     * Arithmetic Specification, any rounding mode is allowed.)
+     * Arithmetic Specification, any rounding mode is allowed.).
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
@@ -3765,13 +3794,14 @@ EContext ctx) {
         throw new NullPointerException("exponent");
       }
 
+      int sign = (((flags & BigNumberFlags.FlagSpecial) == 0) &&
+                mantissa.isValueZero()) ? 0 : (((flags &
+                    BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
       return new EDecimal(
         mantissa,
         exponent,
         flags,
-        (((flags & BigNumberFlags.FlagSpecial) == 0) &&
-                mantissa.isValueZero()) ? 0 : (((flags &
-                    BigNumberFlags.FlagNegative) != 0) ? -1 : 1));
+        sign);
     }
 
     static EDecimal CreateWithFlags(
@@ -3785,13 +3815,14 @@ EContext ctx) {
         throw new NullPointerException("exponent");
       }
 
+      int sign = (((flags & BigNumberFlags.FlagSpecial) == 0) &&
+                mantissa.isZero()) ? 0 : (((flags &
+                    BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
       return new EDecimal(
         FastIntegerFixed.FromBig(mantissa),
         FastIntegerFixed.FromBig(exponent),
         flags,
-        (((flags & BigNumberFlags.FlagSpecial) == 0) &&
-                mantissa.isZero()) ? 0 : (((flags &
-                    BigNumberFlags.FlagNegative) != 0) ? -1 : 1));
+        sign);
     }
 
     private static boolean AppendString(

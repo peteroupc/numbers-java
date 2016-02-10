@@ -123,7 +123,7 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return True if this object is finite (not infinity or NaN); otherwise,
+     * @return true if this object is finite (not infinity or NaN), otherwise,
      * false.
      */
     public final boolean isFinite() {
@@ -133,7 +133,7 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return True if this object's value is negative; otherwise, false.
+     * @return true if this object's value is negative, otherwise, false.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -141,7 +141,7 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return True if this object's value equals 0; otherwise, false.
+     * @return true if this object's value equals 0, otherwise, false.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -508,8 +508,8 @@ boolean negative) {
       int denomBufferMult = 1;
       boolean haveDigits = false;
       boolean haveDenominator = false;
-      int newScaleInt = 0;
-      FastInteger newScale = null;
+      int ndenomInt = 0;
+      FastInteger ndenom = null;
       int i = tmpoffset;
       if (i + 8 == endStr) {
         if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
@@ -716,19 +716,22 @@ boolean negative) {
           denom.Multiply(denomBufferMult).AddInt(denomBuffer);
         }
         if (denom == null) {
-          newScaleInt = denomInt;
+          ndenomInt = denomInt;
         } else {
-          newScale = denom;
+          ndenom = denom;
         }
       } else {
-        newScaleInt = 1;
+        ndenomInt = 1;
       }
       if (i != endStr) {
         throw new NumberFormatException();
       }
+      if (ndenom == null ? (ndenomInt == 0) : ndenom.isValueZero()) {
+        throw new NumberFormatException();
+      }
       ERational erat = Create(
         numer == null ? EInteger.FromInt32(numerInt) : numer.AsEInteger(),
-        newScale == null ? EInteger.FromInt32(newScaleInt) : newScale.AsEInteger());
+        ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom.AsEInteger());
       return negative ? erat.Negate() : erat;
     }
 
@@ -1268,7 +1271,7 @@ boolean negative) {
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return True if the objects are equal; otherwise, false.
+     * @return true if the objects are equal, otherwise, false.
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1310,7 +1313,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Gets a value indicating whether this object's value is infinity.
-     * @return True if this object's value is infinity; otherwise, false.
+     * @return true if this object's value is infinity, otherwise, false.
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1318,7 +1321,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a not-a-number value.
-     * @return True if this object is a not-a-number value; otherwise, false.
+     * @return true if this object is a not-a-number value, otherwise, false.
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
@@ -1326,7 +1329,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return True if this object is negative infinity; otherwise, false.
+     * @return true if this object is negative infinity, otherwise, false.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1336,7 +1339,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return True if this object is positive infinity; otherwise, false.
+     * @return true if this object is positive infinity, otherwise, false.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1345,7 +1348,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a quiet not-a-number value.
-     * @return True if this object is a quiet not-a-number value; otherwise, false.
+     * @return true if this object is a quiet not-a-number value, otherwise, false.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1355,9 +1358,9 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Returns whether this object is a signaling not-a-number value (which causes
      * an error if the value is passed to any arithmetic operation in this
      * class).
-     * @return True if this object is a signaling not-a-number value (which causes
+     * @return true if this object is a signaling not-a-number value (which causes
      * an error if the value is passed to any arithmetic operation in this
-     * class); otherwise, false.
+     * class), otherwise, false.
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;

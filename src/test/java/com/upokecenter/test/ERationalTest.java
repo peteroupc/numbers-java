@@ -78,6 +78,9 @@ throw new IllegalStateException("", ex);
       for (int i = 0; i < 1000; ++i) {
         EInteger ei1 = RandomObjects.RandomEInteger(fr);
         EInteger ei2 = RandomObjects.RandomEInteger(fr).Abs();
+        if (ei2.isZero()) {
+          ei2 = EInteger.FromInt32(1);
+        }
         er = ERational.FromString(ei1 + "/" + ei2);
         Assert.assertEquals(ei1, er.getNumerator());
         Assert.assertEquals(ei2, er.getDenominator());

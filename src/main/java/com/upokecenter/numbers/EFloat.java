@@ -2076,8 +2076,8 @@ this.flags ^ BigNumberFlags.FlagNegative);
 
     /**
      * Not documented yet.
-     * @param exponent Not documented yet.
-     * @param rounding Not documented yet.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
      * @return An EFloat object.
      */
     public EFloat RoundToExponentExact(
