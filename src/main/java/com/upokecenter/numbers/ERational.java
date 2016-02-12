@@ -11,7 +11,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Arbitrary-precision rational number. This class cannot be inherited. (The
      * "E" stands for "extended", meaning that instances of this class can
      * be values other than numbers proper, such as infinity and
-     * not-a-number.) <p><b>Thread safety:</b>Instances of this class are
+     * not-a-number.) <p><b>Thread safety:</b> Instances of this class are
      * immutable, so they are inherently safe for use by multiple threads.
      * Multiple instances of this object with the same properties are
      * interchangeable, so they should not be compared using the "=="
@@ -123,8 +123,9 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return true if this object is finite (not infinity or NaN), otherwise,
-     * false.
+     * @return <code>true</code> if this object is finite (not infinity or NaN);
+     * otherwise, <code>false</code>. true if this object is finite (not infinity
+     * or not-a-number (NaN)); otherwise, false.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
@@ -133,7 +134,9 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return true if this object's value is negative, otherwise, false.
+     * @return <code>true</code> if this object's value is negative (including negative
+     * zero); otherwise, <code>false</code>. true if this object's value is
+     * negative; otherwise, false.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -141,7 +144,8 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return true if this object's value equals 0, otherwise, false.
+     * @return <code>true</code> if this object's value equals 0; otherwise,
+     * <code>false</code>. true if this object's value equals 0; otherwise, false.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -425,7 +429,7 @@ boolean negative) {
     }
 
     /**
-     * Creates a rational number from a string that represents a number. See
+     * Creates a rational number from a text string that represents a number. See
      * <code>FromString(String, int, int)</code> for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
@@ -441,24 +445,25 @@ boolean negative) {
     private static final int MaxSafeInt = 214748363;
 
     /**
-     * <p>Creates a rational number from a string that represents a number.</p>
-     * <p>The format of the string generally consists of:</p> <ul> <li>An
-     * optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-'
-     * , the value is negative.)</li> <li>The numerator in the form of one
-     * or more digits.</li> <li>Optionally, "/" followed by the denominator
-     * in the form of one or more digits. If a denominator is not given,
-     * it's equal to 1.</li></ul> <p>The string can also be "-INF",
-     * "-Infinity", "Infinity", "INF" , quiet NaN ("NaN" /"-NaN") followed
-     * by any number of digits, or signaling NaN ("sNaN" /"-sNaN") followed
-     * by any number of digits, all in any combination of upper and lower
-     * case.</p> <p>All characters mentioned above are the corresponding
-     * characters in the Basic Latin range. In particular, the digits must
-     * be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not
-     * allowed to contain white space characters, including spaces.</p>
+     * <p>Creates a rational number from a text string that represents a
+     * number.</p> <p>The format of the string generally consists of:</p>
+     * <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
+     * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
+     * the form of one or more digits.</li> <li>Optionally, "/" followed by
+     * the denominator in the form of one or more digits. If a denominator
+     * is not given, it's equal to 1.</li></ul> <p>The string can also be
+     * "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+     * followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+     * followed by any number of digits, all in any combination of upper and
+     * lower case.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular, the
+     * digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
+     * is not allowed to contain white space characters, including
+     * spaces.</p>
      * @param str A text string, a portion of which represents a number.
      * @param offset A zero-based index that identifies the start of the number.
      * @param length The length of the number within the string.
-     * @return Not documented yet.
+     * @return An ERational object.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
@@ -1271,7 +1276,7 @@ boolean negative) {
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return true if the objects are equal, otherwise, false.
+     * @return true if the objects are equal; otherwise, false .
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1313,7 +1318,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Gets a value indicating whether this object's value is infinity.
-     * @return true if this object's value is infinity, otherwise, false.
+     * @return true if this object's value is infinity; otherwise, false .
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1321,7 +1326,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a not-a-number value.
-     * @return true if this object is a not-a-number value, otherwise, false.
+     * @return true if this object is a not-a-number value; otherwise, false .
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
@@ -1329,7 +1334,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return true if this object is negative infinity, otherwise, false.
+     * @return true if this object is negative infinity; otherwise, false .
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1339,7 +1344,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return true if this object is positive infinity, otherwise, false.
+     * @return true if this object is positive infinity; otherwise, false .
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1348,7 +1353,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a quiet not-a-number value.
-     * @return true if this object is a quiet not-a-number value, otherwise, false.
+     * @return true if this object is a quiet not-a-number value; otherwise, false
+     * .
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1360,7 +1366,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * class).
      * @return true if this object is a signaling not-a-number value (which causes
      * an error if the value is passed to any arithmetic operation in this
-     * class), otherwise, false.
+     * class); otherwise, false .
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -1422,7 +1428,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Finds the remainder that results when this instance is divided by the value
      * of an arbitrary-precision rational number.
      * @param otherValue An arbitrary-precision rational number.
-     * @return The remainder of the two objects.
+     * @return The remainder of the two numbers.
      * @throws java.lang.NullPointerException The parameter {@code otherValue} is
      * null.
      */
@@ -1538,7 +1544,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * in this value will be discarded when converting to an
      * arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.ArithmeticException This object's value is infinity or NaN.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      */
     public EInteger ToEInteger() {
       if (!this.isFinite()) {
@@ -1551,7 +1558,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Converts this value to an arbitrary-precision integer, checking whether the
      * value is an exact integer.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.ArithmeticException This object's value is infinity or NaN.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToEIntegerExact() {
@@ -1841,7 +1849,7 @@ ctx);
      * @return A string representation of this object. If this object's value is
      * infinity or not-a-number, the result is the analogous return value of
      * the EDecimal.toString method. Otherwise, the return value has the
-     * following form: [-]numerator/denominator.
+     * following form: [-]numerator/denominator .
      */
     @Override public String toString() {
       if (!this.isFinite()) {

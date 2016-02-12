@@ -84,7 +84,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets the number 10 as an arbitrary-precision integer.
-     * @return A value not documented yet.
+     * @return The number 10 as an arbitrary-precision integer.
      */
     public static EInteger getTen() {
         return ValueTen;
@@ -100,7 +100,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return true if this value is even, otherwise, false.
+     * @return <code>true</code> if this value is even; otherwise, <code>false</code>. true if
+     * this value is even; otherwise, false.
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -108,7 +109,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return true if this object's value is a power of two, otherwise, false.
+     * @return <code>true</code> if this object&#x27;s value is a power of two;
+     * otherwise, <code>false</code>. true if this object's value is a power of
+     * two; otherwise, false .
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -120,7 +123,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return true if this value is 0, otherwise, false.
+     * @return <code>true</code> if this value is 0; otherwise, <code>false</code>. true if
+     * this value is 0; otherwise, false.
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -139,7 +143,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Initializes an arbitrary-precision integer from an array of bytes.
      * @param bytes A byte array consisting of the two's-complement integer
      * representation of the arbitrary-precision integer to create. The byte
-     * array is encoded using the following rules:<ul> <li>Positive numbers
+     * array is encoded using the following rules: <ul> <li>Positive numbers
      * have the first byte's highest bit cleared, and negative numbers have
      * the bit set.</li> <li>The last byte contains the lowest 8-bits, the
      * next-to-last contains the next lowest 8 bits, and so on. For example,
@@ -155,7 +159,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * example contains a cleared high bit in {@code 0x31, 0x7b}, so an
      * additional 0xFF is added at the start to ensure it's interpreted as
      * negative.)</li></ul> <p>For little-endian, the byte order is reversed
-     * from the byte order just discussed.</p>
+     * from the byte order just discussed.</p>.
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is big-endian,
      * or most-significant-byte first.
@@ -952,7 +956,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Returns whether this object's value can fit in a 32-bit signed integer.
      * @return true if this object's value is Integer.MIN_VALUE or greater, and
-     * Integer.MAX_VALUE or less, otherwise, false.
+     * Integer.MAX_VALUE or less; otherwise, false .
      */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
@@ -969,7 +973,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Returns whether this object's value can fit in a 64-bit signed integer.
      * @return true if this object's value is Long.MIN_VALUE or greater, and
-     * Long.MAX_VALUE or less, otherwise, false.
+     * Long.MAX_VALUE or less; otherwise, false .
      */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
@@ -1247,7 +1251,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return true if this object and another object are equal, otherwise, false.
+     * @return true if this object and another object are equal; otherwise, false .
      */
     @Override public boolean equals(Object obj) {
       EInteger other = ((obj instanceof EInteger) ? (EInteger)obj : null);
@@ -1692,7 +1696,7 @@ WordsShiftRightOne(bu, buc);
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
      * @return true if a bit is set in the two's-complement representation of this
-     * object's value, otherwise, false.
+     * object's value; otherwise, false .
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -2138,7 +2142,7 @@ this.negative ^ bigintMult.negative);
      * absolute value of the other object; the remainder has the same sign
      * (positive or negative) as this object.
      * @param divisor Another arbitrary-precision integer.
-     * @return The remainder of the two objects.
+     * @return The remainder of the two numbers.
      * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
