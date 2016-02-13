@@ -1246,7 +1246,7 @@ Divides this arbitrary-precision binary float by another arbitrary-precision
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to DivRemNaturalScale.</span>
+Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
 
 **Parameters:**
 
@@ -1259,7 +1259,7 @@ Divides this arbitrary-precision binary float by another arbitrary-precision
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor, EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to DivRemNaturalScale.</span>
+Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
 
 **Parameters:**
 
@@ -2561,7 +2561,7 @@ Returns a binary float with the same value as this object but rounded to an
 
 ### RoundToIntegralExact
     @Deprecated public EFloat RoundToIntegralExact(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to RoundToIntegerExact.</span>
+Deprecated.&nbsp;<i>Renamed to RoundToIntegerExact.</i>
 
 **Parameters:**
 
@@ -2583,7 +2583,7 @@ Returns a binary float with the same value as this object but rounded to an
 
 ### RoundToIntegralNoRoundedFlag
     @Deprecated public EFloat RoundToIntegralNoRoundedFlag(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</span>
+Deprecated.&nbsp;<i>Renamed to RoundToIntegerNoRoundedFlag.</i>
 
 **Parameters:**
 
@@ -2705,7 +2705,7 @@ Finds the square root of this object&#x27;s value.
 
 ### SquareRoot
     @Deprecated public EFloat SquareRoot(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to Sqrt.</span>
+Deprecated.&nbsp;<i>Renamed to Sqrt.</i>
 
 **Parameters:**
 
@@ -2819,7 +2819,7 @@ Converts this value to an arbitrary-precision decimal number, then returns
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEDecimal.</span>
+Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
 
 **Returns:**
 

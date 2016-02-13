@@ -388,7 +388,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 ### FromExtendedDecimal
     @Deprecated public static ERational FromExtendedDecimal(EDecimal ef)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to FromEDecimal.</span>
+Deprecated.&nbsp;<i>Renamed to FromEDecimal.</i>
 
 **Parameters:**
 
@@ -404,7 +404,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 ### FromExtendedFloat
     @Deprecated public static ERational FromExtendedFloat(EFloat ef)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to FromEFloat.</span>
+Deprecated.&nbsp;<i>Renamed to FromEFloat.</i>
 
 **Parameters:**
 
@@ -960,7 +960,7 @@ Converts this rational number to a decimal number, but if the result would
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEDecimal.</span>
+Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
 
 **Returns:**
 
@@ -970,7 +970,7 @@ Converts this rational number to a decimal number, but if the result would
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEDecimal.</span>
+Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
 
 **Parameters:**
 
@@ -988,7 +988,7 @@ Converts this rational number to a decimal number, but if the result would
 
 ### ToExtendedDecimalExactIfPossible
     @Deprecated public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEDecimalExactIfPossible.</span>
+Deprecated.&nbsp;<i>Renamed to ToEDecimalExactIfPossible.</i>
 
 **Parameters:**
 
@@ -1061,7 +1061,7 @@ Converts this rational number to a binary float, but if the result would
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEFloat.</span>
+Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
 
 **Returns:**
 
@@ -1071,7 +1071,7 @@ Converts this rational number to a binary float, but if the result would
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEFloat.</span>
+Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
 
 **Parameters:**
 
@@ -1089,7 +1089,7 @@ Converts this rational number to a binary float, but if the result would
 
 ### ToExtendedFloatExactIfPossible
     @Deprecated public EFloat ToExtendedFloatExactIfPossible(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEFloatExactIfPossible.</span>
+Deprecated.&nbsp;<i>Renamed to ToEFloatExactIfPossible.</i>
 
 **Parameters:**
 

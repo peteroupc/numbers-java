@@ -781,7 +781,7 @@ Converts an arbitrary-precision integer to an arbitrary precision decimal.
 
 ### FromExtendedFloat
     @Deprecated public static EDecimal FromExtendedFloat(EFloat ef)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to FromEFloat.</span>
+Deprecated.&nbsp;<i>Renamed to FromEFloat.</i>
 
 **Parameters:**
 
@@ -1417,7 +1417,7 @@ Divides this arbitrary-precision decimal number by another
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to DivRemNaturalScale.</span>
+Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
 
 **Parameters:**
 
@@ -1430,7 +1430,7 @@ Divides this arbitrary-precision decimal number by another
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor, EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to DivRemNaturalScale.</span>
+Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
 
 **Parameters:**
 
@@ -2984,7 +2984,7 @@ Returns a decimal number with the same value as this object but rounded to
 
 ### RoundToIntegralExact
     @Deprecated public EDecimal RoundToIntegralExact(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to RoundToIntegerExact.</span>
+Deprecated.&nbsp;<i>Renamed to RoundToIntegerExact.</i>
 
 **Parameters:**
 
@@ -3006,7 +3006,7 @@ Returns a decimal number with the same value as this object but rounded to
 
 ### RoundToIntegralNoRoundedFlag
     @Deprecated public EDecimal RoundToIntegralNoRoundedFlag(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</span>
+Deprecated.&nbsp;<i>Renamed to RoundToIntegerNoRoundedFlag.</i>
 
 **Parameters:**
 
@@ -3130,7 +3130,7 @@ Finds the square root of this object&#x27;s value.
 
 ### SquareRoot
     @Deprecated public EDecimal SquareRoot(EContext ctx)
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to Sqrt.</span>
+Deprecated.&nbsp;<i>Renamed to Sqrt.</i>
 
 **Parameters:**
 
@@ -3245,7 +3245,7 @@ Same as toString(), except that when an exponent is used it will be a
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToEFloat.</span>
+Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
 
 **Returns:**
 

@@ -434,7 +434,7 @@ Adds this object and another object.
 
 ### AsInt32Checked
     @Deprecated public int AsInt32Checked()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToInt32Checked.</span>
+Deprecated.&nbsp;<i>Renamed to ToInt32Checked.</i>
 
 **Returns:**
 
@@ -447,7 +447,7 @@ Adds this object and another object.
 
 ### AsInt32Unchecked
     @Deprecated public int AsInt32Unchecked()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToInt32Unchecked.</span>
+Deprecated.&nbsp;<i>Renamed to ToInt32Unchecked.</i>
 
 **Returns:**
 
@@ -455,7 +455,7 @@ Adds this object and another object.
 
 ### AsInt64Checked
     @Deprecated public long AsInt64Checked()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToInt64Checked.</span>
+Deprecated.&nbsp;<i>Renamed to ToInt64Checked.</i>
 
 **Returns:**
 
@@ -468,7 +468,7 @@ Adds this object and another object.
 
 ### AsInt64Unchecked
     @Deprecated public long AsInt64Unchecked()
-<span class='deprecatedLabel'>Deprecated.</span>&nbsp;<span class='deprecationComment'>Renamed to ToInt64Unchecked.</span>
+Deprecated.&nbsp;<i>Renamed to ToInt64Unchecked.</i>
 
 **Returns:**
 
