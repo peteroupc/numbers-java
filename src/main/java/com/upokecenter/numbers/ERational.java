@@ -8,12 +8,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * Arbitrary-precision rational number. This class cannot be inherited. (The
-     * "E" stands for "extended", meaning that instances of this class can
-     * be values other than numbers proper, such as infinity and
-     * not-a-number.) <p><b>Thread safety:</b> Instances of this class are
-     * immutable, so they are inherently safe for use by multiple threads.
-     * Multiple instances of this object with the same properties are
+     * Arbitrary-precision rational number. This class can't be inherited. (The "E"
+     * stands for "extended", meaning that instances of this class can be
+     * values other than numbers proper, such as infinity and not-a-number.)
+     * <p><b>Thread safety:</b> Instances of this class are immutable, so
+     * they are inherently safe for use by multiple threads. Multiple
+     * instances of this object with the same properties are
      * interchangeable, so they should not be compared using the "=="
      * operator (which only checks if each side of the operator is the same
      * instance).</p>
@@ -123,9 +123,8 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return <code>true</code> if this object is finite (not infinity or NaN);
-     * otherwise, <code>false</code>. true if this object is finite (not infinity
-     * or not-a-number (NaN)); otherwise, false.
+     * @return true if this object is finite (not infinity or not-a-number (NaN));
+     * otherwise, false.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
@@ -134,9 +133,7 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return <code>true</code> if this object's value is negative (including negative
-     * zero); otherwise, <code>false</code>. true if this object's value is
-     * negative; otherwise, false.
+     * @return true if this object's value is negative; otherwise, false.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -144,8 +141,7 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return <code>true</code> if this object's value equals 0; otherwise,
-     * <code>false</code>. true if this object's value equals 0; otherwise, false.
+     * @return true if this object's value equals 0; otherwise, false.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -185,9 +181,10 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Creates a rational number with the given numerator and denominator.
-     * @param numeratorSmall A 32-bit signed integer.
-     * @param denominatorSmall A 32-bit signed integer. (2).
+     * @param numeratorSmall The numerator.
+     * @param denominatorSmall The denominator.
      * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
 int numeratorSmall,
@@ -197,9 +194,10 @@ int denominatorSmall) {
 
     /**
      * Creates a rational number with the given numerator and denominator.
-     * @param numerator An arbitrary-precision integer.
-     * @param denominator Another arbitrary-precision integer.
+     * @param numerator The numerator.
+     * @param denominator The denominator.
      * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
 EInteger numerator,
@@ -1592,8 +1590,14 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     /**
      * Converts this rational number to a decimal number and rounds the result to
      * the given precision.
-     * @param ctx An EContext object.
-     * @return An arbitrary-precision decimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
@@ -1604,10 +1608,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EDecimal.PositiveInfinity;
+        return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EDecimal.NegativeInfinity;
+        return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
       }
       EDecimal ef = (this.isNegative() && this.isZero()) ?
  EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
@@ -1621,11 +1625,14 @@ ctx);
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating decimal expansion. If
-     * {@code HasFlags} of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case this method is the
-     * same as ToExtendedDecimal.
-     * @return An arbitrary-precision decimal.
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
           ctx) {
@@ -1640,10 +1647,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EDecimal.PositiveInfinity;
+        return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EDecimal.NegativeInfinity;
+        return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
       }
       if (this.isNegative() && this.isZero()) {
         return EDecimal.NegativeZero;
@@ -1674,8 +1681,14 @@ ctx);
     /**
      * Converts this rational number to a decimal number and rounds the result to
      * the given precision.
-     * @param ctx An EContext object.
-     * @return An arbitrary-precision decimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -1687,14 +1700,17 @@ ctx);
      * Converts this rational number to a decimal number, but if the result would
      * have a nonterminating decimal expansion, rounds that result to the
      * given precision.
-     * @param ctx An arithmetic context object to control the precision. The
-     * rounding and exponent range settings of this context are ignored.
-     * This context will be used only if the exact result would have a
-     * nonterminating decimal expansion. If {@code HasFlags} of the context
-     * is true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case this method is the same as ToExtendedDecimal.
-     * @return An arbitrary-precision decimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating decimal expansion. If
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimalExactIfPossible.
  */
 @Deprecated
@@ -1703,7 +1719,7 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number.
+     * Converts this rational number to a binary float.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating binary
      * expansion.
@@ -1713,16 +1729,16 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number and rounds the result to
+     * Converts this rational number to a binary float and rounds that result to
      * the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. This context will be used only if
-     * the exact result would have a nonterminating binary expansion. If
-     * {@code HasFlags} of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case this method is the
-     * same as ToExtendedFloat.
-     * @return An arbitrary-precision binary float.
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
@@ -1733,10 +1749,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity;
+        return EFloat.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity;
+        return EFloat.NegativeInfinity.RoundToPrecision(ctx);
       }
       EFloat ef = (this.isNegative() && this.isZero()) ?
      EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
@@ -1744,17 +1760,20 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number, but if the result would
+     * Converts this rational number to a binary float, but if the result would
      * have a nonterminating binary expansion, rounds that result to the
      * given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating binary expansion. If
-     * {@code HasFlags} of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case this method is the
-     * same as ToExtendedFloat.
-     * @return An arbitrary-precision binary float.
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {
       if (ctx == null) {
@@ -1768,10 +1787,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity;
+        return EFloat.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity;
+        return EFloat.NegativeInfinity.RoundToPrecision(ctx);
       }
       if (this.isZero()) {
         return this.isNegative() ? EFloat.NegativeZero :
@@ -1789,7 +1808,7 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number.
+     * Converts this rational number to a binary float.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating binary
      * expansion.
@@ -1801,10 +1820,16 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number and rounds the result to
+     * Converts this rational number to a binary float and rounds that result to
      * the given precision.
-     * @param ctx An EContext object.
-     * @return An arbitrary-precision binary float.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -1813,17 +1838,20 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number, but if the result would
+     * Converts this rational number to a binary float, but if the result would
      * have a nonterminating binary expansion, rounds that result to the
      * given precision.
-     * @param ctx An arithmetic context object to control the precision. The
-     * rounding and exponent range settings of this context are ignored.
-     * This context will be used only if the exact result would have a
-     * nonterminating binary expansion. If {@code HasFlags} of the context
-     * is true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case this method is the same as ToExtendedFloat.
-     * @return An arbitrary-precision binary float.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating binary expansion. If
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloatExactIfPossible.
  */
 @Deprecated
@@ -1849,7 +1877,7 @@ ctx);
      * @return A string representation of this object. If this object's value is
      * infinity or not-a-number, the result is the analogous return value of
      * the EDecimal.toString method. Otherwise, the return value has the
-     * following form: [-]numerator/denominator .
+     * following form: [-]numerator/denominator.
      */
     @Override public String toString() {
       if (!this.isFinite()) {

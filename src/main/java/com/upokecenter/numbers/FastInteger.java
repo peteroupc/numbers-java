@@ -583,7 +583,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @param val Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
      * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
@@ -666,7 +666,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @param val Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
      * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
@@ -717,7 +717,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @param val Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
      * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {
@@ -742,7 +742,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @param bigintVal Not documented yet.
+     * @param bigintVal The parameter {@code bigintVal} is not documented yet.
      * @return A FastInteger object.
      */
     FastInteger AddBig(EInteger bigintVal) {
@@ -768,7 +768,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @param bigintVal Not documented yet.
+     * @param bigintVal The parameter {@code bigintVal} is not documented yet.
      * @return A FastInteger object.
      */
     FastInteger SubtractBig(EInteger bigintVal) {
@@ -845,7 +845,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @param divisor Not documented yet.
+     * @param divisor The number to divide by.
      * @return A FastInteger object.
      * @throws ArithmeticException Attempted to divide by zero.
      */
@@ -1086,7 +1086,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Not documented yet.
-     * @return A string object.
+     * @return A text string.
      */
     @Override public String toString() {
       switch (this.integerMode) {
