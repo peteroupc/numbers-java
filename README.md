@@ -29,7 +29,7 @@ group ID (`com.github.peteroupc`), artifact ID (`numbers`), and version, as give
 Documentation
 ------------
 
-See the [Wiki](https://github.com/peteroupc/Numbers-Java/wiki) for Java API documentation.
+**See the [Java API documentation](https://peteroupc.github.io/Numbers/api/).**
 
 Source Code
 ---------
