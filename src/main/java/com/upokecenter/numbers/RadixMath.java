@@ -4312,8 +4312,8 @@ boolean adjustNegativeZero,
 EContext ctx) {
       // If context has unlimited precision and exponent range,
       // and no discarded digits or shifting
-      boolean unlimitedPrecisionExp = (ctx == null ||
-         (!ctx.getHasMaxPrecision() && !ctx.getHasExponentRange()));
+      boolean unlimitedPrecisionExp = ctx == null ||
+         (!ctx.getHasMaxPrecision() && !ctx.getHasExponentRange());
       int thisFlags = this.helper.GetFlags(thisValue);
       if ((thisFlags & BigNumberFlags.FlagSpecial) != 0) {
         if ((thisFlags & BigNumberFlags.FlagSignalingNaN) != 0) {
@@ -4763,8 +4763,8 @@ neg ? BigNumberFlags.FlagNegative : 0);
       // DebugUtility.Log("" + accum.getShiftedInt() + ", exp=" + (//
       // adjExponent) + "/" + fastEMin);
       boolean recheckOverflow = false;
-      boolean doRounding = (accum.getDiscardedDigitCount().signum() != 0 ||
-        (accum.getLastDiscardedDigit() | accum.getOlderDiscardedDigits()) != 0);
+      boolean doRounding = accum.getDiscardedDigitCount().signum() != 0 ||
+        (accum.getLastDiscardedDigit() | accum.getOlderDiscardedDigits()) != 0;
       if (doRounding) {
         if (!bigmantissa.isValueZero()) {
           flags |= EContext.FlagRounded;

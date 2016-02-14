@@ -112,9 +112,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  return new MutableNumber(0);
 }
       MutableNumber mbi = new MutableNumber(0);
-      mbi.data[0 ] = ((int)longVal);
+      mbi.data[0] = ((int)longVal);
         int mbd = ((int)(longVal >> 32));
-      mbi.data[1 ] = mbd;
+      mbi.data[1] = mbd;
       mbi.wordCount = (mbd == 0) ? 1 : 2;
       return mbi;
     }
@@ -145,7 +145,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           }
           int result0, result1, result2, result3;
           if (multiplicand < 65536) {
-            if (this.wordCount == 2 && (this.data[1 ]>>16) == 0) {
+            if (this.wordCount == 2 && (this.data[1] >> 16) == 0) {
               long longV = ((long)this.data[0]);
               longV &= 0xFFFFFFFFL;
               longV |= (((long)this.data[1]) << 32);
@@ -594,7 +594,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else {
         switch (this.integerMode) {
           case 0: {
-            long amult = ((long)val) *((long)this.smallValue);
+            long amult = ((long)val) * ((long)this.smallValue);
             if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
               // would overflow, convert to large
              boolean apos = this.smallValue > 0L;
