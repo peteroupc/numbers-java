@@ -157,9 +157,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return <code>true</code> if this object is finite (not infinity or NaN);
-     * otherwise, <code>false</code>. true if this object is finite (not infinity
-     * or not-a-number (NaN)); otherwise, false.
+     * @return true if this object is finite (not infinity or not-a-number (NaN));
+     * otherwise, false.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -169,9 +168,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return <code>true</code> if this object is negative, including negative zero;
-     * otherwise, <code>false</code>. true if this object is negative, including
-     * negative zero; otherwise, false.
+     * @return true if this object is negative, including negative zero; otherwise,
+     * false.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -179,8 +177,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return <code>true</code> if this object&#x27;s value equals 0; otherwise,
-     * <code>false</code>. true if this object's value equals 0; otherwise, false.
+     * @return true if this object's value equals 0; otherwise, false.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -188,8 +185,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
 
     /**
-     * Gets this object&#x27;s un-scaled value.
-     * @return This object's un-scaled value. Will be negative if this object's
+     * Gets this object&#x27;s unscaled value.
+     * @return This object's unscaled value. Will be negative if this object's
      * value is negative (including a negative NaN).
      */
     public final EInteger getMantissa() {
@@ -208,8 +205,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
 
     /**
-     * Gets the absolute value of this object&#x27;s un-scaled value.
-     * @return The absolute value of this object's un-scaled value.
+     * Gets the absolute value of this object&#x27;s unscaled value.
+     * @return The absolute value of this object's unscaled value.
      */
     public final EInteger getUnsignedMantissa() {
         return this.unsignedMantissa;
@@ -660,7 +657,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as &#x3c0; can never be represented exactly.</i>.
+     * can't be null, as &#x3c0; can never be represented exactly.</i>.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
      * or the precision is unlimited (the context's Precision property is
@@ -1339,7 +1336,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the exponential function's results are generally
+     * can't be null, as the exponential function's results are generally
      * not exact.</i> (Unlike in the General Binary Arithmetic
      * Specification, any rounding mode is allowed.).
      * @return Exponential of this object. If this object's value is 1, returns an
@@ -1431,7 +1428,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the ln function's results are generally not
+     * can't be null, as the ln function's results are generally not
      * exact.</i> (Unlike in the General Binary Arithmetic Specification,
      * any rounding mode is allowed.).
      * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
@@ -1455,7 +1452,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the ln function's results are generally not
+     * can't be null, as the ln function's results are generally not
      * exact.</i> (Unlike in the General Binary Arithmetic Specification,
      * any rounding mode is allowed.).
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
@@ -1953,6 +1950,17 @@ this.flags ^ BigNumberFlags.FlagNegative);
      * precision); </code> <p>A fixed-point binary arithmetic in which no
      * digits come after the radix point (a desired exponent of 0) is
      * considered an "integer arithmetic".</p>
+     * @param desiredExponentInt The desired exponent for the result. The exponent
+     * is the number of fractional digits in the result, expressed as a
+     * negative number. Can also be positive, which eliminates lower-order
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
+     * @param ctx An arithmetic context to control precision and rounding of the
+     * result. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which case the default
+     * rounding mode is HalfEven.
      * @return A binary float with the same value as this object but with the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if this object is infinity, if the rounded result can't fit the given
@@ -2412,7 +2420,7 @@ EContext ctx) {
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the square root function's results are generally
+     * can't be null, as the square root function's results are generally
      * not exact for many inputs.</i> (Unlike in the General Binary
      * Arithmetic Specification, any rounding mode is allowed.).
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
@@ -2431,7 +2439,7 @@ EContext ctx) {
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the square root function's results are generally
+     * can't be null, as the square root function's results are generally
      * not exact for many inputs.</i> (Unlike in the General Binary
      * Arithmetic Specification, any rounding mode is allowed.).
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
@@ -2516,94 +2524,43 @@ EContext ctx) {
         }
         return Extras.IntegersToDouble(nan);
       }
-      if (this.isNegative() && this.isZero()) {
+      EFloat thisValue = this.RoundToPrecision(EContext.Binary64);
+      if (!thisValue.isFinite()) {
+        return thisValue.ToDouble();
+      }
+      EInteger mant = thisValue.unsignedMantissa;
+      if (thisValue.isNegative() && mant.isZero()) {
         return Extras.IntegersToDouble(new int[] { 0, ((int)(1 << 31)) });
+      } else if (mant.isZero()) {
+        return 0.0;
       }
-      EInteger bigmant = this.unsignedMantissa.Abs();
-      FastInteger bigexponent = FastInteger.FromBig(this.exponent);
-      int bitLeftmost = 0;
-      int bitsAfterLeftmost = 0;
-      if (this.unsignedMantissa.isZero()) {
-        return 0.0d;
-      }
-      int[] mantissaBits;
-      if (bigmant.compareTo(ValueOneShift52) < 0) {
-        mantissaBits = FastInteger.GetLastWords(bigmant, 2);
-        // This will be an infinite loop if both elements
-        // of the bits array are 0, but the check for
-        // 0 was already done above
-        while (!NumberUtility.HasBitSet(mantissaBits, 52)) {
-          NumberUtility.ShiftLeftOne(mantissaBits);
-          bigexponent.Decrement();
-        }
-      } else {
-        BitShiftAccumulator accum = new BitShiftAccumulator(bigmant, 0, 0);
-        accum.ShiftToDigitsInt(53);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        mantissaBits = FastInteger.GetLastWords(accum.getShiftedInt(), 2);
-      }
-      // Round half-even
-      if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    NumberUtility.HasBitSet(mantissaBits, 0))) {
-        // Add 1 to the bits
-        mantissaBits[0] = ((int)(mantissaBits[0] + 1));
-        if (mantissaBits[0] == 0) {
-          mantissaBits[1] = ((int)(mantissaBits[1] + 1));
-        }
-        if (mantissaBits[0] == 0 &&
-            mantissaBits[1] == (1 << 21)) {  // if mantissa is now 2^53
-          mantissaBits[1] >>= 1;  // change it to 2^52
-          bigexponent.Increment();
-        }
-      }
+      // DebugUtility.Log("-->" + (//
+      // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
+      // thisValue.exponent));
+      int bitLength = mant.GetUnsignedBitLength();
+
+      int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
-      if (bigexponent.CompareToInt(971) > 0) {
-        // exponent too big
-        return this.isNegative() ? Double.NEGATIVE_INFINITY :
-          Double.POSITIVE_INFINITY;
-      }
-      if (bigexponent.CompareToInt(-1074) < 0) {
-        // subnormal
-        subnormal = true;
-        // Shift while number remains subnormal
-        BitShiftAccumulator accum = new BitShiftAccumulator(
-          FastInteger.WordsToEInteger(mantissaBits),
-          0,
-          0);
-        FastInteger fi = bigexponent.Copy().SubtractInt(-1074).Abs();
-        accum.ShiftRight(fi);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        mantissaBits = FastInteger.GetLastWords(accum.getShiftedInt(), 2);
-        // Round half-even
-        if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    NumberUtility.HasBitSet(mantissaBits, 0))) {
-          // Add 1 to the bits
-          mantissaBits[0] = ((int)(mantissaBits[0] + 1));
-          if (mantissaBits[0] == 0) {
-            mantissaBits[1] = ((int)(mantissaBits[1] + 1));
-          }
-          if (mantissaBits[0] == 0 &&
-              mantissaBits[1] == (1 << 21)) {  // if mantissa is now 2^53
-            mantissaBits[1] >>= 1;  // change it to 2^52
-            bigexponent.Increment();
-          }
+      if (bitLength < 53) {
+        int diff = 53 - bitLength;
+        expo -= diff;
+        if (expo < -1074) {
+          // DebugUtility.Log("Diff changed from " + diff + " to " + (diff -
+          // (-1074 - expo)));
+          diff -= -1074 - expo;
+          expo = -1074;
+          subnormal = true;
         }
+        mant = mant.ShiftLeft(diff);
+        bitLength += diff;
       }
-      if (bigexponent.CompareToInt(-1074) < 0) {
-        // exponent too small, so return zero
-        return this.isNegative() ?
-          Extras.IntegersToDouble(new int[] { 0, ((int)0x80000000) }) :
-          0.0d;
-      }
-      bigexponent.AddInt(1075);
+      // DebugUtility.Log("2->" + (mant.ToRadixString(2)) + ", " + expo);
+      int[] mantissaBits;
+      mantissaBits = FastInteger.GetLastWords(mant, 2);
       // Clear the high bits where the exponent and sign are
       mantissaBits[1] &= 0xfffff;
       if (!subnormal) {
-        int smallexponent = bigexponent.AsInt32() << 20;
+        int smallexponent = (expo + 1075) << 20;
         mantissaBits[1] |= smallexponent;
       }
       if (this.isNegative()) {
@@ -2867,89 +2824,45 @@ EContext ctx) {
         }
         return Float.intBitsToFloat(nan);
       }
-      if (this.isNegative() && this.isZero()) {
-        return Float.intBitsToFloat(1 << 31);
+      EFloat thisValue = this.RoundToPrecision(EContext.Binary32);
+      if (!thisValue.isFinite()) {
+        return thisValue.ToSingle();
       }
-      EInteger bigmant = this.unsignedMantissa.Abs();
-      FastInteger bigexponent = FastInteger.FromBig(this.exponent);
-      int bitLeftmost = 0;
-      int bitsAfterLeftmost = 0;
-      if (this.unsignedMantissa.isZero()) {
+      EInteger mant = thisValue.unsignedMantissa;
+      if (thisValue.isNegative() && mant.isZero()) {
+        return Float.intBitsToFloat(1 << 31);
+      } else if (mant.isZero()) {
         return 0.0f;
       }
-      int smallmant = 0;
-      FastInteger fastSmallMant;
-      if (bigmant.compareTo(ValueOneShift23) < 0) {
-        smallmant = bigmant.AsInt32Checked();
-        int exponentchange = 0;
-        while (smallmant < (1 << 23)) {
-          smallmant <<= 1;
-          ++exponentchange;
-        }
-        bigexponent.SubtractInt(exponentchange);
-        fastSmallMant = new FastInteger(smallmant);
-      } else {
-        BitShiftAccumulator accum = new BitShiftAccumulator(bigmant, 0, 0);
-        accum.ShiftToDigitsInt(24);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        fastSmallMant = accum.getShiftedIntFast();
-      }
-      // Round half-even
-      if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    !fastSmallMant.isEvenNumber())) {
-        fastSmallMant.Increment();
-        if (fastSmallMant.CompareToInt(1 << 24) == 0) {
-          fastSmallMant = new FastInteger(1 << 23);
-          bigexponent.Increment();
-        }
-      }
+      // DebugUtility.Log("-->" + (//
+      // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
+      // thisValue.exponent));
+      int bitLength = mant.GetUnsignedBitLength();
+
+      int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
-      if (bigexponent.CompareToInt(104) > 0) {
-        // exponent too big
-        return this.isNegative() ? Float.NEGATIVE_INFINITY :
-          Float.POSITIVE_INFINITY;
-      }
-      if (bigexponent.CompareToInt(-149) < 0) {
-        // subnormal
-        subnormal = true;
-        // Shift while number remains subnormal
-        BitShiftAccumulator accum =
-          BitShiftAccumulator.FromInt32(fastSmallMant.AsInt32());
-        FastInteger fi = bigexponent.Copy().SubtractInt(-149).Abs();
-        accum.ShiftRight(fi);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        fastSmallMant = accum.getShiftedIntFast();
-        // Round half-even
-        if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    !fastSmallMant.isEvenNumber())) {
-          fastSmallMant.Increment();
-          if (fastSmallMant.CompareToInt(1 << 24) == 0) {
-            fastSmallMant = new FastInteger(1 << 23);
-            bigexponent.Increment();
-          }
+      if (bitLength < 24) {
+        int diff = 24 - bitLength;
+        expo -= diff;
+        if (expo < -149) {
+          // DebugUtility.Log("Diff changed from " + diff + " to " + (diff -
+          // (-149 - expo)));
+          diff -= -149 - expo;
+          expo = -149;
+          subnormal = true;
         }
+        mant = mant.ShiftLeft(diff);
+        bitLength += diff;
       }
-      if (bigexponent.CompareToInt(-149) < 0) {
-        // exponent too small, so return zero
-        return this.isNegative() ?
-          Float.intBitsToFloat(1 << 31) :
-          Float.intBitsToFloat(0);
-      } else {
-        int smallexponent = bigexponent.AsInt32();
-        smallexponent += 150;
-        int smallmantissa = ((int)fastSmallMant.AsInt32()) & 0x7fffff;
-        if (!subnormal) {
-          smallmantissa |= smallexponent << 23;
-        }
-        if (this.isNegative()) {
+      // DebugUtility.Log("2->" + (mant.ToRadixString(2)) + ", " + expo);
+      int smallmantissa = ((int)mant.ToInt32Checked()) & 0x7fffff;
+      if (!subnormal) {
+          smallmantissa |= (expo + 150) << 23;
+      }
+      if (this.isNegative()) {
           smallmantissa |= 1 << 31;
-        }
-        return Float.intBitsToFloat(smallmantissa);
       }
+      return Float.intBitsToFloat(smallmantissa);
     }
 
     /**

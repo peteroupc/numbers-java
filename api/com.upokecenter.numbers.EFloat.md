@@ -218,9 +218,9 @@ Renamed to DivRemNaturalScale.
 * `EInteger getExponent()`<br>
  Gets this object's exponent.
 * `EInteger getMantissa()`<br>
- Gets this object's un-scaled value.
+ Gets this object's unscaled value.
 * `EInteger getUnsignedMantissa()`<br>
- Gets the absolute value of this object's un-scaled value.
+ Gets the absolute value of this object's unscaled value.
 * `int hashCode()`<br>
  Calculates this object's hash code.
 * `boolean isFinite()`<br>
@@ -532,9 +532,8 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is finite (not infinity or NaN);
- otherwise, <code>false</code>. true if this object is finite (not infinity
- or not-a-number (NaN)); otherwise, false.
+* true if this object is finite (not infinity or not-a-number (NaN));
+ otherwise, false.
 
 ### isNegative
     public final boolean isNegative()
@@ -543,9 +542,8 @@ Gets a value indicating whether this object is negative, including negative
 
 **Returns:**
 
-* <code>true</code> if this object is negative, including negative zero;
- otherwise, <code>false</code>. true if this object is negative, including
- negative zero; otherwise, false.
+* true if this object is negative, including negative zero; otherwise,
+ false.
 
 ### isZero
     public final boolean isZero()
@@ -553,16 +551,15 @@ Gets a value indicating whether this object&#x27;s value equals 0.
 
 **Returns:**
 
-* <code>true</code> if this object&#x27;s value equals 0; otherwise,
- <code>false</code>. true if this object's value equals 0; otherwise, false.
+* true if this object's value equals 0; otherwise, false.
 
 ### getMantissa
     public final EInteger getMantissa()
-Gets this object&#x27;s un-scaled value.
+Gets this object&#x27;s unscaled value.
 
 **Returns:**
 
-* This object's un-scaled value. Will be negative if this object's
+* This object's unscaled value. Will be negative if this object's
  value is negative (including a negative NaN).
 
 ### signum
@@ -575,11 +572,11 @@ Gets this value&#x27;s sign: -1 if negative; 1 if positive; 0 if zero.
 
 ### getUnsignedMantissa
     public final EInteger getUnsignedMantissa()
-Gets the absolute value of this object&#x27;s un-scaled value.
+Gets the absolute value of this object&#x27;s unscaled value.
 
 **Returns:**
 
-* The absolute value of this object's un-scaled value.
+* The absolute value of this object's unscaled value.
 
 ### Create
     public static EFloat Create(int mantissaSmall, int exponentSmall)
@@ -971,7 +968,7 @@ Finds the constant &#x3c0;, the circumference of a circle divided by its
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as &#x3c0; can never be represented exactly.</i>.
+ can't be null, as &#x3c0; can never be represented exactly.</i>.
 
 **Returns:**
 
@@ -1591,7 +1588,7 @@ Finds e (the base of natural logarithms) raised to the power of this
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the exponential function's results are generally
+ can't be null, as the exponential function's results are generally
  not exact.</i> (Unlike in the General Binary Arithmetic
  Specification, any rounding mode is allowed.).
 
@@ -1680,7 +1677,7 @@ Finds the natural logarithm of this object, that is, the power (exponent)
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the ln function's results are generally not
+ can't be null, as the ln function's results are generally not
  exact.</i> (Unlike in the General Binary Arithmetic Specification,
  any rounding mode is allowed.).
 
@@ -1707,7 +1704,7 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the ln function's results are generally not
+ can't be null, as the ln function's results are generally not
  exact.</i> (Unlike in the General Binary Arithmetic Specification,
  any rounding mode is allowed.).
 
@@ -2207,6 +2204,21 @@ Returns a binary float with the same value but a new exponent. <p>Note that
  digits come after the radix point (a desired exponent of 0) is
  considered an "integer arithmetic".</p>
 
+**Parameters:**
+
+* <code>desiredExponentInt</code> - The desired exponent for the result. The exponent
+ is the number of fractional digits in the result, expressed as a
+ negative number. Can also be positive, which eliminates lower-order
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
+
+* <code>ctx</code> - An arithmetic context to control precision and rounding of the
+ result. If <code>HasFlags</code> of the context is true, will also store
+ the flags resulting from the operation (the flags are in addition to
+ the pre-existing flags). Can be null, in which case the default
+ rounding mode is HalfEven.
+
 **Returns:**
 
 * A binary float with the same value as this object but with the
@@ -2691,7 +2703,7 @@ Finds the square root of this object&#x27;s value.
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the square root function's results are generally
+ can't be null, as the square root function's results are generally
  not exact for many inputs.</i> (Unlike in the General Binary
  Arithmetic Specification, any rounding mode is allowed.).
 
@@ -2713,7 +2725,7 @@ Deprecated.&nbsp;<i>Renamed to Sqrt.</i>
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the square root function's results are generally
+ can't be null, as the square root function's results are generally
  not exact for many inputs.</i> (Unlike in the General Binary
  Arithmetic Specification, any rounding mode is allowed.).
 
