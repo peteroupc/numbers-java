@@ -51,10 +51,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * is generally used when a negative number is rounded to 0; it has the
      * same mathematical value as positive zero. <b>Infinity</b> is
      * generally used when a non-zero number is divided by zero, or when a
-     * very high number can't be represented in a given exponent range.
-     * <b>Not-a-number</b> is generally used to signal errors.</p> <p>This
-     * class implements the General Decimal Arithmetic Specification version
-     * 1.70 (except part of chapter 6):
+     * very high or very low number can't be represented in a given exponent
+     * range. <b>Not-a-number</b> is generally used to signal errors.</p>
+     * <p>This class implements the General Decimal Arithmetic Specification
+     * version 1.70 (except part of chapter 6):
      * <code>http://speleotrove.com/decimal/decarith.html</code></p> <p><b>Errors
      * and Exceptions</b></p> <p>Passing a signaling NaN to any arithmetic
      * operation shown here will signal the flag FlagInvalid and return a
@@ -95,7 +95,61 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * method compares the mathematical values of the two instances passed
      * to it (and considers two different NaN values as equal), while two
      * instances with the same mathematical value, but different exponents,
-     * will be considered unequal under the Equals method.</p>
+     * will be considered unequal under the Equals method.</p> <p><b>Forms
+     * of numbers</b></p> <p>There are several other types of numbers that
+     * are mentioned in this class and elsewhere in this documentation. For
+     * reference, they are specified here.</p> <p><b>Unsigned integer</b>: A
+     * number that&#39;s always 0 or greater, with the following maximum
+     * values:</p> <ul> <li>8-bit unsigned integer, or <i>byte</i>:
+     * 255.</li> <li>16-bit unsigned integer: 65535.</li> <li>32-bit
+     * unsigned integer: (2<sup>32</sup>-1).</li> <li>64-bit unsigned
+     * integer: (2<sup>64</sup>-1).</li> </ul> <p><b>Signed integer</b>: A
+     * number in <i>two&#39;s complement form</i>, with the following
+     * ranges:</p> <ul> <li>8-bit signed integer: -128 to 127.</li>
+     * <li>16-bit signed integer: -32768 to 32767.</li> <li>32-bit signed
+     * integer: -2<sup>31</sup> to (2<sup>31</sup> - 1).</li> <li>64-bit
+     * signed integer: -2<sup>63</sup> to (2<sup>63</sup> - 1).</li> </ul>
+     * <p><b>Two's complement form</b>: In <b>two's-complement form</b>,
+     * positive numbers have the highest (most significant) bit set to zero,
+     * and negative numbers have that bit (and all bits beyond) set to one.
+     * To store a negative number, decrease its absolute value by 1 and swap
+     * the bits of the resulting number.</p> <p><b>64-bit floating-point
+     * number</b>: A 64-bit binary floating-point number, in the form
+     * <i>significand</i> * 2<sup><i>exponent</i></sup>. The significand is
+     * 53 bits long (Precision) and the exponent ranges from -1075 (EMin) to
+     * 971 (EMax). The number is stored in the following format (commonly
+     * called the IEEE 754 format):</p>
+     * <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code> <ul> <li>A. Low 52 bits
+     * (Precision minus 1 bits): Lowest bits of the significand.</li> <li>B.
+     * Next 11 bits: Exponent area: <ul> <li>If all bits are ones, this
+     * value is infinity if all bits in area A are zeros, or not-a-number
+     * (NaN) otherwise.</li> <li>If all bits are zeros, this is a subnormal
+     * number. The exponent is EMin and the highest bit of the significand
+     * is zero.</li> <li>If any other number, the exponent is this value
+     * plus EMin, and the highest bit of the significand is one.</li>
+     * </ul></li> <li>C. Highest bit: If one, this is a negative
+     * number.</li> </ul> <p><b>32-bit floating-point number</b>: A 32-bit
+     * binary number which is stored similarly to a <i>64-bit floating-point
+     * number</i>, except that:</p> <ul> <li>Precision is 24 bits.</li>
+     * <li>EMin is -150.</li> <li>EMax is 104.</li> <li>A. The low 23 bits
+     * (Precision minus 1 bits) are the lowest bits of the significand.</li>
+     * <li>B. The next 8 bits are the exponent area.</li> <li>C. If the
+     * highest bit is one, this is a negative number.</li> </ul> <p>The
+     * elements described above are in the same order as the order of each
+     * bit of each element, that is, either most significant first or least
+     * significant first.</p> <p><b>Common Language Infrastructure
+     * decimal</b>: A 128-bit decimal floating-point number, in the form
+     * <i>significand</i> * 10<sup>-<i>scale</i></sup>, where the scale
+     * ranges from 0 to 28. The number is stored in the following
+     * format:</p> <ul> <li>Low 96 bits are the significand, as a 96-bit
+     * unsigned integer (all 96-bit values are allowed, up to
+     * (2<sup>96</sup>-1)).</li> <li>Next 16 bits are unused.</li> <li>Next
+     * 8 bits are the scale, stored as an 8-bit unsigned integer.</li>
+     * <li>Next 7 bits are unused.</li> <li>If the highest bit is one,
+     * it&#39;s a negative number.</li> </ul> <p>The elements described
+     * above are in the same order as the order of each bit of each element,
+     * that is, either most significant first or least significant
+     * first.</p>
      */
   public final class EDecimal implements Comparable<EDecimal> {
     //----------------------------------------------------------------
@@ -231,9 +285,8 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return <code>true</code> if this object is finite (not infinity or NaN);
-     * otherwise, <code>false</code>. true if this object is finite (not infinity
-     * or not-a-number (NaN)); otherwise, false.
+     * @return true if this object is finite (not infinity or not-a-number (NaN));
+     * otherwise, false.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -243,9 +296,8 @@ private static final FastIntegerFixed FastIntZero = new
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return <code>true</code> if this object is negative, including negative zero;
-     * otherwise, <code>false</code>. true if this object is negative, including
-     * negative zero; otherwise, false.
+     * @return true if this object is negative, including negative zero; otherwise,
+     * false.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -253,8 +305,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return <code>true</code> if this object&#x27;s value equals 0; otherwise,
-     * <code>false</code>. true if this object's value equals 0; otherwise, false.
+     * @return true if this object's value equals 0; otherwise, false.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -262,8 +313,8 @@ private static final FastIntegerFixed FastIntZero = new
       }
 
     /**
-     * Gets this object&#x27;s un-scaled value.
-     * @return This object's un-scaled value. Will be negative if this object's
+     * Gets this object&#x27;s unscaled value.
+     * @return This object's unscaled value. Will be negative if this object's
      * value is negative (including a negative NaN).
      */
     public final EInteger getMantissa() {
@@ -280,15 +331,15 @@ private static final FastIntegerFixed FastIntZero = new
       }
 
     /**
-     * Gets the absolute value of this object&#x27;s un-scaled value.
-     * @return The absolute value of this object's un-scaled value.
+     * Gets the absolute value of this object&#x27;s unscaled value.
+     * @return The absolute value of this object's unscaled value.
      */
     public final EInteger getUnsignedMantissa() {
         return this.unsignedMantissa.AsEInteger();
       }
 
     /**
-     * Creates a number with the value exponent*10^mantissa (significand).
+     * Creates a number with the value <code>exponent*10^mantissa</code>.
      * @return An arbitrary-precision decimal number.
      */
     public static EDecimal Create(int mantissaSmall, int exponentSmall) {
@@ -316,10 +367,10 @@ new FastIntegerFixed(exponentSmall),
     }
 
     /**
-     * Creates a number with the value exponent*10^mantissa (significand).
+     * Creates a number with the value <code>exponent*10^mantissa</code>.
      * @return An arbitrary-precision decimal number.
-     * @throws java.lang.NullPointerException The parameter "mantissa (significand)"
-     * or {@code exponent} is null.
+     * @throws java.lang.NullPointerException The parameter {@code mantissa} or
+     * {@code exponent} is null.
      */
     public static EDecimal Create(
       EInteger mantissa,
@@ -1298,7 +1349,7 @@ sign);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as &#x3c0; can never be represented exactly.</i>.
+     * can't be null, as &#x3c0; can never be represented exactly.</i>.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
      * or the precision is unlimited (the context's Precision property is
@@ -2205,7 +2256,7 @@ ERounding.HalfEven);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the exponential function's results are generally
+     * can't be null, as the exponential function's results are generally
      * not exact.</i> (Unlike in the General Decimal Arithmetic
      * Specification, any rounding mode is allowed.).
      * @return Exponential of this object. If this object's value is 1, returns an
@@ -2297,7 +2348,7 @@ ERounding.HalfEven);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the ln function's results are generally not
+     * can't be null, as the ln function's results are generally not
      * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
      * any rounding mode is allowed.).
      * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
@@ -2321,7 +2372,7 @@ ERounding.HalfEven);
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the ln function's results are generally not
+     * can't be null, as the ln function's results are generally not
      * exact.</i> (Unlike in the General Decimal Arithmetic Specification,
      * any rounding mode is allowed.).
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
@@ -3466,7 +3517,7 @@ EContext ctx) {
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the square root function's results are generally
+     * can't be null, as the square root function's results are generally
      * not exact for many inputs.</i> (Unlike in the General Decimal
      * Arithmetic Specification, any rounding mode is allowed.).
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
@@ -3485,7 +3536,7 @@ EContext ctx) {
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * cannot be null, as the square root function's results are generally
+     * can't be null, as the square root function's results are generally
      * not exact for many inputs.</i> (Unlike in the General Decimal
      * Arithmetic Specification, any rounding mode is allowed.).
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
@@ -3668,7 +3719,8 @@ EContext ctx) {
 
     /**
      * Not documented yet.
-     * @return A 32-bit signed integer.
+     * @return A 32-bit signed integer. Returns 0 if this value is infinity or
+     * not-a-number.
      */
     public int ToInt32Unchecked() {
       if (!this.isFinite()) {
@@ -3717,7 +3769,8 @@ EContext ctx) {
 
     /**
      * Not documented yet.
-     * @return A 64-bit signed integer.
+     * @return A 64-bit signed integer. Returns 0 if this value is infinity or
+     * not-a-number.
      */
     public long ToInt64Unchecked() {
       if (!this.isFinite()) {

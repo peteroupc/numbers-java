@@ -35,8 +35,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         ctx.setFlags(ctx.getFlags()|(EContext.FlagInvalid));
       }
       return this.GetHelper().CreateNewWithFlags(
-        EInteger.FromInt64(0),
-        EInteger.FromInt64(0),
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
         BigNumberFlags.FlagQuietNaN);
     }
 
@@ -102,7 +102,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           mant = this.GetHelper().MultiplyByRadixPower(mant, fastExp);
           return this.GetHelper().CreateNewWithFlags(
             mant,
-            EInteger.FromInt64(0),
+            EInteger.FromInt32(0),
             thisFlags);
         }
         if (!ctxDest.ExponentWithinRange(exp)) {
@@ -116,7 +116,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           mant = this.GetHelper().MultiplyByRadixPower(mant, fastExp);
           return this.GetHelper().CreateNewWithFlags(
             mant,
-            EInteger.FromInt64(0),
+            EInteger.FromInt32(0),
             thisFlags);
         }
         if (afterDivision) {
@@ -151,7 +151,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       boolean mantChanged = false;
       if (!mant.isZero() && ctx != null && ctx.getHasMaxPrecision()) {
         EInteger limit = this.GetHelper().MultiplyByRadixPower(
-          EInteger.FromInt64(1),
+          EInteger.FromInt32(1),
           FastInteger.FromBig(ctx.getPrecision()));
         if (mant.compareTo(limit) >= 0) {
           mant = mant.Remainder(limit);
@@ -164,7 +164,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       flags &= BigNumberFlags.FlagNegative;
       flags |= BigNumberFlags.FlagQuietNaN;
-      return this.GetHelper().CreateNewWithFlags(mant, EInteger.FromInt64(0), flags);
+      return this.GetHelper().CreateNewWithFlags(mant, EInteger.FromInt32(0), flags);
     }
 
     private T HandleNotANumber(T thisValue, T other, EContext ctx) {
@@ -387,12 +387,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
              (roundingOnOverflow == ERounding.Floor && !neg))) {
           // Set to the highest possible value for
           // the given precision
-          EInteger overflowMant = EInteger.FromInt64(0);
+          EInteger overflowMant = EInteger.FromInt32(0);
           FastInteger fastPrecision = FastInteger.FromBig(pc.getPrecision());
           overflowMant = this.GetHelper().MultiplyByRadixPower(
-            EInteger.FromInt64(1),
+            EInteger.FromInt32(1),
             fastPrecision);
-          overflowMant = overflowMant.Subtract(EInteger.FromInt64(1));
+          overflowMant = overflowMant.Subtract(EInteger.FromInt32(1));
           FastInteger clamp =
             FastInteger.FromBig(pc.getEMax()).Increment().Subtract(fastPrecision);
           return this.GetHelper().CreateNewWithFlags(
@@ -404,8 +404,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       return this.GetHelper().GetArithmeticSupport() ==
         BigNumberFlags.FiniteOnly ?
         null : this.GetHelper().CreateNewWithFlags(
-          EInteger.FromInt64(0),
-          EInteger.FromInt64(0),
+          EInteger.FromInt32(0),
+          EInteger.FromInt32(0),
           (neg ? BigNumberFlags.FlagNegative : 0) | BigNumberFlags.FlagInfinity);
     }
 

@@ -2645,9 +2645,14 @@ EContext ctx) {
     }
 
     /**
-     * Converts the lowest 32 bits of the truncated form of this number's value to
-     * a 32-bit signed integer.
-     * @return A 32-bit signed integer.
+     * Converts this number to a 32-bit signed integer. If this value is not
+     * exactly a 32-bit integer, truncates the value to an integer and
+     * returns the lowest 32 bits of its two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+     * case the return value might have a different sign than this object's
+     * value).
+     * @return A 32-bit signed integer. Returns 0 if this value is infinity or
+     * not-a-number.
      */
     public int ToInt32Unchecked() {
       if (!this.isFinite()) {
@@ -2693,9 +2698,14 @@ EContext ctx) {
     }
 
     /**
-     * Converts the lowest 64 bits of the truncated form of this number's value to
-     * a 64-bit signed integer.
-     * @return A 64-bit signed integer.
+     * Converts this number to a 64-bit signed integer. If this value is not
+     * exactly a 64-bit integer, truncates the value to an integer and
+     * returns the lowest 64 bits of its two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+     * case the return value might have a different sign than this object's
+     * value).
+     * @return A 64-bit signed integer. Returns 0 if this value is infinity or
+     * not-a-number.
      */
     public long ToInt64Unchecked() {
       if (!this.isFinite()) {

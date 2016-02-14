@@ -100,8 +100,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return <code>true</code> if this value is even; otherwise, <code>false</code>. true if
-     * this value is even; otherwise, false.
+     * @return true if this value is even; otherwise, false.
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -109,9 +108,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return <code>true</code> if this object&#x27;s value is a power of two;
-     * otherwise, <code>false</code>. true if this object's value is a power of
-     * two; otherwise, false .
+     * @return true if this object's value is a power of two; otherwise, false .
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -123,8 +120,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return <code>true</code> if this value is 0; otherwise, <code>false</code>. true if
-     * this value is 0; otherwise, false.
+     * @return true if this value is 0; otherwise, false.
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -141,11 +137,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Initializes an arbitrary-precision integer from an array of bytes.
-     * @param bytes A byte array consisting of the two's-complement integer
-     * representation of the arbitrary-precision integer to create. The byte
-     * array is encoded using the following rules: <ul> <li>Positive numbers
-     * have the first byte's highest bit cleared, and negative numbers have
-     * the bit set.</li> <li>The last byte contains the lowest 8-bits, the
+     * @param bytes A byte array consisting of the two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of the
+     * arbitrary-precision integer to create. The byte array is encoded
+     * using the following rules: <ul> <li>Positive numbers have the first
+     * byte's highest bit cleared, and negative numbers have the bit
+     * set.</li> <li>The last byte contains the lowest 8-bits, the
      * next-to-last contains the next lowest 8 bits, and so on. For example,
      * the number 300 can be encoded as {@code 0x01, 0x2c} and 200 as {@code
      * 0x00, 0xc8}. (Note that the second example contains a set high bit in
@@ -917,8 +914,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's complement representation (in which case the return value might
-     * have a different sign than this object's value).
+     * two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+     * case the return value might have a different sign than this object's
+     * value).
      * @return A 32-bit signed integer.
      * @deprecated Renamed to ToInt32Unchecked.
  */
@@ -943,8 +942,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's complement representation (in which case the return value might
-     * have a different sign than this object's value).
+     * two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+     * case the return value might have a different sign than this object's
+     * value).
      * @return A 64-bit signed integer.
      * @deprecated Renamed to ToInt64Unchecked.
  */
@@ -1039,10 +1040,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * are positive or both are negative.
      * @param bigintDivisor Another arbitrary-precision integer.
      * @return The quotient of the two objects.
-     * @throws ArithmeticException The divisor is zero.
+     * @throws ArithmeticException The parameter {@code bigintDivisor} is
+     * zero.
      * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
      * null.
-     * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Divide(EInteger bigintDivisor) {
       if (bigintDivisor == null) {
@@ -1626,7 +1627,8 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement representation.).
+     * the lowest set bit in the number's two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -1660,7 +1662,8 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement representation.).
+     * the lowest set bit in the number's two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -1691,12 +1694,14 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns whether a bit is set in the two's-complement representation of this
+     * Returns whether a bit is set in the two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of this
      * object's value.
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
-     * @return true if a bit is set in the two's-complement representation of this
-     * object's value; otherwise, false .
+     * @return true if a bit is set in the two's-complement form (see {@link
+     * T:PeterO.Numbers.EDecimal}) of this object's value; otherwise, false
+     * .
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -1730,8 +1735,8 @@ WordsShiftRightOne(bu, buc);
     /**
      * Finds the minimum number of bits needed to represent this object&#x27;s
      * value, except for its sign. If the value is negative, finds the
-     * number of bits in a value equal to this object's absolute value minus
-     * 1.
+     * number of bits in the value equal to this object's absolute value
+     * minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      */
@@ -1767,9 +1772,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Not documented yet.
-     * @param n A 32-bit signed integer.
-     * @return A Boolean object.
+     * Returns whether a bit is set in this number's absolute value.
+     * @param index Zero based index of the bit to test. 0 means the least
+     * significant bit.
+     * @return true if a bit is set in this number's absolute value.
      */
     public boolean GetUnsignedBit(int n) {
       if (n < 0) {
@@ -1780,7 +1786,7 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this object&#x27;s
+     * Finds the minimum number of bits needed to represent this number&#x27;s
      * absolute value.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
@@ -1817,7 +1823,7 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this object&#x27;s
+     * Finds the minimum number of bits needed to represent this number&#x27;s
      * absolute value.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
@@ -2443,8 +2449,9 @@ int subtrahendCount) {
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
-     * two's complement representation. Thus, for negative values, the
-     * arbitrary-precision integer is sign-extended.
+     * two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>). Thus, for
+     * negative values, the arbitrary-precision integer is sign-extended.
      * @param numberBits Number of bits to shift right.
      * @return An arbitrary-precision integer.
      */
@@ -2539,7 +2546,8 @@ int subtrahendCount) {
 
     /**
      * Returns a byte array of this integer&#x27;s value. The byte array will take
-     * the form of the number's two's-complement representation, using the
+     * the form of the number's two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
@@ -2641,8 +2649,10 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's complement representation (in which case the return value might
-     * have a different sign than this object's value).
+     * two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+     * case the return value might have a different sign than this object's
+     * value).
      * @return A 32-bit signed integer.
      */
     public int ToInt32Unchecked() {
@@ -2690,8 +2700,10 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's complement representation (in which case the return value might
-     * have a different sign than this object's value).
+     * two's-complement form (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+     * case the return value might have a different sign than this object's
+     * value).
      * @return A 64-bit signed integer.
      */
     public long ToInt64Unchecked() {

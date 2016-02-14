@@ -78,7 +78,7 @@ Renamed to ToInt64Unchecked.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
 * `boolean GetSignedBit(int index)`<br>
- Returns whether a bit is set in the two's-complement representation of this
+ Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
  object's value.
 * `int GetSignedBitLength()`<br>
  Finds the minimum number of bits needed to represent this object's
@@ -86,12 +86,12 @@ Renamed to ToInt64Unchecked.
 * `static EInteger getTen()`<br>
  Gets the number 10 as an arbitrary-precision integer.
 * `boolean GetUnsignedBit(int n)`<br>
- Not documented yet.
+ Returns whether a bit is set in this number's absolute value.
 * `int GetUnsignedBitLength()`<br>
- Finds the minimum number of bits needed to represent this object's
+ Finds the minimum number of bits needed to represent this number's
  absolute value.
 * `EInteger GetUnsignedBitLengthAsEInteger()`<br>
- Finds the minimum number of bits needed to represent this object's
+ Finds the minimum number of bits needed to represent this number's
  absolute value.
 * `static EInteger getZero()`<br>
  Gets a value not documented yet.
@@ -187,8 +187,7 @@ Gets a value indicating whether this value is even.
 
 **Returns:**
 
-* <code>true</code> if this value is even; otherwise, <code>false</code>. true if
- this value is even; otherwise, false.
+* true if this value is even; otherwise, false.
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
@@ -196,9 +195,7 @@ Gets a value indicating whether this object&#x27;s value is a power of two.
 
 **Returns:**
 
-* <code>true</code> if this object&#x27;s value is a power of two;
- otherwise, <code>false</code>. true if this object's value is a power of
- two; otherwise, false .
+* true if this object's value is a power of two; otherwise, false .
 
 ### isZero
     public final boolean isZero()
@@ -206,8 +203,7 @@ Gets a value indicating whether this value is 0.
 
 **Returns:**
 
-* <code>true</code> if this value is 0; otherwise, <code>false</code>. true if
- this value is 0; otherwise, false.
+* true if this value is 0; otherwise, false.
 
 ### signum
     public final int signum()
@@ -224,11 +220,11 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Parameters:**
 
-* <code>bytes</code> - A byte array consisting of the two's-complement integer
- representation of the arbitrary-precision integer to create. The byte
- array is encoded using the following rules: <ul> <li>Positive numbers
- have the first byte's highest bit cleared, and negative numbers have
- the bit set.</li> <li>The last byte contains the lowest 8-bits, the
+* <code>bytes</code> - A byte array consisting of the two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of the
+ arbitrary-precision integer to create. The byte array is encoded
+ using the following rules: <ul> <li>Positive numbers have the first
+ byte's highest bit cleared, and negative numbers have the bit
+ set.</li> <li>The last byte contains the lowest 8-bits, the
  next-to-last contains the next lowest 8 bits, and so on. For example,
  the number 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00, 0xc8</code>. (Note that the second example contains a set high bit in
  <code>0xC8</code>, so an additional 0 is added at the start to ensure it's
@@ -527,12 +523,11 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Throws:**
 
-* <code>ArithmeticException</code> - The divisor is zero.
+* <code>ArithmeticException</code> - The parameter <code>bigintDivisor</code> is
+ zero.
 
 * <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
  null.
-
-* <code>ArithmeticException</code> - Attempted to divide by zero.
 
 ### DivRem
     public EInteger[] DivRem(EInteger divisor)
@@ -613,7 +608,7 @@ Returns the hash code for this instance.
 ### GetLowBit
     public int GetLowBit()
 Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement representation.).
+ the lowest set bit in the number's two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
 
 **Returns:**
 
@@ -623,7 +618,7 @@ Gets the lowest set bit in this number's absolute value. (This will also be
 ### GetLowBitAsEInteger
     public EInteger GetLowBitAsEInteger()
 Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement representation.).
+ the lowest set bit in the number's two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
 
 **Returns:**
 
@@ -632,7 +627,7 @@ Gets the lowest set bit in this number's absolute value. (This will also be
 
 ### GetSignedBit
     public boolean GetSignedBit(int index)
-Returns whether a bit is set in the two's-complement representation of this
+Returns whether a bit is set in the two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of this
  object's value.
 
 **Parameters:**
@@ -642,15 +637,15 @@ Returns whether a bit is set in the two's-complement representation of this
 
 **Returns:**
 
-* true if a bit is set in the two's-complement representation of this
- object's value; otherwise, false .
+* true if a bit is set in the two's-complement form (see <code>T:PeterO.Numbers.EDecimal</code>) of this object's value; otherwise, false
+ .
 
 ### GetSignedBitLength
     public int GetSignedBitLength()
 Finds the minimum number of bits needed to represent this object&#x27;s
  value, except for its sign. If the value is negative, finds the
- number of bits in a value equal to this object's absolute value minus
- 1.
+ number of bits in the value equal to this object's absolute value
+ minus 1.
 
 **Returns:**
 
@@ -659,19 +654,20 @@ Finds the minimum number of bits needed to represent this object&#x27;s
 
 ### GetUnsignedBit
     public boolean GetUnsignedBit(int n)
-Not documented yet.
+Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
 
-* <code>n</code> - A 32-bit signed integer.
+* <code>index</code> - Zero based index of the bit to test. 0 means the least
+ significant bit.
 
 **Returns:**
 
-* A Boolean object.
+* true if a bit is set in this number's absolute value.
 
 ### GetUnsignedBitLengthAsEInteger
     public EInteger GetUnsignedBitLengthAsEInteger()
-Finds the minimum number of bits needed to represent this object&#x27;s
+Finds the minimum number of bits needed to represent this number&#x27;s
  absolute value.
 
 **Returns:**
@@ -681,7 +677,7 @@ Finds the minimum number of bits needed to represent this object&#x27;s
 
 ### GetUnsignedBitLength
     public int GetUnsignedBitLength()
-Finds the minimum number of bits needed to represent this object&#x27;s
+Finds the minimum number of bits needed to represent this number&#x27;s
  absolute value.
 
 **Returns:**
@@ -834,8 +830,8 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
     public EInteger ShiftRight(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two's complement representation. Thus, for negative values, the
- arbitrary-precision integer is sign-extended.
+ two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>). Thus, for
+ negative values, the arbitrary-precision integer is sign-extended.
 
 **Parameters:**
 
@@ -886,7 +882,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### ToBytes
     public byte[] ToBytes(boolean littleEndian)
 Returns a byte array of this integer&#x27;s value. The byte array will take
- the form of the number's two's-complement representation, using the
+ the form of the number's two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -922,8 +918,9 @@ Converts this object's value to a 32-bit signed integer, throwing an
     public int ToInt32Unchecked()
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
- two's complement representation (in which case the return value might
- have a different sign than this object's value).
+ two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+ case the return value might have a different sign than this object's
+ value).
 
 **Returns:**
 
@@ -947,8 +944,9 @@ Converts this object's value to a 64-bit signed integer, throwing an
     public long ToInt64Unchecked()
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
- two's complement representation (in which case the return value might
- have a different sign than this object's value).
+ two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+ case the return value might have a different sign than this object's
+ value).
 
 **Returns:**
 

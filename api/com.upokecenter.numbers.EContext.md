@@ -28,8 +28,8 @@ Contains parameters for controlling the precision, rounding, and exponent
  precision.
 * `static EContext CliDecimal`<br>
  An arithmetic context for the Common Language Infrastructure (.NET
- Framework) decimal format, 96 bits precision, and a valid exponent
- range of -28 to 0.
+ Framework) decimal format (see "Forms of numbers"), 96 bits
+ precision, and a valid exponent range of -28 to 0.
 * `static EContext Decimal128`<br>
  An arithmetic context for the IEEE-754-2008 decimal128 format.
 * `static EContext Decimal32`<br>
@@ -102,10 +102,10 @@ Contains parameters for controlling the precision, rounding, and exponent
  will not be higher than EMax + 1 - Precision.
 * `EInteger getEMax()`<br>
  Gets the highest exponent possible when a converted number is expressed in
- scientific notation with one digit before the decimal point.
+ scientific notation with one digit before the radix point.
 * `EInteger getEMin()`<br>
  Gets the lowest exponent possible when a converted number is expressed in
- scientific notation with one digit before the decimal point.
+ scientific notation with one digit before the radix point.
 * `int getFlags()`<br>
  Gets the flags that are set from converting numbers according to this
  arithmetic context.
@@ -117,8 +117,8 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `boolean getHasMaxPrecision()`<br>
  Gets a value indicating whether this context defines a maximum precision.
 * `EInteger getPrecision()`<br>
- Gets the maximum length of a converted number in digits, ignoring the
- decimal point and exponent.
+ Gets the maximum length of a converted number in digits, ignoring the radix
+ point and exponent.
 * `ERounding getRounding()`<br>
  Gets the desired rounding mode when converting numbers that can't be
  represented in the given precision and exponent range.
@@ -230,8 +230,9 @@ An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
 ### CliDecimal
     public static final EContext CliDecimal
 An arithmetic context for the Common Language Infrastructure (.NET
- Framework) decimal format, 96 bits precision, and a valid exponent
- range of -28 to 0. The default rounding mode is HalfEven.
+ Framework) decimal format (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), 96 bits
+ precision, and a valid exponent range of -28 to 0. The default
+ rounding mode is HalfEven.
 ### Decimal128
     public static final EContext Decimal128
 An arithmetic context for the IEEE-754-2008 decimal128 format. The default
@@ -264,16 +265,9 @@ Gets a value indicating whether the EMax and EMin properties refer to the
 
 **Returns:**
 
-* <code>true</code> if the EMax and EMin properties refer to the number's
- Exponent property adjusted to the number's precision, or just the
- number's Exponent property; otherwise, <code>false</code>.. The default
- value is true, meaning that EMax and EMin refer to the adjusted
- exponent. Setting this value to false (using WithAdjustExponent) is
- useful for modeling floating point representations with an integer
- mantissa (significand) and an integer exponent, such as Java's
- BigDecimal. true if the EMax and EMin properties refer to the
- number's Exponent property adjusted to the number's precision, or
- false if they refer to just the number's Exponent property.
+* true if the EMax and EMin properties refer to the number's Exponent
+ property adjusted to the number's precision, or false if they refer
+ to just the number's Exponent property.
 
 ### getClampNormalExponents
     public final boolean getClampNormalExponents()
@@ -292,7 +286,7 @@ Gets a value indicating whether a converted number&#x27;s Exponent property
 ### getEMax
     public final EInteger getEMax()
 Gets the highest exponent possible when a converted number is expressed in
- scientific notation with one digit before the decimal point. For
+ scientific notation with one digit before the radix point. For
  example, with a precision of 3 and an EMax of 100, the maximum value
  possible is 9.99E + 100. (This is not the same as the highest
  possible Exponent property.) If HasExponentRange is false, this value
@@ -310,7 +304,7 @@ Gets the highest exponent possible when a converted number is expressed in
 ### getEMin
     public final EInteger getEMin()
 Gets the lowest exponent possible when a converted number is expressed in
- scientific notation with one digit before the decimal point. For
+ scientific notation with one digit before the radix point. For
  example, with a precision of 3 and an EMin of -100, the next value
  that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
  property specifies the lowest possible Exponent property instead.) If
@@ -345,11 +339,8 @@ Gets a value indicating whether this context defines a minimum and maximum
 
 **Returns:**
 
-* <code>true</code> if this context defines a minimum and maximum exponent;
- otherwise, <code>false</code>.. If false, converted exponents can have any
- exponent and operations can't cause overflow or underflow. true if
- this context defines a minimum and maximum exponent; otherwise, false
- .
+* true if this context defines a minimum and maximum exponent;
+ otherwise, false .
 
 ### getHasFlags
     public final boolean getHasFlags()
@@ -357,9 +348,7 @@ Gets a value indicating whether this context has a mutable Flags field.
 
 **Returns:**
 
-* <code>true</code> if this context has a mutable Flags field; otherwise,
- <code>false</code>. true if this context has a mutable Flags field;
- otherwise, false .
+* true if this context has a mutable Flags field; otherwise, false .
 
 ### getHasMaxPrecision
     public final boolean getHasMaxPrecision()
@@ -367,9 +356,7 @@ Gets a value indicating whether this context defines a maximum precision.
 
 **Returns:**
 
-* <code>true</code> if this context defines a maximum precision; otherwise,
- <code>false</code>. true if this context defines a maximum precision;
- otherwise, false .
+* true if this context defines a maximum precision; otherwise, false .
 
 ### isPrecisionInBits
     public final boolean isPrecisionInBits()
@@ -378,10 +365,8 @@ Gets a value indicating whether this context's Precision property is in
 
 **Returns:**
 
-* <code>true</code> if this context's Precision property is in bits, rather
- than digits; otherwise, <code>false</code>.. The default is false. true if
- this context's Precision property is in bits, rather than digits;
- otherwise, false. The default is false.
+* true if this context's Precision property is in bits, rather than
+ digits; otherwise, false. The default is false.
 
 ### isSimplified
     public final boolean isSimplified()
@@ -392,25 +377,19 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
 
 **Returns:**
 
-* <code>true</code> if to use a "simplified" arithmetic; otherwise,
- <code>false</code>.. In the simplified arithmetic, infinity, not-a-number,
- and subnormal numbers are not allowed, and negative zero is treated
- the same as positive zero. For further details, see
- http://speleotrove.com/decimal/dax3274.html . true if a
- "simplified" arithmetic will be used; otherwise, false.
+* true if a "simplified" arithmetic will be used; otherwise, false.
 
 ### getPrecision
     public final EInteger getPrecision()
-Gets the maximum length of a converted number in digits, ignoring the
- decimal point and exponent. For example, if precision is 3, a
- converted number&#x27;s mantissa (significand) can range from 0 to
- 999 (up to three digits long). If 0, converted numbers can have any
- precision.
+Gets the maximum length of a converted number in digits, ignoring the radix
+ point and exponent. For example, if precision is 3, a converted
+ number&#x27;s mantissa (significand) can range from 0 to 999 (up to
+ three digits long). If 0, converted numbers can have any precision.
 
 **Returns:**
 
 * The maximum length of a converted number in digits, ignoring the
- decimal point and exponent.
+ radix point and exponent.
 
 ### getRounding
     public final ERounding getRounding()

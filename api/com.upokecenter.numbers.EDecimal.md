@@ -45,10 +45,10 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  is generally used when a negative number is rounded to 0; it has the
  same mathematical value as positive zero. <b>Infinity</b> is
  generally used when a non-zero number is divided by zero, or when a
- very high number can't be represented in a given exponent range.
- <b>Not-a-number</b> is generally used to signal errors.</p> <p>This
- class implements the General Decimal Arithmetic Specification version
- 1.70 (except part of chapter 6):
+ very high or very low number can't be represented in a given exponent
+ range. <b>Not-a-number</b> is generally used to signal errors.</p>
+ <p>This class implements the General Decimal Arithmetic Specification
+ version 1.70 (except part of chapter 6):
  <code>http://speleotrove.com/decimal/decarith.html</code></p> <p><b>Errors
  and Exceptions</b></p> <p>Passing a signaling NaN to any arithmetic
  operation shown here will signal the flag FlagInvalid and return a
@@ -89,7 +89,61 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  method compares the mathematical values of the two instances passed
  to it (and considers two different NaN values as equal), while two
  instances with the same mathematical value, but different exponents,
- will be considered unequal under the Equals method.</p>
+ will be considered unequal under the Equals method.</p> <p><b>Forms
+ of numbers</b></p> <p>There are several other types of numbers that
+ are mentioned in this class and elsewhere in this documentation. For
+ reference, they are specified here.</p> <p><b>Unsigned integer</b>: A
+ number that&#39;s always 0 or greater, with the following maximum
+ values:</p> <ul> <li>8-bit unsigned integer, or <i>byte</i>:
+ 255.</li> <li>16-bit unsigned integer: 65535.</li> <li>32-bit
+ unsigned integer: (2<sup>32</sup>-1).</li> <li>64-bit unsigned
+ integer: (2<sup>64</sup>-1).</li> </ul> <p><b>Signed integer</b>: A
+ number in <i>two&#39;s complement form</i>, with the following
+ ranges:</p> <ul> <li>8-bit signed integer: -128 to 127.</li>
+ <li>16-bit signed integer: -32768 to 32767.</li> <li>32-bit signed
+ integer: -2<sup>31</sup> to (2<sup>31</sup> - 1).</li> <li>64-bit
+ signed integer: -2<sup>63</sup> to (2<sup>63</sup> - 1).</li> </ul>
+ <p><b>Two's complement form</b>: In <b>two's-complement form</b>,
+ positive numbers have the highest (most significant) bit set to zero,
+ and negative numbers have that bit (and all bits beyond) set to one.
+ To store a negative number, decrease its absolute value by 1 and swap
+ the bits of the resulting number.</p> <p><b>64-bit floating-point
+ number</b>: A 64-bit binary floating-point number, in the form
+ <i>significand</i> * 2<sup><i>exponent</i></sup>. The significand is
+ 53 bits long (Precision) and the exponent ranges from -1075 (EMin) to
+ 971 (EMax). The number is stored in the following format (commonly
+ called the IEEE 754 format):</p>
+ <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code> <ul> <li>A. Low 52 bits
+ (Precision minus 1 bits): Lowest bits of the significand.</li> <li>B.
+ Next 11 bits: Exponent area: <ul> <li>If all bits are ones, this
+ value is infinity if all bits in area A are zeros, or not-a-number
+ (NaN) otherwise.</li> <li>If all bits are zeros, this is a subnormal
+ number. The exponent is EMin and the highest bit of the significand
+ is zero.</li> <li>If any other number, the exponent is this value
+ plus EMin, and the highest bit of the significand is one.</li>
+ </ul></li> <li>C. Highest bit: If one, this is a negative
+ number.</li> </ul> <p><b>32-bit floating-point number</b>: A 32-bit
+ binary number which is stored similarly to a <i>64-bit floating-point
+ number</i>, except that:</p> <ul> <li>Precision is 24 bits.</li>
+ <li>EMin is -150.</li> <li>EMax is 104.</li> <li>A. The low 23 bits
+ (Precision minus 1 bits) are the lowest bits of the significand.</li>
+ <li>B. The next 8 bits are the exponent area.</li> <li>C. If the
+ highest bit is one, this is a negative number.</li> </ul> <p>The
+ elements described above are in the same order as the order of each
+ bit of each element, that is, either most significant first or least
+ significant first.</p> <p><b>Common Language Infrastructure
+ decimal</b>: A 128-bit decimal floating-point number, in the form
+ <i>significand</i> * 10<sup>-<i>scale</i></sup>, where the scale
+ ranges from 0 to 28. The number is stored in the following
+ format:</p> <ul> <li>Low 96 bits are the significand, as a 96-bit
+ unsigned integer (all 96-bit values are allowed, up to
+ (2<sup>96</sup>-1)).</li> <li>Next 16 bits are unused.</li> <li>Next
+ 8 bits are the scale, stored as an 8-bit unsigned integer.</li>
+ <li>Next 7 bits are unused.</li> <li>If the highest bit is one,
+ it&#39;s a negative number.</li> </ul> <p>The elements described
+ above are in the same order as the order of each bit of each element,
+ that is, either most significant first or least significant
+ first.</p>
 
 ## Fields
 
@@ -151,11 +205,11 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number.
 * `static EDecimal Create(EInteger mantissa,
-      EInteger exponent)`<br>
- Creates a number with the value exponent*10^mantissa (significand).
+      EInteger exponent) exponent*10^mantissa`<br>
+ Creates a number with the value exponent*10^mantissa.
 * `static EDecimal Create(int mantissaSmall,
-      int exponentSmall)`<br>
- Creates a number with the value exponent*10^mantissa (significand).
+      int exponentSmall) exponent*10^mantissa`<br>
+ Creates a number with the value exponent*10^mantissa.
 * `static EDecimal CreateNaN(EInteger diag)`<br>
  Creates a not-a-number arbitrary-precision decimal number.
 * `static EDecimal CreateNaN(EInteger diag,
@@ -292,9 +346,9 @@ Renamed to FromEFloat.
 * `EInteger getExponent()`<br>
  Gets this object's exponent.
 * `EInteger getMantissa()`<br>
- Gets this object's un-scaled value.
+ Gets this object's unscaled value.
 * `EInteger getUnsignedMantissa()`<br>
- Gets the absolute value of this object's un-scaled value.
+ Gets the absolute value of this object's unscaled value.
 * `int hashCode()`<br>
  Calculates this object's hash code.
 * `boolean isFinite()`<br>
@@ -625,9 +679,8 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is finite (not infinity or NaN);
- otherwise, <code>false</code>. true if this object is finite (not infinity
- or not-a-number (NaN)); otherwise, false.
+* true if this object is finite (not infinity or not-a-number (NaN));
+ otherwise, false.
 
 ### isNegative
     public final boolean isNegative()
@@ -636,9 +689,8 @@ Gets a value indicating whether this object is negative, including negative
 
 **Returns:**
 
-* <code>true</code> if this object is negative, including negative zero;
- otherwise, <code>false</code>. true if this object is negative, including
- negative zero; otherwise, false.
+* true if this object is negative, including negative zero; otherwise,
+ false.
 
 ### isZero
     public final boolean isZero()
@@ -646,16 +698,15 @@ Gets a value indicating whether this object&#x27;s value equals 0.
 
 **Returns:**
 
-* <code>true</code> if this object&#x27;s value equals 0; otherwise,
- <code>false</code>. true if this object's value equals 0; otherwise, false.
+* true if this object's value equals 0; otherwise, false.
 
 ### getMantissa
     public final EInteger getMantissa()
-Gets this object&#x27;s un-scaled value.
+Gets this object&#x27;s unscaled value.
 
 **Returns:**
 
-* This object's un-scaled value. Will be negative if this object's
+* This object's unscaled value. Will be negative if this object's
  value is negative (including a negative NaN).
 
 ### signum
@@ -668,15 +719,15 @@ Gets this value&#x27;s sign: -1 if negative; 1 if positive; 0 if zero.
 
 ### getUnsignedMantissa
     public final EInteger getUnsignedMantissa()
-Gets the absolute value of this object&#x27;s un-scaled value.
+Gets the absolute value of this object&#x27;s unscaled value.
 
 **Returns:**
 
-* The absolute value of this object's un-scaled value.
+* The absolute value of this object's unscaled value.
 
 ### Create
     public static EDecimal Create(int mantissaSmall, int exponentSmall)
-Creates a number with the value exponent*10^mantissa (significand).
+Creates a number with the value <code>exponent*10^mantissa</code>.
 
 **Returns:**
 
@@ -684,7 +735,7 @@ Creates a number with the value exponent*10^mantissa (significand).
 
 ### Create
     public static EDecimal Create(EInteger mantissa, EInteger exponent)
-Creates a number with the value exponent*10^mantissa (significand).
+Creates a number with the value <code>exponent*10^mantissa</code>.
 
 **Returns:**
 
@@ -692,8 +743,8 @@ Creates a number with the value exponent*10^mantissa (significand).
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "mantissa (significand)"
- or <code>exponent</code> is null.
+* <code>NullPointerException</code> - The parameter <code>mantissa</code> or
+ <code>exponent</code> is null.
 
 ### CreateNaN
     public static EDecimal CreateNaN(EInteger diag)
@@ -1125,7 +1176,7 @@ Finds the constant &#x3c0;, the circumference of a circle divided by its
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as &#x3c0; can never be represented exactly.</i>.
+ can't be null, as &#x3c0; can never be represented exactly.</i>.
 
 **Returns:**
 
@@ -1880,7 +1931,7 @@ Finds e (the base of natural logarithms) raised to the power of this
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the exponential function's results are generally
+ can't be null, as the exponential function's results are generally
  not exact.</i> (Unlike in the General Decimal Arithmetic
  Specification, any rounding mode is allowed.).
 
@@ -1969,7 +2020,7 @@ Finds the natural logarithm of this object, that is, the power (exponent)
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the ln function's results are generally not
+ can't be null, as the ln function's results are generally not
  exact.</i> (Unlike in the General Decimal Arithmetic Specification,
  any rounding mode is allowed.).
 
@@ -1996,7 +2047,7 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the ln function's results are generally not
+ can't be null, as the ln function's results are generally not
  exact.</i> (Unlike in the General Decimal Arithmetic Specification,
  any rounding mode is allowed.).
 
@@ -3116,7 +3167,7 @@ Finds the square root of this object&#x27;s value.
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the square root function's results are generally
+ can't be null, as the square root function's results are generally
  not exact for many inputs.</i> (Unlike in the General Decimal
  Arithmetic Specification, any rounding mode is allowed.).
 
@@ -3138,7 +3189,7 @@ Deprecated.&nbsp;<i>Renamed to Sqrt.</i>
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i>This parameter
- cannot be null, as the square root function's results are generally
+ can't be null, as the square root function's results are generally
  not exact for many inputs.</i> (Unlike in the General Decimal
  Arithmetic Specification, any rounding mode is allowed.).
 
@@ -3283,7 +3334,8 @@ Not documented yet.
 
 **Returns:**
 
-* A 32-bit signed integer.
+* A 32-bit signed integer. Returns 0 if this value is infinity or
+ not-a-number.
 
 ### ToInt64Checked
     public long ToInt64Checked()
@@ -3305,7 +3357,8 @@ Not documented yet.
 
 **Returns:**
 
-* A 64-bit signed integer.
+* A 64-bit signed integer. Returns 0 if this value is infinity or
+ not-a-number.
 
 ### ToPlainString
     public String ToPlainString()

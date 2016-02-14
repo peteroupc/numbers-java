@@ -45,14 +45,14 @@ System.out.print("");
     @Test
     public void TestEMax() {
       EContext ctx = EContext.Unlimited;
-      Assert.assertEquals(EInteger.FromInt64(0), ctx.getEMax());
+      Assert.assertEquals(EInteger.FromInt32(0), ctx.getEMax());
       ctx = EContext.Unlimited.WithExponentRange(-5, 5);
       Assert.assertEquals(EInteger.FromInt64(5), ctx.getEMax());
     }
     @Test
     public void TestEMin() {
       EContext ctx = EContext.Unlimited;
-      Assert.assertEquals(EInteger.FromInt64(0), ctx.getEMin());
+      Assert.assertEquals(EInteger.FromInt32(0), ctx.getEMin());
       ctx = EContext.Unlimited.WithExponentRange(-5, 5);
       Assert.assertEquals(EInteger.FromInt64(-5), ctx.getEMin());
     }
@@ -253,7 +253,7 @@ System.out.print("");
         throw new IllegalStateException("", ex);
       }
       try {
-        EContext.Unlimited.WithBigExponentRange(null, EInteger.FromInt64(0));
+        EContext.Unlimited.WithBigExponentRange(null, EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
 System.out.print("");
@@ -262,7 +262,7 @@ System.out.print("");
         throw new IllegalStateException("", ex);
       }
       try {
-        EContext.Unlimited.WithBigExponentRange(EInteger.FromInt64(0), null);
+        EContext.Unlimited.WithBigExponentRange(EInteger.FromInt32(0), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
 System.out.print("");
@@ -271,10 +271,10 @@ System.out.print("");
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger bigintBig = EInteger.FromInt64(1).ShiftLeft(64);
+        EInteger bigintBig = EInteger.FromInt32(1).ShiftLeft(64);
         EContext.Unlimited.WithBigExponentRange(
           bigintBig,
-          EInteger.FromInt64(0));
+          EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
 System.out.print("");

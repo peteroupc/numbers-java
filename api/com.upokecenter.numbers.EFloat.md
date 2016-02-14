@@ -465,14 +465,12 @@ Renamed to ToEDecimal.
  Converts this value to a 32-bit signed integer, throwing an exception if the
  value can't fit.
 * `int ToInt32Unchecked()`<br>
- Converts the lowest 32 bits of the truncated form of this number's value to
- a 32-bit signed integer.
+ Converts this number to a 32-bit signed integer.
 * `long ToInt64Checked()`<br>
  Converts this value to a 64-bit signed integer, throwing an exception if the
  value can't fit.
 * `long ToInt64Unchecked()`<br>
- Converts the lowest 64 bits of the truncated form of this number's value to
- a 64-bit signed integer.
+ Converts this number to a 64-bit signed integer.
 * `String ToPlainString()`<br>
  Converts this value to a string, but without exponential notation.
 * `String ToShortestString(EContext ctx)`<br>
@@ -2848,12 +2846,16 @@ Converts this value to a 32-bit signed integer, throwing an exception if the
 
 ### ToInt32Unchecked
     public int ToInt32Unchecked()
-Converts the lowest 32 bits of the truncated form of this number's value to
- a 32-bit signed integer.
+Converts this number to a 32-bit signed integer. If this value is not
+ exactly a 32-bit integer, truncates the value to an integer and
+ returns the lowest 32 bits of its two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+ case the return value might have a different sign than this object's
+ value).
 
 **Returns:**
 
-* A 32-bit signed integer.
+* A 32-bit signed integer. Returns 0 if this value is infinity or
+ not-a-number.
 
 ### ToInt64Checked
     public long ToInt64Checked()
@@ -2866,12 +2868,16 @@ Converts this value to a 64-bit signed integer, throwing an exception if the
 
 ### ToInt64Unchecked
     public long ToInt64Unchecked()
-Converts the lowest 64 bits of the truncated form of this number's value to
- a 64-bit signed integer.
+Converts this number to a 64-bit signed integer. If this value is not
+ exactly a 64-bit integer, truncates the value to an integer and
+ returns the lowest 64 bits of its two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
+ case the return value might have a different sign than this object's
+ value).
 
 **Returns:**
 
-* A 64-bit signed integer.
+* A 64-bit signed integer. Returns 0 if this value is infinity or
+ not-a-number.
 
 ### ToPlainString
     public String ToPlainString()

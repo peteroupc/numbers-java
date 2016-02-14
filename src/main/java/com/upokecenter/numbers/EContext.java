@@ -124,8 +124,10 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
     /**
      * An arithmetic context for the Common Language Infrastructure (.NET
-     * Framework) decimal format, 96 bits precision, and a valid exponent
-     * range of -28 to 0. The default rounding mode is HalfEven.
+     * Framework) decimal format (see <see
+     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), 96 bits
+     * precision, and a valid exponent range of -28 to 0. The default
+     * rounding mode is HalfEven.
      */
 
     public static final EContext CliDecimal =
@@ -239,16 +241,9 @@ boolean clampNormalExponents) {
      * this value to false (using WithAdjustExponent) is useful for modeling
      * floating point representations with an integer mantissa (significand)
      * and an integer exponent, such as Java's BigDecimal.
-     * @return <code>true</code> if the EMax and EMin properties refer to the number's
-     * Exponent property adjusted to the number's precision, or just the
-     * number's Exponent property; otherwise, <code>false</code>.. The default
-     * value is true, meaning that EMax and EMin refer to the adjusted
-     * exponent. Setting this value to false (using WithAdjustExponent) is
-     * useful for modeling floating point representations with an integer
-     * mantissa (significand) and an integer exponent, such as Java's
-     * BigDecimal. true if the EMax and EMin properties refer to the
-     * number's Exponent property adjusted to the number's precision, or
-     * false if they refer to just the number's Exponent property.
+     * @return true if the EMax and EMin properties refer to the number's Exponent
+     * property adjusted to the number's precision, or false if they refer
+     * to just the number's Exponent property.
      */
     public final boolean getAdjustExponent() {
         return this.adjustExponent;
@@ -270,7 +265,7 @@ boolean clampNormalExponents) {
 
     /**
      * Gets the highest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the decimal point. For
+     * scientific notation with one digit before the radix point. For
      * example, with a precision of 3 and an EMax of 100, the maximum value
      * possible is 9.99E + 100. (This is not the same as the highest
      * possible Exponent property.) If HasExponentRange is false, this value
@@ -288,7 +283,7 @@ boolean clampNormalExponents) {
 
     /**
      * Gets the lowest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the decimal point. For
+     * scientific notation with one digit before the radix point. For
      * example, with a precision of 3 and an EMin of -100, the next value
      * that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
      * property specifies the lowest possible Exponent property instead.) If
@@ -324,11 +319,8 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context defines a minimum and maximum
      * exponent. If false, converted exponents can have any exponent and
      * operations can't cause overflow or underflow.
-     * @return <code>true</code> if this context defines a minimum and maximum exponent;
-     * otherwise, <code>false</code>.. If false, converted exponents can have any
-     * exponent and operations can't cause overflow or underflow. true if
-     * this context defines a minimum and maximum exponent; otherwise, false
-     * .
+     * @return true if this context defines a minimum and maximum exponent;
+     * otherwise, false .
      */
     public final boolean getHasExponentRange() {
         return this.hasExponentRange;
@@ -336,9 +328,7 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context has a mutable Flags field.
-     * @return <code>true</code> if this context has a mutable Flags field; otherwise,
-     * <code>false</code>. true if this context has a mutable Flags field;
-     * otherwise, false .
+     * @return true if this context has a mutable Flags field; otherwise, false .
      */
     public final boolean getHasFlags() {
         return this.hasFlags;
@@ -346,9 +336,7 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
-     * @return <code>true</code> if this context defines a maximum precision; otherwise,
-     * <code>false</code>. true if this context defines a maximum precision;
-     * otherwise, false .
+     * @return true if this context defines a maximum precision; otherwise, false .
      */
     public final boolean getHasMaxPrecision() {
         return !this.bigintPrecision.isZero();
@@ -357,10 +345,8 @@ public final void setFlags(int value) {
     /**
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
-     * @return <code>true</code> if this context's Precision property is in bits, rather
-     * than digits; otherwise, <code>false</code>.. The default is false. true if
-     * this context's Precision property is in bits, rather than digits;
-     * otherwise, false. The default is false.
+     * @return true if this context's Precision property is in bits, rather than
+     * digits; otherwise, false. The default is false.
      */
     public final boolean isPrecisionInBits() {
         return this.precisionInBits;
@@ -372,26 +358,19 @@ public final void setFlags(int value) {
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
   * href='http://speleotrove.com/decimal/dax3274.html'>http://speleotrove.com/decimal/dax3274.html</a>
-     * @return <code>true</code> if to use a "simplified" arithmetic; otherwise,
-     * <code>false</code>.. In the simplified arithmetic, infinity, not-a-number,
-     * and subnormal numbers are not allowed, and negative zero is treated
-     * the same as positive zero. For further details, see <a
-     * href='http://speleotrove.com/decimal/dax3274.html'>
-     * http://speleotrove.com/decimal/dax3274.html </a>. true if a
-     * "simplified" arithmetic will be used; otherwise, false.
+     * @return true if a "simplified" arithmetic will be used; otherwise, false.
      */
     public final boolean isSimplified() {
         return this.simplified;
       }
 
     /**
-     * Gets the maximum length of a converted number in digits, ignoring the
-     * decimal point and exponent. For example, if precision is 3, a
-     * converted number&#x27;s mantissa (significand) can range from 0 to
-     * 999 (up to three digits long). If 0, converted numbers can have any
-     * precision.
+     * Gets the maximum length of a converted number in digits, ignoring the radix
+     * point and exponent. For example, if precision is 3, a converted
+     * number&#x27;s mantissa (significand) can range from 0 to 999 (up to
+     * three digits long). If 0, converted numbers can have any precision.
      * @return The maximum length of a converted number in digits, ignoring the
-     * decimal point and exponent.
+     * radix point and exponent.
      */
     public final EInteger getPrecision() {
         return this.bigintPrecision;
