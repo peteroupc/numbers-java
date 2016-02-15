@@ -124,7 +124,7 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
     /**
      * An arithmetic context for the .NET Framework decimal format (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}), 96 bits
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
      * rounding mode is HalfEven. (The "Cli" stands for "Common Language
      * Infrastructure", which defined this format as the .NET Framework
@@ -197,7 +197,7 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
     private int traps;
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.getEContext()}
+     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class. <code>HasFlags</code> will be set to false.
      * @param precision The maximum number of digits a number can have, or 0 for an
      * unlimited number of digits.

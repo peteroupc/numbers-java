@@ -34,8 +34,8 @@ Arbitrary-precision rational number. This class can't be inherited. (The "E"
 ## Constructors
 
 * `ERational(EInteger numerator,
-         EInteger denominator) com.upokecenter.numbers.getERational()`<br>
- Initializes a new instance of the com.upokecenter.numbers.getERational()
+         EInteger denominator) ERational`<br>
+ Initializes a new instance of the ERational
  class.
 
 ## Methods

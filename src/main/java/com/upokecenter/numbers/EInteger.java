@@ -138,7 +138,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Initializes an arbitrary-precision integer from an array of bytes.
      * @param bytes A byte array consisting of the two's-complement form (see
-     * {@link com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) of the
+     * {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}) of the
      * arbitrary-precision integer to create. The byte array is encoded
      * using the following rules: <ul> <li>Positive numbers have the first
      * byte's highest bit cleared, and negative numbers have the bit
@@ -914,7 +914,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
@@ -941,7 +941,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
@@ -1626,7 +1626,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
      * the lowest set bit in the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}).).
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -1661,7 +1661,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
      * the lowest set bit in the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}).).
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -1693,13 +1693,13 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) of this
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
      * object's value.
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
      * @return true if a bit is set in the two's-complement form (see {@link
-     * T:PeterO.Numbers.EDecimal}) of this object's value; otherwise, false
-     * .
+     * com.upokecenter.numbers.EDecimal}) of this object's value; otherwise,
+     * false .
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -2447,7 +2447,7 @@ int subtrahendCount) {
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
-     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}). Thus, for negative values, the
      * arbitrary-precision integer is sign-extended.
      * @param numberBits Number of bits to shift right.
@@ -2545,7 +2545,7 @@ int subtrahendCount) {
     /**
      * Returns a byte array of this integer&#x27;s value. The byte array will take
      * the form of the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}), using the
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
@@ -2647,7 +2647,7 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
@@ -2697,7 +2697,7 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
@@ -2745,10 +2745,11 @@ int subtrahendCount) {
      * hexadecimal (base-16) string, specify 16. To generate a decimal
      * (base-10) string, specify 10.
      * @return A string representing the value of this object. If this value is 0,
-     * returns "0". If negative, the string will begin with a hyphen/minus
-     * ("-"). Depending on the radix, the string will use the basic digits 0
-     * to 9 (U + 0030 to U + 0039) and then the basic letters A to Z (U + 0041 to
-     * U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.
+     * returns "0". If negative, the string will begin with a minus sign
+     * ("-", U+002D). Depending on the radix, the string will use the basic
+     * digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
+     * (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
+     * in radix 16.
      * @throws IllegalArgumentException The parameter "index" is less than 0,
      * "endIndex" is less than 0, or either is greater than the string's
      * length, or "endIndex" is less than "index" ; or radix is less than 2

@@ -89,7 +89,7 @@ BigNumberFlags.FlagSignalingNaN);
     private EInteger unsignedNumerator;
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.getERational()}
+     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
      * class.
      * @param numerator An arbitrary-precision integer.
      * @param denominator Another arbitrary-precision integer.

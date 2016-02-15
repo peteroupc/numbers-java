@@ -2652,7 +2652,7 @@ EContext ctx) {
      * Converts this number to a 32-bit signed integer. If this value is not
      * exactly a 32-bit integer, truncates the value to an integer and
      * returns the lowest 32 bits of its two's-complement form (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) (in which case
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}) (in which case
      * the return value might have a different sign than this object's
      * value).
      * @return A 32-bit signed integer. Returns 0 if this value is infinity or
@@ -2705,7 +2705,7 @@ EContext ctx) {
      * Converts this number to a 64-bit signed integer. If this value is not
      * exactly a 64-bit integer, truncates the value to an integer and
      * returns the lowest 64 bits of its two's-complement form (see {@link
-     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) (in which case
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}) (in which case
      * the return value might have a different sign than this object's
      * value).
      * @return A 64-bit signed integer. Returns 0 if this value is infinity or

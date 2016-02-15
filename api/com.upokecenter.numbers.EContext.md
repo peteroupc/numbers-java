@@ -71,8 +71,8 @@ Contains parameters for controlling the precision, rounding, and exponent
         ERounding rounding,
         int exponentMinSmall,
         int exponentMaxSmall,
-        boolean clampNormalExponents) com.upokecenter.numbers.getEContext()`<br>
- Initializes a new instance of the com.upokecenter.numbers.getEContext()
+        boolean clampNormalExponents) EContext`<br>
+ Initializes a new instance of the EContext
  class.
 
 ## Methods

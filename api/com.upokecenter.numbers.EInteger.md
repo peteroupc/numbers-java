@@ -638,8 +638,8 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Returns:**
 
-* true if a bit is set in the two's-complement form (see <code>T:PeterO.Numbers.EDecimal</code>) of this object's value; otherwise, false
- .
+* true if a bit is set in the two's-complement form (see <code>EDecimal</code>) of this object's value; otherwise,
+ false .
 
 ### GetSignedBitLength
     public int GetSignedBitLength()
@@ -965,10 +965,11 @@ Generates a string representing the value of this object, in the given
 **Returns:**
 
 * A string representing the value of this object. If this value is 0,
- returns "0". If negative, the string will begin with a hyphen/minus
- ("-"). Depending on the radix, the string will use the basic digits 0
- to 9 (U + 0030 to U + 0039) and then the basic letters A to Z (U + 0041 to
- U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.
+ returns "0". If negative, the string will begin with a minus sign
+ ("-", U+002D). Depending on the radix, the string will use the basic
+ digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
+ (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
+ in radix 16.
 
 **Throws:**
 

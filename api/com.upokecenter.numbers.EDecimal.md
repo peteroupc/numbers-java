@@ -111,7 +111,7 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  the bits of the resulting number.</p> <p><b>64-bit floating-point
  number</b>: A 64-bit binary floating-point number, in the form
  <i>significand</i> * 2<sup><i>exponent</i></sup>. The significand is
- 53 bits long (Precision) and the exponent ranges from -1075 (EMin) to
+ 53 bits long (Precision) and the exponent ranges from -1074 (EMin) to
  971 (EMax). The number is stored in the following format (commonly
  called the IEEE 754 format):</p>
  <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code> <ul> <li>A. Low 52 bits
@@ -121,18 +121,18 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  (NaN) otherwise.</li> <li>If all bits are zeros, this is a subnormal
  number. The exponent is EMin and the highest bit of the significand
  is zero.</li> <li>If any other number, the exponent is this value
- plus EMin, and the highest bit of the significand is one.</li>
- </ul></li> <li>C. Highest bit: If one, this is a negative
- number.</li> </ul> <p>The elements described above are in the same
- order as the order of each bit of each element, that is, either most
- significant first or least significant first.</p> <p><b>32-bit
- floating-point number</b>: A 32-bit binary number which is stored
- similarly to a <i>64-bit floating-point number</i>, except that:</p>
- <ul> <li>Precision is 24 bits.</li> <li>EMin is -150.</li> <li>EMax
- is 104.</li> <li>A. The low 23 bits (Precision minus 1 bits) are the
- lowest bits of the significand.</li> <li>B. The next 8 bits are the
- exponent area.</li> <li>C. If the highest bit is one, this is a
- negative number.</li> </ul> <p><b>.NET Framework decimal</b>: A
+ reduced by 1, then raised by EMin, and the highest bit of the
+ significand is one.</li> </ul></li> <li>C. Highest bit: If one, this
+ is a negative number.</li> </ul> <p>The elements described above are
+ in the same order as the order of each bit of each element, that is,
+ either most significant first or least significant first.</p>
+ <p><b>32-bit floating-point number</b>: A 32-bit binary number which
+ is stored similarly to a <i>64-bit floating-point number</i>, except
+ that:</p> <ul> <li>Precision is 24 bits.</li> <li>EMin is -149.</li>
+ <li>EMax is 104.</li> <li>A. The low 23 bits (Precision minus 1 bits)
+ are the lowest bits of the significand.</li> <li>B. The next 8 bits
+ are the exponent area.</li> <li>C. If the highest bit is one, this is
+ a negative number.</li> </ul> <p><b>.NET Framework decimal</b>: A
  128-bit decimal floating-point number, in the form <i>significand</i>
  * 10<sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28.
  The number is stored in the following format:</p> <ul> <li>Low 96
@@ -984,13 +984,13 @@ Creates a decimal number from a text string that represents a number. See
     public static EDecimal FromString(String str, int offset, int length, EContext ctx)
 <p>Creates a decimal number from a text string that represents a number.</p>
  <p>The format of the string generally consists of:</p> <ul> <li>An
- optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-'
- , the value is negative.)</li> <li>One or more digits, with a single
- optional decimal point after the first digit and before the last
- digit.</li> <li>Optionally, "E"/"e" followed by an optional (positive
- exponent) or "-" (negative exponent) and followed by one or more
- digits specifying the exponent.</li></ul> <p>The string can also be
- "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+ optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if the
+ minus sign, the value is negative.)</li> <li>One or more digits, with
+ a single optional decimal point after the first digit and before the
+ last digit.</li> <li>Optionally, "E"/"e" followed by an optional
+ (positive exponent) or "-" (negative exponent) and followed by one or
+ more digits specifying the exponent.</li></ul> <p>The string can also
+ be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
  followed by any number of digits, all in any combination of upper and
  lower case.</p> <p>All characters mentioned above are the
