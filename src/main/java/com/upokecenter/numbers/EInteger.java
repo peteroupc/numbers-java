@@ -137,8 +137,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Initializes an arbitrary-precision integer from an array of bytes.
-     * @param bytes A byte array consisting of the two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of the
+     * @param bytes A byte array consisting of the two's-complement form (see
+     * {@link com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) of the
      * arbitrary-precision integer to create. The byte array is encoded
      * using the following rules: <ul> <li>Positive numbers have the first
      * byte's highest bit cleared, and negative numbers have the bit
@@ -914,10 +914,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
-     * case the return value might have a different sign than this object's
-     * value).
+     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
      * @return A 32-bit signed integer.
      * @deprecated Renamed to ToInt32Unchecked.
  */
@@ -942,10 +941,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
-     * case the return value might have a different sign than this object's
-     * value).
+     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
      * @return A 64-bit signed integer.
      * @deprecated Renamed to ToInt64Unchecked.
  */
@@ -1557,7 +1555,7 @@ WordsShiftRightOne(bu, buc);
               // Since we are dividing from left to right, the first
               // nonzero result is the first part of the
               // new quotient
-              bitlen = getUnsignedBitLengthEx(quo, wci + 1);
+              bitlen = GetUnsignedBitLengthEx(quo, wci + 1);
               if (bitlen <= 2135) {
                 // (x*631305) >> 21 is an approximation
                 // to trunc(x*log10(2)) that is correct up
@@ -1627,8 +1625,8 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
+     * the lowest set bit in the number's two's-complement form (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -1662,8 +1660,8 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
+     * the lowest set bit in the number's two's-complement form (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -1694,8 +1692,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns whether a bit is set in the two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of this
+     * Returns whether a bit is set in the two's-complement form (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) of this
      * object's value.
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
@@ -1777,12 +1775,12 @@ WordsShiftRightOne(bu, buc);
      * significant bit.
      * @return true if a bit is set in this number's absolute value.
      */
-    public boolean GetUnsignedBit(int n) {
-      if (n < 0) {
-        throw new IllegalArgumentException("n (" + n + ") is less than 0");
+    public boolean GetUnsignedBit(int index) {
+      if (index < 0) {
+        throw new IllegalArgumentException("index (" + index + ") is less than 0");
       }
-      return ((n >> 4) < this.words.length) && ((boolean)(((this.words[(n >>
-                    4)] >> (int)(n & 15)) & 1) != 0));
+    return ((index >> 4) < this.words.length) && ((boolean)(((this.words[(index >>
+        4)] >> (int)(index & 15)) & 1) != 0));
     }
 
     /**
@@ -2449,9 +2447,9 @@ int subtrahendCount) {
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
-     * two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>). Thus, for
-     * negative values, the arbitrary-precision integer is sign-extended.
+     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * "Forms of numbers"}). Thus, for negative values, the
+     * arbitrary-precision integer is sign-extended.
      * @param numberBits Number of bits to shift right.
      * @return An arbitrary-precision integer.
      */
@@ -2546,8 +2544,8 @@ int subtrahendCount) {
 
     /**
      * Returns a byte array of this integer&#x27;s value. The byte array will take
-     * the form of the number's two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), using the
+     * the form of the number's two's-complement form (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
@@ -2649,10 +2647,9 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
-     * case the return value might have a different sign than this object's
-     * value).
+     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
      * @return A 32-bit signed integer.
      */
     public int ToInt32Unchecked() {
@@ -2700,10 +2697,9 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
-     * case the return value might have a different sign than this object's
-     * value).
+     * two's-complement form (see {@link com.upokecenter.numbers.getEDecimal()
+     * "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
      * @return A 64-bit signed integer.
      */
     public long ToInt64Unchecked() {
@@ -4826,7 +4822,7 @@ int subtrahendCount) {
       return val & 0xffff;
     }
 
-    private static int getUnsignedBitLengthEx(int numberValue, int wordCount) {
+    private static int GetUnsignedBitLengthEx(int numberValue, int wordCount) {
       int wc = wordCount;
       if (wc != 0) {
         wc = (wc - 1) << 4;

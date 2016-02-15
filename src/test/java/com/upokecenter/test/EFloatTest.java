@@ -254,9 +254,9 @@ stringTemp);
     @Test
     public void TestFloatDecimalSpecific() {
       String str =
-
-  "874952453585761710286297571153092638434027760916318352601207433388312948219720355694692773665688395541653.74728887385887787786487024277448654174804687500"
-;
+  "874952453585761710286297571153092638434027760916318352";
+      str += "6012074333883129482197203556946927736656883955";
+      str += "41653.74728887385887787786487024277448654174804687500";
       EDecimal ed = EDecimal.FromString(str);
       EFloat ef2 = ed.ToEFloat();
       Assert.assertEquals(ef2.toString(), 0, ed.CompareToBinary(ef2));
@@ -804,7 +804,7 @@ stringTemp);
       // not implemented yet
     }
 
-    private static String[] valueFPIntegers = { "1", "2", "4", "8",
+    private static final String[] ValueFPIntegers = { "1", "2", "4", "8",
       "281474976710656", "562949953421312", "1125899906842624",
       "2251799813685248", "4503599627370496", "9007199254740992",
       "18014398509481984", "36028797018963968", "72057594037927936",
@@ -822,28 +822,29 @@ stringTemp);
   "89884656743115795386465259539451236680898848947115328636715040578866337902750481566354238661203768010560056939935696678829394884407208311246423715319737062188883946712432742638151109800623047059726541476042502884419075341171231440736956555270413618581675255342293149119973622969239858152417678164812112068608"
       };
 
-    private static int[] valueFPIntegersExp = { 0, 1, 2, 3, 48, 49, 50, 51, 52,
+    private static final int[] ValueFPIntegersExp = { 0, 1, 2, 3, 48, 49,
+      50, 51, 52,
       53, 54, 55, 56, 57, 58, 1020, 1021, 1022, 1023 };
 
     @Test
     public void TestFPDoubles() {
-      for (int i = 0; i < valueFPIntegersExp.length; ++i) {
+      for (int i = 0; i < ValueFPIntegersExp.length; ++i) {
         // Positive
-        EFloat ef = EFloat.Create(1, valueFPIntegersExp[i]);
-        Assert.assertEquals(valueFPIntegers[i], ef.toString());
+        EFloat ef = EFloat.Create(1, ValueFPIntegersExp[i]);
+        Assert.assertEquals(ValueFPIntegers[i], ef.toString());
         ef = EFloat.FromDouble(ef.ToDouble());
-        Assert.assertEquals(valueFPIntegers[i], ef.toString());
+        Assert.assertEquals(ValueFPIntegers[i], ef.toString());
         ef = EFloat.FromDouble(
-          EDecimal.FromString(valueFPIntegers[i]).ToDouble());
-        Assert.assertEquals(valueFPIntegers[i], ef.toString());
+          EDecimal.FromString(ValueFPIntegers[i]).ToDouble());
+        Assert.assertEquals(ValueFPIntegers[i], ef.toString());
         // Negative
-        ef = EFloat.Create(-1, valueFPIntegersExp[i]);
-        Assert.assertEquals("-" + valueFPIntegers[i], ef.toString());
+        ef = EFloat.Create(-1, ValueFPIntegersExp[i]);
+        Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
         ef = EFloat.FromDouble(ef.ToDouble());
-        Assert.assertEquals("-" + valueFPIntegers[i], ef.toString());
+        Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
         ef = EFloat.FromDouble(
-          EDecimal.FromString("-" + valueFPIntegers[i]).ToDouble());
-        Assert.assertEquals("-" + valueFPIntegers[i], ef.toString());
+          EDecimal.FromString("-" + ValueFPIntegers[i]).ToDouble());
+        Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
       }
       for (int i = -1074; i < 1024; ++i) {
         String intstr = TestCommon.IntToString(i);
@@ -1127,9 +1128,9 @@ EFloat src) {
       if (input.ToDouble() != expectedDouble) {
   String msg =
   "\nexpectedDbl " + OutputDouble(expectedDouble) +
-  ",\ngot----- " +
-        OutputDouble(input.ToDouble()) +"\nsrc-----=" + OutputEF(src) +
-        "\nexpected=" + OutputEF(expected) +"\ninput---=" + OutputEF(input);
+  ",\ngot----- " + OutputDouble(input.ToDouble()) +
+        "\nsrc-----=" + OutputEF(src) + "\nexpected=" + OutputEF(expected) +
+        "\ninput---=" + OutputEF(input);
         Assert.fail(msg);
       }
       double inputDouble = EDecimal.FromString(str).ToDouble();

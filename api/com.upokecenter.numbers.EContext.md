@@ -26,9 +26,8 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `static EContext Binary64`<br>
  An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision.
-* `static EContext CliDecimal`<br>
- An arithmetic context for the Common Language Infrastructure (.NET
- Framework) decimal format (see "Forms of numbers"), 96 bits
+* `static EContext CliDecimal "Forms of numbers"`<br>
+ An arithmetic context for the .NET Framework decimal format (see "Forms of numbers"), 96 bits
  precision, and a valid exponent range of -28 to 0.
 * `static EContext Decimal128`<br>
  An arithmetic context for the IEEE-754-2008 decimal128 format.
@@ -72,8 +71,8 @@ Contains parameters for controlling the precision, rounding, and exponent
         ERounding rounding,
         int exponentMinSmall,
         int exponentMaxSmall,
-        boolean clampNormalExponents)`<br>
- Initializes a new instance of the
+        boolean clampNormalExponents) com.upokecenter.numbers.getEContext()`<br>
+ Initializes a new instance of the com.upokecenter.numbers.getEContext()
  class.
 
 ## Methods
@@ -229,10 +228,12 @@ An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision. The default rounding mode is HalfEven.
 ### CliDecimal
     public static final EContext CliDecimal
-An arithmetic context for the Common Language Infrastructure (.NET
- Framework) decimal format (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), 96 bits
+An arithmetic context for the .NET Framework decimal format (see <code>"Forms of numbers"</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
- rounding mode is HalfEven.
+ rounding mode is HalfEven. (The "Cli" stands for "Common Language
+ Infrastructure", which defined this format as the .NET Framework
+ decimal format in version 1, but leaves it unspecified in later
+ versions.)
 ### Decimal128
     public static final EContext Decimal128
 An arithmetic context for the IEEE-754-2008 decimal128 format. The default

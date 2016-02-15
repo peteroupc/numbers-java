@@ -123,11 +123,13 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithExponentClamp(true).WithExponentRange(-1022, 1023);
 
     /**
-     * An arithmetic context for the Common Language Infrastructure (.NET
-     * Framework) decimal format (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), 96 bits
+     * An arithmetic context for the .NET Framework decimal format (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
-     * rounding mode is HalfEven.
+     * rounding mode is HalfEven. (The "Cli" stands for "Common Language
+     * Infrastructure", which defined this format as the .NET Framework
+     * decimal format in version 1, but leaves it unspecified in later
+     * versions.)
      */
 
     public static final EContext CliDecimal =
@@ -195,7 +197,7 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
     private int traps;
 
     /**
-     * Initializes a new instance of the <see cref='T:PeterO.Numbers.EContext'/>
+     * Initializes a new instance of the {@link com.upokecenter.numbers.getEContext()}
      * class. <code>HasFlags</code> will be set to false.
      * @param precision The maximum number of digits a number can have, or 0 for an
      * unlimited number of digits.

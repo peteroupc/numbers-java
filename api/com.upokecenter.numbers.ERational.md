@@ -9,8 +9,8 @@ Arbitrary-precision rational number. This class can't be inherited. (The "E"
  they are inherently safe for use by multiple threads. Multiple
  instances of this object with the same properties are
  interchangeable, so they should not be compared using the "=="
- operator (which only checks if each side of the operator is the same
- instance).</p>
+ operator (which might only check if each side of the operator is the
+ same instance).</p>
 
 ## Fields
 
@@ -34,8 +34,8 @@ Arbitrary-precision rational number. This class can't be inherited. (The "E"
 ## Constructors
 
 * `ERational(EInteger numerator,
-         EInteger denominator)`<br>
- Initializes a new instance of the
+         EInteger denominator) com.upokecenter.numbers.getERational()`<br>
+ Initializes a new instance of the com.upokecenter.numbers.getERational()
  class.
 
 ## Methods

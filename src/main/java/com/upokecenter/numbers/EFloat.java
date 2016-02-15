@@ -44,8 +44,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * <p>Instances of this class are immutable, so they are inherently safe
      * for use by multiple threads. Multiple instances of this object with
      * the same properties are interchangeable, so they should not be
-     * compared using the "==" operator (which only checks if each side of
-     * the operator is the same instance).</p> <p><b>Comparison
+     * compared using the "==" operator (which might only check if each side
+     * of the operator is the same instance).</p> <p><b>Comparison
      * considerations</b></p> <p>This class's natural ordering (under the
      * compareTo method) is not consistent with the Equals method. This
      * means that two values that compare as equal under the compareTo
@@ -61,6 +61,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * A not-a-number value.
      */
+
     public static final EFloat NaN = CreateWithFlags(
       EInteger.FromInt32(0),
       EInteger.FromInt32(0),
@@ -69,6 +70,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Negative infinity, less than any other number.
      */
+
     public static final EFloat NegativeInfinity = CreateWithFlags(
       EInteger.FromInt32(0),
       EInteger.FromInt32(0),
@@ -93,6 +95,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Positive infinity, greater than any other number.
      */
+
     public static final EFloat PositiveInfinity = CreateWithFlags(
       EInteger.FromInt32(0),
       EInteger.FromInt32(0),
@@ -103,6 +106,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * passed as an argument to any arithmetic operation in
      * arbitrary-precision binary float.
      */
+
     public static final EFloat SignalingNaN = CreateWithFlags(
       EInteger.FromInt32(0),
       EInteger.FromInt32(0),
@@ -1968,10 +1972,10 @@ this.flags ^ BigNumberFlags.FlagNegative);
      * exponent is outside that range.
      */
     public EFloat Quantize(
-      int desiredExponentSmall,
+      int desiredExponentInt,
       EContext ctx) {
       return this.Quantize(
-        EFloat.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentSmall)),
+        EFloat.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
         ctx);
     }
 
@@ -2647,9 +2651,9 @@ EContext ctx) {
     /**
      * Converts this number to a 32-bit signed integer. If this value is not
      * exactly a 32-bit integer, truncates the value to an integer and
-     * returns the lowest 32 bits of its two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
-     * case the return value might have a different sign than this object's
+     * returns the lowest 32 bits of its two's-complement form (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) (in which case
+     * the return value might have a different sign than this object's
      * value).
      * @return A 32-bit signed integer. Returns 0 if this value is infinity or
      * not-a-number.
@@ -2700,9 +2704,9 @@ EContext ctx) {
     /**
      * Converts this number to a 64-bit signed integer. If this value is not
      * exactly a 64-bit integer, truncates the value to an integer and
-     * returns the lowest 64 bits of its two's-complement form (see <see
-     * cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
-     * case the return value might have a different sign than this object's
+     * returns the lowest 64 bits of its two's-complement form (see {@link
+     * com.upokecenter.numbers.getEDecimal() "Forms of numbers"}) (in which case
+     * the return value might have a different sign than this object's
      * value).
      * @return A 64-bit signed integer. Returns 0 if this value is infinity or
      * not-a-number.

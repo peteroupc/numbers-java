@@ -77,7 +77,7 @@ Renamed to ToInt64Unchecked.
  Gets the lowest set bit in this number's absolute value.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
-* `boolean GetSignedBit(int index)`<br>
+* `boolean GetSignedBit(int index) "Forms of numbers"`<br>
  Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
  object's value.
 * `int GetSignedBitLength()`<br>
@@ -85,7 +85,7 @@ Renamed to ToInt64Unchecked.
  value, except for its sign.
 * `static EInteger getTen()`<br>
  Gets the number 10 as an arbitrary-precision integer.
-* `boolean GetUnsignedBit(int n)`<br>
+* `boolean GetUnsignedBit(int index)`<br>
  Returns whether a bit is set in this number's absolute value.
 * `int GetUnsignedBitLength()`<br>
  Finds the minimum number of bits needed to represent this number's
@@ -220,7 +220,8 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Parameters:**
 
-* <code>bytes</code> - A byte array consisting of the two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of the
+* <code>bytes</code> - A byte array consisting of the two's-complement form (see
+ <code>"Forms of numbers"</code>) of the
  arbitrary-precision integer to create. The byte array is encoded
  using the following rules: <ul> <li>Positive numbers have the first
  byte's highest bit cleared, and negative numbers have the bit
@@ -608,7 +609,7 @@ Returns the hash code for this instance.
 ### GetLowBit
     public int GetLowBit()
 Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
+ the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers"</code>).).
 
 **Returns:**
 
@@ -618,7 +619,7 @@ Gets the lowest set bit in this number's absolute value. (This will also be
 ### GetLowBitAsEInteger
     public EInteger GetLowBitAsEInteger()
 Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
+ the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers"</code>).).
 
 **Returns:**
 
@@ -627,7 +628,7 @@ Gets the lowest set bit in this number's absolute value. (This will also be
 
 ### GetSignedBit
     public boolean GetSignedBit(int index)
-Returns whether a bit is set in the two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of this
+Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this
  object's value.
 
 **Parameters:**
@@ -653,7 +654,7 @@ Finds the minimum number of bits needed to represent this object&#x27;s
  object's value is 0 or negative 1.
 
 ### GetUnsignedBit
-    public boolean GetUnsignedBit(int n)
+    public boolean GetUnsignedBit(int index)
 Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
@@ -830,8 +831,8 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
     public EInteger ShiftRight(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>). Thus, for
- negative values, the arbitrary-precision integer is sign-extended.
+ two's-complement form (see <code>"Forms of numbers"</code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.
 
 **Parameters:**
 
@@ -882,7 +883,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### ToBytes
     public byte[] ToBytes(boolean littleEndian)
 Returns a byte array of this integer&#x27;s value. The byte array will take
- the form of the number's two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), using the
+ the form of the number's two's-complement form (see <code>"Forms of numbers"</code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -918,9 +919,8 @@ Converts this object's value to a 32-bit signed integer, throwing an
     public int ToInt32Unchecked()
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
- two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
- case the return value might have a different sign than this object's
- value).
+ two's-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ different sign than this object's value).
 
 **Returns:**
 
@@ -944,9 +944,8 @@ Converts this object's value to a 64-bit signed integer, throwing an
     public long ToInt64Unchecked()
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
- two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
- case the return value might have a different sign than this object's
- value).
+ two's-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ different sign than this object's value).
 
 **Returns:**
 

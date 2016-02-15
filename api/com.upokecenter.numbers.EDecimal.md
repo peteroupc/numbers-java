@@ -80,30 +80,31 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  safety</b></p> <p>Instances of this class are immutable, so they are
  inherently safe for use by multiple threads. Multiple instances of
  this object with the same properties are interchangeable, so they
- should not be compared using the "==" operator (which only checks if
- each side of the operator is the same instance).</p> <p><b>Comparison
- considerations</b></p> <p>This class's natural ordering (under the
- compareTo method) is not consistent with the Equals method. This
- means that two values that compare as equal under the compareTo
- method might not be equal under the Equals method. The compareTo
- method compares the mathematical values of the two instances passed
- to it (and considers two different NaN values as equal), while two
- instances with the same mathematical value, but different exponents,
- will be considered unequal under the Equals method.</p> <p><b>Forms
- of numbers</b></p> <p>There are several other types of numbers that
- are mentioned in this class and elsewhere in this documentation. For
- reference, they are specified here.</p> <p><b>Unsigned integer</b>: A
- number that&#39;s always 0 or greater, with the following maximum
- values:</p> <ul> <li>8-bit unsigned integer, or <i>byte</i>:
- 255.</li> <li>16-bit unsigned integer: 65535.</li> <li>32-bit
- unsigned integer: (2<sup>32</sup>-1).</li> <li>64-bit unsigned
- integer: (2<sup>64</sup>-1).</li> </ul> <p><b>Signed integer</b>: A
- number in <i>two&#39;s complement form</i>, with the following
- ranges:</p> <ul> <li>8-bit signed integer: -128 to 127.</li>
- <li>16-bit signed integer: -32768 to 32767.</li> <li>32-bit signed
- integer: -2<sup>31</sup> to (2<sup>31</sup> - 1).</li> <li>64-bit
- signed integer: -2<sup>63</sup> to (2<sup>63</sup> - 1).</li> </ul>
- <p><b>Two's complement form</b>: In <b>two's-complement form</b>,
+ should not be compared using the "==" operator (which might only
+ check if each side of the operator is the same instance).</p>
+ <p><b>Comparison considerations</b></p> <p>This class's natural
+ ordering (under the compareTo method) is not consistent with the
+ Equals method. This means that two values that compare as equal under
+ the compareTo method might not be equal under the Equals method. The
+ compareTo method compares the mathematical values of the two
+ instances passed to it (and considers two different NaN values as
+ equal), while two instances with the same mathematical value, but
+ different exponents, will be considered unequal under the Equals
+ method.</p> <p><b>Forms of numbers</b></p> <p>There are several other
+ types of numbers that are mentioned in this class and elsewhere in
+ this documentation. For reference, they are specified here.</p>
+ <p><b>Unsigned integer</b>: An integer that&#39;s always 0 or
+ greater, with the following maximum values:</p> <ul> <li>8-bit
+ unsigned integer, or <i>byte</i>: 255.</li> <li>16-bit unsigned
+ integer: 65535.</li> <li>32-bit unsigned integer:
+ (2<sup>32</sup>-1).</li> <li>64-bit unsigned integer:
+ (2<sup>64</sup>-1).</li> </ul> <p><b>Signed integer</b>: An integer
+ in <i>two&#39;s complement form</i>, with the following ranges:</p>
+ <ul> <li>8-bit signed integer: -128 to 127.</li> <li>16-bit signed
+ integer: -32768 to 32767.</li> <li>32-bit signed integer:
+ -2<sup>31</sup> to (2<sup>31</sup> - 1).</li> <li>64-bit signed
+ integer: -2<sup>63</sup> to (2<sup>63</sup> - 1).</li> </ul>
+ <p><b>Two's complement form</b>: In <i>two's-complement form</i>,
  positive numbers have the highest (most significant) bit set to zero,
  and negative numbers have that bit (and all bits beyond) set to one.
  To store a negative number, decrease its absolute value by 1 and swap
@@ -122,28 +123,27 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  is zero.</li> <li>If any other number, the exponent is this value
  plus EMin, and the highest bit of the significand is one.</li>
  </ul></li> <li>C. Highest bit: If one, this is a negative
- number.</li> </ul> <p><b>32-bit floating-point number</b>: A 32-bit
- binary number which is stored similarly to a <i>64-bit floating-point
- number</i>, except that:</p> <ul> <li>Precision is 24 bits.</li>
- <li>EMin is -150.</li> <li>EMax is 104.</li> <li>A. The low 23 bits
- (Precision minus 1 bits) are the lowest bits of the significand.</li>
- <li>B. The next 8 bits are the exponent area.</li> <li>C. If the
- highest bit is one, this is a negative number.</li> </ul> <p>The
+ number.</li> </ul> <p>The elements described above are in the same
+ order as the order of each bit of each element, that is, either most
+ significant first or least significant first.</p> <p><b>32-bit
+ floating-point number</b>: A 32-bit binary number which is stored
+ similarly to a <i>64-bit floating-point number</i>, except that:</p>
+ <ul> <li>Precision is 24 bits.</li> <li>EMin is -150.</li> <li>EMax
+ is 104.</li> <li>A. The low 23 bits (Precision minus 1 bits) are the
+ lowest bits of the significand.</li> <li>B. The next 8 bits are the
+ exponent area.</li> <li>C. If the highest bit is one, this is a
+ negative number.</li> </ul> <p><b>.NET Framework decimal</b>: A
+ 128-bit decimal floating-point number, in the form <i>significand</i>
+ * 10<sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28.
+ The number is stored in the following format:</p> <ul> <li>Low 96
+ bits are the significand, as a 96-bit unsigned integer (all 96-bit
+ values are allowed, up to (2<sup>96</sup>-1)).</li> <li>Next 16 bits
+ are unused.</li> <li>Next 8 bits are the scale, stored as an 8-bit
+ unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If the
+ highest bit is one, it&#39;s a negative number.</li> </ul> <p>The
  elements described above are in the same order as the order of each
  bit of each element, that is, either most significant first or least
- significant first.</p> <p><b>Common Language Infrastructure
- decimal</b>: A 128-bit decimal floating-point number, in the form
- <i>significand</i> * 10<sup>-<i>scale</i></sup>, where the scale
- ranges from 0 to 28. The number is stored in the following
- format:</p> <ul> <li>Low 96 bits are the significand, as a 96-bit
- unsigned integer (all 96-bit values are allowed, up to
- (2<sup>96</sup>-1)).</li> <li>Next 16 bits are unused.</li> <li>Next
- 8 bits are the scale, stored as an 8-bit unsigned integer.</li>
- <li>Next 7 bits are unused.</li> <li>If the highest bit is one,
- it&#39;s a negative number.</li> </ul> <p>The elements described
- above are in the same order as the order of each bit of each element,
- that is, either most significant first or least significant
- first.</p>
+ significant first.</p>
 
 ## Fields
 

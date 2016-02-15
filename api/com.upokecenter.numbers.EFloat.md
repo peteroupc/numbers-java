@@ -38,8 +38,8 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  <p>Instances of this class are immutable, so they are inherently safe
  for use by multiple threads. Multiple instances of this object with
  the same properties are interchangeable, so they should not be
- compared using the "==" operator (which only checks if each side of
- the operator is the same instance).</p> <p><b>Comparison
+ compared using the "==" operator (which might only check if each side
+ of the operator is the same instance).</p> <p><b>Comparison
  considerations</b></p> <p>This class's natural ordering (under the
  compareTo method) is not consistent with the Equals method. This
  means that two values that compare as equal under the compareTo
@@ -361,7 +361,7 @@ Renamed to DivRemNaturalScale.
 * `EFloat Quantize(EInteger desiredExponent,
         EContext ctx)`<br>
  Returns a binary float with the same value but a new exponent.
-* `EFloat Quantize(int desiredExponentSmall,
+* `EFloat Quantize(int desiredExponentInt,
         EContext ctx)`<br>
  Returns a binary float with the same value but a new exponent.
 * `EFloat Reduce(EContext ctx)`<br>
@@ -2183,7 +2183,7 @@ Returns a binary float with the same value but a new exponent. <p>Note that
  exponent is outside that range.
 
 ### Quantize
-    public EFloat Quantize(int desiredExponentSmall, EContext ctx)
+    public EFloat Quantize(int desiredExponentInt, EContext ctx)
 Returns a binary float with the same value but a new exponent. <p>Note that
  this is not always the same as rounding to a given number of binary
  digit places, since it can fail if the difference between this
@@ -2848,8 +2848,8 @@ Converts this value to a 32-bit signed integer, throwing an exception if the
     public int ToInt32Unchecked()
 Converts this number to a 32-bit signed integer. If this value is not
  exactly a 32-bit integer, truncates the value to an integer and
- returns the lowest 32 bits of its two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
- case the return value might have a different sign than this object's
+ returns the lowest 32 bits of its two's-complement form (see <code>"Forms of numbers"</code>) (in which case
+ the return value might have a different sign than this object's
  value).
 
 **Returns:**
@@ -2870,8 +2870,8 @@ Converts this value to a 64-bit signed integer, throwing an exception if the
     public long ToInt64Unchecked()
 Converts this number to a 64-bit signed integer. If this value is not
  exactly a 64-bit integer, truncates the value to an integer and
- returns the lowest 64 bits of its two's-complement form (see <see cref='T:PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
- case the return value might have a different sign than this object's
+ returns the lowest 64 bits of its two's-complement form (see <code>"Forms of numbers"</code>) (in which case
+ the return value might have a different sign than this object's
  value).
 
 **Returns:**

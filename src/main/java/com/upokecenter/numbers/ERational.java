@@ -15,13 +15,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * they are inherently safe for use by multiple threads. Multiple
      * instances of this object with the same properties are
      * interchangeable, so they should not be compared using the "=="
-     * operator (which only checks if each side of the operator is the same
-     * instance).</p>
+     * operator (which might only check if each side of the operator is the
+     * same instance).</p>
      */
   public final class ERational implements Comparable<ERational> {
     /**
      * A not-a-number value.
      */
+
     public static final ERational NaN = CreateWithFlags(
 EInteger.FromInt32(0),
 EInteger.FromInt32(1),
@@ -30,6 +31,7 @@ BigNumberFlags.FlagQuietNaN);
     /**
      * Negative infinity, less than any other number.
      */
+
     public static final ERational NegativeInfinity =
       CreateWithFlags(
 EInteger.FromInt32(0),
@@ -39,17 +41,20 @@ BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
     /**
      * A rational number for negative zero.
      */
+
     public static final ERational NegativeZero =
       FromEInteger(EInteger.FromInt32(0)).ChangeSign(false);
 
     /**
      * The rational number one.
      */
+
     public static final ERational One = FromEInteger(EInteger.FromInt32(1));
 
     /**
      * Positive infinity, greater than any other number.
      */
+
     public static final ERational PositiveInfinity =
       CreateWithFlags(
 EInteger.FromInt32(0),
@@ -59,6 +64,7 @@ BigNumberFlags.FlagInfinity);
     /**
      * A signaling not-a-number value.
      */
+
     public static final ERational SignalingNaN =
       CreateWithFlags(
 EInteger.FromInt32(0),
@@ -68,11 +74,13 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * The rational number ten.
      */
+
     public static final ERational Ten = FromEInteger(EInteger.FromInt32(10));
 
     /**
      * A rational number for zero.
      */
+
     public static final ERational Zero = FromEInteger(EInteger.FromInt32(0));
 
     private EInteger denominator;
@@ -81,7 +89,7 @@ BigNumberFlags.FlagSignalingNaN);
     private EInteger unsignedNumerator;
 
     /**
-     * Initializes a new instance of the <see cref='T:PeterO.Numbers.ERational'/>
+     * Initializes a new instance of the {@link com.upokecenter.numbers.getERational()}
      * class.
      * @param numerator An arbitrary-precision integer.
      * @param denominator Another arbitrary-precision integer.

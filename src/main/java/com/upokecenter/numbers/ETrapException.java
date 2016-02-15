@@ -59,8 +59,8 @@ private static final long serialVersionUID = 1L;
     }
 
     /**
-     * Initializes a new instance of the <see
-     * cref='T:PeterO.Numbers.ETrapException'/> class.
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.getETrapException()} class.
      * @param flag A flag that specifies the kind of error ({@code
      * EContext.FlagXXYY}). This will only be one flag, such as {@code
      * FlagInexact} or FlagSubnormal.

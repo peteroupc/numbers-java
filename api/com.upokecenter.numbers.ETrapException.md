@@ -10,8 +10,8 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 * `ETrapException(int flag,
               EContext ctx,
-              Object result)`<br>
- Initializes a new instance of the  class.
+              Object result) com.upokecenter.numbers.getETrapException()`<br>
+ Initializes a new instance of the com.upokecenter.numbers.getETrapException() class.
 * `EContext getContext()`<br>
  Gets the arithmetic context used during the operation that triggered the
  trap.
@@ -24,14 +24,14 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 * `ETrapException(int flag,
               EContext ctx,
-              Object result)`<br>
- Initializes a new instance of the  class.
+              Object result) com.upokecenter.numbers.getETrapException()`<br>
+ Initializes a new instance of the com.upokecenter.numbers.getETrapException() class.
 
 ## Method Details
 
 ### ETrapException
     public ETrapException(int flag, EContext ctx, Object result)
-Initializes a new instance of the <see cref='T:PeterO.Numbers.ETrapException'/> class.
+Initializes a new instance of the <code>com.upokecenter.numbers.getETrapException()</code> class.
 
 **Parameters:**
 
@@ -43,7 +43,7 @@ Initializes a new instance of the <see cref='T:PeterO.Numbers.ETrapException'/> 
 
 ### ETrapException
     public ETrapException(int flag, EContext ctx, Object result)
-Initializes a new instance of the <see cref='T:PeterO.Numbers.ETrapException'/> class.
+Initializes a new instance of the <code>com.upokecenter.numbers.getETrapException()</code> class.
 
 **Parameters:**
 
