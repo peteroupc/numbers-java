@@ -1311,7 +1311,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
               WordsToLongUnchecked(bu, buc),
               WordsToLongUnchecked(bv, bvc));
           }
-          if ((bu[0 ]&0x0f) == 0 && (bv[0]&0x0f) == 0) {
+          if ((bu[0 ] &0x0f) == 0 && (bv[0]&0x0f) == 0) {
             if (bshl < 0) {
               ebshl = ebshl.Add(EInteger.FromInt32(4));
             } else if (bshl == Integer.MAX_VALUE - 3) {
@@ -1325,8 +1325,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             bvc = WordsShiftRightFour(bv, bvc);
             continue;
           }
-          boolean eu = (bu[0 ]&0x01) == 0;
-          boolean ev = (bv[0 ]&0x01) == 0;
+          boolean eu = (bu[0 ] &0x01) == 0;
+          boolean ev = (bv[0 ] &0x01) == 0;
           if (eu && ev) {
             if (bshl < 0) {
               ebshl = ebshl.Add(EInteger.FromInt32(1));
@@ -1340,17 +1340,17 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             buc = WordsShiftRightOne(bu, buc);
             bvc = WordsShiftRightOne(bv, bvc);
           } else if (eu && !ev) {
-            buc = (Math.abs(buc - bvc) >1 && (bu[0 ]&0x0f) == 0) ?
+            buc = (Math.abs(buc - bvc) >1 && (bu[0 ] &0x0f) == 0) ?
               WordsShiftRightFour(bu, buc) :
 WordsShiftRightOne(bu, buc);
           } else if (!eu && ev) {
-            if ((bv[0 ]&0xff) == 0 && Math.abs(buc-bvc)>1) {
+            if ((bv[0 ] &0xff) == 0 && Math.abs(buc-bvc)>1) {
               // DebugUtility.Log("bv8");
               bvc = WordsShiftRightEight(bv, bvc);
             } else {
  bvc = (
 (
-bv[0 ]&0x0f) == 0 && Math.abs(
+bv[0 ] &0x0f) == 0 && Math.abs(
 buc - bvc) >1) ? (
 WordsShiftRightFour(
 bv,
@@ -1358,7 +1358,7 @@ bvc)) : WordsShiftRightOne(bv, bvc);
 }
           } else if (WordsCompare(bu, buc, bv, bvc) >= 0) {
             buc = WordsSubtract(bu, buc, bv, bvc);
-            buc = (Math.abs(buc - bvc) >1 && (bu[0 ]&0x02) == 0) ?
+            buc = (Math.abs(buc - bvc) >1 && (bu[0 ] &0x02) == 0) ?
               WordsShiftRightTwo(bu, buc) : WordsShiftRightOne(bu, buc);
           } else {
             short[] butmp = bv;
@@ -2278,7 +2278,7 @@ this.negative ^ bigintMult.negative);
     }
 
     private static boolean WordsIsEven(short[] words, int wordCount) {
-      return wordCount == 0 || (words[0 ]&0x01) == 0;
+      return wordCount == 0 || (words[0 ] &0x01) == 0;
     }
 
     private static int WordsShiftRightTwo(short[] words, int wordCount) {

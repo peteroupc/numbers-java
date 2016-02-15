@@ -191,7 +191,7 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
     private int traps;
 
     /**
-     * Initializes a new instance of the <see cref='T:PeterO.Numbers.EContext'/>
+     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class. <code>HasFlags</code> will be set to false.
      * @param precision The parameter {@code precision} is not documented yet.
      * @param rounding The parameter {@code rounding} is not documented yet.
@@ -298,7 +298,8 @@ boolean clampNormalExponents) {
      * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
      * 0</code> returns TRUE if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
-     * arithmetic context. If HasFlags is false, this value will be 0.
+     * arithmetic context. If {@code HasFlags} is false, this value will be
+     * 0.
      */
     public final int getFlags() {
         return this.flags;

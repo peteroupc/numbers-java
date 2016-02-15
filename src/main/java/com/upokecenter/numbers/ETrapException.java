@@ -16,9 +16,9 @@ private static final long serialVersionUID = 1L;
     private final EContext ctx;
 
     /**
-     * Gets the precision context used during the operation that triggered the
+     * Gets the arithmetic context used during the operation that triggered the
      * trap. May be null.
-     * @return The precision context used during the operation that triggered the
+     * @return The arithmetic context used during the operation that triggered the
      * trap. May be null.
      */
     public final EContext getContext() {
@@ -36,11 +36,10 @@ private static final long serialVersionUID = 1L;
       }
 
     /**
-     * Gets the flag that specifies the kind of error (PrecisionContext.FlagXXX).
-     * This will only be one flag, such as FlagInexact or FlagSubnormal.
-     * @return The flag that specifies the kind of error
-     * (PrecisionContext.FlagXXX). This will only be one flag, such as
-     * FlagInexact or FlagSubnormal.
+     * Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
+     * only be one flag, such as FlagInexact or FlagSubnormal.
+     * @return The flag that specifies the kind of error (EContext.FlagXXX). This
+     * will only be one flag, such as FlagInexact or FlagSubnormal.
      */
     public final int getError() {
         return this.error;
@@ -58,8 +57,8 @@ private static final long serialVersionUID = 1L;
     }
 
     /**
-     * Initializes a new instance of the <see
-     * cref='T:PeterO.Numbers.ETrapException'/> class.
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
      * @param flag A flag that specifies the kind of error (EContext.FlagXXX). This
      * will only be one flag, such as FlagInexact or FlagSubnormal.
      * @param ctx A context object for arbitrary-precision arithmetic settings.

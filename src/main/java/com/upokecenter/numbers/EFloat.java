@@ -2384,94 +2384,43 @@ EContext ctx) {
         }
         return Extras.IntegersToDouble(nan);
       }
-      if (this.isNegative() && this.isZero()) {
+      EFloat thisValue = this.RoundToPrecision(EContext.Binary64);
+      if (!thisValue.isFinite()) {
+        return thisValue.ToDouble();
+      }
+      EInteger mant = thisValue.unsignedMantissa;
+      if (thisValue.isNegative() && mant.isZero()) {
         return Extras.IntegersToDouble(new int[] { 0, ((int)(1 << 31)) });
+      } else if (mant.isZero()) {
+        return 0.0;
       }
-      EInteger bigmant = this.unsignedMantissa.Abs();
-      FastInteger bigexponent = FastInteger.FromBig(this.exponent);
-      int bitLeftmost = 0;
-      int bitsAfterLeftmost = 0;
-      if (this.unsignedMantissa.isZero()) {
-        return 0.0d;
-      }
-      int[] mantissaBits;
-      if (bigmant.compareTo(ValueOneShift52) < 0) {
-        mantissaBits = FastInteger.GetLastWords(bigmant, 2);
-        // This will be an infinite loop if both elements
-        // of the bits array are 0, but the check for
-        // 0 was already done above
-        while (!NumberUtility.HasBitSet(mantissaBits, 52)) {
-          NumberUtility.ShiftLeftOne(mantissaBits);
-          bigexponent.Decrement();
-        }
-      } else {
-        BitShiftAccumulator accum = new BitShiftAccumulator(bigmant, 0, 0);
-        accum.ShiftToDigitsInt(53);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        mantissaBits = FastInteger.GetLastWords(accum.getShiftedInt(), 2);
-      }
-      // Round half-even
-      if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    NumberUtility.HasBitSet(mantissaBits, 0))) {
-        // Add 1 to the bits
-        mantissaBits[0] = ((int)(mantissaBits[0] + 1));
-        if (mantissaBits[0] == 0) {
-          mantissaBits[1] = ((int)(mantissaBits[1] + 1));
-        }
-        if (mantissaBits[0] == 0 &&
-            mantissaBits[1] == (1 << 21)) {  // if mantissa is now 2^53
-          mantissaBits[1] >>= 1;  // change it to 2^52
-          bigexponent.Increment();
-        }
-      }
+      // DebugUtility.Log("-->" + (//
+      // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
+      // thisValue.exponent));
+      int bitLength = mant.GetUnsignedBitLength();
+
+      int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
-      if (bigexponent.CompareToInt(971) > 0) {
-        // exponent too big
-        return this.isNegative() ? Double.NEGATIVE_INFINITY :
-          Double.POSITIVE_INFINITY;
-      }
-      if (bigexponent.CompareToInt(-1074) < 0) {
-        // subnormal
-        subnormal = true;
-        // Shift while number remains subnormal
-        BitShiftAccumulator accum = new BitShiftAccumulator(
-          FastInteger.WordsToEInteger(mantissaBits),
-          0,
-          0);
-        FastInteger fi = bigexponent.Copy().SubtractInt(-1074).Abs();
-        accum.ShiftRight(fi);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        mantissaBits = FastInteger.GetLastWords(accum.getShiftedInt(), 2);
-        // Round half-even
-        if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    NumberUtility.HasBitSet(mantissaBits, 0))) {
-          // Add 1 to the bits
-          mantissaBits[0] = ((int)(mantissaBits[0] + 1));
-          if (mantissaBits[0] == 0) {
-            mantissaBits[1] = ((int)(mantissaBits[1] + 1));
-          }
-          if (mantissaBits[0] == 0 &&
-              mantissaBits[1] == (1 << 21)) {  // if mantissa is now 2^53
-            mantissaBits[1] >>= 1;  // change it to 2^52
-            bigexponent.Increment();
-          }
+      if (bitLength < 53) {
+        int diff = 53 - bitLength;
+        expo -= diff;
+        if (expo < -1074) {
+          // DebugUtility.Log("Diff changed from " + diff + " to " + (diff -
+          // (-1074 - expo)));
+          diff -= -1074 - expo;
+          expo = -1074;
+          subnormal = true;
         }
+        mant = mant.ShiftLeft(diff);
+        bitLength += diff;
       }
-      if (bigexponent.CompareToInt(-1074) < 0) {
-        // exponent too small, so return zero
-        return this.isNegative() ?
-          Extras.IntegersToDouble(new int[] { 0, ((int)0x80000000) }) :
-          0.0d;
-      }
-      bigexponent.AddInt(1075);
+      // DebugUtility.Log("2->" + (mant.ToRadixString(2)) + ", " + expo);
+      int[] mantissaBits;
+      mantissaBits = FastInteger.GetLastWords(mant, 2);
       // Clear the high bits where the exponent and sign are
       mantissaBits[1] &= 0xfffff;
       if (!subnormal) {
-        int smallexponent = bigexponent.AsInt32() << 20;
+        int smallexponent = (expo + 1075) << 20;
         mantissaBits[1] |= smallexponent;
       }
       if (this.isNegative()) {
@@ -2728,89 +2677,45 @@ EContext ctx) {
         }
         return Float.intBitsToFloat(nan);
       }
-      if (this.isNegative() && this.isZero()) {
-        return Float.intBitsToFloat(1 << 31);
+      EFloat thisValue = this.RoundToPrecision(EContext.Binary32);
+      if (!thisValue.isFinite()) {
+        return thisValue.ToSingle();
       }
-      EInteger bigmant = this.unsignedMantissa.Abs();
-      FastInteger bigexponent = FastInteger.FromBig(this.exponent);
-      int bitLeftmost = 0;
-      int bitsAfterLeftmost = 0;
-      if (this.unsignedMantissa.isZero()) {
+      EInteger mant = thisValue.unsignedMantissa;
+      if (thisValue.isNegative() && mant.isZero()) {
+        return Float.intBitsToFloat(1 << 31);
+      } else if (mant.isZero()) {
         return 0.0f;
       }
-      int smallmant = 0;
-      FastInteger fastSmallMant;
-      if (bigmant.compareTo(ValueOneShift23) < 0) {
-        smallmant = bigmant.AsInt32Checked();
-        int exponentchange = 0;
-        while (smallmant < (1 << 23)) {
-          smallmant <<= 1;
-          ++exponentchange;
-        }
-        bigexponent.SubtractInt(exponentchange);
-        fastSmallMant = new FastInteger(smallmant);
-      } else {
-        BitShiftAccumulator accum = new BitShiftAccumulator(bigmant, 0, 0);
-        accum.ShiftToDigitsInt(24);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        fastSmallMant = accum.getShiftedIntFast();
-      }
-      // Round half-even
-      if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    !fastSmallMant.isEvenNumber())) {
-        fastSmallMant.Increment();
-        if (fastSmallMant.CompareToInt(1 << 24) == 0) {
-          fastSmallMant = new FastInteger(1 << 23);
-          bigexponent.Increment();
-        }
-      }
+      // DebugUtility.Log("-->" + (//
+      // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
+      // thisValue.exponent));
+      int bitLength = mant.GetUnsignedBitLength();
+
+      int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
-      if (bigexponent.CompareToInt(104) > 0) {
-        // exponent too big
-        return this.isNegative() ? Float.NEGATIVE_INFINITY :
-          Float.POSITIVE_INFINITY;
-      }
-      if (bigexponent.CompareToInt(-149) < 0) {
-        // subnormal
-        subnormal = true;
-        // Shift while number remains subnormal
-        BitShiftAccumulator accum =
-          BitShiftAccumulator.FromInt32(fastSmallMant.AsInt32());
-        FastInteger fi = bigexponent.Copy().SubtractInt(-149).Abs();
-        accum.ShiftRight(fi);
-        bitsAfterLeftmost = accum.getOlderDiscardedDigits();
-        bitLeftmost = accum.getLastDiscardedDigit();
-        bigexponent.Add(accum.getDiscardedDigitCount());
-        fastSmallMant = accum.getShiftedIntFast();
-        // Round half-even
-        if (bitLeftmost > 0 && (bitsAfterLeftmost > 0 ||
-                    !fastSmallMant.isEvenNumber())) {
-          fastSmallMant.Increment();
-          if (fastSmallMant.CompareToInt(1 << 24) == 0) {
-            fastSmallMant = new FastInteger(1 << 23);
-            bigexponent.Increment();
-          }
+      if (bitLength < 24) {
+        int diff = 24 - bitLength;
+        expo -= diff;
+        if (expo < -149) {
+          // DebugUtility.Log("Diff changed from " + diff + " to " + (diff -
+          // (-149 - expo)));
+          diff -= -149 - expo;
+          expo = -149;
+          subnormal = true;
         }
+        mant = mant.ShiftLeft(diff);
+        bitLength += diff;
       }
-      if (bigexponent.CompareToInt(-149) < 0) {
-        // exponent too small, so return zero
-        return this.isNegative() ?
-          Float.intBitsToFloat(1 << 31) :
-          Float.intBitsToFloat(0);
-      } else {
-        int smallexponent = bigexponent.AsInt32();
-        smallexponent += 150;
-        int smallmantissa = ((int)fastSmallMant.AsInt32()) & 0x7fffff;
-        if (!subnormal) {
-          smallmantissa |= smallexponent << 23;
-        }
-        if (this.isNegative()) {
+      // DebugUtility.Log("2->" + (mant.ToRadixString(2)) + ", " + expo);
+      int smallmantissa = ((int)mant.ToInt32Checked()) & 0x7fffff;
+      if (!subnormal) {
+          smallmantissa |= (expo + 150) << 23;
+      }
+      if (this.isNegative()) {
           smallmantissa |= 1 << 31;
-        }
-        return Float.intBitsToFloat(smallmantissa);
       }
+      return Float.intBitsToFloat(smallmantissa);
     }
 
     /**

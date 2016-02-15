@@ -1060,9 +1060,50 @@ EFloat.NegativeZero.Plus(null));
       return ef;
     }
 
+    public EFloat RandomSingleEFloat(FastRandom rnd) {
+      return this.RandomSingleEFloat(rnd, false);
+    }
+
+    public EFloat RandomSingleEFloat(FastRandom rnd, boolean subnormal) {
+      StringBuilder sb = new StringBuilder();
+      if (rnd.NextValue(2) == 0) {
+        sb.append('-');
+      }
+      sb.append(subnormal ? '0' : '1');
+      int subSize = 23;
+      int[] oneChances = { 98, 2, 50, 50, 50 };
+      int oneChance = oneChances[rnd.NextValue(oneChances.length)];
+      if (subnormal) {
+        subSize = rnd.NextValue(22);
+      }
+      for (int i = 0; i < 23; ++i) {
+        sb.append(((i < 23 - subSize) || (rnd.NextValue(100) >= oneChance)) ?
+          '0' : '1');
+      }
+      String valueSbString = sb.toString();
+      int expo = 0, exponent;
+      if (subnormal) {
+        exponent = -149;
+      } else {
+        expo = rnd.NextValue(252) + 1 - 127;
+        exponent = expo - 23;
+      }
+      EInteger valueEiExponent = EInteger.FromInt64(exponent);
+      EFloat ef = EFloat.Create(
+        EInteger.FromRadixString(valueSbString, 2),
+        valueEiExponent);
+      return ef;
+    }
+
     public static String OutputDouble(double dbl) {
       EFloat ef = EFloat.FromDouble(dbl);
       return dbl + " [" + ef.getMantissa().Abs().ToRadixString(2) +
+        "," + ef.getExponent() + "]";
+    }
+
+    public static String OutputSingle(float flt) {
+      EFloat ef = EFloat.FromSingle(flt);
+      return flt + " [" + ef.getMantissa().Abs().ToRadixString(2) +
         "," + ef.getExponent() + "]";
     }
 
@@ -1084,17 +1125,50 @@ EFloat src) {
       }
       String str = input.toString();
       if (input.ToDouble() != expectedDouble) {
-  Assert.fail(
-  "\nexpected " + OutputDouble(expectedDouble) +",\ngot----- " +
+  String msg = "\nexpectedDbl " + OutputDouble(expectedDouble) +
+  ",\ngot----- " +
         OutputDouble(input.ToDouble()) +"\nsrc-----=" + OutputEF(src) +
-        "\nexpected=" + OutputEF(expected) +"\ninput---=" + OutputEF(input));
+        "\nexpected=" + OutputEF(expected) +"\ninput---=" + OutputEF(input);
+        Assert.fail(msg);
       }
       double inputDouble = EDecimal.FromString(str).ToDouble();
       if (inputDouble != expectedDouble) {
-  Assert.fail(
-  "\nexpected " + OutputDouble(expectedDouble) +",\ngot----- " +
+  String msg = "\nexpectedDbl " + OutputDouble(expectedDouble) +
+          ",\ngot----- " +
         OutputDouble(inputDouble) +"\nsrc-----=" + OutputEF(src) +
-        "\nexpected=" + OutputEF(expected) +"\ninput---=" + OutputEF(input));
+        "\nexpected=" + OutputEF(expected) +"\ninput---=" + OutputEF(input);
+        Assert.fail(msg);
+      }
+    }
+
+    public static void TestSingleRounding(
+EFloat expected,
+EFloat input,
+EFloat src) {
+      if (!input.isFinite() || !expected.isFinite()) {
+        return;
+      }
+      float expectedSingle = expected.ToSingle();
+      if (((Float)(expectedSingle)).isInfinite()) {
+        return;
+      }
+      String str = input.toString();
+      if (input.ToSingle() != expectedSingle) {
+        String msg = "\nexpectedDbl " + OutputSingle(expectedSingle) +
+        ",\ngot----- " +
+              OutputSingle(input.ToSingle()) + "\nsrc-----=" + OutputEF(src) +
+          "\nexpected=" + OutputEF(expected) + "\ninput---=" +
+                OutputEF(input);
+        Assert.fail(msg);
+      }
+      float inputSingle = EDecimal.FromString(str).ToSingle();
+      if (inputSingle != expectedSingle) {
+        String msg = "\nexpectedDbl " + OutputSingle(expectedSingle) +
+                ",\ngot----- " +
+              OutputSingle(inputSingle) + "\nsrc-----=" + OutputEF(src) +
+          "\nexpected=" + OutputEF(expected) + "\ninput---=" +
+                OutputEF(input);
+        Assert.fail(msg);
       }
     }
 
@@ -1102,13 +1176,18 @@ EFloat src) {
     private static EFloat half = EFloat.FromString("0.5");
     private static EFloat threequarter = EFloat.FromString("0.75");
 
-    private static void TestToDoubleRoundingOne(EFloat efa) {
+    private static void TestToFloatRoundingOne(EFloat efa, boolean dbl) {
       boolean isEven = efa.getUnsignedMantissa().isEven();
-      EFloat efprev = efa.NextMinus(EContext.Binary64);
-      EFloat efnext = efa.NextPlus(EContext.Binary64);
+      EFloat efprev = efa.NextMinus(dbl ? EContext.Binary64 :
+        EContext.Binary32);
+      EFloat efnext = efa.NextPlus(dbl ? EContext.Binary64 :
+        EContext.Binary32);
       EFloat efnextgap = efnext.Subtract(efa);
       EFloat efprevgap = efa.Subtract(efprev);
-   EFloat efprev1q = efprev.Add(
+      // System.out.println("efa___=" + OutputEF(efa));
+      // System.out.println("efprev=" + OutputEF(efprev));
+      // System.out.println("efnext=" + OutputEF(efnext));
+      EFloat efprev1q = efprev.Add(
      efprevgap.Multiply(quarter));
    EFloat efprev2q = efprev.Add(
      efprevgap.Multiply(half));
@@ -1117,15 +1196,27 @@ EFloat src) {
       EFloat efnext1q = efa.Add(efnextgap.Multiply(quarter));
       EFloat efnext2q = efa.Add(efnextgap.Multiply(half));
       EFloat efnext3q = efa.Add(efnextgap.Multiply(threequarter));
-      TestDoubleRounding(efprev, efprev, efa);
-      TestDoubleRounding(efprev, efprev1q, efa);
-      TestDoubleRounding(isEven ? efa : efprev, efprev2q, efa);
-      TestDoubleRounding(efa, efprev3q, efa);
-      TestDoubleRounding(efa, efa, efa);
-      TestDoubleRounding(efa, efnext1q, efa);
-      TestDoubleRounding(isEven ? efa : efnext, efnext2q, efa);
-      TestDoubleRounding(efnext, efnext3q, efa);
-      TestDoubleRounding(efnext, efnext, efa);
+      if (dbl) {
+        TestDoubleRounding(efprev, efprev, efa);
+        TestDoubleRounding(efprev, efprev1q, efa);
+        TestDoubleRounding(isEven ? efa : efprev, efprev2q, efa);
+        TestDoubleRounding(efa, efprev3q, efa);
+        TestDoubleRounding(efa, efa, efa);
+        TestDoubleRounding(efa, efnext1q, efa);
+        TestDoubleRounding(isEven ? efa : efnext, efnext2q, efa);
+        TestDoubleRounding(efnext, efnext3q, efa);
+        TestDoubleRounding(efnext, efnext, efa);
+      } else {
+        TestSingleRounding(efprev, efprev, efa);
+        TestSingleRounding(efprev, efprev1q, efa);
+        TestSingleRounding(isEven ? efa : efprev, efprev2q, efa);
+        TestSingleRounding(efa, efprev3q, efa);
+        TestSingleRounding(efa, efa, efa);
+        TestSingleRounding(efa, efnext1q, efa);
+        TestSingleRounding(isEven ? efa : efnext, efnext2q, efa);
+        TestSingleRounding(efnext, efnext3q, efa);
+        TestSingleRounding(efnext, efnext, efa);
+      }
     }
 
     private static String EFToString(EFloat ef) {
@@ -1228,15 +1319,31 @@ stringTemp);
             +shortestStr);
       }
     }
-
+    @Test
+    public void TestToSingleRounding() {
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 500; ++i) {
+        EFloat efa = this.RandomSingleEFloat(fr, i >= 250);
+        TestToFloatRoundingOne(efa, false);
+      }
+    }
     @Test
     public void TestToDoubleRounding() {
       FastRandom fr = new FastRandom();
       for (int i = 0; i < 500; ++i) {
         EFloat efa = this.RandomDoubleEFloat(fr, i >= 250);
-        TestToDoubleRoundingOne(efa);
+        TestToFloatRoundingOne(efa, true);
       }
-      TestToDoubleRoundingOne(EFloat.Create(0, -1074));
+      TestToFloatRoundingOne(EFloat.Create(0, -1074), true);
+      TestToFloatRoundingOne(
+EFloat.Create(EInteger.FromRadixString("10000000000000000000000000000000000000000000000000000", 2), EInteger.FromInt32(-1074)),
+true);
+      {
+EFloat objectTemp = EFloat.Create(
+  EInteger.FromRadixString("-10000000000000000000000000000000000000000000000000000", 2),
+  EInteger.FromInt32(-1074));
+TestToFloatRoundingOne(objectTemp, true);
+}
     }
 
     @Test

@@ -145,7 +145,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           }
           int result0, result1, result2, result3;
           if (multiplicand < 65536) {
-            if (this.wordCount == 2 && (this.data[1 ]>>16) == 0) {
+            if (this.wordCount == 2 && (this.data[1 ] >>16) == 0) {
               long longV = ((long)this.data[0]);
               longV &= 0xFFFFFFFFL;
               longV |= (((long)this.data[1]) << 32);
