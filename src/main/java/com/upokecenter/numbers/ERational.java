@@ -8,13 +8,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * Arbitrary-precision rational number. This class can't be inherited. (The "E"
-     * stands for "extended", meaning that instances of this class can be
-     * values other than numbers proper, such as infinity and not-a-number.)
-     * <p><b>Thread safety:</b> Instances of this class are immutable, so
-     * they are inherently safe for use by multiple threads. Multiple
-     * instances of this object with the same properties are
-     * interchangeable, so they should not be compared using the "=="
+     * Represents an arbitrary-precision rational number. This class can't be
+     * inherited. (The "E" stands for "extended", meaning that instances of
+     * this class can be values other than numbers proper, such as infinity
+     * and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+     * are immutable, so they are inherently safe for use by multiple
+     * threads. Multiple instances of this object with the same properties
+     * are interchangeable, so they should not be compared using the "=="
      * operator (which might only check if each side of the operator is the
      * same instance).</p>
      */
@@ -131,8 +131,8 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return true if this object is finite (not infinity or not-a-number (NaN));
-     * otherwise, false.
+     * @return {@code true} if this object is finite (not infinity or not-a-number
+     * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
@@ -141,7 +141,8 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return true if this object's value is negative; otherwise, false.
+     * @return {@code true} if this object's value is negative; otherwise, {@code
+     * false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -149,7 +150,8 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return true if this object's value equals 0; otherwise, false.
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * false}.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -402,24 +404,6 @@ boolean negative) {
      */
     public static ERational FromEInteger(EInteger bigint) {
       return new ERational(bigint, EInteger.FromInt32(1));
-    }
-
-    /**
-     * Not documented yet.
-     * @param smallint The parameter {@code smallint} is not documented yet.
-     * @return An arbitrary-precision rational number.
-     */
-    public static ERational FromInt32(int smallint) {
-      return new ERational(EInteger.FromInt32(smallint), EInteger.FromInt32(1));
-    }
-
-    /**
-     * Not documented yet.
-     * @param longInt The parameter {@code longInt} is not documented yet.
-     * @return An arbitrary-precision rational number.
-     */
-    public static ERational FromInt64(long longInt) {
-      return new ERational(EInteger.FromInt64(longInt), EInteger.FromInt32(1));
     }
 
     /**
@@ -1282,7 +1266,7 @@ boolean negative) {
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return true if the objects are equal; otherwise, false .
+     * @return {@code true} if the objects are equal; otherwise, false .
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1324,7 +1308,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Gets a value indicating whether this object's value is infinity.
-     * @return true if this object's value is infinity; otherwise, false .
+     * @return {@code true} if this object's value is infinity; otherwise, false .
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1332,7 +1316,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a not-a-number value.
-     * @return true if this object is a not-a-number value; otherwise, false .
+     * @return {@code true} if this object is a not-a-number value; otherwise,
+     * false .
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
@@ -1340,7 +1325,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return true if this object is negative infinity; otherwise, false .
+     * @return {@code true} if this object is negative infinity; otherwise, false .
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1350,7 +1335,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return true if this object is positive infinity; otherwise, false .
+     * @return {@code true} if this object is positive infinity; otherwise, false .
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1359,8 +1344,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a quiet not-a-number value.
-     * @return true if this object is a quiet not-a-number value; otherwise, false
-     * .
+     * @return {@code true} if this object is a quiet not-a-number value;
+     * otherwise, false .
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1370,9 +1355,9 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Returns whether this object is a signaling not-a-number value (which causes
      * an error if the value is passed to any arithmetic operation in this
      * class).
-     * @return true if this object is a signaling not-a-number value (which causes
-     * an error if the value is passed to any arithmetic operation in this
-     * class); otherwise, false .
+     * @return {@code true} if this object is a signaling not-a-number value (which
+     * causes an error if the value is passed to any arithmetic operation in
+     * this class); otherwise, false .
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -1567,8 +1552,17 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).
      * @throws ArithmeticException This object's value is not an exact integer.
-     */
+     * @deprecated Renamed to ToEIntegerIfExact.
+ */
+@Deprecated
     public EInteger ToEIntegerExact() {
+      return this.ToEIntegerIfExact();
+    }
+
+    /**
+     *
+     */
+    public EInteger ToEIntegerIfExact() {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
@@ -1884,8 +1878,8 @@ ctx);
      * Converts this object to a text string.
      * @return A string representation of this object. If this object's value is
      * infinity or not-a-number, the result is the analogous return value of
-     * the EDecimal.toString method. Otherwise, the return value has the
-     * following form: [-]numerator/denominator.
+     * the {@code EDecimal.toString} method. Otherwise, the return value has
+     * the following form: {@code [-]numerator/denominator}.
      */
     @Override public String toString() {
       if (!this.isFinite()) {
@@ -1927,4 +1921,187 @@ int flags) {
       }
       return this;
     }
+
+        // Begin integer conversions
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) after truncating to an integer.
+     * @return This number's value, truncated to a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a byte (from 0 to 255).
+     */
+public byte ToByteChecked() {
+ return this.ToEInteger().ToByteChecked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a byte (from 0
+     * to 255).
+     * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public byte ToByteUnchecked() {
+ return this.ToEInteger().ToByteUnchecked();
+}
+
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) without rounding to a different numerical value.
+     * @return This number's value as a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a byte (from 0 to 255) without rounding to a
+     * different numerical value.
+     */
+public byte ToByteIfExact() {
+ return this.ToEIntegerIfExact().ToByteChecked();
+}
+
+    /**
+     * Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
+     * @param inputByte The number to convert as a byte (from 0 to 255).
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromByte(byte inputByte) {
+ int val = ((int)inputByte) & 0xff;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 16-bit signed
+     * integer.
+     */
+public short ToInt16Checked() {
+ return this.ToEInteger().ToInt16Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 16-bit
+     * signed integer.
+     * @return This number, converted to a 16-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public short ToInt16Unchecked() {
+ return this.ToEInteger().ToInt16Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 16-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public short ToInt16IfExact() {
+ return this.ToEIntegerIfExact().ToInt16Checked();
+}
+
+    /**
+     * Converts a 16-bit signed integer to an arbitrary-precision rational number.
+     * @param inputInt16 The number to convert as a 16-bit signed integer.
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromInt16(short inputInt16) {
+ int val = (int)inputInt16;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 32-bit signed
+     * integer.
+     */
+public int ToInt32Checked() {
+ return this.ToEInteger().ToInt32Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 32-bit
+     * signed integer.
+     * @return This number, converted to a 32-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public int ToInt32Unchecked() {
+ return this.ToEInteger().ToInt32Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 32-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public int ToInt32IfExact() {
+ return this.ToEIntegerIfExact().ToInt32Checked();
+}
+
+    /**
+     * Converts a 32-bit signed integer to an arbitrary-precision rational number.
+     * @param inputInt32 The number to convert as a 32-bit signed integer.
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromInt32(int inputInt32) {
+ return FromEInteger(EInteger.FromInt32(inputInt32));
+}
+
+    /**
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 64-bit signed
+     * integer.
+     */
+public long ToInt64Checked() {
+ return this.ToEInteger().ToInt64Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 64-bit
+     * signed integer.
+     * @return This number, converted to a 64-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public long ToInt64Unchecked() {
+ return this.ToEInteger().ToInt64Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 64-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public long ToInt64IfExact() {
+ return this.ToEIntegerIfExact().ToInt64Checked();
+}
+
+    /**
+     * Converts a 64-bit signed integer to an arbitrary-precision rational number.
+     * @param inputInt64 The number to convert as a 64-bit signed integer.
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromInt64(long inputInt64) {
+ return FromEInteger(EInteger.FromInt64(inputInt64));
+}
+
+// End integer conversions
   }

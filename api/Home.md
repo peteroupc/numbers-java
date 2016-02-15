@@ -11,10 +11,10 @@ Represents an arbitrary-precision decimal floating-point number.
 Represents an arbitrary-precision binary floating-point number.
 
 * [com.upokecenter.numbers.EInteger](wiki/com.upokecenter.numbers.EInteger) -
-An arbitrary-precision integer.
+Represents an arbitrary-precision integer.
 
 * [com.upokecenter.numbers.ERational](wiki/com.upokecenter.numbers.ERational) -
-Arbitrary-precision rational number.
+Represents an arbitrary-precision rational number.
 
 * [com.upokecenter.numbers.ERounding](wiki/com.upokecenter.numbers.ERounding) -
 Specifies the mode to use when "shortening" numbers that otherwise

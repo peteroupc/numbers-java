@@ -2,13 +2,13 @@
 
     public final class EInteger extends Object implements Comparable<EInteger>
 
-An arbitrary-precision integer. (The "E" stands for "extended", and has this
- prefix to group it with the other classes common to this library,
- particularly EDecimal, EFloat, and ERational.) <p>Instances of this
- class are immutable, so they are inherently safe for use by multiple
- threads. Multiple instances of this object with the same value are
- interchangeable, but they should be compared using the "Equals"
- method rather than the "==" operator.</p>
+Represents an arbitrary-precision integer. (The "E" stands for "extended",
+ and has this prefix to group it with the other classes common to this
+ library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+ of this class are immutable, so they are inherently safe for use by
+ multiple threads. Multiple instances of this object with the same
+ value are interchangeable, but they should be compared using the
+ "Equals" method rather than the "==" operator.</p>
 
 ## Methods
 
@@ -45,9 +45,13 @@ Renamed to ToInt64Unchecked.
  quotient and remainder.
 * `boolean equals(Object obj)`<br>
  Determines whether this object and another object are equal.
+* `static EInteger FromByte(byte inputByte)`<br>
+ Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 * `static EInteger FromBytes(byte[] bytes,
          boolean littleEndian)`<br>
  Initializes an arbitrary-precision integer from an array of bytes.
+* `static EInteger FromInt16(short inputInt16)`<br>
+ Converts a 16-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt32(int intValue)`<br>
  Converts a 32-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt64(long longerValue)`<br>
@@ -137,8 +141,20 @@ Renamed to ToInt64Unchecked.
 * `EInteger Subtract(EInteger subtrahend)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer.
+* `byte ToByteChecked()`<br>
+ Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255).
 * `byte[] ToBytes(boolean littleEndian)`<br>
  Returns a byte array of this integer's value.
+* `byte ToByteUnchecked()`<br>
+ Converts this number to a byte (from 0 to 255), returning the
+ least-significant bits of this number's two's-complement form.
+* `short ToInt16Checked()`<br>
+ Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer.
+* `short ToInt16Unchecked()`<br>
+ Converts this number to a 16-bit signed integer, returning the
+ least-significant bits of this number's two's-complement form.
 * `int ToInt32Checked()`<br>
  Converts this object's value to a 32-bit signed integer, throwing an
  exception if it can't fit.
@@ -187,7 +203,7 @@ Gets a value indicating whether this value is even.
 
 **Returns:**
 
-* true if this value is even; otherwise, false.
+* <code>true</code> if this value is even; otherwise, <code>false</code>.
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
@@ -195,7 +211,8 @@ Gets a value indicating whether this object&#x27;s value is a power of two.
 
 **Returns:**
 
-* true if this object's value is a power of two; otherwise, false .
+* <code>true</code> if this object's value is a power of two; otherwise,
+ <code>false</code> .
 
 ### isZero
     public final boolean isZero()
@@ -203,7 +220,7 @@ Gets a value indicating whether this value is 0.
 
 **Returns:**
 
-* true if this value is 0; otherwise, false.
+* <code>true</code> if this value is 0; otherwise, <code>false</code>.
 
 ### signum
     public final int signum()
@@ -477,8 +494,8 @@ Returns whether this object's value can fit in a 32-bit signed integer.
 
 **Returns:**
 
-* true if this object's value is Integer.MIN_VALUE or greater, and
- Integer.MAX_VALUE or less; otherwise, false .
+* <code>true</code> if this object's value is Integer.MIN_VALUE or greater,
+ and Integer.MAX_VALUE or less; otherwise, false .
 
 ### CanFitInInt64
     public boolean CanFitInInt64()
@@ -486,8 +503,8 @@ Returns whether this object's value can fit in a 64-bit signed integer.
 
 **Returns:**
 
-* true if this object's value is Long.MIN_VALUE or greater, and
- Long.MAX_VALUE or less; otherwise, false .
+* <code>true</code> if this object's value is Long.MIN_VALUE or greater,
+ and Long.MAX_VALUE or less; otherwise, false .
 
 ### compareTo
     public int compareTo(EInteger other)
@@ -566,7 +583,8 @@ Determines whether this object and another object are equal.
 
 **Returns:**
 
-* true if this object and another object are equal; otherwise, false .
+* <code>true</code> if this object and another object are equal; otherwise,
+ false .
 
 ### Gcd
     public EInteger Gcd(EInteger bigintSecond)
@@ -638,8 +656,9 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Returns:**
 
-* true if a bit is set in the two's-complement form (see <code>EDecimal</code>) of this object's value; otherwise,
- false .
+* <code>true</code> if a bit is set in the two's-complement form (see
+ <code>EDecimal</code>) of this object's value;
+ otherwise, false .
 
 ### GetSignedBitLength
     public int GetSignedBitLength()
@@ -664,7 +683,7 @@ Returns whether a bit is set in this number's absolute value.
 
 **Returns:**
 
-* true if a bit is set in this number's absolute value.
+* <code>true</code> if a bit is set in this number's absolute value.
 
 ### GetUnsignedBitLengthAsEInteger
     public EInteger GetUnsignedBitLengthAsEInteger()
@@ -883,7 +902,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### ToBytes
     public byte[] ToBytes(boolean littleEndian)
 Returns a byte array of this integer&#x27;s value. The byte array will take
- the form of the number's two's-complement form (see <code>"Forms of numbers"</code>), using the
+ the number's two's-complement form (see <code>"Forms of numbers"</code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -991,3 +1010,73 @@ Converts this object to a text string in base 10.
 * A string representation of this object. If negative, the string will
  begin with a minus sign ("-", U+002D). The string will use the basic
  digits 0 to 9 (U + 0030 to U + 0039).
+
+### ToByteChecked
+    public byte ToByteChecked()
+Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255).
+
+**Returns:**
+
+* This number's value as a byte (from 0 to 255).
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is outside the range of a byte
+ (from 0 to 255).
+
+### ToByteUnchecked
+    public byte ToByteUnchecked()
+Converts this number to a byte (from 0 to 255), returning the
+ least-significant bits of this number's two's-complement form.
+
+**Returns:**
+
+* This number, converted to a byte (from 0 to 255).
+
+### FromByte
+    public static EInteger FromByte(byte inputByte)
+Converts a byte (from 0 to 255) to an arbitrary-precision integer.
+
+**Parameters:**
+
+* <code>inputByte</code> - The number to convert as a byte (from 0 to 255).
+
+**Returns:**
+
+* This number's value as an arbitrary-precision integer.
+
+### ToInt16Checked
+    public short ToInt16Checked()
+Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer.
+
+**Returns:**
+
+* This number's value as a 16-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is outside the range of a 16-bit
+ signed integer.
+
+### ToInt16Unchecked
+    public short ToInt16Unchecked()
+Converts this number to a 16-bit signed integer, returning the
+ least-significant bits of this number's two's-complement form.
+
+**Returns:**
+
+* This number, converted to a 16-bit signed integer.
+
+### FromInt16
+    public static EInteger FromInt16(short inputInt16)
+Converts a 16-bit signed integer to an arbitrary-precision integer.
+
+**Parameters:**
+
+* <code>inputInt16</code> - The number to convert as a 16-bit signed integer.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision integer.

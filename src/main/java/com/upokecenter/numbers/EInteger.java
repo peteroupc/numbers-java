@@ -17,13 +17,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * An arbitrary-precision integer. (The "E" stands for "extended", and has this
-     * prefix to group it with the other classes common to this library,
-     * particularly EDecimal, EFloat, and ERational.) <p>Instances of this
-     * class are immutable, so they are inherently safe for use by multiple
-     * threads. Multiple instances of this object with the same value are
-     * interchangeable, but they should be compared using the "Equals"
-     * method rather than the "==" operator.</p>
+     * Represents an arbitrary-precision integer. (The "E" stands for "extended",
+     * and has this prefix to group it with the other classes common to this
+     * library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+     * of this class are immutable, so they are inherently safe for use by
+     * multiple threads. Multiple instances of this object with the same
+     * value are interchangeable, but they should be compared using the
+     * "Equals" method rather than the "==" operator.</p>
      */
   public final class EInteger implements Comparable<EInteger> {
     // TODO: Investigate using 32-bit words instead of 16-bit
@@ -100,7 +100,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return true if this value is even; otherwise, false.
+     * @return {@code true} if this value is even; otherwise, {@code false}.
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -108,7 +108,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return true if this object's value is a power of two; otherwise, false .
+     * @return {@code true} if this object's value is a power of two; otherwise,
+     * {@code false} .
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -120,7 +121,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return true if this value is 0; otherwise, false.
+     * @return {@code true} if this value is 0; otherwise, {@code false}.
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -954,8 +955,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Returns whether this object's value can fit in a 32-bit signed integer.
-     * @return true if this object's value is Integer.MIN_VALUE or greater, and
-     * Integer.MAX_VALUE or less; otherwise, false .
+     * @return {@code true} if this object's value is Integer.MIN_VALUE or greater,
+     * and Integer.MAX_VALUE or less; otherwise, false .
      */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
@@ -971,8 +972,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Returns whether this object's value can fit in a 64-bit signed integer.
-     * @return true if this object's value is Long.MIN_VALUE or greater, and
-     * Long.MAX_VALUE or less; otherwise, false .
+     * @return {@code true} if this object's value is Long.MIN_VALUE or greater,
+     * and Long.MAX_VALUE or less; otherwise, false .
      */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
@@ -1250,7 +1251,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return true if this object and another object are equal; otherwise, false .
+     * @return {@code true} if this object and another object are equal; otherwise,
+     * false .
      */
     @Override public boolean equals(Object obj) {
       EInteger other = ((obj instanceof EInteger) ? (EInteger)obj : null);
@@ -1697,9 +1699,9 @@ WordsShiftRightOne(bu, buc);
      * object's value.
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
-     * @return true if a bit is set in the two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal}) of this object's value; otherwise,
-     * false .
+     * @return {@code true} if a bit is set in the two's-complement form (see
+     * {@link com.upokecenter.numbers.EDecimal}) of this object's value;
+     * otherwise, false .
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -1773,7 +1775,7 @@ WordsShiftRightOne(bu, buc);
      * Returns whether a bit is set in this number's absolute value.
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
-     * @return true if a bit is set in this number's absolute value.
+     * @return {@code true} if a bit is set in this number's absolute value.
      */
     public boolean GetUnsignedBit(int index) {
       if (index < 0) {
@@ -2544,7 +2546,7 @@ int subtrahendCount) {
 
     /**
      * Returns a byte array of this integer&#x27;s value. The byte array will take
-     * the form of the number's two's-complement form (see {@link
+     * the number's two's-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
@@ -5896,4 +5898,76 @@ count);
       bigintY = thisValue.Subtract(bigintY);
       return new EInteger[] { bigintX, bigintY };
     }
+        // Begin integer conversions
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255).
+     * @return This number's value as a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is outside the range of a byte
+     * (from 0 to 255).
+     */
+public byte ToByteChecked() {
+ int val = this.ToInt32Checked();
+ if (val < 0 || val > 255) {
+  throw new ArithmeticException("This Object's value is out of range");
+ }
+ return ((byte)(val & 0xff));
+}
+
+    /**
+     * Converts this number to a byte (from 0 to 255), returning the
+     * least-significant bits of this number's two's-complement form.
+     * @return This number, converted to a byte (from 0 to 255).
+     */
+public byte ToByteUnchecked() {
+ int val = this.ToInt32Unchecked();
+ return ((byte)(val & 0xff));
+}
+
+    /**
+     * Converts a byte (from 0 to 255) to an arbitrary-precision integer.
+     * @param inputByte The number to convert as a byte (from 0 to 255).
+     * @return This number's value as an arbitrary-precision integer.
+     */
+public static EInteger FromByte(byte inputByte) {
+ int val = ((int)inputByte) & 0xff;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer.
+     * @return This number's value as a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is outside the range of a 16-bit
+     * signed integer.
+     */
+public short ToInt16Checked() {
+ int val = this.ToInt32Checked();
+ if (val < -32768 || val > 32767) {
+  throw new ArithmeticException("This Object's value is out of range");
+ }
+ return ((short)(val & 0xffff));
+}
+
+    /**
+     * Converts this number to a 16-bit signed integer, returning the
+     * least-significant bits of this number's two's-complement form.
+     * @return This number, converted to a 16-bit signed integer.
+     */
+public short ToInt16Unchecked() {
+ int val = this.ToInt32Unchecked();
+ return ((short)(val & 0xffff));
+}
+
+    /**
+     * Converts a 16-bit signed integer to an arbitrary-precision integer.
+     * @param inputInt16 The number to convert as a 16-bit signed integer.
+     * @return This number's value as an arbitrary-precision integer.
+     */
+public static EInteger FromInt16(short inputInt16) {
+ int val = (int)inputInt16;
+ return FromInt32(val);
+}
+
+// End integer conversions
   }

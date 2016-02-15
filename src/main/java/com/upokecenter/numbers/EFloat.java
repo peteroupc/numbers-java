@@ -161,8 +161,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return true if this object is finite (not infinity or not-a-number (NaN));
-     * otherwise, false.
+     * @return {@code true} if this object is finite (not infinity or not-a-number
+     * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -172,8 +172,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return true if this object is negative, including negative zero; otherwise,
-     * false.
+     * @return {@code true} if this object is negative, including negative zero;
+     * otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -181,7 +181,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return true if this object's value equals 0; otherwise, false.
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * false}.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -365,26 +366,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @return An arbitrary-precision binary float.
      */
     public static EFloat FromEInteger(EInteger bigint) {
-      return EFloat.Create(bigint, EInteger.FromInt32(0));
-    }
-
-    /**
-     * Creates a binary float from a 32-bit signed integer.
-     * @param valueSmaller A 32-bit signed integer.
-     * @return An arbitrary-precision binary float with the exponent set to 0.
-     */
-    public static EFloat FromInt32(int valueSmaller) {
-      EInteger bigint = EInteger.FromInt32(valueSmaller);
-      return EFloat.Create(bigint, EInteger.FromInt32(0));
-    }
-
-    /**
-     * Converts a 64-bit integer to the same value as a binary float.
-     * @param valueSmall A 64-bit signed integer.
-     * @return An arbitrary-precision binary float with the exponent set to 0.
-     */
-    public static EFloat FromInt64(long valueSmall) {
-      EInteger bigint = EInteger.FromInt64(valueSmall);
       return EFloat.Create(bigint, EInteger.FromInt32(0));
     }
 
@@ -1299,8 +1280,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * Determines whether this object&#x27;s mantissa (significand) and exponent
      * are equal to those of another object.
      * @param other An arbitrary-precision binary float.
-     * @return true if this object's mantissa (significand) and exponent are equal
-     * to those of another object; otherwise, false .
+     * @return {@code true} if this object's mantissa (significand) and exponent
+     * are equal to those of another object; otherwise, false .
      */
     public boolean equals(EFloat other) {
       return this.EqualsInternal(other);
@@ -1311,7 +1292,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * are equal to those of another object and that other object is an
      * arbitrary-precision binary float.
      * @param obj An arbitrary object.
-     * @return true if the objects are equal; otherwise, false .
+     * @return {@code true} if the objects are equal; otherwise, false .
      */
     @Override public boolean equals(Object obj) {
       return this.EqualsInternal(((obj instanceof EFloat) ? (EFloat)obj : null));
@@ -1321,8 +1302,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * Determines whether this object&#x27;s mantissa (significand) and exponent
      * are equal to those of another object.
      * @param otherValue An arbitrary-precision binary float.
-     * @return true if this object's mantissa (significand) and exponent are equal
-     * to those of another object; otherwise, false .
+     * @return {@code true} if this object's mantissa (significand) and exponent
+     * are equal to those of another object; otherwise, false .
      */
     public boolean EqualsInternal(EFloat otherValue) {
       if (otherValue == null) {
@@ -1370,8 +1351,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
     /**
      * Gets a value indicating whether this object is positive or negative
      * infinity.
-     * @return true if this object is positive or negative infinity; otherwise,
-     * false .
+     * @return {@code true} if this object is positive or negative infinity;
+     * otherwise, false .
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1379,7 +1360,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Gets a value indicating whether this object is not a number (NaN).
-     * @return true if this object is not a number (NaN); otherwise, false .
+     * @return {@code true} if this object is not a number (NaN); otherwise, false
+     * .
      */
     public boolean IsNaN() {
       return (this.flags & (BigNumberFlags.FlagQuietNaN |
@@ -1388,7 +1370,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return true if this object is negative infinity; otherwise, false .
+     * @return {@code true} if this object is negative infinity; otherwise, false .
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1398,7 +1380,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return true if this object is positive infinity; otherwise, false .
+     * @return {@code true} if this object is positive infinity; otherwise, false .
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1407,8 +1389,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Gets a value indicating whether this object is a quiet not-a-number value.
-     * @return true if this object is a quiet not-a-number value; otherwise, false
-     * .
+     * @return {@code true} if this object is a quiet not-a-number value;
+     * otherwise, false .
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1417,8 +1399,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
     /**
      * Gets a value indicating whether this object is a signaling not-a-number
      * value.
-     * @return true if this object is a signaling not-a-number value; otherwise,
-     * false .
+     * @return {@code true} if this object is a signaling not-a-number value;
+     * otherwise, false .
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -2281,14 +2263,15 @@ EContext.Unlimited.WithRounding(rounding));
 
     /**
      * Returns a binary float with the same value as this object but rounded to an
-     * integer, without adding the <code>FlagInexact</code> or FlagRounded flags.
+     * integer, without adding the <code>FlagInexact</code> or <code>FlagRounded</code>
+     * flags.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags), except that this function will never add the
-     * FlagRounded and {@code FlagInexact} flags (the only difference
-     * between this and RoundToExponentExact). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * {@code FlagRounded} and {@code FlagInexact} flags (the only
+     * difference between this and RoundToExponentExact). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A binary float rounded to the closest integer representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
@@ -2324,14 +2307,15 @@ EContext.Unlimited.WithRounding(rounding));
 
     /**
      * Returns a binary float with the same value as this object but rounded to an
-     * integer, without adding the <code>FlagInexact</code> or FlagRounded flags.
+     * integer, without adding the <code>FlagInexact</code> or <code>FlagRounded</code>
+     * flags.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags), except that this function will never add the
-     * FlagRounded and {@code FlagInexact} flags (the only difference
-     * between this and RoundToExponentExact). Can be null, in which case
-     * the default rounding mode is HalfEven.
+     * {@code FlagRounded} and {@code FlagInexact} flags (the only
+     * difference between this and RoundToExponentExact). Can be null, in
+     * which case the default rounding mode is HalfEven.
      * @return A binary float rounded to the closest integer representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
@@ -2600,8 +2584,17 @@ EContext ctx) {
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).
      * @throws ArithmeticException This object's value is not an exact integer.
-     */
+     * @deprecated Renamed to ToEIntegerIfExact.
+ */
+@Deprecated
     public EInteger ToEIntegerExact() {
+      return this.ToEIntegerInternal(true);
+    }
+
+    /**
+     *
+     */
+    public EInteger ToEIntegerIfExact() {
       return this.ToEIntegerInternal(true);
     }
 
@@ -2622,112 +2615,6 @@ EContext ctx) {
 @Deprecated
     public EDecimal ToExtendedDecimal() {
       return EDecimal.FromEFloat(this);
-    }
-
-    /**
-     * Converts this value to a 32-bit signed integer, throwing an exception if the
-     * value can't fit.
-     * @return A 32-bit signed integer.
-     */
-    public int ToInt32Checked() {
-      if (!this.isFinite()) {
-        throw new ArithmeticException("Value is infinity or NaN");
-      }
-      if (this.unsignedMantissa.isZero()) {
-        return 0;
-      }
-      if (this.exponent.isZero()) {
-        if (this.unsignedMantissa.CanFitInInt32()) {
-          int ret = this.unsignedMantissa.ToInt32Unchecked();
-          if (this.isNegative()) {
-            ret = -ret;
-          }
-          return ret;
-        }
-      }
-      return this.ToEIntegerExact().ToInt32Checked();
-    }
-
-    /**
-     * Converts this number to a 32-bit signed integer. If this value is not
-     * exactly a 32-bit integer, truncates the value to an integer and
-     * returns the lowest 32 bits of its two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}) (in which case
-     * the return value might have a different sign than this object's
-     * value).
-     * @return A 32-bit signed integer. Returns 0 if this value is infinity or
-     * not-a-number.
-     */
-    public int ToInt32Unchecked() {
-      if (!this.isFinite()) {
-        return 0;
-      }
-      if (this.unsignedMantissa.isZero()) {
-        return 0;
-      }
-      if (this.exponent.isZero()) {
-        if (this.unsignedMantissa.CanFitInInt32()) {
-          int ret = this.unsignedMantissa.ToInt32Unchecked();
-          if (this.isNegative()) {
-            ret = -ret;
-          }
-          return ret;
-        }
-      }
-      return this.ToEIntegerExact().ToInt32Unchecked();
-    }
-
-    /**
-     * Converts this value to a 64-bit signed integer, throwing an exception if the
-     * value can't fit.
-     * @return A 64-bit signed integer.
-     */
-    public long ToInt64Checked() {
-      if (!this.isFinite()) {
-        throw new ArithmeticException("Value is infinity or NaN");
-      }
-      if (this.unsignedMantissa.isZero()) {
-        return 0;
-      }
-      if (this.exponent.isZero()) {
-        if (this.unsignedMantissa.CanFitInInt32()) {
-          int ret = this.unsignedMantissa.ToInt32Unchecked();
-          if (this.isNegative()) {
-            ret = -ret;
-          }
-          return ret;
-        }
-      }
-      return this.ToEIntegerExact().ToInt64Checked();
-    }
-
-    /**
-     * Converts this number to a 64-bit signed integer. If this value is not
-     * exactly a 64-bit integer, truncates the value to an integer and
-     * returns the lowest 64 bits of its two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}) (in which case
-     * the return value might have a different sign than this object's
-     * value).
-     * @return A 64-bit signed integer. Returns 0 if this value is infinity or
-     * not-a-number.
-     */
-    public long ToInt64Unchecked() {
-      if (!this.isFinite()) {
-        return 0;
-      }
-      if (this.unsignedMantissa.isZero()) {
-        return 0;
-      }
-      if (this.isFinite() && this.exponent.isZero()) {
-        if (this.unsignedMantissa.CanFitInInt32()) {
-          int ret = this.unsignedMantissa.ToInt32Unchecked();
-          if (this.isNegative()) {
-            ret = -ret;
-          }
-          return ret;
-        }
-      }
-      return this.ToEIntegerExact().ToInt64Unchecked();
     }
 
     /**
@@ -3148,4 +3035,186 @@ flags);
         return FromInt64(val);
       }
     }
+        // Begin integer conversions
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) after truncating to an integer.
+     * @return This number's value, truncated to a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a byte (from 0 to 255).
+     */
+public byte ToByteChecked() {
+ return this.ToEInteger().ToByteChecked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a byte (from 0
+     * to 255).
+     * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public byte ToByteUnchecked() {
+ return this.ToEInteger().ToByteUnchecked();
+}
+
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) without rounding to a different numerical value.
+     * @return This number's value as a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a byte (from 0 to 255) without rounding to a
+     * different numerical value.
+     */
+public byte ToByteIfExact() {
+ return this.ToEIntegerIfExact().ToByteChecked();
+}
+
+    /**
+     * Converts a byte (from 0 to 255) to an arbitrary-precision binary float.
+     * @param inputByte The number to convert as a byte (from 0 to 255).
+     * @return This number's value as an arbitrary-precision binary float.
+     */
+public static EFloat FromByte(byte inputByte) {
+ int val = ((int)inputByte) & 0xff;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 16-bit signed
+     * integer.
+     */
+public short ToInt16Checked() {
+ return this.ToEInteger().ToInt16Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 16-bit
+     * signed integer.
+     * @return This number, converted to a 16-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public short ToInt16Unchecked() {
+ return this.ToEInteger().ToInt16Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 16-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public short ToInt16IfExact() {
+ return this.ToEIntegerIfExact().ToInt16Checked();
+}
+
+    /**
+     * Converts a 16-bit signed integer to an arbitrary-precision binary float.
+     * @param inputInt16 The number to convert as a 16-bit signed integer.
+     * @return This number's value as an arbitrary-precision binary float.
+     */
+public static EFloat FromInt16(short inputInt16) {
+ int val = (int)inputInt16;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 32-bit signed
+     * integer.
+     */
+public int ToInt32Checked() {
+ return this.ToEInteger().ToInt32Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 32-bit
+     * signed integer.
+     * @return This number, converted to a 32-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public int ToInt32Unchecked() {
+ return this.ToEInteger().ToInt32Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 32-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public int ToInt32IfExact() {
+ return this.ToEIntegerIfExact().ToInt32Checked();
+}
+
+    /**
+     * Converts a 32-bit signed integer to an arbitrary-precision binary float.
+     * @param inputInt32 The number to convert as a 32-bit signed integer.
+     * @return This number's value as an arbitrary-precision binary float.
+     */
+public static EFloat FromInt32(int inputInt32) {
+ return FromEInteger(EInteger.FromInt32(inputInt32));
+}
+
+    /**
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 64-bit signed
+     * integer.
+     */
+public long ToInt64Checked() {
+ return this.ToEInteger().ToInt64Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 64-bit
+     * signed integer.
+     * @return This number, converted to a 64-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public long ToInt64Unchecked() {
+ return this.ToEInteger().ToInt64Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 64-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public long ToInt64IfExact() {
+ return this.ToEIntegerIfExact().ToInt64Checked();
+}
+
+    /**
+     * Converts a 64-bit signed integer to an arbitrary-precision binary float.
+     * @param inputInt64 The number to convert as a 64-bit signed integer.
+     * @return This number's value as an arbitrary-precision binary float.
+     */
+public static EFloat FromInt64(long inputInt64) {
+ return FromEInteger(EInteger.FromInt64(inputInt64));
+}
+
+// End integer conversions
   }

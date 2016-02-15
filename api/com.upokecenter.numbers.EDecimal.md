@@ -312,6 +312,8 @@ Renamed to DivRemNaturalScale.
 * `EDecimal Exp(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
+* `static EDecimal FromByte(byte inputByte)`<br>
+ Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
 * `static EDecimal FromDouble(double dbl)`<br>
  Creates a decimal number from a 64-bit binary floating-point number.
 * `static EDecimal FromEFloat(EFloat bigfloat)`<br>
@@ -323,6 +325,8 @@ Renamed to DivRemNaturalScale.
  Deprecated.
 Renamed to FromEFloat.
  Renamed to FromEFloat.
+* `static EDecimal FromInt16(short inputInt16)`<br>
+ Converts a 16-bit signed integer to an arbitrary-precision decimal number.
 * `static EDecimal FromInt32(int valueSmaller)`<br>
  Creates a decimal number from a 32-bit signed integer.
 * `static EDecimal FromInt64(long valueSmall)`<br>
@@ -555,10 +559,10 @@ Renamed to FromEFloat.
  Returns a decimal number with the same value as this object but rounded to
  an integer, and signals an inexact flag if the result would be
  inexact.
-* `EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) FlagInexact`<br>
+* `EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) FlagInexact FlagRounded`<br>
  Returns a decimal number with the same value as this object but rounded to
- an integer, without adding the FlagInexact or FlagRounded
- flags.
+ an integer, without adding the FlagInexact or
+ FlagRounded flags.
 * `EDecimal RoundToIntegralExact(EContext ctx)`<br>
  Deprecated.
 Renamed to RoundToIntegerExact.
@@ -594,6 +598,16 @@ Renamed to Sqrt.
 * `EDecimal Subtract(EDecimal otherValue,
         EContext ctx)`<br>
  Subtracts an arbitrary-precision decimal number from this instance.
+* `byte ToByteChecked()`<br>
+ Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after truncating to an integer.
+* `byte ToByteIfExact()`<br>
+ Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.
+* `byte ToByteUnchecked()`<br>
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a byte (from 0
+ to 255).
 * `double ToDouble()`<br>
  Converts this value to its closest equivalent as a 64-bit floating-point
  number.
@@ -604,8 +618,10 @@ Renamed to Sqrt.
 * `EInteger ToEInteger()`<br>
  Converts this value to an arbitrary-precision integer.
 * `EInteger ToEIntegerExact()`<br>
- Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the integer would be lost.
+ Deprecated.
+Renamed to ToEIntegerIfExact.
+ Renamed to ToEIntegerIfExact.
+* `EInteger ToEIntegerIfExact()`<br>
 * `String ToEngineeringString()`<br>
  Same as toString(), except that when an exponent is used it will be a
  multiple of 3.
@@ -613,16 +629,39 @@ Renamed to Sqrt.
  Deprecated.
 Renamed to ToEFloat.
  Renamed to ToEFloat.
+* `short ToInt16Checked()`<br>
+ Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after truncating to an integer.
+* `short ToInt16IfExact()`<br>
+ Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical
+ value.
+* `short ToInt16Unchecked()`<br>
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 16-bit
+ signed integer.
 * `int ToInt32Checked()`<br>
- Converts this number to a 32-bit signed integer, if possible, without
- truncating or rounding it.
+ Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after truncating to an integer.
+* `int ToInt32IfExact()`<br>
+ Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical
+ value.
 * `int ToInt32Unchecked()`<br>
- Not documented yet.
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 32-bit
+ signed integer.
 * `long ToInt64Checked()`<br>
- Converts this number to a 64-bit signed integer, if possible, without
- truncating or rounding it.
+ Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after truncating to an integer.
+* `long ToInt64IfExact()`<br>
+ Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical
+ value.
 * `long ToInt64Unchecked()`<br>
- Not documented yet.
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 64-bit
+ signed integer.
 * `String ToPlainString()`<br>
  Converts this value to a string, but without using exponential notation.
 * `float ToSingle()`<br>
@@ -679,8 +718,8 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* true if this object is finite (not infinity or not-a-number (NaN));
- otherwise, false.
+* <code>true</code> if this object is finite (not infinity or not-a-number
+ (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
     public final boolean isNegative()
@@ -689,8 +728,8 @@ Gets a value indicating whether this object is negative, including negative
 
 **Returns:**
 
-* true if this object is negative, including negative zero; otherwise,
- false.
+* <code>true</code> if this object is negative, including negative zero;
+ otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -698,7 +737,7 @@ Gets a value indicating whether this object&#x27;s value equals 0.
 
 **Returns:**
 
-* true if this object's value equals 0; otherwise, false.
+* <code>true</code> if this object's value equals 0; otherwise, <code>false</code>.
 
 ### getMantissa
     public final EInteger getMantissa()
@@ -1899,8 +1938,8 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 
 **Returns:**
 
-* true if this object's mantissa (significand) and exponent are equal
- to those of another object; otherwise, false .
+* <code>true</code> if this object's mantissa (significand) and exponent
+ are equal to those of another object; otherwise, false .
 
 ### equals
     public boolean equals(Object obj)
@@ -1918,7 +1957,7 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 
 **Returns:**
 
-* true if the objects are equal; otherwise, false .
+* <code>true</code> if the objects are equal; otherwise, false .
 
 ### Exp
     public EDecimal Exp(EContext ctx)
@@ -1962,8 +2001,8 @@ Gets a value indicating whether this object is positive or negative
 
 **Returns:**
 
-* true if this object is positive or negative infinity; otherwise,
- false .
+* <code>true</code> if this object is positive or negative infinity;
+ otherwise, false .
 
 ### IsNaN
     public boolean IsNaN()
@@ -1971,7 +2010,8 @@ Gets a value indicating whether this object is not a number (NaN).
 
 **Returns:**
 
-* true if this object is not a number (NaN); otherwise, false .
+* <code>true</code> if this object is not a number (NaN); otherwise, false
+ .
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -1979,7 +2019,7 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* true if this object is negative infinity; otherwise, false .
+* <code>true</code> if this object is negative infinity; otherwise, false .
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -1987,7 +2027,7 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* true if this object is positive infinity; otherwise, false .
+* <code>true</code> if this object is positive infinity; otherwise, false .
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -1995,8 +2035,8 @@ Gets a value indicating whether this object is a quiet not-a-number value.
 
 **Returns:**
 
-* true if this object is a quiet not-a-number value; otherwise, false
- .
+* <code>true</code> if this object is a quiet not-a-number value;
+ otherwise, false .
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -2005,8 +2045,8 @@ Gets a value indicating whether this object is a signaling not-a-number
 
 **Returns:**
 
-* true if this object is a signaling not-a-number value; otherwise,
- false .
+* <code>true</code> if this object is a signaling not-a-number value;
+ otherwise, false .
 
 ### Log
     public EDecimal Log(EContext ctx)
@@ -3011,8 +3051,8 @@ Returns a decimal number with the same value as this object but rounded to
 ### RoundToIntegerNoRoundedFlag
     public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx)
 Returns a decimal number with the same value as this object but rounded to
- an integer, without adding the <code>FlagInexact</code> or FlagRounded
- flags.
+ an integer, without adding the <code>FlagInexact</code> or
+ <code>FlagRounded</code> flags.
 
 **Parameters:**
 
@@ -3020,9 +3060,9 @@ Returns a decimal number with the same value as this object but rounded to
  result. If <code>HasFlags</code> of the context is true, will also store
  the flags resulting from the operation (the flags are in addition to
  the pre-existing flags), except that this function will never add the
- FlagRounded and <code>FlagInexact</code> flags (the only difference
- between this and RoundToExponentExact). Can be null, in which case
- the default rounding mode is HalfEven.
+ <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+ difference between this and RoundToExponentExact). Can be null, in
+ which case the default rounding mode is HalfEven.
 
 **Returns:**
 
@@ -3065,9 +3105,9 @@ Deprecated.&nbsp;<i>Renamed to RoundToIntegerNoRoundedFlag.</i>
  result. If <code>HasFlags</code> of the context is true, will also store
  the flags resulting from the operation (the flags are in addition to
  the pre-existing flags), except that this function will never add the
- FlagRounded and <code>FlagInexact</code> flags (the only difference
- between this and RoundToExponentExact). Can be null, in which case
- the default rounding mode is HalfEven.
+ <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+ difference between this and RoundToExponentExact). Can be null, in
+ which case the default rounding mode is HalfEven.
 
 **Returns:**
 
@@ -3270,9 +3310,8 @@ Converts this value to an arbitrary-precision integer. Any fractional part
  not-a-number (NaN).
 
 ### ToEIntegerExact
-    public EInteger ToEIntegerExact()
-Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the integer would be lost.
+    @Deprecated public EInteger ToEIntegerExact()
+Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
 
 **Returns:**
 
@@ -3285,6 +3324,8 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 * <code>ArithmeticException</code> - This object's value is not an exact integer.
 
+### ToEIntegerIfExact
+    public EInteger ToEIntegerIfExact()
 ### ToEngineeringString
     public String ToEngineeringString()
 Same as toString(), except that when an exponent is used it will be a
@@ -3313,52 +3354,6 @@ Creates a binary floating-point number from this object&#x27;s value. Note
 **Returns:**
 
 * An arbitrary-precision binary float.
-
-### ToInt32Checked
-    public int ToInt32Checked()
-Converts this number to a 32-bit signed integer, if possible, without
- truncating or rounding it.
-
-**Returns:**
-
-* A 32-bit signed integer.
-
-**Throws:**
-
-* <code>ArithmeticException</code> - This number's value is infinity,
- not-a-number, or doesn't fit into a 32-bit signed integer.
-
-### ToInt32Unchecked
-    public int ToInt32Unchecked()
-Not documented yet.
-
-**Returns:**
-
-* A 32-bit signed integer. Returns 0 if this value is infinity or
- not-a-number.
-
-### ToInt64Checked
-    public long ToInt64Checked()
-Converts this number to a 64-bit signed integer, if possible, without
- truncating or rounding it.
-
-**Returns:**
-
-* A 64-bit signed integer.
-
-**Throws:**
-
-* <code>ArithmeticException</code> - This number's value is infinity,
- not-a-number, or doesn't fit into a 64-bit signed integer.
-
-### ToInt64Unchecked
-    public long ToInt64Unchecked()
-Not documented yet.
-
-**Returns:**
-
-* A 64-bit signed integer. Returns 0 if this value is infinity or
- not-a-number.
 
 ### ToPlainString
     public String ToPlainString()
@@ -3422,3 +3417,193 @@ Not documented yet.
 **Returns:**
 
 * An EFloat object.
+
+### ToByteChecked
+    public byte ToByteChecked()
+Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a byte (from 0 to 255).
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a byte (from 0 to 255).
+
+### ToByteUnchecked
+    public byte ToByteUnchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a byte (from 0
+ to 255).
+
+**Returns:**
+
+* This number, converted to a byte (from 0 to 255). Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToByteIfExact
+    public byte ToByteIfExact()
+Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.
+
+**Returns:**
+
+* This number's value as a byte (from 0 to 255).
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a byte (from 0 to 255) without rounding to a
+ different numerical value.
+
+### FromByte
+    public static EDecimal FromByte(byte inputByte)
+Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
+
+**Parameters:**
+
+* <code>inputByte</code> - The number to convert as a byte (from 0 to 255).
+
+**Returns:**
+
+* This number's value as an arbitrary-precision decimal number.
+
+### ToInt16Checked
+    public short ToInt16Checked()
+Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a 16-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a 16-bit signed
+ integer.
+
+### ToInt16Unchecked
+    public short ToInt16Unchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 16-bit
+ signed integer.
+
+**Returns:**
+
+* This number, converted to a 16-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToInt16IfExact
+    public short ToInt16IfExact()
+Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical
+ value.
+
+**Returns:**
+
+* This number's value as a 16-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a 16-bit signed integer without rounding to a
+ different numerical value.
+
+### FromInt16
+    public static EDecimal FromInt16(short inputInt16)
+Converts a 16-bit signed integer to an arbitrary-precision decimal number.
+
+**Parameters:**
+
+* <code>inputInt16</code> - The number to convert as a 16-bit signed integer.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision decimal number.
+
+### ToInt32Checked
+    public int ToInt32Checked()
+Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a 32-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a 32-bit signed
+ integer.
+
+### ToInt32Unchecked
+    public int ToInt32Unchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 32-bit
+ signed integer.
+
+**Returns:**
+
+* This number, converted to a 32-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToInt32IfExact
+    public int ToInt32IfExact()
+Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical
+ value.
+
+**Returns:**
+
+* This number's value as a 32-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a 32-bit signed integer without rounding to a
+ different numerical value.
+
+### ToInt64Checked
+    public long ToInt64Checked()
+Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a 64-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a 64-bit signed
+ integer.
+
+### ToInt64Unchecked
+    public long ToInt64Unchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 64-bit
+ signed integer.
+
+**Returns:**
+
+* This number, converted to a 64-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToInt64IfExact
+    public long ToInt64IfExact()
+Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical
+ value.
+
+**Returns:**
+
+* This number's value as a 64-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a 64-bit signed integer without rounding to a
+ different numerical value.

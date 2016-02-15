@@ -2,13 +2,13 @@
 
     public final class ERational extends Object implements Comparable<ERational>
 
-Arbitrary-precision rational number. This class can't be inherited. (The "E"
- stands for "extended", meaning that instances of this class can be
- values other than numbers proper, such as infinity and not-a-number.)
- <p><b>Thread safety:</b> Instances of this class are immutable, so
- they are inherently safe for use by multiple threads. Multiple
- instances of this object with the same properties are
- interchangeable, so they should not be compared using the "=="
+Represents an arbitrary-precision rational number. This class can't be
+ inherited. (The "E" stands for "extended", meaning that instances of
+ this class can be values other than numbers proper, such as infinity
+ and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+ are immutable, so they are inherently safe for use by multiple
+ threads. Multiple instances of this object with the same properties
+ are interchangeable, so they should not be compared using the "=="
  operator (which might only check if each side of the operator is the
  same instance).</p>
 
@@ -78,6 +78,8 @@ Arbitrary-precision rational number. This class can't be inherited. (The "E"
  Not documented yet.
 * `boolean equals(Object obj)`<br>
  Determines whether this object and another object are equal.
+* `static ERational FromByte(byte inputByte)`<br>
+ Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 * `static ERational FromDouble(double flt)`<br>
  Converts a 64-bit floating-point number to a rational number.
 * `static ERational FromEDecimal(EDecimal ef)`<br>
@@ -94,10 +96,12 @@ Renamed to FromEDecimal.
  Deprecated.
 Renamed to FromEFloat.
  Renamed to FromEFloat.
-* `static ERational FromInt32(int smallint)`<br>
- Not documented yet.
-* `static ERational FromInt64(long longInt)`<br>
- Not documented yet.
+* `static ERational FromInt16(short inputInt16)`<br>
+ Converts a 16-bit signed integer to an arbitrary-precision rational number.
+* `static ERational FromInt32(int inputInt32)`<br>
+ Converts a 32-bit signed integer to an arbitrary-precision rational number.
+* `static ERational FromInt64(long inputInt64)`<br>
+ Converts a 64-bit signed integer to an arbitrary-precision rational number.
 * `static ERational FromSingle(float flt)`<br>
  Converts a 32-bit floating-point number to a rational number.
 * `static ERational FromString(String str)`<br>
@@ -148,6 +152,16 @@ Renamed to FromEFloat.
  Gets the sign of this rational number.
 * `ERational Subtract(ERational otherValue)`<br>
  Subtracts an arbitrary-precision rational number from this instance.
+* `byte ToByteChecked()`<br>
+ Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after truncating to an integer.
+* `byte ToByteIfExact()`<br>
+ Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.
+* `byte ToByteUnchecked()`<br>
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a byte (from 0
+ to 255).
 * `double ToDouble()`<br>
  Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
@@ -171,8 +185,10 @@ Renamed to FromEFloat.
 * `EInteger ToEInteger()`<br>
  Converts this value to an arbitrary-precision integer.
 * `EInteger ToEIntegerExact()`<br>
- Converts this value to an arbitrary-precision integer, checking whether the
- value is an exact integer.
+ Deprecated.
+Renamed to ToEIntegerIfExact.
+ Renamed to ToEIntegerIfExact.
+* `EInteger ToEIntegerIfExact()`<br>
 * `EDecimal ToExtendedDecimal()`<br>
  Deprecated.
 Renamed to ToEDecimal.
@@ -197,6 +213,39 @@ Renamed to ToEFloat.
  Deprecated.
 Renamed to ToEFloatExactIfPossible.
  Renamed to ToEFloatExactIfPossible.
+* `short ToInt16Checked()`<br>
+ Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after truncating to an integer.
+* `short ToInt16IfExact()`<br>
+ Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical
+ value.
+* `short ToInt16Unchecked()`<br>
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 16-bit
+ signed integer.
+* `int ToInt32Checked()`<br>
+ Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after truncating to an integer.
+* `int ToInt32IfExact()`<br>
+ Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical
+ value.
+* `int ToInt32Unchecked()`<br>
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 32-bit
+ signed integer.
+* `long ToInt64Checked()`<br>
+ Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after truncating to an integer.
+* `long ToInt64IfExact()`<br>
+ Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical
+ value.
+* `long ToInt64Unchecked()`<br>
+ Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 64-bit
+ signed integer.
 * `float ToSingle()`<br>
  Converts this value to a 32-bit floating-point number.
 * `String toString()`<br>
@@ -244,8 +293,8 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* true if this object is finite (not infinity or not-a-number (NaN));
- otherwise, false.
+* <code>true</code> if this object is finite (not infinity or not-a-number
+ (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
     public final boolean isNegative()
@@ -254,7 +303,7 @@ Gets a value indicating whether this object's value is negative (including
 
 **Returns:**
 
-* true if this object's value is negative; otherwise, false.
+* <code>true</code> if this object's value is negative; otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -262,7 +311,7 @@ Gets a value indicating whether this object's value equals 0.
 
 **Returns:**
 
-* true if this object's value equals 0; otherwise, false.
+* <code>true</code> if this object's value equals 0; otherwise, <code>false</code>.
 
 ### getNumerator
     public final EInteger getNumerator()
@@ -461,30 +510,6 @@ Converts an arbitrary-precision integer to a rational number.
 **Returns:**
 
 * The exact value of the integer as a rational number.
-
-### FromInt32
-    public static ERational FromInt32(int smallint)
-Not documented yet.
-
-**Parameters:**
-
-* <code>smallint</code> - The parameter <code>smallint</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision rational number.
-
-### FromInt64
-    public static ERational FromInt64(long longInt)
-Not documented yet.
-
-**Parameters:**
-
-* <code>longInt</code> - The parameter <code>longInt</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision rational number.
 
 ### FromSingle
     public static ERational FromSingle(float flt)
@@ -724,7 +749,7 @@ Determines whether this object and another object are equal.
 
 **Returns:**
 
-* true if the objects are equal; otherwise, false .
+* <code>true</code> if the objects are equal; otherwise, false .
 
 ### equals
     public boolean equals(ERational other)
@@ -756,7 +781,7 @@ Gets a value indicating whether this object's value is infinity.
 
 **Returns:**
 
-* true if this object's value is infinity; otherwise, false .
+* <code>true</code> if this object's value is infinity; otherwise, false .
 
 ### IsNaN
     public boolean IsNaN()
@@ -764,7 +789,8 @@ Returns whether this object is a not-a-number value.
 
 **Returns:**
 
-* true if this object is a not-a-number value; otherwise, false .
+* <code>true</code> if this object is a not-a-number value; otherwise,
+ false .
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -772,7 +798,7 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* true if this object is negative infinity; otherwise, false .
+* <code>true</code> if this object is negative infinity; otherwise, false .
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -780,7 +806,7 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* true if this object is positive infinity; otherwise, false .
+* <code>true</code> if this object is positive infinity; otherwise, false .
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -788,8 +814,8 @@ Returns whether this object is a quiet not-a-number value.
 
 **Returns:**
 
-* true if this object is a quiet not-a-number value; otherwise, false
- .
+* <code>true</code> if this object is a quiet not-a-number value;
+ otherwise, false .
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -799,9 +825,9 @@ Returns whether this object is a signaling not-a-number value (which causes
 
 **Returns:**
 
-* true if this object is a signaling not-a-number value (which causes
- an error if the value is passed to any arithmetic operation in this
- class); otherwise, false .
+* <code>true</code> if this object is a signaling not-a-number value (which
+ causes an error if the value is passed to any arithmetic operation in
+ this class); otherwise, false .
 
 ### Multiply
     public ERational Multiply(ERational otherValue)
@@ -891,9 +917,8 @@ Converts this value to an arbitrary-precision integer. Any fractional part
  not-a-number (NaN).
 
 ### ToEIntegerExact
-    public EInteger ToEIntegerExact()
-Converts this value to an arbitrary-precision integer, checking whether the
- value is an exact integer.
+    @Deprecated public EInteger ToEIntegerExact()
+Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
 
 **Returns:**
 
@@ -906,6 +931,8 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 * <code>ArithmeticException</code> - This object's value is not an exact integer.
 
+### ToEIntegerIfExact
+    public EInteger ToEIntegerIfExact()
 ### ToEDecimal
     public EDecimal ToEDecimal()
 Converts this rational number to a decimal number.
@@ -1131,5 +1158,219 @@ Converts this object to a text string.
 
 * A string representation of this object. If this object's value is
  infinity or not-a-number, the result is the analogous return value of
- the EDecimal.toString method. Otherwise, the return value has the
- following form: [-]numerator/denominator.
+ the <code>EDecimal.toString</code> method. Otherwise, the return value has
+ the following form: <code>[-]numerator/denominator</code>.
+
+### ToByteChecked
+    public byte ToByteChecked()
+Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a byte (from 0 to 255).
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a byte (from 0 to 255).
+
+### ToByteUnchecked
+    public byte ToByteUnchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a byte (from 0
+ to 255).
+
+**Returns:**
+
+* This number, converted to a byte (from 0 to 255). Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToByteIfExact
+    public byte ToByteIfExact()
+Converts this number's value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.
+
+**Returns:**
+
+* This number's value as a byte (from 0 to 255).
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a byte (from 0 to 255) without rounding to a
+ different numerical value.
+
+### FromByte
+    public static ERational FromByte(byte inputByte)
+Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
+
+**Parameters:**
+
+* <code>inputByte</code> - The number to convert as a byte (from 0 to 255).
+
+**Returns:**
+
+* This number's value as an arbitrary-precision rational number.
+
+### ToInt16Checked
+    public short ToInt16Checked()
+Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a 16-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a 16-bit signed
+ integer.
+
+### ToInt16Unchecked
+    public short ToInt16Unchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 16-bit
+ signed integer.
+
+**Returns:**
+
+* This number, converted to a 16-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToInt16IfExact
+    public short ToInt16IfExact()
+Converts this number's value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical
+ value.
+
+**Returns:**
+
+* This number's value as a 16-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a 16-bit signed integer without rounding to a
+ different numerical value.
+
+### FromInt16
+    public static ERational FromInt16(short inputInt16)
+Converts a 16-bit signed integer to an arbitrary-precision rational number.
+
+**Parameters:**
+
+* <code>inputInt16</code> - The number to convert as a 16-bit signed integer.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision rational number.
+
+### ToInt32Checked
+    public int ToInt32Checked()
+Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a 32-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a 32-bit signed
+ integer.
+
+### ToInt32Unchecked
+    public int ToInt32Unchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 32-bit
+ signed integer.
+
+**Returns:**
+
+* This number, converted to a 32-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToInt32IfExact
+    public int ToInt32IfExact()
+Converts this number's value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical
+ value.
+
+**Returns:**
+
+* This number's value as a 32-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a 32-bit signed integer without rounding to a
+ different numerical value.
+
+### FromInt32
+    public static ERational FromInt32(int inputInt32)
+Converts a 32-bit signed integer to an arbitrary-precision rational number.
+
+**Parameters:**
+
+* <code>inputInt32</code> - The number to convert as a 32-bit signed integer.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision rational number.
+
+### ToInt64Checked
+    public long ToInt64Checked()
+Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after truncating to an integer.
+
+**Returns:**
+
+* This number's value, truncated to a 64-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the truncated integer is outside the range of a 64-bit signed
+ integer.
+
+### ToInt64Unchecked
+    public long ToInt64Unchecked()
+Truncates this number's value to an integer and returns the
+ least-significant bits of its two's-complement form as a 64-bit
+ signed integer.
+
+**Returns:**
+
+* This number, converted to a 64-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
+
+### ToInt64IfExact
+    public long ToInt64IfExact()
+Converts this number's value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical
+ value.
+
+**Returns:**
+
+* This number's value as a 64-bit signed integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+ the number can't fit in a 64-bit signed integer without rounding to a
+ different numerical value.
+
+### FromInt64
+    public static ERational FromInt64(long inputInt64)
+Converts a 64-bit signed integer to an arbitrary-precision rational number.
+
+**Parameters:**
+
+* <code>inputInt64</code> - The number to convert as a 64-bit signed integer.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision rational number.
