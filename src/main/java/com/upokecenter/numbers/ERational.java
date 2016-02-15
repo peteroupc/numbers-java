@@ -8,18 +8,21 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  */
 
     /**
-     * Arbitrary-precision rational number. This class cannot be inherited.
-     * <p><b>Thread safety:</b>Instances of this class are immutable, so
-     * they are inherently safe for use by multiple threads. Multiple
-     * instances of this object with the same properties are
-     * interchangeable, so they should not be compared using the "=="
-     * operator (which only checks if each side of the operator is the same
-     * instance).</p>
+     * Represents an arbitrary-precision rational number. This class can't be
+     * inherited. (The "E" stands for "extended", meaning that instances of
+     * this class can be values other than numbers proper, such as infinity
+     * and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+     * are immutable, so they are inherently safe for use by multiple
+     * threads. Multiple instances of this object with the same properties
+     * are interchangeable, so they should not be compared using the "=="
+     * operator (which might only check if each side of the operator is the
+     * same instance).</p>
      */
   public final class ERational implements Comparable<ERational> {
     /**
      * A not-a-number value.
      */
+
     public static final ERational NaN = CreateWithFlags(
 EInteger.FromInt32(0),
 EInteger.FromInt32(1),
@@ -28,6 +31,7 @@ BigNumberFlags.FlagQuietNaN);
     /**
      * Negative infinity, less than any other number.
      */
+
     public static final ERational NegativeInfinity =
       CreateWithFlags(
 EInteger.FromInt32(0),
@@ -37,17 +41,20 @@ BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
     /**
      * A rational number for negative zero.
      */
+
     public static final ERational NegativeZero =
       FromEInteger(EInteger.FromInt32(0)).ChangeSign(false);
 
     /**
      * The rational number one.
      */
+
     public static final ERational One = FromEInteger(EInteger.FromInt32(1));
 
     /**
      * Positive infinity, greater than any other number.
      */
+
     public static final ERational PositiveInfinity =
       CreateWithFlags(
 EInteger.FromInt32(0),
@@ -57,6 +64,7 @@ BigNumberFlags.FlagInfinity);
     /**
      * A signaling not-a-number value.
      */
+
     public static final ERational SignalingNaN =
       CreateWithFlags(
 EInteger.FromInt32(0),
@@ -66,11 +74,13 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * The rational number ten.
      */
+
     public static final ERational Ten = FromEInteger(EInteger.FromInt32(10));
 
     /**
      * A rational number for zero.
      */
+
     public static final ERational Zero = FromEInteger(EInteger.FromInt32(0));
 
     private EInteger denominator;
@@ -121,8 +131,8 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return True if this object is finite (not infinity or NaN); otherwise,
-     * false.
+     * @return {@code true} if this object is finite (not infinity or not-a-number
+     * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
@@ -131,7 +141,8 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return True if this object's value is negative; otherwise, false.
+     * @return {@code true} if this object's value is negative; otherwise, {@code
+     * false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -139,7 +150,8 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return True if this object's value equals 0; otherwise, false.
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * false}.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -179,9 +191,10 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Creates a rational number with the given numerator and denominator.
-     * @param numeratorSmall A 32-bit signed integer.
-     * @param denominatorSmall A 32-bit signed integer. (2).
+     * @param numeratorSmall The numerator.
+     * @param denominatorSmall The denominator.
      * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
 int numeratorSmall,
@@ -191,9 +204,10 @@ int denominatorSmall) {
 
     /**
      * Creates a rational number with the given numerator and denominator.
-     * @param numerator An arbitrary-precision integer.
-     * @param denominator Another arbitrary-precision integer.
+     * @param numerator The numerator.
+     * @param denominator The denominator.
      * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
 EInteger numerator,
@@ -393,24 +407,6 @@ boolean negative) {
     }
 
     /**
-     * Not documented yet.
-     * @param smallint The parameter {@code smallint} is not documented yet.
-     * @return An arbitrary-precision rational number.
-     */
-    public static ERational FromInt32(int smallint) {
-      return new ERational(EInteger.FromInt32(smallint), EInteger.FromInt32(1));
-    }
-
-    /**
-     * Not documented yet.
-     * @param longInt The parameter {@code longInt} is not documented yet.
-     * @return An arbitrary-precision rational number.
-     */
-    public static ERational FromInt64(long longInt) {
-      return new ERational(EInteger.FromInt64(longInt), EInteger.FromInt32(1));
-    }
-
-    /**
      * Converts a 32-bit floating-point number to a rational number. This method
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the number to a
@@ -420,6 +416,442 @@ boolean negative) {
      */
     public static ERational FromSingle(float flt) {
       return FromEFloat(EFloat.FromSingle(flt));
+    }
+
+    /**
+     * Creates a rational number from a text string that represents a number. See
+     * <code>FromString(String, int, int)</code> for more information.
+     * @param str A string that represents a number.
+     * @return An arbitrary-precision rational number with the same value as the
+     * given string.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * formatted number string.
+     */
+    public static ERational FromString(String str) {
+      return FromString(str, 0, str == null ? 0 : str.length());
+    }
+
+    private static final int MaxSafeInt = 214748363;
+
+    /**
+     * <p>Creates a rational number from a text string that represents a
+     * number.</p> <p>The format of the string generally consists of:</p>
+     * <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
+     * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
+     * the form of one or more digits.</li> <li>Optionally, "/" followed by
+     * the denominator in the form of one or more digits. If a denominator
+     * is not given, it's equal to 1.</li></ul> <p>The string can also be
+     * "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+     * followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+     * followed by any number of digits, all in any combination of upper and
+     * lower case.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular, the
+     * digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
+     * is not allowed to contain white space characters, including
+     * spaces.</p>
+     * @param str A text string, a portion of which represents a number.
+     * @param offset A zero-based index that identifies the start of the number.
+     * @param length The length of the number within the string.
+     * @return An ERational object.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * formatted number string.
+     */
+    public static ERational FromString(
+      String str,
+      int offset,
+      int length) {
+      int tmpoffset = offset;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      if (tmpoffset < 0) {
+        throw new NumberFormatException("offset (" + tmpoffset + ") is less than " +
+                    "0");
+      }
+      if (tmpoffset > str.length()) {
+        throw new NumberFormatException("offset (" + tmpoffset + ") is more than " +
+                    str.length());
+      }
+      if (length < 0) {
+        throw new NumberFormatException("length (" + length + ") is less than " +
+                    "0");
+      }
+      if (length > str.length()) {
+        throw new NumberFormatException("length (" + length + ") is more than " +
+                    str.length());
+      }
+      if (str.length() - tmpoffset < length) {
+        throw new NumberFormatException("str's length minus " + tmpoffset + " (" +
+                    (str.length() - tmpoffset) + ") is less than " + length);
+      }
+      if (length == 0) {
+        throw new NumberFormatException();
+      }
+      boolean negative = false;
+      int endStr = tmpoffset + length;
+      if (str.charAt(0) == '+' || str.charAt(0) == '-') {
+        negative = str.charAt(0) == '-';
+        ++tmpoffset;
+      }
+      int numerInt = 0;
+      FastInteger numer = null;
+      int numerBuffer = 0;
+      int numerBufferMult = 1;
+      int denomBuffer = 0;
+      int denomBufferMult = 1;
+      boolean haveDigits = false;
+      boolean haveDenominator = false;
+      int ndenomInt = 0;
+      FastInteger ndenom = null;
+      int i = tmpoffset;
+      if (i + 8 == endStr) {
+        if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
+            (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') &&
+            (str.charAt(i + 2) == 'F' || str.charAt(i + 2) == 'f') &&
+            (str.charAt(i + 3) == 'I' || str.charAt(i + 3) == 'i') && (str.charAt(i + 4) == 'N' ||
+                    str.charAt(i + 4) == 'n') && (str.charAt(i + 5) ==
+                    'I' || str.charAt(i + 5) == 'i') &&
+            (str.charAt(i + 6) == 'T' || str.charAt(i + 6) == 't') && (str.charAt(i + 7) == 'Y' ||
+                    str.charAt(i + 7) == 'y')) {
+          return negative ? NegativeInfinity : PositiveInfinity;
+        }
+      }
+      if (i + 3 == endStr) {
+        if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
+            (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') && (str.charAt(i + 2) == 'F' ||
+                    str.charAt(i + 2) == 'f')) {
+          return negative ? NegativeInfinity : PositiveInfinity;
+        }
+      }
+      if (i + 3 <= endStr) {
+        // Quiet NaN
+        if ((str.charAt(i) == 'N' || str.charAt(i) == 'n') && (str.charAt(i + 1) == 'A' || str.charAt(i +
+                1) == 'a') && (str.charAt(i + 2) == 'N' || str.charAt(i + 2) == 'n')) {
+          int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
+            BigNumberFlags.FlagQuietNaN;
+          if (i + 3 == endStr) {
+            return (!negative) ? NaN : NaN.Negate();
+          }
+          i += 3;
+          FastInteger digitCount = new FastInteger(0);
+          for (; i < endStr; ++i) {
+            if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+              int thisdigit = (int)(str.charAt(i) - '0');
+              haveDigits = haveDigits || thisdigit != 0;
+              if (numerInt > MaxSafeInt) {
+                if (numer == null) {
+                  numer = new FastInteger(numerInt);
+                  numerBuffer = thisdigit;
+                  numerBufferMult = 10;
+                } else {
+                  if (numerBufferMult >= 1000000000) {
+                    numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+                    numerBuffer = thisdigit;
+                    numerBufferMult = 10;
+                  } else {
+                    numerBufferMult *= 10;
+                    numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                    numerBuffer += thisdigit;
+                  }
+                }
+              } else {
+                numerInt *= 10;
+                numerInt += thisdigit;
+              }
+            } else {
+              throw new NumberFormatException();
+            }
+          }
+          if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
+            numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+          }
+          EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
+            numer.AsEInteger();
+          return CreateNaN(bignumer, false, negative);
+        }
+      }
+      if (i + 4 <= endStr) {
+        // Signaling NaN
+        if ((str.charAt(i) == 'S' || str.charAt(i) == 's') && (str.charAt(i + 1) == 'N' || str.charAt(i +
+                    1) == 'n') && (str.charAt(i + 2) == 'A' || str.charAt(i + 2) == 'a') &&
+                (str.charAt(i + 3) == 'N' || str.charAt(i + 3) == 'n')) {
+          if (i + 4 == endStr) {
+            int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
+              BigNumberFlags.FlagSignalingNaN;
+            return (!negative) ? SignalingNaN : SignalingNaN.Negate();
+          }
+          i += 4;
+          FastInteger digitCount = new FastInteger(0);
+          for (; i < endStr; ++i) {
+            if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+              int thisdigit = (int)(str.charAt(i) - '0');
+              haveDigits = haveDigits || thisdigit != 0;
+              if (numerInt > MaxSafeInt) {
+                if (numer == null) {
+                  numer = new FastInteger(numerInt);
+                  numerBuffer = thisdigit;
+                  numerBufferMult = 10;
+                } else {
+                  if (numerBufferMult >= 1000000000) {
+                    numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+                    numerBuffer = thisdigit;
+                    numerBufferMult = 10;
+                  } else {
+                    numerBufferMult *= 10;
+                    numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                    numerBuffer += thisdigit;
+                  }
+                }
+              } else {
+                numerInt *= 10;
+                numerInt += thisdigit;
+              }
+            } else {
+              throw new NumberFormatException();
+            }
+          }
+          if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
+            numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+          }
+          int flags3 = (negative ? BigNumberFlags.FlagNegative : 0) |
+            BigNumberFlags.FlagSignalingNaN;
+          EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
+            numer.AsEInteger();
+          return CreateWithFlags(
+            bignumer,
+            EInteger.FromInt32(0),
+            flags3);
+        }
+      }
+      // Ordinary number
+      for (; i < endStr; ++i) {
+        if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+          int thisdigit = (int)(str.charAt(i) - '0');
+          if (numerInt > MaxSafeInt) {
+            if (numer == null) {
+              numer = new FastInteger(numerInt);
+              numerBuffer = thisdigit;
+              numerBufferMult = 10;
+            } else {
+              if (numerBufferMult >= 1000000000) {
+                numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+                numerBuffer = thisdigit;
+                numerBufferMult = 10;
+              } else {
+                // multiply numerBufferMult and numerBuffer each by 10
+             numerBufferMult = (numerBufferMult << 3) + (numerBufferMult <<
+                  1);
+                numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                numerBuffer += thisdigit;
+              }
+            }
+          } else {
+            numerInt *= 10;
+            numerInt += thisdigit;
+          }
+          haveDigits = true;
+        } else if (str.charAt(i) == '/') {
+          haveDenominator = true;
+          ++i;
+          break;
+        } else {
+          throw new NumberFormatException();
+        }
+      }
+      if (!haveDigits) {
+        throw new NumberFormatException();
+      }
+      if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
+        numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+      }
+      if (haveDenominator) {
+        FastInteger denom = null;
+        int denomInt = 0;
+        tmpoffset = 1;
+        haveDigits = false;
+        if (i == endStr) {
+          throw new NumberFormatException();
+        }
+        for (; i < endStr; ++i) {
+          if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            haveDigits = true;
+            int thisdigit = (int)(str.charAt(i) - '0');
+            if (denomInt > MaxSafeInt) {
+              if (denom == null) {
+                denom = new FastInteger(denomInt);
+                denomBuffer = thisdigit;
+                denomBufferMult = 10;
+              } else {
+                if (denomBufferMult >= 1000000000) {
+                  denom.Multiply(denomBufferMult).AddInt(denomBuffer);
+                  denomBuffer = thisdigit;
+                  denomBufferMult = 10;
+                } else {
+                  // multiply denomBufferMult and denomBuffer each by 10
+             denomBufferMult = (denomBufferMult << 3) + (denomBufferMult <<
+                    1);
+                  denomBuffer = (denomBuffer << 3) + (denomBuffer << 1);
+                  denomBuffer += thisdigit;
+                }
+              }
+            } else {
+              denomInt *= 10;
+              denomInt += thisdigit;
+            }
+          } else {
+            throw new NumberFormatException();
+          }
+        }
+        if (!haveDigits) {
+          throw new NumberFormatException();
+        }
+        if (denom != null && (denomBufferMult != 1 || denomBuffer != 0)) {
+          denom.Multiply(denomBufferMult).AddInt(denomBuffer);
+        }
+        if (denom == null) {
+          ndenomInt = denomInt;
+        } else {
+          ndenom = denom;
+        }
+      } else {
+        ndenomInt = 1;
+      }
+      if (i != endStr) {
+        throw new NumberFormatException();
+      }
+      if (ndenom == null ? (ndenomInt == 0) : ndenom.isValueZero()) {
+        throw new NumberFormatException();
+      }
+      ERational erat = Create(
+        numer == null ? EInteger.FromInt32(numerInt) : numer.AsEInteger(),
+        ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom.AsEInteger());
+      return negative ? erat.Negate() : erat;
+    }
+
+    /**
+     * Compares the absolute values of this object and another object, imposing a
+     * total ordering on all possible values (ignoring their signs). In this
+     * method: <ul> <li>For objects with the same value, the one with the
+     * higher denominator has a greater "absolute value".</li> <li>Negative
+     * zero and positive zero are considered equal.</li> <li>Quiet NaN has a
+     * higher "absolute value" than signaling NaN. If both objects are quiet
+     * NaN or both are signaling NaN, the one with the higher diagnostic
+     * information has a greater "absolute value".</li> <li>NaN has a higher
+     * "absolute value" than infinity.</li> <li>Infinity has a higher
+     * "absolute value" than any finite number.</li></ul>
+     * @param other An arbitrary-precision rational number to compare with this
+     * one.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
+     */
+    public int CompareToTotalMagnitude(ERational other) {
+      if (other == null) {
+        return -1;
+      }
+      int valueIThis = 0;
+      int valueIOther = 0;
+      int cmp;
+      if (this.IsSignalingNaN()) {
+        valueIThis = 2;
+      } else if (this.IsNaN()) {
+        valueIThis = 3;
+      } else if (this.IsInfinity()) {
+        valueIThis = 1;
+      }
+      if (other.IsSignalingNaN()) {
+        valueIOther = 2;
+      } else if (other.IsNaN()) {
+        valueIOther = 3;
+      } else if (other.IsInfinity()) {
+        valueIOther = 1;
+      }
+      if (valueIThis > valueIOther) {
+        return 1;
+      } else if (valueIThis < valueIOther) {
+        return -1;
+      }
+      if (valueIThis >= 2) {
+        cmp = this.unsignedNumerator.compareTo(
+         other.unsignedNumerator);
+        return cmp;
+      } else if (valueIThis == 1) {
+        return 0;
+      } else {
+        cmp = this.Abs().compareTo(other.Abs());
+        if (cmp == 0) {
+          cmp = this.denominator.compareTo(
+           other.denominator);
+          return cmp;
+        }
+        return cmp;
+      }
+    }
+
+    /**
+     * Compares the values of this object and another object, imposing a total
+     * ordering on all possible values. In this method: <ul> <li>For objects
+     * with the same value, the one with the higher denominator has a
+     * greater "absolute value".</li> <li>Negative zero is less than
+     * positive zero.</li> <li>Quiet NaN has a higher "absolute value" than
+     * signaling NaN. If both objects are quiet NaN or both are signaling
+     * NaN, the one with the higher diagnostic information has a greater
+     * "absolute value".</li> <li>NaN has a higher "absolute value" than
+     * infinity.</li> <li>Infinity has a higher "absolute value" than any
+     * finite number.</li> <li>Negative numbers are less than positive
+     * numbers.</li></ul>
+     * @param other An arbitrary-precision rational number to compare with this
+     * one.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
+     */
+    public int CompareToTotal(ERational other) {
+      if (other == null) {
+        return -1;
+      }
+      boolean neg1 = this.isNegative();
+      boolean neg2 = other.isNegative();
+      if (neg1 != neg2) {
+        return neg1 ? -1 : 1;
+      }
+      int valueIThis = 0;
+      int valueIOther = 0;
+      int cmp;
+      if (this.IsSignalingNaN()) {
+        valueIThis = 2;
+      } else if (this.IsNaN()) {
+        valueIThis = 3;
+      } else if (this.IsInfinity()) {
+        valueIThis = 1;
+      }
+      if (other.IsSignalingNaN()) {
+        valueIOther = 2;
+      } else if (other.IsNaN()) {
+        valueIOther = 3;
+      } else if (other.IsInfinity()) {
+        valueIOther = 1;
+      }
+      if (valueIThis > valueIOther) {
+        return neg1 ? -1 : 1;
+      } else if (valueIThis < valueIOther) {
+        return neg1 ? 1 : -1;
+      }
+      if (valueIThis >= 2) {
+        cmp = this.unsignedNumerator.compareTo(
+         other.unsignedNumerator);
+        return neg1 ? -cmp : cmp;
+      } else if (valueIThis == 1) {
+        return 0;
+      } else {
+        cmp = this.compareTo(other);
+        if (cmp == 0) {
+          cmp = this.denominator.compareTo(
+           other.denominator);
+          return neg1 ? -cmp : cmp;
+        }
+        return cmp;
+      }
     }
 
     /**
@@ -834,7 +1266,7 @@ boolean negative) {
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return True if the objects are equal; otherwise, false.
+     * @return {@code true} if the objects are equal; otherwise, false .
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -876,7 +1308,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Gets a value indicating whether this object's value is infinity.
-     * @return True if this object's value is infinity; otherwise, false.
+     * @return {@code true} if this object's value is infinity; otherwise, false .
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -884,7 +1316,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a not-a-number value.
-     * @return True if this object is a not-a-number value; otherwise, false.
+     * @return {@code true} if this object is a not-a-number value; otherwise,
+     * false .
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
@@ -892,7 +1325,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return True if this object is negative infinity; otherwise, false.
+     * @return {@code true} if this object is negative infinity; otherwise, false .
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -902,7 +1335,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return True if this object is positive infinity; otherwise, false.
+     * @return {@code true} if this object is positive infinity; otherwise, false .
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -911,7 +1344,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is a quiet not-a-number value.
-     * @return True if this object is a quiet not-a-number value; otherwise, false.
+     * @return {@code true} if this object is a quiet not-a-number value;
+     * otherwise, false .
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -921,9 +1355,9 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Returns whether this object is a signaling not-a-number value (which causes
      * an error if the value is passed to any arithmetic operation in this
      * class).
-     * @return True if this object is a signaling not-a-number value (which causes
-     * an error if the value is passed to any arithmetic operation in this
-     * class); otherwise, false.
+     * @return {@code true} if this object is a signaling not-a-number value (which
+     * causes an error if the value is passed to any arithmetic operation in
+     * this class); otherwise, false .
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -985,7 +1419,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Finds the remainder that results when this instance is divided by the value
      * of an arbitrary-precision rational number.
      * @param otherValue An arbitrary-precision rational number.
-     * @return The remainder of the two objects.
+     * @return The remainder of the two numbers.
      * @throws java.lang.NullPointerException The parameter {@code otherValue} is
      * null.
      */
@@ -1101,7 +1535,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * in this value will be discarded when converting to an
      * arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.ArithmeticException This object's value is infinity or NaN.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      */
     public EInteger ToEInteger() {
       if (!this.isFinite()) {
@@ -1114,10 +1549,20 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * Converts this value to an arbitrary-precision integer, checking whether the
      * value is an exact integer.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.ArithmeticException This object's value is infinity or NaN.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      * @throws ArithmeticException This object's value is not an exact integer.
-     */
+     * @deprecated Renamed to ToEIntegerIfExact.
+ */
+@Deprecated
     public EInteger ToEIntegerExact() {
+      return this.ToEIntegerIfExact();
+    }
+
+    /**
+     *
+     */
+    public EInteger ToEIntegerIfExact() {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
@@ -1147,8 +1592,14 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     /**
      * Converts this rational number to a decimal number and rounds the result to
      * the given precision.
-     * @param ctx An EContext object.
-     * @return An arbitrary-precision decimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
@@ -1159,10 +1610,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EDecimal.PositiveInfinity;
+        return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EDecimal.NegativeInfinity;
+        return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
       }
       EDecimal ef = (this.isNegative() && this.isZero()) ?
  EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
@@ -1176,11 +1627,14 @@ ctx);
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating decimal expansion. If
-     * {@code HasFlags} of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case this method is the
-     * same as ToExtendedDecimal.
-     * @return An arbitrary-precision decimal.
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
           ctx) {
@@ -1195,10 +1649,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EDecimal.PositiveInfinity;
+        return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EDecimal.NegativeInfinity;
+        return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
       }
       if (this.isNegative() && this.isZero()) {
         return EDecimal.NegativeZero;
@@ -1229,8 +1683,14 @@ ctx);
     /**
      * Converts this rational number to a decimal number and rounds the result to
      * the given precision.
-     * @param ctx An EContext object.
-     * @return An arbitrary-precision decimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -1242,14 +1702,17 @@ ctx);
      * Converts this rational number to a decimal number, but if the result would
      * have a nonterminating decimal expansion, rounds that result to the
      * given precision.
-     * @param ctx An arithmetic context object to control the precision. The
-     * rounding and exponent range settings of this context are ignored.
-     * This context will be used only if the exact result would have a
-     * nonterminating decimal expansion. If {@code HasFlags} of the context
-     * is true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case this method is the same as ToExtendedDecimal.
-     * @return An arbitrary-precision decimal.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating decimal expansion. If
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimalExactIfPossible.
  */
 @Deprecated
@@ -1258,7 +1721,7 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number.
+     * Converts this rational number to a binary float.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating binary
      * expansion.
@@ -1268,16 +1731,16 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number and rounds the result to
+     * Converts this rational number to a binary float and rounds that result to
      * the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. This context will be used only if
-     * the exact result would have a nonterminating binary expansion. If
-     * {@code HasFlags} of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case this method is the
-     * same as ToExtendedFloat.
-     * @return An arbitrary-precision binary float.
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
@@ -1288,10 +1751,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity;
+        return EFloat.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity;
+        return EFloat.NegativeInfinity.RoundToPrecision(ctx);
       }
       EFloat ef = (this.isNegative() && this.isZero()) ?
      EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
@@ -1299,17 +1762,20 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number, but if the result would
+     * Converts this rational number to a binary float, but if the result would
      * have a nonterminating binary expansion, rounds that result to the
      * given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating binary expansion. If
-     * {@code HasFlags} of the context is true, will also store the flags
-     * resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null, in which case this method is the
-     * same as ToExtendedFloat.
-     * @return An arbitrary-precision binary float.
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {
       if (ctx == null) {
@@ -1323,10 +1789,10 @@ this.isNegative(),
 ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity;
+        return EFloat.PositiveInfinity.RoundToPrecision(ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity;
+        return EFloat.NegativeInfinity.RoundToPrecision(ctx);
       }
       if (this.isZero()) {
         return this.isNegative() ? EFloat.NegativeZero :
@@ -1344,7 +1810,7 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number.
+     * Converts this rational number to a binary float.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating binary
      * expansion.
@@ -1356,10 +1822,16 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number and rounds the result to
+     * Converts this rational number to a binary float and rounds that result to
      * the given precision.
-     * @param ctx An EContext object.
-     * @return An arbitrary-precision binary float.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case
+     * the precision is unlimited and no rounding is needed.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -1368,17 +1840,20 @@ ctx);
     }
 
     /**
-     * Converts this rational number to a binary number, but if the result would
+     * Converts this rational number to a binary float, but if the result would
      * have a nonterminating binary expansion, rounds that result to the
      * given precision.
-     * @param ctx An arithmetic context object to control the precision. The
-     * rounding and exponent range settings of this context are ignored.
-     * This context will be used only if the exact result would have a
-     * nonterminating binary expansion. If {@code HasFlags} of the context
-     * is true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case this method is the same as ToExtendedFloat.
-     * @return An arbitrary-precision binary float.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only if
+     * the exact result would have a nonterminating binary expansion. If
+     * HasFlags of the context is true, will also store the flags resulting
+     * from the operation (the flags are in addition to the pre-existing
+     * flags). Can be null, in which case the precision is unlimited and no
+     * rounding is needed.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloatExactIfPossible.
  */
 @Deprecated
@@ -1401,9 +1876,10 @@ ctx);
 
     /**
      * Converts this object to a text string.
-     * @return A string representation of this object. The result can be Infinity,
-     * NaN, or sNaN (with a minus sign before it for negative values), or a
-     * number of the following form: [-]numerator/denominator.
+     * @return A string representation of this object. If this object's value is
+     * infinity or not-a-number, the result is the analogous return value of
+     * the {@code EDecimal.toString} method. Otherwise, the return value has
+     * the following form: {@code [-]numerator/denominator}.
      */
     @Override public String toString() {
       if (!this.isFinite()) {
@@ -1445,4 +1921,187 @@ int flags) {
       }
       return this;
     }
+
+        // Begin integer conversions
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) after truncating to an integer.
+     * @return This number's value, truncated to a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a byte (from 0 to 255).
+     */
+public byte ToByteChecked() {
+ return this.ToEInteger().ToByteChecked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a byte (from 0
+     * to 255).
+     * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public byte ToByteUnchecked() {
+ return this.ToEInteger().ToByteUnchecked();
+}
+
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) without rounding to a different numerical value.
+     * @return This number's value as a byte (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a byte (from 0 to 255) without rounding to a
+     * different numerical value.
+     */
+public byte ToByteIfExact() {
+ return this.ToEIntegerIfExact().ToByteChecked();
+}
+
+    /**
+     * Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
+     * @param inputByte The number to convert as a byte (from 0 to 255).
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromByte(byte inputByte) {
+ int val = ((int)inputByte) & 0xff;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 16-bit signed
+     * integer.
+     */
+public short ToInt16Checked() {
+ return this.ToEInteger().ToInt16Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 16-bit
+     * signed integer.
+     * @return This number, converted to a 16-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public short ToInt16Unchecked() {
+ return this.ToEInteger().ToInt16Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 16-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public short ToInt16IfExact() {
+ return this.ToEIntegerIfExact().ToInt16Checked();
+}
+
+    /**
+     * Converts a 16-bit signed integer to an arbitrary-precision rational number.
+     * @param inputInt16 The number to convert as a 16-bit signed integer.
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromInt16(short inputInt16) {
+ int val = (int)inputInt16;
+ return FromInt32(val);
+}
+
+    /**
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 32-bit signed
+     * integer.
+     */
+public int ToInt32Checked() {
+ return this.ToEInteger().ToInt32Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 32-bit
+     * signed integer.
+     * @return This number, converted to a 32-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public int ToInt32Unchecked() {
+ return this.ToEInteger().ToInt32Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 32-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public int ToInt32IfExact() {
+ return this.ToEIntegerIfExact().ToInt32Checked();
+}
+
+    /**
+     * Converts a 32-bit signed integer to an arbitrary-precision rational number.
+     * @param inputInt32 The number to convert as a 32-bit signed integer.
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromInt32(int inputInt32) {
+ return FromEInteger(EInteger.FromInt32(inputInt32));
+}
+
+    /**
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer after truncating to an integer.
+     * @return This number's value, truncated to a 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is outside the range of a 64-bit signed
+     * integer.
+     */
+public long ToInt64Checked() {
+ return this.ToEInteger().ToInt64Checked();
+}
+
+    /**
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 64-bit
+     * signed integer.
+     * @return This number, converted to a 64-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
+     */
+public long ToInt64Unchecked() {
+ return this.ToEInteger().ToInt64Unchecked();
+}
+
+    /**
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer without rounding to a different numerical
+     * value.
+     * @return This number's value as a 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the number can't fit in a 64-bit signed integer without rounding to a
+     * different numerical value.
+     */
+public long ToInt64IfExact() {
+ return this.ToEIntegerIfExact().ToInt64Checked();
+}
+
+    /**
+     * Converts a 64-bit signed integer to an arbitrary-precision rational number.
+     * @param inputInt64 The number to convert as a 64-bit signed integer.
+     * @return This number's value as an arbitrary-precision rational number.
+     */
+public static ERational FromInt64(long inputInt64) {
+ return FromEInteger(EInteger.FromInt64(inputInt64));
+}
+
+// End integer conversions
   }

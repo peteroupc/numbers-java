@@ -45,10 +45,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       return "[this.bitLeftmost=" + this.bitLeftmost +
        ", this.bitsAfterLeftmost=" + this.bitsAfterLeftmost +
        ", this.discardedBitCount=" + this.discardedBitCount +
-       ", this.isSmall=" +this.isSmall + ", this.knownDigitLength="
-         +this.knownDigitLength +
-       ", this.shiftedBigInt=" +this.shiftedBigInt + ", this.shiftedSmall="
-         +this.shiftedSmall + "]";
+       ", this.isSmall=" + this.isSmall + ", this.knownDigitLength=" +
+         this.knownDigitLength + ", this.shiftedBigInt=" +this.shiftedBigInt +
+       ", this.shiftedSmall=" + this.shiftedSmall + "]";
     }
 
     public DigitShiftAccumulator(

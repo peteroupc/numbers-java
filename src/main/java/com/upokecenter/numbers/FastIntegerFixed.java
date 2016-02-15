@@ -174,7 +174,7 @@ FastIntegerFixed b) {
 
     /**
      * Not documented yet.
-     * @return A FastInteger2 object.
+     * @return A FastIntegerFixed object.
      */
     FastIntegerFixed Negate() {
       switch (this.integerMode) {

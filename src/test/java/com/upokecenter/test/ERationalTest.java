@@ -13,6 +13,79 @@ import com.upokecenter.numbers.*;
     public void TestAbs() {
       // not implemented yet
     }
+
+    @Test
+    public void TestFromString() {
+      ERational er;
+      er = ERational.FromString("-2/4");
+      Assert.assertEquals(EInteger.FromInt32(-2), er.getNumerator());
+      Assert.assertEquals(EInteger.FromInt32(4), er.getDenominator());
+      er = ERational.FromString("2/4");
+      Assert.assertEquals(EInteger.FromInt32(2), er.getNumerator());
+      Assert.assertEquals(EInteger.FromInt32(4), er.getDenominator());
+      er = ERational.FromString("293939393939/4");
+      Assert.assertEquals(EInteger.FromString("293939393939"), er.getNumerator());
+      Assert.assertEquals(EInteger.FromInt32(4), er.getDenominator());
+      er = ERational.FromString("-293939393939/4");
+      Assert.assertEquals(EInteger.FromString("-293939393939"), er.getNumerator());
+      Assert.assertEquals(EInteger.FromInt32(4), er.getDenominator());
+      er = ERational.FromString("-2/293939393939");
+      Assert.assertEquals(EInteger.FromInt32(-2), er.getNumerator());
+      Assert.assertEquals(EInteger.FromString("293939393939"), er.getDenominator());
+      er = ERational.FromString("-2");
+      Assert.assertEquals(EInteger.FromString("-2"), er.getNumerator());
+      Assert.assertEquals(EInteger.FromInt32(1), er.getDenominator());
+      er = ERational.FromString("2");
+      Assert.assertEquals(EInteger.FromString("2"), er.getNumerator());
+      Assert.assertEquals(EInteger.FromInt32(1), er.getDenominator());
+      try {
+ ERational.FromString("-2x");
+Assert.fail("Should have failed");
+} catch (NumberFormatException ex) {
+System.out.print("");
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ ERational.FromString("-2/");
+Assert.fail("Should have failed");
+} catch (NumberFormatException ex) {
+System.out.print("");
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ ERational.FromString("-2/x");
+Assert.fail("Should have failed");
+} catch (NumberFormatException ex) {
+System.out.print("");
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ ERational.FromString("-2/2x");
+Assert.fail("Should have failed");
+} catch (NumberFormatException ex) {
+System.out.print("");
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 1000; ++i) {
+        EInteger ei1 = RandomObjects.RandomEInteger(fr);
+        EInteger ei2 = RandomObjects.RandomEInteger(fr).Abs();
+        if (ei2.isZero()) {
+          ei2 = EInteger.FromInt32(1);
+        }
+        er = ERational.FromString(ei1 + "/" + ei2);
+        Assert.assertEquals(ei1, er.getNumerator());
+        Assert.assertEquals(ei2, er.getDenominator());
+      }
+    }
     @Test
     public void TestAdd() {
       // not implemented yet

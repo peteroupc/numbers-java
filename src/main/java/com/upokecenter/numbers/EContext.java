@@ -9,7 +9,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Contains parameters for controlling the precision, rounding, and exponent
-     * range of arbitrary-precision numbers.
+     * range of arbitrary-precision numbers. (The "E" stands for "extended",
+     * and has this prefix to group it with the other classes common to this
+     * library, particularly EDecimal, EFloat, and ERational.).
      */
   public final class EContext {
     /**
@@ -121,9 +123,13 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
       .WithExponentClamp(true).WithExponentRange(-1022, 1023);
 
     /**
-     * An arithmetic context for the Common Language Infrastructure (.NET
-     * Framework) decimal format, 96 bits precision, and a valid exponent
-     * range of -28 to 0. The default rounding mode is HalfEven.
+     * An arithmetic context for the .NET Framework decimal format (see {@link
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}), 96 bits
+     * precision, and a valid exponent range of -28 to 0. The default
+     * rounding mode is HalfEven. (The "Cli" stands for "Common Language
+     * Infrastructure", which defined this format as the .NET Framework
+     * decimal format in version 1, but leaves it unspecified in later
+     * versions.)
      */
 
     public static final EContext CliDecimal =
@@ -193,14 +199,15 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class. <code>HasFlags</code> will be set to false.
-     * @param precision The parameter {@code precision} is not documented yet.
-     * @param rounding The parameter {@code rounding} is not documented yet.
-     * @param exponentMinSmall The parameter {@code exponentMinSmall} is not
-     * documented yet.
-     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is not
-     * documented yet.
-     * @param clampNormalExponents The parameter {@code clampNormalExponents} is
-     * not documented yet.
+     * @param precision The maximum number of digits a number can have, or 0 for an
+     * unlimited number of digits.
+     * @param rounding The rounding mode to use when a number can't fit the given
+     * precision.
+     * @param exponentMinSmall The minimum exponent.
+     * @param exponentMaxSmall The maximum exponent.
+     * @param clampNormalExponents Whether to clamp a number's significand to the
+     * given maximum precision (if it isn't zero) while remaining within the
+     * exponent range.
      */
     public EContext(
 int precision,
@@ -234,9 +241,9 @@ boolean clampNormalExponents) {
      * just the number's Exponent property. The default value is true,
      * meaning that EMax and EMin refer to the adjusted exponent. Setting
      * this value to false (using WithAdjustExponent) is useful for modeling
-     * floating point representations with an integer mantissa and an
-     * integer exponent, such as Java's BigDecimal.
-     * @return True if the EMax and EMin properties refer to the number's Exponent
+     * floating point representations with an integer mantissa (significand)
+     * and an integer exponent, such as Java's BigDecimal.
+     * @return true if the EMax and EMin properties refer to the number's Exponent
      * property adjusted to the number's precision, or false if they refer
      * to just the number's Exponent property.
      */
@@ -249,8 +256,8 @@ boolean clampNormalExponents) {
      * will not be higher than EMax + 1 - Precision. If a number&#x27;s
      * exponent is higher than that value, but not high enough to cause
      * overflow, the exponent is clamped to that value and enough zeros are
-     * added to the number&#x27;s mantissa to account for the adjustment. If
-     * HasExponentRange is false, this value is always false.
+     * added to the number&#x27;s mantissa (significand) to account for the
+     * adjustment. If HasExponentRange is false, this value is always false.
      * @return If true, a converted number's Exponent property will not be higher
      * than EMax + 1 - Precision.
      */
@@ -260,7 +267,7 @@ boolean clampNormalExponents) {
 
     /**
      * Gets the highest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the decimal point. For
+     * scientific notation with one digit before the radix point. For
      * example, with a precision of 3 and an EMax of 100, the maximum value
      * possible is 9.99E + 100. (This is not the same as the highest
      * possible Exponent property.) If HasExponentRange is false, this value
@@ -278,7 +285,7 @@ boolean clampNormalExponents) {
 
     /**
      * Gets the lowest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the decimal point. For
+     * scientific notation with one digit before the radix point. For
      * example, with a precision of 3 and an EMin of -100, the next value
      * that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
      * property specifies the lowest possible Exponent property instead.) If
@@ -296,10 +303,9 @@ boolean clampNormalExponents) {
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
      * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
-     * 0</code> returns TRUE if the Inexact flag is set.
+     * 0</code> returns <code>true</code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
-     * arithmetic context. If {@code HasFlags} is false, this value will be
-     * 0.
+     * arithmetic context. If. HasFlags is false, this value will be 0.
      */
     public final int getFlags() {
         return this.flags;
@@ -315,8 +321,8 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context defines a minimum and maximum
      * exponent. If false, converted exponents can have any exponent and
      * operations can't cause overflow or underflow.
-     * @return True if this context defines a minimum and maximum exponent;
-     * otherwise, false.
+     * @return true if this context defines a minimum and maximum exponent;
+     * otherwise, false .
      */
     public final boolean getHasExponentRange() {
         return this.hasExponentRange;
@@ -324,7 +330,7 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context has a mutable Flags field.
-     * @return True if this context has a mutable Flags field; otherwise, false.
+     * @return true if this context has a mutable Flags field; otherwise, false .
      */
     public final boolean getHasFlags() {
         return this.hasFlags;
@@ -332,7 +338,7 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
-     * @return True if this context defines a maximum precision; otherwise, false.
+     * @return true if this context defines a maximum precision; otherwise, false .
      */
     public final boolean getHasMaxPrecision() {
         return !this.bigintPrecision.isZero();
@@ -341,7 +347,7 @@ public final void setFlags(int value) {
     /**
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
-     * @return True if this context's Precision property is in bits, rather than
+     * @return true if this context's Precision property is in bits, rather than
      * digits; otherwise, false. The default is false.
      */
     public final boolean isPrecisionInBits() {
@@ -352,21 +358,21 @@ public final void setFlags(int value) {
      * Gets a value indicating whether to use a "simplified" arithmetic. In the
      * simplified arithmetic, infinity, not-a-number, and subnormal numbers
      * are not allowed, and negative zero is treated the same as positive
-     * zero. For further details, see
-     * <code>http://speleotrove.com/decimal/dax3274.html</code>
-     * @return True if a "simplified" arithmetic will be used; otherwise, false.
+     * zero. For further details, see <a
+  * href='http://speleotrove.com/decimal/dax3274.html'>http://speleotrove.com/decimal/dax3274.html</a>
+     * @return true if a "simplified" arithmetic will be used; otherwise, false.
      */
     public final boolean isSimplified() {
         return this.simplified;
       }
 
     /**
-     * Gets the maximum length of a converted number in digits, ignoring the
-     * decimal point and exponent. For example, if precision is 3, a
-     * converted number&#x27;s mantissa can range from 0 to 999 (up to three
-     * digits long). If 0, converted numbers can have any precision.
+     * Gets the maximum length of a converted number in digits, ignoring the radix
+     * point and exponent. For example, if precision is 3, a converted
+     * number&#x27;s mantissa (significand) can range from 0 to 999 (up to
+     * three digits long). If 0, converted numbers can have any precision.
      * @return The maximum length of a converted number in digits, ignoring the
-     * decimal point and exponent.
+     * radix point and exponent.
      */
     public final EInteger getPrecision() {
         return this.bigintPrecision;
@@ -386,10 +392,10 @@ public final void setFlags(int value) {
      * Gets the traps that are set for each flag in the context. Whenever a flag is
      * signaled, even if <code>HasFlags</code> is false, and the flag's trap is
      * enabled, the operation will throw a TrapException. <p>For example, if
-     * Traps equals FlagInexact and FlagSubnormal, a TrapException will be
-     * thrown if an operation's return value is not the same as the exact
-     * result (FlagInexact) or if the return value's exponent is lower than
-     * the lowest allowed (FlagSubnormal).</p>
+     * Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
+     * will be thrown if an operation's return value is not the same as the
+     * exact result (FlagInexact) or if the return value's exponent is lower
+     * than the lowest allowed (FlagSubnormal).</p>
      * @return The traps that are set for each flag in the context.
      */
     public final int getTraps() {
@@ -494,8 +500,8 @@ false).WithUnlimitedExponents();
      * arithmetic context.
      * @param exponent An arbitrary-precision integer indicating the desired
      * exponent.
-     * @return True if a number can have the given Exponent property under this
-     * arithmetic context; otherwise, false. If this context allows
+     * @return true if a number can have the given Exponent property under this
+     * arithmetic context; otherwise, false . If this context allows
      * unlimited precision, returns true for the exponent EMax and any
      * exponent less than EMax.
      * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
@@ -540,8 +546,8 @@ false).WithUnlimitedExponents();
     /**
      * Copies this EContext and sets the copy's "AdjustExponent" property to the
      * given value.
-     * @param adjustExponent The parameter {@code adjustExponent} is not documented
-     * yet.
+     * @param adjustExponent The new value of the "AdjustExponent" property for the
+     * copy.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithAdjustExponent(boolean adjustExponent) {
@@ -613,8 +619,8 @@ false).WithUnlimitedExponents();
     }
 
     /**
-     * Copies this arithmetic context and sets the copy&#x27;s
-     * &#x22;ClampNormalExponents&#x22; flag to the given value.
+     * Copies this arithmetic context and sets the copy's "ClampNormalExponents"
+     * flag to the given value.
      * @param clamp The parameter {@code clamp} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -674,8 +680,8 @@ false).WithUnlimitedExponents();
     /**
      * Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
      * given value.
-     * @param isPrecisionBits The parameter {@code isPrecisionBits} is not
-     * documented yet.
+     * @param isPrecisionBits The new value of the "IsPrecisionInBits" property for
+     * the copy.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithPrecisionInBits(boolean isPrecisionBits) {
@@ -686,7 +692,7 @@ false).WithUnlimitedExponents();
 
     /**
      * Copies this EContext with the specified rounding mode.
-     * @param rounding The parameter {@code rounding} is not documented yet.
+     * @param rounding Desired value of the Rounding property.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithRounding(ERounding rounding) {

@@ -112,9 +112,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
  return new MutableNumber(0);
 }
       MutableNumber mbi = new MutableNumber(0);
-      mbi.data[0 ] = ((int)longVal);
+      mbi.data[0] = ((int)longVal);
         int mbd = ((int)(longVal >> 32));
-      mbi.data[1 ] = mbd;
+      mbi.data[1] = mbd;
       mbi.wordCount = (mbd == 0) ? 1 : 2;
       return mbi;
     }
@@ -145,7 +145,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           }
           int result0, result1, result2, result3;
           if (multiplicand < 65536) {
-            if (this.wordCount == 2 && (this.data[1 ] >>16) == 0) {
+            if (this.wordCount == 2 && (this.data[1] >> 16) == 0) {
               long longV = ((long)this.data[0]);
               longV &= 0xFFFFFFFFL;
               longV |= (((long)this.data[1]) << 32);
@@ -582,9 +582,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object&#x27;s value to the current value times another integer.
-     * @param val The integer to multiply by.
-     * @return This instance.
+     * Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
+     * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
       this.CheckFrozen();
@@ -594,7 +594,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else {
         switch (this.integerMode) {
           case 0: {
-            long amult = ((long)val) *((long)this.smallValue);
+            long amult = ((long)val) * ((long)this.smallValue);
             if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
               // would overflow, convert to large
              boolean apos = this.smallValue > 0L;
@@ -634,9 +634,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object&#x27;s value to 0 minus its current value (reverses its
-     * sign).
-     * @return This instance.
+     * Not documented yet.
+     * @return A FastInteger object.
      */
     FastInteger Negate() {
       this.CheckFrozen();
@@ -666,10 +665,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object&#x27;s value to the current value minus the given
-     * FastInteger value.
-     * @param val The subtrahend.
-     * @return This instance.
+     * Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
+     * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
       this.CheckFrozen();
@@ -718,9 +716,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object&#x27;s value to the current value minus the given integer.
-     * @param val The subtrahend.
-     * @return This instance.
+     * Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
+     * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {
       this.CheckFrozen();
@@ -743,9 +741,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object&#x27;s value to the current value plus the given integer.
-     * @param bigintVal The number to add.
-     * @return This instance.
+     * Not documented yet.
+     * @param bigintVal The parameter {@code bigintVal} is not documented yet.
+     * @return A FastInteger object.
      */
     FastInteger AddBig(EInteger bigintVal) {
       this.CheckFrozen();
@@ -769,9 +767,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object&#x27;s value to the current value minus the given integer.
-     * @param bigintVal The subtrahend.
-     * @return This instance.
+     * Not documented yet.
+     * @param bigintVal The parameter {@code bigintVal} is not documented yet.
+     * @return A FastInteger object.
      */
     FastInteger SubtractBig(EInteger bigintVal) {
       this.CheckFrozen();
@@ -846,10 +844,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Sets this object's value to the remainder of the current value divided by
-     * the given integer.
-     * @param divisor The divisor.
-     * @return This instance.
+     * Not documented yet.
+     * @param divisor The number to divide by.
+     * @return A FastInteger object.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     FastInteger Remainder(int divisor) {
@@ -950,8 +947,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Gets a value indicating whether this object&#x27;s value is even.
-     * @return True if this object's value is even; otherwise, false.
+     * Gets a value not documented yet.
+     * @return A value not documented yet.
      */
     final boolean isEvenNumber() {
         switch (this.integerMode) {
@@ -1088,8 +1085,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Converts this object to a text string.
-     * @return A string representation of this object.
+     * Not documented yet.
+     * @return A text string.
      */
     @Override public String toString() {
       switch (this.integerMode) {
@@ -1104,8 +1101,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Gets the sign of this object&#x27;s value.
-     * @return 1 if positive, -1 if negative, 0 if zero.
+     * Gets a value not documented yet.
+     * @return A value not documented yet.
      */
     final int signum() {
         switch (this.integerMode) {
@@ -1121,8 +1118,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
 
     /**
-     * Gets a value indicating whether this value is zero.
-     * @return True if this value is zero; otherwise, false.
+     * Gets a value not documented yet.
+     * @return A value not documented yet.
      */
     final boolean isValueZero() {
         switch (this.integerMode) {

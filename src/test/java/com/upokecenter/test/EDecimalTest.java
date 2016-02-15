@@ -1,9 +1,9 @@
 package com.upokecenter.test;
 
+import java.util.*;
 import org.junit.Assert;
 import org.junit.Test;
 import com.upokecenter.numbers.*;
-import java.util.*;
 
   public class EDecimalTest {
     private static final String[] ValueTestStrings = { "1.265e-4",
@@ -107,9 +107,9 @@ import java.util.*;
     private static void TestAddCloseExponent(FastRandom fr, int exp) {
 for (int i = 0; i < 1000; ++i) {
   EInteger exp1 = EInteger.FromInt32(exp)
-    .Add(EInteger.FromInt32(fr.NextValue(32) -16));
+    .Add(EInteger.FromInt32(fr.NextValue(32) - 16));
   EInteger exp2 = exp1
-    .Add(EInteger.FromInt32(fr.NextValue(18) -9));
+    .Add(EInteger.FromInt32(fr.NextValue(18) - 9));
   EInteger mant1 = RandomObjects.RandomEInteger(fr);
   EInteger mant2 = RandomObjects.RandomEInteger(fr);
   EDecimal decA = EDecimal.Create(mant1, exp1);
@@ -177,7 +177,7 @@ for (int i = 0; i < 1000; ++i) {
         TestCommon.CompareTestEqual(
 ba1,
 ba2,
-bigintA.toString() + "/" +bigintB.toString());
+bigintA.toString() + "/" + bigintB.toString());
       }
       TestCommon.CompareTestLess(EDecimal.Zero, EDecimal.NaN);
       TestCommon.CompareTestLess(
@@ -2241,10 +2241,6 @@ EDecimal.NegativeZero.Plus(null));
     }
     @Test
     public void TestRemainderNear() {
-      // not implemented yet
-    }
-    @Test
-    public void TestRoundToBinaryPrecision() {
       // not implemented yet
     }
     @Test

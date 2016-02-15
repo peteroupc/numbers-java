@@ -52,11 +52,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      2147483, 214748, 21474, 2147, 214, 21, 2
     };
 
-    // Conservative maximum base-10 radix power for
-    // TryMultiplyByRadix Power; derived from
-    // Integer.MAX_VALUE*8/3 (8 is the number of bits in a byte;
-    // 3 is a conservative estimate of log(10)/log(2).)
-    private static EInteger valueMaxDigits = EInteger.FromInt64(5726623058L);
     private static final EInteger ValueMinusOne = EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1));
 
     private static final int[] ValueTenPowers = {
@@ -89,6 +84,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     private final IRadixMathHelper<T> helper;
     private final int support;
     private final int thisRadix;
+
+    // Conservative maximum base-10 radix power for
+    // TryMultiplyByRadix Power; derived from
+    // Integer.MAX_VALUE*8/3 (8 is the number of bits in a byte;
+    // 3 is a conservative estimate of log(10)/log(2).)
+    private static EInteger valueMaxDigits = EInteger.FromInt64(5726623058L);
 
     public RadixMath(IRadixMathHelper<T> helper) {
       this.helper = helper;
@@ -4311,8 +4312,8 @@ boolean adjustNegativeZero,
 EContext ctx) {
       // If context has unlimited precision and exponent range,
       // and no discarded digits or shifting
-      boolean unlimitedPrecisionExp = (ctx == null ||
-         (!ctx.getHasMaxPrecision() && !ctx.getHasExponentRange()));
+      boolean unlimitedPrecisionExp = ctx == null ||
+         (!ctx.getHasMaxPrecision() && !ctx.getHasExponentRange());
       int thisFlags = this.helper.GetFlags(thisValue);
       if ((thisFlags & BigNumberFlags.FlagSpecial) != 0) {
         if ((thisFlags & BigNumberFlags.FlagSignalingNaN) != 0) {
@@ -4762,8 +4763,8 @@ neg ? BigNumberFlags.FlagNegative : 0);
       // DebugUtility.Log("" + accum.getShiftedInt() + ", exp=" + (//
       // adjExponent) + "/" + fastEMin);
       boolean recheckOverflow = false;
-      boolean doRounding = (accum.getDiscardedDigitCount().signum() != 0 ||
-        (accum.getLastDiscardedDigit() | accum.getOlderDiscardedDigits()) != 0);
+      boolean doRounding = accum.getDiscardedDigitCount().signum() != 0 ||
+        (accum.getLastDiscardedDigit() | accum.getOlderDiscardedDigits()) != 0;
       if (doRounding) {
         if (!bigmantissa.isValueZero()) {
           flags |= EContext.FlagRounded;
