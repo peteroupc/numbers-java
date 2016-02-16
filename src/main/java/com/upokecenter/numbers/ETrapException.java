@@ -41,7 +41,7 @@ private static final long serialVersionUID = 1L;
      * Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
      * only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.
      * @return The flag that specifies the kind of error (EContext.FlagXXX). This
-     * will only be one flag, such as. FlagInexact or FlagSubnormal.
+     * will only be one flag, such as. {@code FlagInexact} or FlagSubnormal.
      */
     public final int getError() {
         return this.error;

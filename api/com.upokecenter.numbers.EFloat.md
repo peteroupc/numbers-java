@@ -2943,7 +2943,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 **Throws:**
 
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is outside the range of a byte (from 0 to 255).
+ the truncated integer is less than 0 or greater than 255.
 
 ### ToByteUnchecked
     public byte ToByteUnchecked()
@@ -2967,9 +2967,11 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
+* <code>ArithmeticException</code> - This value is a finite number, but is not an
+ exact integer.
+
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the number can't fit in a byte (from 0 to 255) without rounding to a
- different numerical value.
+ the integer is less than 0 or greater than 255.
 
 ### FromByte
     public static EFloat FromByte(byte inputByte)
@@ -2995,8 +2997,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is outside the range of a 16-bit signed
- integer.
+ the truncated integer is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -3021,9 +3022,11 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
+* <code>ArithmeticException</code> - This value is a finite number, but is not an
+ exact integer.
+
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the number can't fit in a 16-bit signed integer without rounding to a
- different numerical value.
+ the integer is less than -32768 or greater than 32767.
 
 ### FromInt16
     public static EFloat FromInt16(short inputInt16)
@@ -3049,8 +3052,8 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is outside the range of a 32-bit signed
- integer.
+ the truncated integer is less than -2147483648 or greater than
+ 2147483647.
 
 ### ToInt32Unchecked
     public int ToInt32Unchecked()
@@ -3075,9 +3078,11 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
+* <code>ArithmeticException</code> - This value is a finite number, but is not an
+ exact integer.
+
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the number can't fit in a 32-bit signed integer without rounding to a
- different numerical value.
+ the integer is less than -2147483648 or greater than 2147483647.
 
 ### FromInt32
     public static EFloat FromInt32(int inputInt32)
@@ -3103,8 +3108,8 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is outside the range of a 64-bit signed
- integer.
+ the truncated integer is less than -9223372036854775808 or greater
+ than 9223372036854775807.
 
 ### ToInt64Unchecked
     public long ToInt64Unchecked()
@@ -3129,9 +3134,12 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
+* <code>ArithmeticException</code> - This value is a finite number, but is not an
+ exact integer.
+
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the number can't fit in a 64-bit signed integer without rounding to a
- different numerical value.
+ the integer is less than -9223372036854775808 or greater than
+ 9223372036854775807.
 
 ### FromInt64
     public static EFloat FromInt64(long inputInt64)

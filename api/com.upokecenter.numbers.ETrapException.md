@@ -79,4 +79,4 @@ Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
 **Returns:**
 
 * The flag that specifies the kind of error (EContext.FlagXXX). This
- will only be one flag, such as. FlagInexact or FlagSubnormal.
+ will only be one flag, such as. <code>FlagInexact</code> or FlagSubnormal.

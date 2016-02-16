@@ -5903,8 +5903,8 @@ count);
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255).
      * @return This number's value as a byte (from 0 to 255).
-     * @throws java.lang.ArithmeticException This value is outside the range of a byte
-     * (from 0 to 255).
+     * @throws java.lang.ArithmeticException This value is less than 0 or greater than
+     * 255.
      */
 public byte ToByteChecked() {
  int val = this.ToInt32Checked();
@@ -5938,8 +5938,8 @@ public static EInteger FromByte(byte inputByte) {
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer.
      * @return This number's value as a 16-bit signed integer.
-     * @throws java.lang.ArithmeticException This value is outside the range of a 16-bit
-     * signed integer.
+     * @throws java.lang.ArithmeticException This value is less than -32768 or greater
+     * than 32767.
      */
 public short ToInt16Checked() {
  int val = this.ToInt32Checked();

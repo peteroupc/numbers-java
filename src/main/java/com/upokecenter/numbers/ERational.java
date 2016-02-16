@@ -1928,7 +1928,7 @@ int flags) {
      * byte (from 0 to 255) after truncating to an integer.
      * @return This number's value, truncated to a byte (from 0 to 255).
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is outside the range of a byte (from 0 to 255).
+     * the truncated integer is less than 0 or greater than 255.
      */
 public byte ToByteChecked() {
  return this.ToEInteger().ToByteChecked();
@@ -1942,16 +1942,17 @@ public byte ToByteChecked() {
      * value is infinity or not-a-number.
      */
 public byte ToByteUnchecked() {
- return this.ToEInteger().ToByteUnchecked();
+ return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
 }
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) without rounding to a different numerical value.
      * @return This number's value as a byte (from 0 to 255).
+     * @throws ArithmeticException This value is a finite number, but is not an
+     * exact integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the number can't fit in a byte (from 0 to 255) without rounding to a
-     * different numerical value.
+     * the integer is less than 0 or greater than 255.
      */
 public byte ToByteIfExact() {
  return this.ToEIntegerIfExact().ToByteChecked();
@@ -1972,8 +1973,7 @@ public static ERational FromByte(byte inputByte) {
      * 16-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is outside the range of a 16-bit signed
-     * integer.
+     * the truncated integer is less than -32768 or greater than 32767.
      */
 public short ToInt16Checked() {
  return this.ToEInteger().ToInt16Checked();
@@ -1987,7 +1987,7 @@ public short ToInt16Checked() {
      * value is infinity or not-a-number.
      */
 public short ToInt16Unchecked() {
- return this.ToEInteger().ToInt16Unchecked();
+ return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
 }
 
     /**
@@ -1995,9 +1995,10 @@ public short ToInt16Unchecked() {
      * 16-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 16-bit signed integer.
+     * @throws ArithmeticException This value is a finite number, but is not an
+     * exact integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the number can't fit in a 16-bit signed integer without rounding to a
-     * different numerical value.
+     * the integer is less than -32768 or greater than 32767.
      */
 public short ToInt16IfExact() {
  return this.ToEIntegerIfExact().ToInt16Checked();
@@ -2018,8 +2019,8 @@ public static ERational FromInt16(short inputInt16) {
      * 32-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 32-bit signed integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is outside the range of a 32-bit signed
-     * integer.
+     * the truncated integer is less than -2147483648 or greater than
+     * 2147483647.
      */
 public int ToInt32Checked() {
  return this.ToEInteger().ToInt32Checked();
@@ -2033,7 +2034,7 @@ public int ToInt32Checked() {
      * value is infinity or not-a-number.
      */
 public int ToInt32Unchecked() {
- return this.ToEInteger().ToInt32Unchecked();
+ return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
 }
 
     /**
@@ -2041,9 +2042,10 @@ public int ToInt32Unchecked() {
      * 32-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 32-bit signed integer.
+     * @throws ArithmeticException This value is a finite number, but is not an
+     * exact integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the number can't fit in a 32-bit signed integer without rounding to a
-     * different numerical value.
+     * the integer is less than -2147483648 or greater than 2147483647.
      */
 public int ToInt32IfExact() {
  return this.ToEIntegerIfExact().ToInt32Checked();
@@ -2063,8 +2065,8 @@ public static ERational FromInt32(int inputInt32) {
      * 64-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 64-bit signed integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is outside the range of a 64-bit signed
-     * integer.
+     * the truncated integer is less than -9223372036854775808 or greater
+     * than 9223372036854775807.
      */
 public long ToInt64Checked() {
  return this.ToEInteger().ToInt64Checked();
@@ -2078,7 +2080,7 @@ public long ToInt64Checked() {
      * value is infinity or not-a-number.
      */
 public long ToInt64Unchecked() {
- return this.ToEInteger().ToInt64Unchecked();
+ return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : (long)0;
 }
 
     /**
@@ -2086,9 +2088,11 @@ public long ToInt64Unchecked() {
      * 64-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 64-bit signed integer.
+     * @throws ArithmeticException This value is a finite number, but is not an
+     * exact integer.
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the number can't fit in a 64-bit signed integer without rounding to a
-     * different numerical value.
+     * the integer is less than -9223372036854775808 or greater than
+     * 9223372036854775807.
      */
 public long ToInt64IfExact() {
  return this.ToEIntegerIfExact().ToInt64Checked();

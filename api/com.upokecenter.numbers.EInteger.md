@@ -1022,8 +1022,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is outside the range of a byte
- (from 0 to 255).
+* <code>ArithmeticException</code> - This value is less than 0 or greater than
+ 255.
 
 ### ToByteUnchecked
     public byte ToByteUnchecked()
@@ -1057,8 +1057,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is outside the range of a 16-bit
- signed integer.
+* <code>ArithmeticException</code> - This value is less than -32768 or greater
+ than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()

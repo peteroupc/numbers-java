@@ -266,9 +266,9 @@ Gets a value indicating whether the EMax and EMin properties refer to the
 
 **Returns:**
 
-* true if the EMax and EMin properties refer to the number's Exponent
- property adjusted to the number's precision, or false if they refer
- to just the number's Exponent property.
+* <code>true</code> if the EMax and EMin properties refer to the number's
+ Exponent property adjusted to the number's precision, or false if
+ they refer to just the number's Exponent property.
 
 ### getClampNormalExponents
     public final boolean getClampNormalExponents()
@@ -328,7 +328,8 @@ Gets the flags that are set from converting numbers according to this
 **Returns:**
 
 * The flags that are set from converting numbers according to this
- arithmetic context. If. HasFlags is false, this value will be 0.
+ arithmetic context. If. <code>HasFlags</code> is false, this value will be
+ 0.
 
 ### setFlags
     public final void setFlags(int value)
@@ -340,8 +341,8 @@ Gets a value indicating whether this context defines a minimum and maximum
 
 **Returns:**
 
-* true if this context defines a minimum and maximum exponent;
- otherwise, false .
+* <code>true</code> if this context defines a minimum and maximum exponent;
+ otherwise, <code>false</code> .
 
 ### getHasFlags
     public final boolean getHasFlags()
@@ -349,7 +350,8 @@ Gets a value indicating whether this context has a mutable Flags field.
 
 **Returns:**
 
-* true if this context has a mutable Flags field; otherwise, false .
+* <code>true</code> if this context has a mutable Flags field; otherwise,
+ <code>false</code> .
 
 ### getHasMaxPrecision
     public final boolean getHasMaxPrecision()
@@ -357,7 +359,8 @@ Gets a value indicating whether this context defines a maximum precision.
 
 **Returns:**
 
-* true if this context defines a maximum precision; otherwise, false .
+* <code>true</code> if this context defines a maximum precision; otherwise,
+ <code>false</code> .
 
 ### isPrecisionInBits
     public final boolean isPrecisionInBits()
@@ -366,8 +369,8 @@ Gets a value indicating whether this context's Precision property is in
 
 **Returns:**
 
-* true if this context's Precision property is in bits, rather than
- digits; otherwise, false. The default is false.
+* <code>true</code> if this context's Precision property is in bits, rather
+ than digits; otherwise, <code>false</code>. The default is false.
 
 ### isSimplified
     public final boolean isSimplified()
@@ -378,7 +381,8 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
 
 **Returns:**
 
-* true if a "simplified" arithmetic will be used; otherwise, false.
+* <code>true</code> if a "simplified" arithmetic will be used; otherwise,
+ <code>false</code>.
 
 ### getPrecision
     public final EInteger getPrecision()
@@ -477,8 +481,8 @@ Determines whether a number can have the given Exponent property under this
 
 **Returns:**
 
-* true if a number can have the given Exponent property under this
- arithmetic context; otherwise, false . If this context allows
+* <code>true</code> if a number can have the given Exponent property under
+ this arithmetic context; otherwise, false . If this context allows
  unlimited precision, returns true for the exponent EMax and any
  exponent less than EMax.
 

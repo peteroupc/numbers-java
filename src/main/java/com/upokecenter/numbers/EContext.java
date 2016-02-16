@@ -243,9 +243,9 @@ boolean clampNormalExponents) {
      * this value to false (using WithAdjustExponent) is useful for modeling
      * floating point representations with an integer mantissa (significand)
      * and an integer exponent, such as Java's BigDecimal.
-     * @return true if the EMax and EMin properties refer to the number's Exponent
-     * property adjusted to the number's precision, or false if they refer
-     * to just the number's Exponent property.
+     * @return {@code true} if the EMax and EMin properties refer to the number's
+     * Exponent property adjusted to the number's precision, or false if
+     * they refer to just the number's Exponent property.
      */
     public final boolean getAdjustExponent() {
         return this.adjustExponent;
@@ -305,7 +305,8 @@ boolean clampNormalExponents) {
      * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
      * 0</code> returns <code>true</code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
-     * arithmetic context. If. HasFlags is false, this value will be 0.
+     * arithmetic context. If. {@code HasFlags} is false, this value will be
+     * 0.
      */
     public final int getFlags() {
         return this.flags;
@@ -321,8 +322,8 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context defines a minimum and maximum
      * exponent. If false, converted exponents can have any exponent and
      * operations can't cause overflow or underflow.
-     * @return true if this context defines a minimum and maximum exponent;
-     * otherwise, false .
+     * @return {@code true} if this context defines a minimum and maximum exponent;
+     * otherwise, {@code false} .
      */
     public final boolean getHasExponentRange() {
         return this.hasExponentRange;
@@ -330,7 +331,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context has a mutable Flags field.
-     * @return true if this context has a mutable Flags field; otherwise, false .
+     * @return {@code true} if this context has a mutable Flags field; otherwise,
+     * {@code false} .
      */
     public final boolean getHasFlags() {
         return this.hasFlags;
@@ -338,7 +340,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
-     * @return true if this context defines a maximum precision; otherwise, false .
+     * @return {@code true} if this context defines a maximum precision; otherwise,
+     * {@code false} .
      */
     public final boolean getHasMaxPrecision() {
         return !this.bigintPrecision.isZero();
@@ -347,8 +350,8 @@ public final void setFlags(int value) {
     /**
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
-     * @return true if this context's Precision property is in bits, rather than
-     * digits; otherwise, false. The default is false.
+     * @return {@code true} if this context's Precision property is in bits, rather
+     * than digits; otherwise, {@code false}. The default is false.
      */
     public final boolean isPrecisionInBits() {
         return this.precisionInBits;
@@ -360,7 +363,8 @@ public final void setFlags(int value) {
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
   * href='http://speleotrove.com/decimal/dax3274.html'>http://speleotrove.com/decimal/dax3274.html</a>
-     * @return true if a "simplified" arithmetic will be used; otherwise, false.
+     * @return {@code true} if a "simplified" arithmetic will be used; otherwise,
+     * {@code false}.
      */
     public final boolean isSimplified() {
         return this.simplified;
@@ -500,8 +504,8 @@ false).WithUnlimitedExponents();
      * arithmetic context.
      * @param exponent An arbitrary-precision integer indicating the desired
      * exponent.
-     * @return true if a number can have the given Exponent property under this
-     * arithmetic context; otherwise, false . If this context allows
+     * @return {@code true} if a number can have the given Exponent property under
+     * this arithmetic context; otherwise, false . If this context allows
      * unlimited precision, returns true for the exponent EMax and any
      * exponent less than EMax.
      * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
