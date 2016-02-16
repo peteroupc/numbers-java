@@ -150,14 +150,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
               longV &= 0xFFFFFFFFL;
               longV |= (((long)this.data[1]) << 32);
               longV = (longV * multiplicand);
-              this.data[0 ] = ((int)longV);
-              this.data[1 ] = ((int)(longV >> 32));
+              this.data[0] = ((int)longV);
+              this.data[1] = ((int)(longV >> 32));
               carry = 0;
             } else if (this.wordCount == 1) {
               long longV = ((long)this.data[0]);
               longV &= 0xFFFFFFFFL;
               longV = (longV * multiplicand);
-              this.data[0 ] = ((int)longV);
+              this.data[0] = ((int)longV);
               carry = ((int)(longV >> 32));
             } else {
             for (int i = 0; i < this.wordCount; ++i) {
@@ -195,7 +195,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
               long longV = ((long)this.data[0]);
               longV &= 0xFFFFFFFFL;
               longV = (longV * multiplicand);
-              this.data[0 ] = ((int)longV);
+              this.data[0] = ((int)longV);
               carry = ((int)(longV >> 32));
             } else {
             for (int i = 0; i < this.wordCount; ++i) {

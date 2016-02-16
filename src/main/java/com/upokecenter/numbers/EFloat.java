@@ -161,7 +161,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} if this object is finite (not infinity or not-a-number
+     * @return {@code true} If this object is finite (not infinity or not-a-number
      * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
@@ -172,7 +172,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return {@code true} if this object is negative, including negative zero;
+     * @return {@code true} If this object is negative, including negative zero;
      * otherwise, {@code false}.
      */
     public final boolean isNegative() {
@@ -181,7 +181,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * @return {@code true} If this object's value equals 0; otherwise, . {@code
      * false}.
      */
     public final boolean isZero() {
@@ -219,6 +219,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Creates a number with the value exponent*2^mantissa (significand).
+     * @param mantissaSmall The parameter {@code mantissaSmall} is not documented
+     * yet.
+     * @param exponentSmall The parameter {@code exponentSmall} is not documented
+     * yet.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
@@ -227,6 +231,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Creates a number with the value exponent*2^mantissa (significand).
+     * @param mantissa The parameter {@code mantissa} is not documented yet.
+     * @param exponent The parameter {@code exponent} is not documented yet.
      * @return An arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter "mantissa (significand)"
      * or {@code exponent} is null.
@@ -1281,7 +1287,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * are equal to those of another object.
      * @param other An arbitrary-precision binary float.
      * @return {@code true} if this object's mantissa (significand) and exponent
-     * are equal to those of another object; otherwise, false .
+     * are equal to those of another object; otherwise, {@code false}.
      */
     public boolean equals(EFloat other) {
       return this.EqualsInternal(other);
@@ -1292,7 +1298,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * are equal to those of another object and that other object is an
      * arbitrary-precision binary float.
      * @param obj An arbitrary object.
-     * @return {@code true} if the objects are equal; otherwise, false .
+     * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
       return this.EqualsInternal(((obj instanceof EFloat) ? (EFloat)obj : null));
@@ -1303,7 +1309,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * are equal to those of another object.
      * @param otherValue An arbitrary-precision binary float.
      * @return {@code true} if this object's mantissa (significand) and exponent
-     * are equal to those of another object; otherwise, false .
+     * are equal to those of another object; otherwise, {@code false}.
      */
     public boolean EqualsInternal(EFloat otherValue) {
       if (otherValue == null) {
@@ -1352,7 +1358,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * Gets a value indicating whether this object is positive or negative
      * infinity.
      * @return {@code true} if this object is positive or negative infinity;
-     * otherwise, false .
+     * otherwise, {@code false}.
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1360,8 +1366,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Gets a value indicating whether this object is not a number (NaN).
-     * @return {@code true} if this object is not a number (NaN); otherwise, false
-     * .
+     * @return {@code true} if this object is not a number (NaN); otherwise, {@code
+     * false}.
      */
     public boolean IsNaN() {
       return (this.flags & (BigNumberFlags.FlagQuietNaN |
@@ -1370,7 +1376,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return {@code true} if this object is negative infinity; otherwise, false .
+     * @return {@code true} if this object is negative infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1380,7 +1387,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return {@code true} if this object is positive infinity; otherwise, false .
+     * @return {@code true} if this object is positive infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1390,7 +1398,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
     /**
      * Gets a value indicating whether this object is a quiet not-a-number value.
      * @return {@code true} if this object is a quiet not-a-number value;
-     * otherwise, false .
+     * otherwise, {@code false}.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1400,7 +1408,7 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * Gets a value indicating whether this object is a signaling not-a-number
      * value.
      * @return {@code true} if this object is a signaling not-a-number value;
-     * otherwise, false .
+     * otherwise, {@code false}.
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -2198,7 +2206,7 @@ this.flags ^ BigNumberFlags.FlagNegative);
     /**
      * Returns a binary number with the same value as this object but rounded to
      * the given exponent.
-     * @param exponent An EInteger object.
+     * @param exponent An arbitrary-precision integer.
      * @param rounding An ERounding object.
      * @return A binary number rounded to the closest value representable in the
      * given precision.
@@ -2592,7 +2600,12 @@ EContext ctx) {
     }
 
     /**
-     *
+     * Converts this value to an arbitrary-precision integer, checking whether the
+     * value contains a fractional part.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToEIntegerIfExact() {
       return this.ToEIntegerInternal(true);
@@ -2999,6 +3012,9 @@ olderDigits);
 
     /**
      * This is an internal method.
+     * @param mantissa The parameter {@code mantissa} is not documented yet.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param flags The parameter {@code flags} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
       public EFloat CreateNewWithFlags(
@@ -3036,6 +3052,7 @@ flags);
       }
     }
         // Begin integer conversions
+
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after truncating to an integer.

@@ -471,6 +471,8 @@ Renamed to Sqrt.
 Renamed to ToEIntegerIfExact.
  Renamed to ToEIntegerIfExact.
 * `EInteger ToEIntegerIfExact()`<br>
+ Converts this value to an arbitrary-precision integer, checking whether the
+ value contains a fractional part.
 * `String ToEngineeringString()`<br>
  Converts this value to an arbitrary-precision decimal number, then returns
  the value of that decimal's ToEngineeringString method.
@@ -570,7 +572,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is finite (not infinity or not-a-number
+* <code>true</code> If this object is finite (not infinity or not-a-number
  (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
@@ -580,7 +582,7 @@ Gets a value indicating whether this object is negative, including negative
 
 **Returns:**
 
-* <code>true</code> if this object is negative, including negative zero;
+* <code>true</code> If this object is negative, including negative zero;
  otherwise, <code>false</code>.
 
 ### isZero
@@ -589,7 +591,7 @@ Gets a value indicating whether this object&#x27;s value equals 0.
 
 **Returns:**
 
-* <code>true</code> if this object's value equals 0; otherwise, <code>false</code>.
+* <code>true</code> If this object's value equals 0; otherwise, . <code>false</code>.
 
 ### getMantissa
     public final EInteger getMantissa()
@@ -620,6 +622,14 @@ Gets the absolute value of this object&#x27;s unscaled value.
     public static EFloat Create(int mantissaSmall, int exponentSmall)
 Creates a number with the value exponent*2^mantissa (significand).
 
+**Parameters:**
+
+* <code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is not documented
+ yet.
+
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
+
 **Returns:**
 
 * An arbitrary-precision binary float.
@@ -627,6 +637,12 @@ Creates a number with the value exponent*2^mantissa (significand).
 ### Create
     public static EFloat Create(EInteger mantissa, EInteger exponent)
 Creates a number with the value exponent*2^mantissa (significand).
+
+**Parameters:**
+
+* <code>mantissa</code> - The parameter <code>mantissa</code> is not documented yet.
+
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
 **Returns:**
 
@@ -1557,7 +1573,7 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 **Returns:**
 
 * <code>true</code> if this object's mantissa (significand) and exponent
- are equal to those of another object; otherwise, false .
+ are equal to those of another object; otherwise, <code>false</code>.
 
 ### equals
     public boolean equals(Object obj)
@@ -1575,7 +1591,7 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, false .
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
 
 ### EqualsInternal
     public boolean EqualsInternal(EFloat otherValue)
@@ -1589,7 +1605,7 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 **Returns:**
 
 * <code>true</code> if this object's mantissa (significand) and exponent
- are equal to those of another object; otherwise, false .
+ are equal to those of another object; otherwise, <code>false</code>.
 
 ### Exp
     public EFloat Exp(EContext ctx)
@@ -1634,7 +1650,7 @@ Gets a value indicating whether this object is positive or negative
 **Returns:**
 
 * <code>true</code> if this object is positive or negative infinity;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -1642,8 +1658,7 @@ Gets a value indicating whether this object is not a number (NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is not a number (NaN); otherwise, false
- .
+* <code>true</code> if this object is not a number (NaN); otherwise, <code>false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -1651,7 +1666,7 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* <code>true</code> if this object is negative infinity; otherwise, false .
+* <code>true</code> if this object is negative infinity; otherwise, <code>false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -1659,7 +1674,7 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* <code>true</code> if this object is positive infinity; otherwise, false .
+* <code>true</code> if this object is positive infinity; otherwise, <code>false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -1668,7 +1683,7 @@ Gets a value indicating whether this object is a quiet not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a quiet not-a-number value;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -1678,7 +1693,7 @@ Gets a value indicating whether this object is a signaling not-a-number
 **Returns:**
 
 * <code>true</code> if this object is a signaling not-a-number value;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### Log
     public EFloat Log(EContext ctx)
@@ -2500,7 +2515,7 @@ Returns a binary number with the same value as this object but rounded to
 
 **Parameters:**
 
-* <code>exponent</code> - An EInteger object.
+* <code>exponent</code> - An arbitrary-precision integer.
 
 * <code>rounding</code> - An ERounding object.
 
@@ -2837,6 +2852,20 @@ Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
 
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
+Converts this value to an arbitrary-precision integer, checking whether the
+ value contains a fractional part.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This object's value is infinity or
+ not-a-number (NaN).
+
+* <code>ArithmeticException</code> - This object's value is not an exact integer.
+
 ### ToEngineeringString
     public String ToEngineeringString()
 Converts this value to an arbitrary-precision decimal number, then returns

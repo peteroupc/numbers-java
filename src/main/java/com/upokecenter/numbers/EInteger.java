@@ -100,7 +100,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return {@code true} if this value is even; otherwise, {@code false}.
+     * @return {@code true} If this value is even; otherwise, {@code false} .
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -108,8 +108,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return {@code true} if this object's value is a power of two; otherwise,
-     * {@code false} .
+     * @return {@code true} If this object's value is a power of two; otherwise,
+     * {@code false}.
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -121,7 +121,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return {@code true} if this value is 0; otherwise, {@code false}.
+     * @return {@code true} If this value is 0; otherwise, {@code false} .
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -155,7 +155,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * ones. For example, the number -450 can be encoded as {@code 0xfe,
      * 0x70} and -52869 as {@code 0xff, 0x31, 0x7b}. (Note that the second
      * example contains a cleared high bit in {@code 0x31, 0x7b}, so an
-     * additional 0xFF is added at the start to ensure it's interpreted as
+     * additional 0xff is added at the start to ensure it's interpreted as
      * negative.)</li></ul> <p>For little-endian, the byte order is reversed
      * from the byte order just discussed.</p>.
      * @param littleEndian If true, the byte order is little-endian, or
@@ -328,21 +328,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Converts a string to an arbitrary-precision integer.
-     * @param str A text string. The string must contain only characters allowed by
-     * the given radix, except that it may start with a minus sign ("-",
-     * U + 002D) to indicate a negative number. The string is not allowed to
-     * contain white space characters, including spaces.
-     * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-     * A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16.
-     * @return An arbitrary-precision integer with the same value as given in the
-     * string.
+     * Not documented yet.
+     * @param str The parameter {@code str} is not documented yet.
+     * @param radix The parameter {@code radix} is not documented yet.
+     * @return An arbitrary-precision integer.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException The parameter {@code radix} is less than 2
-     * or greater than 36.
-     * @throws java.lang.NumberFormatException The string is empty or in an invalid format.
      */
     public static EInteger FromRadixString(String str, int radix) {
       if (str == null) {
@@ -915,7 +905,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
@@ -942,7 +932,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
@@ -956,7 +946,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Returns whether this object's value can fit in a 32-bit signed integer.
      * @return {@code true} if this object's value is Integer.MIN_VALUE or greater,
-     * and Integer.MAX_VALUE or less; otherwise, false .
+     * and Integer.MAX_VALUE or less; otherwise, {@code false}.
      */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
@@ -973,7 +963,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Returns whether this object's value can fit in a 64-bit signed integer.
      * @return {@code true} if this object's value is Long.MIN_VALUE or greater,
-     * and Long.MAX_VALUE or less; otherwise, false .
+     * and Long.MAX_VALUE or less; otherwise, {@code false}.
      */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
@@ -1161,12 +1151,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
              words1Size);
             break;
           case 10:
-            smallRemainder = ((int)FastDivideAndRemainderTen(
+            smallRemainder = (int)FastDivideAndRemainderTen(
              quotient,
              0,
              this.words,
              0,
-             words1Size));
+             words1Size);
             break;
           default:
             // DebugUtility.Log("smalldiv=" + (divisor.words[0]));
@@ -1252,7 +1242,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
      * @return {@code true} if this object and another object are equal; otherwise,
-     * false .
+     * {@code false}.
      */
     @Override public boolean equals(Object obj) {
       EInteger other = ((obj instanceof EInteger) ? (EInteger)obj : null);
@@ -1696,12 +1686,12 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
-     * object's value.
+     * object' s value.
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
      * @return {@code true} if a bit is set in the two's-complement form (see
-     * {@link com.upokecenter.numbers.EDecimal}) of this object's value;
-     * otherwise, false .
+     * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
+     * otherwise, {@code false}.
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -2546,7 +2536,7 @@ int subtrahendCount) {
 
     /**
      * Returns a byte array of this integer&#x27;s value. The byte array will take
-     * the number's two's-complement form (see {@link
+     * the number's two' s-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
@@ -2649,7 +2639,7 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
@@ -2699,7 +2689,7 @@ int subtrahendCount) {
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
@@ -5899,6 +5889,7 @@ count);
       return new EInteger[] { bigintX, bigintY };
     }
         // Begin integer conversions
+
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255).
@@ -5916,7 +5907,7 @@ public byte ToByteChecked() {
 
     /**
      * Converts this number to a byte (from 0 to 255), returning the
-     * least-significant bits of this number's two's-complement form.
+     * least-significant bits of this number's two' s-complement form.
      * @return This number, converted to a byte (from 0 to 255).
      */
 public byte ToByteUnchecked() {
@@ -5951,7 +5942,7 @@ public short ToInt16Checked() {
 
     /**
      * Converts this number to a 16-bit signed integer, returning the
-     * least-significant bits of this number's two's-complement form.
+     * least-significant bits of this number's two' s-complement form.
      * @return This number, converted to a 16-bit signed integer.
      */
 public short ToInt16Unchecked() {

@@ -50,9 +50,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     @Override public int hashCode() {
       int hash = (31 + this.integerMode);
       if (this.integerMode == 0) {
-       hash = (hash * 31 + this.smallValue);
+       hash = ((hash * 31) + this.smallValue);
       } else if (this.integerMode == 1) {
-       hash = (hash * 31 + this.largeValue.hashCode());
+       hash = ((hash * 31) + this.largeValue.hashCode());
       }
       return hash;
     }

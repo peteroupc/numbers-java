@@ -126,10 +126,10 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
      * An arithmetic context for the .NET Framework decimal format (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
-     * rounding mode is HalfEven. (The "Cli" stands for "Common Language
-     * Infrastructure", which defined this format as the .NET Framework
-     * decimal format in version 1, but leaves it unspecified in later
-     * versions.)
+     * rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
+     * Language Infrastructure", which defined this format as the .NET
+     * Framework decimal format in version 1, but leaves it unspecified in
+     * later versions.).
      */
 
     public static final EContext CliDecimal =
@@ -243,7 +243,7 @@ boolean clampNormalExponents) {
      * this value to false (using WithAdjustExponent) is useful for modeling
      * floating point representations with an integer mantissa (significand)
      * and an integer exponent, such as Java's BigDecimal.
-     * @return {@code true} if the EMax and EMin properties refer to the number's
+     * @return {@code true} If the EMax and EMin properties refer to the number's
      * Exponent property adjusted to the number's precision, or false if
      * they refer to just the number's Exponent property.
      */
@@ -322,8 +322,8 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context defines a minimum and maximum
      * exponent. If false, converted exponents can have any exponent and
      * operations can't cause overflow or underflow.
-     * @return {@code true} if this context defines a minimum and maximum exponent;
-     * otherwise, {@code false} .
+     * @return {@code true} If this context defines a minimum and maximum exponent;
+     * otherwise, {@code false}.
      */
     public final boolean getHasExponentRange() {
         return this.hasExponentRange;
@@ -331,8 +331,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context has a mutable Flags field.
-     * @return {@code true} if this context has a mutable Flags field; otherwise,
-     * {@code false} .
+     * @return {@code true} If this context has a mutable Flags field; otherwise,
+     * {@code false}.
      */
     public final boolean getHasFlags() {
         return this.hasFlags;
@@ -340,8 +340,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
-     * @return {@code true} if this context defines a maximum precision; otherwise,
-     * {@code false} .
+     * @return {@code true} If this context defines a maximum precision; otherwise,
+     * {@code false}.
      */
     public final boolean getHasMaxPrecision() {
         return !this.bigintPrecision.isZero();
@@ -350,7 +350,7 @@ public final void setFlags(int value) {
     /**
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
-     * @return {@code true} if this context's Precision property is in bits, rather
+     * @return {@code true} If this context's Precision property is in bits, rather
      * than digits; otherwise, {@code false}. The default is false.
      */
     public final boolean isPrecisionInBits() {
@@ -362,8 +362,9 @@ public final void setFlags(int value) {
      * simplified arithmetic, infinity, not-a-number, and subnormal numbers
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
-  * href='http://speleotrove.com/decimal/dax3274.html'>http://speleotrove.com/decimal/dax3274.html</a>
-     * @return {@code true} if a "simplified" arithmetic will be used; otherwise,
+     * href='http://speleotrove.com/decimal/dax3274.html'>
+     * <code>http://speleotrove.com/decimal/dax3274.html</code></a>
+     * @return {@code true} If a "simplified" arithmetic will be used; otherwise,
      * {@code false}.
      */
     public final boolean isSimplified() {
@@ -505,9 +506,9 @@ false).WithUnlimitedExponents();
      * @param exponent An arbitrary-precision integer indicating the desired
      * exponent.
      * @return {@code true} if a number can have the given Exponent property under
-     * this arithmetic context; otherwise, false . If this context allows
-     * unlimited precision, returns true for the exponent EMax and any
-     * exponent less than EMax.
+     * this arithmetic context; otherwise, {@code false}. If this context
+     * allows unlimited precision, returns true for the exponent EMax and
+     * any exponent less than EMax.
      * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
      */
     public boolean ExponentWithinRange(EInteger exponent) {

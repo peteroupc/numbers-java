@@ -230,10 +230,10 @@ An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
     public static final EContext CliDecimal
 An arithmetic context for the .NET Framework decimal format (see <code>"Forms of numbers"</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
- rounding mode is HalfEven. (The "Cli" stands for "Common Language
- Infrastructure", which defined this format as the .NET Framework
- decimal format in version 1, but leaves it unspecified in later
- versions.)
+ rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
+ Language Infrastructure", which defined this format as the .NET
+ Framework decimal format in version 1, but leaves it unspecified in
+ later versions.).
 ### Decimal128
     public static final EContext Decimal128
 An arithmetic context for the IEEE-754-2008 decimal128 format. The default
@@ -266,7 +266,7 @@ Gets a value indicating whether the EMax and EMin properties refer to the
 
 **Returns:**
 
-* <code>true</code> if the EMax and EMin properties refer to the number's
+* <code>true</code> If the EMax and EMin properties refer to the number's
  Exponent property adjusted to the number's precision, or false if
  they refer to just the number's Exponent property.
 
@@ -341,8 +341,8 @@ Gets a value indicating whether this context defines a minimum and maximum
 
 **Returns:**
 
-* <code>true</code> if this context defines a minimum and maximum exponent;
- otherwise, <code>false</code> .
+* <code>true</code> If this context defines a minimum and maximum exponent;
+ otherwise, <code>false</code>.
 
 ### getHasFlags
     public final boolean getHasFlags()
@@ -350,8 +350,8 @@ Gets a value indicating whether this context has a mutable Flags field.
 
 **Returns:**
 
-* <code>true</code> if this context has a mutable Flags field; otherwise,
- <code>false</code> .
+* <code>true</code> If this context has a mutable Flags field; otherwise,
+ <code>false</code>.
 
 ### getHasMaxPrecision
     public final boolean getHasMaxPrecision()
@@ -359,8 +359,8 @@ Gets a value indicating whether this context defines a maximum precision.
 
 **Returns:**
 
-* <code>true</code> if this context defines a maximum precision; otherwise,
- <code>false</code> .
+* <code>true</code> If this context defines a maximum precision; otherwise,
+ <code>false</code>.
 
 ### isPrecisionInBits
     public final boolean isPrecisionInBits()
@@ -369,7 +369,7 @@ Gets a value indicating whether this context's Precision property is in
 
 **Returns:**
 
-* <code>true</code> if this context's Precision property is in bits, rather
+* <code>true</code> If this context's Precision property is in bits, rather
  than digits; otherwise, <code>false</code>. The default is false.
 
 ### isSimplified
@@ -377,11 +377,12 @@ Gets a value indicating whether this context's Precision property is in
 Gets a value indicating whether to use a "simplified" arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
- zero. For further details, see http://speleotrove.com/decimal/dax3274.html
+ zero. For further details, see
+ <code>http://speleotrove.com/decimal/dax3274.html</code>
 
 **Returns:**
 
-* <code>true</code> if a "simplified" arithmetic will be used; otherwise,
+* <code>true</code> If a "simplified" arithmetic will be used; otherwise,
  <code>false</code>.
 
 ### getPrecision
@@ -482,9 +483,9 @@ Determines whether a number can have the given Exponent property under this
 **Returns:**
 
 * <code>true</code> if a number can have the given Exponent property under
- this arithmetic context; otherwise, false . If this context allows
- unlimited precision, returns true for the exponent EMax and any
- exponent less than EMax.
+ this arithmetic context; otherwise, <code>false</code>. If this context
+ allows unlimited precision, returns true for the exponent EMax and
+ any exponent less than EMax.
 
 **Throws:**
 

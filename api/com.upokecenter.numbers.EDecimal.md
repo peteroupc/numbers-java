@@ -5,7 +5,7 @@
 Represents an arbitrary-precision decimal floating-point number. (The "E"
  stands for "extended", meaning that instances of this class can be
  values other than numbers proper, such as infinity and not-a-number.)
- <p><b>About decimal arithmetic</b></p> <p>Decimal (base-10)
+ <p><b>About decimal arithmetic</b> </p> <p>Decimal (base-10)
  arithmetic, such as that provided by this class, is appropriate for
  calculations involving such real-world data as prices and other sums
  of money, tax rates, and measurements. These calculations often
@@ -15,14 +15,14 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  rounding is a decimal number (for example, multiplying a price by a
  premium rate, then rounding, should result in a decimal amount of
  money).</p> <p>On the other hand, most implementations of
- <code>float</code> and <code>double</code>, including in C# and Java, store
+ <code>float</code> and <code>double</code> , including in C# and Java, store
  numbers in a binary (base-2) floating-point format and use binary
  floating-point arithmetic. Many decimal numbers can't be represented
  exactly in binary floating-point format (regardless of its length).
  Applying binary arithmetic to numbers intended to be decimals can
  sometimes lead to unintuitive results, as is shown in the description
  for the FromDouble() method of this class.</p> <p><b>About EDecimal
- instances</b></p> <p>Each instance of this class consists of an
+ instances</b> </p> <p>Each instance of this class consists of an
  integer mantissa (significand) and an integer exponent, both
  arbitrary-precision. The value of the number equals mantissa
  (significand) * 10^exponent.</p> <p>The mantissa (significand) is the
@@ -49,8 +49,8 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  range. <b>Not-a-number</b> is generally used to signal errors.</p>
  <p>This class implements the General Decimal Arithmetic Specification
  version 1.70 (except part of chapter 6):
- <code>http://speleotrove.com/decimal/decarith.html</code></p> <p><b>Errors
- and Exceptions</b></p> <p>Passing a signaling NaN to any arithmetic
+ <code>http://speleotrove.com/decimal/decarith.html</code> </p> <p><b>Errors
+ and Exceptions</b> </p> <p>Passing a signaling NaN to any arithmetic
  operation shown here will signal the flag FlagInvalid and return a
  quiet NaN, even if another operand to that operation is a quiet NaN,
  unless noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
@@ -68,79 +68,78 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  length), the operation may signal an invalid-operation flag and
  return not-a-number (NaN). In certain rare cases, the compareTo
  method may throw OutOfMemoryError (called OutOfMemoryError in
- Java) in the same circumstances.</p> <p><b>Serialization</b></p>
+ Java) in the same circumstances.</p> <p><b>Serialization</b> </p>
  <p>An arbitrary-precision decimal value can be serialized (converted
- to a stable format) in one of the following ways:</p> <ul> <li>By
+ to a stable format) in one of the following ways:</p> <ul><li>By
  calling the toString() method, which will always return distinct
  strings for distinct arbitrary-precision decimal values.</li> <li>By
  calling the UnsignedMantissa, Exponent, and IsNegative properties,
  and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods.
  The return values combined will uniquely identify a particular
- arbitrary-precision decimal value.</li></ul> <p><b>Thread
- safety</b></p> <p>Instances of this class are immutable, so they are
- inherently safe for use by multiple threads. Multiple instances of
- this object with the same properties are interchangeable, so they
- should not be compared using the "==" operator (which might only
- check if each side of the operator is the same instance).</p>
- <p><b>Comparison considerations</b></p> <p>This class's natural
- ordering (under the compareTo method) is not consistent with the
- Equals method. This means that two values that compare as equal under
- the compareTo method might not be equal under the Equals method. The
- compareTo method compares the mathematical values of the two
- instances passed to it (and considers two different NaN values as
- equal), while two instances with the same mathematical value, but
- different exponents, will be considered unequal under the Equals
- method.</p> <p><b>Forms of numbers</b></p> <p>There are several other
- types of numbers that are mentioned in this class and elsewhere in
- this documentation. For reference, they are specified here.</p>
- <p><b>Unsigned integer</b>: An integer that&#39;s always 0 or
- greater, with the following maximum values:</p> <ul> <li>8-bit
- unsigned integer, or <i>byte</i>: 255.</li> <li>16-bit unsigned
- integer: 65535.</li> <li>32-bit unsigned integer:
- (2<sup>32</sup>-1).</li> <li>64-bit unsigned integer:
- (2<sup>64</sup>-1).</li> </ul> <p><b>Signed integer</b>: An integer
- in <i>two&#39;s complement form</i>, with the following ranges:</p>
- <ul> <li>8-bit signed integer: -128 to 127.</li> <li>16-bit signed
- integer: -32768 to 32767.</li> <li>32-bit signed integer:
- -2<sup>31</sup> to (2<sup>31</sup> - 1).</li> <li>64-bit signed
- integer: -2<sup>63</sup> to (2<sup>63</sup> - 1).</li> </ul>
- <p><b>Two's complement form</b>: In <i>two's-complement form</i>,
+ arbitrary-precision decimal value.</li> </ul> <p><b>Thread safety</b>
+ </p> <p>Instances of this class are immutable, so they are inherently
+ safe for use by multiple threads. Multiple instances of this object
+ with the same properties are interchangeable, so they should not be
+ compared using the "==" operator (which might only check if each side
+ of the operator is the same instance).</p> <p><b>Comparison
+ considerations</b> </p> <p>This class's natural ordering (under the
+ compareTo method) is not consistent with the Equals method. This
+ means that two values that compare as equal under the compareTo
+ method might not be equal under the Equals method. The compareTo
+ method compares the mathematical values of the two instances passed
+ to it (and considers two different NaN values as equal), while two
+ instances with the same mathematical value, but different exponents,
+ will be considered unequal under the Equals method.</p> <p><b>Forms
+ of numbers</b> </p> <p>There are several other types of numbers that
+ are mentioned in this class and elsewhere in this documentation. For
+ reference, they are specified here.</p> <p><b>Unsigned integer</b> :
+ An integer that&#39;s always 0 or greater, with the following maximum
+ values:</p> <ul><li>8-bit unsigned integer, or <i>byte</i> :
+ 255.</li> <li>16-bit unsigned integer: 65535.</li> <li>32-bit
+ unsigned integer: (2 <sup>32</sup> -1).</li> <li>64-bit unsigned
+ integer: (2 <sup>64</sup> -1).</li> </ul> <p><b>Signed integer</b> :
+ An integer in <i>two&#39;s complement form</i> , with the following
+ ranges:</p> <ul><li>8-bit signed integer: -128 to 127.</li>
+ <li>16-bit signed integer: -32768 to 32767.</li> <li>32-bit signed
+ integer: -2 <sup>31</sup> to (2 <sup>31</sup> - 1).</li> <li>64-bit
+ signed integer: -2 <sup>63</sup> to (2 <sup>63</sup> - 1).</li> </ul>
+ <p><b>Two's complement form</b> : In <i>two' s-complement form</i> ,
  positive numbers have the highest (most significant) bit set to zero,
  and negative numbers have that bit (and all bits beyond) set to one.
  To store a negative number, decrease its absolute value by 1 and swap
  the bits of the resulting number.</p> <p><b>64-bit floating-point
- number</b>: A 64-bit binary floating-point number, in the form
- <i>significand</i> * 2<sup><i>exponent</i></sup>. The significand is
- 53 bits long (Precision) and the exponent ranges from -1074 (EMin) to
- 971 (EMax). The number is stored in the following format (commonly
+ number</b> : A 64-bit binary floating-point number, in the form
+ <i>significand</i> * 2 <sup><i>exponent</i> </sup> . The significand
+ is 53 bits long (Precision) and the exponent ranges from -1074 (EMin)
+ to 971 (EMax). The number is stored in the following format (commonly
  called the IEEE 754 format):</p>
- <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code> <ul> <li>A. Low 52 bits
+ <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code> <ul><li>A. Low 52 bits
  (Precision minus 1 bits): Lowest bits of the significand.</li> <li>B.
- Next 11 bits: Exponent area: <ul> <li>If all bits are ones, this
- value is infinity if all bits in area A are zeros, or not-a-number
- (NaN) otherwise.</li> <li>If all bits are zeros, this is a subnormal
+ Next 11 bits: Exponent area: <ul><li>If all bits are ones, this value
+ is infinity if all bits in area A are zeros, or not-a-number (NaN)
+ otherwise.</li> <li>If all bits are zeros, this is a subnormal
  number. The exponent is EMin and the highest bit of the significand
  is zero.</li> <li>If any other number, the exponent is this value
  reduced by 1, then raised by EMin, and the highest bit of the
- significand is one.</li> </ul></li> <li>C. Highest bit: If one, this
+ significand is one.</li> </ul> </li> <li>C. Highest bit: If one, this
  is a negative number.</li> </ul> <p>The elements described above are
  in the same order as the order of each bit of each element, that is,
  either most significant first or least significant first.</p>
- <p><b>32-bit floating-point number</b>: A 32-bit binary number which
- is stored similarly to a <i>64-bit floating-point number</i>, except
- that:</p> <ul> <li>Precision is 24 bits.</li> <li>EMin is -149.</li>
+ <p><b>32-bit floating-point number</b> : A 32-bit binary number which
+ is stored similarly to a <i>64-bit floating-point number</i> , except
+ that:</p> <ul><li>Precision is 24 bits.</li> <li>EMin is -149.</li>
  <li>EMax is 104.</li> <li>A. The low 23 bits (Precision minus 1 bits)
  are the lowest bits of the significand.</li> <li>B. The next 8 bits
  are the exponent area.</li> <li>C. If the highest bit is one, this is
- a negative number.</li> </ul> <p><b>.NET Framework decimal</b>: A
+ a negative number.</li> </ul> <p><b>.NET Framework decimal</b> : A
  128-bit decimal floating-point number, in the form <i>significand</i>
- * 10<sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28.
- The number is stored in the following format:</p> <ul> <li>Low 96
+ * 10 <sup>- <i>scale</i> </sup> , where the scale ranges from 0 to
+ 28. The number is stored in the following format:</p> <ul><li>Low 96
  bits are the significand, as a 96-bit unsigned integer (all 96-bit
- values are allowed, up to (2<sup>96</sup>-1)).</li> <li>Next 16 bits
- are unused.</li> <li>Next 8 bits are the scale, stored as an 8-bit
- unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If the
- highest bit is one, it&#39;s a negative number.</li> </ul> <p>The
+ values are allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16
+ bits are unused.</li> <li>Next 8 bits are the scale, stored as an
+ 8-bit unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If
+ the highest bit is one, it&#39;s a negative number.</li> </ul> <p>The
  elements described above are in the same order as the order of each
  bit of each element, that is, either most significant first or least
  significant first.</p>
@@ -206,10 +205,10 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  (positive or negative) of another number.
 * `static EDecimal Create(EInteger mantissa,
       EInteger exponent) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa.
+ Creates a number with the value exponent*10^mantissa
 * `static EDecimal Create(int mantissaSmall,
       int exponentSmall) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa.
+ Creates a number with the value exponent*10^mantissa
 * `static EDecimal CreateNaN(EInteger diag)`<br>
  Creates a not-a-number arbitrary-precision decimal number.
 * `static EDecimal CreateNaN(EInteger diag,
@@ -622,6 +621,8 @@ Renamed to Sqrt.
 Renamed to ToEIntegerIfExact.
  Renamed to ToEIntegerIfExact.
 * `EInteger ToEIntegerIfExact()`<br>
+ Converts this value to an arbitrary-precision integer, checking whether the
+ fractional part of the integer would be lost.
 * `String ToEngineeringString()`<br>
  Same as toString(), except that when an exponent is used it will be a
  multiple of 3.
@@ -718,7 +719,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is finite (not infinity or not-a-number
+* <code>true</code> If this object is finite (not infinity or not-a-number
  (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
@@ -728,7 +729,7 @@ Gets a value indicating whether this object is negative, including negative
 
 **Returns:**
 
-* <code>true</code> if this object is negative, including negative zero;
+* <code>true</code> If this object is negative, including negative zero;
  otherwise, <code>false</code>.
 
 ### isZero
@@ -737,7 +738,7 @@ Gets a value indicating whether this object&#x27;s value equals 0.
 
 **Returns:**
 
-* <code>true</code> if this object's value equals 0; otherwise, <code>false</code>.
+* <code>true</code> If this object's value equals 0; otherwise, . <code>false</code>.
 
 ### getMantissa
     public final EInteger getMantissa()
@@ -766,7 +767,15 @@ Gets the absolute value of this object&#x27;s unscaled value.
 
 ### Create
     public static EDecimal Create(int mantissaSmall, int exponentSmall)
-Creates a number with the value <code>exponent*10^mantissa</code>.
+Creates a number with the value <code>exponent*10^mantissa</code>
+
+**Parameters:**
+
+* <code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is not documented
+ yet.
+
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -774,7 +783,13 @@ Creates a number with the value <code>exponent*10^mantissa</code>.
 
 ### Create
     public static EDecimal Create(EInteger mantissa, EInteger exponent)
-Creates a number with the value <code>exponent*10^mantissa</code>.
+Creates a number with the value <code>exponent*10^mantissa</code>
+
+**Parameters:**
+
+* <code>mantissa</code> - The parameter <code>mantissa</code> is not documented yet.
+
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
 **Returns:**
 
@@ -1939,7 +1954,7 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 **Returns:**
 
 * <code>true</code> if this object's mantissa (significand) and exponent
- are equal to those of another object; otherwise, false .
+ are equal to those of another object; otherwise, <code>false</code>.
 
 ### equals
     public boolean equals(Object obj)
@@ -1957,7 +1972,7 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, false .
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
 
 ### Exp
     public EDecimal Exp(EContext ctx)
@@ -2002,7 +2017,7 @@ Gets a value indicating whether this object is positive or negative
 **Returns:**
 
 * <code>true</code> if this object is positive or negative infinity;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -2010,8 +2025,7 @@ Gets a value indicating whether this object is not a number (NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is not a number (NaN); otherwise, false
- .
+* <code>true</code> if this object is not a number (NaN); otherwise, <code>false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -2019,7 +2033,7 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* <code>true</code> if this object is negative infinity; otherwise, false .
+* <code>true</code> if this object is negative infinity; otherwise, <code>false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -2027,7 +2041,7 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* <code>true</code> if this object is positive infinity; otherwise, false .
+* <code>true</code> if this object is positive infinity; otherwise, <code>false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -2036,7 +2050,7 @@ Gets a value indicating whether this object is a quiet not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a quiet not-a-number value;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -2046,7 +2060,7 @@ Gets a value indicating whether this object is a signaling not-a-number
 **Returns:**
 
 * <code>true</code> if this object is a signaling not-a-number value;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### Log
     public EDecimal Log(EContext ctx)
@@ -3326,6 +3340,20 @@ Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
 
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
+Converts this value to an arbitrary-precision integer, checking whether the
+ fractional part of the integer would be lost.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This object's value is infinity or
+ not-a-number (NaN).
+
+* <code>ArithmeticException</code> - This object's value is not an exact integer.
+
 ### ToEngineeringString
     public String ToEngineeringString()
 Same as toString(), except that when an exponent is used it will be a

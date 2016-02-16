@@ -131,7 +131,7 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} if this object is finite (not infinity or not-a-number
+     * @return {@code true} If this object is finite (not infinity or not-a-number
      * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
@@ -141,7 +141,7 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return {@code true} if this object's value is negative; otherwise, {@code
+     * @return {@code true} If this object's value is negative; otherwise, {@code
      * false}.
      */
     public final boolean isNegative() {
@@ -150,7 +150,7 @@ BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * @return {@code true} If this object's value equals 0; otherwise, . {@code
      * false}.
      */
     public final boolean isZero() {
@@ -1266,7 +1266,7 @@ boolean negative) {
     /**
      * Determines whether this object and another object are equal.
      * @param obj An arbitrary object.
-     * @return {@code true} if the objects are equal; otherwise, false .
+     * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1308,7 +1308,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Gets a value indicating whether this object's value is infinity.
-     * @return {@code true} if this object's value is infinity; otherwise, false .
+     * @return {@code true} if this object's value is infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1317,7 +1318,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     /**
      * Returns whether this object is a not-a-number value.
      * @return {@code true} if this object is a not-a-number value; otherwise,
-     * false .
+     * {@code false}.
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
@@ -1325,7 +1326,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is negative infinity.
-     * @return {@code true} if this object is negative infinity; otherwise, false .
+     * @return {@code true} if this object is negative infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1335,7 +1337,8 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
 
     /**
      * Returns whether this object is positive infinity.
-     * @return {@code true} if this object is positive infinity; otherwise, false .
+     * @return {@code true} if this object is positive infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1345,7 +1348,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     /**
      * Returns whether this object is a quiet not-a-number value.
      * @return {@code true} if this object is a quiet not-a-number value;
-     * otherwise, false .
+     * otherwise, {@code false}.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1357,7 +1360,7 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
      * class).
      * @return {@code true} if this object is a signaling not-a-number value (which
      * causes an error if the value is passed to any arithmetic operation in
-     * this class); otherwise, false .
+     * this class); otherwise, {@code false}.
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -1560,7 +1563,12 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     }
 
     /**
-     *
+     * Converts this value to an arbitrary-precision integer, checking whether the
+     * value is an exact integer.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToEIntegerIfExact() {
       if (!this.isFinite()) {
@@ -1923,6 +1931,7 @@ int flags) {
     }
 
         // Begin integer conversions
+
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after truncating to an integer.

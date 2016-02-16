@@ -189,6 +189,8 @@ Renamed to FromEFloat.
 Renamed to ToEIntegerIfExact.
  Renamed to ToEIntegerIfExact.
 * `EInteger ToEIntegerIfExact()`<br>
+ Converts this value to an arbitrary-precision integer, checking whether the
+ value is an exact integer.
 * `EDecimal ToExtendedDecimal()`<br>
  Deprecated.
 Renamed to ToEDecimal.
@@ -293,7 +295,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> if this object is finite (not infinity or not-a-number
+* <code>true</code> If this object is finite (not infinity or not-a-number
  (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
@@ -303,7 +305,7 @@ Gets a value indicating whether this object's value is negative (including
 
 **Returns:**
 
-* <code>true</code> if this object's value is negative; otherwise, <code>false</code>.
+* <code>true</code> If this object's value is negative; otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -311,7 +313,7 @@ Gets a value indicating whether this object's value equals 0.
 
 **Returns:**
 
-* <code>true</code> if this object's value equals 0; otherwise, <code>false</code>.
+* <code>true</code> If this object's value equals 0; otherwise, . <code>false</code>.
 
 ### getNumerator
     public final EInteger getNumerator()
@@ -749,7 +751,7 @@ Determines whether this object and another object are equal.
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, false .
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
 
 ### equals
     public boolean equals(ERational other)
@@ -781,7 +783,7 @@ Gets a value indicating whether this object's value is infinity.
 
 **Returns:**
 
-* <code>true</code> if this object's value is infinity; otherwise, false .
+* <code>true</code> if this object's value is infinity; otherwise, <code>false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -790,7 +792,7 @@ Returns whether this object is a not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a not-a-number value; otherwise,
- false .
+ <code>false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -798,7 +800,7 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* <code>true</code> if this object is negative infinity; otherwise, false .
+* <code>true</code> if this object is negative infinity; otherwise, <code>false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -806,7 +808,7 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* <code>true</code> if this object is positive infinity; otherwise, false .
+* <code>true</code> if this object is positive infinity; otherwise, <code>false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -815,7 +817,7 @@ Returns whether this object is a quiet not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a quiet not-a-number value;
- otherwise, false .
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -827,7 +829,7 @@ Returns whether this object is a signaling not-a-number value (which causes
 
 * <code>true</code> if this object is a signaling not-a-number value (which
  causes an error if the value is passed to any arithmetic operation in
- this class); otherwise, false .
+ this class); otherwise, <code>false</code>.
 
 ### Multiply
     public ERational Multiply(ERational otherValue)
@@ -933,6 +935,20 @@ Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
 
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
+Converts this value to an arbitrary-precision integer, checking whether the
+ value is an exact integer.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - This object's value is infinity or
+ not-a-number (NaN).
+
+* <code>ArithmeticException</code> - This object's value is not an exact integer.
+
 ### ToEDecimal
     public EDecimal ToEDecimal()
 Converts this rational number to a decimal number.

@@ -58,7 +58,7 @@ Renamed to ToInt64Unchecked.
  Converts a 64-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromRadixString(String str,
                int radix)`<br>
- Converts a string to an arbitrary-precision integer.
+ Not documented yet.
 * `static EInteger FromRadixSubstring(String str,
                   int radix,
                   int index,
@@ -83,7 +83,7 @@ Renamed to ToInt64Unchecked.
  Gets the number 1 as an arbitrary-precision integer.
 * `boolean GetSignedBit(int index) "Forms of numbers"`<br>
  Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
- object's value.
+ object' s value.
 * `int GetSignedBitLength()`<br>
  Finds the minimum number of bits needed to represent this object's
  value, except for its sign.
@@ -148,13 +148,13 @@ Renamed to ToInt64Unchecked.
  Returns a byte array of this integer's value.
 * `byte ToByteUnchecked()`<br>
  Converts this number to a byte (from 0 to 255), returning the
- least-significant bits of this number's two's-complement form.
+ least-significant bits of this number's two' s-complement form.
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer.
 * `short ToInt16Unchecked()`<br>
  Converts this number to a 16-bit signed integer, returning the
- least-significant bits of this number's two's-complement form.
+ least-significant bits of this number's two' s-complement form.
 * `int ToInt32Checked()`<br>
  Converts this object's value to a 32-bit signed integer, throwing an
  exception if it can't fit.
@@ -203,7 +203,7 @@ Gets a value indicating whether this value is even.
 
 **Returns:**
 
-* <code>true</code> if this value is even; otherwise, <code>false</code>.
+* <code>true</code> If this value is even; otherwise, <code>false</code> .
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
@@ -211,8 +211,8 @@ Gets a value indicating whether this object&#x27;s value is a power of two.
 
 **Returns:**
 
-* <code>true</code> if this object's value is a power of two; otherwise,
- <code>false</code> .
+* <code>true</code> If this object's value is a power of two; otherwise,
+ <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -220,7 +220,7 @@ Gets a value indicating whether this value is 0.
 
 **Returns:**
 
-* <code>true</code> if this value is 0; otherwise, <code>false</code>.
+* <code>true</code> If this value is 0; otherwise, <code>false</code> .
 
 ### signum
     public final int signum()
@@ -253,7 +253,7 @@ Initializes an arbitrary-precision integer from an array of bytes.
  ones. For example, the number -450 can be encoded as <code>0xfe,
  0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code>. (Note that the second
  example contains a cleared high bit in <code>0x31, 0x7b</code>, so an
- additional 0xFF is added at the start to ensure it's interpreted as
+ additional 0xff is added at the start to ensure it's interpreted as
  negative.)</li></ul> <p>For little-endian, the byte order is reversed
  from the byte order just discussed.</p>.
 
@@ -298,33 +298,21 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
 
 ### FromRadixString
     public static EInteger FromRadixString(String str, int radix)
-Converts a string to an arbitrary-precision integer.
+Not documented yet.
 
 **Parameters:**
 
-* <code>str</code> - A text string. The string must contain only characters allowed by
- the given radix, except that it may start with a minus sign ("-",
- U + 002D) to indicate a negative number. The string is not allowed to
- contain white space characters, including spaces.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
-* <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
- the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
- A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
- then A-F in radix 16.
+* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision integer with the same value as given in the
- string.
+* An arbitrary-precision integer.
 
 **Throws:**
 
 * <code>NullPointerException</code> - The parameter <code>str</code> is null.
-
-* <code>IllegalArgumentException</code> - The parameter <code>radix</code> is less than 2
- or greater than 36.
-
-* <code>NumberFormatException</code> - The string is empty or in an invalid format.
 
 ### FromRadixSubstring
     public static EInteger FromRadixSubstring(String str, int radix, int index, int endIndex)
@@ -495,7 +483,7 @@ Returns whether this object's value can fit in a 32-bit signed integer.
 **Returns:**
 
 * <code>true</code> if this object's value is Integer.MIN_VALUE or greater,
- and Integer.MAX_VALUE or less; otherwise, false .
+ and Integer.MAX_VALUE or less; otherwise, <code>false</code>.
 
 ### CanFitInInt64
     public boolean CanFitInInt64()
@@ -504,7 +492,7 @@ Returns whether this object's value can fit in a 64-bit signed integer.
 **Returns:**
 
 * <code>true</code> if this object's value is Long.MIN_VALUE or greater,
- and Long.MAX_VALUE or less; otherwise, false .
+ and Long.MAX_VALUE or less; otherwise, <code>false</code>.
 
 ### compareTo
     public int compareTo(EInteger other)
@@ -584,7 +572,7 @@ Determines whether this object and another object are equal.
 **Returns:**
 
 * <code>true</code> if this object and another object are equal; otherwise,
- false .
+ <code>false</code>.
 
 ### Gcd
     public EInteger Gcd(EInteger bigintSecond)
@@ -647,7 +635,7 @@ Gets the lowest set bit in this number's absolute value. (This will also be
 ### GetSignedBit
     public boolean GetSignedBit(int index)
 Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this
- object's value.
+ object' s value.
 
 **Parameters:**
 
@@ -657,8 +645,8 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 **Returns:**
 
 * <code>true</code> if a bit is set in the two's-complement form (see
- <code>EDecimal</code>) of this object's value;
- otherwise, false .
+ <code>EDecimal</code>) of this object' s value;
+ otherwise, <code>false</code>.
 
 ### GetSignedBitLength
     public int GetSignedBitLength()
@@ -902,7 +890,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### ToBytes
     public byte[] ToBytes(boolean littleEndian)
 Returns a byte array of this integer&#x27;s value. The byte array will take
- the number's two's-complement form (see <code>"Forms of numbers"</code>), using the
+ the number's two' s-complement form (see <code>"Forms of numbers"</code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -938,7 +926,7 @@ Converts this object's value to a 32-bit signed integer, throwing an
     public int ToInt32Unchecked()
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
- two's-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ two' s-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
  different sign than this object's value).
 
 **Returns:**
@@ -963,7 +951,7 @@ Converts this object's value to a 64-bit signed integer, throwing an
     public long ToInt64Unchecked()
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
- two's-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ two' s-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
  different sign than this object's value).
 
 **Returns:**
@@ -1028,7 +1016,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 ### ToByteUnchecked
     public byte ToByteUnchecked()
 Converts this number to a byte (from 0 to 255), returning the
- least-significant bits of this number's two's-complement form.
+ least-significant bits of this number's two' s-complement form.
 
 **Returns:**
 
@@ -1063,7 +1051,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
 Converts this number to a 16-bit signed integer, returning the
- least-significant bits of this number's two's-complement form.
+ least-significant bits of this number's two' s-complement form.
 
 **Returns:**
 
