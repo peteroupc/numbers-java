@@ -2921,12 +2921,12 @@ Returns a string representation of this number's value after rounding to the
     public float ToSingle()
 Converts this value to its closest equivalent as 32-bit floating-point
  number. The half-even rounding mode is used. <p>If this value is a
- NaN, sets the high bit of the 32-bit floating point number's mantissa
- (significand) for a quiet NaN, and clears it for a signaling NaN.
- Then the next highest bit of the mantissa (significand) is cleared
- for a quiet NaN, and set for a signaling NaN. Then the other bits of
- the mantissa (significand) are set to the lowest bits of this
- object's unsigned mantissa (significand).</p>
+ NaN, sets the high bit of the 32-bit floating point number's
+ significand area for a quiet NaN, and clears it for a signaling NaN.
+ Then the other bits of the significand area are set to the lowest
+ bits of this object's unsigned mantissa (significand), and the
+ next-highest bit of the significand area is set if those bits are all
+ zeros and this is a signaling NaN.</p>
 
 **Returns:**
 

@@ -19,6 +19,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * same instance).</p>
      */
   public final class ERational implements Comparable<ERational> {
+    private static final int MaxSafeInt = 214748363;
+
     /**
      * A not-a-number value.
      */
@@ -432,8 +434,6 @@ boolean negative) {
       return FromString(str, 0, str == null ? 0 : str.length());
     }
 
-    private static final int MaxSafeInt = 214748363;
-
     /**
      * <p>Creates a rational number from a text string that represents a
      * number.</p> <p>The format of the string generally consists of:</p>
@@ -453,7 +453,7 @@ boolean negative) {
      * @param str A text string, a portion of which represents a number.
      * @param offset A zero-based index that identifies the start of the number.
      * @param length The length of the number within the string.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.

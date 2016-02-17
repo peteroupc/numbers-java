@@ -46,8 +46,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
        ", this.bitsAfterLeftmost=" + this.bitsAfterLeftmost +
        ", this.discardedBitCount=" + this.discardedBitCount +
        ", this.isSmall=" + this.isSmall + ", this.knownDigitLength=" +
-         this.knownDigitLength + ", this.shiftedBigInt=" +this.shiftedBigInt +
-       ", this.shiftedSmall=" + this.shiftedSmall + "]";
+         this.knownDigitLength + ", this.shiftedBigInt=" +
+         this.shiftedBigInt + ", this.shiftedSmall=" +
+       this.shiftedSmall + "]";
     }
 
     public DigitShiftAccumulator(
@@ -350,7 +351,7 @@ boolean truncate) {
           } else {
             FastInteger knownDigits = this.GetDigitLength();
             bigPower = knownDigits.Copy().SubtractInt(digits)
-              .CompareToInt(-2) <0;
+              .CompareToInt(-2) < 0;
             if (!bigPower) {
               // DebugUtility.Log("digitlength {0} [todiscard: {1}]"
               // , knownDigits, digits);

@@ -843,12 +843,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       return this;
     }
 
-    /**
-     * Not documented yet.
-     * @param divisor The number to divide by.
-     * @return A FastInteger object.
-     * @throws ArithmeticException Attempted to divide by zero.
-     */
     FastInteger Remainder(int divisor) {
       // Mod operator will always result in a
       // number that fits an int for int divisors
@@ -946,10 +940,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       return this;
     }
 
-    /**
-     * Gets a value not documented yet.
-     * @return A value not documented yet.
-     */
     final boolean isEvenNumber() {
         switch (this.integerMode) {
           case 0:
@@ -1077,7 +1067,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           chars[count--] = HexAlphabet.charAt((int)value);
       }
       if (neg) {
-        chars[count ] = '-';
+        chars[count] = '-';
       } else {
         ++count;
       }
@@ -1117,10 +1107,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
       }
 
-    /**
-     * Gets a value not documented yet.
-     * @return A value not documented yet.
-     */
     final boolean isValueZero() {
         switch (this.integerMode) {
           case 0:

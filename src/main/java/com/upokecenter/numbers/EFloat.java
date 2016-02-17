@@ -2505,18 +2505,23 @@ EContext ctx) {
         if (this.isNegative()) {
           nan[1] |= ((int)(1 << 31));
         }
-        // 0x40000 is not really the signaling bit, but done to keep
-        // the mantissa from being zero
         if (this.IsQuietNaN()) {
           nan[1] |= 0x80000;
-        } else {
+        } else if (this.getUnsignedMantissa().isZero()) {
+          // Set the 0x40000 bit to keep the mantissa from
+          // being zero if this is a signaling NaN
           nan[1] |= 0x40000;
         }
         if (!this.getUnsignedMantissa().isZero()) {
           // Copy diagnostic information
           int[] words = FastInteger.GetLastWords(this.getUnsignedMantissa(), 2);
           nan[0] = words[0];
-          nan[1] = words[1] & 0x3ffff;
+          nan[1] = words[1] & 0x7ffff;
+          if ((words[1] | (words[1] & 0x7ffff)) == 0 && !this.IsQuietNaN()) {
+            // Set the 0x40000 bit to keep the mantissa from
+            // being zero if this is a signaling NaN
+            nan[1] |= 0x40000;
+          }
         }
         return Extras.IntegersToDouble(nan);
       }
@@ -2639,8 +2644,8 @@ EContext ctx) {
     }
 
     private String ToDebugString() {
-      return "[" + this.getMantissa().ToRadixString(2) +"," +
-        this.getMantissa().GetUnsignedBitLength() +"," + this.getExponent() + "]";
+      return "[" + this.getMantissa().ToRadixString(2) +
+        "," + this.getMantissa().GetUnsignedBitLength() +"," + this.getExponent() + "]";
     }
 
     /**
@@ -2705,12 +2710,12 @@ EContext ctx) {
     /**
      * Converts this value to its closest equivalent as 32-bit floating-point
      * number. The half-even rounding mode is used. <p>If this value is a
-     * NaN, sets the high bit of the 32-bit floating point number's mantissa
-     * (significand) for a quiet NaN, and clears it for a signaling NaN.
-     * Then the next highest bit of the mantissa (significand) is cleared
-     * for a quiet NaN, and set for a signaling NaN. Then the other bits of
-     * the mantissa (significand) are set to the lowest bits of this
-     * object's unsigned mantissa (significand).</p>
+     * NaN, sets the high bit of the 32-bit floating point number's
+     * significand area for a quiet NaN, and clears it for a signaling NaN.
+     * Then the other bits of the significand area are set to the lowest
+     * bits of this object's unsigned mantissa (significand), and the
+     * next-highest bit of the significand area is set if those bits are all
+     * zeros and this is a signaling NaN.</p>
      * @return The closest 32-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 32-bit floating point number.
@@ -2728,13 +2733,21 @@ EContext ctx) {
           nan |= ((int)(1 << 31));
         }
         // IsQuietNaN(): the quiet bit for X86 at least
-        // Not IsQuietNaN(): not really the signaling bit, but done to keep
-        // the mantissa from being zero
-        nan |= this.IsQuietNaN() ? 0x400000 : 0x200000;
+        // If signaling NaN and mantissa is 0: set 0x200000
+        // bit to keep the mantissa from being zero
+        if (this.IsQuietNaN()) {
+          nan |= 0x400000;
+        } else if (this.getUnsignedMantissa().isZero()) {
+          nan |= 0x200000;
+        }
         if (!this.getUnsignedMantissa().isZero()) {
           // Transfer diagnostic information
-          EInteger bigdata = this.getUnsignedMantissa().Remainder(EInteger.FromInt64(0x200000));
-          nan |= bigdata.AsInt32Checked();
+          EInteger bigdata = this.getUnsignedMantissa().Remainder(EInteger.FromInt64(0x400000));
+          int intData = bigdata.AsInt32Checked();
+          nan |= intData;
+          if (intData == 0 && !this.IsQuietNaN()) {
+            nan |= 0x200000;
+          }
         }
         return Float.intBitsToFloat(nan);
       }

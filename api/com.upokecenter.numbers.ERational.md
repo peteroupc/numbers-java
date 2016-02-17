@@ -577,7 +577,7 @@ Creates a rational number from a text string that represents a number. See
 
 **Returns:**
 
-* An ERational object.
+* An arbitrary-precision rational number.
 
 **Throws:**
 
