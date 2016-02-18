@@ -113,7 +113,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       if (this.integerMode == 0 && this.smallValue >= 0) {
         return this.smallValue % value;
       } else {
-      EInteger retval = this.AsEInteger().Remainder(EInteger.FromInt32(value));
+      EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
         return retval.ToInt32Checked();
       }
     }
@@ -132,8 +132,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         return new FastIntegerFixed(a.smallValue + b.smallValue);
       }
     }
-      EInteger bigA = a.AsEInteger();
-      EInteger bigB = b.AsEInteger();
+      EInteger bigA = a.ToEInteger();
+      EInteger bigB = b.ToEInteger();
       return FastIntegerFixed.FromBig(bigA.Add(bigB));
     }
 
@@ -150,8 +150,8 @@ FastIntegerFixed b) {
         return new FastIntegerFixed(a.smallValue - b.smallValue);
       }
     }
-      EInteger bigA = a.AsEInteger();
-      EInteger bigB = b.AsEInteger();
+      EInteger bigA = a.ToEInteger();
+      EInteger bigB = b.ToEInteger();
       return FastIntegerFixed.FromBig(bigA.Subtract(bigB));
     }
 
@@ -164,10 +164,10 @@ FastIntegerFixed b) {
                   1);
           }
         case (0 << 2) | 2:
-          return this.AsEInteger().compareTo(val.largeValue);
+          return this.ToEInteger().compareTo(val.largeValue);
         case (2 << 2) | 0:
         case (2 << 2) | 2:
-          return this.largeValue.compareTo(val.AsEInteger());
+          return this.largeValue.compareTo(val.ToEInteger());
         default: throw new IllegalStateException();
       }
     }
@@ -276,7 +276,7 @@ FastIntegerFixed b) {
       }
     }
 
-    EInteger AsEInteger() {
+    EInteger ToEInteger() {
       switch (this.integerMode) {
         case 0:
           return EInteger.FromInt32(this.smallValue);

@@ -283,12 +283,12 @@ private static final FastIntegerFixed FastIntZero = new
      * the exponent is positive or zero.
      */
     public final EInteger getExponent() {
-        return this.exponent.AsEInteger();
+        return this.exponent.ToEInteger();
       }
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} If this object is finite (not infinity or not-a-number
+     * @return {@code true} if this object is finite (not infinity or not-a-number
      * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
@@ -299,7 +299,7 @@ private static final FastIntegerFixed FastIntZero = new
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return {@code true} If this object is negative, including negative zero;
+     * @return {@code true} if this object is negative, including negative zero;
      * otherwise, {@code false}.
      */
     public final boolean isNegative() {
@@ -308,7 +308,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return {@code true} If this object's value equals 0; otherwise, . {@code
+     * @return {@code true} if this object's value equals 0; otherwise, . {@code
      * false}.
      */
     public final boolean isZero() {
@@ -322,8 +322,8 @@ private static final FastIntegerFixed FastIntZero = new
      * value is negative (including a negative NaN).
      */
     public final EInteger getMantissa() {
-        return this.isNegative() ? this.unsignedMantissa.AsEInteger().Negate() :
-                this.unsignedMantissa.AsEInteger();
+        return this.isNegative() ? this.unsignedMantissa.ToEInteger().Negate() :
+                this.unsignedMantissa.ToEInteger();
       }
 
     /**
@@ -339,7 +339,7 @@ private static final FastIntegerFixed FastIntZero = new
      * @return The absolute value of this object's unscaled value.
      */
     public final EInteger getUnsignedMantissa() {
-        return this.unsignedMantissa.AsEInteger();
+        return this.unsignedMantissa.ToEInteger();
       }
 
     /**
@@ -502,7 +502,7 @@ negative ? -1 : 1);
         }
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (value[1] & 0x80000) != 0;
-        value[1] &= 0x3ffff;
+        value[1] &= 0x7ffff;
         EInteger info = FastInteger.WordsToEInteger(value);
         value[0] = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
                 BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
@@ -715,7 +715,7 @@ FastIntZero,
         }
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (valueFpMantissa & 0x400000) != 0;
-        valueFpMantissa &= 0x1fffff;
+        valueFpMantissa &= 0x3fffff;
         value = (neg ? BigNumberFlags.FlagNegative : 0) |
        (quiet ? BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
         return valueFpMantissa == 0 ? (quiet ? NaN : SignalingNaN) :
@@ -2233,7 +2233,7 @@ ERounding.HalfEven);
       ERounding rounding) {
       return this.DivideToExponent(
         divisor,
-        this.exponent.AsEInteger(),
+        this.exponent.ToEInteger(),
         EContext.ForRounding(rounding));
     }
 
@@ -2530,7 +2530,7 @@ EContext ctx) {
       EInteger bigExp = this.getExponent();
       bigExp = bigExp.Add(bigPlaces);
       if (bigExp.signum() > 0) {
-        EInteger mant = this.unsignedMantissa.AsEInteger();
+        EInteger mant = this.unsignedMantissa.ToEInteger();
         EInteger bigPower = NumberUtility.FindPowerOfTenFromBig(bigExp);
         mant = mant.Multiply(bigPower);
         return CreateWithFlags(
@@ -2576,8 +2576,8 @@ newflags,
 sign);
           }
         } else {
-          EInteger eintA = this.unsignedMantissa.AsEInteger().Multiply(
-           otherValue.unsignedMantissa.AsEInteger());
+          EInteger eintA = this.unsignedMantissa.ToEInteger().Multiply(
+           otherValue.unsignedMantissa.ToEInteger());
           int sign = eintA.isZero() ? 0 : (newflags == 0 ? 1 : -1);
           return new EDecimal(
 FastIntegerFixed.FromBig(eintA),
@@ -2838,7 +2838,7 @@ this.flags ^ BigNumberFlags.FlagNegative,
       if (this.isZero()) {
         return EInteger.FromInt32(1);
       }
-      int digcount = this.unsignedMantissa.AsEInteger().GetDigitCount();
+      int digcount = this.unsignedMantissa.ToEInteger().GetDigitCount();
       return EInteger.FromInt32(digcount);
     }
 
@@ -3611,7 +3611,9 @@ EContext ctx) {
      * Then the other bits of the significand area are set to the lowest
      * bits of this object's unsigned mantissa (significand), and the
      * next-highest bit of the significand area is set if those bits are all
-     * zeros and this is a signaling NaN.</p>
+     * zeros and this is a signaling NaN. Unfortunately, in the .NET
+     * implementation, the return value of this method may be a quiet NaN
+     * even if a signaling NaN would otherwise be generated.</p>
      * @return The closest 64-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 64-bit floating point number.
@@ -3734,7 +3736,9 @@ EContext ctx) {
      * Then the other bits of the significand area are set to the lowest
      * bits of this object's unsigned mantissa (significand), and the
      * next-highest bit of the significand area is set if those bits are all
-     * zeros and this is a signaling NaN.</p>
+     * zeros and this is a signaling NaN. Unfortunately, in the .NET
+     * implementation, the return value of this method may be a quiet NaN
+     * even if a signaling NaN would otherwise be generated.</p>
      * @return The closest 32-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 32-bit floating point number.
@@ -3937,6 +3941,25 @@ ERounding rounding) {
       return null;
     }
 
+    private boolean IsIntegerPartZero() {
+      if (!this.isFinite()) {
+        return false;
+      }
+      if (this.unsignedMantissa.isValueZero()) {
+        return true;
+      }
+      int sign = this.getExponent().signum();
+      if (sign >= 0) {
+        return false;
+      } else {
+        FastInteger bigexponent = this.exponent.ToFastInteger().Negate();
+        EInteger bigmantissa = this.unsignedMantissa.ToEInteger();
+        DigitShiftAccumulator acc = new DigitShiftAccumulator(bigmantissa, 0, 0);
+  return (acc.GetDigitLength().compareTo(bigexponent) <= 0) ? true :
+          false;
+      }
+    }
+
     private EInteger ToEIntegerInternal(boolean exact) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
@@ -3956,11 +3979,15 @@ ERounding rounding) {
         bigmantissa = bigmantissa.Multiply(bigexponent);
         return bigmantissa;
       } else {
-        EInteger bigmantissa = this.getMantissa();
-        FastInteger bigexponent = FastInteger.FromBig(this.getExponent()).Negate();
-        bigmantissa = bigmantissa.Abs();
+        if (exact && !this.unsignedMantissa.isEvenNumber()) {
+          // Mantissa is odd and will have to shift a nonzero
+          // number of digits, so can't be an exact integer
+          throw new ArithmeticException("Not an exact integer");
+        }
+        FastInteger bigexponent = this.exponent.ToFastInteger().Negate();
+        EInteger bigmantissa = this.unsignedMantissa.ToEInteger();
         DigitShiftAccumulator acc = new DigitShiftAccumulator(bigmantissa, 0, 0);
-        acc.ShiftRight(bigexponent);
+        acc.TruncateRight(bigexponent);
         if (exact && (acc.getLastDiscardedDigit() != 0 || acc.getOlderDiscardedDigits() !=
                     0)) {
           // Some digits were discarded
@@ -4530,7 +4557,7 @@ adjust.AsEInteger()));
      * @return An arbitrary-precision integer.
      */
       public EInteger GetMantissa(EDecimal value) {
-        return value.unsignedMantissa.AsEInteger();
+        return value.unsignedMantissa.ToEInteger();
       }
 
     /**
@@ -4539,7 +4566,7 @@ adjust.AsEInteger()));
      * @return An arbitrary-precision integer.
      */
       public EInteger GetExponent(EDecimal value) {
-        return value.exponent.AsEInteger();
+        return value.exponent.ToEInteger();
       }
 
       public FastIntegerFixed GetMantissaFastInt(EDecimal value) {
@@ -4568,7 +4595,7 @@ lastDigit,
 olderDigits);
         } else {
 return new DigitShiftAccumulator(
-fastInt.AsEInteger(),
+fastInt.ToEInteger(),
 lastDigit,
 olderDigits);
         }
@@ -4713,6 +4740,18 @@ flags);
      * the truncated integer is less than 0 or greater than 255.
      */
 public byte ToByteChecked() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+if (this.IsIntegerPartZero()) {
+ return (byte)0;
+}
+if (this.isNegative()) {
+ throw new ArithmeticException("Value out of range");
+}
+if (this.exponent.CompareToInt(3) >= 0) {
+throw new ArithmeticException("Value out of range: ");
+}
  return this.ToEInteger().ToByteChecked();
 }
 
@@ -4731,12 +4770,22 @@ public byte ToByteUnchecked() {
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) without rounding to a different numerical value.
      * @return This number's value as a byte (from 0 to 255).
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than 0 or greater than 255.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than 0 or greater than 255.
      */
 public byte ToByteIfExact() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ if (this.isZero()) {
+ return (byte)0;
+}
+ if (this.isNegative()) {
+throw new ArithmeticException("Value out of range");
+}
+if (this.exponent.CompareToInt(3) >= 0) {
+throw new ArithmeticException("Value out of range");
+}
  return this.ToEIntegerIfExact().ToByteChecked();
 }
 
@@ -4758,6 +4807,15 @@ public static EDecimal FromByte(byte inputByte) {
      * the truncated integer is less than -32768 or greater than 32767.
      */
 public short ToInt16Checked() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+if (this.IsIntegerPartZero()) {
+ return (short)0;
+}
+if (this.exponent.CompareToInt(5) >= 0) {
+throw new ArithmeticException("Value out of range: ");
+}
  return this.ToEInteger().ToInt16Checked();
 }
 
@@ -4777,12 +4835,19 @@ public short ToInt16Unchecked() {
      * 16-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 16-bit signed integer.
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than -32768 or greater than 32767.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
 public short ToInt16IfExact() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ if (this.isZero()) {
+ return (short)0;
+}
+if (this.exponent.CompareToInt(5) >= 0) {
+throw new ArithmeticException("Value out of range");
+}
  return this.ToEIntegerIfExact().ToInt16Checked();
 }
 
@@ -4805,6 +4870,15 @@ public static EDecimal FromInt16(short inputInt16) {
      * 2147483647.
      */
 public int ToInt32Checked() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+if (this.IsIntegerPartZero()) {
+ return (int)0;
+}
+if (this.exponent.CompareToInt(10) >= 0) {
+throw new ArithmeticException("Value out of range: ");
+}
  return this.ToEInteger().ToInt32Checked();
 }
 
@@ -4824,12 +4898,20 @@ public int ToInt32Unchecked() {
      * 32-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 32-bit signed integer.
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than -2147483648 or greater than 2147483647.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -2147483648 or greater than
+     * 2147483647.
      */
 public int ToInt32IfExact() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ if (this.isZero()) {
+ return (int)0;
+}
+if (this.exponent.CompareToInt(10) >= 0) {
+throw new ArithmeticException("Value out of range");
+}
  return this.ToEIntegerIfExact().ToInt32Checked();
 }
 
@@ -4842,6 +4924,15 @@ public int ToInt32IfExact() {
      * than 9223372036854775807.
      */
 public long ToInt64Checked() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+if (this.IsIntegerPartZero()) {
+ return (long)0;
+}
+if (this.exponent.CompareToInt(19) >= 0) {
+throw new ArithmeticException("Value out of range: ");
+}
  return this.ToEInteger().ToInt64Checked();
 }
 
@@ -4861,13 +4952,20 @@ public long ToInt64Unchecked() {
      * 64-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 64-bit signed integer.
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than -9223372036854775808 or greater than
-     * 9223372036854775807.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -9223372036854775808 or greater
+     * than 9223372036854775807.
      */
 public long ToInt64IfExact() {
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ if (this.isZero()) {
+ return (long)0;
+}
+if (this.exponent.CompareToInt(19) >= 0) {
+throw new ArithmeticException("Value out of range");
+}
  return this.ToEIntegerIfExact().ToInt64Checked();
 }
 

@@ -295,7 +295,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> If this object is finite (not infinity or not-a-number
+* <code>true</code> if this object is finite (not infinity or not-a-number
  (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
@@ -305,7 +305,7 @@ Gets a value indicating whether this object's value is negative (including
 
 **Returns:**
 
-* <code>true</code> If this object's value is negative; otherwise, <code>false</code>.
+* <code>true</code> if this object's value is negative; otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -313,7 +313,7 @@ Gets a value indicating whether this object's value equals 0.
 
 **Returns:**
 
-* <code>true</code> If this object's value equals 0; otherwise, . <code>false</code>.
+* <code>true</code> if this object's value equals 0; otherwise, . <code>false</code>.
 
 ### getNumerator
     public final EInteger getNumerator()
@@ -1213,11 +1213,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than 0 or greater than 255.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than 0 or greater than 255.
 
 ### FromByte
     public static ERational FromByte(byte inputByte)
@@ -1268,11 +1265,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than -32768 or greater than 32767.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
     public static ERational FromInt16(short inputInt16)
@@ -1324,11 +1318,9 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than -2147483648 or greater than 2147483647.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than -2147483648 or greater than
+ 2147483647.
 
 ### FromInt32
     public static ERational FromInt32(int inputInt32)
@@ -1380,12 +1372,9 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than -9223372036854775808 or greater than
- 9223372036854775807.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than -9223372036854775808 or greater
+ than 9223372036854775807.
 
 ### FromInt64
     public static ERational FromInt64(long inputInt64)

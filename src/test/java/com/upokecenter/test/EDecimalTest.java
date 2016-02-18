@@ -105,32 +105,31 @@ import com.upokecenter.numbers.*;
     }
 
     private static void TestAddCloseExponent(FastRandom fr, int exp) {
-for (int i = 0; i < 1000; ++i) {
-  EInteger exp1 = EInteger.FromInt32(exp)
-    .Add(EInteger.FromInt32(fr.NextValue(32) - 16));
-  EInteger exp2 = exp1
-    .Add(EInteger.FromInt32(fr.NextValue(18) - 9));
-  EInteger mant1 = RandomObjects.RandomEInteger(fr);
-  EInteger mant2 = RandomObjects.RandomEInteger(fr);
-  EDecimal decA = EDecimal.Create(mant1, exp1);
-  EDecimal decB = EDecimal.Create(mant2, exp2);
-  EDecimal decC = decA.Add(decB);
-  EDecimal decD = decC.Subtract(decA);
-  TestCommon.CompareTestEqual(decD, decB);
-  decD = decC.Subtract(decB);
-  TestCommon.CompareTestEqual(decD, decA);
-}
-}
+      for (int i = 0; i < 1000; ++i) {
+        EInteger exp1 = EInteger.FromInt32(exp)
+          .Add(EInteger.FromInt32(fr.NextValue(32) - 16));
+        EInteger exp2 = exp1 .Add(EInteger.FromInt32(fr.NextValue(18) - 9));
+        EInteger mant1 = RandomObjects.RandomEInteger(fr);
+        EInteger mant2 = RandomObjects.RandomEInteger(fr);
+        EDecimal decA = EDecimal.Create(mant1, exp1);
+        EDecimal decB = EDecimal.Create(mant2, exp2);
+        EDecimal decC = decA.Add(decB);
+        EDecimal decD = decC.Subtract(decA);
+        TestCommon.CompareTestEqual(decD, decB);
+        decD = decC.Subtract(decB);
+        TestCommon.CompareTestEqual(decD, decA);
+      }
+    }
 
-@Test
-public void TestPrecisionOneHalfEven() {
-  EDecimal edec = EDecimal.FromString("9.5e-1");
-  EContext ectx = EContext.ForPrecisionAndRounding(1, ERounding.HalfEven);
-  edec = edec.RoundToPrecision(ectx);
-  TestCommon.CompareTestEqual(
-    EDecimal.FromString("10.0e-1"),
-    edec);
-}
+    @Test
+    public void TestPrecisionOneHalfEven() {
+      EDecimal edec = EDecimal.FromString("9.5e-1");
+      EContext ectx = EContext.ForPrecisionAndRounding(1, ERounding.HalfEven);
+      edec = edec.RoundToPrecision(ectx);
+      TestCommon.CompareTestEqual(
+        EDecimal.FromString("10.0e-1"),
+        edec);
+    }
 
     @Test
     public void TestAdd() {
@@ -138,7 +137,7 @@ public void TestPrecisionOneHalfEven() {
         EDecimal.Zero.Add(null, EContext.Unlimited);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -158,12 +157,12 @@ public void TestPrecisionOneHalfEven() {
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702414428117526594285731840");
       a = a.Add(
         EDecimal.FromString("18895577316172922617856"));
-        EDecimal b = EDecimal.FromString(
+      EDecimal b = EDecimal.FromString(
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702433323694842767208349696");
-        Assert.assertEquals(a.toString(), b.toString());
-        TestCommon.CompareTestEqual(a, b, "");
-        Assert.assertEquals(a.signum(), b.signum());
-      }
+      Assert.assertEquals(a.toString(), b.toString());
+      TestCommon.CompareTestEqual(a, b, "");
+      Assert.assertEquals(a.signum(), b.signum());
+    }
 
     @Test
     public void TestCompareTo() {
@@ -266,103 +265,100 @@ EDecimal.FromString("8451910"));
     @Test
     public void TestConversions() {
       FastRandom fr = new FastRandom();
-      for (int i = 0; i < 2000; ++i) {
+      for (int i = 0; i < 20000; ++i) {
         boolean isNum, isTruncated, isInteger;
-        String strNormal, strInteger;
         EInteger eint;
         EDecimal enumber = RandomObjects.RandomEDecimal(fr);
         if (!enumber.isFinite()) {
           try {
- enumber.ToByteChecked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
-  Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromByte(enumber.ToByteUnchecked()));
+            enumber.ToByteChecked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
+          Assert.assertEquals(
+        EInteger.FromInt32(0),
+        EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
- enumber.ToByteIfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToByteIfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToInt16Checked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
-Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+            enumber.ToInt16Checked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
+          Assert.assertEquals(
+          EInteger.FromInt32(0),
+          EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
- enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt16IfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToInt32Checked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
-Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+            enumber.ToInt32Checked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
+          Assert.assertEquals(
+          EInteger.FromInt32(0),
+          EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
- enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt32IfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToInt64Checked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
-Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+            enumber.ToInt64Checked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
+          Assert.assertEquals(
+          EInteger.FromInt32(0),
+          EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
- enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt64IfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           continue;
         }
         EDecimal enumberInteger = EDecimal.FromEInteger(enumber.ToEInteger());
         isInteger = enumberInteger.compareTo(enumber) == 0;
-        strNormal = enumber.toString();
         eint = enumber.ToEInteger();
-        strInteger = eint.toString();
         isNum = enumber.compareTo(
         EDecimal.FromString("0")) >= 0 && enumber.compareTo(
         EDecimal.FromString("255")) <= 0;
@@ -370,69 +366,79 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("0")) >= 0 && enumber.ToEInteger().compareTo(
         EInteger.FromString("255")) <= 0;
         if (isNum) {
-          Assert.assertEquals(eint, EInteger.FromByte(enumber.ToByteChecked()));
-          Assert.assertEquals(eint, EInteger.FromByte(enumber.ToByteUnchecked()));
+     TestCommon.AssertEquals(
+eint,
+EInteger.FromByte(enumber.ToByteChecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromByte(enumber.ToByteUnchecked()));
           if (isInteger) {
-            Assert.assertEquals(eint, EInteger.FromByte(enumber.ToByteIfExact()));
+     TestCommon.AssertEquals(
+eint,
+EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
             try {
- enumber.ToByteIfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToByteIfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         } else if (isTruncated) {
-          Assert.assertEquals(eint, EInteger.FromByte(enumber.ToByteChecked()));
-          Assert.assertEquals(eint, EInteger.FromByte(enumber.ToByteUnchecked()));
+     TestCommon.AssertEquals(
+eint,
+EInteger.FromByte(enumber.ToByteChecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
- enumber.ToByteIfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToByteIfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
         } else {
           try {
- enumber.ToByteChecked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToByteChecked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToByteUnchecked();
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToByteUnchecked();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           if (isInteger) {
             try {
- enumber.ToByteIfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToByteIfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           } else {
             try {
- enumber.ToByteIfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToByteIfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         }
         isNum = enumber.compareTo(
@@ -442,69 +448,79 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("-32768")) >= 0 && enumber.ToEInteger().compareTo(
         EInteger.FromString("32767")) <= 0;
         if (isNum) {
-          Assert.assertEquals(eint, EInteger.FromInt16(enumber.ToInt16Checked()));
-          Assert.assertEquals(eint, EInteger.FromInt16(enumber.ToInt16Unchecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt16(enumber.ToInt16Checked()));
+ TestCommon.AssertEquals(
+eint,
+EInteger.FromInt16(enumber.ToInt16Unchecked()));
           if (isInteger) {
-            Assert.assertEquals(eint, EInteger.FromInt16(enumber.ToInt16IfExact()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
             try {
- enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt16IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         } else if (isTruncated) {
-          Assert.assertEquals(eint, EInteger.FromInt16(enumber.ToInt16Checked()));
-          Assert.assertEquals(eint, EInteger.FromInt16(enumber.ToInt16Unchecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt16(enumber.ToInt16Checked()));
+ TestCommon.AssertEquals(
+eint,
+EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
- enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt16IfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
         } else {
           try {
- enumber.ToInt16Checked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt16Checked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToInt16Unchecked();
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt16Unchecked();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           if (isInteger) {
             try {
- enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt16IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           } else {
             try {
- enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt16IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         }
         isNum = enumber.compareTo(
@@ -515,142 +531,162 @@ throw new IllegalStateException("", ex);
           enumber.ToEInteger().compareTo(
         EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
-          Assert.assertEquals(eint, EInteger.FromInt32(enumber.ToInt32Checked()));
-          Assert.assertEquals(eint, EInteger.FromInt32(enumber.ToInt32Unchecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt32(enumber.ToInt32Checked()));
+ TestCommon.AssertEquals(
+eint,
+EInteger.FromInt32(enumber.ToInt32Unchecked()));
           if (isInteger) {
-            Assert.assertEquals(eint, EInteger.FromInt32(enumber.ToInt32IfExact()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
             try {
- enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt32IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         } else if (isTruncated) {
-          Assert.assertEquals(eint, EInteger.FromInt32(enumber.ToInt32Checked()));
-          Assert.assertEquals(eint, EInteger.FromInt32(enumber.ToInt32Unchecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt32(enumber.ToInt32Checked()));
+ TestCommon.AssertEquals(
+eint,
+EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
- enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt32IfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
         } else {
           try {
- enumber.ToInt32Checked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt32Checked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToInt32Unchecked();
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt32Unchecked();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           if (isInteger) {
             try {
- enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt32IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           } else {
             try {
- enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt32IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         }
-        isNum = enumber.compareTo(
-        EDecimal.FromString("-9223372036854775808")) >= 0 && enumber.compareTo(
-        EDecimal.FromString("9223372036854775807")) <= 0;
         isTruncated = enumber.ToEInteger().compareTo(
         EInteger.FromString("-9223372036854775808")) >= 0 &&
           enumber.ToEInteger().compareTo(
         EInteger.FromString("9223372036854775807")) <= 0;
+        isNum = isTruncated && enumber.compareTo(
+        EDecimal.FromString("-9223372036854775808")) >= 0 && enumber.compareTo(
+        EDecimal.FromString("9223372036854775807")) <= 0;
         if (isNum) {
-          Assert.assertEquals(eint, EInteger.FromInt64(enumber.ToInt64Checked()));
-          Assert.assertEquals(eint, EInteger.FromInt64(enumber.ToInt64Unchecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt64(enumber.ToInt64Checked()));
+ TestCommon.AssertEquals(
+eint,
+EInteger.FromInt64(enumber.ToInt64Unchecked()));
           if (isInteger) {
-            Assert.assertEquals(eint, EInteger.FromInt64(enumber.ToInt64IfExact()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt64(enumber.ToInt64IfExact()));
           } else {
             try {
- enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt64IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         } else if (isTruncated) {
-          Assert.assertEquals(eint, EInteger.FromInt64(enumber.ToInt64Checked()));
-          Assert.assertEquals(eint, EInteger.FromInt64(enumber.ToInt64Unchecked()));
+   TestCommon.AssertEquals(
+eint,
+EInteger.FromInt64(enumber.ToInt64Checked()));
+ TestCommon.AssertEquals(
+eint,
+EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
- enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt64IfExact();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
         } else {
           try {
- enumber.ToInt64Checked();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt64Checked();
+            Assert.fail("Should have failed");
+          } catch (ArithmeticException ex) {
+            new Object();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           try {
- enumber.ToInt64Unchecked();
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+            enumber.ToInt64Unchecked();
+          } catch (Exception ex) {
+            Assert.fail(ex.toString());
+            throw new IllegalStateException("", ex);
+          }
           if (isInteger) {
             try {
- enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt64IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           } else {
             try {
- enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
-} catch (ArithmeticException ex) {
-System.out.print("");
-} catch (Exception ex) {
- Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+              enumber.ToInt64IfExact();
+              Assert.fail("Should have failed");
+            } catch (ArithmeticException ex) {
+              new Object();
+            } catch (Exception ex) {
+              Assert.fail(ex.toString());
+              throw new IllegalStateException("", ex);
+            }
           }
         }
       }
@@ -666,7 +702,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Create(null, EInteger.FromInt32(1));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -675,7 +711,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Create(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -684,7 +720,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Create(EInteger.FromInt32(1), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -802,40 +838,40 @@ throw new IllegalStateException("", ex);
     @Test
     public void TestDivide() {
       {
-String stringTemp = EDecimal.FromString(
-"1").Divide(EDecimal.FromInt32(8)).toString();
-Assert.assertEquals(
-"0.125",
-stringTemp);
-}
+        String stringTemp = EDecimal.FromString(
+        "1").Divide(EDecimal.FromInt32(8)).toString();
+        Assert.assertEquals(
+        "0.125",
+        stringTemp);
+      }
       {
-String stringTemp = EDecimal.FromString(
-"10").Divide(EDecimal.FromInt32(80)).toString();
-Assert.assertEquals(
-"0.125",
-stringTemp);
-}
+        String stringTemp = EDecimal.FromString(
+        "10").Divide(EDecimal.FromInt32(80)).toString();
+        Assert.assertEquals(
+        "0.125",
+        stringTemp);
+      }
       {
-String stringTemp = EDecimal.FromString(
-"10000").Divide(EDecimal.FromInt32(80000)).toString();
-Assert.assertEquals(
-"0.125",
-stringTemp);
-}
+        String stringTemp = EDecimal.FromString(
+        "10000").Divide(EDecimal.FromInt32(80000)).toString();
+        Assert.assertEquals(
+        "0.125",
+        stringTemp);
+      }
       {
-String stringTemp = EDecimal.FromString(
-"1000").Divide(EDecimal.FromInt32(8)).toString();
-Assert.assertEquals(
-"125",
-stringTemp);
-}
+        String stringTemp = EDecimal.FromString(
+        "1000").Divide(EDecimal.FromInt32(8)).toString();
+        Assert.assertEquals(
+        "125",
+        stringTemp);
+      }
       {
-String stringTemp = EDecimal.FromString(
-"1").Divide(EDecimal.FromInt32(256)).toString();
-Assert.assertEquals(
-"0.00390625",
-stringTemp);
-}
+        String stringTemp = EDecimal.FromString(
+        "1").Divide(EDecimal.FromInt32(256)).toString();
+        Assert.assertEquals(
+        "0.00390625",
+        stringTemp);
+      }
       FastRandom fr = new FastRandom();
       for (int i = 0; i < 5000; ++i) {
         EDecimal ed1 = RandomObjects.RandomEDecimal(fr);
@@ -1156,18 +1192,18 @@ stringTemp);
       for (int i = 0; i < 2047; ++i) {
         // Try a random double with a given
         // exponent
-      TestEDecimalDoubleCore(
-RandomObjects.RandomDouble(rand, i),
-null);
-      TestEDecimalDoubleCore(
-RandomObjects.RandomDouble(rand, i),
-null);
-      TestEDecimalDoubleCore(
-RandomObjects.RandomDouble(rand, i),
-null);
-      TestEDecimalDoubleCore(
-RandomObjects.RandomDouble(rand, i),
-null);
+        TestEDecimalDoubleCore(
+  RandomObjects.RandomDouble(rand, i),
+  null);
+        TestEDecimalDoubleCore(
+  RandomObjects.RandomDouble(rand, i),
+  null);
+        TestEDecimalDoubleCore(
+  RandomObjects.RandomDouble(rand, i),
+  null);
+        TestEDecimalDoubleCore(
+  RandomObjects.RandomDouble(rand, i),
+  null);
       }
     }
     @Test
@@ -1176,18 +1212,18 @@ null);
       for (int i = 0; i < 255; ++i) {
         // Try a random float with a given
         // exponent
-      TestEDecimalSingleCore(
-RandomObjects.RandomSingle(rand, i),
-null);
-      TestEDecimalSingleCore(
-RandomObjects.RandomSingle(rand, i),
-null);
-      TestEDecimalSingleCore(
-RandomObjects.RandomSingle(rand, i),
-null);
-      TestEDecimalSingleCore(
-RandomObjects.RandomSingle(rand, i),
-null);
+        TestEDecimalSingleCore(
+  RandomObjects.RandomSingle(rand, i),
+  null);
+        TestEDecimalSingleCore(
+  RandomObjects.RandomSingle(rand, i),
+  null);
+        TestEDecimalSingleCore(
+  RandomObjects.RandomSingle(rand, i),
+  null);
+        TestEDecimalSingleCore(
+  RandomObjects.RandomSingle(rand, i),
+  null);
       }
     }
 
@@ -1876,7 +1912,7 @@ null);
         EDecimal.FromEFloat(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1953,7 +1989,7 @@ null);
         EDecimal.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1962,7 +1998,7 @@ null);
         EDecimal.FromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1975,7 +2011,7 @@ null);
         EDecimal.FromString(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1984,7 +2020,7 @@ null);
         EDecimal.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1993,7 +2029,7 @@ null);
         EDecimal.FromString(null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2003,7 +2039,7 @@ null);
         EDecimal.FromString("0..1");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2012,7 +2048,7 @@ null);
         EDecimal.FromString("0.1x+222");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2021,7 +2057,7 @@ null);
         EDecimal.FromString("0.1g-222");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2031,7 +2067,7 @@ null);
         EDecimal.FromString("x", -1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2040,7 +2076,7 @@ null);
         EDecimal.FromString("x", 2, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2049,7 +2085,7 @@ null);
         EDecimal.FromString("x", 0, -1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2058,7 +2094,7 @@ null);
         EDecimal.FromString("x", 0, 2);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2067,7 +2103,7 @@ null);
         EDecimal.FromString("x", 1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2076,7 +2112,7 @@ null);
         EDecimal.FromString(null, 0, 1, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2085,7 +2121,7 @@ null);
         EDecimal.FromString("x", -1, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2094,7 +2130,7 @@ null);
         EDecimal.FromString("x", 2, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2103,7 +2139,7 @@ null);
         EDecimal.FromString("x", 0, -1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2112,7 +2148,7 @@ null);
         EDecimal.FromString("x", 0, 2, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2121,7 +2157,7 @@ null);
         EDecimal.FromString("x", 1, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2131,25 +2167,24 @@ null);
       for (int i = 0; i < 3000; ++i) {
         String r = RandomObjects.RandomDecimalString(rand);
         try {
- EDecimal.FromString(r);
-} catch (Exception ex) {
-Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
-}
+          EDecimal.FromString(r);
+        } catch (Exception ex) {
+          Assert.fail(ex.toString());
+          throw new IllegalStateException("", ex);
+        }
       }
     }
 
     @Test
     public void TestFromStringDecimal() {
       {
-String stringTemp =
-  EDecimal.FromString(
-"-89675213981993819.5183499484258059",
-EContext.CliDecimal).toString();
-Assert.assertEquals(
-"-89675213981993819.51834994843",
-stringTemp);
-}
+        String stringTemp = EDecimal.FromString(
+        "-89675213981993819.5183499484258059",
+        EContext.CliDecimal).toString();
+        Assert.assertEquals(
+        "-89675213981993819.51834994843",
+        stringTemp);
+      }
     }
 
     @Test
@@ -2216,7 +2251,7 @@ stringTemp);
         EDecimal.Max(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2225,7 +2260,7 @@ stringTemp);
         EDecimal.Max(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2262,7 +2297,7 @@ stringTemp);
         EDecimal.MaxMagnitude(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2271,7 +2306,7 @@ stringTemp);
         EDecimal.MaxMagnitude(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2283,7 +2318,7 @@ stringTemp);
         EDecimal.Min(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2292,7 +2327,7 @@ stringTemp);
         EDecimal.Min(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2329,7 +2364,7 @@ stringTemp);
         EDecimal.MinMagnitude(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2338,7 +2373,7 @@ stringTemp);
         EDecimal.MinMagnitude(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2420,7 +2455,7 @@ stringTemp);
         EDecimal.One.MultiplyAndAdd(null, EDecimal.Zero, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2429,7 +2464,7 @@ stringTemp);
         EDecimal.One.MultiplyAndAdd(EDecimal.Zero, null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2438,7 +2473,7 @@ stringTemp);
         EDecimal.One.MultiplyAndAdd(null, null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2447,7 +2482,7 @@ stringTemp);
         EDecimal.One.MultiplyAndAdd(null, EDecimal.Zero);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2456,7 +2491,7 @@ stringTemp);
         EDecimal.One.MultiplyAndAdd(EDecimal.Zero, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2465,7 +2500,7 @@ stringTemp);
         EDecimal.One.MultiplyAndAdd(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2480,7 +2515,7 @@ stringTemp);
    null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2492,7 +2527,7 @@ stringTemp);
    null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2501,7 +2536,7 @@ stringTemp);
         EDecimal.One.MultiplyAndSubtract(null, null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2745,6 +2780,58 @@ EDecimal.NegativeZero.Plus(null));
         stringTemp);
       }
     }
+
+    /*
+    private static void CA(byte[] bytes) {
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < bytes.length; ++i) {
+        sb.AppendFormat("{0:X2}", bytes[i]);
+      }
+      System.out.println(sb.toString());
+    }
+    */
+
+    private static void AssertQuietNaN(String str) {
+      EDecimal ed = EDecimal.FromString(str);
+      if (!(ed.IsQuietNaN()))Assert.fail();
+      if (!(EDecimal.FromDouble(ed.ToDouble()).IsQuietNaN()))Assert.fail();
+      if (!(EDecimal.FromSingle(ed.ToSingle()).IsQuietNaN()))Assert.fail();
+      EFloat ef = EFloat.FromString(str);
+      if (!(ef.IsQuietNaN()))Assert.fail();
+      if (!(EFloat.FromDouble(ef.ToDouble()).IsQuietNaN()))Assert.fail();
+      if (!(EFloat.FromSingle(ef.ToSingle()).IsQuietNaN()))Assert.fail();
+      ERational er = ERational.FromString(str);
+      if (!(er.IsQuietNaN()))Assert.fail();
+      if (!(ERational.FromDouble(er.ToDouble()).IsQuietNaN()))Assert.fail();
+      if (!(ERational.FromSingle(er.ToSingle()).IsQuietNaN()))Assert.fail();
+    }
+
+    private static void AssertSignalingNaN(String str) {
+      EDecimal ed = EDecimal.FromString(str);
+      if (!(ed.IsSignalingNaN()))Assert.fail();
+      EFloat ef = EFloat.FromString(str);
+      if (!(ef.IsSignalingNaN()))Assert.fail();
+      ERational er = ERational.FromString(str);
+      if (!(er.IsSignalingNaN()))Assert.fail();
+      // NOTE: Unfortunately, .NET might quiet signaling
+      // NaNs it may otherwise generate
+      if (!(
+        EDecimal.FromDouble(ed.ToDouble()).IsNaN()))Assert.fail(
+        str);
+      if (!(EDecimal.FromSingle(ed.ToSingle()).IsNaN()))Assert.fail();
+      if (!(EFloat.FromDouble(ef.ToDouble()).IsNaN()))Assert.fail();
+      if (!(EFloat.FromSingle(ef.ToSingle()).IsNaN()))Assert.fail();
+      if (!(ERational.FromDouble(er.ToDouble()).IsNaN()))Assert.fail();
+      if (!(ERational.FromSingle(er.ToSingle()).IsNaN()))Assert.fail();
+    }
+
+    @Test
+    public void TestQuietSignalingNaN() {
+      for (int i = 0; i <= 50; ++i) {
+        AssertQuietNaN("NaN" + TestCommon.IntToString(i));
+        AssertSignalingNaN("sNaN" + TestCommon.IntToString(i));
+      }
+    }
     @Test
     public void TestSquareRoot() {
       // not implemented yet
@@ -2755,7 +2842,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.Zero.Subtract(null, EContext.Unlimited);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2767,7 +2854,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.PositiveInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2776,7 +2863,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.NegativeInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2785,7 +2872,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.PositiveInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2794,7 +2881,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.NegativeInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2803,7 +2890,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.NaN.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2812,7 +2899,7 @@ EDecimal.NegativeZero.Plus(null));
         EDecimal.SignalingNaN.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2832,7 +2919,7 @@ EDecimal.NegativeZero.Plus(null));
         dec.ToEIntegerIfExact();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);

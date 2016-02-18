@@ -21,6 +21,12 @@ private TestCommon() {
       }
     }
 
+    public static void AssertEquals(Object o, Object o2) {
+      if (!o.equals(o2)) {
+         Assert.assertEquals(o, o2);
+      }
+    }
+
     public static void AssertEqualsHashCode(Object o, Object o2) {
       if (o.equals(o2)) {
         if (!o2.equals(o)) {

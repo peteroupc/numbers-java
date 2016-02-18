@@ -572,7 +572,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 
 **Returns:**
 
-* <code>true</code> If this object is finite (not infinity or not-a-number
+* <code>true</code> if this object is finite (not infinity or not-a-number
  (NaN)); otherwise, <code>false</code>.
 
 ### isNegative
@@ -582,7 +582,7 @@ Gets a value indicating whether this object is negative, including negative
 
 **Returns:**
 
-* <code>true</code> If this object is negative, including negative zero;
+* <code>true</code> if this object is negative, including negative zero;
  otherwise, <code>false</code>.
 
 ### isZero
@@ -591,7 +591,7 @@ Gets a value indicating whether this object&#x27;s value equals 0.
 
 **Returns:**
 
-* <code>true</code> If this object's value equals 0; otherwise, . <code>false</code>.
+* <code>true</code> if this object's value equals 0; otherwise, . <code>false</code>.
 
 ### getMantissa
     public final EInteger getMantissa()
@@ -2926,7 +2926,9 @@ Converts this value to its closest equivalent as 32-bit floating-point
  Then the other bits of the significand area are set to the lowest
  bits of this object's unsigned mantissa (significand), and the
  next-highest bit of the significand area is set if those bits are all
- zeros and this is a signaling NaN.</p>
+ zeros and this is a signaling NaN. Unfortunately, in the .NET
+ implementation, the return value of this method may be a quiet NaN
+ even if a signaling NaN would otherwise be generated.</p>
 
 **Returns:**
 
@@ -2996,11 +2998,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than 0 or greater than 255.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than 0 or greater than 255.
 
 ### FromByte
     public static EFloat FromByte(byte inputByte)
@@ -3051,11 +3050,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than -32768 or greater than 32767.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
     public static EFloat FromInt16(short inputInt16)
@@ -3107,11 +3103,9 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than -2147483648 or greater than 2147483647.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than -2147483648 or greater than
+ 2147483647.
 
 ### FromInt32
     public static EFloat FromInt32(int inputInt32)
@@ -3163,12 +3157,9 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is a finite number, but is not an
- exact integer.
-
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
- the integer is less than -9223372036854775808 or greater than
- 9223372036854775807.
+* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+ an exact integer, or is less than -9223372036854775808 or greater
+ than 9223372036854775807.
 
 ### FromInt64
     public static EFloat FromInt64(long inputInt64)

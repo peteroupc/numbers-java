@@ -161,7 +161,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} If this object is finite (not infinity or not-a-number
+     * @return {@code true} if this object is finite (not infinity or not-a-number
      * (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
@@ -172,7 +172,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return {@code true} If this object is negative, including negative zero;
+     * @return {@code true} if this object is negative, including negative zero;
      * otherwise, {@code false}.
      */
     public final boolean isNegative() {
@@ -181,7 +181,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return {@code true} If this object's value equals 0; otherwise, . {@code
+     * @return {@code true} if this object's value equals 0; otherwise, . {@code
      * false}.
      */
     public final boolean isZero() {
@@ -337,7 +337,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (value[1] & 0x80000) != 0;
-        value[1] &= 0x3ffff;
+        value[1] &= 0x7ffff;
         EInteger info = FastInteger.WordsToEInteger(value);
         if (info.isZero()) {
           return quiet ? NaN : SignalingNaN;
@@ -395,7 +395,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (valueFpMantissa & 0x400000) != 0;
-        valueFpMantissa &= 0x1fffff;
+        valueFpMantissa &= 0x3fffff;
         bigmant = EInteger.FromInt32(valueFpMantissa);
         value = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
                 BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
@@ -2516,8 +2516,8 @@ EContext ctx) {
           // Copy diagnostic information
           int[] words = FastInteger.GetLastWords(this.getUnsignedMantissa(), 2);
           nan[0] = words[0];
-          nan[1] = words[1] & 0x7ffff;
-          if ((words[1] | (words[1] & 0x7ffff)) == 0 && !this.IsQuietNaN()) {
+          nan[1] |= words[1] & 0x7ffff;
+          if ((words[0] | (words[1] & 0x7ffff)) == 0 && !this.IsQuietNaN()) {
             // Set the 0x40000 bit to keep the mantissa from
             // being zero if this is a signaling NaN
             nan[1] |= 0x40000;
@@ -2715,7 +2715,9 @@ EContext ctx) {
      * Then the other bits of the significand area are set to the lowest
      * bits of this object's unsigned mantissa (significand), and the
      * next-highest bit of the significand area is set if those bits are all
-     * zeros and this is a signaling NaN.</p>
+     * zeros and this is a signaling NaN. Unfortunately, in the .NET
+     * implementation, the return value of this method may be a quiet NaN
+     * even if a signaling NaN would otherwise be generated.</p>
      * @return The closest 32-bit floating-point number to this value. The return
      * value can be positive infinity or negative infinity if this value
      * exceeds the range of a 32-bit floating point number.
@@ -2861,9 +2863,13 @@ EContext ctx) {
         }
         return bigmantissa;
       } else {
-        EInteger bigmantissa = this.getMantissa();
+        if (exact && !this.unsignedMantissa.isEven()) {
+          // Mantissa is odd and will have to shift a nonzero
+          // number of bits, so can't be an exact integer
+          throw new ArithmeticException("Not an exact integer");
+        }
         FastInteger bigexponent = FastInteger.FromBig(this.getExponent()).Negate();
-        bigmantissa = bigmantissa.Abs();
+        EInteger bigmantissa = this.unsignedMantissa;
         BitShiftAccumulator acc = new BitShiftAccumulator(bigmantissa, 0, 0);
         acc.ShiftRight(bigexponent);
         if (exact && (acc.getLastDiscardedDigit() != 0 || acc.getOlderDiscardedDigits() !=
@@ -2948,7 +2954,7 @@ lastDigit,
 olderDigits);
         } else {
   return new BitShiftAccumulator(
-fastInt.AsEInteger(),
+fastInt.ToEInteger(),
 lastDigit,
 olderDigits);
         }
@@ -3042,8 +3048,8 @@ olderDigits);
         FastIntegerFixed fexponent,
         int flags) {
         return CreateWithFlags(
-fmantissa.AsEInteger(),
-fexponent.AsEInteger(),
+fmantissa.ToEInteger(),
+fexponent.ToEInteger(),
 flags);
       }
 
@@ -3074,7 +3080,10 @@ flags);
      * the truncated integer is less than 0 or greater than 255.
      */
 public byte ToByteChecked() {
- return this.ToEInteger().ToByteChecked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
 }
 
     /**
@@ -3092,13 +3101,14 @@ public byte ToByteUnchecked() {
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) without rounding to a different numerical value.
      * @return This number's value as a byte (from 0 to 255).
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than 0 or greater than 255.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than 0 or greater than 255.
      */
 public byte ToByteIfExact() {
- return this.ToEIntegerIfExact().ToByteChecked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ return this.isZero() ? ((byte)0) : this.ToEIntegerIfExact().ToByteChecked();
 }
 
     /**
@@ -3119,7 +3129,10 @@ public static EFloat FromByte(byte inputByte) {
      * the truncated integer is less than -32768 or greater than 32767.
      */
 public short ToInt16Checked() {
- return this.ToEInteger().ToInt16Checked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
 }
 
     /**
@@ -3138,13 +3151,15 @@ public short ToInt16Unchecked() {
      * 16-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 16-bit signed integer.
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than -32768 or greater than 32767.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
 public short ToInt16IfExact() {
- return this.ToEIntegerIfExact().ToInt16Checked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ return this.isZero() ? ((short)0) :
+   this.ToEIntegerIfExact().ToInt16Checked();
 }
 
     /**
@@ -3166,7 +3181,10 @@ public static EFloat FromInt16(short inputInt16) {
      * 2147483647.
      */
 public int ToInt32Checked() {
- return this.ToEInteger().ToInt32Checked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
 }
 
     /**
@@ -3185,13 +3203,15 @@ public int ToInt32Unchecked() {
      * 32-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 32-bit signed integer.
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than -2147483648 or greater than 2147483647.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -2147483648 or greater than
+     * 2147483647.
      */
 public int ToInt32IfExact() {
- return this.ToEIntegerIfExact().ToInt32Checked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
 }
 
     /**
@@ -3212,7 +3232,10 @@ public static EFloat FromInt32(int inputInt32) {
      * than 9223372036854775807.
      */
 public long ToInt64Checked() {
- return this.ToEInteger().ToInt64Checked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
 }
 
     /**
@@ -3231,14 +3254,15 @@ public long ToInt64Unchecked() {
      * 64-bit signed integer without rounding to a different numerical
      * value.
      * @return This number's value as a 64-bit signed integer.
-     * @throws ArithmeticException This value is a finite number, but is not an
-     * exact integer.
-     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
-     * the integer is less than -9223372036854775808 or greater than
-     * 9223372036854775807.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -9223372036854775808 or greater
+     * than 9223372036854775807.
      */
 public long ToInt64IfExact() {
- return this.ToEIntegerIfExact().ToInt64Checked();
+ if (!this.isFinite()) {
+ throw new ArithmeticException("Value is infinity or NaN");
+}
+ return this.isZero() ? ((long)0) : this.ToEIntegerIfExact().ToInt64Checked();
 }
 
     /**
