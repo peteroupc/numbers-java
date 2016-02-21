@@ -2671,8 +2671,15 @@ EContext ctx) {
       if (ctx == null || !ctx.getHasMaxPrecision()) {
         return this.toString();
       }
-      if (!this.isFinite()) {
-        return this.ToEDecimal().ToEFloat(ctx).toString();
+      if (this.IsNaN()) {
+        return CreateNaN(
+this.getUnsignedMantissa(),
+this.IsSignalingNaN(),
+this.isNegative(),
+ctx).toString();
+      }
+      if (this.IsInfinity()) {
+        return this.RoundToPrecision(ctx).toString();
       }
       EContext ctx2 = ctx.WithNoFlags();
       EFloat valueEfRnd = this.RoundToPrecision(ctx);

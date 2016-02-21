@@ -162,7 +162,37 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestCreateNaN() {
-      // not implemented yet
+      try {
+ ERational.CreateNaN(null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ ERational.CreateNaN(EInteger.FromString("-1"));
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ ERational.CreateNaN(null, false, false);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      ERational ef = ERational.CreateNaN(EInteger.FromInt32(0), false, true);
+      if (!(ef.isNegative()))Assert.fail();
+      ef = ERational.CreateNaN(EInteger.FromInt32(0), false, false);
+      if (!(!ef.isNegative()))Assert.fail();
     }
     @Test
     public void TestDenominator() {

@@ -111,7 +111,37 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestCreateNaN() {
-      // not implemented yet
+      try {
+ EFloat.CreateNaN(null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EFloat.CreateNaN(EInteger.FromString("-1"));
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EFloat.CreateNaN(null, false, false, null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      EFloat ef = EFloat.CreateNaN(EInteger.FromInt32(0), false, true, null);
+      if (!(ef.isNegative()))Assert.fail();
+      ef = EFloat.CreateNaN(EInteger.FromInt32(0), false, false, null);
+      if (!(!ef.isNegative()))Assert.fail();
     }
     @Test
     public void TestDivide() {

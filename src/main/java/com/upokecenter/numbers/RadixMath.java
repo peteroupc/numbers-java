@@ -2591,6 +2591,12 @@ ctxtmp);
           helper.CreateShiftAccumulator(op1MantAbs).GetDigitLength();
         FastInteger precision2 =
           helper.CreateShiftAccumulator(op2MantAbs).GetDigitLength();
+        FastInteger exp1 = fastOp1Exp.Copy().Add(precision1).Decrement();
+        FastInteger exp2 = fastOp2Exp.Copy().Add(precision2).Decrement();
+        int adjcmp = exp1.compareTo(exp2);
+        if (adjcmp != 0) {
+          return (signA < 0) ? -adjcmp : adjcmp;
+        }
         FastInteger maxPrecision = null;
         maxPrecision = (precision1.compareTo(precision2) > 0) ? precision1 :
           precision2;
@@ -2648,8 +2654,9 @@ ctxtmp);
         }
       }
       if (expcmp > 0) {
-        EInteger newmant =
-          RescaleByExponentDiff(
+        // DebugUtility.Log("" + op1Mantissa + " " + op2Mantissa + " [exp="
+        // + (// op1Exponent) + " " + op2Exponent + "]");
+        EInteger newmant = RescaleByExponentDiff(
 op1Mantissa,
 op1Exponent,
 op2Exponent,
@@ -2663,6 +2670,8 @@ helper);
         int mantcmp = newmant.compareTo(op2Mantissa);
         return (signA < 0) ? -mantcmp : mantcmp;
       } else {
+        // DebugUtility.Log("" + op1Mantissa + " " + op2Mantissa + " [exp="
+        // + (// op1Exponent) + " " + op2Exponent + "]");
         EInteger newmant = RescaleByExponentDiff(
             op2Mantissa,
             op1Exponent,

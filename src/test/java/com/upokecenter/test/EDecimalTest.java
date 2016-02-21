@@ -178,8 +178,8 @@ import com.upokecenter.numbers.*;
         EInteger bigintA = RandomObjects.RandomEInteger(r);
         EInteger bigintB = RandomObjects.RandomEInteger(r);
         EInteger bigintC = bigintA.Add(bigintB);
-        EDecimal
-  ba1 = EDecimal.FromEInteger(bigintA).Add(EDecimal.FromEInteger(bigintB));
+        EDecimal ba1 = EDecimal.FromEInteger(bigintA)
+          .Add(EDecimal.FromEInteger(bigintB));
         EDecimal ba2 = EDecimal.FromEInteger(bigintC);
         Assert.assertEquals(ba1.signum(), ba2.signum());
         Assert.assertEquals(ba1.toString(), ba2.toString());
@@ -188,6 +188,9 @@ ba1,
 ba2,
 bigintA.toString() + "/" + bigintB.toString());
       }
+      TestCommon.CompareTestEqual(
+EDecimal.FromString("-1.603074425947290000E+2147483671"),
+EDecimal.FromString("-1.60307442594729E+2147483671"));
       TestCommon.CompareTestLess(EDecimal.Zero, EDecimal.NaN);
       TestCommon.CompareTestLess(
 EDecimal.FromString("-4328117878201602191937590091183.9810549"),
@@ -728,7 +731,37 @@ EInteger.FromInt64(enumber.ToInt64Unchecked()));
     }
     @Test
     public void TestCreateNaN() {
-      // not implemented yet
+      try {
+ EDecimal.CreateNaN(null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EDecimal.CreateNaN(EInteger.FromString("-1"));
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EDecimal.CreateNaN(null, false, false, null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+new Object();
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      EDecimal ef = EDecimal.CreateNaN(EInteger.FromInt32(0), false, true, null);
+      if (!(ef.isNegative()))Assert.fail();
+      ef = EDecimal.CreateNaN(EInteger.FromInt32(0), false, false, null);
+      if (!(!ef.isNegative()))Assert.fail();
     }
 
     @Test
@@ -1945,10 +1978,6 @@ EInteger.FromInt64(enumber.ToInt64Unchecked()));
       Assert.assertEquals(EDecimal.One, EDecimal.FromInt32(1));
     }
     @Test
-    public void TestFromInt64() {
-      // not implemented yet
-    }
-    @Test
     public void TestFromSingle() {
       String stringTemp;
       {
@@ -2925,6 +2954,55 @@ EDecimal.NegativeZero.Plus(null));
         throw new IllegalStateException("", ex);
       }
     }
+
+    private static final EDecimal DoubleUnderflowToZero =
+      EFloat.Create(1, -1075).ToEDecimal();
+
+    private static final EDecimal DoubleOverflowToInfinity =
+  EFloat.Create(EInteger.FromInt64((1L << 53) -1), EInteger.FromInt32(971)).Add(
+         EFloat.Create(1, 970)).ToEDecimal();
+
+    private static final EDecimal SingleUnderflowToZero =
+      EFloat.Create(1, -150).ToEDecimal();
+
+    private static final EDecimal SingleOverflowToInfinity =
+  EFloat.Create(EInteger.FromInt64((1L << 24) -1), EInteger.FromInt32(104)).Add(
+         EFloat.Create(1, 103)).ToEDecimal();
+
+    private static EDecimal[] MakeUlpTable() {
+      EDecimal[] edecarr = new EDecimal[2048];
+      for (int i = 0; i < 2048; ++i) {
+        edecarr[i] = EFloat.Create(1, i - 1075).ToEDecimal();
+      }
+      return edecarr;
+    }
+
+    private static final EDecimal[] UlpTable = MakeUlpTable();
+
+    private static EDecimal GetHalfUlp(double dbl) {
+      long value = Double.doubleToRawLongBits(dbl);
+      int exponent = (int)((value >> 52) & 0x7ffL);
+      if (exponent == 0) {
+        return UlpTable[exponent];
+      } else if (exponent == 2047) {
+        throw new IllegalArgumentException();
+      } else {
+        return UlpTable[exponent - 1];
+      }
+    }
+
+    private static EDecimal GetHalfUlp(float sng) {
+      int value = Float.floatToRawIntBits(sng);
+      int exponent = (int)((value >> 23) & 0xff);
+      if (exponent == 0) {
+        return UlpTable[exponent + 925];
+      } else if (exponent == 255) {
+        throw new IllegalArgumentException();
+      } else {
+        return UlpTable[exponent + 924];
+      }
+    }
+
     @Test
     public void TestToDouble() {
       // test for correct rounding
@@ -2937,6 +3015,43 @@ EDecimal.NegativeZero.Plus(null));
         Assert.assertEquals(
           "1.9725792733634686104693400920950807631015777587890625",
           stringTemp);
+      }
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 10000; ++i) {
+        EDecimal edec;
+        if (fr.NextValue(100) < 10) {
+          String decimals = RandomObjects.RandomBigIntString(fr);
+          if (decimals.charAt(0) == '-') {
+            decimals = decimals.substring(1);
+          }
+          String edecstr = RandomObjects.RandomBigIntString(fr) +
+            "." + decimals + "e" + RandomObjects.RandomBigIntString(fr);
+          edec = EDecimal.FromString(edecstr);
+        } else {
+          edec = RandomObjects.RandomEDecimal(fr);
+        }
+        if (edec.isFinite()) {
+          dbl = edec.ToDouble();
+          if (((dbl) == Double.NEGATIVE_INFINITY)) {
+            if (!(edec.isNegative()))Assert.fail();
+  TestCommon.CompareTestGreaterEqual(edec.Abs(), DoubleOverflowToInfinity);
+          } else if (((dbl) == Double.POSITIVE_INFINITY)) {
+            if (!(!edec.isNegative()))Assert.fail();
+  TestCommon.CompareTestGreaterEqual(edec.Abs(), DoubleOverflowToInfinity);
+          } else if (dbl == 0.0) {
+            TestCommon.CompareTestLessEqual(edec.Abs(), DoubleUnderflowToZero);
+Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
+          } else {
+            if (!(!Double.isNaN(dbl)))Assert.fail();
+            edec = edec.Abs();
+            TestCommon.CompareTestGreater(edec, DoubleUnderflowToZero);
+            TestCommon.CompareTestLess(edec, DoubleOverflowToInfinity);
+            EDecimal halfUlp = GetHalfUlp(dbl);
+            EDecimal difference = EDecimal.FromDouble(dbl).Abs()
+              .Subtract(edec).Abs();
+            TestCommon.CompareTestLessEqual(difference, halfUlp);
+          }
+        }
       }
     }
     @Test
@@ -4397,7 +4512,43 @@ EDecimal.NegativeZero.Plus(null));
     }
     @Test
     public void TestToSingle() {
-      // not implemented yet
+      FastRandom fr = new FastRandom();
+      for (int i = 0; i < 10000; ++i) {
+        EDecimal edec;
+        if (fr.NextValue(100) < 10) {
+          String decimals = RandomObjects.RandomBigIntString(fr);
+          if (decimals.charAt(0) == '-') {
+            decimals = decimals.substring(1);
+          }
+          String edecstr = RandomObjects.RandomBigIntString(fr) +
+            "." + decimals + "e" + RandomObjects.RandomBigIntString(fr);
+          edec = EDecimal.FromString(edecstr);
+        } else {
+          edec = RandomObjects.RandomEDecimal(fr);
+        }
+        if (edec.isFinite()) {
+          float sng = edec.ToSingle();
+          if (((sng) == Float.NEGATIVE_INFINITY)) {
+            if (!(edec.isNegative()))Assert.fail();
+  TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
+          } else if (((sng) == Float.POSITIVE_INFINITY)) {
+            if (!(!edec.isNegative()))Assert.fail();
+  TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
+          } else if (sng == 0.0) {
+            TestCommon.CompareTestLessEqual(edec.Abs(), SingleUnderflowToZero);
+Assert.assertEquals(edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
+          } else {
+            if (!(!Float.isNaN(sng)))Assert.fail();
+            edec = edec.Abs();
+            TestCommon.CompareTestGreater(edec, SingleUnderflowToZero);
+            TestCommon.CompareTestLess(edec, SingleOverflowToInfinity);
+            EDecimal halfUlp = GetHalfUlp(sng);
+            EDecimal difference = EDecimal.FromSingle(sng).Abs()
+              .Subtract(edec).Abs();
+            TestCommon.CompareTestLessEqual(difference, halfUlp);
+          }
+        }
+      }
     }
 
     @Test

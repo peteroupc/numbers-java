@@ -141,6 +141,19 @@ String msg) {
       }
     }
 
+    public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2) {
+      CompareTestLessEqual(o2, o1);
+    }
+
+    public static <T extends Comparable<T>> void CompareTestLessEqual(T o1, T o2) {
+      if (CompareTestReciprocal(o1, o2) > 0) {
+        Assert.fail(ObjectMessages(
+          o1,
+          o2,
+          "Not less: " + CompareTestReciprocal(o1, o2)));
+      }
+    }
+
     public static <T extends Comparable<T>> int CompareTestReciprocal(T o1, T o2) {
       if (o1 == null) {
         throw new NullPointerException("o1");
