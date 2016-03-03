@@ -13,15 +13,15 @@ private Extras() {
     public static int[] DoubleToIntegers(double dbl) {
       long value = Double.doubleToRawLongBits(dbl);
       int[] ret = new int[2];
-      ret[0] = ((int)(value & 0xFFFFFFFFL));
-      ret[1] = ((int)((value >> 32) & 0xFFFFFFFFL));
+      ret[0] = ((int)(value & 0xffffffffL));
+      ret[1] = ((int)((value >> 32) & 0xffffffffL));
       return ret;
     }
 
     public static double IntegersToDouble(int[] integers) {
       // NOTE: least significant word first
-      long value = ((long)integers[0]) & 0xFFFFFFFFL;
-      value |= (((long)integers[1]) & 0xFFFFFFFFL) << 32;
+      long value = ((long)integers[0]) & 0xffffffffL;
+      value |= (((long)integers[1]) & 0xffffffffL) << 32;
       return Double.longBitsToDouble(value);
     }
   }

@@ -5,7 +5,18 @@
 Contains parameters for controlling the precision, rounding, and exponent
  range of arbitrary-precision numbers. (The "E" stands for "extended",
  and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.).
+ library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
+ safety:</b> With one exception, instances of this class are immutable
+ and are safe to use among multiple threads. The one exception
+ involves the <code>Flags</code> property. If the context's <code>HasFlags</code>
+ property (a read-only property) is <code>true</code>, the <code>Flags</code>
+ property is mutable, thus making the context mutable. This class
+ doesn't synchronize access to such mutable contexts, so applications
+ should provide their own synchronization if a context with the
+ <code>HasFlags</code> property set to <code>true</code> will be shared among
+ multiple threads and those threads need to read or write the
+ <code>Flags</code> property (which can happen, for example, by passing the
+ context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
 
 ## Fields
 
@@ -266,7 +277,7 @@ Gets a value indicating whether the EMax and EMin properties refer to the
 
 **Returns:**
 
-* <code>true</code> If the EMax and EMin properties refer to the number's
+* <code>true</code> if the EMax and EMin properties refer to the number's
  Exponent property adjusted to the number's precision, or false if
  they refer to just the number's Exponent property.
 
@@ -341,7 +352,7 @@ Gets a value indicating whether this context defines a minimum and maximum
 
 **Returns:**
 
-* <code>true</code> If this context defines a minimum and maximum exponent;
+* <code>true</code> if this context defines a minimum and maximum exponent;
  otherwise, <code>false</code>.
 
 ### getHasFlags
@@ -350,7 +361,7 @@ Gets a value indicating whether this context has a mutable Flags field.
 
 **Returns:**
 
-* <code>true</code> If this context has a mutable Flags field; otherwise,
+* <code>true</code> if this context has a mutable Flags field; otherwise,
  <code>false</code>.
 
 ### getHasMaxPrecision
@@ -359,7 +370,7 @@ Gets a value indicating whether this context defines a maximum precision.
 
 **Returns:**
 
-* <code>true</code> If this context defines a maximum precision; otherwise,
+* <code>true</code> if this context defines a maximum precision; otherwise,
  <code>false</code>.
 
 ### isPrecisionInBits
@@ -369,7 +380,7 @@ Gets a value indicating whether this context's Precision property is in
 
 **Returns:**
 
-* <code>true</code> If this context's Precision property is in bits, rather
+* <code>true</code> if this context's Precision property is in bits, rather
  than digits; otherwise, <code>false</code>. The default is false.
 
 ### isSimplified
@@ -382,7 +393,7 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
 
 **Returns:**
 
-* <code>true</code> If a "simplified" arithmetic will be used; otherwise,
+* <code>true</code> if a "simplified" arithmetic will be used; otherwise,
  <code>false</code>.
 
 ### getPrecision

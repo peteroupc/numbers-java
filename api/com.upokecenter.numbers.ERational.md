@@ -767,7 +767,8 @@ Not documented yet.
 
 ### hashCode
     public int hashCode()
-Returns the hash code for this instance.
+Returns the hash code for this instance. No application or process IDs are
+ used in the hash code calculation.
 
 **Overrides:**
 

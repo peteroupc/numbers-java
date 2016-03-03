@@ -148,13 +148,13 @@ Renamed to ToInt64Unchecked.
  Returns a byte array of this integer's value.
 * `byte ToByteUnchecked()`<br>
  Converts this number to a byte (from 0 to 255), returning the
- least-significant bits of this number's two' s-complement form.
+ least-significant bits of this number's two's-complement form.
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer.
 * `short ToInt16Unchecked()`<br>
  Converts this number to a 16-bit signed integer, returning the
- least-significant bits of this number's two' s-complement form.
+ least-significant bits of this number's two's-complement form.
 * `int ToInt32Checked()`<br>
  Converts this object's value to a 32-bit signed integer, throwing an
  exception if it can't fit.
@@ -203,7 +203,7 @@ Gets a value indicating whether this value is even.
 
 **Returns:**
 
-* <code>true</code> If this value is even; otherwise, <code>false</code> .
+* <code>true</code> if this value is even; otherwise, <code>false</code> .
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
@@ -211,7 +211,7 @@ Gets a value indicating whether this object&#x27;s value is a power of two.
 
 **Returns:**
 
-* <code>true</code> If this object's value is a power of two; otherwise,
+* <code>true</code> if this object's value is a power of two; otherwise,
  <code>false</code>.
 
 ### isZero
@@ -220,7 +220,7 @@ Gets a value indicating whether this value is 0.
 
 **Returns:**
 
-* <code>true</code> If this value is 0; otherwise, <code>false</code> .
+* <code>true</code> if this value is 0; otherwise, <code>false</code> .
 
 ### signum
     public final int signum()
@@ -482,8 +482,8 @@ Returns whether this object's value can fit in a 32-bit signed integer.
 
 **Returns:**
 
-* <code>true</code> if this object's value is Integer.MIN_VALUE or greater,
- and Integer.MAX_VALUE or less; otherwise, <code>false</code>.
+* <code>true</code> if this object's value is from -2147483648 through
+ 2147483647; otherwise, <code>false</code>.
 
 ### CanFitInInt64
     public boolean CanFitInInt64()
@@ -491,8 +491,8 @@ Returns whether this object's value can fit in a 64-bit signed integer.
 
 **Returns:**
 
-* <code>true</code> if this object's value is Long.MIN_VALUE or greater,
- and Long.MAX_VALUE or less; otherwise, <code>false</code>.
+* <code>true</code> if this object's value is from -9223372036854775808
+ through 9223372036854775807; otherwise, <code>false</code>.
 
 ### compareTo
     public int compareTo(EInteger other)
@@ -602,7 +602,8 @@ Not documented yet.
 
 ### hashCode
     public int hashCode()
-Returns the hash code for this instance.
+Returns the hash code for this instance. No application or process IDs are
+ used in the hash code calculation.
 
 **Overrides:**
 
@@ -1016,7 +1017,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 ### ToByteUnchecked
     public byte ToByteUnchecked()
 Converts this number to a byte (from 0 to 255), returning the
- least-significant bits of this number's two' s-complement form.
+ least-significant bits of this number's two's-complement form.
 
 **Returns:**
 
@@ -1051,7 +1052,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
 Converts this number to a 16-bit signed integer, returning the
- least-significant bits of this number's two' s-complement form.
+ least-significant bits of this number's two's-complement form.
 
 **Returns:**
 

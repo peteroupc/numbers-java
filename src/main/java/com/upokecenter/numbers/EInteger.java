@@ -100,7 +100,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return {@code true} If this value is even; otherwise, {@code false} .
+     * @return {@code true} if this value is even; otherwise, {@code false} .
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -108,7 +108,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return {@code true} If this object's value is a power of two; otherwise,
+     * @return {@code true} if this object's value is a power of two; otherwise,
      * {@code false}.
      */
     public final boolean isPowerOfTwo() {
@@ -121,7 +121,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return {@code true} If this value is 0; otherwise, {@code false} .
+     * @return {@code true} if this value is 0; otherwise, {@code false} .
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -710,8 +710,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           a |= (((int)this.words[1]) & 0xffff) << 16;
           int b = ((int)bigintAugend.words[0]) & 0xffff;
           b |= (((int)bigintAugend.words[1]) & 0xffff) << 16;
-          long longResult = ((long)a) & 0xFFFFFFFFL;
-          longResult += ((long)b) & 0xFFFFFFFFL;
+          long longResult = ((long)a) & 0xffffffffL;
+          longResult += ((long)b) & 0xffffffffL;
           if ((longResult >> 32) == 0) {
             a = ((int)longResult);
             sumreg = new short[2];
@@ -945,8 +945,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Returns whether this object's value can fit in a 32-bit signed integer.
-     * @return {@code true} if this object's value is Integer.MIN_VALUE or greater,
-     * and Integer.MAX_VALUE or less; otherwise, {@code false}.
+     * @return {@code true} if this object's value is from -2147483648 through
+     * 2147483647; otherwise, {@code false}.
      */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
@@ -962,8 +962,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Returns whether this object's value can fit in a 64-bit signed integer.
-     * @return {@code true} if this object's value is Long.MIN_VALUE or greater,
-     * and Long.MAX_VALUE or less; otherwise, {@code false}.
+     * @return {@code true} if this object's value is from -9223372036854775808
+     * through 9223372036854775807; otherwise, {@code false}.
      */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
@@ -1599,7 +1599,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns the hash code for this instance.
+     * Returns the hash code for this instance. No application or process IDs are
+     * used in the hash code calculation.
      * @return A 32-bit signed integer.
      */
     @Override public int hashCode() {
@@ -2295,11 +2296,11 @@ this.negative ^ bigintMult.negative);
         if (c > 3) {
           intRetValue2 |= (((int)words[3]) & 0xffff) << 16;
         }
-        ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+        ivv = ((long)intRetValue) & 0xffffffffL;
         ivv |= ((long)intRetValue2) << 32;
         return ivv;
       }
-      ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+      ivv = ((long)intRetValue) & 0xffffffffL;
       return ivv;
     }
 
@@ -2719,11 +2720,11 @@ int subtrahendCount) {
           intRetValue = (~intRetValue);
           intRetValue2 = (~intRetValue2);
         }
-        ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+        ivv = ((long)intRetValue) & 0xffffffffL;
         ivv |= ((long)intRetValue2) << 32;
         return ivv;
       }
-      ivv = ((long)intRetValue) & 0xFFFFFFFFL;
+      ivv = ((long)intRetValue) & 0xffffffffL;
       if (this.negative) {
         ivv = -ivv;
       }
@@ -5907,7 +5908,7 @@ public byte ToByteChecked() {
 
     /**
      * Converts this number to a byte (from 0 to 255), returning the
-     * least-significant bits of this number's two' s-complement form.
+     * least-significant bits of this number's two's-complement form.
      * @return This number, converted to a byte (from 0 to 255).
      */
 public byte ToByteUnchecked() {
@@ -5942,7 +5943,7 @@ public short ToInt16Checked() {
 
     /**
      * Converts this number to a 16-bit signed integer, returning the
-     * least-significant bits of this number's two' s-complement form.
+     * least-significant bits of this number's two's-complement form.
      * @return This number, converted to a 16-bit signed integer.
      */
 public short ToInt16Unchecked() {

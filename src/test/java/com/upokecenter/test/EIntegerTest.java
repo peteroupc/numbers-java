@@ -128,7 +128,7 @@ String result) {
           bigintA.DivRem(bigintB);
           Assert.fail("Should have failed");
         } catch (ArithmeticException ex) {
-          System.out.print("");
+          new Object();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -206,7 +206,7 @@ String result) {
           bigintA.DivRem(bigintB);
           Assert.fail("Should have failed");
         } catch (ArithmeticException ex) {
-          System.out.print("");
+          new Object();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -411,7 +411,7 @@ String result) {
         BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -420,7 +420,7 @@ String result) {
         BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -429,7 +429,7 @@ String result) {
         BigFromString("999999999999999999999999999999999").ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -444,7 +444,7 @@ String result) {
         BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -453,7 +453,7 @@ String result) {
         BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -474,7 +474,7 @@ String result) {
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -485,23 +485,23 @@ String result) {
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
       Assert.assertEquals(
-        ((long)0xFFFFFFF200000000L),
-  BigValueOf(((long)0xFFFFFFF200000000L)).ToInt64Checked());
+        ((long)0xfffffff200000000L),
+  BigValueOf(((long)0xfffffff200000000L)).ToInt64Checked());
       Assert.assertEquals(
-        ((long)0xFFFFFFF280000000L),
-  BigValueOf(((long)0xFFFFFFF280000000L)).ToInt64Checked());
+        ((long)0xfffffff280000000L),
+  BigValueOf(((long)0xfffffff280000000L)).ToInt64Checked());
       Assert.assertEquals(
-        ((long)0xFFFFFFF280000001L),
-  BigValueOf(((long)0xFFFFFFF280000001L)).ToInt64Checked());
+        ((long)0xfffffff280000001L),
+  BigValueOf(((long)0xfffffff280000001L)).ToInt64Checked());
       Assert.assertEquals(
-        ((long)0xFFFFFFF27FFFFFFFL),
-  BigValueOf(((long)0xFFFFFFF27FFFFFFFL)).ToInt64Checked());
+        ((long)0xfffffff27fffffffL),
+  BigValueOf(((long)0xfffffff27fffffffL)).ToInt64Checked());
       Assert.assertEquals(
         0x0000000380000001L,
         BigValueOf(0x0000000380000001L).ToInt64Checked());
@@ -526,7 +526,7 @@ String result) {
         BigFromString("999999999999999999999999999999999").ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -543,7 +543,7 @@ String result) {
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -554,24 +554,24 @@ String result) {
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      long longV = ((long)0xFFFFFFF200000000L);
+      long longV = ((long)0xfffffff200000000L);
       Assert.assertEquals(
 longV,
 BigValueOf(longV).ToInt64Checked());
-      longV = ((long)0xFFFFFFF280000000L);
+      longV = ((long)0xfffffff280000000L);
       Assert.assertEquals(
 longV,
 BigValueOf(longV).ToInt64Checked());
-      longV = ((long)0xFFFFFFF280000001L);
+      longV = ((long)0xfffffff280000001L);
       Assert.assertEquals(
 longV,
 BigValueOf(longV).ToInt64Checked());
-      longV = ((long)0xFFFFFFF27FFFFFFFL);
+      longV = ((long)0xfffffff27fffffffL);
       Assert.assertEquals(
 longV,
 BigValueOf(longV).ToInt64Checked());
@@ -602,7 +602,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -611,7 +611,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(null, EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -620,7 +620,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(EInteger.FromInt32(0), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -629,7 +629,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(BigFromString("-1"), BigFromString("1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -638,7 +638,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -647,7 +647,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -656,7 +656,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -665,7 +665,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -726,7 +726,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).DivRem(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -735,7 +735,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).DivRem(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -770,7 +770,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -780,7 +780,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(0).GetSignedBit(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -789,7 +789,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString("x11");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -798,7 +798,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString(".");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -807,7 +807,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString("..");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -816,7 +816,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString("e200");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -826,7 +826,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Mod(EInteger.FromInt64(-1));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -835,7 +835,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Add(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -844,7 +844,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Subtract(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -853,7 +853,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Divide(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -862,7 +862,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Divide(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -871,7 +871,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Remainder(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -880,7 +880,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Mod(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -889,7 +889,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromInt32(1).Remainder(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -906,7 +906,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromBytes(null, false);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -918,7 +918,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixString(null, 10);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -927,7 +927,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixString("0", 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -936,7 +936,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixString("0", 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -945,7 +945,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixString("0", -37);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -954,7 +954,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixString("0", Integer.MIN_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -963,7 +963,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixString("0", Integer.MAX_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -984,7 +984,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring(null, 10, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -993,7 +993,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0", 1, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1002,7 +1002,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0", 0, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1011,7 +1011,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0", -37, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1020,7 +1020,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0", Integer.MIN_VALUE, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1029,7 +1029,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0", Integer.MAX_VALUE, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1038,7 +1038,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, -1, 2);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1047,7 +1047,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, 4, 5);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1056,7 +1056,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, 0, -8);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1065,7 +1065,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, 0, 6);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1074,7 +1074,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, 2, 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1083,7 +1083,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, 0, 0);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1092,7 +1092,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("123", 10, 1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1101,7 +1101,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("-", 10, 0, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1110,7 +1110,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("g", 16, 0, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1119,7 +1119,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0123gggg", 16, 0, 8);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1128,7 +1128,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0123gggg", 10, 0, 8);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1137,7 +1137,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromRadixSubstring("0123aaaa", 10, 0, 8);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1166,7 +1166,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString("xyz");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1175,7 +1175,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1184,7 +1184,7 @@ BigValueOf(longV).ToInt64Checked());
         BigFromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1196,7 +1196,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring(null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1206,7 +1206,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring("123", -1, 2);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1215,7 +1215,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring("123", 4, 2);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1224,7 +1224,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring("123", 1, -1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1233,7 +1233,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring("123", 1, 4);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1242,7 +1242,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring("123", 1, 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1251,7 +1251,7 @@ BigValueOf(longV).ToInt64Checked());
         EInteger.FromSubstring("123", 2, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1311,7 +1311,7 @@ stringTemp);
         EInteger.FromInt32(0).Gcd(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1659,19 +1659,19 @@ Assert.assertEquals(objectTemp, objectTemp2);
       Assert.assertEquals(
         Long.MIN_VALUE,
         BigValueOf(Long.MAX_VALUE).Add(EInteger.FromInt32(1)).ToInt64Unchecked());
-      long aa = ((long)0xFFFFFFF200000000L);
+      long aa = ((long)0xfffffff200000000L);
       Assert.assertEquals(
               aa,
               BigValueOf(aa).ToInt64Unchecked());
-      aa = ((long)0xFFFFFFF280000000L);
+      aa = ((long)0xfffffff280000000L);
       Assert.assertEquals(
               aa,
               BigValueOf(aa).ToInt64Unchecked());
-      aa = ((long)0xFFFFFFF200000001L);
+      aa = ((long)0xfffffff200000001L);
       Assert.assertEquals(
               aa,
               BigValueOf(aa).ToInt64Unchecked());
-      aa = ((long)0xFFFFFFF27FFFFFFFL);
+      aa = ((long)0xfffffff27fffffffL);
       Assert.assertEquals(
               aa,
               BigValueOf(aa).ToInt64Unchecked());
@@ -1709,7 +1709,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         System.out.println(minValueTimes2.AsInt32Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1719,7 +1719,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         System.out.println(verybig.AsInt32Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1728,7 +1728,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         System.out.println(verybig.AsInt64Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1737,7 +1737,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EInteger.FromInt32(1).PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1746,7 +1746,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EInteger.FromInt32(1).Pow(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1755,7 +1755,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         (EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1774,7 +1774,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EInteger.FromInt32(1).Mod(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1783,7 +1783,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         (EInteger.FromInt64(13)).Mod(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1792,7 +1792,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         (EInteger.FromInt64(13)).Mod(EInteger.FromInt64(-4));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1801,7 +1801,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         (EInteger.FromInt64(-13)).Mod(EInteger.FromInt64(-4));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1813,7 +1813,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EInteger.FromInt32(1).Multiply(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2115,7 +2115,7 @@ stringTemp);
         EInteger.FromInt32(1).ToRadixString(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2124,7 +2124,7 @@ stringTemp);
         EInteger.FromInt32(1).ToRadixString(0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2133,7 +2133,7 @@ stringTemp);
         EInteger.FromInt32(1).ToRadixString(1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2142,7 +2142,7 @@ stringTemp);
         EInteger.FromInt32(1).ToRadixString(37);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2151,7 +2151,7 @@ stringTemp);
         EInteger.FromInt32(1).ToRadixString(Integer.MIN_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2160,7 +2160,7 @@ stringTemp);
         EInteger.FromInt32(1).ToRadixString(Integer.MAX_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        System.out.print("");
+        new Object();
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);

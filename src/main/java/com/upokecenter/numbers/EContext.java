@@ -11,7 +11,18 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * Contains parameters for controlling the precision, rounding, and exponent
      * range of arbitrary-precision numbers. (The "E" stands for "extended",
      * and has this prefix to group it with the other classes common to this
-     * library, particularly EDecimal, EFloat, and ERational.).
+     * library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
+     * safety:</b> With one exception, instances of this class are immutable
+     * and are safe to use among multiple threads. The one exception
+     * involves the <code>Flags</code> property. If the context's <code>HasFlags</code>
+     * property (a read-only property) is <code>true</code>, the <code>Flags</code>
+     * property is mutable, thus making the context mutable. This class
+     * doesn't synchronize access to such mutable contexts, so applications
+     * should provide their own synchronization if a context with the
+     * <code>HasFlags</code> property set to <code>true</code> will be shared among
+     * multiple threads and those threads need to read or write the
+     * <code>Flags</code> property (which can happen, for example, by passing the
+     * context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
      */
   public final class EContext {
     /**
@@ -243,7 +254,7 @@ boolean clampNormalExponents) {
      * this value to false (using WithAdjustExponent) is useful for modeling
      * floating point representations with an integer mantissa (significand)
      * and an integer exponent, such as Java's BigDecimal.
-     * @return {@code true} If the EMax and EMin properties refer to the number's
+     * @return {@code true} if the EMax and EMin properties refer to the number's
      * Exponent property adjusted to the number's precision, or false if
      * they refer to just the number's Exponent property.
      */
@@ -322,7 +333,7 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context defines a minimum and maximum
      * exponent. If false, converted exponents can have any exponent and
      * operations can't cause overflow or underflow.
-     * @return {@code true} If this context defines a minimum and maximum exponent;
+     * @return {@code true} if this context defines a minimum and maximum exponent;
      * otherwise, {@code false}.
      */
     public final boolean getHasExponentRange() {
@@ -331,7 +342,7 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context has a mutable Flags field.
-     * @return {@code true} If this context has a mutable Flags field; otherwise,
+     * @return {@code true} if this context has a mutable Flags field; otherwise,
      * {@code false}.
      */
     public final boolean getHasFlags() {
@@ -340,7 +351,7 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
-     * @return {@code true} If this context defines a maximum precision; otherwise,
+     * @return {@code true} if this context defines a maximum precision; otherwise,
      * {@code false}.
      */
     public final boolean getHasMaxPrecision() {
@@ -350,7 +361,7 @@ public final void setFlags(int value) {
     /**
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
-     * @return {@code true} If this context's Precision property is in bits, rather
+     * @return {@code true} if this context's Precision property is in bits, rather
      * than digits; otherwise, {@code false}. The default is false.
      */
     public final boolean isPrecisionInBits() {
@@ -364,7 +375,7 @@ public final void setFlags(int value) {
      * zero. For further details, see <a
      * href='http://speleotrove.com/decimal/dax3274.html'>
      * <code>http://speleotrove.com/decimal/dax3274.html</code></a>
-     * @return {@code true} If a "simplified" arithmetic will be used; otherwise,
+     * @return {@code true} if a "simplified" arithmetic will be used; otherwise,
      * {@code false}.
      */
     public final boolean isSimplified() {

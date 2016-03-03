@@ -2280,7 +2280,8 @@ ERounding.HalfEven);
     }
 
     /**
-     * Calculates this object&#x27;s hash code.
+     * Calculates this object&#x27;s hash code. No application or process IDs are
+     * used in the hash code calculation.
      * @return This object's hash code.
      */
     @Override public int hashCode() {

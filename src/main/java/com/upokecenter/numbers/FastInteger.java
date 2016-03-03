@@ -71,7 +71,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         if (this.wordCount == 2 && (this.data[1] >> 31) == 0) {
           long longV = ((long)this.data[0]);
-          longV &= 0xFFFFFFFFL;
+          longV &= 0xffffffffL;
           longV |= (((long)this.data[1]) << 32);
           return EInteger.FromInt64(longV);
         }
@@ -147,7 +147,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           if (multiplicand < 65536) {
             if (this.wordCount == 2 && (this.data[1] >> 16) == 0) {
               long longV = ((long)this.data[0]);
-              longV &= 0xFFFFFFFFL;
+              longV &= 0xffffffffL;
               longV |= (((long)this.data[1]) << 32);
               longV = (longV * multiplicand);
               this.data[0] = ((int)longV);
@@ -155,7 +155,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
               carry = 0;
             } else if (this.wordCount == 1) {
               long longV = ((long)this.data[0]);
-              longV &= 0xFFFFFFFFL;
+              longV &= 0xffffffffL;
               longV = (longV * multiplicand);
               this.data[0] = ((int)longV);
               carry = ((int)(longV >> 32));
@@ -193,7 +193,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           } else {
             if (this.wordCount == 1) {
               long longV = ((long)this.data[0]);
-              longV &= 0xFFFFFFFFL;
+              longV &= 0xffffffffL;
               longV = (longV * multiplicand);
               this.data[0] = ((int)longV);
               carry = ((int)(longV >> 32));

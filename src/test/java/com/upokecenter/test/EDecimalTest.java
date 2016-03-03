@@ -3017,6 +3017,14 @@ EDecimal.NegativeZero.Plus(null));
           stringTemp);
       }
       FastRandom fr = new FastRandom();
+      dbl = DoubleOverflowToInfinity.ToDouble();
+      if (!(((dbl) == Double.POSITIVE_INFINITY)))Assert.fail();
+      dbl = DoubleOverflowToInfinity.Negate().ToDouble();
+      if (!(((dbl) == Double.NEGATIVE_INFINITY)))Assert.fail();
+      dbl = DoubleUnderflowToZero.ToDouble();
+      if (!(dbl == 0.0))Assert.fail();
+      dbl = DoubleUnderflowToZero.Negate().ToDouble();
+      if (!(dbl == 0.0))Assert.fail();
       for (int i = 0; i < 10000; ++i) {
         EDecimal edec;
         if (fr.NextValue(100) < 10) {
@@ -4513,6 +4521,15 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
     @Test
     public void TestToSingle() {
       FastRandom fr = new FastRandom();
+      float sng;
+      sng = SingleOverflowToInfinity.ToSingle();
+      if (!(((sng) == Float.POSITIVE_INFINITY)))Assert.fail();
+      sng = SingleOverflowToInfinity.Negate().ToSingle();
+      if (!(((sng) == Float.NEGATIVE_INFINITY)))Assert.fail();
+      sng = SingleUnderflowToZero.ToSingle();
+      if (!(sng == 0.0))Assert.fail();
+      sng = SingleUnderflowToZero.Negate().ToSingle();
+      if (!(sng == 0.0))Assert.fail();
       for (int i = 0; i < 10000; ++i) {
         EDecimal edec;
         if (fr.NextValue(100) < 10) {
@@ -4527,14 +4544,14 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
           edec = RandomObjects.RandomEDecimal(fr);
         }
         if (edec.isFinite()) {
-          float sng = edec.ToSingle();
+          sng = edec.ToSingle();
           if (((sng) == Float.NEGATIVE_INFINITY)) {
             if (!(edec.isNegative()))Assert.fail();
   TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
           } else if (((sng) == Float.POSITIVE_INFINITY)) {
             if (!(!edec.isNegative()))Assert.fail();
   TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
-          } else if (sng == 0.0) {
+          } else if (sng == 0.0f) {
             TestCommon.CompareTestLessEqual(edec.Abs(), SingleUnderflowToZero);
 Assert.assertEquals(edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
           } else {
