@@ -2,6 +2,7 @@ package com.upokecenter.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
   public class EFloatTest {
@@ -75,7 +76,7 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       TestAddCloseExponent(fr, 0);
       TestAddCloseExponent(fr, 100);
       TestAddCloseExponent(fr, -100);
@@ -84,7 +85,7 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestCompareTo() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EFloat bigintA = RandomObjects.RandomEFloat(r);
         EFloat bigintB = RandomObjects.RandomEFloat(r);
@@ -153,40 +154,40 @@ throw new IllegalStateException("", ex);
       }
       {
 String stringTemp = EFloat.FromString(
-"1").Divide(EFloat.FromInt32(8)).toString();
+  "1").Divide(EFloat.FromInt32(8)).toString();
 Assert.assertEquals(
-"0.125",
-stringTemp);
+  "0.125",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"10").Divide(EFloat.FromInt32(80)).toString();
+  "10").Divide(EFloat.FromInt32(80)).toString();
 Assert.assertEquals(
-"0.125",
-stringTemp);
+  "0.125",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"10000").Divide(EFloat.FromInt32(80000)).toString();
+  "10000").Divide(EFloat.FromInt32(80000)).toString();
 Assert.assertEquals(
-"0.125",
-stringTemp);
+  "0.125",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"1000").Divide(EFloat.FromInt32(8)).toString();
+  "1000").Divide(EFloat.FromInt32(8)).toString();
 Assert.assertEquals(
-"125",
-stringTemp);
+  "125",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"1").Divide(EFloat.FromInt32(256)).toString();
+  "1").Divide(EFloat.FromInt32(256)).toString();
 Assert.assertEquals(
-"0.00390625",
-stringTemp);
+  "0.00390625",
+  stringTemp);
 }
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
         EFloat ed1 = RandomObjects.RandomEFloat(fr);
         EFloat ed2 = RandomObjects.RandomEFloat(fr);
@@ -228,7 +229,7 @@ stringTemp);
     }
     @Test
     public void TestEquals() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EFloat bigintA = RandomObjects.RandomEFloat(r);
         EFloat bigintB = RandomObjects.RandomEFloat(r);
@@ -258,7 +259,7 @@ stringTemp);
       TestEFloatDoubleCore(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
-      FastRandom rand = new FastRandom();
+      RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 2047; ++i) {
         // Try a random double with a given
         // exponent
@@ -270,7 +271,7 @@ stringTemp);
     }
     @Test
     public void TestEFloatSingle() {
-      FastRandom rand = new FastRandom();
+      RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 255; ++i) {
         // Try a random float with a given
         // exponent
@@ -304,7 +305,7 @@ public void TestPrecisionOneHalfEven() {
 
     @Test
     public void TestFloatDecimalRoundTrip() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
         EFloat ef = RandomObjects.RandomEFloat(r);
         EDecimal ed = ef.ToEDecimal();
@@ -684,7 +685,7 @@ public void TestPrecisionOneHalfEven() {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EFloat bigintA = RandomObjects.RandomEFloat(r);
         EFloat bigintB = RandomObjects.RandomEFloat(r);
@@ -752,7 +753,7 @@ public void TestPrecisionOneHalfEven() {
         throw new IllegalStateException("", ex);
       }
 
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EFloat bigintA = RandomObjects.RandomEFloat(r);
         EFloat bigintB = RandomObjects.RandomEFloat(r);
@@ -923,11 +924,11 @@ public void TestPrecisionOneHalfEven() {
     @Test
     public void TestPlus() {
       Assert.assertEquals(
-EFloat.Zero,
-EFloat.NegativeZero.Plus(EContext.Basic));
+  EFloat.Zero,
+  EFloat.NegativeZero.Plus(EContext.Basic));
       Assert.assertEquals(
-EFloat.Zero,
-EFloat.NegativeZero.Plus(null));
+  EFloat.Zero,
+  EFloat.NegativeZero.Plus(null));
     }
     @Test
     public void TestPow() {
@@ -1066,24 +1067,24 @@ EFloat.NegativeZero.Plus(null));
       }
     }
 
-    public EFloat RandomDoubleEFloat(FastRandom rnd) {
+    public EFloat RandomDoubleEFloat(RandomGenerator rnd) {
       return this.RandomDoubleEFloat(rnd, false);
     }
 
-    public EFloat RandomDoubleEFloat(FastRandom rnd, boolean subnormal) {
+    public EFloat RandomDoubleEFloat(RandomGenerator rnd, boolean subnormal) {
       StringBuilder sb = new StringBuilder();
-      if (rnd.NextValue(2) == 0) {
+      if (rnd.UniformInt(2) == 0) {
         sb.append('-');
       }
       sb.append(subnormal ? '0' : '1');
       int subSize = 52;
       int[] oneChances = { 98, 2, 50, 50, 50 };
-      int oneChance = oneChances[rnd.NextValue(oneChances.length)];
+      int oneChance = oneChances[rnd.UniformInt(oneChances.length)];
       if (subnormal) {
-        subSize = rnd.NextValue(51);
+        subSize = rnd.UniformInt(51);
       }
       for (int i = 0; i < 52; ++i) {
-        sb.append(((i < 52 - subSize) || (rnd.NextValue(100) >= oneChance)) ?
+        sb.append(((i < 52 - subSize) || (rnd.UniformInt(100) >= oneChance)) ?
           '0' : '1');
       }
       String valueSbString = sb.toString();
@@ -1091,7 +1092,7 @@ EFloat.NegativeZero.Plus(null));
       if (subnormal) {
         exponent = -1074;
       } else {
-        expo = rnd.NextValue(2045) + 1 - 1023;
+        expo = rnd.UniformInt(2045) + 1 - 1023;
         exponent = expo - 52;
       }
       EInteger valueEiExponent = EInteger.FromInt64(exponent);
@@ -1101,24 +1102,24 @@ EFloat.NegativeZero.Plus(null));
       return ef;
     }
 
-    public EFloat RandomSingleEFloat(FastRandom rnd) {
+    public EFloat RandomSingleEFloat(RandomGenerator rnd) {
       return this.RandomSingleEFloat(rnd, false);
     }
 
-    public EFloat RandomSingleEFloat(FastRandom rnd, boolean subnormal) {
+    public EFloat RandomSingleEFloat(RandomGenerator rnd, boolean subnormal) {
       StringBuilder sb = new StringBuilder();
-      if (rnd.NextValue(2) == 0) {
+      if (rnd.UniformInt(2) == 0) {
         sb.append('-');
       }
       sb.append(subnormal ? '0' : '1');
       int subSize = 23;
       int[] oneChances = { 98, 2, 50, 50, 50 };
-      int oneChance = oneChances[rnd.NextValue(oneChances.length)];
+      int oneChance = oneChances[rnd.UniformInt(oneChances.length)];
       if (subnormal) {
-        subSize = rnd.NextValue(22);
+        subSize = rnd.UniformInt(22);
       }
       for (int i = 0; i < 23; ++i) {
-        sb.append(((i < 23 - subSize) || (rnd.NextValue(100) >= oneChance)) ?
+        sb.append(((i < 23 - subSize) || (rnd.UniformInt(100) >= oneChance)) ?
           '0' : '1');
       }
       String valueSbString = sb.toString();
@@ -1126,7 +1127,7 @@ EFloat.NegativeZero.Plus(null));
       if (subnormal) {
         exponent = -149;
       } else {
-        expo = rnd.NextValue(252) + 1 - 127;
+        expo = rnd.UniformInt(252) + 1 - 127;
         exponent = expo - 23;
       }
       EInteger valueEiExponent = EInteger.FromInt64(exponent);
@@ -1154,9 +1155,9 @@ EFloat.NegativeZero.Plus(null));
     }
 
     public static void TestDoubleRounding(
-EFloat expected,
-EFloat input,
-EFloat src) {
+  EFloat expected,
+  EFloat input,
+  EFloat src) {
       if (!input.isFinite() || !expected.isFinite()) {
         return;
       }
@@ -1184,9 +1185,9 @@ EFloat src) {
     }
 
     public static void TestSingleRounding(
-EFloat expected,
-EFloat input,
-EFloat src) {
+  EFloat expected,
+  EFloat input,
+  EFloat src) {
       if (!input.isFinite() || !expected.isFinite()) {
         return;
       }
@@ -1264,13 +1265,13 @@ EFloat src) {
     }
 
     private static void TestBinaryToDecimal(
-String input,
-int digits,
-String expected,
-String msg) {
+  String input,
+  int digits,
+  String expected,
+  String msg) {
     EContext ec = EContext.ForPrecisionAndRounding(
-digits,
-ERounding.HalfEven);
+  digits,
+  ERounding.HalfEven);
       String str = EFloat.FromString(input, EContext.Binary64)
           .ToEDecimal().RoundToPrecision(ec).toString();
       TestCommon.CompareTestEqual(
@@ -1282,75 +1283,75 @@ ERounding.HalfEven);
     @Test
     public void TestBinaryDecimalLine() {
 TestBinaryToDecimal(
-"9.5673250588722716156829968E22",
-12,
-"9.56732505887E22",
-"");
+  "9.5673250588722716156829968E22",
+  12,
+  "9.56732505887E22",
+  "");
     }
 
-    @Test
+    @Test(timeout = 60000)
     public void TestToShortestString() {
       {
 String stringTemp = EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
 Assert.assertEquals(
-"0.1",
-stringTemp);
+  "0.1",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.NegativeZero.ToShortestString(EContext.Binary32);
 Assert.assertEquals(
-"-0",
-stringTemp);
+  "-0",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromDouble(0.1).ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"0.1",
-stringTemp);
+  "0.1",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"100").ToShortestString(EContext.Binary64);
+  "100").ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"100",
-stringTemp);
+  "100",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"1000").ToShortestString(EContext.Binary64);
+  "1000").ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"1000",
-stringTemp);
+  "1000",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"1000000").ToShortestString(EContext.Binary64);
+  "1000000").ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"1000000",
-stringTemp);
+  "1000000",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"10000000").ToShortestString(EContext.Binary64);
+  "10000000").ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"1E+7",
-stringTemp);
+  "1E+7",
+  stringTemp);
 }
       {
 String stringTemp = EFloat.FromString(
-"10000000000").ToShortestString(EContext.Binary64);
+  "10000000000").ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"1E+10",
-stringTemp);
+  "1E+10",
+  stringTemp);
 }
       {
 String stringTemp =
   EFloat.FromDouble(199999d).ToShortestString(EContext.Binary64);
 Assert.assertEquals(
-"199999",
-stringTemp);
+  "199999",
+  stringTemp);
 }
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
         EFloat efa = this.RandomDoubleEFloat(fr);
         String shortestStr = efa.ToShortestString(EContext.Binary64);
@@ -1367,7 +1368,7 @@ stringTemp);
     }
     @Test
     public void TestToSingleRounding() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {
         EFloat efa = this.RandomSingleEFloat(fr, i >= 250);
         TestToFloatRoundingOne(efa, false);
@@ -1376,7 +1377,7 @@ stringTemp);
 
     @Test
     public void TestConversions() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
@@ -1392,8 +1393,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
   Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromByte(enumber.ToByteUnchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
@@ -1413,8 +1414,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
@@ -1434,8 +1435,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
@@ -1455,8 +1456,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
@@ -1479,15 +1480,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("255")) <= 0;
         if (isNum) {
      TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteChecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteChecked()));
    TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteUnchecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteUnchecked()));
           if (isInteger) {
      TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteIfExact()));
+  eint,
+  EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
             try {
  enumber.ToByteIfExact();
@@ -1501,11 +1502,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
      TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteChecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteChecked()));
    TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteUnchecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
@@ -1561,15 +1562,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("32767")) <= 0;
         if (isNum) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Checked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Unchecked()));
           if (isInteger) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16IfExact()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
             try {
  enumber.ToInt16IfExact();
@@ -1583,11 +1584,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Checked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
@@ -1644,15 +1645,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Checked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Unchecked()));
           if (isInteger) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32IfExact()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
             try {
  enumber.ToInt32IfExact();
@@ -1666,11 +1667,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Checked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
@@ -1727,15 +1728,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("9223372036854775807")) <= 0;
         if (isNum) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Checked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Unchecked()));
           if (isInteger) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64IfExact()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64IfExact()));
           } else {
             try {
  enumber.ToInt64IfExact();
@@ -1749,11 +1750,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Checked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
@@ -1806,7 +1807,7 @@ throw new IllegalStateException("", ex);
 
     @Test
     public void TestToDoubleRounding() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {
         EFloat efa = this.RandomDoubleEFloat(fr, i >= 250);
         TestToFloatRoundingOne(efa, true);
@@ -1817,8 +1818,8 @@ throw new IllegalStateException("", ex);
         2);
       {
 EFloat objectTemp = EFloat.Create(
-mant,
-EInteger.FromInt32(-1074));
+  mant,
+  EInteger.FromInt32(-1074));
 TestToFloatRoundingOne(objectTemp, true);
 }
       {
@@ -1860,21 +1861,25 @@ TestToFloatRoundingOne(objectTemp, true);
     }
     @Test
     public void TestToString() {
-      // not implemented yet
+      RandomGenerator fr = new RandomGenerator();
+      for (int i = 0; i < 1000; ++i) {
+        EFloat dec = RandomObjects.RandomEFloat(fr);
+        ExtraTest.TestStringEqualRoundTrip(dec);
+      }
     }
     @Test
     public void TestUnsignedMantissa() {
       // not implemented yet
     }
 
-    private static void TestAddCloseExponent(FastRandom fr, int exp) {
+    private static void TestAddCloseExponent(RandomGenerator fr, int exp) {
       for (int i = 0; i < 1000; ++i) {
         EInteger exp1 = EInteger.FromInt32(exp)
-          .Add(EInteger.FromInt32(fr.NextValue(32) - 16));
+          .Add(EInteger.FromInt32(fr.UniformInt(32) - 16));
         EInteger exp2 = exp1.Add(
-          EInteger.FromInt32(fr.NextValue(18) - 30));
-        EInteger mant1 = EInteger.FromInt32(fr.NextValue(0x10000000));
-        EInteger mant2 = EInteger.FromInt32(fr.NextValue(0x10000000));
+          EInteger.FromInt32(fr.UniformInt(18) - 30));
+        EInteger mant1 = EInteger.FromInt32(fr.UniformInt(0x10000000));
+        EInteger mant2 = EInteger.FromInt32(fr.UniformInt(0x10000000));
         EFloat decA = EFloat.Create(mant1, exp1);
         EFloat decB = EFloat.Create(mant2, exp2);
         EFloat decC = decA.Add(decB);

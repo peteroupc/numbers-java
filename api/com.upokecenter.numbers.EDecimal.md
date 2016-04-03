@@ -302,12 +302,12 @@ Renamed to DivRemNaturalScale.
  Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and the formula in RemainderNaturalScale.
 * `boolean equals(EDecimal other)`<br>
- Determines whether this object's mantissa (significand) and exponent
- are equal to those of another object.
+ Determines whether this object's mantissa (significand), exponent, and
+ properties are equal to those of another object.
 * `boolean equals(Object obj)`<br>
- Determines whether this object's mantissa (significand) and exponent
- are equal to those of another object and that other object is an
- arbitrary-precision decimal number.
+ Determines whether this object's mantissa (significand), exponent, and
+ properties are equal to those of another object and that other object
+ is an arbitrary-precision decimal number.
 * `EDecimal Exp(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
@@ -1944,8 +1944,9 @@ Divides this object by another decimal number and returns a result with the
 
 ### equals
     public boolean equals(EDecimal other)
-Determines whether this object&#x27;s mantissa (significand) and exponent
- are equal to those of another object.
+Determines whether this object&#x27;s mantissa (significand), exponent, and
+ properties are equal to those of another object. Not-a-number values
+ are considered equal if the rest of their properties are equal.
 
 **Parameters:**
 
@@ -1958,9 +1959,10 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 
 ### equals
     public boolean equals(Object obj)
-Determines whether this object&#x27;s mantissa (significand) and exponent
- are equal to those of another object and that other object is an
- arbitrary-precision decimal number.
+Determines whether this object&#x27;s mantissa (significand), exponent, and
+ properties are equal to those of another object and that other object
+ is an arbitrary-precision decimal number. Not-a-number values are
+ considered equal if the rest of their properties are equal.
 
 **Overrides:**
 

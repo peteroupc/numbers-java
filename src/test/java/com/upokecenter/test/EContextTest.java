@@ -59,10 +59,10 @@ new Object();
     @Test
     public void TestExponentWithinRange() {
   if (!(EContext.Unlimited.ExponentWithinRange(EInteger.FromString(
-"-9999999"))))Assert.fail();
+  "-9999999"))))Assert.fail();
 
   if (!(EContext.Unlimited.ExponentWithinRange(EInteger.FromString(
-"9999999"))))Assert.fail();
+  "9999999"))))Assert.fail();
       try {
  EContext.Unlimited.ExponentWithinRange(null);
 Assert.fail("Should have failed");
@@ -108,7 +108,7 @@ new Object();
     public void TestCliDecimal() {
       EDecimal valueEdTmp;
       valueEdTmp = EDecimal.FromString(
-"-79228162514264337593543950336")
+  "-79228162514264337593543950336")
 .RoundToPrecision(EContext.CliDecimal);
       Assert.assertEquals(
         EDecimal.NegativeInfinity,
@@ -129,7 +129,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         String stringTemp =
 
           EDecimal.FromString(
-"-9344285899206687626894794544.04982268810272216796875")
+  "-9344285899206687626894794544.04982268810272216796875")
 .RoundToPrecision(EContext.CliDecimal)
           .ToPlainString();
         Assert.assertEquals(
@@ -139,13 +139,13 @@ Assert.assertEquals(objectTemp, objectTemp2);
       {
 Object objectTemp = EDecimal.PositiveInfinity;
 Object objectTemp2 = EDecimal.FromString(
-"96148154858060747311034406200").RoundToPrecision(EContext.CliDecimal);
+  "96148154858060747311034406200").RoundToPrecision(EContext.CliDecimal);
 Assert.assertEquals(objectTemp, objectTemp2);
 }
       {
 Object objectTemp = EDecimal.PositiveInfinity;
 Object objectTemp2 = EDecimal.FromString(
-"90246605365627217170000000000").RoundToPrecision(EContext.CliDecimal);
+  "90246605365627217170000000000").RoundToPrecision(EContext.CliDecimal);
 Assert.assertEquals(objectTemp, objectTemp2);
 }
     }

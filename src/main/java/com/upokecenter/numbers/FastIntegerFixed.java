@@ -138,8 +138,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     public static FastIntegerFixed Subtract(
-FastIntegerFixed a,
-FastIntegerFixed b) {
+  FastIntegerFixed a,
+  FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (b.smallValue == 0) {
  return a;

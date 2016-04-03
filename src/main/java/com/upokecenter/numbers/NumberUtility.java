@@ -145,7 +145,7 @@ private NumberUtility() {
         val = val.ShiftLeft(1000000);
         bigShift = bigShift.Subtract(ValueBigShiftIteration);
       }
-      int lastshift = bigShift.AsInt32Checked();
+      int lastshift = bigShift.ToInt32Checked();
       val = val.ShiftLeft(lastshift);
       return val;
     }
@@ -380,7 +380,7 @@ private NumberUtility() {
         return EInteger.FromInt32(1);
       }
       if (bigintExponent.compareTo(ValueBigInt36) <= 0) {
-        return FindPowerOfTen(bigintExponent.AsInt32Checked());
+        return FindPowerOfTen(bigintExponent.ToInt32Checked());
       }
       FastInteger intcurexp = FastInteger.FromBig(bigintExponent);
       EInteger mantissa = EInteger.FromInt32(1);
@@ -458,7 +458,7 @@ private NumberUtility() {
         if (otherPower != null) {
           EInteger otherPower0 = otherPower[0];
           EInteger otherPower1 = otherPower[1];
-          precision -= otherPower0.AsInt32Checked();
+          precision -= otherPower0.ToInt32Checked();
           if (first) {
             bigpow = otherPower[1];
           } else {
@@ -559,7 +559,7 @@ private NumberUtility() {
             // DebugUtility.Log("bigcachedpower miss {0} -> {1}"
             // , precision, otherPower0);
           }
-          precision -= otherPower0.AsInt32Checked();
+          precision -= otherPower0.ToInt32Checked();
           if (first) {
             bigpow = otherPower[1];
           } else {

@@ -504,7 +504,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         case 1:
           return this.mnum.ToInt32();
         case 2:
-          return this.largeValue.AsInt32Checked();
+          return this.largeValue.ToInt32Checked();
         default: throw new IllegalStateException();
       }
     }
@@ -749,7 +749,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       this.CheckFrozen();
       switch (this.integerMode) {
           case 0: {
-            return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.AsInt32Checked()) :
+            return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.ToInt32Checked()) :
             this.Add(FastInteger.FromBig(bigintVal));
           }
         case 1:
@@ -784,10 +784,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         // Check if this value fits an int, except if
         // it's MinValue
         if (sign < 0 && bigintVal.compareTo(ValueInt32MinValue) > 0) {
-          return this.AddInt(-(bigintVal.AsInt32Checked()));
+          return this.AddInt(-(bigintVal.ToInt32Checked()));
         }
         if (sign > 0 && bigintVal.compareTo(ValueInt32MaxValue) <= 0) {
-          return this.SubtractInt(bigintVal.AsInt32Checked());
+          return this.SubtractInt(bigintVal.ToInt32Checked());
         }
         bigintVal = bigintVal.Negate();
         return this.AddBig(bigintVal);
@@ -855,12 +855,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           case 1:
             this.largeValue = this.mnum.ToEInteger();
             this.largeValue = this.largeValue.Remainder(EInteger.FromInt64(divisor));
-            this.smallValue = this.largeValue.AsInt32Checked();
+            this.smallValue = this.largeValue.ToInt32Checked();
             this.integerMode = 0;
             break;
           case 2:
             this.largeValue = this.largeValue.Remainder(EInteger.FromInt64(divisor));
-            this.smallValue = this.largeValue.AsInt32Checked();
+            this.smallValue = this.largeValue.ToInt32Checked();
             this.integerMode = 0;
             break;
           default:

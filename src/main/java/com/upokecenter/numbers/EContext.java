@@ -20,7 +20,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * doesn't synchronize access to such mutable contexts, so applications
      * should provide their own synchronization if a context with the
      * <code>HasFlags</code> property set to <code>true</code> will be shared among
-     * multiple threads and those threads need to read or write the
+     * multiple threads and at least one of those threads needs to write the
      * <code>Flags</code> property (which can happen, for example, by passing the
      * context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
      */
@@ -94,8 +94,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       new EContext(0, ERounding.HalfUp, 0, 0, true)
       .WithExponentClamp(true).WithAdjustExponent(false)
       .WithBigExponentRange(
-EInteger.FromInt32(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
-EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
+  EInteger.FromInt32(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
+  EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
     /**
      * An arithmetic context for the IEEE-754-2008 binary128 format, 113 bits
@@ -221,11 +221,11 @@ EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
      * exponent range.
      */
     public EContext(
-int precision,
-ERounding rounding,
-int exponentMinSmall,
-int exponentMaxSmall,
-boolean clampNormalExponents) {
+  int precision,
+  ERounding rounding,
+  int exponentMinSmall,
+  int exponentMaxSmall,
+  boolean clampNormalExponents) {
       if (precision < 0) {
         throw new IllegalArgumentException("precision (" + precision +
           ") is less than 0");
@@ -426,11 +426,11 @@ public final void setFlags(int value) {
      */
     public static EContext ForPrecision(int precision) {
       return new EContext(
-precision,
-ERounding.HalfUp,
-0,
-0,
-false).WithUnlimitedExponents();
+  precision,
+  ERounding.HalfUp,
+  0,
+  0,
+  false).WithUnlimitedExponents();
     }
 
     /**
@@ -444,26 +444,26 @@ false).WithUnlimitedExponents();
       int precision,
       ERounding rounding) {
       return new EContext(
-precision,
-rounding,
-0,
-0,
-false).WithUnlimitedExponents();
+  precision,
+  rounding,
+  0,
+  0,
+  false).WithUnlimitedExponents();
     }
 
     private static final EContext ForRoundingHalfEven = new EContext(
-0,
-ERounding.HalfEven,
-0,
-0,
-false).WithUnlimitedExponents();
+  0,
+  ERounding.HalfEven,
+  0,
+  0,
+  false).WithUnlimitedExponents();
 
     private static final EContext ForRoundingDown = new EContext(
-0,
-ERounding.Down,
-0,
-0,
-false).WithUnlimitedExponents();
+  0,
+  ERounding.Down,
+  0,
+  0,
+  false).WithUnlimitedExponents();
 
     /**
      * Creates a new EContext object initialized with an unlimited precision, an
@@ -479,11 +479,11 @@ false).WithUnlimitedExponents();
         return ForRoundingDown;
       }
       return new EContext(
-0,
-rounding,
-0,
-0,
-false).WithUnlimitedExponents();
+  0,
+  rounding,
+  0,
+  0,
+  false).WithUnlimitedExponents();
     }
 
     /**

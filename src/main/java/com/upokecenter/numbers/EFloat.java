@@ -667,9 +667,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     public EFloat Abs() {
       if (this.isNegative()) {
         EFloat er = new EFloat(
-this.unsignedMantissa,
-this.exponent,
-this.flags & ~BigNumberFlags.FlagNegative);
+  this.unsignedMantissa,
+  this.exponent,
+  this.flags & ~BigNumberFlags.FlagNegative);
         return er;
       }
       return this;
@@ -1283,8 +1283,9 @@ this.flags & ~BigNumberFlags.FlagNegative);
     }
 
     /**
-     * Determines whether this object&#x27;s mantissa (significand) and exponent
-     * are equal to those of another object.
+     * Determines whether this object&#x27;s mantissa (significand), exponent, and
+     * properties are equal to those of another object. Not-a-number values
+     * are considered equal if the rest of their properties are equal.
      * @param other An arbitrary-precision binary float.
      * @return {@code true} if this object's mantissa (significand) and exponent
      * are equal to those of another object; otherwise, {@code false}.
@@ -1294,9 +1295,10 @@ this.flags & ~BigNumberFlags.FlagNegative);
     }
 
     /**
-     * Determines whether this object&#x27;s mantissa (significand) and exponent
-     * are equal to those of another object and that other object is an
-     * arbitrary-precision binary float.
+     * Determines whether this object&#x27;s mantissa (significand), exponent, and
+     * properties are equal to those of another object and that other object
+     * is an arbitrary-precision binary float. Not-a-number values are
+     * considered equal if the rest of their properties are equal.
      * @param obj An arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
@@ -1519,8 +1521,8 @@ this.flags & ~BigNumberFlags.FlagNegative);
      * to more than 0.
      */
     public EFloat MovePointLeft(
-EInteger bigPlaces,
-EContext ctx) {
+  EInteger bigPlaces,
+  EContext ctx) {
       return (!this.isFinite()) ? this.RoundToPrecision(ctx) :
         this.MovePointRight((bigPlaces).Negate(), ctx);
     }
@@ -1584,8 +1586,8 @@ EContext ctx) {
      * to more than 0.
      */
     public EFloat MovePointRight(
-EInteger bigPlaces,
-EContext ctx) {
+  EInteger bigPlaces,
+  EContext ctx) {
       if (!this.isFinite()) {
         return this.RoundToPrecision(ctx);
       }
@@ -1596,9 +1598,9 @@ EContext ctx) {
           this.unsignedMantissa,
           bigExp);
         return CreateWithFlags(
-mant,
-EInteger.FromInt32(0),
-this.flags).RoundToPrecision(ctx);
+  mant,
+  EInteger.FromInt32(0),
+  this.flags).RoundToPrecision(ctx);
       }
       return CreateWithFlags(
         this.unsignedMantissa,
@@ -1730,9 +1732,9 @@ this.flags).RoundToPrecision(ctx);
      */
     public EFloat Negate() {
       return new EFloat(
-this.unsignedMantissa,
-this.exponent,
-this.flags ^ BigNumberFlags.FlagNegative);
+  this.unsignedMantissa,
+  this.exponent,
+  this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
@@ -2217,9 +2219,9 @@ this.flags ^ BigNumberFlags.FlagNegative);
       ERounding rounding) {
         // TODO: Edit doc for RoundToExponentExact
       return MathValue.RoundToExponentExact(
-this,
-exponent,
-EContext.Unlimited.WithRounding(rounding));
+  this,
+  exponent,
+  EContext.Unlimited.WithRounding(rounding));
     }
 
     /**
@@ -2395,8 +2397,8 @@ EContext.Unlimited.WithRounding(rounding));
      * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(
-EInteger bigPlaces,
-EContext ctx) {
+  EInteger bigPlaces,
+  EContext ctx) {
       if (bigPlaces.isZero()) {
         return this.RoundToPrecision(ctx);
       }
@@ -2646,7 +2648,8 @@ EContext ctx) {
 
     private String ToDebugString() {
       return "[" + this.getMantissa().ToRadixString(2) +
-        "," + this.getMantissa().GetUnsignedBitLength() +"," + this.getExponent() + "]";
+        "," + this.getMantissa().GetUnsignedBitLength() +
+        "," + this.getExponent() + "]";
     }
 
     /**
@@ -2674,10 +2677,10 @@ EContext ctx) {
       }
       if (this.IsNaN()) {
         return CreateNaN(
-this.getUnsignedMantissa(),
-this.IsSignalingNaN(),
-this.isNegative(),
-ctx).toString();
+  this.getUnsignedMantissa(),
+  this.IsSignalingNaN(),
+  this.isNegative(),
+  ctx).toString();
       }
       if (this.IsInfinity()) {
         return this.RoundToPrecision(ctx).toString();
@@ -2753,7 +2756,7 @@ ctx).toString();
         if (!this.getUnsignedMantissa().isZero()) {
           // Transfer diagnostic information
           EInteger bigdata = this.getUnsignedMantissa().Remainder(EInteger.FromInt64(0x400000));
-          int intData = bigdata.AsInt32Checked();
+          int intData = bigdata.ToInt32Checked();
           nan |= intData;
           if (intData == 0 && !this.IsQuietNaN()) {
             nan |= 0x200000;
@@ -2957,14 +2960,14 @@ ctx).toString();
         int olderDigits) {
         if (fastInt.CanFitInInt32()) {
      return new BitShiftAccumulator(
-fastInt.AsInt32(),
-lastDigit,
-olderDigits);
+  fastInt.AsInt32(),
+  lastDigit,
+  olderDigits);
         } else {
   return new BitShiftAccumulator(
-fastInt.ToEInteger(),
-lastDigit,
-olderDigits);
+  fastInt.ToEInteger(),
+  lastDigit,
+  olderDigits);
         }
       }
 
@@ -3056,9 +3059,9 @@ olderDigits);
         FastIntegerFixed fexponent,
         int flags) {
         return CreateWithFlags(
-fmantissa.ToEInteger(),
-fexponent.ToEInteger(),
-flags);
+  fmantissa.ToEInteger(),
+  fexponent.ToEInteger(),
+  flags);
       }
 
     /**

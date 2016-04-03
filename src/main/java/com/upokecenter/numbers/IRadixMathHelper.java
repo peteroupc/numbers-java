@@ -29,19 +29,19 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     T CreateNewWithFlags(EInteger mantissa, EInteger exponent, int flags);
 
     T CreateNewWithFlagsFastInt(
-FastIntegerFixed mantissa,
-FastIntegerFixed exponent,
-int flags);
+  FastIntegerFixed mantissa,
+  FastIntegerFixed exponent,
+  int flags);
 
     IShiftAccumulator CreateShiftAccumulatorWithDigits(
-EInteger value,
-int lastDigit,
-int olderDigits);
+  EInteger value,
+  int lastDigit,
+  int olderDigits);
 
     IShiftAccumulator CreateShiftAccumulatorWithDigitsFastInt(
-FastIntegerFixed value,
-int lastDigit,
-int olderDigits);
+  FastIntegerFixed value,
+  int lastDigit,
+  int olderDigits);
 
     IShiftAccumulator CreateShiftAccumulator(EInteger value);
 

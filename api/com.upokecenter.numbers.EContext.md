@@ -14,7 +14,7 @@ Contains parameters for controlling the precision, rounding, and exponent
  doesn't synchronize access to such mutable contexts, so applications
  should provide their own synchronization if a context with the
  <code>HasFlags</code> property set to <code>true</code> will be shared among
- multiple threads and those threads need to read or write the
+ multiple threads and at least one of those threads needs to write the
  <code>Flags</code> property (which can happen, for example, by passing the
  context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
 

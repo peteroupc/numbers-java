@@ -44,7 +44,8 @@ Renamed to ToInt64Unchecked.
  Divides this object by another arbitrary-precision integer and returns the
  quotient and remainder.
 * `boolean equals(Object obj)`<br>
- Determines whether this object and another object are equal.
+ Determines whether this object and another object are equal and have the
+ same type.
 * `static EInteger FromByte(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 * `static EInteger FromBytes(byte[] bytes,
@@ -559,7 +560,8 @@ Divides this object by another arbitrary-precision integer and returns the
 
 ### equals
     public boolean equals(Object obj)
-Determines whether this object and another object are equal.
+Determines whether this object and another object are equal and have the
+ same type.
 
 **Overrides:**
 

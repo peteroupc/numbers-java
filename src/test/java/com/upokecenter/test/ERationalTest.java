@@ -2,6 +2,7 @@ package com.upokecenter.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
   public class ERationalTest {
@@ -74,7 +75,7 @@ new Object();
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
 }
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger ei1 = RandomObjects.RandomEInteger(fr);
         EInteger ei2 = RandomObjects.RandomEInteger(fr).Abs();
@@ -92,11 +93,11 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestCompareTo() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        ERational bigintA = RandomObjects.RandomRational(r);
-        ERational bigintB = RandomObjects.RandomRational(r);
-        ERational bigintC = RandomObjects.RandomRational(r);
+        ERational bigintA = RandomObjects.RandomERational(r);
+        ERational bigintB = RandomObjects.RandomERational(r);
+        ERational bigintC = RandomObjects.RandomERational(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       TestCommon.CompareTestLess(ERational.Zero, ERational.NaN);
@@ -143,10 +144,10 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestCompareToDecimal() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 100; ++i) {
-        ERational er = RandomObjects.RandomRational(fr);
-        int exp = -100000 + fr.NextValue(200000);
+        ERational er = RandomObjects.RandomERational(fr);
+        int exp = -100000 + fr.UniformInt(200000);
         EDecimal ed = EDecimal.Create(
           RandomObjects.RandomEInteger(fr),
           EInteger.FromInt32(exp));
@@ -200,10 +201,10 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestDivide() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        ERational er = RandomObjects.RandomRational(fr);
-        ERational er2 = RandomObjects.RandomRational(fr);
+        ERational er = RandomObjects.RandomERational(fr);
+        ERational er2 = RandomObjects.RandomERational(fr);
         if (er2.isZero() || !er2.isFinite()) {
           continue;
         }
@@ -219,7 +220,11 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestEquals() {
-      // not implemented yet
+      ERational era = ERational.FromString("0/3920");
+      ERational erb = ERational.FromString("0/3920");
+      TestCommon.CompareTestEqualAndConsistent(
+        era,
+        erb);
     }
     @Test
     public void TestFromBigInteger() {
@@ -231,11 +236,11 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestConversions() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
-        ERational enumber = RandomObjects.RandomRational(fr);
+        ERational enumber = RandomObjects.RandomERational(fr);
         if (!enumber.isFinite()) {
           try {
  enumber.ToByteChecked();
@@ -247,8 +252,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
   Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromByte(enumber.ToByteUnchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
@@ -268,8 +273,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
@@ -289,8 +294,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
@@ -310,8 +315,8 @@ new Object();
 throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
-EInteger.FromInt32(0),
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+  EInteger.FromInt32(0),
+  EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
@@ -334,15 +339,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("255")) <= 0;
         if (isNum) {
      TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteChecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteChecked()));
    TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteUnchecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteUnchecked()));
           if (isInteger) {
      TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteIfExact()));
+  eint,
+  EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
             try {
  enumber.ToByteIfExact();
@@ -356,11 +361,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
      TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteChecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteChecked()));
    TestCommon.AssertEquals(
-eint,
-EInteger.FromByte(enumber.ToByteUnchecked()));
+  eint,
+  EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
@@ -416,15 +421,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("32767")) <= 0;
         if (isNum) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Checked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Unchecked()));
           if (isInteger) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16IfExact()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
             try {
  enumber.ToInt16IfExact();
@@ -438,11 +443,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Checked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt16(enumber.ToInt16Unchecked()));
+  eint,
+  EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
@@ -499,15 +504,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Checked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Unchecked()));
           if (isInteger) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32IfExact()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
             try {
  enumber.ToInt32IfExact();
@@ -521,11 +526,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Checked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt32(enumber.ToInt32Unchecked()));
+  eint,
+  EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
@@ -582,15 +587,15 @@ throw new IllegalStateException("", ex);
         EInteger.FromString("9223372036854775807")) <= 0;
         if (isNum) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Checked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Unchecked()));
           if (isInteger) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64IfExact()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64IfExact()));
           } else {
             try {
  enumber.ToInt64IfExact();
@@ -604,11 +609,11 @@ throw new IllegalStateException("", ex);
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Checked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Checked()));
  TestCommon.AssertEquals(
-eint,
-EInteger.FromInt64(enumber.ToInt64Unchecked()));
+  eint,
+  EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
@@ -756,7 +761,7 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestRemainder() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 100; ++i) {
         ERational er;
         ERational er2;
@@ -869,8 +874,8 @@ throw new IllegalStateException("", ex);
       {
 String stringTemp = EFloat.FromDouble(dbl).ToPlainString();
 Assert.assertEquals(
-"1.9725792733634686104693400920950807631015777587890625",
-stringTemp);
+  "1.9725792733634686104693400920950807631015777587890625",
+  stringTemp);
 }
     }
     @Test
@@ -895,7 +900,14 @@ stringTemp);
     }
     @Test
     public void TestToString() {
-      // not implemented yet
+      RandomGenerator fr = new RandomGenerator();
+      ERational dec;
+       for (int i = 0; i < 1000; ++i) {
+        dec = RandomObjects.RandomERational(fr);
+        ExtraTest.TestStringEqualRoundTrip(dec);
+      }
+      dec = ERational.FromString("-0/500");
+      ExtraTest.TestStringEqualRoundTrip(dec);
     }
     @Test
     public void TestUnsignedNumerator() {

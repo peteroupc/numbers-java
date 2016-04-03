@@ -41,10 +41,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     T NextPlus(T thisValue, EContext ctx);
 
     T DivideToExponent(
-T thisValue,
-T divisor,
-EInteger desiredExponent,
-EContext ctx);
+  T thisValue,
+  T divisor,
+  EInteger desiredExponent,
+  EContext ctx);
 
     T Divide(T thisValue, T divisor, EContext ctx);
 
@@ -59,10 +59,10 @@ EContext ctx);
     T Multiply(T thisValue, T other, EContext ctx);
 
     T MultiplyAndAdd(
-T thisValue,
-T multiplicand,
-T augend,
-EContext ctx);
+  T thisValue,
+  T multiplicand,
+  T augend,
+  EContext ctx);
 
     T Plus(T thisValue, EContext ctx);
 
@@ -73,35 +73,35 @@ EContext ctx);
     T Quantize(T thisValue, T otherValue, EContext ctx);
 
     T RoundToExponentExact(
-T thisValue,
-EInteger expOther,
-EContext ctx);
+  T thisValue,
+  EInteger expOther,
+  EContext ctx);
 
     T RoundToExponentSimple(
-T thisValue,
-EInteger expOther,
-EContext ctx);
+  T thisValue,
+  EInteger expOther,
+  EContext ctx);
 
     T RoundToExponentNoRoundedFlag(
-T thisValue,
-EInteger exponent,
-EContext ctx);
+  T thisValue,
+  EInteger exponent,
+  EContext ctx);
 
     T Reduce(T thisValue, EContext ctx);
 
     T Add(T thisValue, T other, EContext ctx);
 
     T AddEx(
-T thisValue,
-T other,
-EContext ctx,
-boolean roundToOperandPrecision);
+  T thisValue,
+  T other,
+  EContext ctx,
+  boolean roundToOperandPrecision);
 
     T CompareToWithContext(
-T thisValue,
-T otherValue,
-boolean treatQuietNansAsSignaling,
-EContext ctx);
+  T thisValue,
+  T otherValue,
+  boolean treatQuietNansAsSignaling,
+  EContext ctx);
 
     int compareTo(T thisValue, T otherValue);
   }

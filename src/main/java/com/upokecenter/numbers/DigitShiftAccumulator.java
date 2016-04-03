@@ -52,11 +52,11 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     public DigitShiftAccumulator(
-EInteger bigint,
-int lastDiscarded,
-int olderDiscarded) {
+  EInteger bigint,
+  int lastDiscarded,
+  int olderDiscarded) {
       if (bigint.CanFitInInt32()) {
-        this.shiftedSmall = bigint.AsInt32Checked();
+        this.shiftedSmall = bigint.ToInt32Checked();
         if (this.shiftedSmall < 0) {
           throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
             ") is less than 0");
@@ -71,9 +71,9 @@ int olderDiscarded) {
     }
 
     public DigitShiftAccumulator(
-int smallint,
-int lastDiscarded,
-int olderDiscarded) {
+  int smallint,
+  int lastDiscarded,
+  int olderDiscarded) {
         this.shiftedSmall = smallint;
         if (this.shiftedSmall < 0) {
           throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
@@ -130,7 +130,7 @@ int olderDiscarded) {
         while (bi.signum() > 0) {
           int count = 1000000;
           if (bi.compareTo(EInteger.FromInt64(1000000)) < 0) {
-            count = bi.AsInt32Checked();
+            count = bi.ToInt32Checked();
           }
           this.ShiftRightInt(count);
           bi = bi.Subtract(EInteger.FromInt32(count));
@@ -155,9 +155,9 @@ int olderDiscarded) {
     }
 
     public void ShiftToDigits(
-FastInteger bits,
-FastInteger preShift,
-boolean truncate) {
+  FastInteger bits,
+  FastInteger preShift,
+  boolean truncate) {
       if (preShift != null && preShift.signum() > 0) {
         FastInteger kdl = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
         this.knownDigitLength = kdl;
@@ -409,7 +409,7 @@ boolean truncate) {
         bigquo = divrem[0];
         bigrem = divrem[1];
         this.bitsAfterLeftmost |= this.bitLeftmost;
-        this.bitLeftmost = bigrem.AsInt32Checked();
+        this.bitLeftmost = bigrem.ToInt32Checked();
         this.shiftedBigInt = bigquo;
         this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
@@ -423,7 +423,7 @@ boolean truncate) {
           this.shiftedBigInt.DivRem(NumberUtility.FindPowerOfTen(digits));
         bigquo = divrem[0];
         bigrem = divrem[1];
-        int intRem = bigrem.AsInt32Checked();
+        int intRem = bigrem.ToInt32Checked();
         int smallPower = ValueTenPowers[digits - 1];
         int leftBit = intRem / smallPower;
         int otherBits = intRem - (leftBit * smallPower);
@@ -457,7 +457,7 @@ boolean truncate) {
       }
       if (this.shiftedBigInt.CanFitInInt32()) {
         this.isSmall = true;
-        this.shiftedSmall = this.shiftedBigInt.AsInt32Checked();
+        this.shiftedSmall = this.shiftedBigInt.ToInt32Checked();
         this.ShiftRightSmall(digits);
         return;
       }
@@ -721,7 +721,7 @@ boolean truncate) {
         bigquo = divrem[0];
         bigrem = divrem[1];
         this.bitsAfterLeftmost |= this.bitLeftmost;
-        this.bitLeftmost = bigrem.AsInt32Checked();
+        this.bitLeftmost = bigrem.ToInt32Checked();
         this.shiftedBigInt = bigquo;
         this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
@@ -737,7 +737,7 @@ boolean truncate) {
         EInteger[] divrem = this.shiftedBigInt.DivRem(radixPower);
         bigquo = divrem[0];
         bigrem = divrem[1];
-        int rem = bigrem.AsInt32Checked();
+        int rem = bigrem.ToInt32Checked();
         this.bitsAfterLeftmost |= this.bitLeftmost;
         for (int i = 0; i < diffInt; ++i) {
           if (i == diffInt - 1) {
@@ -779,7 +779,7 @@ boolean truncate) {
         divrem = bigquo.DivRem(ValueTen);
         bigquo2 = divrem[0];
         bigrem = divrem[1];
-        this.bitLeftmost = bigrem.AsInt32Checked();
+        this.bitLeftmost = bigrem.ToInt32Checked();
         this.shiftedBigInt = bigquo2;
         this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);

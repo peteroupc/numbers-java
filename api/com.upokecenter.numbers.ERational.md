@@ -75,9 +75,12 @@ Represents an arbitrary-precision rational number. This class can't be
  Divides this instance by the value of an arbitrary-precision rational number
  object.
 * `boolean equals(ERational other)`<br>
- Not documented yet.
+ Determines whether this object's numerator, denominator, and properties
+ are equal to those of another object.
 * `boolean equals(Object obj)`<br>
- Determines whether this object and another object are equal.
+ Determines whether this object's numerator, denominator, and properties
+ are equal to those of another object and that other object is an
+ arbitrary-precision rational number.
 * `static ERational FromByte(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 * `static ERational FromDouble(double flt)`<br>
@@ -739,7 +742,10 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 ### equals
     public boolean equals(Object obj)
-Determines whether this object and another object are equal.
+Determines whether this object&#x27;s numerator, denominator, and properties
+ are equal to those of another object and that other object is an
+ arbitrary-precision rational number. Not-a-number values are
+ considered equal if the rest of their properties are equal.
 
 **Overrides:**
 
@@ -755,7 +761,9 @@ Determines whether this object and another object are equal.
 
 ### equals
     public boolean equals(ERational other)
-Not documented yet.
+Determines whether this object&#x27;s numerator, denominator, and properties
+ are equal to those of another object. Not-a-number values are
+ considered equal if the rest of their properties are equal.
 
 **Parameters:**
 

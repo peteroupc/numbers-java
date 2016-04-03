@@ -2,6 +2,7 @@ package com.upokecenter.test;
 
 import org.junit.Assert;
 import org.junit.Test;
+import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
   public class EIntegerTest {
@@ -12,17 +13,17 @@ private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
       -1073741825L, 31L, -1073741824L, 30L, -1073741823L, 30L, -536870913L, 30L,
       -536870912L, 29L, -536870911L, 29L, -268435457L, 29L, -268435456L, 28L,
       -268435455L, 28L, -134217729L, 28L, -134217728L, 27L, -134217727L, 27L,
--67108865L, 27L, -67108864L, 26L, -67108863L, 26L, -33554433L, 26L,
+  -67108865L, 27L, -67108864L, 26L, -67108863L, 26L, -33554433L, 26L,
         -33554432L,
       25L, -33554431L, 25L, -16777217L, 25L, -16777216L, 24L, -16777215L, 24L,
--8388609L, 24L, -8388608L, 23L, -8388607L, 23L, -4194305L, 23L, -4194304L,
+  -8388609L, 24L, -8388608L, 23L, -8388607L, 23L, -4194305L, 23L, -4194304L,
         22L,
--4194303L, 22L, -2097153L, 22L, -2097152L, 21L, -2097151L, 21L, -1048577L,
+  -4194303L, 22L, -2097153L, 22L, -2097152L, 21L, -2097151L, 21L, -1048577L,
         21L,
    -1048576L, 20L, -1048575L, 20L, -524289L, 20L, -524288L, 19L, -524287L,
         19L,
       -262145L, 19L, -262144L, 18L, -262143L, 18L, -131073L, 18L, -131072L, 17L,
--131071L, 17L, -65537L, 17L, -65536L, 16L, -65535L, 16L, -32769L, 16L,
+  -131071L, 17L, -65537L, 17L, -65536L, 16L, -65535L, 16L, -32769L, 16L,
         -32768L,
       15L, -32767L, 15L, -16385L, 15L, -16384L, 14L, -16383L, 14L, -8193L,
         14L, -8192L,
@@ -46,7 +47,7 @@ private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
         13L, 8192L, 14L,
    8193L, 14L, 16383L, 14L, 16384L, 15L, 16385L, 15L, 32767L, 15L, 32768L,
         16L,
-32769L, 16L, 65535L, 16L, 65536L, 17L, 65537L, 17L, 131071L, 17L, 131072L,
+  32769L, 16L, 65535L, 16L, 65536L, 17L, 65537L, 17L, 131071L, 17L, 131072L,
         18L,
  131073L, 18L, 262143L, 18L, 262144L, 19L, 262145L, 19L, 524287L, 19L,
         524288L,
@@ -55,7 +56,7 @@ private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
       2097152L, 22L, 2097153L, 22L, 4194303L, 22L, 4194304L, 23L, 4194305L, 23L,
    8388607L, 23L, 8388608L, 24L, 8388609L, 24L, 16777215L, 24L, 16777216L,
         25L,
-16777217L, 25L, 33554431L, 25L, 33554432L, 26L, 33554433L, 26L, 67108863L,
+  16777217L, 25L, 33554431L, 25L, 33554432L, 26L, 33554433L, 26L, 67108863L,
         26L,
   67108864L, 27L, 67108865L, 27L, 134217727L, 27L, 134217728L, 28L,
         134217729L,
@@ -72,7 +73,7 @@ private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
         0L, 511L, 0L, 512L,
       9L, 513L, 0L, 1023L, 0L, 1024L, 10L, 1025L, 0L, 2047L, 0L, 2048L, 11L,
         2049L, 0L,
-4095L, 0L, 4096L, 12L, 4097L, 0L, 8191L, 0L, 8192L, 13L, 8193L, 0L, 16383L,
+  4095L, 0L, 4096L, 12L, 4097L, 0L, 8191L, 0L, 8192L, 13L, 8193L, 0L, 16383L,
         0L,
       16384L, 14L, 16385L, 0L, 32767L, 0L, 32768L, 15L, 32769L, 0L, 65535L,
         0L, 65536L,
@@ -111,9 +112,9 @@ private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
     }
 
     public static void DoTestDivide(
-String dividend,
-String divisor,
-String result) {
+  String dividend,
+  String divisor,
+  String result) {
       EInteger bigintA = BigFromString(dividend);
       EInteger bigintB = BigFromString(divisor);
       EInteger bigintTemp;
@@ -140,10 +141,10 @@ String result) {
     }
 
     public static void DoTestDivRem(
-String dividend,
-String divisor,
-String result,
-String rem) {
+  String dividend,
+  String divisor,
+  String result,
+  String rem) {
       EInteger bigintA = BigFromString(dividend);
       EInteger bigintB = BigFromString(divisor);
       EInteger rembi;
@@ -191,9 +192,9 @@ String rem) {
     }
 
     public static void DoTestRemainder(
-String dividend,
-String divisor,
-String result) {
+  String dividend,
+  String divisor,
+  String result) {
       EInteger bigintA = BigFromString(dividend);
       EInteger bigintB = BigFromString(divisor);
       if (bigintB.isZero()) {
@@ -342,18 +343,18 @@ String result) {
       return r;
     }
 
-    public static EInteger RandomBigInteger(FastRandom r) {
-      int selection = r.NextValue(100);
-      int count = r.NextValue(60) + 1;
+    public static EInteger RandomBigInteger(RandomGenerator r) {
+      int selection = r.UniformInt(100);
+      int count = r.UniformInt(60) + 1;
       if (selection < 40) {
-        count = r.NextValue(7) + 1;
+        count = r.UniformInt(7) + 1;
       }
       if (selection < 50) {
-        count = r.NextValue(15) + 1;
+        count = r.UniformInt(15) + 1;
       }
       byte[] bytes = new byte[count];
       for (int i = 0; i < count; ++i) {
-        bytes[i] = (byte)((int)r.NextValue(256));
+        bytes[i] = (byte)((int)r.UniformInt(256));
       }
       return BigFromBytes(bytes);
     }
@@ -378,7 +379,7 @@ String result) {
 
     @Test
     public void TestAddSubtract() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         EInteger bigintB = RandomBigInteger(r);
@@ -561,20 +562,20 @@ String result) {
       }
       long longV = ((long)0xfffffff200000000L);
       Assert.assertEquals(
-longV,
-BigValueOf(longV).ToInt64Checked());
+  longV,
+  BigValueOf(longV).ToInt64Checked());
       longV = ((long)0xfffffff280000000L);
       Assert.assertEquals(
-longV,
-BigValueOf(longV).ToInt64Checked());
+  longV,
+  BigValueOf(longV).ToInt64Checked());
       longV = ((long)0xfffffff280000001L);
       Assert.assertEquals(
-longV,
-BigValueOf(longV).ToInt64Checked());
+  longV,
+  BigValueOf(longV).ToInt64Checked());
       longV = ((long)0xfffffff27fffffffL);
       Assert.assertEquals(
-longV,
-BigValueOf(longV).ToInt64Checked());
+  longV,
+  BigValueOf(longV).ToInt64Checked());
       Assert.assertEquals(
         0x0000000380000001L,
         BigValueOf(0x0000000380000001L).ToInt64Checked());
@@ -674,7 +675,7 @@ BigValueOf(longV).ToInt64Checked());
 
     @Test
     public void TestCanFitInInt() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 2000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
   Assert.assertEquals(bigintA.CanFitInInt32(), bigintA.GetSignedBitLength() <= 31);
@@ -683,7 +684,7 @@ BigValueOf(longV).ToInt64Checked());
     }
     @Test
     public void TestCompareTo() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         EInteger bigintB = RandomBigInteger(r);
@@ -695,10 +696,16 @@ BigValueOf(longV).ToInt64Checked());
     @Test
     public void TestDivide() {
       int intA, intB;
-      FastRandom fr = new FastRandom();
+      DoTestDivide(
+    "9999999999999999999999",
+    "281474976710655",
+    "35527136");
+      DoTestDivide("2472320648", "2831812081", "0");
+      DoTestDivide("-2472320648", "2831812081", "0");
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
-        intA = fr.NextValue(0x1000000);
-        intB = fr.NextValue(0x1000000);
+        intA = fr.UniformInt(0x1000000);
+        intB = fr.UniformInt(0x1000000);
         if (intB == 0) {
           continue;
         }
@@ -706,22 +713,12 @@ BigValueOf(longV).ToInt64Checked());
         EInteger bigintA = EInteger.FromInt32(intA);
         EInteger bigintB = EInteger.FromInt32(intB);
         EInteger bigintC = bigintA.Divide(bigintB);
-        Assert.assertEquals(bigintC.AsInt32Checked(), c);
+        Assert.assertEquals(bigintC.ToInt32Checked(), c);
       }
-      DoTestDivide("2472320648", "2831812081", "0");
-      DoTestDivide("-2472320648", "2831812081", "0");
-      DoTestDivide(
-    "9999999999999999999999",
-    "281474976710655",
-    "35527136");
-    }
-    @Test
-    public void TestDivRem() {
-      // not implemented yet
     }
 
     @Test
-    public void TestDivRem2() {
+    public void TestDivRem() {
       try {
         EInteger.FromInt32(1).DivRem(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
@@ -756,7 +753,7 @@ BigValueOf(longV).ToInt64Checked());
       TestCommon.AssertEqualsHashCode(
         EInteger.FromInt32(0),
         EInteger.FromInt32(1));
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomObjects.RandomEInteger(r);
         EInteger bigintB = RandomObjects.RandomEInteger(r);
@@ -968,7 +965,7 @@ BigValueOf(longV).ToInt64Checked());
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 2; i <= 36; ++i) {
         for (int j = 0; j < 100; ++j) {
           StringAndBigInt sabi = StringAndBigInt.Generate(fr, i);
@@ -1142,7 +1139,7 @@ BigValueOf(longV).ToInt64Checked());
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       for (int i = 2; i <= 36; ++i) {
         StringBuilder padding = new StringBuilder();
         for (int j = 0; j < 100; ++j) {
@@ -1300,8 +1297,8 @@ BigValueOf(longV).ToInt64Checked());
 String stringTemp = BigFromString("781631509928000000").Gcd(
           BigFromString("1000000")).toString();
 Assert.assertEquals(
-"1000000",
-stringTemp);
+  "1000000",
+  stringTemp);
 }
     }
 
@@ -1399,10 +1396,10 @@ stringTemp);
         stringTemp);
       }
       int prime = 0;
-      FastRandom rand = new FastRandom();
+      RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         while (true) {
-          prime = rand.NextValue(0x7fffffff);
+          prime = rand.UniformInt(0x7fffffff);
           prime |= 1;
           if (IsPrime(prime)) {
             break;
@@ -1489,12 +1486,12 @@ stringTemp);
       TestGcdPair(EInteger.FromInt64(1576), EInteger.FromInt64(-4209), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(-277), EInteger.FromInt64(-4415), EInteger.FromInt32(1));
       for (int i = 0; i < 1000; ++i) {
-        prime = rand.NextValue(0x7fffffff);
-        if (rand.NextValue(2) == 0) {
+        prime = rand.UniformInt(0x7fffffff);
+        if (rand.UniformInt(2) == 0) {
           prime = -prime;
         }
-        int intB = rand.NextValue(0x7fffffff);
-        if (rand.NextValue(2) == 0) {
+        int intB = rand.UniformInt(0x7fffffff);
+        if (rand.UniformInt(2) == 0) {
           intB = -intB;
         }
         EInteger biga = EInteger.FromInt32(prime);
@@ -1511,11 +1508,11 @@ stringTemp);
     }
     @Test
     public void TestGetDigitCount() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       {
 Object objectTemp = 39;
 Object objectTemp2 = EInteger.FromString(
-"101754295360222878437145684059582837272").GetDigitCount();
+  "101754295360222878437145684059582837272").GetDigitCount();
 Assert.assertEquals(objectTemp, objectTemp2);
 }
       for (int i = 0; i < 1000; ++i) {
@@ -1601,7 +1598,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
 
     @Test
     public void TestIsEven() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         EInteger mod = bigintA.Remainder(BigValueOf(2));
@@ -1704,9 +1701,9 @@ Assert.assertEquals(objectTemp, objectTemp2);
       Assert.assertEquals(1, EInteger.FromInt32(0).GetDigitCount());
       EInteger minValue = EInteger.FromInt64(Integer.MIN_VALUE);
       EInteger minValueTimes2 = minValue.Add(minValue);
-      Assert.assertEquals(Integer.MIN_VALUE, minValue.AsInt32Checked());
+      Assert.assertEquals(Integer.MIN_VALUE, minValue.ToInt32Checked());
       try {
-        System.out.println(minValueTimes2.AsInt32Checked());
+        System.out.println(minValueTimes2.ToInt32Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         new Object();
@@ -1716,7 +1713,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
       }
       EInteger verybig = EInteger.FromInt32(1).ShiftLeft(80);
       try {
-        System.out.println(verybig.AsInt32Checked());
+        System.out.println(verybig.ToInt32Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         new Object();
@@ -1725,7 +1722,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         throw new IllegalStateException("", ex);
       }
       try {
-        System.out.println(verybig.AsInt64Checked());
+        System.out.println(verybig.ToInt64Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         new Object();
@@ -1818,7 +1815,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         EInteger bigintB = bigintA.Add(EInteger.FromInt32(1));
@@ -1847,9 +1844,9 @@ Assert.assertEquals(objectTemp, objectTemp2);
         }
       }
       DoTestMultiply(
-"39258416159456516340113264558732499166970244380745050",
-"39258416159456516340113264558732499166970244380745051",
-"1541223239349076530208308657654362309553698742116222355477449713742236585667505604058123112521437480247550");
+  "39258416159456516340113264558732499166970244380745050",
+  "39258416159456516340113264558732499166970244380745051",
+  "1541223239349076530208308657654362309553698742116222355477449713742236585667505604058123112521437480247550");
       DoTestMultiply(
   "5786426269322750882632312999752639738983363095641642905722171221986067189342123124290107105663618428969517616421742429671402859775667602123564",
   "331378991485809774307751183645559883724387697397707434271522313077548174328632968616330900320595966360728317363190772921",
@@ -1858,11 +1855,19 @@ Assert.assertEquals(objectTemp, objectTemp2);
 
     @Test
     public void TestMultiplyDivide() {
-      FastRandom r = new FastRandom();
-      for (int i = 0; i < 10000; ++i) {
-        TestMultiplyDivideOne(
-          RandomObjects.RandomEInteger(r),
-          RandomObjects.RandomEInteger(r));
+      TestMultiplyDivideOne(
+  EInteger.FromRadixString(
+  "101000101010100000001000100000101000000000100000101000100010101000001010000000001010101000101010100010100",
+  16),
+
+  EInteger.FromRadixString(
+  "100000000000100010000000100000000010001000100010000010101010100000000000000000000",
+  16));
+      RandomGenerator r = new RandomGenerator();
+      for (int i = 0; i < 50000; ++i) {
+        EInteger bigA = RandomObjects.RandomEInteger(r);
+        EInteger bigB = RandomObjects.RandomEInteger(r);
+        TestMultiplyDivideOne(bigA, bigB);
       }
       TestMultiplyDivideOne(EInteger.FromInt32(-985), EInteger.FromInt32(0));
     }
@@ -1942,9 +1947,9 @@ Assert.assertEquals(objectTemp, objectTemp2);
 
     @Test
     public void TestPow() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 200; ++i) {
-        int power = 1 + r.NextValue(8);
+        int power = 1 + r.UniformInt(8);
         EInteger bigintA = RandomBigInteger(r);
         EInteger bigintB = bigintA;
         for (int j = 1; j < power; ++j) {
@@ -1968,7 +1973,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
       bigint = bigint.ShiftLeft(100);
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(12), bigint.ShiftRight(-12));
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(-12), bigint.ShiftRight(12));
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         EInteger bigintB = bigintA;
@@ -1990,11 +1995,11 @@ Assert.assertEquals(objectTemp, objectTemp2);
       bigint = bigint.ShiftLeft(80);
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(12), bigint.ShiftRight(-12));
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(-12), bigint.ShiftRight(12));
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       EInteger minusone = EInteger.FromInt32(0);
       minusone = minusone.Subtract(EInteger.FromInt32(1));
       for (int i = 0; i < 1000; ++i) {
-        int smallint = r.NextValue(0x7fffffff);
+        int smallint = r.UniformInt(0x7fffffff);
         EInteger bigintA = EInteger.FromInt32(smallint);
         String str = bigintA.toString();
         for (int j = 32; j < 80; ++j) {
@@ -2054,7 +2059,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
 
     @Test
     public void TestSqrt() {
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         if (bigintA.signum() < 0) {
@@ -2094,13 +2099,13 @@ Assert.assertEquals(objectTemp, objectTemp2);
     public void TestSubtract() {
 EInteger ei1 =
   EInteger.FromString(
-"5903310052234442839693218602919688229567185544510721229016780853271484375");
+  "5903310052234442839693218602919688229567185544510721229016780853271484375");
       EInteger ei2 = EInteger.FromString("710542735760100185871124267578125");
       {
 String stringTemp = ei1.Subtract(ei2).toString();
 Assert.assertEquals(
-"5903310052234442839693218602919688229566475001774961128830909729003906250",
-stringTemp);
+  "5903310052234442839693218602919688229566475001774961128830909729003906250",
+  stringTemp);
 }
     }
     @Test
@@ -2110,7 +2115,7 @@ stringTemp);
 
     @Test
     public void TestToRadixString() {
-      FastRandom fr = new FastRandom();
+      RandomGenerator fr = new RandomGenerator();
       try {
         EInteger.FromInt32(1).ToRadixString(-1);
         Assert.fail("Should have failed");
@@ -2192,7 +2197,7 @@ stringTemp);
             sabi.getBigIntValue().ToRadixString(i));
         }
       }
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int radix = 2; radix < 36; ++radix) {
         for (int i = 0; i < 80; ++i) {
           EInteger bigintA = RandomBigInteger(r);
@@ -2213,12 +2218,17 @@ stringTemp);
       AssertBigIntegersEqual("-898989", other);
       other = EInteger.FromInt64(898989);
       AssertBigIntegersEqual("898989", other);
-      FastRandom r = new FastRandom();
+      RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
-        String s = bigintA.toString();
-        EInteger big2 = BigFromString(s);
-        Assert.assertEquals(big2.toString(), s);
+        ExtraTest.TestStringEqualRoundTrip(bigintA);
+      }
+      // Test serialization of relatively big numbers
+      for (int i = 0; i < 20; ++i) {
+        EInteger bigintA = RandomBigInteger(r);
+        bigintA = bigintA.ShiftLeft(r.UniformInt(2000) + (16 * 500));
+        bigintA = bigintA.Subtract(RandomBigInteger(r));
+        ExtraTest.TestStringEqualRoundTrip(bigintA);
       }
     }
     @Test
@@ -2292,8 +2302,8 @@ stringTemp);
     }
 
  public static void TestMultiplyDivideOne(
-EInteger bigintA,
-EInteger bigintB) {
+  EInteger bigintA,
+  EInteger bigintB) {
       // Test that A*B/A = B and A*B/B = A
       EInteger bigintC = bigintA.Multiply(bigintB);
       EInteger bigintRem;
@@ -2417,5 +2427,36 @@ EInteger bigintB) {
         efloatD = efloatD.Add(efloatRem);
         TestCommon.CompareTestEqualAndConsistent(efloatA, efloatD);
       }
+    }
+
+    /*
+    private EInteger VBString(int len) {
+      int cc = len;
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < len; ++i) {
+        sb.append('0' + Math.abs(cc % 9));
+        cc = (cc * 31);
+      }
+      return EInteger.FromString(sb.toString());
+    }
+    */
+
+    @Test
+    public void TT2() {
+      EInteger bi, bi2, r;
+      // bi = VBString(740000);
+      // bi2 = VBString(333333);
+      bi = EInteger.FromString("1").ShiftLeft(740000).Subtract(EInteger.FromInt32(1));
+      bi2 = EInteger.FromString("1").ShiftLeft(333330).Subtract(EInteger.FromInt32(1));
+      r = bi.Divide(bi2);
+      EInteger r2 = bi.Divide(bi2);
+      Assert.assertEquals(r, r2);
+    }
+
+    @Test
+    public void TT() {
+ EInteger bi = EInteger.FromString(
+  "1").ShiftLeft(742072).Subtract(EInteger.FromInt32(1));
+      String valueBiStr = bi.toString();
     }
   }

@@ -179,12 +179,12 @@ Renamed to DivRemNaturalScale.
  Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and the formula in RemainderNaturalScale.
 * `boolean equals(EFloat other)`<br>
- Determines whether this object's mantissa (significand) and exponent
- are equal to those of another object.
+ Determines whether this object's mantissa (significand), exponent, and
+ properties are equal to those of another object.
 * `boolean equals(Object obj)`<br>
- Determines whether this object's mantissa (significand) and exponent
- are equal to those of another object and that other object is an
- arbitrary-precision binary float.
+ Determines whether this object's mantissa (significand), exponent, and
+ properties are equal to those of another object and that other object
+ is an arbitrary-precision binary float.
 * `boolean EqualsInternal(EFloat otherValue)`<br>
  Determines whether this object's mantissa (significand) and exponent
  are equal to those of another object.
@@ -1563,8 +1563,9 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 
 ### equals
     public boolean equals(EFloat other)
-Determines whether this object&#x27;s mantissa (significand) and exponent
- are equal to those of another object.
+Determines whether this object&#x27;s mantissa (significand), exponent, and
+ properties are equal to those of another object. Not-a-number values
+ are considered equal if the rest of their properties are equal.
 
 **Parameters:**
 
@@ -1577,9 +1578,10 @@ Determines whether this object&#x27;s mantissa (significand) and exponent
 
 ### equals
     public boolean equals(Object obj)
-Determines whether this object&#x27;s mantissa (significand) and exponent
- are equal to those of another object and that other object is an
- arbitrary-precision binary float.
+Determines whether this object&#x27;s mantissa (significand), exponent, and
+ properties are equal to those of another object and that other object
+ is an arbitrary-precision binary float. Not-a-number values are
+ considered equal if the rest of their properties are equal.
 
 **Overrides:**
 

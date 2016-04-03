@@ -34,9 +34,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     public void ShiftToDigits(
-FastInteger bits,
-FastInteger preShift,
-boolean truncate) {
+  FastInteger bits,
+  FastInteger preShift,
+  boolean truncate) {
       if (bits.signum() < 0) {
         throw new IllegalArgumentException("bits's sign (" + bits.signum() +
           ") is less than 0");
@@ -117,16 +117,16 @@ boolean truncate) {
       }
 
     public BitShiftAccumulator(
-EInteger bigint,
-int lastDiscarded,
-int olderDiscarded) {
+  EInteger bigint,
+  int lastDiscarded,
+  int olderDiscarded) {
       if (bigint.signum() < 0) {
         throw new IllegalArgumentException("bigint's sign (" + bigint.signum() +
           ") is less than 0");
       }
       if (bigint.CanFitInInt32()) {
         this.isSmall = true;
-        this.shiftedSmall = bigint.AsInt32Checked();
+        this.shiftedSmall = bigint.ToInt32Checked();
       } else {
         this.shiftedBigInt = bigint;
       }
@@ -136,9 +136,9 @@ int olderDiscarded) {
     }
 
     public BitShiftAccumulator(
-int smallint,
-int lastDiscarded,
-int olderDiscarded) {
+  int smallint,
+  int lastDiscarded,
+  int olderDiscarded) {
         this.shiftedSmall = smallint;
         if (this.shiftedSmall < 0) {
           throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
@@ -177,7 +177,7 @@ int olderDiscarded) {
         while (bi.signum() > 0) {
           int count = 1000000;
           if (bi.compareTo(EInteger.FromInt64(1000000)) < 0) {
-            count = bi.AsInt32Checked();
+            count = bi.ToInt32Checked();
           }
           this.ShiftRightInt(count);
           bi = bi.Subtract(EInteger.FromInt32(count));
@@ -243,7 +243,7 @@ int olderDiscarded) {
           // Shifting to small number of bits,
           // convert to small integer
           this.isSmall = true;
-          this.shiftedSmall = this.shiftedBigInt.AsInt32Checked();
+          this.shiftedSmall = this.shiftedBigInt.ToInt32Checked();
         }
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
       }
@@ -326,7 +326,7 @@ int olderDiscarded) {
           // Shifting to small number of bits,
           // convert to small integer
           this.isSmall = true;
-          this.shiftedSmall = this.shiftedBigInt.AsInt32Checked();
+          this.shiftedSmall = this.shiftedBigInt.ToInt32Checked();
         }
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
       }

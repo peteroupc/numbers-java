@@ -3,8 +3,7 @@ package com.upokecenter.numbers;
 Written in 2013-2016 by Peter O.
 
 Parts of the code were adapted by Peter O. from
-the public-domain code from the library
-CryptoPP by Wei Dai.
+public-domain code by Wei Dai.
 
 Parts of the GCD function adapted by Peter O.
 from public domain GCD code by Christian
@@ -56,13 +55,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       59652322 };
 
     private static final EInteger ValueOne = new EInteger(
-      1, new short[] { 1, 0 }, false);
+      1, new short[] { 1 }, false);
 
     private static final EInteger ValueTen = new EInteger(
-      1, new short[] { 10, 0 }, false);
+      1, new short[] { 10 }, false);
 
     private static final EInteger ValueZero = new EInteger(
-      0, new short[] { 0, 0 }, false);
+      0, new short[] { 0 }, false);
 
     private final boolean negative;
     private final int wordCount;
@@ -174,7 +173,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       int len = bytes.length;
       int wordLength = ((int)len + 1) >> 1;
-      wordLength = RoundupSize(wordLength);
       short[] newreg = new short[wordLength];
       int valueJIndex = littleEndian ? len - 1 : 0;
       boolean numIsNegative = (bytes[valueJIndex] & 0x80) != 0;
@@ -431,7 +429,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (leftover != 0) {
           ++wordCount;
         }
-        bigint = new short[wordCount + (wordCount & 1)];
+        bigint = new short[wordCount];
         int currentDigit = wordCount - 1;
         // Get most significant digits if effective
         // length is not divisible by 4
@@ -489,7 +487,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (leftover != 0) {
           ++wordCount;
         }
-        bigint = new short[wordCount + (wordCount & 1)];
+        bigint = new short[wordCount];
         int currentDigit = wordCount - 1;
         // Get most significant digits if effective
         // length is not divisible by 4
@@ -695,9 +693,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
            (this.wordCount < 2 || (this.words[1] >> 15) == 0) &&
            (bigintAugend.wordCount < 2 || (bigintAugend.words[1] >> 15) == 0)) {
           int a = ((int)this.words[0]) & 0xffff;
-          a |= (((int)this.words[1]) & 0xffff) << 16;
+          if (this.wordCount == 2) {
+            a |= (((int)this.words[1]) & 0xffff) << 16;
+          }
           int b = ((int)bigintAugend.words[0]) & 0xffff;
-          b |= (((int)bigintAugend.words[1]) & 0xffff) << 16;
+          if (bigintAugend.wordCount == 2) {
+            b |= (((int)bigintAugend.words[1]) & 0xffff) << 16;
+          }
           a = ((int)(a + b));
           sumreg = new short[2];
           sumreg[0] = ((short)(a & 0xffff));
@@ -707,9 +709,13 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         if (augendCount <= 2 && addendCount <= 2) {
           int a = ((int)this.words[0]) & 0xffff;
-          a |= (((int)this.words[1]) & 0xffff) << 16;
+          if (this.wordCount == 2) {
+            a |= (((int)this.words[1]) & 0xffff) << 16;
+          }
           int b = ((int)bigintAugend.words[0]) & 0xffff;
-          b |= (((int)bigintAugend.words[1]) & 0xffff) << 16;
+          if (bigintAugend.wordCount == 2) {
+            b |= (((int)bigintAugend.words[1]) & 0xffff) << 16;
+          }
           long longResult = ((long)a) & 0xffffffffL;
           longResult += ((long)b) & 0xffffffffL;
           if ((longResult >> 32) == 0) {
@@ -787,7 +793,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         boolean needShorten = true;
         if (carry != 0) {
           int nextIndex = desiredLength;
-          int len = RoundupSize(nextIndex + 1);
+          int len = nextIndex + 1;
           sumreg = CleanGrow(sumreg, len);
           sumreg[nextIndex] = (short)carry;
           needShorten = false;
@@ -810,10 +816,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       // Do a subtraction
       int words1Size = minuend.wordCount;
-      words1Size += words1Size & 1;
       int words2Size = subtrahend.wordCount;
-      words2Size += words2Size & 1;
       boolean diffNeg = false;
+
       short borrow;
       short[] diffReg = new short[(
         int)Math.max(
@@ -823,7 +828,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         if (Compare(minuend.words, 0, subtrahend.words, 0, (int)words1Size) >=
             0) {
           // words1 is at least as high as words2
-          SubtractTwoByTwo(
+          SubtractInternal(
             diffReg,
             0,
             minuend.words,
@@ -833,7 +838,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             words1Size);
         } else {
           // words1 is less than words2
-          SubtractTwoByTwo(
+          SubtractInternal(
             diffReg,
             0,
             subtrahend.words,
@@ -846,7 +851,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else if (words1Size > words2Size) {
         // words1 is greater than words2
         borrow = (
-          short)SubtractTwoByTwo(
+          short)SubtractInternal(
           diffReg,
           0,
           minuend.words,
@@ -864,7 +869,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else {
         // words1 is less than words2
         borrow = (
-          short)SubtractTwoByTwo(
+          short)SubtractInternal(
           diffReg,
           0,
           subtrahend.words,
@@ -1085,23 +1090,18 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
             this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
       }
       // ---- General case
-      words1Size += words1Size & 1;
-      words2Size += words2Size & 1;
-      quotReg = new short[RoundupSize((int)(words1Size - words2Size + 2))];
-      short[] tempbuf = new short[words1Size + (3 * (words2Size + 2))];
-      Divide(
-        null,
-        0,
-        quotReg,
-        0,
-        tempbuf,
-        0,
-        this.words,
-        0,
-        words1Size,
-        bigintDivisor.words,
-        0,
-        words2Size);
+      quotReg = new short[((int)(words1Size - words2Size + 1))];
+      GeneralDivide(
+  this.words,
+  0,
+  this.wordCount,
+  bigintDivisor.words,
+  0,
+  bigintDivisor.wordCount,
+  quotReg,
+  0,
+  null,
+  0);
       quotwordCount = CountWords(quotReg, quotReg.length);
       quotReg = ShortenArray(quotReg, quotwordCount);
       return (
@@ -1110,6 +1110,565 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           quotwordCount,
           quotReg,
           this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
+    }
+
+    private static void TwoPlaceMultiply(
+  short[] resultArr,
+  int resultStart,
+  int w1low,
+  int w1high,
+  short[] words2,
+  int words2Start,
+  int words2Count) {
+      int p = 0;
+      int cstart = 0;
+      if (words2Count <= 0) {
+        return;
+      }
+      if (w1high == 0) {
+        short carry = 0;
+        for (int i = 0; i < words2Count; ++i) {
+          p = ((((int)words2[words2Start + i]) & 0xffff) * w1low);
+          p = (p + (((int)carry) & 0xffff));
+          resultArr[resultStart + i] = ((short)p);
+          carry = (short)(p >> 16);
+        }
+        resultArr[resultStart + words2Count] = ((short)carry);
+        resultArr[resultStart + words2Count + 1] = (short)0;
+        return;
+      }
+      if (words2Count == 1) {
+        short carry = 0;
+        int bint = ((int)words2[words2Start]) & 0xffff;
+        p = (w1low * bint);
+        p = (p + (((int)carry) & 0xffff));
+        resultArr[resultStart + 1] = (short)p;
+        carry = (short)(p >> 16);
+        p = (w1high * bint);
+        p = (p + (((int)carry) & 0xffff));
+        resultArr[resultStart + 1] = (short)p;
+        carry = (short)(p >> 16);
+        resultArr[resultStart + 2] = (short)carry;
+        return;
+      }
+      for (int i = 0; i < words2Count; ++i) {
+        cstart = resultStart + i;
+        {
+          short carry = 0;
+          int valueBint = ((int)words2[words2Start + i]) & 0xffff;
+          p = w1low * valueBint;
+          p += ((int)carry) & 0xffff;
+          if (i != 0) {
+            p += ((int)resultArr[cstart]) & 0xffff;
+          }
+          resultArr[cstart] = (short)p;
+          carry = (short)(p >> 16);
+          p = w1high * valueBint;
+          p += ((int)carry) & 0xffff;
+          if (i != 0) {
+            p += ((int)resultArr[cstart + 1]) & 0xffff;
+          }
+          resultArr[cstart + 1] = (short)p;
+          carry = (short)(p >> 16);
+          resultArr[cstart + 2] = carry;
+        }
+      }
+    }
+    /*
+    private static void T(short[] a, int x, int c, String t) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(t+"=0x");
+      //for (int i = 0; i <c; ++i) {
+      for (var i = c - 1; i >= 0; --i) {
+        sb.append(String.Format("{0:X4}",a[x + i]));
+        if (i != 0) {
+ sb.append('_');
+}
+      }
+      DebugUtility.Log(sb.toString());
+    }
+    */
+    private static final int RecursiveDivisionLimit = 40;
+
+    private static void DivideThreeBlocksByTwo(
+      short[] valueALow,
+      int posALow,
+      short[] valueAMidHigh,
+      int posAMidHigh,
+      short[] b,
+      int posB,
+      int blockCount,
+      short[] quot,
+      int posQuot,
+      short[] rem,
+      int posRem,
+      short[] tmp) {
+        if (quot != null) {
+        }
+        if (rem != null) {
+        }
+
+      // Implements Algorithm 2 of Burnikel & Ziegler 1998
+      int remSize = blockCount * 2;
+      int c;
+      if (
+  WordsCompare(
+  valueAMidHigh,
+  posAMidHigh + blockCount,
+  blockCount,
+  b,
+  posB + blockCount,
+  blockCount) < 0) {
+        java.util.Arrays.fill(tmp, blockCount * 4, (blockCount * 4)+(blockCount * 2), (short)0);
+        RecursiveDivideInner(
+ valueAMidHigh,
+ posAMidHigh,
+ b,
+ posB + blockCount,
+ quot,
+ posQuot,
+ rem,
+ posRem,
+ blockCount);
+        System.arraycopy(rem, posRem, tmp, blockCount * 4, blockCount);
+      } else {
+        for (int i = 0; i < blockCount; ++i) {
+          quot[i] = ((short)0xffff);
+        }
+        System.arraycopy(
+       valueAMidHigh,
+       posAMidHigh,
+       tmp,
+       blockCount * 4,
+       blockCount * 2);
+        SubtractInternal(
+  tmp,
+  blockCount * 5,
+  tmp,
+  blockCount * 5,
+  b,
+  posB + blockCount,
+  blockCount);
+        c = AddInternal(
+  tmp,
+  blockCount * 4,
+  tmp,
+  blockCount * 4,
+  b,
+  posB + blockCount,
+  blockCount);
+        Increment(tmp, blockCount * 5, blockCount, (short)c);
+      }
+      AsymmetricMultiply(
+  tmp,
+  0,
+  tmp,
+  blockCount * 2,
+  quot,
+  posQuot,
+  blockCount,
+  b,
+  posB,
+  blockCount);
+      int bc3 = blockCount * 3;
+      System.arraycopy(valueALow, posALow, tmp, bc3, blockCount);
+      c = SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, blockCount * 2);
+      c = Decrement(tmp, blockCount * 5, blockCount, (short)c);
+      if (c != 0) {
+        while (true) {
+          c = AddInternal(tmp, bc3, tmp, bc3, b, posB, blockCount * 2);
+          c = Increment(tmp, blockCount * 5, blockCount, (short)c);
+          Decrement(quot, posQuot, blockCount * 2, (short)1);
+          if (c != 0) {
+            break;
+          }
+        }
+      }
+      System.arraycopy(tmp, bc3, rem, posRem, blockCount * 2);
+    }
+
+    private static void RecursiveDivideInner(
+      short[] a,
+      int posA,
+      short[] b,
+      int posB,
+      short[] quot,
+      int posQuot,
+      short[] rem,
+      int posRem,
+      int blockSize) {
+        if (quot != null) {
+        }
+        if (rem != null) {
+        }
+      // Implements Algorithm 1 of Burnikel & Ziegler 1998
+      // DebugUtility.Log("size="+blockSize);
+      if (blockSize < RecursiveDivisionLimit || (blockSize & 1) == 1) {
+        // DebugUtility.Log("general");
+        GeneralDivide(
+  a,
+  posA,
+  blockSize * 2,
+  b,
+  posB,
+  blockSize,
+  quot,
+  posQuot,
+  rem,
+  posRem);
+      } else {
+        // DebugUtility.Log("special");
+        int halfBlock = blockSize >> 1;
+        short[] tmp = new short[halfBlock * 10];
+        DivideThreeBlocksByTwo(
+  a,
+  posA + halfBlock,
+  a,
+  posA + (halfBlock * 2),
+  b,
+  posB,
+  halfBlock,
+  tmp,
+ halfBlock * 6,
+  tmp,
+ halfBlock * 8,
+  tmp);
+        DivideThreeBlocksByTwo(
+  a,
+  posA,
+  tmp,
+  halfBlock * 8,
+  b,
+  posB,
+  halfBlock,
+  quot,
+  posQuot,
+  rem,
+  posRem,
+  tmp);
+        System.arraycopy(tmp, halfBlock * 6, quot, posQuot + halfBlock, halfBlock);
+      }
+    }
+
+    private static void RecursiveDivide(
+     short[] a,
+     int posA,
+     int countA,
+     short[] b,
+     int posB,
+     int countB,
+     short[] quot,
+     int posQuot,
+     short[] rem,
+     int posRem) {
+        if (rem != null) {
+        }
+      int workPosA, workPosB, i;
+      short[] workA = a;
+      short[] workB = b;
+      workPosA = posA;
+      workPosB = posB;
+      int blocksB = RecursiveDivisionLimit;
+      int shiftB = 0;
+      int m = 1;
+      while (blocksB < countB) {
+        blocksB <<= 1;
+        m <<= 1;
+      }
+      workB = new short[blocksB];
+      workPosB = 0;
+      System.arraycopy(b, posB, workB, blocksB - countB, countB);
+      int shiftA = 0;
+      int extraWord = 0;
+      int wordsA = countA + (blocksB - countB);
+      if ((b[countB - 1] & 0x8000) == 0) {
+        int x = b[countB - 1];
+        while ((x & 0x8000) == 0) {
+          ++shiftB;
+          x <<= 1;
+        }
+        x = a[countA - 1];
+        while ((x & 0x8000) == 0) {
+          ++shiftA;
+          x <<= 1;
+        }
+        if (shiftA < shiftB) {
+          // Shifting A would require an extra word
+          ++extraWord;
+        }
+        ShiftWordsLeftByBits(
+  workB,
+  workPosB + blocksB - countB,
+  countB,
+  shiftB);
+      }
+      int blocksA = (wordsA + extraWord + (blocksB - 1)) / blocksB;
+      int totalWordsA = blocksA * blocksB;
+      workA = new short[totalWordsA];
+      workPosA = 0;
+      System.arraycopy(
+  a,
+  posA,
+  workA,
+  workPosA + (blocksB - countB),
+  countA);
+      ShiftWordsLeftByBits(
+  workA,
+  workPosA + (blocksB - countB),
+  countA + extraWord,
+  shiftB);
+      // Start division
+      // "tmprem" holds temporary space for the following:
+      // - blocksB: Remainder
+      // - blocksB * 2: Dividend
+      // - blocksB * 2: Quotient
+      short[] tmprem = new short[blocksB * 5];
+      int size = 0;
+      for (i = blocksA - 1; i >= 0; --i) {
+        int workAIndex = workPosA + (i * blocksB);
+        // Set the low part of the sub-dividend with the working
+        // block of the dividend
+        System.arraycopy(workA, workAIndex, tmprem, blocksB, blocksB);
+        // Clear the quotient
+        java.util.Arrays.fill(tmprem, blocksB * 3, (blocksB * 3)+(blocksB << 1), (short)0);
+        RecursiveDivideInner(
+  tmprem,
+  blocksB,
+  workB,
+  workPosB,
+  tmprem,
+  blocksB * 3,
+  tmprem,
+  0,
+  blocksB);
+        if (quot != null) {
+          size = Math.min(blocksB, quot.length - (i * blocksB));
+          // DebugUtility.Log("quot len=" + quot.length + ",bb=" + blocksB +
+          // ",size=" + size + " [" + countA + "," + countB + "]");
+          if (size > 0) {
+            System.arraycopy(tmprem, blocksB * 3, quot, posQuot + i * blocksB, size);
+          }
+        }
+        // Set the high part of the sub-dividend with the remainder
+        System.arraycopy(tmprem, 0, tmprem, blocksB << 1, blocksB);
+      }
+      if (rem != null) {
+        System.arraycopy(tmprem, blocksB - countB, rem, posRem, countB);
+        ShiftWordsRightByBits(rem, posRem, countB, shiftB);
+      }
+      // DebugUtility.Log("done");
+    }
+
+    private static void GeneralDivide(
+     short[] a,
+     int posA,
+     int countA,
+     short[] b,
+     int posB,
+     int countB,
+     short[] quot,
+     int posQuot,
+     short[] rem,
+     int posRem) {
+      int origQuotSize = countA - countB + 1;
+      int origCountA = countA;
+      int origCountB = countB;
+      while (countB > 0 && b[posB + countB - 1] == 0) {
+        --countB;
+      }
+      while (countA > 0 && a[posA + countA - 1] == 0) {
+        --countA;
+      }
+      int newQuotSize = countA - countB + 1;
+      if (quot != null) {
+          if (newQuotSize < 0 || newQuotSize >= origQuotSize) {
+            java.util.Arrays.fill(quot, posQuot, (posQuot)+(Math.max(0, origQuotSize)), (short)0);
+          } else {
+            java.util.Arrays.fill(quot, posQuot + newQuotSize, (posQuot + newQuotSize)+(Math.max(0, origQuotSize - newQuotSize)), (short)0);
+          }
+      }
+      if (rem != null) {
+          java.util.Arrays.fill(rem, posRem + countB, (posRem + countB)+(origCountB - countB), (short)0);
+      }
+
+      int quotSize = countA - countB + 1;
+      if (countA < countB) {
+        // A is less than B, so quotient is 0, remainder is "a"
+        if (quot != null) {
+          java.util.Arrays.fill(quot, posQuot, (posQuot)+(Math.max(0, origQuotSize)), (short)0);
+        }
+        if (rem != null) {
+          System.arraycopy(a, posA, rem, posRem, origCountA);
+        }
+        return;
+      } else if (countA == countB) {
+        int cmp = Compare(a, posA, b, posB, countA);
+        if (cmp == 0) {
+          // A equals B, so quotient is 1, remainder is 0
+          if (quot != null) {
+            quot[0] = 1;
+            java.util.Arrays.fill(quot, posQuot + 1, (posQuot + 1)+(Math.max(0, origQuotSize - 1)), (short)0);
+          }
+          if (rem != null) {
+            java.util.Arrays.fill(rem, posRem, (posRem)+(countA), (short)0);
+          }
+          return;
+        } else if (cmp < 0) {
+          // A is less than B, so quotient is 0, remainder is "a"
+          if (quot != null) {
+            java.util.Arrays.fill(quot, posQuot, (posQuot)+(Math.max(0, origQuotSize)), (short)0);
+          }
+          if (rem != null) {
+            System.arraycopy(a, posA, rem, posRem, origCountA);
+          }
+          return;
+        }
+      }
+      if (countB == 1) {
+        // Divisor is a single word
+        short shortRemainder = FastDivideAndRemainder(
+              quot,
+              posQuot,
+              a,
+              posA,
+              countA,
+              b[0]);
+        if (rem != null) {
+          rem[posRem] = shortRemainder;
+        }
+        return;
+      }
+      int workPosA, workPosB;
+      short[] workAB = null;
+      short[] workA = a;
+      short[] workB = b;
+      workPosA = posA;
+      workPosB = posB;
+      if (countB > RecursiveDivisionLimit) {
+        RecursiveDivide(
+  a,
+  posA,
+  countA,
+  b,
+  posB,
+  countB,
+  quot,
+  posQuot,
+  rem,
+  posRem);
+        return;
+      }
+      int tempSize = countB + 2;
+      int workPosTemp = 0;
+      short[] workTemp = null;
+      int sh = 0;
+      boolean noShift = false;
+      if ((b[posB + countB - 1] & 0x8000) == 0) {
+        // Normalize a and b by shifting both until the high
+        // bit of b is the highest bit of the last word
+        int x = b[posB + countB - 1];
+        if (x == 0) {
+          throw new IllegalStateException();
+        }
+        while ((x & 0x8000) == 0) {
+          ++sh;
+          x <<= 1;
+        }
+        workAB = new short[countA + 1 + countB + tempSize];
+        workPosA = 0;
+        workPosB = countA + 1;
+        workA = workAB;
+        workB = workAB;
+        workTemp = workAB;
+        workPosTemp = countA + 1 + countB;
+        System.arraycopy(a, posA, workA, workPosA, countA);
+        System.arraycopy(b, posB, workB, workPosB, countB);
+        ShiftWordsLeftByBits(workA, workPosA, countA + 1, sh);
+        ShiftWordsLeftByBits(workB, workPosB, countB, sh);
+      } else {
+        noShift = true;
+        workA = new short[countA + 1 + tempSize];
+        workPosA = 0;
+        System.arraycopy(a, posA, workA, workPosA, countA);
+        workTemp = workA;
+        workPosTemp = countA + 1;
+      }
+      int c = 0;
+      short pieceBHigh = workB[workPosB + countB - 1];
+      int pieceBHighInt = ((int)pieceBHigh) & 0xffff;
+      int endIndex = workPosA + countA;
+
+      short pieceBNextHigh = workB[workPosB + countB - 2];
+      int pieceBNextHighInt = ((int)pieceBNextHigh) & 0xffff;
+      for (int offset = countA - countB; offset >= 0; --offset) {
+        int wpoffset = workPosA + offset;
+        int wpaNextHigh = ((int)workA[wpoffset + countB - 1]) & 0xffff;
+        int wpaHigh = 0;
+        if (!noShift || wpoffset + countB < endIndex) {
+          wpaHigh = ((int)workA[wpoffset + countB]) & 0xffff;
+        }
+        int dividend = (wpaNextHigh + (wpaHigh << 16));
+        int divnext = ((int)workA[wpoffset + countB - 2]) & 0xffff;
+        int quorem0 = (dividend >> 31) == 0 ? (dividend / pieceBHighInt) :
+         ((int)(((long)dividend & 0xffffffffL) / pieceBHighInt));
+        int quorem1 = (dividend - (quorem0 * pieceBHighInt));
+        // DebugUtility.Log("{0:X8}/{1:X4} = {2:X8},{3:X4}"
+        // , dividend, pieceBHigh, quorem0, quorem1);
+        long t = (((long)quorem1) << 16) | (divnext & 0xffffL);
+        if ((quorem0 >> 16) != 0 ||
+          ((quorem0 * pieceBNextHighInt) & 0xffffffffL) > t) {
+          quorem1 += pieceBHighInt;
+          --quorem0;
+          if ((quorem1 >> 16) == 0) {
+            t = (((long)quorem1) << 16) | (divnext & 0xffffL);
+            if ((quorem0 >> 16) != 0 ||
+                ((quorem0 * pieceBNextHighInt) & 0xffffffffL) > t) {
+              --quorem0;
+            }
+          }
+        }
+        int q1 = quorem0 & 0xffff;
+        int q2 = (quorem0 >> 16) & 0xffff;
+      TwoPlaceMultiply(
+  workTemp,
+  workPosTemp,
+  q1,
+  q2,
+  workB,
+  workPosB,
+  countB);
+        c = SubtractInternal(
+    workA,
+    wpoffset,
+    workA,
+    wpoffset,
+    workTemp,
+    workPosTemp,
+    countB + 1);
+        if (c != 0) {
+          // T(workA,workPosA,countA+1,"workA X");
+          c = AddInternal(
+  workA,
+  wpoffset,
+  workA,
+  wpoffset,
+  workB,
+  workPosB,
+  countB);
+          c = Increment(workA, wpoffset + countB, 1, (short)c);
+          // T(workA,workPosA,countA+1,"workA "+c);
+          --quorem0;
+        }
+        if (quot != null) {
+          quot[posQuot + offset] = ((short)quorem0);
+        }
+      }
+      if (rem != null) {
+        if (sh != 0) {
+          ShiftWordsRightByBits(workA, workPosA, countB + 1, sh);
+        }
+        System.arraycopy(workA, workPosA, rem, posRem, countB);
+      }
     }
 
     /**
@@ -1139,7 +1698,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       if (words2Size == 1) {
         // divisor is small, use a fast path
-        short[] quotient = new short[this.words.length];
+        short[] quotient = new short[this.wordCount];
         int smallRemainder;
         switch (divisor.words[0]) {
           case 2:
@@ -1187,8 +1746,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         }
         return new EInteger[] { bigquo, EInteger.FromInt64(smallRemainder) };
       }
-      words1Size += words1Size & 1;
-      words2Size += words2Size & 1;
       if (this.CanFitInInt32() && divisor.CanFitInInt32()) {
         long dividendSmall = this.ToInt32Checked();
         long divisorSmall = divisor.ToInt32Checked();
@@ -1210,23 +1767,20 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         // DebugUtility.Log("int64divrem {0}/{1}"
         // , this.ToInt64Checked(), divisor.ToInt64Checked());
       }
-      short[] bigRemainderreg = new short[RoundupSize((int)words2Size)];
-      short[] quotientreg = new short[RoundupSize((int)(words1Size - words2Size +
-                    2))];
-      short[] tempbuf = new short[words1Size + (3 * (words2Size + 2))];
-      Divide(
-        bigRemainderreg,
-        0,
-        quotientreg,
-        0,
-        tempbuf,
-        0,
-        this.words,
-        0,
-        words1Size,
-        divisor.words,
-        0,
-        words2Size);
+      // --- General case
+      short[] bigRemainderreg = new short[((int)words2Size)];
+      short[] quotientreg = new short[((int)(words1Size - words2Size + 1))];
+      GeneralDivide(
+  this.words,
+  0,
+  this.wordCount,
+  divisor.words,
+  0,
+  divisor.wordCount,
+  quotientreg,
+  0,
+  bigRemainderreg,
+  0);
       int remCount = CountWords(bigRemainderreg, bigRemainderreg.length);
       int quoCount = CountWords(quotientreg, quotientreg.length);
       bigRemainderreg = ShortenArray(bigRemainderreg, remCount);
@@ -1239,7 +1793,8 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
     }
 
     /**
-     * Determines whether this object and another object are equal.
+     * Determines whether this object and another object are equal and have the
+     * same type.
      * @param obj An arbitrary object.
      * @return {@code true} if this object and another object are equal; otherwise,
      * {@code false}.
@@ -1772,8 +2327,8 @@ WordsShiftRightOne(bu, buc);
       if (index < 0) {
         throw new IllegalArgumentException("index (" + index + ") is less than 0");
       }
-    return ((index >> 4) < this.words.length) && ((boolean)(((this.words[(index >>
-        4)] >> (int)(index & 15)) & 1) != 0));
+    return ((index >> 4) < this.words.length) &&
+        ((boolean)(((this.words[(index >> 4)] >> (int)(index & 15)) & 1) != 0));
     }
 
     /**
@@ -1949,12 +2504,12 @@ WordsShiftRightOne(bu, buc);
           short preg = productreg[1];
           wc = (preg == 0) ? 1 : 2;
           return new EInteger(
-wc,
-productreg,
-this.negative ^ bigintMult.negative);
+  wc,
+  productreg,
+  this.negative ^ bigintMult.negative);
         }
         wc = bigintMult.wordCount;
-        int regLength = RoundupSize(wc + 1);
+        int regLength = wc + 1;
         productreg = new short[regLength];
         productreg[wc] = LinearMultiply(
           productreg,
@@ -1967,7 +2522,7 @@ this.negative ^ bigintMult.negative);
         needShorten = false;
       } else if (bigintMult.wordCount == 1) {
         int wc = this.wordCount;
-        int regLength = RoundupSize(wc + 1);
+        int regLength = wc + 1;
         productreg = new short[regLength];
         productreg[wc] = LinearMultiply(
           productreg,
@@ -1979,7 +2534,7 @@ this.negative ^ bigintMult.negative);
         productwordCount = productreg.length;
         needShorten = false;
       } else if (this.equals(bigintMult)) {
-        int words1Size = RoundupSize(this.wordCount);
+        int words1Size = this.wordCount;
         productreg = new short[words1Size + words1Size];
         productwordCount = productreg.length;
         short[] workspace = new short[words1Size + words1Size];
@@ -1993,7 +2548,6 @@ this.negative ^ bigintMult.negative);
           words1Size);
       } else if (this.wordCount <= 10 && bigintMult.wordCount <= 10) {
         int wc = this.wordCount + bigintMult.wordCount;
-        wc = RoundupSize(wc);
         productreg = new short[wc];
         productwordCount = productreg.length;
         SchoolbookMultiply(
@@ -2009,9 +2563,7 @@ this.negative ^ bigintMult.negative);
       } else {
         int words1Size = this.wordCount;
         int words2Size = bigintMult.wordCount;
-        words1Size = RoundupSize(words1Size);
-        words2Size = RoundupSize(words2Size);
-        productreg = new short[RoundupSize(words1Size + words2Size)];
+        productreg = new short[(words1Size + words2Size)];
         short[] workspace = new short[words1Size + words2Size];
         productwordCount = productreg.length;
         AsymmetricMultiply(
@@ -2170,23 +2722,18 @@ this.negative ^ bigintMult.negative);
       if (this.PositiveCompare(divisor) < 0) {
         return this;
       }
-      words1Size += words1Size & 1;
-      words2Size += words2Size & 1;
-      short[] remainderReg = new short[RoundupSize((int)words2Size)];
-      short[] tempbuf = new short[words1Size + (3 * (words2Size + 2))];
-      Divide(
-        remainderReg,
-        0,
-        null,
-        0,
-        tempbuf,
-        0,
-        this.words,
-        0,
-        words1Size,
-        divisor.words,
-        0,
-        words2Size);
+      short[] remainderReg = new short[((int)words2Size)];
+      GeneralDivide(
+  this.words,
+  0,
+  this.wordCount,
+  divisor.words,
+  0,
+  divisor.wordCount,
+  null,
+  0,
+  remainderReg,
+  0);
       int count = CountWords(remainderReg, remainderReg.length);
       if (count == 0) {
         return EInteger.FromInt32(0);
@@ -2217,8 +2764,7 @@ this.negative ^ bigintMult.negative);
       int shiftWords = (int)(numberBits >> 4);
       int shiftBits = (int)(numberBits & 15);
       if (!this.negative) {
-        short[] ret = new short[RoundupSize(numWords +
-                    BitsToWords((int)numberBits))];
+        short[] ret = new short[(numWords + BitsToWords((int)numberBits))];
         System.arraycopy(this.words, 0, ret, shiftWords, numWords);
         ShiftWordsLeftByBits(
           ret,
@@ -2227,7 +2773,7 @@ this.negative ^ bigintMult.negative);
           shiftBits);
         return new EInteger(CountWords(ret, ret.length), ret, false);
       } else {
-        short[] ret = new short[RoundupSize(numWords +
+        short[] ret = new short[(numWords +
                     BitsToWords((int)numberBits))];
         System.arraycopy(this.words, 0, ret, 0, numWords);
         TwosComplement(ret, 0, (int)ret.length);
@@ -2253,6 +2799,16 @@ this.negative ^ bigintMult.negative);
        int wordCount,
        short[] words2,
        int wordCount2) {
+      return WordsCompare(words, 0, wordCount, words2, 0, wordCount2);
+    }
+
+    private static int WordsCompare(
+       short[] words,
+       int pos1,
+       int wordCount,
+       short[] words2,
+       int pos2,
+       int wordCount2) {
       // NOTE: Assumes the number is nonnegative
       int size = wordCount;
       if (size == 0) {
@@ -2261,18 +2817,22 @@ this.negative ^ bigintMult.negative);
         return 1;
       }
       if (size == wordCount2) {
-        if (size == 1 && words[0] == words2[0]) {
+        if (size == 1 && words[pos1] == words2[pos2]) {
           return 0;
         } else {
+          int p1 = pos1 + size - 1;
+          int p2 = pos2 + size - 1;
           while ((size--) != 0) {
-            int an = ((int)words[size]) & 0xffff;
-            int bn = ((int)words2[size]) & 0xffff;
+            int an = ((int)words[p1]) & 0xffff;
+            int bn = ((int)words2[p2]) & 0xffff;
             if (an > bn) {
               return 1;
             }
             if (an < bn) {
               return -1;
             }
+            --p1;
+            --p2;
           }
           return 0;
         }
@@ -2398,15 +2958,13 @@ this.negative ^ bigintMult.negative);
     }
 
     private static int WordsSubtract(
-short[] words,
-int wordCount,
-short[] subtrahendWords,
-int subtrahendCount) {
+  short[] words,
+  int wordCount,
+  short[] subtrahendWords,
+  int subtrahendCount) {
       // NOTE: Assumes this value is at least as high as the subtrahend
       // and both numbers are nonnegative
-      short borrow;
-      if ((subtrahendCount & 1) == 0) {
-        borrow = (short)SubtractTwoByTwo(
+      short borrow = (short)SubtractInternal(
            words,
            0,
            words,
@@ -2414,16 +2972,6 @@ int subtrahendCount) {
            subtrahendWords,
            0,
            subtrahendCount);
-      } else {
-        borrow = (short)SubtractOneByOne(
-           words,
-           0,
-           words,
-           0,
-           subtrahendWords,
-           0,
-           subtrahendCount);
-      }
       if (borrow != 0) {
         Decrement(
  words,
@@ -2731,6 +3279,93 @@ int subtrahendCount) {
       return ivv;
     }
 
+    private void ToRadixStringDecimal(StringBuilder outputSB) {
+      int i = 0;
+      if (this.wordCount >= 100) {
+        StringBuilder rightBuilder = new StringBuilder();
+        int digits = this.wordCount * 3;
+        EInteger pow = NumberUtility.FindPowerOfTen(digits);
+        // DebugUtility.Log("---divrem " + (this.wordCount));
+        EInteger[] divrem = this.DivRem(pow);
+        // DebugUtility.Log("" + (divrem[0].GetUnsignedBitLength()) + "," +
+        // (// divrem[1].GetUnsignedBitLength()));
+        divrem[0].ToRadixStringDecimal(outputSB);
+        divrem[1].ToRadixStringDecimal(rightBuilder);
+        for (i = rightBuilder.length(); i < digits; ++i) {
+          outputSB.append('0');
+        }
+        outputSB.append(rightBuilder.toString());
+        return;
+      }
+      if (this.HasSmallValue()) {
+        outputSB.append(this.SmallValueToString());
+        return;
+      }
+      short[] tempReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
+      int numWordCount = tempReg.length;
+      while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
+        --numWordCount;
+      }
+      char[] s = new char[(numWordCount << 4) + 1];
+      while (numWordCount != 0) {
+        if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
+          int rest = tempReg[0];
+          while (rest != 0) {
+            // accurate approximation to rest/10 up to 43698,
+            // and rest can go up to 32767
+            int newrest = (rest * 26215) >> 18;
+            s[i++] = Digits.charAt(rest - (newrest * 10));
+            rest = newrest;
+          }
+          break;
+        }
+        if (numWordCount == 2 && tempReg[1] > 0 && tempReg[1] <= 0x7fff) {
+          int rest = ((int)tempReg[0]) & 0xffff;
+          rest |= (((int)tempReg[1]) & 0xffff) << 16;
+          while (rest != 0) {
+            int newrest = (rest < 43698) ? ((rest * 26215) >> 18) : (rest /
+                10);
+            s[i++] = Digits.charAt(rest - (newrest * 10));
+            rest = newrest;
+          }
+          break;
+        } else {
+          int wci = numWordCount;
+          short remainderShort = 0;
+          int quo, rem;
+          // Divide by 10000
+          while ((wci--) > 0) {
+            int currentDividend = ((int)((((int)tempReg[wci]) &
+                  0xffff) | ((int)remainderShort << 16)));
+            quo = currentDividend / 10000;
+            tempReg[wci] = ((short)quo);
+            rem = currentDividend - (10000 * quo);
+            remainderShort = ((short)rem);
+          }
+          int remainderSmall = remainderShort;
+          // Recalculate word count
+          while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
+            --numWordCount;
+          }
+          // accurate approximation to rest/10 up to 16388,
+          // and rest can go up to 9999
+          int newrest = (remainderSmall * 3277) >> 15;
+          s[i++] = Digits.charAt((int)(remainderSmall - (newrest * 10)));
+          remainderSmall = newrest;
+          newrest = (remainderSmall * 3277) >> 15;
+          s[i++] = Digits.charAt((int)(remainderSmall - (newrest * 10)));
+          remainderSmall = newrest;
+          newrest = (remainderSmall * 3277) >> 15;
+          s[i++] = Digits.charAt((int)(remainderSmall - (newrest * 10)));
+          remainderSmall = newrest;
+          s[i++] = Digits.charAt(remainderSmall);
+        }
+      }
+      ReverseChars(s, 0, i);
+      outputSB.append(s, 0, (0)+(i));
+    }
+
     /**
      * Generates a string representing the value of this object, in the given
      * radix.
@@ -2765,78 +3400,12 @@ int subtrahendCount) {
         if (this.HasSmallValue()) {
           return this.SmallValueToString();
         }
-        short[] tempReg = new short[this.wordCount];
-        System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
-        int numWordCount = tempReg.length;
-        while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
-          --numWordCount;
-        }
-        int i = 0;
-        char[] s = new char[(numWordCount << 4) + 1];
-        while (numWordCount != 0) {
-          if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
-            int rest = tempReg[0];
-            while (rest != 0) {
-              // accurate approximation to rest/10 up to 43698,
-              // and rest can go up to 32767
-              int newrest = (rest * 26215) >> 18;
-              s[i++] = Digits.charAt(rest - (newrest * 10));
-              rest = newrest;
-            }
-            break;
-          }
-          if (numWordCount == 2 && tempReg[1] > 0 && tempReg[1] <= 0x7fff) {
-            int rest = ((int)tempReg[0]) & 0xffff;
-            rest |= (((int)tempReg[1]) & 0xffff) << 16;
-            while (rest != 0) {
-              int newrest = (rest < 43698) ? ((rest * 26215) >> 18) : (rest /
-                  10);
-              s[i++] = Digits.charAt(rest - (newrest * 10));
-              rest = newrest;
-            }
-            break;
-          } else {
-            int wci = numWordCount;
-            short remainderShort = 0;
-            int quo, rem;
-            // Divide by 10000
-            while ((wci--) > 0) {
-              int currentDividend = ((int)((((int)tempReg[wci]) &
-                    0xffff) | ((int)remainderShort << 16)));
-              quo = currentDividend / 10000;
-              tempReg[wci] = ((short)quo);
-              rem = currentDividend - (10000 * quo);
-              remainderShort = ((short)rem);
-            }
-            int remainderSmall = remainderShort;
-            // Recalculate word count
-            while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
-              --numWordCount;
-            }
-            // accurate approximation to rest/10 up to 16388,
-            // and rest can go up to 9999
-            int newrest = (remainderSmall * 3277) >> 15;
-            s[i++] = Digits.charAt((int)(remainderSmall - (newrest * 10)));
-            remainderSmall = newrest;
-            newrest = (remainderSmall * 3277) >> 15;
-            s[i++] = Digits.charAt((int)(remainderSmall - (newrest * 10)));
-            remainderSmall = newrest;
-            newrest = (remainderSmall * 3277) >> 15;
-            s[i++] = Digits.charAt((int)(remainderSmall - (newrest * 10)));
-            remainderSmall = newrest;
-            s[i++] = Digits.charAt(remainderSmall);
-          }
-        }
-        ReverseChars(s, 0, i);
+        StringBuilder sb = new StringBuilder();
         if (this.negative) {
-          StringBuilder sb = new StringBuilder(i + 1);
           sb.append('-');
-          for (int j = 0; j < i; ++j) {
-            sb.append(s[j]);
-          }
-          return sb.toString();
         }
-        return new String(s, 0, i);
+        this.Abs().ToRadixStringDecimal(sb);
+        return sb.toString();
       }
       if (radix == 16) {
         // Hex
@@ -4351,231 +4920,10 @@ int subtrahendCount) {
       }
     }
 
-    private static void Divide(
-      short[] remainderArr,
-      int remainderStart,  // remainder
-      short[] quotientArr,
-      int quotientStart,  // quotient
-      short[] tempArr,
-      int tempStart,  // scratch space
-      short[] words1,
-      int words1Start,
-      int words1Count,  // dividend
-      short[] words2,
-      int words2Start,
-      int words2Count) {
-      // set up temporary work space
-
-      if (words2Count == 0) {
-        throw new ArithmeticException();
-      }
-      if (words2Count == 1) {
-        if (words2[words2Start] == 0) {
-          throw new ArithmeticException();
-        }
-        int smallRemainder = ((int)FastDivideAndRemainder(
-          quotientArr,
-          quotientStart,
-          words1,
-          words1Start,
-          words1Count,
-          words2[words2Start])) & 0xffff;
-        if (remainderArr != null) {
-          remainderArr[remainderStart] = (short)smallRemainder;
-        }
-        return;
-      }
-
-      short[] quot = quotientArr;
-      if (quotientArr == null) {
-        quot = new short[2];
-      }
-      int valueTBstart = (int)(tempStart + (words1Count + 2));
-      int valueTPstart = (int)(tempStart + (words1Count + 2 + words2Count));
-      {
-        // copy words2 into TB and normalize it so that TB has highest bit
-        // set to 1
-        int shiftWords = (short)(words2[words2Start + words2Count - 1] == 0 ?
-                    1 : 0);
-        tempArr[valueTBstart] = (short)0;
-        tempArr[valueTBstart + words2Count - 1] = (short)0;
-        System.arraycopy(
-          words2,
-          words2Start,
-          tempArr,
-          valueTBstart + shiftWords,
-          words2Count - shiftWords);
-        short shiftBits = (short)((short)16 - BitPrecision(tempArr[valueTBstart +
-                    words2Count - 1]));
-        ShiftWordsLeftByBits(
-          tempArr,
-          valueTBstart,
-          words2Count,
-          shiftBits);
-        // copy words1 into valueTA and normalize it
-        tempArr[0] = (short)0;
-        tempArr[words1Count] = (short)0;
-        tempArr[words1Count + 1] = (short)0;
-        System.arraycopy(
-          words1,
-          words1Start,
-          tempArr,
-          (int)(tempStart + shiftWords),
-          words1Count);
-        ShiftWordsLeftByBits(
-          tempArr,
-          tempStart,
-          words1Count + 2,
-          shiftBits);
-
-        if (tempArr[tempStart + words1Count + 1] == 0 &&
-            (((int)tempArr[tempStart + words1Count]) & 0xffff) <= 1) {
-          if (quotientArr != null) {
-            quotientArr[quotientStart + words1Count - words2Count + 1] =
-              (short)0;
-            quotientArr[quotientStart + words1Count - words2Count] = (short)0;
-          }
-          while (
-            tempArr[words1Count] != 0 || Compare(
-              tempArr,
-              (int)(tempStart + words1Count - words2Count),
-              tempArr,
-              valueTBstart,
-              words2Count) >= 0) {
-            tempArr[words1Count] -= (
-              short)SubtractTwoByTwo(
-              tempArr,
-              tempStart + words1Count - words2Count,
-              tempArr,
-              tempStart + words1Count - words2Count,
-              tempArr,
-              valueTBstart,
-              words2Count);
-            if (quotientArr != null) {
-              quotientArr[quotientStart + words1Count - words2Count] +=
-                (short)1;
-            }
-          }
-        } else {
-          words1Count += 2;
-        }
-
-        short valueBT0 = (short)(tempArr[valueTBstart + words2Count - 2] +
-                    (short)1);
-        short valueBT1 = (short)(tempArr[valueTBstart + words2Count - 1] +
-                    (short)(valueBT0 == (short)0 ? 1 : 0));
-
-        // start reducing valueTA mod TB, 2 words at a time
-        short[] valueTAtomic = new short[4];
-        for (int i = words1Count - 2; i >= words2Count; i -= 2) {
-          int qs = (quotientArr == null) ? 0 : quotientStart + i - words2Count;
-          DivideFourWordsByTwo(
-            quot,
-            qs,
-            tempArr,
-            tempStart + i - 2,
-            valueBT0,
-            valueBT1,
-            valueTAtomic);
-          // now correct the underestimated quotient
-          int valueRstart2 = tempStart + i - words2Count;
-          int n = words2Count;
-          {
-            int quotient0 = quot[qs];
-            int quotient1 = quot[qs + 1];
-            if (quotient1 == 0) {
-              short carry = LinearMultiply(
-                tempArr,
-                valueTPstart,
-                tempArr,
-                valueTBstart,
-                (short)quotient0,
-                n);
-              tempArr[valueTPstart + n] = carry;
-              tempArr[valueTPstart + n + 1] = 0;
-            } else if (n == 2) {
-              BaselineMultiply2(
-                tempArr,
-                valueTPstart,
-                quot,
-                qs,
-                tempArr,
-                valueTBstart);
-            } else {
-              tempArr[valueTPstart + n] = (short)0;
-              tempArr[valueTPstart + n + 1] = (short)0;
-              quotient0 &= 0xffff;
-              quotient1 &= 0xffff;
-              AtomicMultiplyOpt(
-                tempArr,
-                valueTPstart,
-                quotient0,
-                quotient1,
-                tempArr,
-                valueTBstart,
-                0,
-                n);
-              AtomicMultiplyAddOpt(
-                tempArr,
-                valueTPstart,
-                quotient0,
-                quotient1,
-                tempArr,
-                valueTBstart,
-                2,
-                n);
-            }
-            SubtractTwoByTwo(
-              tempArr,
-              valueRstart2,
-              tempArr,
-              valueRstart2,
-              tempArr,
-              valueTPstart,
-              n + 2);
-            while (tempArr[valueRstart2 + n] != 0 || Compare(
-              tempArr,
-              valueRstart2,
-              tempArr,
-              valueTBstart,
-              n) >= 0) {
-              tempArr[valueRstart2 + n] -= (
-                short)SubtractTwoByTwo(
-                tempArr,
-                valueRstart2,
-                tempArr,
-                valueRstart2,
-                tempArr,
-                valueTBstart,
-                n);
-              if (quotientArr != null) {
-                ++quotientArr[qs];
-                quotientArr[qs + 1] += (short)((quotientArr[qs] == 0) ? 1 : 0);
-              }
-            }
-          }
-        }
-        if (remainderArr != null) {  // If the remainder is non-null
-          // copy valueTA into result, and denormalize it
-          System.arraycopy(
-            tempArr,
-            (int)(tempStart + shiftWords),
-            remainderArr,
-            remainderStart,
-            words2Count);
-          ShiftWordsRightByBits(
-            remainderArr,
-            remainderStart,
-            words2Count,
-            shiftBits);
-        }
-      }
-    }
-
     private static short Divide32By16(
-      int dividendLow,
-      short divisorShort,
-      boolean returnRemainder) {
+       int dividendLow,
+       short divisorShort,
+       boolean returnRemainder) {
       int tmpInt;
       int dividendHigh = 0;
       int intDivisor = ((int)divisorShort) & 0xffff;
@@ -4597,73 +4945,6 @@ int subtrahendCount) {
       return returnRemainder ? ((short)(((int)dividendHigh) &
                     0xffff)) : ((short)(((int)dividendLow) &
                     0xffff));
-    }
-
-    private static void DivideFourWordsByTwo(
-      short[] quotient,
-      int quotientStart,
-      short[] words1,
-      int words1Start,
-      short word2A,
-      short word2B,
-      short[] temp) {
-      if (word2A == 0 && word2B == 0) {
-        // if divisor is 0, we assume divisor.compareTo(EInteger.FromInt64(2)) == 0**32
-        quotient[quotientStart] = words1[words1Start + 2];
-        quotient[quotientStart + 1] = words1[words1Start + 3];
-      } else {
-        temp[0] = words1[words1Start];
-        temp[1] = words1[words1Start + 1];
-        temp[2] = words1[words1Start + 2];
-        temp[3] = words1[words1Start + 3];
-        short valueQ1 = DivideThreeWordsByTwo(temp, 1, word2A, word2B);
-        short valueQ0 = DivideThreeWordsByTwo(temp, 0, word2A, word2B);
-        quotient[quotientStart] = valueQ0;
-        quotient[quotientStart + 1] = valueQ1;
-      }
-    }
-
-    private static short DivideThreeWordsByTwo(
-      short[] words1,
-      int words1Start,
-      short valueB0,
-      short valueB1) {
-      short valueQ;
-      {
-        int valueB1int = ((int)valueB1) & 0xffff;
-        valueQ = ((short)(valueB1 + 1) == 0) ? words1[words1Start + 2] :
-          ((valueB1 != 0) ? DivideUnsigned(
-            MakeUint(words1[words1Start + 1], words1[words1Start + 2]),
-            (short)(valueB1int + 1)) : DivideUnsigned(
-             MakeUint(words1[words1Start], words1[words1Start + 1]),
-             valueB0));
-        int w1s0 = ((int)words1[words1Start]) & 0xffff;
-        int w1s1 = ((int)words1[words1Start + 1]) & 0xffff;
-        int w1s2 = ((int)words1[words1Start + 2]) & 0xffff;
-        int valueQint = ((int)valueQ) & 0xffff;
-        int valueB0int = ((int)valueB0) & 0xffff;
-        int p = valueB0int * valueQint;
-        int u = w1s0 - (p & 0xffff);
-        w1s0 = GetLowHalf(u);
-        u = w1s1 - ((p >> 16) & 0xffff) -
-          (((int)GetHighHalfAsBorrow(u)) & 0xffff) - (valueB1int * valueQint);
-        w1s1 = GetLowHalf(u);
-        w1s2 = (w1s2 + (u >> 16)) & 0xffff;
-        while (w1s2 != 0 || w1s1 > valueB1int || (w1s1 == valueB1int &&
-                    w1s0 >= valueB0int)) {
-          u = w1s0 - valueB0int;
-          w1s0 = GetLowHalf(u);
-          u = w1s1 - valueB1int -
-            (((int)GetHighHalfAsBorrow(u)) & 0xffff);
-          w1s1 = GetLowHalf(u);
-          w1s2 = (w1s2 + (u >> 16)) & 0xffff;
-          ++valueQ;
-        }
-        words1[words1Start] = (short)w1s0;
-        words1[words1Start + 1] = (short)w1s1;
-        words1[words1Start + 2] = (short)w1s2;
-      }
-      return valueQ;
     }
 
     private static short DivideUnsigned(int x, short y) {
@@ -4848,7 +5129,7 @@ int subtrahendCount) {
 
     private static short[] GrowForCarry(short[] a, short carry) {
       int oldLength = a.length;
-      short[] ret = CleanGrow(a, RoundupSize(oldLength + 1));
+      short[] ret = CleanGrow(a, oldLength + 1);
       ret[oldLength] = carry;
       return ret;
     }
@@ -4902,19 +5183,17 @@ int subtrahendCount) {
       int astart,
       short words2,
       int n) {
-      {
-        short carry = 0;
-        int bint = ((int)words2) & 0xffff;
-        for (int i = 0; i < n; ++i) {
-          int p;
-          p = (((int)words1[astart + i]) & 0xffff) * bint;
-          p += ((int)carry) & 0xffff;
-          p += ((int)productArr[cstart + i]) & 0xffff;
-          productArr[cstart + i] = (short)p;
-          carry = (short)(p >> 16);
-        }
-        return carry;
+      short carry = 0;
+      int bint = ((int)words2) & 0xffff;
+      for (int i = 0; i < n; ++i) {
+        int p;
+        p = ((((int)words1[astart + i]) & 0xffff) * bint);
+        p = (p + (((int)carry) & 0xffff));
+        p = (p + (((int)productArr[cstart + i]) & 0xffff));
+        productArr[cstart + i] = ((short)p);
+        carry = (short)(p >> 16);
       }
+      return carry;
     }
 
     private static int MakeUint(short first, short second) {
@@ -4942,11 +5221,11 @@ int subtrahendCount) {
             break;
           default:
             SchoolbookSquare(
-resultArr,
-resultStart,
-words1,
-words1Start,
-count);
+  resultArr,
+  resultStart,
+  words1,
+  words1Start,
+  count);
             break;
         }
       } else if ((count & 1) == 0) {
@@ -5030,10 +5309,6 @@ count);
       }
     }
 
-    private static int RoundupSize(int n) {
-      return n + (n & 1);
-    }
-
     // NOTE: Renamed from RecursiveMultiply to better show that
     // this function only takes operands of the same size, as opposed
     // to AsymmetricMultiply.
@@ -5055,12 +5330,12 @@ count);
         switch (count) {
           case 2:
             BaselineMultiply2(
-resultArr,
-resultStart,
-words1,
-words1Start,
-words2,
-words2Start);
+  resultArr,
+  resultStart,
+  words1,
+  words1Start,
+  words2,
+  words2Start);
             break;
           case 4:
             BaselineMultiply4(
@@ -5081,14 +5356,14 @@ words2Start);
   words2Start);
             break;
           default: SchoolbookMultiply(
-resultArr,
-resultStart,
-words1,
-words1Start,
-count,
-words2,
-words2Start,
-count);
+  resultArr,
+  resultStart,
+  words1,
+  words1Start,
+  count,
+  words2,
+  words2Start,
+  count);
             break;
         }
       } else {
@@ -5156,7 +5431,7 @@ count);
           int tmpvar = (int)(words1Start + (count2 ^
                     offset2For1));
           // Abs(LowA - HighA)
-          SubtractOneByOne(
+          SubtractInternal(
             resultArr,
             resultStart,
             words1,
@@ -5174,7 +5449,7 @@ count);
             count2) > 0 ? 0 : count2;
           // Abs(LowB - HighB)
           int tmp = words2Start + (count2 ^ offset2For2);
-          SubtractOneByOne(
+          SubtractInternal(
             resultArr,
             resultMediumLow,
             words2,
@@ -5252,7 +5527,7 @@ count);
             // than their high parts
             // Medium low/Medium high result = Medium low/Medium high result
             // - Low(Temp)
-            c3 -= SubtractOneByOne(
+            c3 -= SubtractInternal(
               resultArr,
               resultMediumLow,
               resultArr,
@@ -5414,7 +5689,7 @@ count);
             // than their high parts
             // Medium low/Medium high result = Medium low/Medium high result
             // - Low(Temp)
-            c3 -= SubtractOneByOne(
+            c3 -= SubtractInternal(
               resultArr,
               resultStart + countLow,
               resultArr,
@@ -5460,8 +5735,6 @@ count);
       short[] words2,
       int words2Start,
       int words2Count) {
-      // Method assumes that resultArr was already zeroed,
-      // if resultArr is the same as words1 or words2
       int cstart;
       if (words1Count < words2Count) {
         // words1 is shorter than words2, so put words2 on top
@@ -5627,9 +5900,9 @@ count);
 
     private static short[] ShortenArray(short[] reg, int wordCount) {
       if (reg.length > 32) {
-        int newLength = RoundupSize(wordCount);
+        int newLength = wordCount;
         if (newLength < reg.length && (reg.length - newLength) >= 16) {
-          // Reallocate the array if the rounded length
+          // Reallocate the array if the desired length
           // is much smaller than the current length
           short[] newreg = new short[newLength];
           System.arraycopy(reg, 0, newreg, 0, Math.min(newLength, reg.length));
@@ -5637,34 +5910,6 @@ count);
         }
       }
       return reg;
-    }
-
-    private static int SubtractTwoByTwo(
-      short[] c,
-      int cstart,
-      short[] words1,
-      int astart,
-      short[] words2,
-      int bstart,
-      int n) {
-      // NOTE: Assumes that n is an even number
-      {
-        int u;
-        u = 0;
-        for (int i = 0; i < n; i += 2) {
-          u = (((int)words1[astart]) & 0xffff) - (((int)words2[bstart]) &
-                    0xffff) - (int)((u >> 31) & 1);
-          c[cstart++] = (short)u;
-          ++astart;
-          ++bstart;
-          u = (((int)words1[astart]) & 0xffff) - (((int)words2[bstart]) &
-                    0xffff) - (int)((u >> 31) & 1);
-          c[cstart++] = (short)u;
-          ++astart;
-          ++bstart;
-        }
-        return (int)((u >> 31) & 1);
-      }
     }
 
     private static int SubtractWords1IsOneBigger(
@@ -5702,24 +5947,23 @@ count);
       int bstart,
       int words2Count) {
       // Assumes that words1's count is 1 less
-      {
-        int u;
-        u = 0;
-        int cm1 = words2Count - 1;
-        for (int i = 0; i < cm1; i += 1) {
-          u = (((int)words1[astart]) & 0xffff) - (((int)words2[bstart]) &
-                    0xffff) - (int)((u >> 31) & 1);
-          c[cstart++] = (short)u;
-          ++astart;
-          ++bstart;
-        }
-        u = 0 - (((int)words2[bstart]) & 0xffff) - (int)((u >> 31) & 1);
-        c[cstart++] = (short)u;
-        return (int)((u >> 31) & 1);
+      int u;
+      u = 0;
+      int cm1 = words2Count - 1;
+      for (int i = 0; i < cm1; i += 1) {
+        u = ((((int)words1[astart]) & 0xffff) -
+              (((int)words2[bstart]) & 0xffff) - (int)((u >> 31) & 1));
+        c[cstart++] = ((short)u);
+        ++astart;
+        ++bstart;
       }
+      u = 0 - ((((int)words2[bstart]) & 0xffff) - (int)((u >> 31) &
+            1));
+      c[cstart++] = ((short)u);
+      return (int)((u >> 31) & 1);
     }
 
-    private static int SubtractOneByOne(
+    private static int SubtractInternal(
       short[] c,
       int cstart,
       short[] words1,
@@ -5727,18 +5971,32 @@ count);
       short[] words2,
       int bstart,
       int n) {
-      {
-        int u;
-        u = 0;
-        for (int i = 0; i < n; i += 1) {
-          u = (((int)words1[astart]) & 0xffff) - (((int)words2[bstart]) &
-                    0xffff) - (int)((u >> 31) & 1);
-          c[cstart++] = (short)u;
-          ++astart;
-          ++bstart;
-        }
-        return (int)((u >> 31) & 1);
+      int u = 0;
+      boolean odd = (n & 1) != 0;
+      if (odd) {
+        --n;
       }
+      int mask = 0xffff;
+      for (int i = 0; i < n; i += 2) {
+        int wb0 = words2[bstart] & mask;
+        int wb1 = words2[bstart + 1] & mask;
+        int wa0 = words1[astart] & mask;
+        int wa1 = words1[astart + 1] & mask;
+        u = (wa0 - wb0 - (int)((u >> 31) & 1));
+        c[cstart++] = ((short)u);
+        u = (wa1 - wb1 - (int)((u >> 31) & 1));
+        c[cstart++] = ((short)u);
+        astart += 2;
+        bstart += 2;
+      }
+      if (odd) {
+        u = ((((int)words1[astart]) & mask) -
+              (((int)words2[bstart]) & mask) - (int)((u >> 31) & 1));
+        c[cstart++] = ((short)u);
+        ++astart;
+        ++bstart;
+      }
+      return (int)((u >> 31) & 1);
     }
 
     private static void TwosComplement(short[] words1, int words1Start, int n) {
@@ -5889,7 +6147,7 @@ count);
       bigintY = thisValue.Subtract(bigintY);
       return new EInteger[] { bigintX, bigintY };
     }
-        // Begin integer conversions
+    // Begin integer conversions
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
@@ -5898,33 +6156,33 @@ count);
      * @throws java.lang.ArithmeticException This value is less than 0 or greater than
      * 255.
      */
-public byte ToByteChecked() {
- int val = this.ToInt32Checked();
- if (val < 0 || val > 255) {
-  throw new ArithmeticException("This Object's value is out of range");
- }
- return ((byte)(val & 0xff));
-}
+    public byte ToByteChecked() {
+      int val = this.ToInt32Checked();
+      if (val < 0 || val > 255) {
+        throw new ArithmeticException("This Object's value is out of range");
+      }
+      return ((byte)(val & 0xff));
+    }
 
     /**
      * Converts this number to a byte (from 0 to 255), returning the
      * least-significant bits of this number's two's-complement form.
      * @return This number, converted to a byte (from 0 to 255).
      */
-public byte ToByteUnchecked() {
- int val = this.ToInt32Unchecked();
- return ((byte)(val & 0xff));
-}
+    public byte ToByteUnchecked() {
+      int val = this.ToInt32Unchecked();
+      return ((byte)(val & 0xff));
+    }
 
     /**
      * Converts a byte (from 0 to 255) to an arbitrary-precision integer.
      * @param inputByte The number to convert as a byte (from 0 to 255).
      * @return This number's value as an arbitrary-precision integer.
      */
-public static EInteger FromByte(byte inputByte) {
- int val = ((int)inputByte) & 0xff;
- return FromInt32(val);
-}
+    public static EInteger FromByte(byte inputByte) {
+      int val = ((int)inputByte) & 0xff;
+      return FromInt32(val);
+    }
 
     /**
      * Converts this number's value to a 16-bit signed integer if it can fit in a
@@ -5933,33 +6191,33 @@ public static EInteger FromByte(byte inputByte) {
      * @throws java.lang.ArithmeticException This value is less than -32768 or greater
      * than 32767.
      */
-public short ToInt16Checked() {
- int val = this.ToInt32Checked();
- if (val < -32768 || val > 32767) {
-  throw new ArithmeticException("This Object's value is out of range");
- }
- return ((short)(val & 0xffff));
-}
+    public short ToInt16Checked() {
+      int val = this.ToInt32Checked();
+      if (val < -32768 || val > 32767) {
+        throw new ArithmeticException("This Object's value is out of range");
+      }
+      return ((short)(val & 0xffff));
+    }
 
     /**
      * Converts this number to a 16-bit signed integer, returning the
      * least-significant bits of this number's two's-complement form.
      * @return This number, converted to a 16-bit signed integer.
      */
-public short ToInt16Unchecked() {
- int val = this.ToInt32Unchecked();
- return ((short)(val & 0xffff));
-}
+    public short ToInt16Unchecked() {
+      int val = this.ToInt32Unchecked();
+      return ((short)(val & 0xffff));
+    }
 
     /**
      * Converts a 16-bit signed integer to an arbitrary-precision integer.
      * @param inputInt16 The number to convert as a 16-bit signed integer.
      * @return This number's value as an arbitrary-precision integer.
      */
-public static EInteger FromInt16(short inputInt16) {
- int val = (int)inputInt16;
- return FromInt32(val);
-}
+    public static EInteger FromInt16(short inputInt16) {
+      int val = (int)inputInt16;
+      return FromInt32(val);
+    }
 
-// End integer conversions
+    // End integer conversions
   }

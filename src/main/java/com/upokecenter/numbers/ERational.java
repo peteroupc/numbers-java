@@ -26,9 +26,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      */
 
     public static final ERational NaN = CreateWithFlags(
-EInteger.FromInt32(0),
-EInteger.FromInt32(1),
-BigNumberFlags.FlagQuietNaN);
+  EInteger.FromInt32(0),
+  EInteger.FromInt32(1),
+  BigNumberFlags.FlagQuietNaN);
 
     /**
      * Negative infinity, less than any other number.
@@ -36,9 +36,9 @@ BigNumberFlags.FlagQuietNaN);
 
     public static final ERational NegativeInfinity =
       CreateWithFlags(
-EInteger.FromInt32(0),
-EInteger.FromInt32(1),
-BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
+  EInteger.FromInt32(0),
+  EInteger.FromInt32(1),
+  BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
 
     /**
      * A rational number for negative zero.
@@ -59,9 +59,9 @@ BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
 
     public static final ERational PositiveInfinity =
       CreateWithFlags(
-EInteger.FromInt32(0),
-EInteger.FromInt32(1),
-BigNumberFlags.FlagInfinity);
+  EInteger.FromInt32(0),
+  EInteger.FromInt32(1),
+  BigNumberFlags.FlagInfinity);
 
     /**
      * A signaling not-a-number value.
@@ -69,9 +69,9 @@ BigNumberFlags.FlagInfinity);
 
     public static final ERational SignalingNaN =
       CreateWithFlags(
-EInteger.FromInt32(0),
-EInteger.FromInt32(1),
-BigNumberFlags.FlagSignalingNaN);
+  EInteger.FromInt32(0),
+  EInteger.FromInt32(1),
+  BigNumberFlags.FlagSignalingNaN);
 
     /**
      * The rational number ten.
@@ -199,8 +199,8 @@ BigNumberFlags.FlagSignalingNaN);
      * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
-int numeratorSmall,
-int denominatorSmall) {
+  int numeratorSmall,
+  int denominatorSmall) {
       return Create(EInteger.FromInt32(numeratorSmall), EInteger.FromInt32(denominatorSmall));
     }
 
@@ -212,8 +212,8 @@ int denominatorSmall) {
      * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
-EInteger numerator,
-EInteger denominator) {
+  EInteger numerator,
+  EInteger denominator) {
       return new ERational(numerator, denominator);
     }
 
@@ -241,9 +241,9 @@ EInteger denominator) {
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
     public static ERational CreateNaN(
-EInteger diag,
-boolean signaling,
-boolean negative) {
+  EInteger diag,
+  boolean signaling,
+  boolean negative) {
       if (diag == null) {
         throw new NullPointerException("diag");
       }
@@ -1264,23 +1264,28 @@ boolean negative) {
     }
 
     /**
-     * Determines whether this object and another object are equal.
+     * Determines whether this object&#x27;s numerator, denominator, and properties
+     * are equal to those of another object and that other object is an
+     * arbitrary-precision rational number. Not-a-number values are
+     * considered equal if the rest of their properties are equal.
      * @param obj An arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
       return (
-other != null) && (
-(((
-this.unsignedNumerator) == null) ? ((other.unsignedNumerator) == null) : (
-this.unsignedNumerator).equals(other.unsignedNumerator)) && (((
-this.denominator) == null) ? ((other.denominator) == null) : (
-this.denominator).equals(other.denominator)) && this.flags == other.flags);
+  other != null) && (
+  (((
+  this.unsignedNumerator) == null) ? ((other.unsignedNumerator) == null) : (
+  this.unsignedNumerator).equals(other.unsignedNumerator)) && (((
+  this.denominator) == null) ? ((other.denominator) == null) : (
+  this.denominator).equals(other.denominator)) && this.flags == other.flags);
     }
 
     /**
-     * Not documented yet.
+     * Determines whether this object&#x27;s numerator, denominator, and properties
+     * are equal to those of another object. Not-a-number values are
+     * considered equal if the rest of their properties are equal.
      * @param other The parameter {@code other} is not documented yet.
      * @return A Boolean object.
      */
@@ -1613,10 +1618,10 @@ this.denominator).equals(other.denominator)) && this.flags == other.flags);
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
         return EDecimal.CreateNaN(
-this.unsignedNumerator,
-this.IsSignalingNaN(),
-this.isNegative(),
-ctx);
+  this.unsignedNumerator,
+  this.IsSignalingNaN(),
+  this.isNegative(),
+  ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
@@ -1652,10 +1657,10 @@ ctx);
       }
       if (this.IsNaN()) {
         return EDecimal.CreateNaN(
-this.unsignedNumerator,
-this.IsSignalingNaN(),
-this.isNegative(),
-ctx);
+  this.unsignedNumerator,
+  this.IsSignalingNaN(),
+  this.isNegative(),
+  ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
@@ -1754,10 +1759,10 @@ ctx);
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
-this.unsignedNumerator,
-this.IsSignalingNaN(),
-this.isNegative(),
-ctx);
+  this.unsignedNumerator,
+  this.IsSignalingNaN(),
+  this.isNegative(),
+  ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EFloat.PositiveInfinity.RoundToPrecision(ctx);
@@ -1792,10 +1797,10 @@ ctx);
       }
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
-this.unsignedNumerator,
-this.IsSignalingNaN(),
-this.isNegative(),
-ctx);
+  this.unsignedNumerator,
+  this.IsSignalingNaN(),
+  this.isNegative(),
+  ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EFloat.PositiveInfinity.RoundToPrecision(ctx);
@@ -1910,13 +1915,14 @@ ctx);
           return this.isNegative() ? "-Infinity" : "Infinity";
         }
       }
-      return this.getNumerator() + "/" + this.getDenominator();
+      return (this.getNumerator().isZero() && this.isNegative()) ? ("-0/" +
+        this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
     }
 
     private static ERational CreateWithFlags(
-EInteger numerator,
-EInteger denominator,
-int flags) {
+  EInteger numerator,
+  EInteger denominator,
+  int flags) {
       ERational er = new ERational(numerator, denominator);
       er.flags = flags;
       return er;
