@@ -10,15 +10,24 @@ package com.upokecenter.util;
      * byte generator is as well.</p>
      */
   public final class RandomGenerator {
-    boolean haveLastNormal;
-    IRandomGen irg;
-    double lastNormal;
-    Object normalLock = new Object();
+    private boolean valueHaveLastNormal;
+    private IRandomGen valueIrg;
+    private double valueLastNormal;
+    private Object valueNormalLock = new Object();
+
+    /**
+     * Initializes a new instance of the RandomGenerator class.
+     */
     public RandomGenerator() {
  this(new XorShift128Plus());
     }
-    public RandomGenerator(IRandomGen irg) {
-      this.irg = irg;
+
+    /**
+     * Initializes a new instance of the RandomGenerator class.
+     * @param valueIrg An IRandomGen object.
+     */
+    public RandomGenerator(IRandomGen valueIrg) {
+      this.valueIrg = valueIrg;
     }
 
     /**
@@ -29,12 +38,12 @@ package com.upokecenter.util;
      */
     public boolean Bernoulli(double p) {
       if (p < 0) {
-        throw new IllegalArgumentException("p (" + p + ") is less than " + 0);
+        throw new IllegalArgumentException("p (" + p + ") is less than 0");
       }
       if (p > 1) {
-        throw new IllegalArgumentException("p (" + p + ") is more than " + 1);
+        throw new IllegalArgumentException("p (" + p + ") is more than 1");
       }
-      return Uniform() < p;
+      return this.Uniform() < p;
     }
 
     /**
@@ -42,7 +51,7 @@ package com.upokecenter.util;
      * @return A Boolean object.
      */
     public boolean Bernoulli() {
-      return UniformInt(2) == 0;
+      return this.UniformInt(2) == 0;
     }
 
     /**
@@ -53,7 +62,7 @@ package com.upokecenter.util;
      * @return A 32-bit signed integer.
      */
     public int Binomial(int trials) {
-      return Binomial(trials, 0.5);
+      return this.Binomial(trials, 0.5);
     }
 
     /**
@@ -67,12 +76,12 @@ package com.upokecenter.util;
      */
     public int Binomial(int trials, double p) {
       if (p < 0) {
-        throw new IllegalArgumentException("p (" + p + ") is less than " + 0);
+        throw new IllegalArgumentException("p (" + p + ") is less than 0");
       }
       if (p > 1) {
-        throw new IllegalArgumentException("p (" + p + ") is more than " + 1);
+        throw new IllegalArgumentException("p (" + p + ") is more than 1");
       }
-      if ((trials) <= -1) {
+      if (trials <= -1) {
         throw new IllegalArgumentException("trials (" + trials +
                ") is not greater than " + (-1));
       }
@@ -83,7 +92,7 @@ package com.upokecenter.util;
       if (p == 0.5) {
         byte[] bytes = new byte[1];
         for (int i = 0; i < trials && i >= 0;) {
-          irg.GetBytes(bytes, 0, 1);
+          this.valueIrg.GetBytes(bytes, 0, 1);
           int b = bytes[0];
           while (i < trials && i >= 0) {
             if ((b & 1) == 1) {
@@ -95,7 +104,7 @@ package com.upokecenter.util;
         }
       } else {
         for (int i = 0; i < trials && i >= 0; ++i) {
-          if (Uniform() < p) {
+          if (this.Uniform() < p) {
             ++count;
           }
         }
@@ -113,9 +122,9 @@ package com.upokecenter.util;
      */
     public double ChiSquared(int df) {
       if (df <= 0) {
-        throw new IllegalArgumentException("df (" + df + ") is not greater than " + 0);
+        throw new IllegalArgumentException("df (" + df + ") is not greater than 0");
       }
-      return Gamma(df / 2, 2);
+      return this.Gamma(df / 2, 2);
     }
 
     /**
@@ -123,7 +132,7 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double Exponential() {
-      return -Math.log(NonZeroUniform());
+      return -Math.log(this.NonZeroUniform());
     }
 
     /**
@@ -134,9 +143,9 @@ package com.upokecenter.util;
      */
     public double Gamma(double a, double b) {
       if (b <= 0) {
-        throw new IllegalArgumentException("b (" + b + ") is not greater than " + 0);
+        throw new IllegalArgumentException("b (" + b + ") is not greater than 0");
       }
-      return Gamma(a) * b;
+      return this.Gamma(a) * b;
     }
 
     /**
@@ -145,7 +154,7 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double Gamma(double a) {
-      if ((a) <= -1) {
+      if (a <= -1) {
         throw new IllegalArgumentException("a (" + a + ") is not greater than " +
             (-1));
       }
@@ -175,7 +184,7 @@ package com.upokecenter.util;
      * @return The number of failures until a success happens.
      */
     public int Geometric() {
-      return NegativeBinomial(1, 0.5);
+      return this.NegativeBinomial(1, 0.5);
     }
 
     /**
@@ -185,7 +194,7 @@ package com.upokecenter.util;
      * @return The number of failures until a success happens.
      */
     public int Geometric(double p) {
-      return NegativeBinomial(1, p);
+      return this.NegativeBinomial(1, p);
     }
 
     /**
@@ -199,8 +208,7 @@ package com.upokecenter.util;
      */
     public int Hypergeometric(int trials, int ones, int count) {
       if (ones < 0) {
-        throw new IllegalArgumentException("ones (" + ones + ") is less than " +
-            0);
+        throw new IllegalArgumentException("ones (" + ones + ") is less than 0");
       }
       if (ones > count) {
         throw new IllegalArgumentException("ones (" + ones + ") is more than " +
@@ -208,11 +216,11 @@ package com.upokecenter.util;
       }
       if (count < 0) {
         throw new IllegalArgumentException("count (" + count +
-          ") is less than " + 0);
+          ") is less than 0");
       }
       if (trials < 0) {
         throw new IllegalArgumentException("trials (" + trials +
-          ") is less than " + 0);
+          ") is less than 0");
       }
       if (trials > count) {
         throw new IllegalArgumentException("trials (" + trials +
@@ -220,7 +228,7 @@ package com.upokecenter.util;
       }
       int ret = 0;
       for (int i = 0; i < trials && ones > 0; ++i) {
-        if (UniformInt(count) < ones) {
+        if (this.UniformInt(count) < ones) {
           --ones;
           ++ret;
         }
@@ -237,7 +245,7 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double LogNormal(double mean, double sd) {
-      return Math.exp((Normal() * sd) + mean);
+      return Math.exp((this.Normal() * sd) + mean);
     }
 
     /**
@@ -252,12 +260,12 @@ package com.upokecenter.util;
      */
     public int NegativeBinomial(int trials, double p) {
       if (p < 0) {
-        throw new IllegalArgumentException("p (" + p + ") is less than " + 0);
+        throw new IllegalArgumentException("p (" + p + ") is less than 0");
       }
       if (p > 1) {
-        throw new IllegalArgumentException("p (" + p + ") is more than " + 1);
+        throw new IllegalArgumentException("p (" + p + ") is more than 1");
       }
-      if ((trials) <= -1) {
+      if (trials <= -1) {
         throw new IllegalArgumentException("trials (" + trials +
                ") is not greater than " + (-1));
       }
@@ -271,7 +279,7 @@ package com.upokecenter.util;
       if (p == 0.5) {
         byte[] bytes = new byte[1];
         while (true) {
-          irg.GetBytes(bytes, 0, 1);
+          this.valueIrg.GetBytes(bytes, 0, 1);
           int b = bytes[0];
           for (int i = 0; i < 8; ++i) {
             if ((b & 1) == 1) {
@@ -288,7 +296,7 @@ package com.upokecenter.util;
         }
       } else {
         while (true) {
-          if (Uniform() < p) {
+          if (this.Uniform() < p) {
             --trials;
             if (trials <= 0) {
               return count;
@@ -308,7 +316,7 @@ package com.upokecenter.util;
      * @return The number of 0's generated. Returns Integer.MAX_VALUE if "p" is 0.
      */
     public int NegativeBinomial(int trials) {
-      return NegativeBinomial(trials, 0.5);
+      return this.NegativeBinomial(trials, 0.5);
     }
     // The Normal, Exponential, Poisson, and
     // single-argument Gamma methods were adapted
@@ -321,20 +329,20 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double Normal() {
-      synchronized (normalLock) {
-        if (haveLastNormal) {
-          haveLastNormal = false;
-          return lastNormal;
+      synchronized (this.valueNormalLock) {
+        if (this.valueHaveLastNormal) {
+          this.valueHaveLastNormal = false;
+          return this.valueLastNormal;
         }
       }
-      double x = NonZeroUniform();
-      double y = Uniform();
+      double x = this.NonZeroUniform();
+      double y = this.Uniform();
       double s = Math.sqrt(-2 * Math.log(x));
       double t = 2 * Math.PI * y;
       double otherNormal = s * Math.sin(t);
-      synchronized (normalLock) {
-        lastNormal = otherNormal;
-        haveLastNormal = true;
+      synchronized (this.valueNormalLock) {
+        this.valueLastNormal = otherNormal;
+        this.valueHaveLastNormal = true;
       }
       return s * Math.cos(t);
     }
@@ -347,7 +355,7 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double Normal(double mean, double sd) {
-      return (Normal() * sd) + mean;
+      return (this.Normal() * sd) + mean;
     }
 
     /**
@@ -360,20 +368,20 @@ package com.upokecenter.util;
     public int Poisson(double mean) {
       if (mean < 0) {
         throw new IllegalArgumentException("mean (" + mean +
-          ") is less than " + 0);
+          ") is less than 0");
       }
       double l = Math.exp(-mean);
       int k = 0;
       double p = 0;
       do {
         ++k;
-        p *= Uniform();
+        p *= this.Uniform();
       } while (p > l);
       return k - 1;
     }
 
     /**
-     *
+     * Not documented yet.
      * @param min Not documented yet.
      * @param max Not documented yet.
      * @return A 64-bit floating-point number.
@@ -383,21 +391,26 @@ package com.upokecenter.util;
         throw new IllegalArgumentException("min (" + min + ") is not less than " +
             max);
       }
-      return min + (max - min) * Uniform();
-    }
-
-    public double Uniform(double max) {
-      return Uniform(0.0, max);
+      return min + (max - min) * this.Uniform();
     }
 
     /**
-     *
+     * Not documented yet.
+     * @param max Not documented yet.
+     * @return A 64-bit floating-point number.
+     */
+    public double Uniform(double max) {
+      return this.Uniform(0.0, max);
+    }
+
+    /**
+     * Not documented yet.
      * @return A 64-bit floating-point number.
      */
     public double Uniform() {
       byte[] b = new byte[7];
-      irg.GetBytes(b, 0, 7);
-      long lb = ((long)b[0] & 0xffL);
+      this.valueIrg.GetBytes(b, 0, 7);
+      long lb = (long)b[0] & 0xffL;
       lb |= ((long)b[1] & 0xffL) << 8;
       lb |= ((long)b[2] & 0xffL) << 16;
       lb |= ((long)b[3] & 0xffL) << 24;
@@ -409,13 +422,13 @@ package com.upokecenter.util;
     }
 
     /**
-     *
+     * Not documented yet.
      * @return A 64-bit floating-point number.
      */
     public double UniformSingle() {
       byte[] b = new byte[3];
-      irg.GetBytes(b, 0, 3);
-      int lb = ((int)b[0] & 0xff);
+      this.valueIrg.GetBytes(b, 0, 3);
+      int lb = (int)b[0] & 0xff;
       lb |= ((int)b[1] & 0xff) << 8;
       lb |= ((int)b[2] & 0x7f) << 16;
       lb |= 0x7f << 23;
@@ -423,7 +436,7 @@ package com.upokecenter.util;
     }
 
     /**
-     *
+     * Not documented yet.
      * @param minInclusive Not documented yet.
      * @param maxExclusive Not documented yet.
      * @return A 32-bit signed integer.
@@ -437,19 +450,19 @@ if (minInclusive == maxExclusive) {
  return minInclusive;
 }
       if (minInclusive >= 0) {
-        return minInclusive + UniformInt(maxExclusive-minInclusive);
+        return minInclusive + this.UniformInt(maxExclusive - minInclusive);
       } else {
-        long diff = maxExclusive-minInclusive;
+        long diff = maxExclusive - minInclusive;
         if (diff <= Integer.MAX_VALUE) {
-          return minInclusive + UniformInt((int)diff);
+          return minInclusive + this.UniformInt((int)diff);
         } else {
-          return (int)(minInclusive + UniformLong(diff));
+          return (int)(minInclusive + this.UniformLong(diff));
         }
       }
     }
 
     /**
-     *
+     * Not documented yet.
      * @param minInclusive Not documented yet.
      * @param maxExclusive Not documented yet.
      * @return A 64-bit signed integer.
@@ -463,17 +476,17 @@ if (minInclusive == maxExclusive) {
  return minInclusive;
 }
       if (minInclusive >= 0) {
-        return minInclusive + UniformLong(maxExclusive-minInclusive);
+        return minInclusive + this.UniformLong(maxExclusive - minInclusive);
       } else {
-      if ((maxExclusive < 0 && Long.MAX_VALUE + maxExclusive < minInclusive)||
-          (maxExclusive > 0 && Long.MIN_VALUE + maxExclusive > minInclusive)||
+      if ((maxExclusive < 0 && Long.MAX_VALUE + maxExclusive < minInclusive) ||
+          (maxExclusive > 0 && Long.MIN_VALUE + maxExclusive > minInclusive) ||
                 minInclusive - maxExclusive < 0) {
            // Difference is greater than MaxValue
          long lb = 0;
          byte[] b = new byte[8];
          while (true) {
-           irg.GetBytes(b, 0, 8);
-           lb = (b[0] & 0xffL);
+           this.valueIrg.GetBytes(b, 0, 8);
+           lb = b[0] & 0xffL;
            lb |= (b[1] & 0xffL) << 8;
            lb |= (b[2] & 0xffL) << 16;
            lb |= (b[3] & 0xffL) << 24;
@@ -486,20 +499,20 @@ if (minInclusive == maxExclusive) {
            }
           }
         } else {
-         return minInclusive + UniformLong(maxExclusive-minInclusive);
+         return minInclusive + this.UniformLong(maxExclusive - minInclusive);
         }
       }
     }
 
     /**
-     *
+     * Not documented yet.
      * @param maxExclusive Not documented yet.
      * @return A 32-bit signed integer.
      */
     public int UniformInt(int maxExclusive) {
       if (maxExclusive < 0) {
   throw new IllegalArgumentException("maxExclusive (" + maxExclusive +
-    ") is less than " + 0);
+    ") is less than 0");
 }
       if (maxExclusive <= 0) {
  return 0;
@@ -507,26 +520,26 @@ if (minInclusive == maxExclusive) {
       byte[] b = new byte[4];
       switch (maxExclusive) {
         case 2: {
-            irg.GetBytes(b, 0, 1);
-            return (b[0] & 1);
+            this.valueIrg.GetBytes(b, 0, 1);
+            return b[0] & 1;
           }
         case 256: {
-            irg.GetBytes(b, 0, 1);
-            return ((int)b[0] & 1);
+            this.valueIrg.GetBytes(b, 0, 1);
+            return (int)b[0] & 1;
           }
         default: {
             while (true) {
               int ib = 0;
               if (maxExclusive == 0x1000000) {
-                irg.GetBytes(b, 0, 3);
-                ib = (b[0] & 0xff);
+                this.valueIrg.GetBytes(b, 0, 3);
+                ib = b[0] & 0xff;
                 ib |= (b[1] & 0xff) << 8;
                 ib |= (b[2] & 0xff) << 16;
                 return ib;
               }
               if (maxExclusive == 0x10000) {
-                irg.GetBytes(b, 0, 2);
-                ib = (b[0] & 0xff);
+                this.valueIrg.GetBytes(b, 0, 2);
+                ib = b[0] & 0xff;
                 ib |= (b[1] & 0xff) << 8;
                 return ib;
               }
@@ -534,8 +547,8 @@ if (minInclusive == maxExclusive) {
               maxexc = (maxExclusive <= 100) ? 2147483600 :
                 ((Integer.MAX_VALUE / maxExclusive) * maxExclusive);
               while (true) {
-                irg.GetBytes(b, 0, 4);
-                ib = (b[0] & 0xff);
+                this.valueIrg.GetBytes(b, 0, 4);
+                ib = b[0] & 0xff;
                 ib |= (b[1] & 0xff) << 8;
                 ib |= (b[2] & 0xff) << 16;
                 ib |= (b[3] & 0x7f) << 24;
@@ -549,25 +562,25 @@ if (minInclusive == maxExclusive) {
     }
 
     /**
-     *
+     * Not documented yet.
      * @param maxExclusive Not documented yet.
      * @return A 64-bit signed integer.
      */
     public long UniformLong(long maxExclusive) {
       if (maxExclusive < 0) {
   throw new IllegalArgumentException("maxExclusive (" + maxExclusive +
-    ") is less than " + 0);
+    ") is less than 0");
 }
       if (maxExclusive <= Integer.MAX_VALUE) {
-        return UniformInt((int)maxExclusive);
+        return this.UniformInt((int)maxExclusive);
       }
       long lb = 0;
       long maxexc;
       byte[] b = new byte[8];
       maxexc = (Long.MAX_VALUE / maxExclusive) * maxExclusive;
       while (true) {
-        irg.GetBytes(b, 0, 8);
-        lb = (b[0] & 0xffL);
+        this.valueIrg.GetBytes(b, 0, 8);
+        lb = b[0] & 0xffL;
         lb |= (b[1] & 0xffL) << 8;
         lb |= (b[2] & 0xffL) << 16;
         lb |= (b[3] & 0xffL) << 24;
@@ -585,8 +598,8 @@ if (minInclusive == maxExclusive) {
       byte[] b = new byte[7];
       long lb = 0;
       do {
-        irg.GetBytes(b, 0, 7);
-        lb = (b[0] & 0xffL);
+        this.valueIrg.GetBytes(b, 0, 7);
+        lb = b[0] & 0xffL;
         lb |= (b[1] & 0xffL) << 8;
         lb |= (b[2] & 0xffL) << 16;
         lb |= (b[3] & 0xffL) << 24;

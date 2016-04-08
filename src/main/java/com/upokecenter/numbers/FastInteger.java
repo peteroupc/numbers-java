@@ -75,18 +75,19 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
           longV |= (((long)this.data[1]) << 32);
           return EInteger.FromInt64(longV);
         }
-        byte[] bytes = new byte[(this.wordCount * 4) + 1];
+        return EInteger.FromInts(this.data, this.wordCount);
+        /* byte[] bytes = new byte[(this.wordCount >> 2) + 1];
         int i = 0;
         int j = 0;
         for (i = 0, j = 0; i < this.wordCount; ++i) {
           int d = this.data[i];
-          bytes[j++] = (byte)(d & 0xff);
-          bytes[j++] = (byte)((d >> 8) & 0xff);
-          bytes[j++] = (byte)((d >> 16) & 0xff);
-          bytes[j++] = (byte)((d >> 24) & 0xff);
+          bytes[j++] = ((byte)(d));
+          bytes[j++] = ((byte)(d >> 8));
+          bytes[j++] = ((byte)(d >> 16));
+          bytes[j++] = ((byte)(d >> 24));
         }
         bytes[bytes.length - 1] = (byte)0;
-        return EInteger.FromBytes(bytes, true);
+        return EInteger.FromBytes(bytes, true);*/
       }
 
       int[] GetLastWordsInternal(int numWords32Bit) {
@@ -551,22 +552,6 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         default:
           return (this.signum() < 0) ? this.Negate() : this;
       }
-    }
-
-    static EInteger WordsToEInteger(int[] words) {
-      int wordCount = words.length;
-      if (wordCount == 1 && (words[0] >> 31) == 0) {
-        return EInteger.FromInt64((int)words[0]);
-      }
-      byte[] bytes = new byte[(wordCount * 4) + 1];
-      for (int i = 0; i < wordCount; ++i) {
-        bytes[(i * 4) + 0] = (byte)(words[i] & 0xff);
-        bytes[(i * 4) + 1] = (byte)((words[i] >> 8) & 0xff);
-        bytes[(i * 4) + 2] = (byte)((words[i] >> 16) & 0xff);
-        bytes[(i * 4) + 3] = (byte)((words[i] >> 24) & 0xff);
-      }
-      bytes[bytes.length - 1] = (byte)0;
-      return EInteger.FromBytes(bytes, true);
     }
 
     static int[] GetLastWords(EInteger bigint, int numWords32Bit) {

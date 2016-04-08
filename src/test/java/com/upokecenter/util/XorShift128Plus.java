@@ -21,7 +21,7 @@ package com.upokecenter.util;
       }
       if (offset < 0) {
         throw new IllegalArgumentException("offset (" + offset +
-          ") is less than " + 0);
+          ") is less than 0");
       }
       if (offset > bytes.length) {
         throw new IllegalArgumentException("offset (" + offset +
@@ -29,7 +29,7 @@ package com.upokecenter.util;
       }
       if (length < 0) {
         throw new IllegalArgumentException("length (" + length +
-          ") is less than " + 0);
+          ") is less than 0");
       }
       if (length > bytes.length) {
         throw new IllegalArgumentException("length (" + length +

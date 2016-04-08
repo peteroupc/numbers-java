@@ -331,6 +331,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       int[] value = Extras.DoubleToIntegers(dbl);
       int floatExponent = (int)((value[1] >> 20) & 0x7ff);
       boolean neg = (value[1] >> 31) != 0;
+      long lvalue;
       if (floatExponent == 2047) {
         if ((value[1] & 0xfffff) == 0 && value[0] == 0) {
           return neg ? NegativeInfinity : PositiveInfinity;
@@ -338,14 +339,14 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (value[1] & 0x80000) != 0;
         value[1] &= 0x7ffff;
-        EInteger info = FastInteger.WordsToEInteger(value);
-        if (info.isZero()) {
+        lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
+        if (lvalue == 0) {
           return quiet ? NaN : SignalingNaN;
         }
         value[0] = (neg ? BigNumberFlags.FlagNegative : 0) |
        (quiet ? BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
         return CreateWithFlags(
-          info,
+          EInteger.FromInt64(lvalue),
           EInteger.FromInt32(0),
           value[0]);
       }
@@ -360,8 +361,9 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       } else {
         return neg ? EFloat.NegativeZero : EFloat.Zero;
       }
+      lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
       return CreateWithFlags(
-        FastInteger.WordsToEInteger(value),
+        EInteger.FromInt64(lvalue),
         EInteger.FromInt64(floatExponent - 1075),
         neg ? BigNumberFlags.FlagNegative : 0);
     }

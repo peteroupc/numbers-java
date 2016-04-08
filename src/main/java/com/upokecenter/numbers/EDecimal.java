@@ -496,6 +496,7 @@ private static final FastIntegerFixed FastIntZero = new
       int[] value = Extras.DoubleToIntegers(dbl);
       int floatExponent = (int)((value[1] >> 20) & 0x7ff);
       boolean neg = (value[1] >> 31) != 0;
+      long lvalue;
       if (floatExponent == 2047) {
         if ((value[1] & 0xfffff) == 0 && value[0] == 0) {
           return neg ? NegativeInfinity : PositiveInfinity;
@@ -503,14 +504,14 @@ private static final FastIntegerFixed FastIntZero = new
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (value[1] & 0x80000) != 0;
         value[1] &= 0x7ffff;
-        EInteger info = FastInteger.WordsToEInteger(value);
-        value[0] = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
+        lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
+        int flags = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
                 BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
-        return info.isZero() ? (quiet ? NaN : SignalingNaN) :
+        return lvalue == 0 ? (quiet ? NaN : SignalingNaN) :
           new EDecimal(
-            FastIntegerFixed.FromBig(info),
+            FastIntegerFixed.FromLong(lvalue),
             FastIntZero,
-            value[0],
+            flags,
             neg ? -1 : 1);
       }
       value[1] &= 0xfffff;
@@ -527,16 +528,16 @@ private static final FastIntegerFixed FastIntZero = new
         return neg ? EDecimal.NegativeZero : EDecimal.Zero;
       }
       floatExponent -= 1075;
-      EInteger valueFpMantissaBig = FastInteger.WordsToEInteger(value);
+      lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
       if (floatExponent == 0) {
         if (neg) {
-          valueFpMantissaBig = valueFpMantissaBig.Negate();
+          lvalue = -lvalue;
         }
-        return EDecimal.FromEInteger(valueFpMantissaBig);
+        return EDecimal.FromInt64(lvalue);
       }
       if (floatExponent > 0) {
         // Value is an integer
-        EInteger bigmantissa = valueFpMantissaBig;
+        EInteger bigmantissa = EInteger.FromInt64(lvalue);
         bigmantissa = bigmantissa.ShiftLeft(floatExponent);
         if (neg) {
           bigmantissa=(bigmantissa).Negate();
@@ -544,7 +545,7 @@ private static final FastIntegerFixed FastIntZero = new
         return EDecimal.FromEInteger(bigmantissa);
       } else {
         // Value has a fractional part
-        EInteger bigmantissa = valueFpMantissaBig;
+        EInteger bigmantissa = EInteger.FromInt64(lvalue);
         EInteger exp = NumberUtility.FindPowerOfFive(-floatExponent);
         bigmantissa = bigmantissa.Multiply(exp);
         if (neg) {
@@ -965,13 +966,15 @@ private static final FastIntegerFixed FastIntZero = new
                     mantBuffer = thisdigit;
                     mantBufferMult = 10;
                   } else {
-                    mantBufferMult *= 10;
+                    // multiply by 10
+   mantBufferMult = (mantBufferMult << 3) + (mantBufferMult << 1);
                     mantBuffer = (mantBuffer << 3) + (mantBuffer << 1);
                     mantBuffer += thisdigit;
                   }
                 }
               } else {
-                mantInt *= 10;
+                // multiply by 10
+   mantInt = (mantInt << 3) + (mantInt << 1);
                 mantInt += thisdigit;
               }
               if (haveDigits && maxDigits != null) {
@@ -1041,13 +1044,15 @@ private static final FastIntegerFixed FastIntZero = new
                     mantBuffer = thisdigit;
                     mantBufferMult = 10;
                   } else {
-                    mantBufferMult *= 10;
+                    // multiply by 10
+   mantBufferMult = (mantBufferMult << 3) + (mantBufferMult << 1);
                     mantBuffer = (mantBuffer << 3) + (mantBuffer << 1);
                     mantBuffer += thisdigit;
                   }
                 }
               } else {
-                mantInt *= 10;
+                // multiply by 10
+   mantInt = (mantInt << 3) + (mantInt << 1);
                 mantInt += thisdigit;
               }
               if (haveDigits && maxDigits != null) {
@@ -1076,8 +1081,9 @@ private static final FastIntegerFixed FastIntZero = new
       }
       // Ordinary number
       for (; i < endStr; ++i) {
-        if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
-          int thisdigit = (int)(str.charAt(i) - '0');
+        char ch = str.charAt(i);
+        if (ch >= '0' && ch <= '9') {
+          int thisdigit = (int)(ch - '0');
           if (mantInt > MaxSafeInt) {
             if (mant == null) {
               mant = new FastInteger(mantInt);
@@ -1096,7 +1102,8 @@ private static final FastIntegerFixed FastIntZero = new
               }
             }
           } else {
-            mantInt *= 10;
+            // multiply by 10
+   mantInt = (mantInt << 3) + (mantInt << 1);
             mantInt += thisdigit;
           }
           haveDigits = true;
@@ -1108,12 +1115,12 @@ private static final FastIntegerFixed FastIntZero = new
               --newScaleInt;
             }
           }
-        } else if (str.charAt(i) == '.') {
+        } else if (ch == '.') {
           if (haveDecimalPoint) {
             throw new NumberFormatException();
           }
           haveDecimalPoint = true;
-        } else if (str.charAt(i) == 'E' || str.charAt(i) == 'e') {
+        } else if (ch == 'E' || ch == 'e') {
           haveExponent = true;
           ++i;
           break;
@@ -1142,9 +1149,10 @@ private static final FastIntegerFixed FastIntZero = new
           ++i;
         }
         for (; i < endStr; ++i) {
-          if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+          char ch = str.charAt(i);
+          if (ch >= '0' && ch <= '9') {
             haveDigits = true;
-            int thisdigit = (int)(str.charAt(i) - '0');
+            int thisdigit = (int)(ch - '0');
             if (expInt > MaxSafeInt) {
               if (exp == null) {
                 exp = new FastInteger(expInt);
@@ -4670,8 +4678,14 @@ return new DigitShiftAccumulator(
         EInteger bigtmp = null;
         if (tmpbigint.compareTo(EInteger.FromInt32(1)) != 0) {
           if (fitsInInt32) {
-            bigtmp = NumberUtility.FindPowerOfTen(powerInt);
-            tmpbigint = tmpbigint.Multiply(bigtmp);
+            if (powerInt <= 10) {
+              bigtmp = NumberUtility.FindPowerOfTen(powerInt);
+              tmpbigint = tmpbigint.Multiply(bigtmp);
+            } else {
+              bigtmp = NumberUtility.FindPowerOfFive(powerInt);
+              tmpbigint = tmpbigint.Multiply(bigtmp);
+              tmpbigint = tmpbigint.ShiftLeft(powerInt);
+            }
           } else {
             bigtmp = NumberUtility.FindPowerOfTenFromBig(power.AsEInteger());
             tmpbigint = tmpbigint.Multiply(bigtmp);
