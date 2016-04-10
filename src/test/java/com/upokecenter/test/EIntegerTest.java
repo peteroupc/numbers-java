@@ -1866,8 +1866,10 @@ import com.upokecenter.numbers.*;
       }
       return ei;
     }
-    private static EInteger FuzzInteger(EInteger ei, int
-      fuzzes, RandomGenerator r) {
+
+    private static EInteger FuzzInteger(EInteger ei,
+ int fuzzes,
+ RandomGenerator r) {
       byte[] bytes = ei.ToBytes(true);
       int bits = ei.GetUnsignedBitLength();
       for (int i = 0; i < fuzzes; ++i) {
@@ -1876,6 +1878,7 @@ import com.upokecenter.numbers.*;
       }
       return EInteger.FromBytes(bytes, true);
     }
+
     private static EInteger AllOnesInteger(int size) {
       EInteger ei = EInteger.FromInt32(0);
       for (int i = 0; i < size; ++i) {
@@ -1887,8 +1890,8 @@ import com.upokecenter.numbers.*;
     private static EInteger ZerosAndOnesInteger(int size) {
       EInteger ei = EInteger.FromInt32(0xffff);
       for (int i = 1; i < size; ++i) {
-        ei = (i % 2 == 0) ? (ei.ShiftLeft(16).Add(EInteger.FromInt32(0xffff))) :
-          (ei.ShiftLeft(16));
+        ei = (i % 2 == 0) ? ei.ShiftLeft(16).Add(EInteger.FromInt32(0xffff)) :
+          ei.ShiftLeft(16);
       }
       return ei;
     }
