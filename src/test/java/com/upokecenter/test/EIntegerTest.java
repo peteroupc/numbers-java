@@ -1867,9 +1867,10 @@ import com.upokecenter.numbers.*;
       return ei;
     }
 
-    private static EInteger FuzzInteger(EInteger ei,
- int fuzzes,
- RandomGenerator r) {
+    private static EInteger FuzzInteger(
+  EInteger ei,
+  int fuzzes,
+  RandomGenerator r) {
       byte[] bytes = ei.ToBytes(true);
       int bits = ei.GetUnsignedBitLength();
       for (int i = 0; i < fuzzes; ++i) {

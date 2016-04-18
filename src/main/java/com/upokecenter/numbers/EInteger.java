@@ -1184,83 +1184,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       cc = (b >> 31) & 1;
       return ((short)cc);
     }
-    /*
-    private static void TwoPlaceMultiply(
-  short[] resultArr,
-  int resultStart,
-  int w1low,
-  int w1high,
-  short[] words2,
-  int words2Start,
-  int words2Count) {
-      int p = 0;
-      int cstart = 0;
-      if (words2Count <= 0) {
-        throw new IllegalArgumentException();
-      }
-      if (w1high == 0) {
-        short carry = 0;
-        for (int i = 0; i < words2Count; ++i) {
-          p = ((((int)words2[words2Start + i]) & 0xffff) * w1low);
-          p = (p + (((int)carry) & 0xffff));
-          resultArr[resultStart + i] = ((short)p);
-          carry = (short)(p >> 16);
-        }
-        resultArr[resultStart + words2Count] = ((short)carry);
-        resultArr[resultStart + words2Count + 1] = (short)0;
-        return;
-      }
-      if (words2Count == 1) {
-        short carry = 0;
-        int bint = ((int)words2[words2Start]) & 0xffff;
-        p = (w1low * bint);
-        p = (p + (((int)carry) & 0xffff));
-        resultArr[resultStart + 1] = (short)p;
-        carry = (short)(p >> 16);
-        p = (w1high * bint);
-        p = (p + (((int)carry) & 0xffff));
-        resultArr[resultStart + 1] = (short)p;
-        carry = (short)(p >> 16);
-        resultArr[resultStart + 2] = (short)carry;
-        return;
-      }
-      for (int i = 0; i < words2Count; ++i) {
-        cstart = resultStart + i;
-        {
-          short carry = 0;
-          int valueBint = ((int)words2[words2Start + i]) & 0xffff;
-          p = w1low * valueBint;
-          p += ((int)carry) & 0xffff;
-          if (i != 0) {
-            p += ((int)resultArr[cstart]) & 0xffff;
-          }
-          resultArr[cstart] = (short)p;
-          carry = (short)(p >> 16);
-          p = w1high * valueBint;
-          p += ((int)carry) & 0xffff;
-          if (i != 0) {
-            p += ((int)resultArr[cstart + 1]) & 0xffff;
-          }
-          resultArr[cstart + 1] = (short)p;
-          carry = (short)(p >> 16);
-          resultArr[cstart + 2] = carry;
-        }
-      }
-    }
 
-    private static void T(short[] a, int x, int c, String t) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(t+"=0x");
-      //for (int i = 0; i <c; ++i) {
-      for (var i = c - 1; i >= 0; --i) {
-        sb.append(String.Format("{0:X4}",a[x + i]));
-        if (i != 0) {
- sb.append('_');
-}
-      }
-      DebugUtility.Log(sb.toString());
-    }
-    */
     private static final int RecursiveDivisionLimit = 40;
 
     private static void DivideThreeBlocksByTwo(
@@ -6271,6 +6195,7 @@ WordsShiftRightOne(bu, buc);
           }
           sqroot = sqroot.Subtract(EInteger.FromInt32(1));
         }
+  //
   //
   //
   //
