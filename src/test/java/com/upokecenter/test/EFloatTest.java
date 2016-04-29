@@ -1289,7 +1289,7 @@ TestBinaryToDecimal(
   "");
     }
 
-    @Test(timeout = 60000)
+    @Test(timeout = 120000)
     public void TestToShortestString() {
       {
 String stringTemp = EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
@@ -1365,6 +1365,11 @@ Assert.assertEquals(
           shortest,
           msg);
       }
+
+      System.out.println(EFloat.Create(1, -44));
+  System.out.println(
+  EFloat.Create(1,
+        -44).ToShortestString(EContext.Binary64));
     }
     @Test
     public void TestToSingleRounding() {
