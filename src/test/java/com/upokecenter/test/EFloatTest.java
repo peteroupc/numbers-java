@@ -1358,18 +1358,15 @@ Assert.assertEquals(
         EFloat shortest = EFloat.FromString(
           shortestStr,
           EContext.Binary64);
-     String msg = "\n" + EFToString(efa) + "\n" + EFToString(shortest) +
-          "\n" + shortestStr;
-        TestCommon.CompareTestEqual(
-          efa,
-          shortest,
-          msg);
+        if (!efa.equals(shortest)) {
+          String msg = "\n" + EFToString(efa) + "\n" + EFToString(shortest) +
+     "\n" + shortestStr;
+          TestCommon.CompareTestEqual(
+            efa,
+            shortest,
+            msg);
+        }
       }
-
-      System.out.println(EFloat.Create(1, -44));
-  System.out.println(
-  EFloat.Create(1,
-        -44).ToShortestString(EContext.Binary64));
     }
     @Test
     public void TestToSingleRounding() {

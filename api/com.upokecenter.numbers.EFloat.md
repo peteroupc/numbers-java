@@ -517,7 +517,7 @@ Renamed to ToEDecimal.
  Converts this value to a string, but without exponential notation.
 * `String ToShortestString(EContext ctx)`<br>
  Returns a string representation of this number's value after rounding to the
- given precision.
+ given precision (using the given arithmetic context).
 * `float ToSingle()`<br>
  Converts this value to its closest equivalent as 32-bit floating-point
  number.
@@ -2897,11 +2897,12 @@ Converts this value to a string, but without exponential notation.
 ### ToShortestString
     public String ToShortestString(EContext ctx)
 Returns a string representation of this number's value after rounding to the
- given precision. If the number after rounding is neither infinity nor
- not-a-number (NaN), returns the shortest decimal form (in terms of
- nonzero decimal digits) of this number's value that results in the
- rounded number after the decimal form is converted to binary
- floating-point format.
+ given precision (using the given arithmetic context). If the number
+ after rounding is neither infinity nor not-a-number (NaN), returns
+ the shortest decimal form (in terms of nonzero decimal digits) of
+ this number's value that results in the rounded number after the
+ decimal form is converted to binary floating-point format (using the
+ given arithmetic context).
 
 **Parameters:**
 

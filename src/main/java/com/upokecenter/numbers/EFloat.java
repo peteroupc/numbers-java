@@ -2656,11 +2656,12 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
 
     /**
      * Returns a string representation of this number's value after rounding to the
-     * given precision. If the number after rounding is neither infinity nor
-     * not-a-number (NaN), returns the shortest decimal form (in terms of
-     * nonzero decimal digits) of this number's value that results in the
-     * rounded number after the decimal form is converted to binary
-     * floating-point format.
+     * given precision (using the given arithmetic context). If the number
+     * after rounding is neither infinity nor not-a-number (NaN), returns
+     * the shortest decimal form (in terms of nonzero decimal digits) of
+     * this number's value that results in the rounded number after the
+     * decimal form is converted to binary floating-point format (using the
+     * given arithmetic context).
      * @param ctx An arithmetic context to control precision (in bits), rounding,
      * and exponent range of the rounded number. If {@code HasFlags} of the
      * context is true, will also store the flags resulting from the
@@ -2694,6 +2695,7 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
       }
       // NOTE: The original EFloat is converted to decimal,
       // not the rounded version, to avoid double rounding issues
+      boolean mantissaIsPowerOfTwo = this.unsignedMantissa.isPowerOfTwo();
       EDecimal dec = this.ToEDecimal();
       if (ctx.getPrecision().compareTo(EInteger.FromInt32(10)) >= 0) {
         // Preround the decimal so the significand has closer to the
@@ -2712,6 +2714,16 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
         EDecimal nextDec = dec.RoundToPrecision(nextCtx);
         EFloat newFloat = nextDec.ToEFloat(ctx2);
         if (newFloat.compareTo(valueEfRnd) == 0) {
+          if (mantissaIsPowerOfTwo) {
+            nextPrecision = eprecision;
+            nextCtx = ctx2.WithBigPrecision(nextPrecision);
+            EDecimal nextDec2 = dec.RoundToPrecision(nextCtx);
+            nextDec2 = nextDec2.NextPlus(nextCtx);
+            newFloat = nextDec2.ToEFloat(ctx2);
+            if (newFloat.compareTo(valueEfRnd) == 0) {
+              nextDec = nextDec2;
+            }
+          }
           return (nextDec.getExponent().signum() > 0 &&
               nextDec.Abs().compareTo(EDecimal.FromInt32(10000000)) < 0) ?
                 nextDec.ToPlainString() : nextDec.toString();
