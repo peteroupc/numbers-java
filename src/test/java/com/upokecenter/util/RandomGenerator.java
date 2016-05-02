@@ -199,11 +199,11 @@ package com.upokecenter.util;
 
     /**
      * Conceptually, given a set of tokens, some of which are labeled 1 and the
-     * others labeled 0, draws "trials" tokens and then counts the number of
-     * 1's drawn.
-     * @param trials Not documented yet.
-     * @param ones Not documented yet.
-     * @param count Not documented yet. (3).
+     * others labeled 0, draws "trials" tokens at random without replacement
+     * and then counts the number of 1's drawn.
+     * @param trials The number of tokens drawn at random without replacement.
+     * @param ones The number of tokens labeled 1.
+     * @param count The number of tokens labeled 1 or 0.
      * @return A 32-bit signed integer.
      */
     public int Hypergeometric(int trials, int ones, int count) {
