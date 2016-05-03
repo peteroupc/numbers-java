@@ -97,7 +97,10 @@ at: http://upokecenter.dreamhosters.com/articles/donate-now-2/
      * @param denominator Another arbitrary-precision integer.
      * @throws java.lang.NullPointerException The parameter {@code numerator} or
      * {@code denominator} is null.
-     */
+     * @deprecated Use the ERational.Create method instead. This constructor will be private or
+* unavailable in version 1.0.
+ */
+@Deprecated
     public ERational(EInteger numerator, EInteger denominator) {
       if (numerator == null) {
         throw new NullPointerException("numerator");

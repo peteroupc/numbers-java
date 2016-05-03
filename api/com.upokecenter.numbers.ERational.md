@@ -34,9 +34,12 @@ Represents an arbitrary-precision rational number. This class can't be
 ## Constructors
 
 * `ERational(EInteger numerator,
-         EInteger denominator) ERational`<br>
- Initializes a new instance of the ERational
- class.
+         EInteger denominator)`<br>
+ Deprecated.
+Use the ERational.Create method instead. This constructor will be private or
+ unavailable in version 1.0.
+ Use the ERational.Create method instead. This constructor will be private or
+ unavailable in version 1.0.
 
 ## Methods
 
