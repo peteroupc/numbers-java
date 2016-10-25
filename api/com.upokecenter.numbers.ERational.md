@@ -445,7 +445,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 ### FromExtendedDecimal
     @Deprecated public static ERational FromExtendedDecimal(EDecimal ef)
-Deprecated.&nbsp;<i>Renamed to FromEDecimal.</i>
+Deprecated.&nbsp;Renamed to FromEDecimal.
 
 **Parameters:**
 
@@ -461,7 +461,7 @@ Deprecated.&nbsp;<i>Renamed to FromEDecimal.</i>
 
 ### FromExtendedFloat
     @Deprecated public static ERational FromExtendedFloat(EFloat ef)
-Deprecated.&nbsp;<i>Renamed to FromEFloat.</i>
+Deprecated.&nbsp;Renamed to FromEFloat.
 
 **Parameters:**
 
@@ -932,7 +932,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
-Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
+Deprecated.&nbsp;Renamed to ToEIntegerIfExact.
 
 **Returns:**
 
@@ -1015,7 +1015,7 @@ Converts this rational number to a decimal number, but if the result would
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal()
-Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
+Deprecated.&nbsp;Renamed to ToEDecimal.
 
 **Returns:**
 
@@ -1025,7 +1025,7 @@ Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
+Deprecated.&nbsp;Renamed to ToEDecimal.
 
 **Parameters:**
 
@@ -1043,7 +1043,7 @@ Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
 
 ### ToExtendedDecimalExactIfPossible
     @Deprecated public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to ToEDecimalExactIfPossible.</i>
+Deprecated.&nbsp;Renamed to ToEDecimalExactIfPossible.
 
 **Parameters:**
 
@@ -1116,7 +1116,7 @@ Converts this rational number to a binary float, but if the result would
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat()
-Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
+Deprecated.&nbsp;Renamed to ToEFloat.
 
 **Returns:**
 
@@ -1126,7 +1126,7 @@ Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
+Deprecated.&nbsp;Renamed to ToEFloat.
 
 **Parameters:**
 
@@ -1144,7 +1144,7 @@ Deprecated.&nbsp;<i>Renamed to ToEFloat.</i>
 
 ### ToExtendedFloatExactIfPossible
     @Deprecated public EFloat ToExtendedFloatExactIfPossible(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to ToEFloatExactIfPossible.</i>
+Deprecated.&nbsp;Renamed to ToEFloatExactIfPossible.
 
 **Parameters:**
 

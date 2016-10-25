@@ -1273,7 +1273,7 @@ Divides this arbitrary-precision binary float by another arbitrary-precision
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor)
-Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
+Deprecated.&nbsp;Renamed to DivRemNaturalScale.
 
 **Parameters:**
 
@@ -1286,7 +1286,7 @@ Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor, EContext ctx)
-Deprecated.&nbsp;<i>Renamed to DivRemNaturalScale.</i>
+Deprecated.&nbsp;Renamed to DivRemNaturalScale.
 
 **Parameters:**
 
@@ -2607,7 +2607,7 @@ Returns a binary float with the same value as this object but rounded to an
 
 ### RoundToIntegralExact
     @Deprecated public EFloat RoundToIntegralExact(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to RoundToIntegerExact.</i>
+Deprecated.&nbsp;Renamed to RoundToIntegerExact.
 
 **Parameters:**
 
@@ -2629,7 +2629,7 @@ Deprecated.&nbsp;<i>Renamed to RoundToIntegerExact.</i>
 
 ### RoundToIntegralNoRoundedFlag
     @Deprecated public EFloat RoundToIntegralNoRoundedFlag(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to RoundToIntegerNoRoundedFlag.</i>
+Deprecated.&nbsp;Renamed to RoundToIntegerNoRoundedFlag.
 
 **Parameters:**
 
@@ -2751,7 +2751,7 @@ Finds the square root of this object&#x27;s value.
 
 ### SquareRoot
     @Deprecated public EFloat SquareRoot(EContext ctx)
-Deprecated.&nbsp;<i>Renamed to Sqrt.</i>
+Deprecated.&nbsp;Renamed to Sqrt.
 
 **Parameters:**
 
@@ -2840,7 +2840,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
-Deprecated.&nbsp;<i>Renamed to ToEIntegerIfExact.</i>
+Deprecated.&nbsp;Renamed to ToEIntegerIfExact.
 
 **Returns:**
 
@@ -2880,7 +2880,7 @@ Converts this value to an arbitrary-precision decimal number, then returns
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal()
-Deprecated.&nbsp;<i>Renamed to ToEDecimal.</i>
+Deprecated.&nbsp;Renamed to ToEDecimal.
 
 **Returns:**
 

@@ -3,7 +3,7 @@ Numbers
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.peteroupc/numbers.svg?style=plastic)](https://search.maven.org/#search|ga|1|g%3A%22com.github.peteroupc%22%20AND%20a%3A%22numbers%22)
 
-If you like this software, consider donating to me at this link: [http://upokecenter.dreamhosters.com/articles/donate-now-2/](http://upokecenter.dreamhosters.com/articles/donate-now-2/)
+If you like this software, consider donating to me at this link: [http://peteroupc.github.io/](http://peteroupc.github.io/)
 
 ----
 
@@ -44,4 +44,4 @@ Any copyright is dedicated to the Public Domain.
 [http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/)
 
 If you like this, you should donate to Peter O.
-at: [http://upokecenter.dreamhosters.com/articles/donate-now-2/](http://upokecenter.dreamhosters.com/articles/donate-now-2/)
+at: [http://peteroupc.github.io/](http://peteroupc.github.io/)
