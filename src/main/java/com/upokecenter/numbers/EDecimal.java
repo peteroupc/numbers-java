@@ -238,9 +238,6 @@ private static final FastIntegerFixed FastIntZero = new
         new ExtendedOrSimpleRadixMath<EDecimal>(new
                     DecimalMathHelper()));
 
-    private static final EInteger ValueOneShift62 =
-      EInteger.FromInt32(1).ShiftLeft(62);
-
     private static final int[] ValueTenPowers = {
       1, 10, 100, 1000, 10000, 100000,
       1000000, 10000000, 100000000,
@@ -4244,7 +4241,6 @@ private static final FastIntegerFixed FastIntZero = new
             }
           } while (quorem[0].compareTo(desiredLow) < 0);
         }
-        boolean inexact = !quorem[1].isZero();
         // Round to odd to avoid rounding errors
         if (!quorem[1].isZero() && quorem[0].isEven()) {
           quorem[0] = quorem[0].Add(EInteger.FromInt32(1));

@@ -101,6 +101,7 @@ throw new IllegalStateException("", ex);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       TestCommon.CompareTestLess(ERational.Zero, ERational.NaN);
+      ERational rat, rat2;
       for (int i = 0; i < 100; ++i) {
         EInteger num = RandomObjects.RandomEInteger(r);
         if (num.isZero()) {
@@ -109,21 +110,21 @@ throw new IllegalStateException("", ex);
           continue;
         }
         num = num.Abs();
-        ERational rat = new ERational(num, EInteger.FromInt32(1));
-        ERational rat2 = new ERational(num, EInteger.FromInt64(2));
+        rat = ERational.Create(num, EInteger.FromInt32(1));
+        rat2 = ERational.Create(num, EInteger.FromInt64(2));
         TestCommon.CompareTestLess(rat2, rat);
         TestCommon.CompareTestGreater(rat, rat2);
       }
       TestCommon.CompareTestLess(
-        new ERational(EInteger.FromInt32(1), EInteger.FromInt64(2)),
-        new ERational(EInteger.FromInt64(4), EInteger.FromInt32(1)));
+        ERational.Create(EInteger.FromInt32(1), EInteger.FromInt64(2)),
+        ERational.Create(EInteger.FromInt64(4), EInteger.FromInt32(1)));
       for (int i = 0; i < 100; ++i) {
         EInteger num = RandomObjects.RandomEInteger(r);
         EInteger den = RandomObjects.RandomEInteger(r);
         if (den.isZero()) {
           den = EInteger.FromInt32(1);
         }
-        ERational rat = new ERational(num, den);
+        rat = ERational.Create(num, den);
         for (int j = 0; j < 10; ++j) {
           EInteger num2 = num;
           EInteger den2 = den;
@@ -133,7 +134,7 @@ throw new IllegalStateException("", ex);
           }
           num2 = num2.Multiply(mult);
           den2 = den2.Multiply(mult);
-          ERational rat2 = new ERational(num2, den2);
+          rat2 = ERational.Create(num2, den2);
           TestCommon.CompareTestEqual(rat, rat2);
         }
       }
@@ -765,10 +766,10 @@ throw new IllegalStateException("", ex);
       for (int i = 0; i < 100; ++i) {
         ERational er;
         ERational er2;
-        er = new ERational(
+                er = ERational.Create(
           RandomObjects.RandomEInteger(fr),
           EInteger.FromInt32(1));
-        er2 = new ERational(
+                er2 = ERational.Create(
           RandomObjects.RandomEInteger(fr),
           EInteger.FromInt32(1));
         if (er2.isZero() || !er2.isFinite()) {

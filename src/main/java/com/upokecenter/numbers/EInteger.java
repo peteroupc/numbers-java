@@ -1200,9 +1200,28 @@ at: http://peteroupc.github.io/
       short[] rem,
       int posRem,
       short[] tmp) {
+      // NOTE: size of 'quot' equals 'blockCount' * 2
+      // NOTE: size of 'rem' equals 'blockCount' * 2
+
+      /* short [] realquot = new short [blockCount * 2];
+      short [] realrem = new short [blockCount * 2];
+      var cw = CombineWords (valueALow, posALow,
+                    blockCount, valueAMidHigh, posAMidHigh, blockCount * 2);
+      int ca = CountWords (cw, 0, cw.length);
+      int cb = CountWords (b, posB, blockCount * 2);
+      String extra="";
+      if (ca >= cb) {
+        //DebugUtility.Log ("ca=" + ca + " cb=" + cb);
+        GeneralDivide (cw, 0, ca,
+                    b, posB, cb,
+                    realquot, 0,
+                    realrem, 0);
+      }
+      */
+
       // Implements Algorithm 2 of Burnikel & Ziegler 1998
-      int remSize = blockCount * 2;
       int c;
+      // If AHigh is less than BHigh
       if (
   WordsCompare(
   valueAMidHigh,
@@ -1211,7 +1230,12 @@ at: http://peteroupc.github.io/
   b,
   posB + blockCount,
   blockCount) < 0) {
-        java.util.Arrays.fill(tmp, blockCount * 4, (blockCount * 4)+(blockCount * 2), (short)0);
+         /*extra+="\namh="+WordsToStringHex (valueAMidHigh,
+  posAMidHigh, blockCount*2);
+        extra+="\nbh ="+WordsToStringHex (b,
+ posB + blockCount, blockCount);
+        extra+="\naHigh<bHigh size="+(blockCount*2);*/
+        // Divide AMidHigh by BHigh
         RecursiveDivideInner(
  valueAMidHigh,
  posAMidHigh,
@@ -1222,17 +1246,27 @@ at: http://peteroupc.github.io/
  rem,
  posRem,
  blockCount);
+        //extra+="\nq="+WordsToStringHex (quot,posQuot, blockCount*2);
+        //extra+="\nr="+WordsToStringHex (rem,posRem, blockCount);
+        // Copy remainder to temp at block position 4
         System.arraycopy(rem, posRem, tmp, blockCount * 4, blockCount);
+        java.util.Arrays.fill(tmp, blockCount * 5, (blockCount * 5)+(blockCount), (short)0);
       } else {
+        // BHigh is less than AHigh
+        // set quotient to all ones
+    //     extra+=" aHigh>= bHigh";
         for (int i = 0; i < blockCount; ++i) {
-          quot[i] = ((short)0xffff);
+          quot[posQuot + i] = ((short)0xffff);
         }
+        java.util.Arrays.fill(quot, posQuot + blockCount, (posQuot + blockCount)+(blockCount), (short)0);
+        // copy AMidHigh to temp
         System.arraycopy(
        valueAMidHigh,
        posAMidHigh,
        tmp,
        blockCount * 4,
        blockCount * 2);
+       // subtract BHigh from temp's high block
         SubtractInternal(
   tmp,
   blockCount * 5,
@@ -1241,6 +1275,7 @@ at: http://peteroupc.github.io/
   b,
   posB + blockCount,
   blockCount);
+        // add BHigh to temp
         c = AddInternal(
   tmp,
   blockCount * 4,
@@ -1249,6 +1284,7 @@ at: http://peteroupc.github.io/
   b,
   posB + blockCount,
   blockCount);
+//        extra+="\nq="+WordsToStringHex (quot,posQuot, blockCount*2);
         Increment(tmp, blockCount * 5, blockCount, (short)c);
       }
       AsymmetricMultiply(
@@ -1264,9 +1300,27 @@ at: http://peteroupc.github.io/
   blockCount);
       int bc3 = blockCount * 3;
       System.arraycopy(valueALow, posALow, tmp, bc3, blockCount);
-      c = SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, blockCount * 2);
-      c = Decrement(tmp, blockCount * 5, blockCount, (short)c);
+      java.util.Arrays.fill(tmp, blockCount*2, (blockCount*2)+(blockCount), (short)0);
+/*
+        extra+="\nsub1="+WordsToStringHex (tmp, bc3, blockCount*3);
+        extra+="\nsub2="+WordsToStringHex (tmp, 0, blockCount*3);
+        extra+="\nb   ="+WordsToStringHex (b, posB, blockCount * 2);
+        extra+="\n--->"+WordsToStringHex (tmp, bc3, blockCount*3);
+        extra+=" borrow";
+        //AddInternal(tmp, bc3, tmp, bc3, tmp, 0, bc3);
+        int cnt = 0;
+        while (WordsCompare(tmp, bc3, bc3, tmp, 0, bc3)< 0) {
+          Decrement(quot, posQuot, blockCount * 2, (short)1);
+          c = AddInternal(tmp, bc3, tmp, bc3, b, posB, blockCount * 2);
+          Increment(tmp, blockCount * 5, blockCount, (short)c);
+          extra+="\nsub1x="+WordsToStringHex (tmp, bc3, blockCount*3);
+          extra+="\nsub2x="+WordsToStringHex (tmp, 0, blockCount*3);
+         }
+         SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, bc3);
+*/
+      c = SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, blockCount * 3);
       if (c != 0) {
+        //extra+=" borrow";
         while (true) {
           c = AddInternal(tmp, bc3, tmp, bc3, b, posB, blockCount * 2);
           c = Increment(tmp, blockCount * 5, blockCount, (short)c);
@@ -1277,8 +1331,24 @@ at: http://peteroupc.github.io/
         }
       }
       System.arraycopy(tmp, bc3, rem, posRem, blockCount * 2);
+/*
+ if (ca >= cb && (Compare (quot, posQuot, realquot, 0, realquot.length) != 0||
+        Compare (rem, posRem, realrem, 0, realrem.length) != 0)) {
+        String exmessage = "\n" +
+          "ca=" + ca + ", cb=" + cb + ", extra="+extra+"\n" +
+          "a=" + WordsToStringHex (cw, 0, cw.length) + "\n" +
+          "b=" + WordsToStringHex (b, posB, blockCount * 2) + "\n" +
+          "expQ=" + WordsToStringHex (realquot, 0, realquot.length) + "\n" +
+          "expR=" + WordsToStringHex (realrem, 0, realrem.length) + "\n" +
+          "gotQ=" + WordsToStringHex (quot, posQuot, blockCount * 2) + "\n" +
+          "gotR=" + WordsToStringHex (rem, posRem, blockCount * 2) + "\n";
+        //DebugUtility.Log (exmessage);
+        //System.arraycopy (realquot, 0, quot, posQuot, realquot.length);
+        //System.arraycopy (realrem, 0, rem, posRem, realrem.length);
+        //return;
+        throw new IllegalStateException (exmessage);
+      }*/
     }
-
     private static void RecursiveDivideInner(
       short[] a,
       int posA,
@@ -1289,10 +1359,12 @@ at: http://peteroupc.github.io/
       short[] rem,
       int posRem,
       int blockSize) {
+// NOTE: size of 'a', 'quot', and 'rem' is 'blockSize'*2
+// NOTE: size of 'b' is 'blockSize'
+
       // Implements Algorithm 1 of Burnikel & Ziegler 1998
-      // DebugUtility.Log("size="+blockSize);
       if (blockSize < RecursiveDivisionLimit || (blockSize & 1) == 1) {
-        // DebugUtility.Log("general");
+        //DebugUtility.Log("general "+WordsToStringHex (a, posA, blockSize*2));
         GeneralDivide(
   a,
   posA,
@@ -1306,20 +1378,22 @@ at: http://peteroupc.github.io/
   posRem);
       } else {
         // DebugUtility.Log("special");
-        int halfBlock = blockSize >> 1;
+                int halfBlock = blockSize >> 1;
         short[] tmp = new short[halfBlock * 10];
+        java.util.Arrays.fill(quot, posQuot, (posQuot)+(blockSize * 2), (short)0);
+        java.util.Arrays.fill(rem, posRem, (posRem)+(blockSize), (short)0);
         DivideThreeBlocksByTwo(
   a,
   posA + halfBlock,
   a,
-  posA + (halfBlock * 2),
+  posA + blockSize,
   b,
   posB,
   halfBlock,
   tmp,
- halfBlock * 6,
+  halfBlock * 6,
   tmp,
- halfBlock * 8,
+  halfBlock * 8,
   tmp);
         DivideThreeBlocksByTwo(
   a,
@@ -1444,6 +1518,50 @@ at: http://peteroupc.github.io/
       }
     }
 
+    private static String WordsToString(short [] a, int pos, int len) {
+      while (len != 0 && a [pos + len - 1] == 0) {
+                --len;
+            }
+      if (len == 0) {
+ return "\"0\"";
+}
+      short [] words = new short [len];
+      System.arraycopy (a, pos, words, 0, len);
+      return "\""+ new EInteger (len, words, false).ToUnoptString()+"\"";
+    }
+        private static String WordsToStringHex(short [] a, int pos, int len) {
+            while (len != 0 && a [pos + len - 1] == 0) {
+                --len;
+            }
+            if (len == 0) {
+                return "\"0\"";
+            }
+            short [] words = new short [len];
+            System.arraycopy (a, pos, words, 0, len);
+      return "\"" + new EInteger (len, words, false).ToRadixString (16) +
+              "\"" ;
+        }
+        private static String WordsToString2(short [] a, int pos, int len,
+      short [] b, int pos2, int len2) {
+      short [] words = new short [len + len2];
+      System.arraycopy (a, pos, words, 0, len);
+      System.arraycopy (b, pos2, words, len, len2);
+       len+=len2;
+      while (len != 0 && words[len - 1] == 0) {
+                --len;
+      }
+      return (len == 0) ? ("\"0\"") : ("\"" + new EInteger (len, words,
+        false).ToUnoptString()+"\"");
+    }
+
+    private static short[] CombineWords(short [] a, int pos, int len,
+      short [] b, int pos2, int len2) {
+      short [] words = new short [len + len2];
+      System.arraycopy (a, pos, words, 0, len);
+      System.arraycopy (b, pos2, words, len, len2);
+      return words;
+    }
+
     private static void GeneralDivide(
      short[] a,
      int posA,
@@ -1476,7 +1594,6 @@ at: http://peteroupc.github.io/
           java.util.Arrays.fill(rem, posRem + countB, (posRem + countB)+(origCountB - countB), (short)0);
       }
 
-      int quotSize = countA - countB + 1;
       if (countA < countB) {
         // A is less than B, so quotient is 0, remainder is "a"
         if (quot != null) {
@@ -1491,7 +1608,7 @@ at: http://peteroupc.github.io/
         if (cmp == 0) {
           // A equals B, so quotient is 1, remainder is 0
           if (quot != null) {
-            quot[0] = 1;
+            quot[posQuot] = 1;
             java.util.Arrays.fill(quot, posQuot + 1, (posQuot + 1)+(Math.max(0, origQuotSize - 1)), (short)0);
           }
           if (rem != null) {
@@ -1517,7 +1634,7 @@ at: http://peteroupc.github.io/
               a,
               posA,
               countA,
-              b[0]);
+              b[posB]);
         if (rem != null) {
           rem[posRem] = shortRemainder;
         }
@@ -3280,9 +3397,10 @@ WordsShiftRightOne(bu, buc);
       return ivv;
     }
 
-    private void ToRadixStringDecimal(StringBuilder outputSB) {
+    private void ToRadixStringDecimal(StringBuilder outputSB,
+                    boolean optimize) {
       int i = 0;
-      if (this.wordCount >= 100) {
+      if (this.wordCount >= 100 && optimize) {
         StringBuilder rightBuilder = new StringBuilder();
         int digits = this.wordCount * 3;
         EInteger pow = NumberUtility.FindPowerOfTen(digits);
@@ -3290,8 +3408,8 @@ WordsShiftRightOne(bu, buc);
         EInteger[] divrem = this.DivRem(pow);
         // DebugUtility.Log("" + (divrem[0].GetUnsignedBitLength()) + "," +
         // (// divrem[1].GetUnsignedBitLength()));
-        divrem[0].ToRadixStringDecimal(outputSB);
-        divrem[1].ToRadixStringDecimal(rightBuilder);
+        divrem[0].ToRadixStringDecimal(outputSB, optimize);
+        divrem[1].ToRadixStringDecimal(rightBuilder, optimize);
         for (i = rightBuilder.length(); i < digits; ++i) {
           outputSB.append('0');
         }
@@ -3367,6 +3485,18 @@ WordsShiftRightOne(bu, buc);
       outputSB.append(s, 0, (0)+(i));
     }
 
+    private String ToUnoptString() {
+        if (this.HasSmallValue()) {
+          return this.SmallValueToString();
+        }
+            StringBuilder  sb = new StringBuilder ();
+            if (this.negative) {
+                sb.append ('-');
+            }
+            this.Abs ().ToRadixStringDecimal (sb, false);
+            return sb.toString ();
+    }
+
     /**
      * Generates a string representing the value of this object, in the given
      * radix.
@@ -3405,7 +3535,7 @@ WordsShiftRightOne(bu, buc);
         if (this.negative) {
           sb.append('-');
         }
-        this.Abs().ToRadixStringDecimal(sb);
+        this.Abs().ToRadixStringDecimal(sb, true);
         return sb.toString();
       }
       if (radix == 16) {
@@ -4899,6 +5029,13 @@ WordsShiftRightOne(bu, buc);
       }
       return (int)n;
     }
+    private static int CountWords(short[] array, int pos, int len) {
+      int n = len;
+      while (n != 0 && array[pos + n - 1] == 0) {
+        --n;
+      }
+      return (int)n;
+    }
 
     private static int Decrement(
       short[] words1,
@@ -6181,7 +6318,7 @@ WordsShiftRightOne(bu, buc);
         //DebugUtility.Log("sqrt1({0})[depth={3}] = {1},{2}"
         // , e3, srem2.get(0), srem2.get(1), 0);
         //if (!srem[0].equals(srem2.get(0)) || !srem[1].equals(srem2.get(1))) {
-  //  throw new IllegalStateException(this.toString());
+  // throw new IllegalStateException(this.toString());
    //}
         EInteger[] qrem = srem[1].ShiftLeft(bitsPerPart).Add(e2).DivRem(
            srem[0].ShiftLeft(1));

@@ -18,9 +18,6 @@ at: http://peteroupc.github.io/
     private static final EInteger ValueInt32MinValue =
       EInteger.FromInt64(Integer.MIN_VALUE);
 
-    private static final EInteger ValueInt32MaxValue =
-      EInteger.FromInt64(Integer.MAX_VALUE);
-
     private static final EInteger ValueNegativeInt32MinValue=(ValueInt32MinValue).Negate();
 
     FastIntegerFixed(int value) {

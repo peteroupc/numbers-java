@@ -832,7 +832,6 @@ at: http://peteroupc.github.io/
       this.knownDigitLength = new FastInteger(kb);
       if (kb > digits) {
         int digitShift = (int)(kb - digits);
-        int newLength = (int)(kb - digitShift);
         this.UpdateKnownLengthInt(digitShift);
         this.discardedBitCount = this.discardedBitCount != null ?
           this.discardedBitCount.AddInt(digitShift) :
@@ -864,7 +863,6 @@ at: http://peteroupc.github.io/
       if (digits >= 1 && digits <= TenPowersLong.length - 1) {
         if (shiftedLong >= TenPowersLong[digits]) {
           long bigPower = TenPowersLong[digits];
-          long smallPower = TenPowersLong[digits - 1];
           if (this.discardedBitCount != null) {
             this.discardedBitCount.AddInt(digits);
           } else {
@@ -884,7 +882,6 @@ at: http://peteroupc.github.io/
           this.UpdateKnownLengthInt(digits);
           return;
         } else {
-          long smallPower = TenPowersLong[digits - 1];
           if (this.discardedBitCount != null) {
             this.discardedBitCount.AddInt(digits);
           } else {
@@ -940,7 +937,6 @@ at: http://peteroupc.github.io/
           this.UpdateKnownLengthInt(digits);
           return;
         } else {
-          int smallPower = ValueTenPowers[digits - 1];
           if (this.discardedBitCount != null) {
             this.discardedBitCount.AddInt(digits);
           } else {

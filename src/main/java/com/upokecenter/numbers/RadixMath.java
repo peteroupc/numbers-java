@@ -1304,7 +1304,7 @@ ctx.getPrecision()).WithBlankFlags();
               expTmp.AsEInteger().Abs(),
               EInteger.FromInt32(0),
               expTmp.signum() < 0 ? BigNumberFlags.FlagNegative : 0);
-            thisValue = thisValue = this.RoundToPrecision(
+            thisValue = this.RoundToPrecision(
                 thisValue,
                 ctxCopy);
           } else {
@@ -2905,8 +2905,8 @@ ctx.getPrecision()).WithBlankFlags();
         FastInteger fastPrecision = FastInteger.FromBig(ctx.getPrecision());
         boolean moreDistantThanPrecision = expdiff.compareTo(fastPrecision) > 0;
         // If exponent difference is greater than the precision
-        if (true || moreDistantThanPrecision) {
-        // if (expdiff.compareTo(fastPrecision) > 0) {
+                //if (true || moreDistantThanPrecision) {
+        if (moreDistantThanPrecision) {
           int expcmp2 = fastOp1Exp.compareTo(fastOp2Exp);
           if (expcmp2 < 0) {
             if (!op2MantAbs.isZero()) {

@@ -130,12 +130,6 @@ at: http://peteroupc.github.io/
       TrappableRadixMath<EFloat>(
         new ExtendedOrSimpleRadixMath<EFloat>(new BinaryMathHelper()));
 
- private static final EInteger ValueOneShift23 =
-      EInteger.FromInt32(1).ShiftLeft(23);
-
- private static final EInteger ValueOneShift52 =
-      EInteger.FromInt32(1).ShiftLeft(52);
-
     private final EInteger exponent;
     private final int flags;
     private final EInteger unsignedMantissa;
@@ -1625,12 +1619,10 @@ at: http://peteroupc.github.io/
           int integerA = this.unsignedMantissa.ToInt32Unchecked();
           int integerB = otherValue.unsignedMantissa.ToInt32Unchecked();
           long longA = ((long)integerA) * ((long)integerB);
-          int sign = (longA == 0) ? 0 : (newflags == 0 ? 1 : -1);
           return CreateWithFlags(EInteger.FromInt64(longA), exp, newflags);
         } else {
           EInteger eintA = this.unsignedMantissa.Multiply(
            otherValue.unsignedMantissa);
-          int sign = eintA.isZero() ? 0 : (newflags == 0 ? 1 : -1);
           return CreateWithFlags(eintA, exp, newflags);
         }
       }
@@ -2706,7 +2698,7 @@ at: http://peteroupc.github.io/
         dec = dec.RoundToPrecision(
           ctx2.WithRounding(ERounding.Odd).WithBigPrecision(roundedPrec));
       }
-      int precision = dec.getUnsignedMantissa().GetDigitCount();
+      // int precision = dec.getUnsignedMantissa().GetDigitCount();
       EInteger eprecision = EInteger.FromInt32(0);
       while (true) {
         EInteger nextPrecision = eprecision.Add(EInteger.FromInt32(1));

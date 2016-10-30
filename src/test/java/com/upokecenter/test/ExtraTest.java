@@ -8,7 +8,7 @@ at: http://peteroupc.github.io/
  */
 
 import org.junit.Assert;
-import org.junit.Test;
+
 import com.upokecenter.numbers.*;
 
   public class ExtraTest {
@@ -19,8 +19,15 @@ import com.upokecenter.numbers.*;
       TestCommon.AssertEqualsHashCode(obj, newobj);
       TestCommon.AssertEqualsHashCode(str, str2);
     }
+    public static void TestStringEqualRoundTrip(ERational obj) {
+            String str = obj.toString ();
+            ERational newobj = ERational.FromString (str);
+            String str2 = newobj.toString ();
+            TestCommon.AssertEqualsHashCode (obj, newobj);
+            TestCommon.AssertEqualsHashCode (str, str2);
+        }
 
-    public static void TestStringEqualRoundTrip(EInteger obj) {
+        public static void TestStringEqualRoundTrip(EInteger obj) {
       String str = obj.toString();
       EInteger newobj = EInteger.FromString(str);
       String str2 = newobj.toString();
@@ -29,51 +36,6 @@ import com.upokecenter.numbers.*;
     }
 
     public static void TestStringEqualRoundTrip(EFloat obj) {
-      String str = obj.toString();
-      EFloat newobj = EFloat.FromString(str);
-      String str2 = newobj.toString();
-      TestCommon.AssertEqualsHashCode(obj, newobj);
-      TestCommon.AssertEqualsHashCode(str, str2);
-    }
-
-    public static void TestStringEqualRoundTrip(ERational obj) {
-      String str = obj.toString();
-      ERational newobj = ERational.FromString(str);
-      String str2 = newobj.toString();
-      TestCommon.AssertEqualsHashCode(obj, newobj);
-      TestCommon.AssertEqualsHashCode(str, str2);
-    }
-    @Test
-    public void TestExtendedInfinity() {
-      if (!(EDecimal.PositiveInfinity.IsPositiveInfinity()))Assert.fail();
-      if (EDecimal.PositiveInfinity.IsNegativeInfinity())Assert.fail();
-      if (EDecimal.PositiveInfinity.isNegative())Assert.fail();
-      if (EDecimal.NegativeInfinity.IsPositiveInfinity())Assert.fail();
-      if (!(EDecimal.NegativeInfinity.IsNegativeInfinity()))Assert.fail();
-      if (!(EDecimal.NegativeInfinity.isNegative()))Assert.fail();
-      if (!(EFloat.PositiveInfinity.IsInfinity()))Assert.fail();
-      if (!(EFloat.PositiveInfinity.IsPositiveInfinity()))Assert.fail();
-      if (EFloat.PositiveInfinity.IsNegativeInfinity())Assert.fail();
-      if (EFloat.PositiveInfinity.isNegative())Assert.fail();
-      if (!(EFloat.NegativeInfinity.IsInfinity()))Assert.fail();
-      if (EFloat.NegativeInfinity.IsPositiveInfinity())Assert.fail();
-      if (!(EFloat.NegativeInfinity.IsNegativeInfinity()))Assert.fail();
-      if (!(EFloat.NegativeInfinity.isNegative()))Assert.fail();
-      if (!(ERational.PositiveInfinity.IsInfinity()))Assert.fail();
-      if (!(ERational.PositiveInfinity.IsPositiveInfinity()))Assert.fail();
-      if (ERational.PositiveInfinity.IsNegativeInfinity())Assert.fail();
-      if (ERational.PositiveInfinity.isNegative())Assert.fail();
-      if (!(ERational.NegativeInfinity.IsInfinity()))Assert.fail();
-      if (ERational.NegativeInfinity.IsPositiveInfinity())Assert.fail();
-      if (!(ERational.NegativeInfinity.IsNegativeInfinity()))Assert.fail();
-      if (!(ERational.NegativeInfinity.isNegative()))Assert.fail();
-
-      Assert.assertEquals(
-        EDecimal.PositiveInfinity,
-        EDecimal.FromDouble(Double.POSITIVE_INFINITY));
-      Assert.assertEquals(
-        EDecimal.NegativeInfinity,
-        EDecimal.FromDouble(Double.NEGATIVE_INFINITY));
       Assert.assertEquals(
         EDecimal.PositiveInfinity,
         EDecimal.FromSingle(Float.POSITIVE_INFINITY));
@@ -128,27 +90,4 @@ import com.upokecenter.numbers.*;
 
   if (!(((ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
     }
-    /*
-    @Test
-    public void TestEIntegerAnd() {
-      try {
-        EInteger.And(EInteger.FromInt32(0), null);
-        Assert.fail("Should have failed");
-      } catch (NullPointerException ex) {
-        new Object();
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-      try {
-        EInteger.And(null, EInteger.FromInt32(0));
-        Assert.fail("Should have failed");
-      } catch (NullPointerException ex) {
-        new Object();
-      } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
-      }
-    }
-    */
   }

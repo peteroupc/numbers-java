@@ -107,158 +107,158 @@ import com.upokecenter.numbers.*;
 
     private static void TestAddCloseExponent(RandomGenerator fr, int exp) {
       for (int i = 0; i < 1000; ++i) {
-        EInteger exp1 = EInteger.FromInt32(exp)
-          .Add(EInteger.FromInt32(fr.UniformInt(32) - 16));
-        EInteger exp2 = exp1 .Add(EInteger.FromInt32(fr.UniformInt(18) - 9));
-        EInteger mant1 = RandomObjects.RandomEInteger(fr);
-        EInteger mant2 = RandomObjects.RandomEInteger(fr);
-        EDecimal decA = EDecimal.Create(mant1, exp1);
-        EDecimal decB = EDecimal.Create(mant2, exp2);
-        EDecimal decC = decA.Add(decB);
-        EDecimal decD = decC.Subtract(decA);
-        TestCommon.CompareTestEqual(decD, decB);
-        decD = decC.Subtract(decB);
-        TestCommon.CompareTestEqual(decD, decA);
+        EInteger exp1 = EInteger.FromInt32 (exp)
+          .Add (EInteger.FromInt32 (fr.UniformInt (32) - 16));
+        EInteger exp2 = exp1.Add (EInteger.FromInt32 (fr.UniformInt (18) - 9));
+        EInteger mant1 = RandomObjects.RandomEInteger (fr);
+        EInteger mant2 = RandomObjects.RandomEInteger (fr);
+        EDecimal decA = EDecimal.Create (mant1, exp1);
+        EDecimal decB = EDecimal.Create (mant2, exp2);
+        EDecimal decC = decA.Add (decB);
+        EDecimal decD = decC.Subtract (decA);
+        TestCommon.CompareTestEqual (decD, decB);
+        decD = decC.Subtract (decB);
+        TestCommon.CompareTestEqual (decD, decA);
       }
     }
 
     @Test
     public void TestPrecisionOneHalfEven() {
-      EDecimal edec = EDecimal.FromString("9.5e-1");
-      EContext ectx = EContext.ForPrecisionAndRounding(1, ERounding.HalfEven);
-      edec = edec.RoundToPrecision(ectx);
-      TestCommon.CompareTestEqual(
-        EDecimal.FromString("10.0e-1"),
+      EDecimal edec = EDecimal.FromString ("9.5e-1");
+      EContext ectx = EContext.ForPrecisionAndRounding (1, ERounding.HalfEven);
+      edec = edec.RoundToPrecision (ectx);
+      TestCommon.CompareTestEqual (
+        EDecimal.FromString ("10.0e-1"),
         edec);
     }
 
     @Test
     public void TestAdd() {
       try {
-        EDecimal.Zero.Add(null, EContext.Unlimited);
-        Assert.fail("Should have failed");
+        EDecimal.Zero.Add (null, EContext.Unlimited);
+        Assert.fail ("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        new Object ();
       } catch (Exception ex) {
-        Assert.fail(ex.toString());
-        throw new IllegalStateException("", ex);
+        Assert.fail (ex.toString ());
+        throw new IllegalStateException ("", ex);
       }
-      RandomGenerator fr = new RandomGenerator();
-      TestAddCloseExponent(fr, 0);
-      TestAddCloseExponent(fr, 100);
-      TestAddCloseExponent(fr, -100);
-      TestAddCloseExponent(fr, Integer.MIN_VALUE);
-      TestAddCloseExponent(fr, Integer.MAX_VALUE);
-      AssertAddSubtract("617862143", "1528127703");
+      RandomGenerator  fr = new RandomGenerator ();
+      TestAddCloseExponent (fr, 0);
+      TestAddCloseExponent (fr, 100);
+      TestAddCloseExponent (fr, -100);
+      TestAddCloseExponent (fr, Integer.MIN_VALUE);
+      TestAddCloseExponent (fr, Integer.MAX_VALUE);
+      AssertAddSubtract ("617862143", "1528127703");
     }
 
     @Test
     public void TestAddThenCompare() {
-      EDecimal a = EDecimal.FromString(
+      EDecimal a = EDecimal.FromString (
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702414428117526594285731840");
-      a = a.Add(
-        EDecimal.FromString("18895577316172922617856"));
-      EDecimal b = EDecimal.FromString(
+      a = a.Add (
+        EDecimal.FromString ("18895577316172922617856"));
+      EDecimal b = EDecimal.FromString (
   "3432401181884624580219161996277760227145481682978308767347063168426989874100957186809774969532587926005597200790737572030389681269702433323694842767208349696");
-      Assert.assertEquals(a.toString(), b.toString());
-      TestCommon.CompareTestEqual(a, b, "");
-      Assert.assertEquals(a.signum(), b.signum());
+      Assert.assertEquals (a.toString (), b.toString ());
+      TestCommon.CompareTestEqual (a, b, "");
+      Assert.assertEquals (a.signum(), b.signum());
     }
 
     @Test
     public void TestCompareTo() {
-      RandomGenerator r = new RandomGenerator();
+      RandomGenerator  r = new RandomGenerator ();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintC = RandomObjects.RandomEDecimal(r);
-        TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
+        EDecimal bigintA = RandomObjects.RandomEDecimal (r);
+        EDecimal bigintB = RandomObjects.RandomEDecimal (r);
+        EDecimal bigintC = RandomObjects.RandomEDecimal (r);
+        TestCommon.CompareTestRelations (bigintA, bigintB, bigintC);
       }
       // Test equivalence of EInteger and EDecimal for integers
       for (int i = 0; i < 3000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        EInteger bigintB = RandomObjects.RandomEInteger(r);
-        EInteger bigintC = bigintA.Add(bigintB);
-        EDecimal ba1 = EDecimal.FromEInteger(bigintA)
-          .Add(EDecimal.FromEInteger(bigintB));
-        EDecimal ba2 = EDecimal.FromEInteger(bigintC);
-        Assert.assertEquals(ba1.signum(), ba2.signum());
-        Assert.assertEquals(ba1.toString(), ba2.toString());
-        TestCommon.CompareTestEqual(
+        EInteger bigintA = RandomObjects.RandomEInteger (r);
+        EInteger bigintB = RandomObjects.RandomEInteger (r);
+        EInteger bigintC = bigintA.Add (bigintB);
+        EDecimal ba1 = EDecimal.FromEInteger (bigintA)
+          .Add (EDecimal.FromEInteger (bigintB));
+        EDecimal ba2 = EDecimal.FromEInteger (bigintC);
+        Assert.assertEquals (ba1.signum(), ba2.signum());
+        Assert.assertEquals (ba1.toString (), ba2.toString ());
+        TestCommon.CompareTestEqual (
   ba1,
   ba2,
-  bigintA.toString() + "/" + bigintB.toString());
+  bigintA.toString () + "/" + bigintB.toString ());
       }
-      TestCommon.CompareTestEqual(
-  EDecimal.FromString("-1.603074425947290000E+2147483671"),
-  EDecimal.FromString("-1.60307442594729E+2147483671"));
-      TestCommon.CompareTestLess(EDecimal.Zero, EDecimal.NaN);
-      TestCommon.CompareTestLess(
-  EDecimal.FromString("-4328117878201602191937590091183.9810549"),
-  EDecimal.FromString("-14"));
-      TestCommon.CompareTestGreater(
-  EDecimal.FromString("937125319376706291597172.99"),
-  EDecimal.FromString("9755.2823"));
-      TestCommon.CompareTestLess(
-  EDecimal.FromString("95"),
-  EDecimal.FromString("1.41189247453434859259019E+26"));
-      TestCommon.CompareTestGreater(
-  EDecimal.FromString("379351600076111561037"),
-  EDecimal.FromString("8451910"));
+      TestCommon.CompareTestEqual (
+  EDecimal.FromString ("-1.603074425947290000E+2147483671"),
+  EDecimal.FromString ("-1.60307442594729E+2147483671"));
+      TestCommon.CompareTestLess (EDecimal.Zero, EDecimal.NaN);
+      TestCommon.CompareTestLess (
+  EDecimal.FromString ("-4328117878201602191937590091183.9810549"),
+  EDecimal.FromString ("-14"));
+      TestCommon.CompareTestGreater (
+  EDecimal.FromString ("937125319376706291597172.99"),
+  EDecimal.FromString ("9755.2823"));
+      TestCommon.CompareTestLess (
+  EDecimal.FromString ("95"),
+  EDecimal.FromString ("1.41189247453434859259019E+26"));
+      TestCommon.CompareTestGreater (
+  EDecimal.FromString ("379351600076111561037"),
+  EDecimal.FromString ("8451910"));
     }
     @Test
     public void TestCompareToBinary() {
       {
-        long numberTemp = EDecimal.NegativeInfinity.CompareToBinary(null);
-        Assert.assertEquals(1, numberTemp);
+        long numberTemp = EDecimal.NegativeInfinity.CompareToBinary (null);
+        Assert.assertEquals (1, numberTemp);
       }
       {
-        long numberTemp = EDecimal.PositiveInfinity.CompareToBinary(null);
-        Assert.assertEquals(1, numberTemp);
+        long numberTemp = EDecimal.PositiveInfinity.CompareToBinary (null);
+        Assert.assertEquals (1, numberTemp);
       }
-      Assert.assertEquals(1, EDecimal.NaN.CompareToBinary(null));
-      Assert.assertEquals(1, EDecimal.SignalingNaN.CompareToBinary(null));
-      Assert.assertEquals(1, EDecimal.Zero.CompareToBinary(null));
-      Assert.assertEquals(1, EDecimal.One.CompareToBinary(null));
+      Assert.assertEquals (1, EDecimal.NaN.CompareToBinary (null));
+      Assert.assertEquals (1, EDecimal.SignalingNaN.CompareToBinary (null));
+      Assert.assertEquals (1, EDecimal.Zero.CompareToBinary (null));
+      Assert.assertEquals (1, EDecimal.One.CompareToBinary (null));
 
       {
-        long numberTemp = EDecimal.NaN.CompareToBinary(EFloat.NaN);
-        Assert.assertEquals(0, numberTemp);
-      }
-
-      {
-        long numberTemp =
-          EDecimal.SignalingNaN.CompareToBinary(EFloat.NaN);
-        Assert.assertEquals(0, numberTemp);
+        long numberTemp = EDecimal.NaN.CompareToBinary (EFloat.NaN);
+        Assert.assertEquals (0, numberTemp);
       }
 
       {
         long numberTemp =
-          EDecimal.NaN.CompareToBinary(EFloat.SignalingNaN);
-        Assert.assertEquals(0, numberTemp);
+          EDecimal.SignalingNaN.CompareToBinary (EFloat.NaN);
+        Assert.assertEquals (0, numberTemp);
       }
 
       {
         long numberTemp =
-  EDecimal.SignalingNaN.CompareToBinary(EFloat.SignalingNaN);
-        Assert.assertEquals(0, numberTemp);
-      }
-      {
-        long numberTemp = EDecimal.NaN.CompareToBinary(EFloat.Zero);
-        Assert.assertEquals(1, numberTemp);
+          EDecimal.NaN.CompareToBinary (EFloat.SignalingNaN);
+        Assert.assertEquals (0, numberTemp);
       }
 
       {
         long numberTemp =
-          EDecimal.SignalingNaN.CompareToBinary(EFloat.Zero);
-        Assert.assertEquals(1, numberTemp);
+  EDecimal.SignalingNaN.CompareToBinary (EFloat.SignalingNaN);
+        Assert.assertEquals (0, numberTemp);
       }
-      RandomGenerator r = new RandomGenerator();
+      {
+        long numberTemp = EDecimal.NaN.CompareToBinary (EFloat.Zero);
+        Assert.assertEquals (1, numberTemp);
+      }
+
+      {
+        long numberTemp =
+          EDecimal.SignalingNaN.CompareToBinary (EFloat.Zero);
+        Assert.assertEquals (1, numberTemp);
+      }
+      RandomGenerator  r = new RandomGenerator ();
       for (int i = 0; i < 3000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        int cmp = EDecimal.FromEInteger(bigintA).CompareToBinary(
-            EFloat.FromEInteger(bigintA));
-        Assert.assertEquals(0, cmp);
+        EInteger bigintA = RandomObjects.RandomEInteger (r);
+        int cmp = EDecimal.FromEInteger (bigintA).CompareToBinary (
+            EFloat.FromEInteger (bigintA));
+        Assert.assertEquals (0, cmp);
       }
     }
     @Test
@@ -268,428 +268,430 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestConversions() {
-      RandomGenerator fr = new RandomGenerator();
+      RandomGenerator  fr = new RandomGenerator ();
       for (int i = 0; i < 20000; ++i) {
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
-        EDecimal enumber = RandomObjects.RandomEDecimal(fr);
+        EDecimal enumber = RandomObjects.RandomEDecimal (fr);
         if (!enumber.isFinite()) {
           try {
-            enumber.ToByteChecked();
-            Assert.fail("Should have failed");
+            enumber.ToByteChecked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
-          Assert.assertEquals(
+          Assert.assertEquals (
         EInteger.FromInt32(0),
-        EInteger.FromByte(enumber.ToByteUnchecked()));
+        EInteger.FromByte (enumber.ToByteUnchecked ()));
           try {
-            enumber.ToByteIfExact();
-            Assert.fail("Should have failed");
+            enumber.ToByteIfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToInt16Checked();
-            Assert.fail("Should have failed");
+            enumber.ToInt16Checked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
-          Assert.assertEquals(
+          Assert.assertEquals (
           EInteger.FromInt32(0),
-          EInteger.FromInt16(enumber.ToInt16Unchecked()));
+          EInteger.FromInt16 (enumber.ToInt16Unchecked ()));
           try {
-            enumber.ToInt16IfExact();
-            Assert.fail("Should have failed");
+            enumber.ToInt16IfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToInt32Checked();
-            Assert.fail("Should have failed");
+            enumber.ToInt32Checked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
-          Assert.assertEquals(
+          Assert.assertEquals (
           EInteger.FromInt32(0),
-          EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          EInteger.FromInt32 (enumber.ToInt32Unchecked ()));
           try {
-            enumber.ToInt32IfExact();
-            Assert.fail("Should have failed");
+            enumber.ToInt32IfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToInt64Checked();
-            Assert.fail("Should have failed");
+            enumber.ToInt64Checked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
-          Assert.assertEquals(
+          Assert.assertEquals (
           EInteger.FromInt32(0),
-          EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          EInteger.FromInt64 (enumber.ToInt64Unchecked ()));
           try {
-            enumber.ToInt64IfExact();
-            Assert.fail("Should have failed");
+            enumber.ToInt64IfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           continue;
         }
-        EDecimal enumberInteger = EDecimal.FromEInteger(enumber.ToEInteger());
-        isInteger = enumberInteger.compareTo(enumber) == 0;
-        eint = enumber.ToEInteger();
-        isNum = enumber.compareTo(
-        EDecimal.FromString("0")) >= 0 && enumber.compareTo(
-        EDecimal.FromString("255")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-        EInteger.FromString("0")) >= 0 && enumber.ToEInteger().compareTo(
-        EInteger.FromString("255")) <= 0;
+        EDecimal enumberInteger = EDecimal.FromEInteger (enumber.ToEInteger ());
+        isInteger = enumberInteger.compareTo (enumber) == 0;
+        eint = enumber.ToEInteger ();
+        isNum = enumber.compareTo (
+        EDecimal.FromString ("0")) >= 0 && enumber.compareTo (
+        EDecimal.FromString ("255")) <= 0;
+        isTruncated = enumber.ToEInteger ().compareTo (
+        EInteger.FromString ("0")) >= 0 && enumber.ToEInteger ().compareTo (
+        EInteger.FromString ("255")) <= 0;
         if (isNum) {
-     TestCommon.AssertEquals(
-  eint,
-  EInteger.FromByte(enumber.ToByteChecked()));
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromByte(enumber.ToByteUnchecked()));
+          TestCommon.AssertEquals (
+       eint,
+       EInteger.FromByte (enumber.ToByteChecked ()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromByte (enumber.ToByteUnchecked ()));
           if (isInteger) {
-     TestCommon.AssertEquals(
-  eint,
-  EInteger.FromByte(enumber.ToByteIfExact()));
+            TestCommon.AssertEquals (
+         eint,
+         EInteger.FromByte (enumber.ToByteIfExact ()));
           } else {
             try {
-              enumber.ToByteIfExact();
-              Assert.fail("Should have failed");
+              enumber.ToByteIfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         } else if (isTruncated) {
-     TestCommon.AssertEquals(
-  eint,
-  EInteger.FromByte(enumber.ToByteChecked()));
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromByte(enumber.ToByteUnchecked()));
+          TestCommon.AssertEquals (
+       eint,
+       EInteger.FromByte (enumber.ToByteChecked ()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromByte (enumber.ToByteUnchecked ()));
           try {
-            enumber.ToByteIfExact();
-            Assert.fail("Should have failed");
+            enumber.ToByteIfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
         } else {
           try {
-            enumber.ToByteChecked();
-            Assert.fail("Should have failed");
+            enumber.ToByteChecked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToByteUnchecked();
+            enumber.ToByteUnchecked ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           if (isInteger) {
             try {
-              enumber.ToByteIfExact();
-              Assert.fail("Should have failed");
+              enumber.ToByteIfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           } else {
             try {
-              enumber.ToByteIfExact();
-              Assert.fail("Should have failed");
+              enumber.ToByteIfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         }
-        isNum = enumber.compareTo(
-        EDecimal.FromString("-32768")) >= 0 && enumber.compareTo(
-        EDecimal.FromString("32767")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-        EInteger.FromString("-32768")) >= 0 && enumber.ToEInteger().compareTo(
-        EInteger.FromString("32767")) <= 0;
+        isNum = enumber.compareTo (
+        EDecimal.FromString ("-32768")) >= 0 && enumber.compareTo (
+        EDecimal.FromString ("32767")) <= 0;
+        isTruncated = enumber.ToEInteger ().compareTo (
+      EInteger.FromString ("-32768")) >= 0 && enumber.ToEInteger
+          ().compareTo (
+        EInteger.FromString ("32767")) <= 0;
         if (isNum) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt16(enumber.ToInt16Checked()));
- TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt16(enumber.ToInt16Unchecked()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromInt16 (enumber.ToInt16Checked ()));
+          TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt16 (enumber.ToInt16Unchecked ()));
           if (isInteger) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt16(enumber.ToInt16IfExact()));
+            TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt16 (enumber.ToInt16IfExact ()));
           } else {
             try {
-              enumber.ToInt16IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt16IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         } else if (isTruncated) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt16(enumber.ToInt16Checked()));
- TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt16(enumber.ToInt16Unchecked()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromInt16 (enumber.ToInt16Checked ()));
+          TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt16 (enumber.ToInt16Unchecked ()));
           try {
-            enumber.ToInt16IfExact();
-            Assert.fail("Should have failed");
+            enumber.ToInt16IfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
         } else {
           try {
-            enumber.ToInt16Checked();
-            Assert.fail("Should have failed");
+            enumber.ToInt16Checked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToInt16Unchecked();
+            enumber.ToInt16Unchecked ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           if (isInteger) {
             try {
-              enumber.ToInt16IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt16IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           } else {
             try {
-              enumber.ToInt16IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt16IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         }
-        isNum = enumber.compareTo(
-        EDecimal.FromString("-2147483648")) >= 0 && enumber.compareTo(
-        EDecimal.FromString("2147483647")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-    EInteger.FromString("-2147483648")) >= 0 &&
-          enumber.ToEInteger().compareTo(
-        EInteger.FromString("2147483647")) <= 0;
+        isNum = enumber.compareTo (
+        EDecimal.FromString ("-2147483648")) >= 0 && enumber.compareTo (
+        EDecimal.FromString ("2147483647")) <= 0;
+        isTruncated = enumber.ToEInteger ().compareTo (
+    EInteger.FromString ("-2147483648")) >= 0 &&
+          enumber.ToEInteger ().compareTo (
+        EInteger.FromString ("2147483647")) <= 0;
         if (isNum) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt32(enumber.ToInt32Checked()));
- TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromInt32 (enumber.ToInt32Checked ()));
+          TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt32 (enumber.ToInt32Unchecked ()));
           if (isInteger) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt32(enumber.ToInt32IfExact()));
+            TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt32 (enumber.ToInt32IfExact ()));
           } else {
             try {
-              enumber.ToInt32IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt32IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         } else if (isTruncated) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt32(enumber.ToInt32Checked()));
- TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromInt32 (enumber.ToInt32Checked ()));
+          TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt32 (enumber.ToInt32Unchecked ()));
           try {
-            enumber.ToInt32IfExact();
-            Assert.fail("Should have failed");
+            enumber.ToInt32IfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
         } else {
           try {
-            enumber.ToInt32Checked();
-            Assert.fail("Should have failed");
+            enumber.ToInt32Checked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToInt32Unchecked();
+            enumber.ToInt32Unchecked ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           if (isInteger) {
             try {
-              enumber.ToInt32IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt32IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           } else {
             try {
-              enumber.ToInt32IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt32IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         }
-        isTruncated = enumber.ToEInteger().compareTo(
-        EInteger.FromString("-9223372036854775808")) >= 0 &&
-          enumber.ToEInteger().compareTo(
-        EInteger.FromString("9223372036854775807")) <= 0;
-        isNum = isTruncated && enumber.compareTo(
-        EDecimal.FromString("-9223372036854775808")) >= 0 && enumber.compareTo(
-        EDecimal.FromString("9223372036854775807")) <= 0;
+        isTruncated = enumber.ToEInteger ().compareTo (
+        EInteger.FromString ("-9223372036854775808")) >= 0 &&
+          enumber.ToEInteger ().compareTo (
+        EInteger.FromString ("9223372036854775807")) <= 0;
+        isNum = isTruncated && enumber.compareTo (
+      EDecimal.FromString ("-9223372036854775808")) >= 0 &&
+          enumber.compareTo (
+        EDecimal.FromString ("9223372036854775807")) <= 0;
         if (isNum) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt64(enumber.ToInt64Checked()));
- TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromInt64 (enumber.ToInt64Checked ()));
+          TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt64 (enumber.ToInt64Unchecked ()));
           if (isInteger) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt64(enumber.ToInt64IfExact()));
+            TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt64 (enumber.ToInt64IfExact ()));
           } else {
             try {
-              enumber.ToInt64IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt64IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         } else if (isTruncated) {
-   TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt64(enumber.ToInt64Checked()));
- TestCommon.AssertEquals(
-  eint,
-  EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          TestCommon.AssertEquals (
+         eint,
+         EInteger.FromInt64 (enumber.ToInt64Checked ()));
+          TestCommon.AssertEquals (
+           eint,
+           EInteger.FromInt64 (enumber.ToInt64Unchecked ()));
           try {
-            enumber.ToInt64IfExact();
-            Assert.fail("Should have failed");
+            enumber.ToInt64IfExact ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
         } else {
           try {
-            enumber.ToInt64Checked();
-            Assert.fail("Should have failed");
+            enumber.ToInt64Checked ();
+            Assert.fail ("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            new Object ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           try {
-            enumber.ToInt64Unchecked();
+            enumber.ToInt64Unchecked ();
           } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            throw new IllegalStateException("", ex);
+            Assert.fail (ex.toString ());
+            throw new IllegalStateException ("", ex);
           }
           if (isInteger) {
             try {
-              enumber.ToInt64IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt64IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           } else {
             try {
-              enumber.ToInt64IfExact();
-              Assert.fail("Should have failed");
+              enumber.ToInt64IfExact ();
+              Assert.fail ("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              new Object ();
             } catch (Exception ex) {
-              Assert.fail(ex.toString());
-              throw new IllegalStateException("", ex);
+              Assert.fail (ex.toString ());
+              throw new IllegalStateException ("", ex);
             }
           }
         }
@@ -3065,701 +3067,702 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
     }
     @Test
     public void TestToEngineeringString() {
+      String stringTemp;
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "89.12E-1").ToEngineeringString();
         Assert.assertEquals(
           "8.912",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "242.31E-4").ToEngineeringString();
         Assert.assertEquals(
           "0.024231",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "229.18E5").ToEngineeringString();
         Assert.assertEquals(
           "22.918E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "326.18E-7").ToEngineeringString();
         Assert.assertEquals(
           "0.000032618",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "55.0E6").ToEngineeringString();
         Assert.assertEquals(
           "55.0E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "224.36E3").ToEngineeringString();
         Assert.assertEquals(
           "224.36E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "230.12E9").ToEngineeringString();
         Assert.assertEquals(
           "230.12E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "113.20E-7").ToEngineeringString();
         Assert.assertEquals(
           "0.000011320",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "317.7E-9").ToEngineeringString();
         Assert.assertEquals(
           "317.7E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "339.3E-2").ToEngineeringString();
         Assert.assertEquals(
           "3.393",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "271.35E8").ToEngineeringString();
         Assert.assertEquals(
           "27.135E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "377.19E-9").ToEngineeringString();
         Assert.assertEquals(
           "377.19E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "321.27E7").ToEngineeringString();
         Assert.assertEquals(
           "3.2127E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "294.22E-2").ToEngineeringString();
         Assert.assertEquals(
           "2.9422",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "110.31E-8").ToEngineeringString();
         Assert.assertEquals(
           "0.0000011031",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "243.24E-2").ToEngineeringString();
         Assert.assertEquals(
           "2.4324",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "64.12E-5").ToEngineeringString();
         Assert.assertEquals(
           "0.0006412",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "142.23E1").ToEngineeringString();
         Assert.assertEquals(
           "1422.3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "293.0E0").ToEngineeringString();
         Assert.assertEquals(
           "293.0",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "253.20E-8").ToEngineeringString();
         Assert.assertEquals(
           "0.0000025320",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "366.6E8").ToEngineeringString();
         Assert.assertEquals(
           "36.66E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "345.26E10").ToEngineeringString();
         Assert.assertEquals(
           "3.4526E+12",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "270.4E-2").ToEngineeringString();
         Assert.assertEquals(
           "2.704",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "4.32E8").ToEngineeringString();
         Assert.assertEquals(
           "432E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "224.22E0").ToEngineeringString();
         Assert.assertEquals(
           "224.22",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "315.30E-7").ToEngineeringString();
         Assert.assertEquals(
           "0.000031530",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "115.32E5").ToEngineeringString();
         Assert.assertEquals(
           "11.532E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "394.20E2").ToEngineeringString();
         Assert.assertEquals(
           "39420",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "67.24E-9").ToEngineeringString();
         Assert.assertEquals(
           "67.24E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "349.33E2").ToEngineeringString();
         Assert.assertEquals(
           "34933",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "67.8E-9").ToEngineeringString();
         Assert.assertEquals(
           "67.8E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "192.31E5").ToEngineeringString();
         Assert.assertEquals(
           "19.231E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "173.17E7").ToEngineeringString();
         Assert.assertEquals(
           "1.7317E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "43.9E0").ToEngineeringString();
         Assert.assertEquals(
           "43.9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "168.12E-8").ToEngineeringString();
         Assert.assertEquals(
           "0.0000016812",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "371.5E10").ToEngineeringString();
         Assert.assertEquals(
           "3.715E+12",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "42.4E-8").ToEngineeringString();
         Assert.assertEquals(
           "424E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "161.23E10").ToEngineeringString();
         Assert.assertEquals(
           "1.6123E+12",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "302.8E6").ToEngineeringString();
         Assert.assertEquals(
           "302.8E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "175.13E0").ToEngineeringString();
         Assert.assertEquals(
           "175.13",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "298.20E-9").ToEngineeringString();
         Assert.assertEquals(
           "298.20E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "362.23E8").ToEngineeringString();
         Assert.assertEquals(
           "36.223E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "277.39E2").ToEngineeringString();
         Assert.assertEquals(
           "27739",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "117.34E-4").ToEngineeringString();
         Assert.assertEquals(
           "0.011734",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "190.13E-9").ToEngineeringString();
         Assert.assertEquals(
           "190.13E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "350.19E-2").ToEngineeringString();
         Assert.assertEquals(
           "3.5019",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "383.27E-9").ToEngineeringString();
         Assert.assertEquals(
           "383.27E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "242.17E5").ToEngineeringString();
         Assert.assertEquals(
           "24.217E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "299.23E7").ToEngineeringString();
         Assert.assertEquals(
           "2.9923E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "302.22E-2").ToEngineeringString();
         Assert.assertEquals(
           "3.0222",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "45.21E-3").ToEngineeringString();
         Assert.assertEquals(
           "0.04521",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "150.0E-1").ToEngineeringString();
         Assert.assertEquals(
           "15.00",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "29.0E4").ToEngineeringString();
         Assert.assertEquals(
           "290E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "263.37E3").ToEngineeringString();
         Assert.assertEquals(
           "263.37E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "283.21E-1").ToEngineeringString();
         Assert.assertEquals(
           "28.321",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "21.32E0").ToEngineeringString();
         Assert.assertEquals(
           "21.32",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "69.20E-6").ToEngineeringString();
         Assert.assertEquals(
           "0.00006920",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "72.8E-3").ToEngineeringString();
         Assert.assertEquals(
           "0.0728",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "164.6E7").ToEngineeringString();
         Assert.assertEquals(
           "1.646E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "118.17E-2").ToEngineeringString();
         Assert.assertEquals(
           "1.1817",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "262.35E-7").ToEngineeringString();
         Assert.assertEquals(
           "0.000026235",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "233.7E5").ToEngineeringString();
         Assert.assertEquals(
           "23.37E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "391.24E0").ToEngineeringString();
         Assert.assertEquals(
           "391.24",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "221.36E1").ToEngineeringString();
         Assert.assertEquals(
           "2213.6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "353.32E0").ToEngineeringString();
         Assert.assertEquals(
           "353.32",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "129.31E-4").ToEngineeringString();
         Assert.assertEquals(
           "0.012931",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "176.26E-5").ToEngineeringString();
         Assert.assertEquals(
           "0.0017626",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "207.5E3").ToEngineeringString();
         Assert.assertEquals(
           "207.5E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "314.10E0").ToEngineeringString();
         Assert.assertEquals(
           "314.10",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "379.20E9").ToEngineeringString();
         Assert.assertEquals(
           "379.20E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "379.12E-6").ToEngineeringString();
         Assert.assertEquals(
           "0.00037912",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "74.38E-8").ToEngineeringString();
         Assert.assertEquals(
           "743.8E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "234.17E-9").ToEngineeringString();
         Assert.assertEquals(
           "234.17E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "13.26E7").ToEngineeringString();
         Assert.assertEquals(
           "132.6E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "251.5E5").ToEngineeringString();
         Assert.assertEquals(
           "25.15E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "87.32E0").ToEngineeringString();
         Assert.assertEquals(
           "87.32",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "331.16E7").ToEngineeringString();
         Assert.assertEquals(
           "3.3116E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "61.4E8").ToEngineeringString();
         Assert.assertEquals(
           "6.14E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "209.7E-6").ToEngineeringString();
         Assert.assertEquals(
           "0.0002097",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
        "5.4E6").ToEngineeringString();
         Assert.assertEquals(
           "5.4E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "219.9E0").ToEngineeringString();
         Assert.assertEquals(
           "219.9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "26.31E-6").ToEngineeringString();
         Assert.assertEquals(
           "0.00002631",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "48.28E7").ToEngineeringString();
         Assert.assertEquals(
           "482.8E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "267.8E0").ToEngineeringString();
         Assert.assertEquals(
           "267.8",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "320.9E-3").ToEngineeringString();
         Assert.assertEquals(
           "0.3209",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "300.15E-3").ToEngineeringString();
         Assert.assertEquals(
           "0.30015",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "260.11E4").ToEngineeringString();
         Assert.assertEquals(
           "2.6011E+6",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "114.29E-2").ToEngineeringString();
         Assert.assertEquals(
           "1.1429",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "306.0E-6").ToEngineeringString();
         Assert.assertEquals(
           "0.0003060",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "97.7E3").ToEngineeringString();
         Assert.assertEquals(
           "97.7E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "122.29E8").ToEngineeringString();
         Assert.assertEquals(
           "12.229E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "69.4E2").ToEngineeringString();
         Assert.assertEquals(
           "6.94E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "383.5E0").ToEngineeringString();
         Assert.assertEquals(
           "383.5",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "315.30E3").ToEngineeringString();
         Assert.assertEquals(
           "315.30E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "130.38E9").ToEngineeringString();
         Assert.assertEquals(
           "130.38E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "206.16E9").ToEngineeringString();
         Assert.assertEquals(
           "206.16E+9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "304.28E-9").ToEngineeringString();
         Assert.assertEquals(
           "304.28E-9",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
   "66.13E4").ToEngineeringString();
         Assert.assertEquals(
           "661.3E+3",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
           "185.33E-2").ToEngineeringString();
         Assert.assertEquals(
           "1.8533",
           stringTemp);
       }
       {
-        String stringTemp = EDecimal.FromString(
+        stringTemp = EDecimal.FromString(
         "70.7E6").ToEngineeringString();
         Assert.assertEquals(
           "70.7E+6",

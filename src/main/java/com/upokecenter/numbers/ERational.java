@@ -581,12 +581,9 @@ at: http://peteroupc.github.io/
                     1) == 'n') && (str.charAt(i + 2) == 'A' || str.charAt(i + 2) == 'a') &&
                 (str.charAt(i + 3) == 'N' || str.charAt(i + 3) == 'n')) {
           if (i + 4 == endStr) {
-            int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
-              BigNumberFlags.FlagSignalingNaN;
             return (!negative) ? SignalingNaN : SignalingNaN.Negate();
           }
           i += 4;
-          FastInteger digitCount = new FastInteger(0);
           for (; i < endStr; ++i) {
             if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
               int thisdigit = (int)(str.charAt(i) - '0');
