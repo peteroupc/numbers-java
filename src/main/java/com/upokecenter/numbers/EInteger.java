@@ -1203,22 +1203,6 @@ at: http://peteroupc.github.io/
       // NOTE: size of 'quot' equals 'blockCount' * 2
       // NOTE: size of 'rem' equals 'blockCount' * 2
 
-      /* short [] realquot = new short [blockCount * 2];
-      short [] realrem = new short [blockCount * 2];
-      var cw = CombineWords (valueALow, posALow,
-                    blockCount, valueAMidHigh, posAMidHigh, blockCount * 2);
-      int ca = CountWords (cw, 0, cw.length);
-      int cb = CountWords (b, posB, blockCount * 2);
-      String extra="";
-      if (ca >= cb) {
-        //DebugUtility.Log ("ca=" + ca + " cb=" + cb);
-        GeneralDivide (cw, 0, ca,
-                    b, posB, cb,
-                    realquot, 0,
-                    realrem, 0);
-      }
-      */
-
       // Implements Algorithm 2 of Burnikel & Ziegler 1998
       int c;
       // If AHigh is less than BHigh
@@ -1230,11 +1214,6 @@ at: http://peteroupc.github.io/
   b,
   posB + blockCount,
   blockCount) < 0) {
-         /*extra+="\namh="+WordsToStringHex (valueAMidHigh,
-  posAMidHigh, blockCount*2);
-        extra+="\nbh ="+WordsToStringHex (b,
- posB + blockCount, blockCount);
-        extra+="\naHigh<bHigh size="+(blockCount*2);*/
         // Divide AMidHigh by BHigh
         RecursiveDivideInner(
  valueAMidHigh,
@@ -1246,15 +1225,12 @@ at: http://peteroupc.github.io/
  rem,
  posRem,
  blockCount);
-        //extra+="\nq="+WordsToStringHex (quot,posQuot, blockCount*2);
-        //extra+="\nr="+WordsToStringHex (rem,posRem, blockCount);
         // Copy remainder to temp at block position 4
         System.arraycopy(rem, posRem, tmp, blockCount * 4, blockCount);
         java.util.Arrays.fill(tmp, blockCount * 5, (blockCount * 5)+(blockCount), (short)0);
       } else {
         // BHigh is less than AHigh
         // set quotient to all ones
-    //     extra+=" aHigh>= bHigh";
         for (int i = 0; i < blockCount; ++i) {
           quot[posQuot + i] = ((short)0xffff);
         }
@@ -1284,7 +1260,6 @@ at: http://peteroupc.github.io/
   b,
   posB + blockCount,
   blockCount);
-//        extra+="\nq="+WordsToStringHex (quot,posQuot, blockCount*2);
         Increment(tmp, blockCount * 5, blockCount, (short)c);
       }
       AsymmetricMultiply(
@@ -1301,15 +1276,8 @@ at: http://peteroupc.github.io/
       int bc3 = blockCount * 3;
       System.arraycopy(valueALow, posALow, tmp, bc3, blockCount);
       java.util.Arrays.fill(tmp, blockCount*2, (blockCount*2)+(blockCount), (short)0);
-/*
-        extra+="\nsub1="+WordsToStringHex (tmp, bc3, blockCount*3);
-        extra+="\nsub2="+WordsToStringHex (tmp, 0, blockCount*3);
-        extra+="\nb   ="+WordsToStringHex (b, posB, blockCount * 2);
-        extra+="\n--->"+WordsToStringHex (tmp, bc3, blockCount*3);
-*/
       c = SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, blockCount * 3);
       if (c != 0) {
-        //extra+=" borrow";
         while (true) {
           c = AddInternal(tmp, bc3, tmp, bc3, b, posB, blockCount * 2);
           c = Increment(tmp, blockCount * 5, blockCount, (short)c);
@@ -1320,23 +1288,6 @@ at: http://peteroupc.github.io/
         }
       }
       System.arraycopy(tmp, bc3, rem, posRem, blockCount * 2);
-/*
- if (ca >= cb && (Compare (quot, posQuot, realquot, 0, realquot.length) != 0||
-        Compare (rem, posRem, realrem, 0, realrem.length) != 0)) {
-        String exmessage = "\n" +
-          "ca=" + ca + ", cb=" + cb + ", extra="+extra+"\n" +
-          "a=" + WordsToStringHex (cw, 0, cw.length) + "\n" +
-          "b=" + WordsToStringHex (b, posB, blockCount * 2) + "\n" +
-          "expQ=" + WordsToStringHex (realquot, 0, realquot.length) + "\n" +
-          "expR=" + WordsToStringHex (realrem, 0, realrem.length) + "\n" +
-          "gotQ=" + WordsToStringHex (quot, posQuot, blockCount * 2) + "\n" +
-          "gotR=" + WordsToStringHex (rem, posRem, blockCount * 2) + "\n";
-        //DebugUtility.Log (exmessage);
-        //System.arraycopy (realquot, 0, quot, posQuot, realquot.length);
-        //System.arraycopy (realrem, 0, rem, posRem, realrem.length);
-        //return;
-        throw new IllegalStateException (exmessage);
-      }*/
     }
     private static void RecursiveDivideInner(
       short[] a,
@@ -1353,7 +1304,6 @@ at: http://peteroupc.github.io/
 
       // Implements Algorithm 1 of Burnikel & Ziegler 1998
       if (blockSize < RecursiveDivisionLimit || (blockSize & 1) == 1) {
-        //DebugUtility.Log("general "+WordsToStringHex (a, posA, blockSize*2));
         GeneralDivide(
   a,
   posA,
@@ -1366,7 +1316,6 @@ at: http://peteroupc.github.io/
   rem,
   posRem);
       } else {
-        // DebugUtility.Log("special");
                 int halfBlock = blockSize >> 1;
         short[] tmp = new short[halfBlock * 10];
         java.util.Arrays.fill(quot, posQuot, (posQuot)+(blockSize * 2), (short)0);
