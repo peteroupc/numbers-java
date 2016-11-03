@@ -1306,17 +1306,6 @@ at: http://peteroupc.github.io/
         extra+="\nsub2="+WordsToStringHex (tmp, 0, blockCount*3);
         extra+="\nb   ="+WordsToStringHex (b, posB, blockCount * 2);
         extra+="\n--->"+WordsToStringHex (tmp, bc3, blockCount*3);
-        extra+=" borrow";
-        //AddInternal(tmp, bc3, tmp, bc3, tmp, 0, bc3);
-        int cnt = 0;
-        while (WordsCompare(tmp, bc3, bc3, tmp, 0, bc3)< 0) {
-          Decrement(quot, posQuot, blockCount * 2, (short)1);
-          c = AddInternal(tmp, bc3, tmp, bc3, b, posB, blockCount * 2);
-          Increment(tmp, blockCount * 5, blockCount, (short)c);
-          extra+="\nsub1x="+WordsToStringHex (tmp, bc3, blockCount*3);
-          extra+="\nsub2x="+WordsToStringHex (tmp, 0, blockCount*3);
-         }
-         SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, bc3);
 */
       c = SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, blockCount * 3);
       if (c != 0) {
