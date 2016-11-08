@@ -3427,12 +3427,12 @@ WordsShiftRightOne(bu, buc);
         if (this.HasSmallValue()) {
           return this.SmallValueToString();
         }
-            StringBuilder  sb = new StringBuilder ();
+            StringBuilder sb = new StringBuilder();
             if (this.negative) {
                 sb.append ('-');
             }
             this.Abs ().ToRadixStringDecimal (sb, false);
-            return sb.toString ();
+            return sb.toString();
     }
 
     /**
