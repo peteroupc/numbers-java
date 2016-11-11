@@ -3359,7 +3359,6 @@ private static final FastIntegerFixed FastIntZero = new
     public EDecimal RoundToExponentExact(
       int exponentSmall,
       ERounding rounding) {
-        // TODO: Edit doc for RoundToExponentExact
  return this.RoundToExponentExact(
   EInteger.FromInt32(exponentSmall),
   EContext.Unlimited.WithRounding(rounding));
