@@ -90,6 +90,33 @@ at: http://peteroupc.github.io/
     private int flags;
     private EInteger unsignedNumerator;
 
+    private ERational () { }
+
+    private void Initialize(EInteger numerator, EInteger denominator) {
+            if (numerator == null) {
+                throw new NullPointerException ("numerator");
+            }
+            if (denominator == null) {
+                throw new NullPointerException ("denominator");
+            }
+            if (denominator.isZero()) {
+                throw new IllegalArgumentException ("denominator is zero");
+            }
+            boolean numNegative = numerator.signum() < 0;
+            boolean denNegative = denominator.signum() < 0;
+      this.flags = (numNegative != denNegative) ?
+              BigNumberFlags.FlagNegative : 0;
+            if (numNegative) {
+                numerator = numerator.Negate();
+            }
+            if (denNegative) {
+                denominator = denominator.Negate();
+            }
+
+            this.unsignedNumerator = numerator;
+            this.denominator = denominator;
+    }
+
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
      * class.
@@ -102,28 +129,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public ERational(EInteger numerator, EInteger denominator) {
-      if (numerator == null) {
-        throw new NullPointerException("numerator");
-      }
-      if (denominator == null) {
-        throw new NullPointerException("denominator");
-      }
-      if (denominator.isZero()) {
-        throw new IllegalArgumentException("denominator is zero");
-      }
-      boolean numNegative = numerator.signum() < 0;
-      boolean denNegative = denominator.signum() < 0;
-      this.flags = (numNegative != denNegative) ? BigNumberFlags.FlagNegative :
-           0;
-      if (numNegative) {
-        numerator = numerator.Negate();
-      }
-      if (denNegative) {
-        denominator = denominator.Negate();
-      }
-
-      this.unsignedNumerator = numerator;
-      this.denominator = denominator;
+      Initialize (numerator, denominator);
     }
 
     /**
@@ -217,7 +223,9 @@ at: http://peteroupc.github.io/
     public static ERational Create(
   EInteger numerator,
   EInteger denominator) {
-      return new ERational(numerator, denominator);
+            ERational er = new ERational();
+      er.Initialize (numerator, denominator);
+            return er;
     }
 
     /**
@@ -264,7 +272,7 @@ at: http://peteroupc.github.io/
       }
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
-      ERational er = new ERational(diag, EInteger.FromInt32(1));
+      ERational er = ERational.Create(diag, EInteger.FromInt32(1));
       er.flags = flags;
       return er;
     }
@@ -316,7 +324,7 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite()) {
-        ERational er = new ERational(ef.getMantissa(), EInteger.FromInt32(1));
+        ERational er = ERational.Create(ef.getMantissa(), EInteger.FromInt32(1));
         int flags = 0;
         if (ef.isNegative()) {
           flags |= BigNumberFlags.FlagNegative;
@@ -351,7 +359,7 @@ at: http://peteroupc.github.io/
       if (neg) {
         num=(num).Negate();
       }
-      return new ERational(num, den);
+      return ERational.Create(num, den);
     }
 
     /**
@@ -365,7 +373,7 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite()) {
-        ERational er = new ERational(ef.getMantissa(), EInteger.FromInt32(1));
+        ERational er = ERational.Create(ef.getMantissa(), EInteger.FromInt32(1));
         int flags = 0;
         if (ef.isNegative()) {
           flags |= BigNumberFlags.FlagNegative;
@@ -399,7 +407,7 @@ at: http://peteroupc.github.io/
       if (neg) {
         num=(num).Negate();
       }
-      return new ERational(num, den);
+      return ERational.Create(num, den);
     }
 
     /**
@@ -408,7 +416,7 @@ at: http://peteroupc.github.io/
      * @return The exact value of the integer as a rational number.
      */
     public static ERational FromEInteger(EInteger bigint) {
-      return new ERational(bigint, EInteger.FromInt32(1));
+      return ERational.Create(bigint, EInteger.FromInt32(1));
     }
 
     /**
@@ -532,13 +540,10 @@ at: http://peteroupc.github.io/
         // Quiet NaN
         if ((str.charAt(i) == 'N' || str.charAt(i) == 'n') && (str.charAt(i + 1) == 'A' || str.charAt(i +
                 1) == 'a') && (str.charAt(i + 2) == 'N' || str.charAt(i + 2) == 'n')) {
-          int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
-            BigNumberFlags.FlagQuietNaN;
           if (i + 3 == endStr) {
             return (!negative) ? NaN : NaN.Negate();
           }
           i += 3;
-          FastInteger digitCount = new FastInteger(0);
           for (; i < endStr; ++i) {
             if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
               int thisdigit = (int)(str.charAt(i) - '0');
@@ -860,7 +865,8 @@ at: http://peteroupc.github.io/
      */
     public ERational Abs() {
       if (this.isNegative()) {
-        ERational er = new ERational(this.unsignedNumerator, this.denominator);
+     ERational er = ERational.Create(this.unsignedNumerator,
+          this.denominator);
         er.flags = this.flags & ~BigNumberFlags.FlagNegative;
         return er;
       }
@@ -905,7 +911,7 @@ at: http://peteroupc.github.io/
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       ad = ad.Add(bc);
-      return new ERational(ad, bd);
+      return ERational.Create(ad, bd);
     }
 
     /**
@@ -1260,7 +1266,7 @@ at: http://peteroupc.github.io/
       }
       EInteger ad = this.getNumerator().Multiply(otherValue.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
-      return new ERational(ad, bc).ChangeSign(resultNeg);
+      return ERational.Create(ad, bc).ChangeSign(resultNeg);
     }
 
     /**
@@ -1410,8 +1416,8 @@ at: http://peteroupc.github.io/
       }
       EInteger ac = this.getNumerator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
-      return ac.isZero() ? (resultNeg ? NegativeZero : Zero) : new
-        ERational(ac, bd).ChangeSign(resultNeg);
+      return ac.isZero() ? (resultNeg ? NegativeZero : Zero) :
+               ERational.Create(ac, bd).ChangeSign(resultNeg);
     }
 
     /**
@@ -1419,7 +1425,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision rational number.
      */
     public ERational Negate() {
-      ERational er = new ERational(this.unsignedNumerator, this.denominator);
+      ERational er = ERational.Create(this.unsignedNumerator, this.denominator);
       er.flags = this.flags ^ BigNumberFlags.FlagNegative;
       return er;
     }
@@ -1474,7 +1480,7 @@ at: http://peteroupc.github.io/
       bc = thisDen.Multiply(tnum);
       tden = tden.Multiply(thisDen);
       ad = ad.Subtract(bc);
-      return new ERational(ad, tden).ChangeSign(resultNeg);
+      return ERational.Create(ad, tden).ChangeSign(resultNeg);
     }
 
     /**
@@ -1517,7 +1523,7 @@ at: http://peteroupc.github.io/
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       ad = ad.Subtract(bc);
-      return new ERational(ad, bd);
+      return ERational.Create(ad, bd);
     }
 
     /**
@@ -1923,7 +1929,7 @@ at: http://peteroupc.github.io/
   EInteger numerator,
   EInteger denominator,
   int flags) {
-      ERational er = new ERational(numerator, denominator);
+      ERational er = ERational.Create(numerator, denominator);
       er.flags = flags;
       return er;
     }
