@@ -19,7 +19,7 @@ project, add the following to the `dependencies` section in your `pom.xml` file:
 <dependency>
   <groupId>com.github.peteroupc</groupId>
   <artifactId>numbers</artifactId>
-  <version>0.3.0-SNAPSHOT</version>
+  <version>0.3.0</version>
 </dependency>
 ```
 
