@@ -90,7 +90,8 @@ at: http://peteroupc.github.io/
     private int flags;
     private EInteger unsignedNumerator;
 
-    private ERational () { }
+    private ERational () {
+}
 
     private void Initialize(EInteger numerator, EInteger denominator) {
             if (numerator == null) {
@@ -129,7 +130,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public ERational(EInteger numerator, EInteger denominator) {
-      Initialize (numerator, denominator);
+      this.Initialize (numerator, denominator);
     }
 
     /**
@@ -865,8 +866,9 @@ at: http://peteroupc.github.io/
      */
     public ERational Abs() {
       if (this.isNegative()) {
-     ERational er = ERational.Create(this.unsignedNumerator,
-          this.denominator);
+     ERational er = ERational.Create(
+  this.unsignedNumerator,
+  this.denominator);
         er.flags = this.flags & ~BigNumberFlags.FlagNegative;
         return er;
       }

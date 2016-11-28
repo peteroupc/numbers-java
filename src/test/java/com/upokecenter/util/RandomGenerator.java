@@ -58,7 +58,7 @@ package com.upokecenter.util;
      * Conceptually, generates either 1 or 0 the given number of times, where
      * either number is equally likely, and counts the number of 1's
      * generated.
-     * @param trials Another 32-bit signed integer.
+     * @param trials The number of times to generate a random number, conceptually.
      * @return A 32-bit signed integer.
      */
     public int Binomial(int trials) {
@@ -69,7 +69,7 @@ package com.upokecenter.util;
      * Conceptually, generates either 1 or 0 the given number of times, where a 1
      * is generated at the given probability, and counts the number of 1's
      * generated.
-     * @param trials Another 32-bit signed integer.
+     * @param trials The number of times to generate a random number, conceptually.
      * @param p The probability for each trial to succeed, from 0 (never) to 1
      * (always).
      * @return The number of successes in a given number of trials.
@@ -404,7 +404,8 @@ package com.upokecenter.util;
     }
 
     /**
-     * Not documented yet.
+     * Returns a uniformly-distributed 64-bit floating-point number from 0 and up,
+     * but less than 1.
      * @return A 64-bit floating-point number.
      */
     public double Uniform() {
@@ -422,7 +423,8 @@ package com.upokecenter.util;
     }
 
     /**
-     * Not documented yet.
+     * Returns a uniformly-distributed 32-bit floating-point number from 0 and up,
+     * but less than 1.
      * @return A 64-bit floating-point number.
      */
     public double UniformSingle() {

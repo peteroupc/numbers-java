@@ -2652,10 +2652,10 @@ ctx.getPrecision()).WithBlankFlags();
         }
       }
       if (expcmp > 0) {
-        //if ((op1Exponent-op2Exponent).Abs() > 10) {
-        //DebugUtility.Log("" + op1Mantissa + " " + op2Mantissa + " [exp="
+        // if ((op1Exponent-op2Exponent).Abs() > 10) {
+        // DebugUtility.Log("" + op1Mantissa + " " + op2Mantissa + " [exp="
         // + op1Exponent + " " + op2Exponent + "]");
-        //}
+        // }
         EInteger newmant = RescaleByExponentDiff(
   op1Mantissa,
   op1Exponent,
@@ -2670,10 +2670,10 @@ ctx.getPrecision()).WithBlankFlags();
         int mantcmp = newmant.compareTo(op2Mantissa);
         return (signA < 0) ? -mantcmp : mantcmp;
       } else {
-        //if ((op1Exponent-op2Exponent).Abs() > 10) {
-        //DebugUtility.Log("" + op1Mantissa + " " + op2Mantissa + " [exp="
+        // if ((op1Exponent-op2Exponent).Abs() > 10) {
+        // DebugUtility.Log("" + op1Mantissa + " " + op2Mantissa + " [exp="
         // + op1Exponent + " " + op2Exponent + "]");
-        //}
+        // }
         EInteger newmant = RescaleByExponentDiff(
             op2Mantissa,
             op1Exponent,
@@ -2905,7 +2905,7 @@ ctx.getPrecision()).WithBlankFlags();
         FastInteger fastPrecision = FastInteger.FromBig(ctx.getPrecision());
         boolean moreDistantThanPrecision = expdiff.compareTo(fastPrecision) > 0;
         // If exponent difference is greater than the precision
-                //if (true || moreDistantThanPrecision) {
+                // if (true || moreDistantThanPrecision) {
         if (moreDistantThanPrecision) {
           int expcmp2 = fastOp1Exp.compareTo(fastOp2Exp);
           if (expcmp2 < 0) {

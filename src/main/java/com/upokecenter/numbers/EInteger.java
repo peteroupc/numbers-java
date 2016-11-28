@@ -1289,6 +1289,7 @@ at: http://peteroupc.github.io/
       }
       System.arraycopy(tmp, bc3, rem, posRem, blockCount * 2);
     }
+
     private static void RecursiveDivideInner(
       short[] a,
       int posA,
@@ -1467,6 +1468,7 @@ at: http://peteroupc.github.io/
       System.arraycopy (a, pos, words, 0, len);
       return "\""+ new EInteger (len, words, false).ToUnoptString()+"\"";
     }
+
         private static String WordsToStringHex(short [] a, int pos, int len) {
             while (len != 0 && a [pos + len - 1] == 0) {
                 --len;
@@ -1479,8 +1481,14 @@ at: http://peteroupc.github.io/
       return "\"" + new EInteger (len, words, false).ToRadixString (16) +
               "\"" ;
         }
-        private static String WordsToString2(short [] a, int pos, int len,
-      short [] b, int pos2, int len2) {
+
+        private static String WordsToString2(
+  short [] a,
+  int pos,
+  int len,
+  short [] b,
+  int pos2,
+  int len2) {
       short [] words = new short [len + len2];
       System.arraycopy (a, pos, words, 0, len);
       System.arraycopy (b, pos2, words, len, len2);
@@ -1488,12 +1496,20 @@ at: http://peteroupc.github.io/
       while (len != 0 && words[len - 1] == 0) {
                 --len;
       }
-      return (len == 0) ? ("\"0\"") : ("\"" + new EInteger (len, words,
+      return (
+  len == 0) ? (
+  "\"0\"") : ("\"" + new EInteger (len,
+ words,
         false).ToUnoptString()+"\"");
     }
 
-    private static short[] CombineWords(short [] a, int pos, int len,
-      short [] b, int pos2, int len2) {
+    private static short[] CombineWords(
+  short [] a,
+  int pos,
+  int len,
+  short [] b,
+  int pos2,
+  int len2) {
       short [] words = new short [len + len2];
       System.arraycopy (a, pos, words, 0, len);
       System.arraycopy (b, pos2, words, len, len2);
@@ -3335,8 +3351,9 @@ WordsShiftRightOne(bu, buc);
       return ivv;
     }
 
-    private void ToRadixStringDecimal(StringBuilder outputSB,
-                    boolean optimize) {
+    private void ToRadixStringDecimal(
+  StringBuilder outputSB,
+  boolean optimize) {
       int i = 0;
       if (this.wordCount >= 100 && optimize) {
         StringBuilder rightBuilder = new StringBuilder();
@@ -4967,6 +4984,7 @@ WordsShiftRightOne(bu, buc);
       }
       return (int)n;
     }
+
     private static int CountWords(short[] array, int pos, int len) {
       int n = len;
       while (n != 0 && array[pos + n - 1] == 0) {
@@ -6237,8 +6255,8 @@ WordsShiftRightOne(bu, buc);
           shift = targetLength-bitLength;
           bigintX = bigintX.ShiftLeft(shift);
         }
-        //DebugUtility.Log("this=" + (this.ToRadixString(16)));
-        //DebugUtility.Log("bigx=" + (bigintX.ToRadixString(16)));
+        // DebugUtility.Log("this=" + (this.ToRadixString(16)));
+        // DebugUtility.Log("bigx=" + (bigintX.ToRadixString(16)));
         short[] ww = bigintX.words;
         short[] w1 = new short[wordsPerPart];
         short[] w2 = new short[wordsPerPart];
@@ -6251,19 +6269,19 @@ WordsShiftRightOne(bu, buc);
         EInteger e2 = new EInteger(CountWords(w2), w2, false);
         EInteger e3 = new EInteger(CountWords(w3), w3, false);
         EInteger[] srem = e3.SqrtRemInternal(true);
-        //DebugUtility.Log("sqrt0({0})[depth={3}] = {1},{2}"
+        // DebugUtility.Log("sqrt0({0})[depth={3}] = {1},{2}"
         // , e3, srem[0], srem[1], 0);
-        //DebugUtility.Log("sqrt1({0})[depth={3}] = {1},{2}"
+        // DebugUtility.Log("sqrt1({0})[depth={3}] = {1},{2}"
         // , e3, srem2.get(0), srem2.get(1), 0);
-        //if (!srem[0].equals(srem2.get(0)) || !srem[1].equals(srem2.get(1))) {
+        // if (!srem[0].equals(srem2.get(0)) || !srem[1].equals(srem2.get(1))) {
   // throw new IllegalStateException(this.toString());
-   //}
+   // }
         EInteger[] qrem = srem[1].ShiftLeft(bitsPerPart).Add(e2).DivRem(
            srem[0].ShiftLeft(1));
         EInteger sqroot = srem[0].ShiftLeft(bitsPerPart).Add(qrem[0]);
         EInteger sqrem = qrem[1].ShiftLeft(bitsPerPart).Add(e1).Subtract(
            qrem[0].Multiply(qrem[0]));
-        //DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
+        // DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
         if (sqrem.signum()< 0) {
           if (useRem) {
             sqrem = sqrem.Add(sqroot.ShiftLeft(1)).Subtract(EInteger.FromInt32(1));
@@ -6296,7 +6314,7 @@ WordsShiftRightOne(bu, buc);
       bigintY = EInteger.FromInt32(1).ShiftLeft(powerBits);
       do {
         bigintX = bigintY;
-        //DebugUtility.Log("" + thisValue + " " + bigintX);
+        // DebugUtility.Log("" + thisValue + " " + bigintX);
         bigintY = thisValue.Divide(bigintX);
         bigintY = bigintY.Add(bigintX);
         bigintY = bigintY.ShiftRight(1);
