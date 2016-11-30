@@ -138,7 +138,7 @@ at: http://peteroupc.github.io/
     static EInteger FromInts(int[] intWords, int count) {
       short[] words = new short[count << 1];
       int j = 0;
-      for (int i = 0; i < count; ++i, j+=2) {
+      for (int i = 0; i < count; ++i, j += 2) {
         int w = intWords[i];
         words[j] = ((short)(w));
         words[j + 1] = ((short)(w >> 16));
@@ -199,7 +199,7 @@ at: http://peteroupc.github.io/
       int j = 0;
       if (!numIsNegative) {
         if (littleEndian) {
-         boolean odd=(len & 1) != 0;
+         boolean odd = (len & 1) != 0;
          if (odd) {
            --len;
          }
@@ -210,7 +210,7 @@ at: http://peteroupc.github.io/
           newreg[j] = ((short)nrj);
          }
          if (odd) {
-           newreg[len >> 1]=((short)(((int)bytes[len]) & 0xff));
+           newreg[len >> 1] = ((short)(((int)bytes[len]) & 0xff));
          }
         } else {
         for (int i = 0; i < len; i += 2, j++) {
@@ -1275,7 +1275,7 @@ at: http://peteroupc.github.io/
   blockCount);
       int bc3 = blockCount * 3;
       System.arraycopy(valueALow, posALow, tmp, bc3, blockCount);
-      java.util.Arrays.fill(tmp, blockCount*2, (blockCount*2)+(blockCount), (short)0);
+      java.util.Arrays.fill(tmp, blockCount * 2, (blockCount * 2)+(blockCount), (short)0);
       c = SubtractInternal(tmp, bc3, tmp, bc3, tmp, 0, blockCount * 3);
       if (c != 0) {
         while (true) {
@@ -1457,62 +1457,62 @@ at: http://peteroupc.github.io/
       }
     }
 
-    private static String WordsToString(short [] a, int pos, int len) {
-      while (len != 0 && a [pos + len - 1] == 0) {
+    private static String WordsToString(short[] a, int pos, int len) {
+      while (len != 0 && a[pos + len - 1] == 0) {
                 --len;
             }
       if (len == 0) {
  return "\"0\"";
 }
-      short [] words = new short [len];
-      System.arraycopy (a, pos, words, 0, len);
-      return "\""+ new EInteger (len, words, false).ToUnoptString()+"\"";
+      short[] words = new short[len];
+      System.arraycopy(a, pos, words, 0, len);
+      return "\"" + new EInteger(len, words, false).ToUnoptString() + "\"";
     }
 
-        private static String WordsToStringHex(short [] a, int pos, int len) {
-            while (len != 0 && a [pos + len - 1] == 0) {
+        private static String WordsToStringHex(short[] a, int pos, int len) {
+            while (len != 0 && a[pos + len - 1] == 0) {
                 --len;
             }
             if (len == 0) {
                 return "\"0\"";
             }
-            short [] words = new short [len];
-            System.arraycopy (a, pos, words, 0, len);
-      return "\"" + new EInteger (len, words, false).ToRadixString (16) +
-              "\"" ;
+            short[] words = new short[len];
+            System.arraycopy(a, pos, words, 0, len);
+      return "\"" + new EInteger(len, words, false).ToRadixString(16) +
+              "\"";
         }
 
         private static String WordsToString2(
-  short [] a,
+  short[] a,
   int pos,
   int len,
-  short [] b,
+  short[] b,
   int pos2,
   int len2) {
-      short [] words = new short [len + len2];
-      System.arraycopy (a, pos, words, 0, len);
-      System.arraycopy (b, pos2, words, len, len2);
-       len+=len2;
+      short[] words = new short[len + len2];
+      System.arraycopy(a, pos, words, 0, len);
+      System.arraycopy(b, pos2, words, len, len2);
+       len += len2;
       while (len != 0 && words[len - 1] == 0) {
                 --len;
       }
       return (
   len == 0) ? (
-  "\"0\"") : ("\"" + new EInteger (len,
+  "\"0\"") :("\"" + new EInteger(len,
  words,
-        false).ToUnoptString()+"\"");
+        false).ToUnoptString() + "\"");
     }
 
     private static short[] CombineWords(
-  short [] a,
+  short[] a,
   int pos,
   int len,
-  short [] b,
+  short[] b,
   int pos2,
   int len2) {
-      short [] words = new short [len + len2];
-      System.arraycopy (a, pos, words, 0, len);
-      System.arraycopy (b, pos2, words, len, len2);
+      short[] words = new short[len + len2];
+      System.arraycopy(a, pos, words, 0, len);
+      System.arraycopy(b, pos2, words, len, len2);
       return words;
     }
 
@@ -2182,7 +2182,7 @@ WordsShiftRightOne(bu, buc);
                   // number of previously known digits
                   return i + minDigits + 4;
                 }
-                if (minDigits>1) {
+                if (minDigits > 1) {
                  int maxDigitEstimate = i + maxDigits + 4;
                  int minDigitEstimate = i + minDigits + 4;
  return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigitEstimate))
@@ -3446,9 +3446,9 @@ WordsShiftRightOne(bu, buc);
         }
             StringBuilder sb = new StringBuilder();
             if (this.negative) {
-                sb.append ('-');
+                sb.append('-');
             }
-            this.Abs ().ToRadixStringDecimal (sb, false);
+            this.Abs().ToRadixStringDecimal(sb, false);
             return sb.toString();
     }
 
@@ -6245,14 +6245,15 @@ WordsShiftRightOne(bu, buc);
       }
       if (this.wordCount >= 4) {
         int wordsPerPart = (this.wordCount + 3) >> 2;
-        int bitsPerPart = wordsPerPart*16;
-        int totalBits = bitsPerPart*4;
+        int bitsPerPart = wordsPerPart * 16;
+        int totalBits = bitsPerPart * 4;
         int bitLength = this.GetUnsignedBitLength();
+        boolean bitLengthEven = (bitLength & 1) == 0;
         bigintX = this;
         int shift = 0;
-        if (bitLength<totalBits-1) {
-          int targetLength=(bitLength & 1) == 0 ? totalBits : (totalBits-1);
-          shift = targetLength-bitLength;
+        if (bitLength < totalBits - 1) {
+          int targetLength = bitLengthEven ? totalBits : (totalBits - 1);
+          shift = targetLength - bitLength;
           bigintX = bigintX.ShiftLeft(shift);
         }
         // DebugUtility.Log("this=" + (this.ToRadixString(16)));
@@ -6260,10 +6261,10 @@ WordsShiftRightOne(bu, buc);
         short[] ww = bigintX.words;
         short[] w1 = new short[wordsPerPart];
         short[] w2 = new short[wordsPerPart];
-        short[] w3 = new short[wordsPerPart*2];
+        short[] w3 = new short[wordsPerPart * 2];
         System.arraycopy(ww, 0, w1, 0, wordsPerPart);
         System.arraycopy(ww, wordsPerPart, w2, 0, wordsPerPart);
-        System.arraycopy(ww, wordsPerPart*2, w3, 0, wordsPerPart*2);
+        System.arraycopy(ww, wordsPerPart * 2, w3, 0, wordsPerPart * 2);
 
         EInteger e1 = new EInteger(CountWords(w1), w1, false);
         EInteger e2 = new EInteger(CountWords(w2), w2, false);
@@ -6282,7 +6283,7 @@ WordsShiftRightOne(bu, buc);
         EInteger sqrem = qrem[1].ShiftLeft(bitsPerPart).Add(e1).Subtract(
            qrem[0].Multiply(qrem[0]));
         // DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
-        if (sqrem.signum()< 0) {
+        if (sqrem.signum() < 0) {
           if (useRem) {
             sqrem = sqrem.Add(sqroot.ShiftLeft(1)).Subtract(EInteger.FromInt32(1));
           }

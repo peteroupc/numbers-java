@@ -382,8 +382,8 @@ package com.upokecenter.util;
 
     /**
      * Not documented yet.
-     * @param min Not documented yet.
-     * @param max Not documented yet.
+     * @param min Smallest possible number that will be generated.
+     * @param max Number that the randomly-generated number will be less than.
      * @return A 64-bit floating-point number.
      */
     public double Uniform(double min, double max) {
@@ -438,12 +438,13 @@ package com.upokecenter.util;
     }
 
     /**
-     * Not documented yet.
-     * @param minInclusive Not documented yet.
-     * @param maxExclusive Not documented yet.
+     * Generates a random 32-bit signed integer within a given range.
+     * @param minInclusive Smallest possible value of the random number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
      * @return A 32-bit signed integer.
      */
-    public int UniformInt(int minInclusive, int maxExclusive) {
+        public int UniformInt(int minInclusive, int maxExclusive) {
       if (minInclusive > maxExclusive) {
   throw new IllegalArgumentException("minInclusive (" + minInclusive +
     ") is more than " + maxExclusive);
@@ -464,9 +465,10 @@ if (minInclusive == maxExclusive) {
     }
 
     /**
-     * Not documented yet.
-     * @param minInclusive Not documented yet.
-     * @param maxExclusive Not documented yet.
+     * Generates a random 64-bit signed integer within a given range.
+     * @param minInclusive Smallest possible value of the random number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
      * @return A 64-bit signed integer.
      */
     public long UniformLong(long minInclusive, long maxExclusive) {
@@ -507,8 +509,10 @@ if (minInclusive == maxExclusive) {
     }
 
     /**
-     * Not documented yet.
-     * @param maxExclusive Not documented yet.
+     * Generates a random 32-bit signed integer 0 or greater and less than the
+     * given number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
      * @return A 32-bit signed integer.
      */
     public int UniformInt(int maxExclusive) {
@@ -564,11 +568,13 @@ if (minInclusive == maxExclusive) {
     }
 
     /**
-     * Not documented yet.
-     * @param maxExclusive Not documented yet.
+     * Generates a random 32-bit signed integer 0 or greater and less than the
+     * given number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
      * @return A 64-bit signed integer.
      */
-    public long UniformLong(long maxExclusive) {
+        public long UniformLong(long maxExclusive) {
       if (maxExclusive < 0) {
   throw new IllegalArgumentException("maxExclusive (" + maxExclusive +
     ") is less than 0");

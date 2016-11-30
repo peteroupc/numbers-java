@@ -90,18 +90,18 @@ at: http://peteroupc.github.io/
     private int flags;
     private EInteger unsignedNumerator;
 
-    private ERational () {
+    private ERational() {
 }
 
     private void Initialize(EInteger numerator, EInteger denominator) {
             if (numerator == null) {
-                throw new NullPointerException ("numerator");
+                throw new NullPointerException("numerator");
             }
             if (denominator == null) {
-                throw new NullPointerException ("denominator");
+                throw new NullPointerException("denominator");
             }
             if (denominator.isZero()) {
-                throw new IllegalArgumentException ("denominator is zero");
+                throw new IllegalArgumentException("denominator is zero");
             }
             boolean numNegative = numerator.signum() < 0;
             boolean denNegative = denominator.signum() < 0;
@@ -130,7 +130,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public ERational(EInteger numerator, EInteger denominator) {
-      this.Initialize (numerator, denominator);
+      this.Initialize(numerator, denominator);
     }
 
     /**
@@ -225,7 +225,7 @@ at: http://peteroupc.github.io/
   EInteger numerator,
   EInteger denominator) {
             ERational er = new ERational();
-      er.Initialize (numerator, denominator);
+      er.Initialize(numerator, denominator);
             return er;
     }
 

@@ -22,10 +22,10 @@ import com.upokecenter.numbers.*;
 
     public static void TestStringEqualRoundTrip(ERational obj) {
             String str = obj.toString();
-            ERational newobj = ERational.FromString (str);
+            ERational newobj = ERational.FromString(str);
             String str2 = newobj.toString();
-            TestCommon.AssertEqualsHashCode (obj, newobj);
-            TestCommon.AssertEqualsHashCode (str, str2);
+            TestCommon.AssertEqualsHashCode(obj, newobj);
+            TestCommon.AssertEqualsHashCode(str, str2);
         }
 
         public static void TestStringEqualRoundTrip(EInteger obj) {
