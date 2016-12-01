@@ -124,7 +124,7 @@ package com.upokecenter.util;
       if (df <= 0) {
         throw new IllegalArgumentException("df (" + df + ") is not greater than 0");
       }
-      return this.Gamma(df / 2, 2);
+      return this.Gamma(df / 2.0, 2);
     }
 
     /**
@@ -159,17 +159,17 @@ package com.upokecenter.util;
             (-1));
       }
       double v, x, u, x2, d, c;
-      d = (a < 1 ? 1 + a : a) - 1 / 3;
+      d = (a < 1 ? 1 + a : a) - (1.0 / 3.0);
       c = 1 / Math.sqrt(9 * d);
       do {
         do {
           x = this.Normal();
-          v = Math.pow(c * x + 1, 3);
+          v = Math.pow((c * x) + 1, 3);
         } while (v <= 0);
         u = this.Uniform();
         x2 = Math.pow(x, 2);
       } while (u >= 1 - (0.0331 * x2 * x2) &&
-               Math.log(u) >= 0.5 * x2 + d * (1 - v + Math.log(v)));
+               Math.log(u) >= (0.5 * x2) + (d * (1 - v + Math.log(v))));
       if (a < 1) {
         return d * v * Math.exp(this.Exponential() / -a);
       } else {
@@ -320,8 +320,7 @@ package com.upokecenter.util;
     }
     // The Normal, Exponential, Poisson, and
     // single-argument Gamma methods were adapted
-    // from "Seedable random number generator functions",
-    // a public-domain JavaScript file.
+    // from a third-party public-domain JavaScript file.
 
     /**
      * Generates a normally-distributed number with mean 0 and standard deviation
