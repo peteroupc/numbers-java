@@ -1176,7 +1176,7 @@ at: http://peteroupc.github.io/
           a = (a + (cc & 0xffff));
           b = ((int)minuendArr[minuendArrStart + i] & 0xffff) - (a & 0xffff);
           resultArr[resultStart + i] = ((short)b);
-          cc = ((a >> 16) & 0xffff) +((b >> 31) & 1);
+          cc = ((a >> 16) & 0xffff) + ((b >> 31) & 1);
         }
       a = cc & 0xffff;
       b = ((int)minuendArr[minuendArrStart + factor2Count] & 0xffff) - a;
