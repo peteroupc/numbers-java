@@ -2554,12 +2554,12 @@ Returns a decimal number with the same value but a new exponent. <p>Note
  following code example returns a fixed-point number with up to 20
  digits before and exactly 5 digits after the decimal point:</p>
  <code>  // After performing arithmetic operations, adjust  // the
- number to 5 digits after the decimal point number = number.Quantize(
- EInteger.FromInt32(-5),  // five digits after the decimal point
- EContext.ForPrecision(25)  // 25-digit precision); </code> <p>A
- fixed-point decimal arithmetic in which no digits come after the
- decimal point (a desired exponent of 0) is considered an "integer
- arithmetic".</p>
+ number to 5  // digits after the decimal point number =
+ number.Quantize(EInteger.FromInt32(-5),  // five digits after the
+ decimal point EContext.ForPrecision(25)  // 25-digit precision);
+ </code> <p>A fixed-point decimal arithmetic in which no digits come
+ after the decimal point (a desired exponent of 0) is considered an
+ "integer arithmetic".</p>
 
 **Parameters:**
 
@@ -2677,9 +2677,9 @@ Returns a decimal number with the same value as this object but with the
  result. The mantissa (significand) is ignored. The exponent is the
  number of fractional digits in the result, expressed as a negative
  number. Can also be positive, which eliminates lower-order places
- from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store

@@ -140,7 +140,7 @@ at: http://peteroupc.github.io/
       int j = 0;
       for (int i = 0; i < count; ++i, j += 2) {
         int w = intWords[i];
-        words[j] = ((short)(w));
+        words[j] = ((short)w);
         words[j + 1] = ((short)(w >> 16));
       }
       int newwordCount = words.length;
@@ -1496,9 +1496,8 @@ at: http://peteroupc.github.io/
       while (len != 0 && words[len - 1] == 0) {
                 --len;
       }
-      return (
-  len == 0) ? (
-  "\"0\"") :("\"" + new EInteger(len,
+      return (len == 0) ?
+  "\"0\"" : ("\"" + new EInteger(len,
  words,
         false).ToUnoptString() + "\"");
     }

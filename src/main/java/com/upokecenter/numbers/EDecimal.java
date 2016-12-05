@@ -2862,12 +2862,12 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the decimal point:</p>
      * <code>  // After performing arithmetic operations, adjust  // the
-     * number to 5 digits after the decimal point number = number.Quantize(
-     * EInteger.FromInt32(-5),  // five digits after the decimal point
-     * EContext.ForPrecision(25)  // 25-digit precision); </code> <p>A
-     * fixed-point decimal arithmetic in which no digits come after the
-     * decimal point (a desired exponent of 0) is considered an "integer
-     * arithmetic".</p>
+     * number to 5  // digits after the decimal point number =
+     * number.Quantize(EInteger.FromInt32(-5),  // five digits after the
+     * decimal point EContext.ForPrecision(25)  // 25-digit precision);
+     * </code> <p>A fixed-point decimal arithmetic in which no digits come
+     * after the decimal point (a desired exponent of 0) is considered an
+     * "integer arithmetic".</p>
      * @param desiredExponent The desired exponent for the result. The exponent is
      * the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
@@ -2998,9 +2998,9 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * result. The mantissa (significand) is ignored. The exponent is the
      * number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places
-     * from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -4079,7 +4079,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
         EInteger desiredHigh;
         EInteger desiredLow;
         boolean haveCopy = false;
-ec = (ec == null) ? ((EContext.UnlimitedHalfEven)) : ec;
+ec = (ec == null) ? (EContext.UnlimitedHalfEven) : ec;
         EContext originalEc = ec;
         if (!ec.getHasMaxPrecision()) {
           EInteger num = bigmantissa;

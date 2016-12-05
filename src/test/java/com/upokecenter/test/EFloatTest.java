@@ -1260,7 +1260,7 @@ public void TestPrecisionOneHalfEven() {
     }
 
     private static String EFToString(EFloat ef) {
-      return "[" + ef.getMantissa().ToRadixString(2) +"," +
+      return "[" + ef.getMantissa().ToRadixString(2) + "," +
         ef.getMantissa().GetUnsignedBitLength() + "," + ef.getExponent() + "]";
     }
 
