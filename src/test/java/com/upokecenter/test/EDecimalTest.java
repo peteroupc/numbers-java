@@ -449,8 +449,8 @@ import com.upokecenter.numbers.*;
         EDecimal.FromString("-32768")) >= 0 && enumber.compareTo(
         EDecimal.FromString("32767")) <= 0;
         isTruncated = enumber.ToEInteger().compareTo(
-      EInteger.FromString("-32768")) >= 0 && enumber.ToEInteger
-().compareTo(
+      EInteger.FromString("-32768")) >= 0 && enumber.ToEInteger(
+).compareTo(
         EInteger.FromString("32767")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(

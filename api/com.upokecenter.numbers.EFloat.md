@@ -2199,9 +2199,9 @@ Returns a binary float with the same value but a new exponent. <p>Note that
 * <code>desiredExponent</code> - The desired exponent for the result. The exponent is
  the number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
@@ -2242,9 +2242,9 @@ Returns a binary float with the same value but a new exponent. <p>Note that
 * <code>desiredExponentInt</code> - The desired exponent for the result. The exponent
  is the number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
@@ -2281,9 +2281,9 @@ Returns a binary float with the same value as this object but with the same
  result. The mantissa (significand) is ignored. The exponent is the
  number of fractional digits in the result, expressed as a negative
  number. Can also be positive, which eliminates lower-order places
- from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
@@ -2430,9 +2430,9 @@ Returns a binary float with the same value as this object but rounded to a
 * <code>exponent</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -2460,9 +2460,9 @@ Returns a binary float with the same value as this object but rounded to a
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -2491,9 +2491,9 @@ Returns a binary float with the same value as this object but rounded to the
 * <code>exponent</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -2537,9 +2537,9 @@ Returns a binary float with the same value as this object but rounded to an
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the sixteenth
+ (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+ 1000b). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
