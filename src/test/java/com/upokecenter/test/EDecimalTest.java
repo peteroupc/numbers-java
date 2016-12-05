@@ -3781,10 +3781,10 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
       Assert.assertEquals(
         EFloat.NegativeZero,
         EDecimal.NegativeZero.ToEFloat());
-      if (0.0f != EFloat.Zero.ToSingle()) {
+      if (EFloat.Zero.ToSingle() != 0.0f) {
         Assert.fail("Failed " + EFloat.Zero.ToDouble());
       }
-      if (0.0f != EFloat.Zero.ToDouble()) {
+      if (EFloat.Zero.ToDouble() != 0.0f) {
         Assert.fail("Failed " + EFloat.Zero.ToDouble());
       }
       EDecimal df;
@@ -4610,10 +4610,10 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
     @Test
     public void TestZero() {
       Assert.assertEquals(EDecimal.Zero, EDecimal.FromInt32(0));
-      if (0.0 != EDecimal.Zero.ToSingle()) {
+      if (EDecimal.Zero.ToSingle() != 0.0) {
         Assert.fail("Failed " + EDecimal.Zero.ToSingle());
       }
-      if (0.0 != EDecimal.Zero.ToDouble()) {
+      if (EDecimal.Zero.ToDouble() != 0.0) {
         Assert.fail("Failed " + EDecimal.Zero.ToDouble());
       }
     }
