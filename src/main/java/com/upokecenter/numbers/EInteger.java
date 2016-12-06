@@ -1499,8 +1499,8 @@ at: http://peteroupc.github.io/
       return (len == 0) ?
   "\"0\"" : ("\"" + new EInteger(
       len,
- words,
-        false).ToUnoptString() + "\"");
+      words,
+      false).ToUnoptString() + "\"");
     }
 
     private static short[] CombineWords(

@@ -1,12 +1,12 @@
 package com.upokecenter.util;
 
     /**
-     * Not documented yet.
+     * Interface for random-number generators.
      */
  public interface IRandomGen {
     /**
-     * Not documented yet.
-     * @return Not documented yet.
+     * Randomly generates a set of bytes.
+     * @return Number of bytes returned.
      */
     int GetBytes(byte[] bytes, int offset, int length);
   }

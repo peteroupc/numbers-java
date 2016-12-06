@@ -240,8 +240,8 @@ package com.upokecenter.util;
     /**
      * Generates a logarithmic normally-distributed number with the given mean and
      * standard deviation.
-     * @param mean Not documented yet.
-     * @param sd Not documented yet.
+     * @param mean The desired mean.
+     * @param sd Standard deviation.
      * @return A 64-bit floating-point number.
      */
     public double LogNormal(double mean, double sd) {
@@ -349,8 +349,8 @@ package com.upokecenter.util;
     /**
      * Generates a normally-distributed number with the given mean and standard
      * deviation.
-     * @param mean Not documented yet.
-     * @param sd Not documented yet.
+     * @param mean The desired mean.
+     * @param sd Standard deviation.
      * @return A 64-bit floating-point number.
      */
     public double Normal(double mean, double sd) {
@@ -390,12 +390,13 @@ package com.upokecenter.util;
         throw new IllegalArgumentException("min (" + min + ") is not less than " +
             max);
       }
-      return min + (max - min) * this.Uniform();
+      return min + ((max - min) * this.Uniform());
     }
 
     /**
-     * Not documented yet.
-     * @param max Not documented yet.
+     * Returns a uniformly-distributed 64-bit floating-point number from 0 and up,
+     * but less than the given number.
+     * @param max Number that the randomly-generated number will be less than.
      * @return A 64-bit floating-point number.
      */
     public double Uniform(double max) {
