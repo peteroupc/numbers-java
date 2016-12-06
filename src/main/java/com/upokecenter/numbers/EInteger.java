@@ -28,6 +28,8 @@ at: http://peteroupc.github.io/
     // TODO: Investigate using 32-bit words instead of 16-bit
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    private static final int RecursiveDivisionLimit = 40;
+
     private static final int RecursionLimit = 10;
 
     private static final int ShortMask = 0xffff;
@@ -1185,8 +1187,6 @@ at: http://peteroupc.github.io/
       return ((short)cc);
     }
 
-    private static final int RecursiveDivisionLimit = 40;
-
     private static void DivideThreeBlocksByTwo(
       short[] valueALow,
       int posALow,
@@ -1497,7 +1497,8 @@ at: http://peteroupc.github.io/
                 --len;
       }
       return (len == 0) ?
-  "\"0\"" : ("\"" + new EInteger(len,
+  "\"0\"" : ("\"" + new EInteger(
+      len,
  words,
         false).ToUnoptString() + "\"");
     }
