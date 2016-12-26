@@ -449,8 +449,8 @@ import com.upokecenter.numbers.*;
         EDecimal.FromString("-32768")) >= 0 && enumber.compareTo(
         EDecimal.FromString("32767")) <= 0;
         isTruncated = enumber.ToEInteger().compareTo(
-      EInteger.FromString("-32768")) >= 0 && enumber.ToEInteger(
-).compareTo(
+      EInteger.FromString("-32768")) >= 0 && enumber.ToEInteger()
+  .compareTo(
         EInteger.FromString("32767")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(
@@ -762,9 +762,13 @@ new Object();
 throw new IllegalStateException("", ex);
 }
       EDecimal ef = EDecimal.CreateNaN(EInteger.FromInt32(0), false, true, null);
-      if (!(ef.isNegative()))Assert.fail();
+      if (!(ef.isNegative())) {
+ Assert.fail();
+ }
       ef = EDecimal.CreateNaN(EInteger.FromInt32(0), false, false, null);
-      if (!(!ef.isNegative()))Assert.fail();
+      if (!(!ef.isNegative())) {
+ Assert.fail();
+ }
     }
 
     @Test
@@ -916,19 +920,25 @@ throw new IllegalStateException("", ex);
           continue;
         }
         EDecimal ed3 = ed1.Multiply(ed2);
-        if (!(ed3.isFinite()))Assert.fail();
+        if (!(ed3.isFinite())) {
+ Assert.fail();
+ }
         EDecimal ed4;
         ed4 = ed3.Divide(ed1);
         if (!ed1.isZero()) {
           TestCommon.CompareTestEqual(ed4, ed2);
         } else {
-          if (!(ed4.IsNaN()))Assert.fail();
+          if (!(ed4.IsNaN())) {
+ Assert.fail();
+ }
         }
         ed4 = ed3.Divide(ed2);
         if (!ed2.isZero()) {
           TestCommon.CompareTestEqual(ed4, ed1);
         } else {
-          if (!(ed4.IsNaN()))Assert.fail();
+          if (!(ed4.IsNaN())) {
+ Assert.fail();
+ }
         }
       }
       try {
@@ -2225,17 +2235,33 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsInfinity() {
-      if (!(EDecimal.PositiveInfinity.IsInfinity()))Assert.fail();
-      if (!(EDecimal.NegativeInfinity.IsInfinity()))Assert.fail();
-      if (EDecimal.Zero.IsInfinity())Assert.fail();
-      if (EDecimal.NaN.IsInfinity())Assert.fail();
+      if (!(EDecimal.PositiveInfinity.IsInfinity())) {
+ Assert.fail();
+ }
+      if (!(EDecimal.NegativeInfinity.IsInfinity())) {
+ Assert.fail();
+ }
+      if (EDecimal.Zero.IsInfinity()) {
+ Assert.fail();
+ }
+      if (EDecimal.NaN.IsInfinity()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsNaN() {
-      if (EDecimal.PositiveInfinity.IsNaN())Assert.fail();
-      if (EDecimal.NegativeInfinity.IsNaN())Assert.fail();
-      if (EDecimal.Zero.IsNaN())Assert.fail();
-      if (!(EDecimal.NaN.IsNaN()))Assert.fail();
+      if (EDecimal.PositiveInfinity.IsNaN()) {
+ Assert.fail();
+ }
+      if (EDecimal.NegativeInfinity.IsNaN()) {
+ Assert.fail();
+ }
+      if (EDecimal.Zero.IsNaN()) {
+ Assert.fail();
+ }
+      if (!(EDecimal.NaN.IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsNegative() {
@@ -2259,19 +2285,31 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsZero() {
-      if (EDecimal.NaN.isZero())Assert.fail();
-      if (EDecimal.SignalingNaN.isZero())Assert.fail();
+      if (EDecimal.NaN.isZero()) {
+ Assert.fail();
+ }
+      if (EDecimal.SignalingNaN.isZero()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestLog() {
-      if (!(EDecimal.One.Log(null).IsNaN()))Assert.fail();
-      if (!(EDecimal.One.Log(EContext.Unlimited).IsNaN()))Assert.fail();
+      if (!(EDecimal.One.Log(null).IsNaN())) {
+ Assert.fail();
+ }
+      if (!(EDecimal.One.Log(EContext.Unlimited).IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestLog10() {
-      if (!(EDecimal.One.Log10(null).IsNaN()))Assert.fail();
+      if (!(EDecimal.One.Log10(null).IsNaN())) {
+ Assert.fail();
+ }
       if (!(EDecimal.One.Log10(EContext.Unlimited)
-              .IsNaN()))Assert.fail();
+              .IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestMantissa() {
@@ -2581,13 +2619,21 @@ throw new IllegalStateException("", ex);
       for (int i = 0; i < 1000; ++i) {
         EDecimal ed = RandomObjects.RandomEDecimal(r);
         ed = ed.CopySign(EDecimal.Zero);
-        if (ed.isNegative())Assert.fail();
+        if (ed.isNegative()) {
+ Assert.fail();
+ }
         ed = ed.CopySign(EDecimal.NegativeZero);
-        if (!(ed.isNegative()))Assert.fail();
+        if (!(ed.isNegative())) {
+ Assert.fail();
+ }
       }
-      if (EDecimal.SignalingNaN.CopySign(EDecimal.Zero).isNegative())Assert.fail();
+      if (EDecimal.SignalingNaN.CopySign(EDecimal.Zero).isNegative()) {
+ Assert.fail();
+ }
       if (!(
-        EDecimal.SignalingNaN.CopySign(EDecimal.NegativeZero).isNegative()))Assert.fail();
+        EDecimal.SignalingNaN.CopySign(EDecimal.NegativeZero).isNegative())) {
+ Assert.fail();
+ }
     }
 
     @Test
@@ -2596,11 +2642,17 @@ throw new IllegalStateException("", ex);
       for (int i = 0; i < 1000; ++i) {
         EDecimal ed = RandomObjects.RandomEDecimal(r);
         ed = ed.CopySign(EDecimal.Zero);
-        if (!(ed.Negate().isNegative()))Assert.fail();
+        if (!(ed.Negate().isNegative())) {
+ Assert.fail();
+ }
         ed = ed.CopySign(EDecimal.NegativeZero);
-        if (!(ed.isNegative()))Assert.fail();
+        if (!(ed.isNegative())) {
+ Assert.fail();
+ }
       }
-      if (!(EDecimal.SignalingNaN.Negate().isNegative()))Assert.fail();
+      if (!(EDecimal.SignalingNaN.Negate().isNegative())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestNextMinus() {
@@ -2825,26 +2877,38 @@ throw new IllegalStateException("", ex);
 
     private static void AssertQuietNaN(String str) {
       EDecimal ed = EDecimal.FromString(str);
-      if (!(ed.IsQuietNaN()))Assert.fail();
+      if (!(ed.IsQuietNaN())) {
+ Assert.fail();
+ }
       if (!(EDecimal.FromDouble(ed.ToDouble()).IsQuietNaN()))Assert.fail();
       if (!(EDecimal.FromSingle(ed.ToSingle()).IsQuietNaN()))Assert.fail();
       EFloat ef = EFloat.FromString(str);
-      if (!(ef.IsQuietNaN()))Assert.fail();
+      if (!(ef.IsQuietNaN())) {
+ Assert.fail();
+ }
       if (!(EFloat.FromDouble(ef.ToDouble()).IsQuietNaN()))Assert.fail();
       if (!(EFloat.FromSingle(ef.ToSingle()).IsQuietNaN()))Assert.fail();
       ERational er = ERational.FromString(str);
-      if (!(er.IsQuietNaN()))Assert.fail();
+      if (!(er.IsQuietNaN())) {
+ Assert.fail();
+ }
       if (!(ERational.FromDouble(er.ToDouble()).IsQuietNaN()))Assert.fail();
       if (!(ERational.FromSingle(er.ToSingle()).IsQuietNaN()))Assert.fail();
     }
 
     private static void AssertSignalingNaN(String str) {
       EDecimal ed = EDecimal.FromString(str);
-      if (!(ed.IsSignalingNaN()))Assert.fail();
+      if (!(ed.IsSignalingNaN())) {
+ Assert.fail();
+ }
       EFloat ef = EFloat.FromString(str);
-      if (!(ef.IsSignalingNaN()))Assert.fail();
+      if (!(ef.IsSignalingNaN())) {
+ Assert.fail();
+ }
       ERational er = ERational.FromString(str);
-      if (!(er.IsSignalingNaN()))Assert.fail();
+      if (!(er.IsSignalingNaN())) {
+ Assert.fail();
+ }
       // NOTE: Unfortunately, .NET might quiet signaling
       // NaNs it may otherwise generate
       if (!(
@@ -3029,9 +3093,13 @@ EFloat.Create(
       dbl = DoubleOverflowToInfinity.Negate().ToDouble();
       if (!(((dbl) == Double.NEGATIVE_INFINITY)))Assert.fail();
       dbl = DoubleUnderflowToZero.ToDouble();
-      if (!(dbl == 0.0))Assert.fail();
+      if (!(dbl == 0.0)) {
+ Assert.fail();
+ }
       dbl = DoubleUnderflowToZero.Negate().ToDouble();
-      if (!(dbl == 0.0))Assert.fail();
+      if (!(dbl == 0.0)) {
+ Assert.fail();
+ }
       for (int i = 0; i < 10000; ++i) {
         EDecimal edec;
         if (fr.UniformInt(100) < 10) {
@@ -3048,16 +3116,22 @@ EFloat.Create(
         if (edec.isFinite()) {
           dbl = edec.ToDouble();
           if (((dbl) == Double.NEGATIVE_INFINITY)) {
-            if (!(edec.isNegative()))Assert.fail();
+            if (!(edec.isNegative())) {
+ Assert.fail();
+ }
   TestCommon.CompareTestGreaterEqual(edec.Abs(), DoubleOverflowToInfinity);
           } else if (((dbl) == Double.POSITIVE_INFINITY)) {
-            if (!(!edec.isNegative()))Assert.fail();
+            if (!(!edec.isNegative())) {
+ Assert.fail();
+ }
   TestCommon.CompareTestGreaterEqual(edec.Abs(), DoubleOverflowToInfinity);
           } else if (dbl == 0.0) {
             TestCommon.CompareTestLessEqual(edec.Abs(), DoubleUnderflowToZero);
 Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
           } else {
-            if (!(!Double.isNaN(dbl)))Assert.fail();
+            if (!(!Double.isNaN(dbl))) {
+ Assert.fail();
+ }
             edec = edec.Abs();
             TestCommon.CompareTestGreater(edec, DoubleUnderflowToZero);
             TestCommon.CompareTestLess(edec, DoubleOverflowToInfinity);
@@ -4535,9 +4609,13 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
       sng = SingleOverflowToInfinity.Negate().ToSingle();
       if (!(((sng) == Float.NEGATIVE_INFINITY)))Assert.fail();
       sng = SingleUnderflowToZero.ToSingle();
-      if (!(sng == 0.0))Assert.fail();
+      if (!(sng == 0.0)) {
+ Assert.fail();
+ }
       sng = SingleUnderflowToZero.Negate().ToSingle();
-      if (!(sng == 0.0))Assert.fail();
+      if (!(sng == 0.0)) {
+ Assert.fail();
+ }
       for (int i = 0; i < 10000; ++i) {
         EDecimal edec;
         if (fr.UniformInt(100) < 10) {
@@ -4554,16 +4632,22 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
         if (edec.isFinite()) {
           sng = edec.ToSingle();
           if (((sng) == Float.NEGATIVE_INFINITY)) {
-            if (!(edec.isNegative()))Assert.fail();
+            if (!(edec.isNegative())) {
+ Assert.fail();
+ }
   TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
           } else if (((sng) == Float.POSITIVE_INFINITY)) {
-            if (!(!edec.isNegative()))Assert.fail();
+            if (!(!edec.isNegative())) {
+ Assert.fail();
+ }
   TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
           } else if (sng == 0.0f) {
             TestCommon.CompareTestLessEqual(edec.Abs(), SingleUnderflowToZero);
 Assert.assertEquals(edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
           } else {
-            if (!(!Float.isNaN(sng)))Assert.fail();
+            if (!(!Float.isNaN(sng))) {
+ Assert.fail();
+ }
             edec = edec.Abs();
             TestCommon.CompareTestGreater(edec, SingleUnderflowToZero);
             TestCommon.CompareTestLess(edec, SingleOverflowToInfinity);
