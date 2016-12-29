@@ -838,10 +838,18 @@ DoTestDivide("4294901760", "281470681808895", "0");
     }
     @Test
     public void TestEquals() {
-      if (EInteger.FromInt32(1).equals(null))Assert.fail();
-      if (EInteger.FromInt32(0).equals(null))Assert.fail();
-      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0)))Assert.fail();
-      if (EInteger.FromInt32(0).equals(EInteger.FromInt32(1)))Assert.fail();
+      if (EInteger.FromInt32(1).equals(null)) {
+ Assert.fail();
+ }
+      if (EInteger.FromInt32(0).equals(null)) {
+ Assert.fail();
+ }
+      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0))) {
+ Assert.fail();
+ }
+      if (EInteger.FromInt32(0).equals(EInteger.FromInt32(1))) {
+ Assert.fail();
+ }
       TestCommon.AssertEqualsHashCode(
         EInteger.FromInt32(0),
         EInteger.FromString("-0"));
@@ -1621,12 +1629,22 @@ DoTestDivide("4294901760", "281470681808895", "0");
     }
     @Test
     public void TestGetSignedBit() {
-      if (EInteger.FromInt32(0).GetSignedBit(0))Assert.fail();
-      if (EInteger.FromInt32(0).GetSignedBit(1))Assert.fail();
-      if (!(EInteger.FromInt32(1).GetSignedBit(0)))Assert.fail();
-      if (EInteger.FromInt32(1).GetSignedBit(1))Assert.fail();
+      if (EInteger.FromInt32(0).GetSignedBit(0)) {
+ Assert.fail();
+ }
+      if (EInteger.FromInt32(0).GetSignedBit(1)) {
+ Assert.fail();
+ }
+      if (!(EInteger.FromInt32(1).GetSignedBit(0))) {
+ Assert.fail();
+ }
+      if (EInteger.FromInt32(1).GetSignedBit(1)) {
+ Assert.fail();
+ }
       for (int i = 0; i < 32; ++i) {
-        if (!(BigValueOf(-1).GetSignedBit(i)))Assert.fail();
+        if (!(BigValueOf(-1).GetSignedBit(i))) {
+ Assert.fail();
+ }
       }
     }
 
@@ -1644,12 +1662,20 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger posint = BigValueOf(valueLowBits[i]);
         EInteger negint = BigValueOf(-valueLowBits[i]);
         for (int j = 0; j < lowbit; ++j) {
-          if (posint.GetUnsignedBit(j))Assert.fail();
-          if (negint.GetUnsignedBit(j))Assert.fail();
+          if (posint.GetUnsignedBit(j)) {
+ Assert.fail();
+ }
+          if (negint.GetUnsignedBit(j)) {
+ Assert.fail();
+ }
         }
         if (lowbit >= 0) {
-          if (!(posint.GetUnsignedBit(lowbit)))Assert.fail();
-          if (!(negint.GetUnsignedBit(lowbit)))Assert.fail();
+          if (!(posint.GetUnsignedBit(lowbit))) {
+ Assert.fail();
+ }
+          if (!(negint.GetUnsignedBit(lowbit))) {
+ Assert.fail();
+ }
         }
       }
     }
@@ -1703,34 +1729,76 @@ DoTestDivide("4294901760", "281470681808895", "0");
         Assert.assertEquals(mod.isZero(), bigintA.isEven());
         if (bigintA.isEven()) {
           bigintA = bigintA.Add(EInteger.FromInt32(1));
-          if (!(!bigintA.isEven()))Assert.fail();
+          if (!(!bigintA.isEven())) {
+ Assert.fail();
+ }
         } else {
           bigintA = bigintA.Add(EInteger.FromInt32(1));
-          if (!(bigintA.isEven()))Assert.fail();
+          if (!(bigintA.isEven())) {
+ Assert.fail();
+ }
         }
       }
     }
     @Test
     public void TestIsPowerOfTwo() {
-      if (!(BigValueOf(1).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(2).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(4).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(8).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(16).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(32).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(64).isPowerOfTwo()))Assert.fail();
-      if (BigValueOf(65535).isPowerOfTwo())Assert.fail();
-      if (!(BigValueOf(65536).isPowerOfTwo()))Assert.fail();
-      if (BigValueOf(65537).isPowerOfTwo())Assert.fail();
-      if (!(BigValueOf(0x100000).isPowerOfTwo()))Assert.fail();
-      if (!(BigValueOf(0x10000000).isPowerOfTwo()))Assert.fail();
-      if (BigValueOf(0).isPowerOfTwo())Assert.fail();
-      if (BigValueOf(-1).isPowerOfTwo())Assert.fail();
-      if (BigValueOf(-2).isPowerOfTwo())Assert.fail();
-      if (BigValueOf(-3).isPowerOfTwo())Assert.fail();
-      if (BigValueOf(-4).isPowerOfTwo())Assert.fail();
-      if (BigValueOf(-5).isPowerOfTwo())Assert.fail();
-      if (BigValueOf(-65536).isPowerOfTwo())Assert.fail();
+      if (!(BigValueOf(1).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(2).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(4).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(8).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(16).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(32).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(64).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (BigValueOf(65535).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(65536).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (BigValueOf(65537).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(0x100000).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (!(BigValueOf(0x10000000).isPowerOfTwo())) {
+ Assert.fail();
+ }
+      if (BigValueOf(0).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (BigValueOf(-1).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (BigValueOf(-2).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (BigValueOf(-3).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (BigValueOf(-4).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (BigValueOf(-5).isPowerOfTwo()) {
+ Assert.fail();
+ }
+      if (BigValueOf(-65536).isPowerOfTwo()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsZero() {
@@ -1855,8 +1923,12 @@ DoTestDivide("4294901760", "281470681808895", "0");
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0)))Assert.fail();
-      if (verybig.equals(EInteger.FromInt32(0)))Assert.fail();
+      if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0))) {
+ Assert.fail();
+ }
+      if (verybig.equals(EInteger.FromInt32(0))) {
+ Assert.fail();
+ }
       if (EInteger.FromInt32(1).equals(EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))))Assert.fail();
       Assert.assertEquals(1, EInteger.FromInt32(1).compareTo(null));
       EInteger[] tmpsqrt = EInteger.FromInt32(0).SqrtRem();
@@ -1993,13 +2065,24 @@ DoTestDivide("4294901760", "281470681808895", "0");
 
     @Test(timeout = 5000)
     public void TestMultiplyDivideSpecific() {
-TestMultiplyDivideOne(
+String
+
+  strParam =
+  "D28E831580A0A69BD2259283B7E894A5B766C1FC9C93E776AB78E226A66983788A36C8458A1EAB8DA505CBFBCD41F7A4953CF426CCB884CCFF85B189D2759102C0CCF7A3DE909AE486B38A6DEC0B86FBE95DA041D8FEC163D24D95CEECCDBC7DE2FD88A99CF9A25AB3078E4BBFE3A2BBAD61C53CEA68E40BA3D7D66296C6CE66A6E4DC32E1A0F020DAD8820C9A698282EB5ADDC9CFF8F42ED565";
+{
+EInteger valueEObjectTemp = EInteger.FromRadixString(
+  strParam,
+  16);
+strParam =
+
+  "E29BE968D480A9FEE535E95FD35DD081868CDF4ED961B2148530A98AD961D4249920AE57AF49E6E1BB50940FD710E5C598249829FA8886C6A63D853BC52CE8D1D2E8B6EF927DC5AF9D14F3AFA2669EC4DAB7FD88F15BACB79149";
+
+        EInteger valueEObjectTemp2 =
   EInteger.FromRadixString(
-  "D28E831580A0A69BD2259283B7E894A5B766C1FC9C93E776AB78E226A66983788A36C8458A1EAB8DA505CBFBCD41F7A4953CF426CCB884CCFF85B189D2759102C0CCF7A3DE909AE486B38A6DEC0B86FBE95DA041D8FEC163D24D95CEECCDBC7DE2FD88A99CF9A25AB3078E4BBFE3A2BBAD61C53CEA68E40BA3D7D66296C6CE66A6E4DC32E1A0F020DAD8820C9A698282EB5ADDC9CFF8F42ED565",
-  16),
-  EInteger.FromRadixString(
-  "E29BE968D480A9FEE535E95FD35DD081868CDF4ED961B2148530A98AD961D4249920AE57AF49E6E1BB50940FD710E5C598249829FA8886C6A63D853BC52CE8D1D2E8B6EF927DC5AF9D14F3AFA2669EC4DAB7FD88F15BACB79149",
-  16));
+  strParam,
+  16);
+TestMultiplyDivideOne(valueEObjectTemp, valueEObjectTemp2);
+}
 TestMultiplyDivideOne(
   EInteger.FromRadixString("E6E8FFFFFFFF", 16),
   EInteger.FromRadixString("E6E8FFFFFFFF", 16));

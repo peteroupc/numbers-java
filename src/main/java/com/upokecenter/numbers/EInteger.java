@@ -1184,7 +1184,7 @@ at: http://peteroupc.github.io/
       b = ((int)minuendArr[minuendArrStart + factor2Count] & 0xffff) - a;
       resultArr[resultStart + factor2Count] = ((short)b);
       cc = (b >> 31) & 1;
-      return ((short)cc);
+      return (short)cc;
     }
 
     private static void DivideThreeBlocksByTwo(
@@ -1445,7 +1445,12 @@ at: http://peteroupc.github.io/
           // DebugUtility.Log("quot len=" + quot.length + ",bb=" + blocksB +
           // ",size=" + size + " [" + countA + "," + countB + "]");
           if (size > 0) {
-            System.arraycopy(tmprem, blocksB * 3, quot, posQuot + i * blocksB, size);
+          System.arraycopy(
+  tmprem,
+ blocksB * 3,
+ quot,
+ posQuot + (i * blocksB),
+              size);
           }
         }
         // Set the high part of the sub-dividend with the remainder
@@ -5046,11 +5051,11 @@ WordsShiftRightOne(bu, buc);
       if ((x >> 31) == 0) {
         // x is already nonnegative
         int iy = ((int)y) & 0xffff;
-        return ((short)((int)x / iy));
+        return (short)((int)x / iy);
       } else {
         long longX = ((long)x) & 0xffffffffL;
         int iy = ((int)y) & 0xffff;
-        return ((short)(longX / iy));
+        return (short)(longX / iy);
       }
     }
 
@@ -5098,7 +5103,7 @@ WordsShiftRightOne(bu, buc);
         --ds;
         --qs;
       }
-      return ((short)rem);
+      return (short)rem;
     }
 
     private static short FastDivideAndRemainderTen(
@@ -5122,7 +5127,7 @@ WordsShiftRightOne(bu, buc);
         --ds;
         --qs;
       }
-      return ((short)rem);
+      return (short)rem;
     }
 
     private static short FastDivideAndRemainder(
@@ -5167,7 +5172,7 @@ WordsShiftRightOne(bu, buc);
           --qs;
         }
       }
-      return ((short)rem);
+      return (short)rem;
     }
 
     private static short FastRemainder(
@@ -5935,7 +5940,7 @@ WordsShiftRightOne(bu, buc);
           carry = (u & 0xffff) >> sb16;
         }
       }
-      return ((short)carry);
+      return (short)carry;
     }
 
     private static void ShiftWordsLeftByWords(
@@ -6341,7 +6346,7 @@ WordsShiftRightOne(bu, buc);
       if (val < 0 || val > 255) {
         throw new ArithmeticException("This Object's value is out of range");
       }
-      return ((byte)(val & 0xff));
+      return (byte)(val & 0xff);
     }
 
     /**
@@ -6351,7 +6356,7 @@ WordsShiftRightOne(bu, buc);
      */
     public byte ToByteUnchecked() {
       int val = this.ToInt32Unchecked();
-      return ((byte)(val & 0xff));
+      return (byte)(val & 0xff);
     }
 
     /**
@@ -6376,7 +6381,7 @@ WordsShiftRightOne(bu, buc);
       if (val < -32768 || val > 32767) {
         throw new ArithmeticException("This Object's value is out of range");
       }
-      return ((short)(val & 0xffff));
+      return (short)(val & 0xffff);
     }
 
     /**
@@ -6386,7 +6391,7 @@ WordsShiftRightOne(bu, buc);
      */
     public short ToInt16Unchecked() {
       int val = this.ToInt32Unchecked();
-      return ((short)(val & 0xffff));
+      return (short)(val & 0xffff);
     }
 
     /**
