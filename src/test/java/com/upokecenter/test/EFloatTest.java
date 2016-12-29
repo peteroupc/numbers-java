@@ -140,9 +140,13 @@ new Object();
 throw new IllegalStateException("", ex);
 }
       EFloat ef = EFloat.CreateNaN(EInteger.FromInt32(0), false, true, null);
-      if (!(ef.isNegative()))Assert.fail();
+      if (!(ef.isNegative())) {
+ Assert.fail();
+ }
       ef = EFloat.CreateNaN(EInteger.FromInt32(0), false, false, null);
-      if (!(!ef.isNegative()))Assert.fail();
+      if (!(!ef.isNegative())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestDivide() {
@@ -195,19 +199,25 @@ Assert.assertEquals(
           continue;
         }
         EFloat ed3 = ed1.Multiply(ed2);
-        if (!(ed3.isFinite()))Assert.fail();
+        if (!(ed3.isFinite())) {
+ Assert.fail();
+ }
         EFloat ed4;
         ed4 = ed3.Divide(ed1);
         if (!ed1.isZero()) {
           TestCommon.CompareTestEqual(ed4, ed2);
         } else {
-          if (!(ed4.IsNaN()))Assert.fail();
+          if (!(ed4.IsNaN())) {
+ Assert.fail();
+ }
         }
         ed4 = ed3.Divide(ed2);
         if (!ed2.isZero()) {
           TestCommon.CompareTestEqual(ed4, ed1);
         } else {
-          if (!(ed4.IsNaN()))Assert.fail();
+          if (!(ed4.IsNaN())) {
+ Assert.fail();
+ }
         }
       }
     }
@@ -613,17 +623,33 @@ public void TestPrecisionOneHalfEven() {
 
     @Test
     public void TestIsInfinity() {
-      if (!(EFloat.PositiveInfinity.IsInfinity()))Assert.fail();
-      if (!(EFloat.NegativeInfinity.IsInfinity()))Assert.fail();
-      if (EFloat.Zero.IsInfinity())Assert.fail();
-      if (EFloat.NaN.IsInfinity())Assert.fail();
+      if (!(EFloat.PositiveInfinity.IsInfinity())) {
+ Assert.fail();
+ }
+      if (!(EFloat.NegativeInfinity.IsInfinity())) {
+ Assert.fail();
+ }
+      if (EFloat.Zero.IsInfinity()) {
+ Assert.fail();
+ }
+      if (EFloat.NaN.IsInfinity()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsNaN() {
-      if (EFloat.PositiveInfinity.IsNaN())Assert.fail();
-      if (EFloat.NegativeInfinity.IsNaN())Assert.fail();
-      if (EFloat.Zero.IsNaN())Assert.fail();
-      if (!(EFloat.NaN.IsNaN()))Assert.fail();
+      if (EFloat.PositiveInfinity.IsNaN()) {
+ Assert.fail();
+ }
+      if (EFloat.NegativeInfinity.IsNaN()) {
+ Assert.fail();
+ }
+      if (EFloat.Zero.IsNaN()) {
+ Assert.fail();
+ }
+      if (!(EFloat.NaN.IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsNegative() {
@@ -647,19 +673,31 @@ public void TestPrecisionOneHalfEven() {
     }
     @Test
     public void TestIsZero() {
-      if (EFloat.NaN.isZero())Assert.fail();
-      if (EFloat.SignalingNaN.isZero())Assert.fail();
+      if (EFloat.NaN.isZero()) {
+ Assert.fail();
+ }
+      if (EFloat.SignalingNaN.isZero()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestLog() {
-      if (!(EFloat.One.Log(null).IsNaN()))Assert.fail();
-      if (!(EFloat.One.Log(EContext.Unlimited).IsNaN()))Assert.fail();
+      if (!(EFloat.One.Log(null).IsNaN())) {
+ Assert.fail();
+ }
+      if (!(EFloat.One.Log(EContext.Unlimited).IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestLog10() {
-      if (!(EFloat.One.Log10(null).IsNaN()))Assert.fail();
+      if (!(EFloat.One.Log10(null).IsNaN())) {
+ Assert.fail();
+ }
       if (!(EFloat.One.Log10(EContext.Unlimited)
-              .IsNaN()))Assert.fail();
+              .IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestMantissa() {
@@ -861,7 +899,7 @@ public void TestPrecisionOneHalfEven() {
   ,
 
   "89884656743115795386465259539451236680898848947115328636715040578866337902750481566354238661203768010560056939935696678829394884407208311246423715319737062188883946712432742638151109800623047059726541476042502884419075341171231440736956555270413618581675255342293149119973622969239858152417678164812112068608"
-      };
+    };
 
     private static final int[] ValueFPIntegersExp = { 0, 1, 2, 3, 48, 49,
       50, 51, 52,
