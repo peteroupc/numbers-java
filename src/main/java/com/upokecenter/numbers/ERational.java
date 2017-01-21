@@ -1474,7 +1474,7 @@ at: http://peteroupc.github.io/
       }
       EInteger ad = this.getNumerator().Multiply(otherValue.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
-      EInteger quo = ad.Divide(bc);  // Find the integer quotient
+      EInteger quo = ad.Divide(bc); // Find the integer quotient
       EInteger tnum = quo.Multiply(otherValue.getNumerator());
       EInteger tden = otherValue.getDenominator();
       EInteger thisDen = this.getDenominator();

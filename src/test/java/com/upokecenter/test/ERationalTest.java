@@ -192,9 +192,13 @@ new Object();
 throw new IllegalStateException("", ex);
 }
       ERational ef = ERational.CreateNaN(EInteger.FromInt32(0), false, true);
-      if (!(ef.isNegative()))Assert.fail();
+      if (!(ef.isNegative())) {
+ Assert.fail();
+ }
       ef = ERational.CreateNaN(EInteger.FromInt32(0), false, false);
-      if (!(!ef.isNegative()))Assert.fail();
+      if (!(!ef.isNegative())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestDenominator() {
@@ -690,25 +694,51 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsFinite() {
-      if (ERational.PositiveInfinity.isFinite())Assert.fail();
-      if (ERational.NegativeInfinity.isFinite())Assert.fail();
-      if (!(ERational.Zero.isFinite()))Assert.fail();
-      if (ERational.NaN.isFinite())Assert.fail();
+      if (ERational.PositiveInfinity.isFinite()) {
+ Assert.fail();
+ }
+      if (ERational.NegativeInfinity.isFinite()) {
+ Assert.fail();
+ }
+      if (!(ERational.Zero.isFinite())) {
+ Assert.fail();
+ }
+      if (ERational.NaN.isFinite()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsInfinity() {
-      if (!(ERational.PositiveInfinity.IsInfinity()))Assert.fail();
-      if (!(ERational.NegativeInfinity.IsInfinity()))Assert.fail();
-      if (ERational.Zero.IsInfinity())Assert.fail();
-      if (ERational.NaN.IsInfinity())Assert.fail();
+      if (!(ERational.PositiveInfinity.IsInfinity())) {
+ Assert.fail();
+ }
+      if (!(ERational.NegativeInfinity.IsInfinity())) {
+ Assert.fail();
+ }
+      if (ERational.Zero.IsInfinity()) {
+ Assert.fail();
+ }
+      if (ERational.NaN.IsInfinity()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsNaN() {
-      if (ERational.PositiveInfinity.IsNaN())Assert.fail();
-      if (ERational.NegativeInfinity.IsNaN())Assert.fail();
-      if (ERational.Zero.IsNaN())Assert.fail();
-      if (ERational.One.IsNaN())Assert.fail();
-      if (!(ERational.NaN.IsNaN()))Assert.fail();
+      if (ERational.PositiveInfinity.IsNaN()) {
+ Assert.fail();
+ }
+      if (ERational.NegativeInfinity.IsNaN()) {
+ Assert.fail();
+ }
+      if (ERational.Zero.IsNaN()) {
+ Assert.fail();
+ }
+      if (ERational.One.IsNaN()) {
+ Assert.fail();
+ }
+      if (!(ERational.NaN.IsNaN())) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsNegative() {
@@ -716,19 +746,39 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsNegativeInfinity() {
-      if (ERational.PositiveInfinity.IsNegativeInfinity())Assert.fail();
-      if (!(ERational.NegativeInfinity.IsNegativeInfinity()))Assert.fail();
-      if (ERational.Zero.IsNegativeInfinity())Assert.fail();
-      if (ERational.One.IsNegativeInfinity())Assert.fail();
-      if (ERational.NaN.IsNegativeInfinity())Assert.fail();
+      if (ERational.PositiveInfinity.IsNegativeInfinity()) {
+ Assert.fail();
+ }
+      if (!(ERational.NegativeInfinity.IsNegativeInfinity())) {
+ Assert.fail();
+ }
+      if (ERational.Zero.IsNegativeInfinity()) {
+ Assert.fail();
+ }
+      if (ERational.One.IsNegativeInfinity()) {
+ Assert.fail();
+ }
+      if (ERational.NaN.IsNegativeInfinity()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsPositiveInfinity() {
-      if (!(ERational.PositiveInfinity.IsPositiveInfinity()))Assert.fail();
-      if (ERational.NegativeInfinity.IsPositiveInfinity())Assert.fail();
-      if (ERational.Zero.IsPositiveInfinity())Assert.fail();
-      if (ERational.One.IsPositiveInfinity())Assert.fail();
-      if (ERational.NaN.IsPositiveInfinity())Assert.fail();
+      if (!(ERational.PositiveInfinity.IsPositiveInfinity())) {
+ Assert.fail();
+ }
+      if (ERational.NegativeInfinity.IsPositiveInfinity()) {
+ Assert.fail();
+ }
+      if (ERational.Zero.IsPositiveInfinity()) {
+ Assert.fail();
+ }
+      if (ERational.One.IsPositiveInfinity()) {
+ Assert.fail();
+ }
+      if (ERational.NaN.IsPositiveInfinity()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestIsQuietNaN() {
@@ -740,13 +790,27 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsZero() {
-      if (!(ERational.NegativeZero.isZero()))Assert.fail();
-      if (!(ERational.Zero.isZero()))Assert.fail();
-      if (ERational.One.isZero())Assert.fail();
-      if (ERational.NegativeInfinity.isZero())Assert.fail();
-      if (ERational.PositiveInfinity.isZero())Assert.fail();
-      if (ERational.NaN.isZero())Assert.fail();
-      if (ERational.SignalingNaN.isZero())Assert.fail();
+      if (!(ERational.NegativeZero.isZero())) {
+ Assert.fail();
+ }
+      if (!(ERational.Zero.isZero())) {
+ Assert.fail();
+ }
+      if (ERational.One.isZero()) {
+ Assert.fail();
+ }
+      if (ERational.NegativeInfinity.isZero()) {
+ Assert.fail();
+ }
+      if (ERational.PositiveInfinity.isZero()) {
+ Assert.fail();
+ }
+      if (ERational.NaN.isZero()) {
+ Assert.fail();
+ }
+      if (ERational.SignalingNaN.isZero()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestMultiply() {

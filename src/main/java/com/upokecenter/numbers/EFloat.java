@@ -344,7 +344,7 @@ at: http://peteroupc.github.io/
           EInteger.FromInt32(0),
           value[0]);
       }
-      value[1] &= 0xfffff;  // Mask out the exponent and sign
+      value[1] &= 0xfffff; // Mask out the exponent and sign
       if (floatExponent == 0) {
         ++floatExponent;
       } else {
@@ -1891,19 +1891,19 @@ at: http://peteroupc.github.io/
      * binary float has a fixed number of digits after the radix point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the radix point:</p> <code>
-     *  // After performing arithmetic operations, adjust  // the number to 5
-     *  // digits after the radix point number = number.Quantize(
-     * EInteger.FromInt32(-5),  // five digits after the radix point
-     * EContext.ForPrecision(25)  // 25-digit precision); </code> <p>A
+     * // After performing arithmetic operations, adjust // the number to 5
+     * // digits after the radix point number = number.Quantize(
+     * EInteger.FromInt32(-5), // five digits after the radix point
+     * EContext.ForPrecision(25) // 25-digit precision); </code> <p>A
      * fixed-point binary arithmetic in which no digits come after the radix
      * point (a desired exponent of 0) is considered an "integer
      * arithmetic".</p>
      * @param desiredExponent The desired exponent for the result. The exponent is
      * the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -1935,18 +1935,18 @@ at: http://peteroupc.github.io/
      * binary float has a fixed number of digits after the radix point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the radix point:</p> <code>
-     *  // After performing arithmetic operations, adjust  // the number to 5
-     * digits after the radix point number = number.Quantize(-5,  // five
-     * digits after the radix point EContext.ForPrecision(25)  // 25-digit
+     * // After performing arithmetic operations, adjust // the number to 5
+     * digits after the radix point number = number.Quantize(-5, // five
+     * digits after the radix point EContext.ForPrecision(25) // 25-digit
      * precision); </code> <p>A fixed-point binary arithmetic in which no
      * digits come after the radix point (a desired exponent of 0) is
      * considered an "integer arithmetic".</p>
      * @param desiredExponentInt The desired exponent for the result. The exponent
      * is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -2121,9 +2121,9 @@ at: http://peteroupc.github.io/
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2149,9 +2149,9 @@ at: http://peteroupc.github.io/
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2178,9 +2178,9 @@ at: http://peteroupc.github.io/
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2224,9 +2224,9 @@ at: http://peteroupc.github.io/
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the thousandth
-     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
-     * value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the

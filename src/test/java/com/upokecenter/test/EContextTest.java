@@ -313,11 +313,17 @@ new Object();
     @Test
     public void TestWithSimplified() {
       EContext pc = new EContext(0, ERounding.HalfUp, 0, 5, true);
-      if (pc.isSimplified())Assert.fail();
+      if (pc.isSimplified()) {
+ Assert.fail();
+ }
       pc = pc.WithSimplified(true);
-      if (!(pc.isSimplified()))Assert.fail();
+      if (!(pc.isSimplified())) {
+ Assert.fail();
+ }
       pc = pc.WithSimplified(false);
-      if (pc.isSimplified())Assert.fail();
+      if (pc.isSimplified()) {
+ Assert.fail();
+ }
     }
     @Test
     public void TestWithTraps() {
@@ -326,8 +332,12 @@ new Object();
     @Test
     public void TestWithUnlimitedExponents() {
       EContext pc = new EContext(0, ERounding.HalfUp, 0, 5, true);
-      if (!(pc.getHasExponentRange()))Assert.fail();
+      if (!(pc.getHasExponentRange())) {
+ Assert.fail();
+ }
       pc = pc.WithUnlimitedExponents();
-      if (pc.getHasExponentRange())Assert.fail();
+      if (pc.getHasExponentRange()) {
+ Assert.fail();
+ }
     }
   }
