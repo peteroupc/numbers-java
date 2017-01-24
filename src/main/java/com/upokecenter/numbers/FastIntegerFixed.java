@@ -8,8 +8,8 @@ at: http://peteroupc.github.io/
  */
 
   final class FastIntegerFixed implements Comparable<FastIntegerFixed> {
-    private int smallValue; // if integerMode is 0
-    private EInteger largeValue; // if integerMode is 2
+    private int smallValue;  // if integerMode is 0
+    private EInteger largeValue;  // if integerMode is 2
     private int integerMode;
 
     public static final FastIntegerFixed Zero = new FastIntegerFixed(0);

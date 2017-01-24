@@ -2186,10 +2186,10 @@ Returns a binary float with the same value but a new exponent. <p>Note that
  binary float has a fixed number of digits after the radix point. The
  following code example returns a fixed-point number with up to 20
  digits before and exactly 5 digits after the radix point:</p> <code>
- // After performing arithmetic operations, adjust // the number to 5
- // digits after the radix point number = number.Quantize(
- EInteger.FromInt32(-5), // five digits after the radix point
- EContext.ForPrecision(25) // 25-digit precision); </code> <p>A
+  // After performing arithmetic operations, adjust  // the number to 5
+  // digits after the radix point number = number.Quantize(
+ EInteger.FromInt32(-5),  // five digits after the radix point
+ EContext.ForPrecision(25)  // 25-digit precision); </code> <p>A
  fixed-point binary arithmetic in which no digits come after the radix
  point (a desired exponent of 0) is considered an "integer
  arithmetic".</p>
@@ -2230,9 +2230,9 @@ Returns a binary float with the same value but a new exponent. <p>Note that
  binary float has a fixed number of digits after the radix point. The
  following code example returns a fixed-point number with up to 20
  digits before and exactly 5 digits after the radix point:</p> <code>
- // After performing arithmetic operations, adjust // the number to 5
- digits after the radix point number = number.Quantize(-5, // five
- digits after the radix point EContext.ForPrecision(25) // 25-digit
+  // After performing arithmetic operations, adjust  // the number to 5
+ digits after the radix point number = number.Quantize(-5,  // five
+ digits after the radix point EContext.ForPrecision(25)  // 25-digit
  precision); </code> <p>A fixed-point binary arithmetic in which no
  digits come after the radix point (a desired exponent of 0) is
  considered an "integer arithmetic".</p>

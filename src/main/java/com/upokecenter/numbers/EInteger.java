@@ -239,7 +239,7 @@ at: http://peteroupc.github.io/
           newreg[j] = ((short)nrj);
         }
         for (; j < newreg.length; ++j) {
-          newreg[j] = ((short)0xffff); // sign extend remaining words
+          newreg[j] = ((short)0xffff);  // sign extend remaining words
         }
         TwosComplement(newreg, 0, (int)newreg.length);
       }
@@ -892,7 +892,7 @@ at: http://peteroupc.github.io/
             minuend.words,
             0,
             words1Size);
-          diffNeg = true; // difference will be negative
+          diffNeg = true;  // difference will be negative
         }
       } else if (words1Size > words2Size) {
         // words1 is greater than words2
@@ -3715,9 +3715,9 @@ WordsShiftRightOne(bu, buc);
     // Multiplies two operands of different sizes
     private static void AsymmetricMultiply(
       short[] resultArr,
-      int resultStart, // uses words1Count + words2Count
+      int resultStart,  // uses words1Count + words2Count
       short[] tempArr,
-      int tempStart, // uses words1Count + words2Count
+      int tempStart,  // uses words1Count + words2Count
       short[] words1,
       int words1Start,
       int words1Count,
@@ -4853,10 +4853,10 @@ WordsShiftRightOne(bu, buc);
       short[] productArr,
       int cstart,
       short[] tempArr,
-      int tempStart, // uses bcount*4 space
+      int tempStart,  // uses bcount*4 space
       short[] words1,
       int astart,
-      int acount, // Equal size or longer
+      int acount,  // Equal size or longer
       short[] words2,
       int bstart,
       int bcount) {
@@ -4898,9 +4898,9 @@ WordsShiftRightOne(bu, buc);
           } else {
             AsymmetricMultiply(
               tempArr,
-              tempStart, // uses diff + bcount space
+              tempStart,  // uses diff + bcount space
               tempArr,
-              tempStart + diff + bcount, // uses diff + bcount
+              tempStart + diff + bcount,  // uses diff + bcount
               words1,
               astart + i,
               diff,
@@ -5413,14 +5413,14 @@ WordsShiftRightOne(bu, buc);
     // this function only takes operands of the same size, as opposed
     // to AsymmetricMultiply.
     private static void SameSizeMultiply(
-      short[] resultArr, // size 2*count
+      short[] resultArr,  // size 2*count
       int resultStart,
-      short[] tempArr, // size 2*count
+      short[] tempArr,  // size 2*count
       int tempStart,
       short[] words1,
-      int words1Start, // size count
+      int words1Start,  // size count
       short[] words2,
-      int words2Start, // size count
+      int words2Start,  // size count
       int count) {
       // DebugUtility.Log("RecursiveMultiply " + count + " " + count +
       // " [r=" + resultStart + " t=" + tempStart + " a=" + words1Start +
@@ -5654,8 +5654,8 @@ WordsShiftRightOne(bu, buc);
           }
         } else {
           // Count is odd, high part will be 1 shorter
-          int countHigh = count >> 1; // Shorter part
-          int countLow = count - countHigh; // Longer part
+          int countHigh = count >> 1;  // Shorter part
+          int countLow = count - countHigh;  // Longer part
           offset2For1 = CompareWithWords1IsOneBigger(
             words1,
             words1Start,

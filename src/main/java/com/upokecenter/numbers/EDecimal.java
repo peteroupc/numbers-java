@@ -2861,10 +2861,10 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * number has a fixed number of digits after the decimal point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the decimal point:</p>
-     * <code> // After performing arithmetic operations, adjust // the
-     * number to 5 // digits after the decimal point number =
-     * number.Quantize(EInteger.FromInt32(-5), // five digits after the
-     * decimal point EContext.ForPrecision(25) // 25-digit precision);
+     * <code>  // After performing arithmetic operations, adjust  // the
+     * number to 5  // digits after the decimal point number =
+     * number.Quantize(EInteger.FromInt32(-5),  // five digits after the
+     * decimal point EContext.ForPrecision(25)  // 25-digit precision);
      * </code> <p>A fixed-point decimal arithmetic in which no digits come
      * after the decimal point (a desired exponent of 0) is considered an
      * "integer arithmetic".</p>
@@ -2939,10 +2939,10 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * number has a fixed number of digits after the decimal point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the decimal point:</p>
-     * <code> // After performing arithmetic operations, adjust // the
+     * <code>  // After performing arithmetic operations, adjust  // the
      * number to 5 digits after the decimal point number =
-     * number.Quantize(-5, // five digits after the decimal point
-     * EContext.ForPrecision(25) // 25-digit precision); </code> <p>A
+     * number.Quantize(-5,  // five digits after the decimal point
+     * EContext.ForPrecision(25)  // 25-digit precision); </code> <p>A
      * fixed-point decimal arithmetic in which no digits come after the
      * decimal point (a desired exponent of 0) is considered an "integer
      * arithmetic".</p>
