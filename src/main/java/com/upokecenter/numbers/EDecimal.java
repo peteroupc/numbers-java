@@ -3667,7 +3667,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
 
     /**
      * Converts this value to an arbitrary-precision integer, checking whether the
-     * fractional part of the integer would be lost.
+     * fractional part of the value would be lost.
      * @return An arbitrary-precision integer.
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).
@@ -3681,7 +3681,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
 
     /**
      * Converts this value to an arbitrary-precision integer, checking whether the
-     * fractional part of the integer would be lost.
+     * fractional part of the value would be lost.
      * @return An arbitrary-precision integer.
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).

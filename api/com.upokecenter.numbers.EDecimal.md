@@ -622,7 +622,7 @@ Renamed to ToEIntegerIfExact.
  Renamed to ToEIntegerIfExact.
 * `EInteger ToEIntegerIfExact()`<br>
  Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the integer would be lost.
+ fractional part of the value would be lost.
 * `String ToEngineeringString()`<br>
  Same as toString(), except that when an exponent is used it will be a
  multiple of 3.
@@ -3346,7 +3346,7 @@ Deprecated.&nbsp;Renamed to ToEIntegerIfExact.
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
 Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the integer would be lost.
+ fractional part of the value would be lost.
 
 **Returns:**
 
