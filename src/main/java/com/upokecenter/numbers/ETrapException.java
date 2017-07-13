@@ -65,7 +65,7 @@ private static final long serialVersionUID = 1L;
      * EContext.FlagXXYY}). This will only be one flag, such as {@code
      * FlagInexact} or FlagSubnormal.
      * @param ctx A context object for arbitrary-precision arithmetic settings.
-     * @param result An arbitrary object.
+     * @param result The parameter {@code result} is an arbitrary object.
      */
     public ETrapException(int flag, EContext ctx, Object result) {
  super(FlagToMessage(flag));

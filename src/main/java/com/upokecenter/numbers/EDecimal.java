@@ -110,42 +110,43 @@ at: http://peteroupc.github.io/
      * integer: -2 <sup>31</sup> to (2 <sup>31</sup> - 1).</li> <li>64-bit
      * signed integer: -2 <sup>63</sup> to (2 <sup>63</sup> - 1).</li> </ul>
      * <p><b>Two's complement form</b> : In <i>two' s-complement form</i> ,
-     * positive numbers have the highest (most significant) bit set to zero,
-     * and negative numbers have that bit (and all bits beyond) set to one.
-     * To store a negative number, decrease its absolute value by 1 and swap
-     * the bits of the resulting number.</p> <p><b>64-bit floating-point
-     * number</b> : A 64-bit binary floating-point number, in the form
-     * <i>significand</i> * 2 <sup><i>exponent</i> </sup> . The significand
-     * is 53 bits long (Precision) and the exponent ranges from -1074 (EMin)
-     * to 971 (EMax). The number is stored in the following format (commonly
-     * called the IEEE 754 format):</p>
-     * <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code> <ul><li>A. Low 52 bits
-     * (Precision minus 1 bits): Lowest bits of the significand.</li> <li>B.
-     * Next 11 bits: Exponent area: <ul><li>If all bits are ones, this value
-     * is infinity if all bits in area A are zeros, or not-a-number (NaN)
-     * otherwise.</li> <li>If all bits are zeros, this is a subnormal
-     * number. The exponent is EMin and the highest bit of the significand
-     * is zero.</li> <li>If any other number, the exponent is this value
-     * reduced by 1, then raised by EMin, and the highest bit of the
-     * significand is one.</li> </ul> </li> <li>C. Highest bit: If one, this
-     * is a negative number.</li> </ul> <p>The elements described above are
-     * in the same order as the order of each bit of each element, that is,
-     * either most significant first or least significant first.</p>
-     * <p><b>32-bit floating-point number</b> : A 32-bit binary number which
-     * is stored similarly to a <i>64-bit floating-point number</i> , except
-     * that:</p> <ul><li>Precision is 24 bits.</li> <li>EMin is -149.</li>
-     * <li>EMax is 104.</li> <li>A. The low 23 bits (Precision minus 1 bits)
-     * are the lowest bits of the significand.</li> <li>B. The next 8 bits
-     * are the exponent area.</li> <li>C. If the highest bit is one, this is
-     * a negative number.</li> </ul> <p><b>.NET Framework decimal</b> : A
-     * 128-bit decimal floating-point number, in the form <i>significand</i>
-     * * 10 <sup>- <i>scale</i> </sup> , where the scale ranges from 0 to
-     * 28. The number is stored in the following format:</p> <ul><li>Low 96
-     * bits are the significand, as a 96-bit unsigned integer (all 96-bit
-     * values are allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16
-     * bits are unused.</li> <li>Next 8 bits are the scale, stored as an
-     * 8-bit unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If
-     * the highest bit is one, it&#39;s a negative number.</li> </ul> <p>The
+     * nonnegative numbers have the highest (most significant) bit set to
+     * zero, and negative numbers have that bit (and all bits beyond) set to
+     * one, and a negative number is stored in such form by decreasing its
+     * absolute value by 1 and swapping the bits of the resulting
+     * number.</p> <p><b>64-bit floating-point number</b> : A 64-bit binary
+     * floating-point number, in the form <i>significand</i> * 2
+     * <sup><i>exponent</i> </sup> . The significand is 53 bits long
+     * (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax).
+     * The number is stored in the following format (commonly called the
+     * IEEE 754 format):</p> <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code>
+     * <ul><li>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the
+     * significand.</li> <li>B. Next 11 bits: Exponent area: <ul><li>If all
+     * bits are ones, this value is infinity if all bits in area A are
+     * zeros, or not-a-number (NaN) otherwise.</li> <li>If all bits are
+     * zeros, this is a subnormal number. The exponent is EMin and the
+     * highest bit of the significand is zero.</li> <li>If any other number,
+     * the exponent is this value reduced by 1, then raised by EMin, and the
+     * highest bit of the significand is one.</li> </ul> </li> <li>C.
+     * Highest bit: If one, this is a negative number.</li> </ul> <p>The
+     * elements described above are in the same order as the order of each
+     * bit of each element, that is, either most significant first or least
+     * significant first.</p> <p><b>32-bit floating-point number</b> : A
+     * 32-bit binary number which is stored similarly to a <i>64-bit
+     * floating-point number</i> , except that:</p> <ul><li>Precision is 24
+     * bits.</li> <li>EMin is -149.</li> <li>EMax is 104.</li> <li>A. The
+     * low 23 bits (Precision minus 1 bits) are the lowest bits of the
+     * significand.</li> <li>B. The next 8 bits are the exponent area.</li>
+     * <li>C. If the highest bit is one, this is a negative number.</li>
+     * </ul> <p><b>.NET Framework decimal</b> : A 128-bit decimal
+     * floating-point number, in the form <i>significand</i> * 10 <sup>-
+     * <i>scale</i> </sup> , where the scale ranges from 0 to 28. The number
+     * is stored in the following format:</p> <ul><li>Low 96 bits are the
+     * significand, as a 96-bit unsigned integer (all 96-bit values are
+     * allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16 bits are
+     * unused.</li> <li>Next 8 bits are the scale, stored as an 8-bit
+     * unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If the
+     * highest bit is one, it&#39;s a negative number.</li> </ul> <p>The
      * elements described above are in the same order as the order of each
      * bit of each element, that is, either most significant first or least
      * significant first.</p>
@@ -486,7 +487,7 @@ private static final FastIntegerFixed FastIntZero = new
      * arbitrary-precision decimal number from a decimal number, use
      * FromString instead in most cases (for example:
      * <code>ExtendedDecimal.FromString("0.1")</code>).
-     * @param dbl A 64-bit floating-point number.
+     * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
      * @return A decimal number with the same value as {@code dbl}.
      */
     public static EDecimal FromDouble(double dbl) {
@@ -635,7 +636,8 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a 32-bit signed integer.
-     * @param valueSmaller A 32-bit signed integer.
+     * @param valueSmaller The parameter {@code valueSmaller} is a 32-bit signed
+     * integer.
      * @return An arbitrary-precision decimal number with the exponent set to 0.
      */
     public static EDecimal FromInt32(int valueSmaller) {
@@ -659,7 +661,8 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a 64-bit signed integer.
-     * @param valueSmall A 64-bit signed integer.
+     * @param valueSmall The parameter {@code valueSmall} is a 64-bit signed
+     * integer.
      * @return An arbitrary-precision decimal number with the exponent set to 0.
      */
     public static EDecimal FromInt64(long valueSmall) {
@@ -699,7 +702,7 @@ private static final FastIntegerFixed FastIntZero = new
      * arbitrary-precision decimal number from a decimal number, use
      * FromString instead in most cases (for example:
      * <code>ExtendedDecimal.FromString("0.1")</code>).
-     * @param flt A 32-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 32-bit floating-point number.
      * @return A decimal number with the same value as {@code flt}.
      */
     public static EDecimal FromSingle(float flt) {
@@ -2258,7 +2261,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * properties are equal to those of another object and that other object
      * is an arbitrary-precision decimal number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
-     * @param obj An arbitrary object.
+     * @param obj The parameter {@code obj} is an arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
@@ -4733,7 +4736,7 @@ return new DigitShiftAccumulator(
 
     /**
      * This is an internal method.
-     * @param val A 32-bit signed integer.
+     * @param val The parameter {@code val} is a 32-bit signed integer.
      * @return An arbitrary-precision decimal number.
      */
       public EDecimal ValueOf(int val) {

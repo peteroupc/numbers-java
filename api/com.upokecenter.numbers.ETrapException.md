@@ -39,7 +39,7 @@ Initializes a new instance of the <code>ETrapException</code> class.
 
 * <code>ctx</code> - A context object for arbitrary-precision arithmetic settings.
 
-* <code>result</code> - An arbitrary object.
+* <code>result</code> - The parameter <code>result</code> is an arbitrary object.
 
 ### ETrapException
     public ETrapException(int flag, EContext ctx, Object result)
@@ -51,7 +51,7 @@ Initializes a new instance of the <code>ETrapException</code> class.
 
 * <code>ctx</code> - A context object for arbitrary-precision arithmetic settings.
 
-* <code>result</code> - An arbitrary object.
+* <code>result</code> - The parameter <code>result</code> is an arbitrary object.
 
 ### getContext
     public final EContext getContext()

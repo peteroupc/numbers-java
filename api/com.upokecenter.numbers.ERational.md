@@ -437,7 +437,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 **Parameters:**
 
-* <code>flt</code> - A 64-bit floating-point number.
+* <code>flt</code> - The parameter <code>flt</code> is a 64-bit floating-point number.
 
 **Returns:**
 
@@ -528,7 +528,7 @@ Converts a 32-bit floating-point number to a rational number. This method
 
 **Parameters:**
 
-* <code>flt</code> - A 32-bit floating-point number.
+* <code>flt</code> - The parameter <code>flt</code> is a 32-bit floating-point number.
 
 **Returns:**
 
@@ -756,7 +756,7 @@ Determines whether this object&#x27;s numerator, denominator, and properties
 
 **Parameters:**
 
-* <code>obj</code> - An arbitrary object.
+* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
 
 **Returns:**
 
@@ -774,7 +774,7 @@ Determines whether this object&#x27;s numerator, denominator, and properties
 
 **Returns:**
 
-* A Boolean object.
+* either <code>true</code> or <code>false</code>.
 
 ### hashCode
     public int hashCode()

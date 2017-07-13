@@ -454,7 +454,7 @@ Creates a new EContext object initialized with an unlimited exponent range,
 
 * <code>precision</code> - Maximum number of digits (precision).
 
-* <code>rounding</code> - An ERounding object.
+* <code>rounding</code> - The parameter <code>rounding</code> is an ERounding object.
 
 **Returns:**
 

@@ -277,7 +277,7 @@ Converts a 32-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -290,7 +290,8 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>longerValue</code> - A 64-bit signed integer.
+* <code>longerValue</code> - The parameter <code>longerValue</code> is a 64-bit signed
+ integer.
 
 **Returns:**
 
@@ -569,7 +570,7 @@ Determines whether this object and another object are equal and have the
 
 **Parameters:**
 
-* <code>obj</code> - An arbitrary object.
+* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
 
 **Returns:**
 

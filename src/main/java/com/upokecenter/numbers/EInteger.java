@@ -256,7 +256,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts a 32-bit signed integer to an arbitrary-precision integer.
-     * @param intValue A 32-bit signed integer.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return An arbitrary-precision integer with the same value as the 64-bit
      * number.
      */
@@ -303,7 +303,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts a 64-bit signed integer to an arbitrary-precision integer.
-     * @param longerValue A 64-bit signed integer.
+     * @param longerValue The parameter {@code longerValue} is a 64-bit signed
+     * integer.
      * @return An arbitrary-precision integer with the same value as the 64-bit
      * number.
      */
@@ -1859,7 +1860,7 @@ at: http://peteroupc.github.io/
     /**
      * Determines whether this object and another object are equal and have the
      * same type.
-     * @param obj An arbitrary object.
+     * @param obj The parameter {@code obj} is an arbitrary object.
      * @return {@code true} if this object and another object are equal; otherwise,
      * {@code false}.
      */

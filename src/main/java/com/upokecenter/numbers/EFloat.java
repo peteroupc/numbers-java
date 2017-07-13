@@ -318,7 +318,7 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the floating point
      * number to a string first.
-     * @param dbl A 64-bit floating-point number.
+     * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
      * @return A binary float with the same value as {@code dbl}.
      */
     public static EFloat FromDouble(double dbl) {
@@ -376,7 +376,7 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the floating point
      * number to a string first.
-     * @param flt A 32-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 32-bit floating-point number.
      * @return A binary float with the same value as {@code flt}.
      */
     public static EFloat FromSingle(float flt) {
@@ -443,7 +443,7 @@ at: http://peteroupc.github.io/
      * digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
      * is not allowed to contain white space characters, including
      * spaces.</p>
-     * @param str A text string.
+     * @param str The parameter {@code str} is a text string.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
@@ -484,7 +484,7 @@ at: http://peteroupc.github.io/
     /**
      * Creates a binary float from a text string that represents a number. For more
      * information, see the FromString(String, int, int, EContext) method.
-     * @param str A text string.
+     * @param str The parameter {@code str} is a text string.
      * @param ctx An EContext object specifying the precision, rounding, and
      * exponent range to apply to the parsed number. Can be null.
      * @return The parsed number, converted to arbitrary-precision binary float.
@@ -498,7 +498,7 @@ at: http://peteroupc.github.io/
      * Creates a binary float from a text string that represents a number. For more
      * information, see the <code>FromString(String, int, int, EContext)</code>
      * method.
-     * @param str A text string.
+     * @param str The parameter {@code str} is a text string.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
@@ -1295,7 +1295,7 @@ at: http://peteroupc.github.io/
      * properties are equal to those of another object and that other object
      * is an arbitrary-precision binary float. Not-a-number values are
      * considered equal if the rest of their properties are equal.
-     * @param obj An arbitrary object.
+     * @param obj The parameter {@code obj} is an arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
@@ -1901,9 +1901,9 @@ at: http://peteroupc.github.io/
      * @param desiredExponent The desired exponent for the result. The exponent is
      * the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the sixteenth
-     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-     * 1000b). A value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -1944,9 +1944,9 @@ at: http://peteroupc.github.io/
      * @param desiredExponentInt The desired exponent for the result. The exponent
      * is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the sixteenth
-     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-     * 1000b). A value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -2121,9 +2121,9 @@ at: http://peteroupc.github.io/
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the sixteenth
-     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-     * 1000b). A value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2149,9 +2149,9 @@ at: http://peteroupc.github.io/
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the sixteenth
-     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-     * 1000b). A value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2178,9 +2178,9 @@ at: http://peteroupc.github.io/
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the sixteenth
-     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-     * 1000b). A value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2204,7 +2204,7 @@ at: http://peteroupc.github.io/
      * Returns a binary number with the same value as this object but rounded to
      * the given exponent.
      * @param exponent An arbitrary-precision integer.
-     * @param rounding An ERounding object.
+     * @param rounding The parameter {@code rounding} is an ERounding object.
      * @return A binary number rounded to the closest value representable in the
      * given precision.
      */
@@ -2224,9 +2224,9 @@ at: http://peteroupc.github.io/
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the sixteenth
-     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-     * 1000b). A value of 0 rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2352,7 +2352,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns a number similar to this number but with the scale adjusted.
-     * @param places A 32-bit signed integer.
+     * @param places The parameter {@code places} is a 32-bit signed integer.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ScaleByPowerOfTwo(int places) {
@@ -2361,7 +2361,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns a number similar to this number but with the scale adjusted.
-     * @param places A 32-bit signed integer.
+     * @param places The parameter {@code places} is a 32-bit signed integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2949,8 +2949,9 @@ at: http://peteroupc.github.io/
     /**
      * This is an internal method.
      * @param bigint An arbitrary-precision integer.
-     * @param lastDigit A 32-bit signed integer.
-     * @param olderDigits A 32-bit signed integer. (2).
+     * @param lastDigit The parameter {@code lastDigit} is a 32-bit signed integer.
+     * @param olderDigits The parameter {@code olderDigits} is a 32-bit signed
+     * integer.
      * @return An IShiftAccumulator object.
      */
       public IShiftAccumulator CreateShiftAccumulatorWithDigits(
@@ -2990,7 +2991,7 @@ at: http://peteroupc.github.io/
      * This is an internal method.
      * @param num An arbitrary-precision integer.
      * @param den Another arbitrary-precision integer.
-     * @return A Boolean object.
+     * @return either {@code true} or {@code false}.
      */
       public FastInteger DivisionShift(EInteger num, EInteger den) {
         if (den.isZero()) {
@@ -3080,7 +3081,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param val A 32-bit signed integer.
+     * @param val The parameter {@code val} is a 32-bit signed integer.
      * @return An arbitrary-precision binary float.
      */
       public EFloat ValueOf(int val) {

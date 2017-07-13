@@ -437,7 +437,7 @@ public final void setFlags(int value) {
      * Creates a new EContext object initialized with an unlimited exponent range,
      * and the given rounding mode and maximum precision.
      * @param precision Maximum number of digits (precision).
-     * @param rounding An ERounding object.
+     * @param rounding The parameter {@code rounding} is an ERounding object.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public static EContext ForPrecisionAndRounding(

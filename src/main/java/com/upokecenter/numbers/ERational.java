@@ -283,7 +283,7 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the number to a
      * string.
-     * @param flt A 64-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 64-bit floating-point number.
      * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromDouble(double flt) {
@@ -425,7 +425,7 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the number to a
      * string.
-     * @param flt A 32-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 32-bit floating-point number.
      * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromSingle(float flt) {
@@ -1276,7 +1276,7 @@ at: http://peteroupc.github.io/
      * are equal to those of another object and that other object is an
      * arbitrary-precision rational number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
-     * @param obj An arbitrary object.
+     * @param obj The parameter {@code obj} is an arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
@@ -1295,7 +1295,7 @@ at: http://peteroupc.github.io/
      * are equal to those of another object. Not-a-number values are
      * considered equal if the rest of their properties are equal.
      * @param other The parameter {@code other} is not documented yet.
-     * @return A Boolean object.
+     * @return either {@code true} or {@code false}.
      */
     public boolean equals(ERational other) {
       return this.equals((Object)other);
