@@ -774,7 +774,7 @@ Determines whether this object&#x27;s numerator, denominator, and properties
 
 **Returns:**
 
-* either <code>true</code> or <code>false</code>.
+* Either <code>true</code> or <code>false</code>.
 
 ### hashCode
     public int hashCode()

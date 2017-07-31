@@ -557,8 +557,7 @@ Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
 
-* <code>bigintPrecision</code> - The parameter <code>bigintPrecision</code> is not
- documented yet.
+* <code>bigintPrecision</code> - Desired precision. 0 means unlimited precision.
 
 **Returns:**
 
@@ -659,7 +658,7 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 
 **Parameters:**
 
-* <code>simplified</code> - The parameter <code>simplified</code> is not documented yet.
+* <code>simplified</code> - Desired value of the IsSimplified property.
 
 **Returns:**
 

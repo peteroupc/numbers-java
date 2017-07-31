@@ -342,10 +342,8 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a number with the value <code>exponent*10^mantissa</code>
-     * @param mantissaSmall The parameter {@code mantissaSmall} is not documented
-     * yet.
-     * @param exponentSmall The parameter {@code exponentSmall} is not documented
-     * yet.
+     * @param mantissaSmall Desired value for the mantissa.
+     * @param exponentSmall Desired value for the exponent.
      * @return An arbitrary-precision decimal number.
      */
     public static EDecimal Create(int mantissaSmall, int exponentSmall) {
@@ -374,8 +372,8 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a number with the value <code>exponent*10^mantissa</code>
-     * @param mantissa The parameter {@code mantissa} is not documented yet.
-     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param mantissa Desired value for the mantissa.
+     * @param exponent Desired value for the exponent.
      * @return An arbitrary-precision decimal number.
      * @throws java.lang.NullPointerException The parameter {@code mantissa} or
      * {@code exponent} is null.
@@ -4704,9 +4702,9 @@ return new DigitShiftAccumulator(
 
     /**
      * This is an internal method.
-     * @param mantissa The parameter {@code mantissa} is not documented yet.
-     * @param exponent The parameter {@code exponent} is not documented yet.
-     * @param flags The parameter {@code flags} is not documented yet.
+     * @param mantissa The parameter {@code mantissa} is an internal parameter.
+     * @param exponent The parameter {@code exponent} is an internal parameter.
+     * @param flags The parameter {@code flags} is an internal parameter.
      * @return An arbitrary-precision decimal number.
      */
       public EDecimal CreateNewWithFlags(

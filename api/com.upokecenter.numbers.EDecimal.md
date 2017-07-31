@@ -772,11 +772,9 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 **Parameters:**
 
-* <code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is not documented
- yet.
+* <code>mantissaSmall</code> - Desired value for the mantissa.
 
-* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
- yet.
+* <code>exponentSmall</code> - Desired value for the exponent.
 
 **Returns:**
 
@@ -788,9 +786,9 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 **Parameters:**
 
-* <code>mantissa</code> - The parameter <code>mantissa</code> is not documented yet.
+* <code>mantissa</code> - Desired value for the mantissa.
 
-* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
+* <code>exponent</code> - Desired value for the exponent.
 
 **Returns:**
 

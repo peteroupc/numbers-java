@@ -567,7 +567,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @param val The parameter {@code val} is not documented yet.
      * @return A FastInteger object.
      */
@@ -619,7 +619,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @return A FastInteger object.
      */
     FastInteger Negate() {
@@ -650,7 +650,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @param val The parameter {@code val} is not documented yet.
      * @return A FastInteger object.
      */
@@ -701,7 +701,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @param val The parameter {@code val} is not documented yet.
      * @return A FastInteger object.
      */
@@ -726,8 +726,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param bigintVal The parameter {@code bigintVal} is not documented yet.
+     * This is an internal API.
+     * @param bigintVal The parameter {@code bigintVal} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger AddBig(EInteger bigintVal) {
@@ -752,8 +752,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param bigintVal The parameter {@code bigintVal} is not documented yet.
+     * This is an internal API.
+     * @param bigintVal The parameter {@code bigintVal} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger SubtractBig(EInteger bigintVal) {
@@ -1060,7 +1060,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @return A text string.
      */
     @Override public String toString() {
@@ -1076,8 +1076,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Gets a value not documented yet.
-     * @return A value not documented yet.
+     * Gets an internal value.
+     * @return an internal value.
      */
     final int signum() {
         switch (this.integerMode) {

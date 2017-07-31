@@ -59,7 +59,7 @@ Renamed to ToInt64Unchecked.
  Converts a 64-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromRadixString(String str,
                int radix)`<br>
- Not documented yet.
+ Converts a string to an arbitrary-precision integer in a given radix.
 * `static EInteger FromRadixSubstring(String str,
                   int radix,
                   int index,
@@ -300,17 +300,21 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
 
 ### FromRadixString
     public static EInteger FromRadixString(String str, int radix)
-Not documented yet.
+Converts a string to an arbitrary-precision integer in a given radix.
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A string described by the FromRadixSubstring method.
 
-* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+ the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+ A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+ then A-F in radix 16.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* An arbitrary-precision integer with the same value as the given
+ string.
 
 **Throws:**
 

@@ -170,7 +170,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @return A FastIntegerFixed object.
      */
     FastIntegerFixed Negate() {
@@ -203,7 +203,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * This is an internal API.
      * @return A text string.
      */
     @Override public String toString() {

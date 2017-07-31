@@ -213,10 +213,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a number with the value exponent*2^mantissa (significand).
-     * @param mantissaSmall The parameter {@code mantissaSmall} is not documented
-     * yet.
-     * @param exponentSmall The parameter {@code exponentSmall} is not documented
-     * yet.
+     * @param mantissaSmall Desired value for the mantissa.
+     * @param exponentSmall Desired value for the exponent.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
@@ -225,8 +223,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a number with the value exponent*2^mantissa (significand).
-     * @param mantissa The parameter {@code mantissa} is not documented yet.
-     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param mantissa Desired value for the mantissa.
+     * @param exponent Desired value for the exponent.
      * @return An arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter "mantissa (significand)"
      * or {@code exponent} is null.
@@ -1901,9 +1899,9 @@ at: http://peteroupc.github.io/
      * @param desiredExponent The desired exponent for the result. The exponent is
      * the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the eighth
-     * (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-     * rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -1944,9 +1942,9 @@ at: http://peteroupc.github.io/
      * @param desiredExponentInt The desired exponent for the result. The exponent
      * is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the eighth
-     * (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-     * rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -1983,9 +1981,9 @@ at: http://peteroupc.github.io/
      * result. The mantissa (significand) is ignored. The exponent is the
      * number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places
-     * from the number. For example, -3 means round to the eighth (10^-1,
-     * 1/8), and 3 means round to the eight (2^3, 8). A value of 0 rounds
-     * the number to an integer.
+     * from the number. For example, -3 means round to the sixteenth
+     * (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+     * 1000b). A value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store
      * the flags resulting from the operation (the flags are in addition to
@@ -2121,9 +2119,9 @@ at: http://peteroupc.github.io/
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the eighth
-     * (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-     * rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2149,9 +2147,9 @@ at: http://peteroupc.github.io/
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the eighth
-     * (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-     * rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2178,9 +2176,9 @@ at: http://peteroupc.github.io/
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the eighth
-     * (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-     * rounds the number to an integer.
+     * places from the number. For example, -3 means round to the thousandth
+     * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+     * value of 0 rounds the number to an integer.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2995,7 +2993,7 @@ at: http://peteroupc.github.io/
      * This is an internal method.
      * @param num An arbitrary-precision integer.
      * @param den Another arbitrary-precision integer.
-     * @return either {@code true} or {@code false}.
+     * @return Either {@code true} or {@code false}.
      */
       public FastInteger DivisionShift(EInteger num, EInteger den) {
         if (den.isZero()) {
@@ -3053,9 +3051,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param mantissa The parameter {@code mantissa} is not documented yet.
-     * @param exponent The parameter {@code exponent} is not documented yet.
-     * @param flags The parameter {@code flags} is not documented yet.
+     * @param mantissa The parameter {@code mantissa} is an internal parameter.
+     * @param exponent The parameter {@code exponent} is an internal parameter.
+     * @param flags The parameter {@code flags} is an internal parameter.
      * @return An arbitrary-precision binary float.
      */
       public EFloat CreateNewWithFlags(

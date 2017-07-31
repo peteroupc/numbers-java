@@ -373,10 +373,14 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param str The parameter {@code str} is not documented yet.
-     * @param radix The parameter {@code radix} is not documented yet.
-     * @return An arbitrary-precision integer.
+     * Converts a string to an arbitrary-precision integer in a given radix.
+     * @param str A string described by the FromRadixSubstring method.
+     * @param radix A base from 2 to 36. Depending on the radix, the string can use
+     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+     * A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+     * then A-F in radix 16.
+     * @return An arbitrary-precision integer with the same value as the given
+     * string.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromRadixString(String str, int radix) {

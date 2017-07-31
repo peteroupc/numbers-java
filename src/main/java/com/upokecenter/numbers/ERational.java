@@ -121,10 +121,11 @@ at: http://peteroupc.github.io/
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
      * class.
-     * @param numerator An arbitrary-precision integer.
-     * @param denominator Another arbitrary-precision integer.
+     * @param numerator The numerator.
+     * @param denominator The denominator.
      * @throws java.lang.NullPointerException The parameter {@code numerator} or
      * {@code denominator} is null.
+     * @throws IllegalArgumentException The denominator is zero.
      * @deprecated Use the ERational.Create method instead. This constructor will be private or
 * unavailable in version 1.0.
  */
@@ -1295,7 +1296,7 @@ at: http://peteroupc.github.io/
      * are equal to those of another object. Not-a-number values are
      * considered equal if the rest of their properties are equal.
      * @param other The parameter {@code other} is not documented yet.
-     * @return either {@code true} or {@code false}.
+     * @return Either {@code true} or {@code false}.
      */
     public boolean equals(ERational other) {
       return this.equals((Object)other);

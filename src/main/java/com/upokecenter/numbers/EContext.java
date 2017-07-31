@@ -603,8 +603,7 @@ public final void setFlags(int value) {
 
     /**
      * Copies this EContext and gives it a particular precision value.
-     * @param bigintPrecision The parameter {@code bigintPrecision} is not
-     * documented yet.
+     * @param bigintPrecision Desired precision. 0 means unlimited precision.
      * @return A context object for arbitrary-precision arithmetic settings.
      * @throws java.lang.NullPointerException The parameter {@code bigintPrecision}
      * is null.
@@ -720,7 +719,7 @@ public final void setFlags(int value) {
     /**
      * Copies this EContext and sets the copy's "IsSimplified" property to the
      * given value.
-     * @param simplified The parameter {@code simplified} is not documented yet.
+     * @param simplified Desired value of the IsSimplified property.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithSimplified(boolean simplified) {
