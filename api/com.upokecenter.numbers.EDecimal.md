@@ -125,8 +125,8 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  Highest bit: If one, this is a negative number.</li> </ul> <p>The
  elements described above are in the same order as the order of each
  bit of each element, that is, either most significant first or least
- significant first.</p> <p><b>32-bit floating-point number</b> : A
- 32-bit binary number which is stored similarly to a <i>64-bit
+ significant first.</p> <p><b>32-bit binary floating-point number</b>
+ : A 32-bit binary number which is stored similarly to a <i>64-bit
  floating-point number</i> , except that:</p> <ul><li>Precision is 24
  bits.</li> <li>EMin is -149.</li> <li>EMax is 104.</li> <li>A. The
  low 23 bits (Precision minus 1 bits) are the lowest bits of the
@@ -614,7 +614,7 @@ Renamed to Sqrt.
 * `EFloat ToEFloat()`<br>
  Creates a binary floating-point number from this object's value.
 * `EFloat ToEFloat(EContext ec)`<br>
- Not documented yet.
+ Creates a binary floating-point number from this object's value.
 * `EInteger ToEInteger()`<br>
  Converts this value to an arbitrary-precision integer.
 * `EInteger ToEIntegerExact()`<br>
@@ -883,17 +883,25 @@ Converts an arbitrary-precision integer to an arbitrary precision decimal.
 
 * An arbitrary-precision decimal number with the exponent set to 0.
 
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigint</code> is null.
+
 ### FromExtendedFloat
     @Deprecated public static EDecimal FromExtendedFloat(EFloat ef)
 Deprecated.&nbsp;Renamed to FromEFloat.
 
 **Parameters:**
 
-* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
+* <code>ef</code> - An arbitrary-precision binary floating-point number.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision decimal number.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>ef</code> is null.
 
 ### FromEFloat
     public static EDecimal FromEFloat(EFloat bigfloat)
@@ -956,7 +964,8 @@ Creates a decimal number from a 32-bit binary floating-point number. This
 
 **Parameters:**
 
-* <code>flt</code> - The parameter <code>flt</code> is a 32-bit floating-point number.
+* <code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+ number.
 
 **Returns:**
 
@@ -3412,9 +3421,9 @@ Converts this value to its closest equivalent as a 32-bit floating-point
 
 **Returns:**
 
-* The closest 32-bit floating-point number to this value. The return
- value can be positive infinity or negative infinity if this value
- exceeds the range of a 32-bit floating point number.
+* The closest 32-bit binary floating-point number to this value. The
+ return value can be positive infinity or negative infinity if this
+ value exceeds the range of a 32-bit floating point number.
 
 ### toString
     public String toString()
@@ -3444,15 +3453,22 @@ Returns the unit in the last place. The mantissa (significand) will be 1 and
 
 ### ToEFloat
     public EFloat ToEFloat(EContext ec)
-Not documented yet.
+Creates a binary floating-point number from this object&#x27;s value. Note
+ that if the binary floating-point number contains a negative
+ exponent, the resulting value might not be exact, in which case the
+ resulting binary float will be an approximation of this decimal
+ number's value.
 
 **Parameters:**
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control precision, rounding, and exponent
+ range of the result. If <code>HasFlags</code> of the context is true, will
+ also store the flags resulting from the operation (the flags are in
+ addition to the pre-existing flags).
 
 **Returns:**
 
-* An EFloat object.
+* an arbitrary-precision float floating-point number.
 
 ### ToByteChecked
     public byte ToByteChecked()

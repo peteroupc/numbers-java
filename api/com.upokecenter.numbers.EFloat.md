@@ -206,7 +206,8 @@ Renamed to DivRemNaturalScale.
 * `static EFloat FromSingle(float flt)`<br>
  Creates a binary float from a 32-bit floating-point number.
 * `static EFloat FromString(String str)`<br>
- Not documented yet.
+ Creates a binary float from a text string that represents a number, using an
+ unlimited precision context.
 * `static EFloat FromString(String str,
           EContext ctx)`<br>
  Creates a binary float from a text string that represents a number.
@@ -461,7 +462,7 @@ Renamed to Sqrt.
  least-significant bits of its two's-complement form as a byte (from 0
  to 255).
 * `double ToDouble()`<br>
- Not documented yet.
+ Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
  Converts this value to an arbitrary-precision decimal number.
 * `EInteger ToEInteger()`<br>
@@ -737,7 +738,8 @@ Creates a binary float from a 32-bit floating-point number. This method
 
 **Parameters:**
 
-* <code>flt</code> - The parameter <code>flt</code> is a 32-bit floating-point number.
+* <code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+ number.
 
 **Returns:**
 
@@ -772,7 +774,7 @@ Creates a binary float from a text string that represents a number. Note
 
 * <code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> 's length).
 
-* <code>ctx</code> - An EContext object specifying the precision, rounding, and
+* <code>ctx</code> - A precision context specifying the precision, rounding, and
  exponent range (in bits) to apply to the parsed number. Can be null.
 
 **Returns:**
@@ -789,26 +791,29 @@ Creates a binary float from a text string that represents a number. Note
 
 ### FromString
     public static EFloat FromString(String str)
-Not documented yet.
+Creates a binary float from a text string that represents a number, using an
+ unlimited precision context. For more information, see the
+ <code>FromString(String, int, int, EContext)</code> method.
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A text string to convert to a binary float.
 
 **Returns:**
 
-* An EFloat object.
+* The parsed number, converted to arbitrary-precision binary float.
 
 ### FromString
     public static EFloat FromString(String str, EContext ctx)
 Creates a binary float from a text string that represents a number. For more
- information, see the FromString(String, int, int, EContext) method.
+ information, see the <code>FromString(String, int, int, EContext)</code>
+ method.
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is a text string.
+* <code>str</code> - A text string to convert to a binary float.
 
-* <code>ctx</code> - An EContext object specifying the precision, rounding, and
+* <code>ctx</code> - A precision context specifying the precision, rounding, and
  exponent range to apply to the parsed number. Can be null.
 
 **Returns:**
@@ -2812,11 +2817,11 @@ Subtracts an arbitrary-precision binary float from this instance.
 
 ### ToDouble
     public double ToDouble()
-Not documented yet.
+Converts this value to a 64-bit floating-point number.
 
 **Returns:**
 
-* A 64-bit floating-point number.
+* This number, converted to a 64-bit floating-point number.
 
 ### ToEDecimal
     public EDecimal ToEDecimal()
@@ -2824,7 +2829,7 @@ Converts this value to an arbitrary-precision decimal number.
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* This number, converted to an arbitrary-precision decimal number.
 
 ### ToEInteger
     public EInteger ToEInteger()
@@ -2939,9 +2944,9 @@ Converts this value to its closest equivalent as 32-bit floating-point
 
 **Returns:**
 
-* The closest 32-bit floating-point number to this value. The return
- value can be positive infinity or negative infinity if this value
- exceeds the range of a 32-bit floating point number.
+* The closest 32-bit binary floating-point number to this value. The
+ return value can be positive infinity or negative infinity if this
+ value exceeds the range of a 32-bit floating point number.
 
 ### toString
     public String toString()

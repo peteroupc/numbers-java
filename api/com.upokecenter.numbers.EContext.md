@@ -584,7 +584,7 @@ Copies this arithmetic context and sets the copy's "ClampNormalExponents"
 
 **Parameters:**
 
-* <code>clamp</code> - The parameter <code>clamp</code> is not documented yet.
+* <code>clamp</code> - The desired value of the "ClampNormalExponents" flag.
 
 **Returns:**
 

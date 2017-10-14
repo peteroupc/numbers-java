@@ -73,9 +73,9 @@ Renamed to ToInt64Unchecked.
              int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer.
 * `EInteger Gcd(EInteger bigintSecond)`<br>
- Returns the greatest common divisor of two integers.
+ Returns the greatest common divisor of this integer and the given integer.
 * `int GetDigitCount()`<br>
- Not documented yet.
+ Returns the number of decimal digits used by this integer.
 * `int GetLowBit()`<br>
  Gets the lowest set bit in this number's absolute value.
 * `EInteger GetLowBitAsEInteger()`<br>
@@ -99,7 +99,7 @@ Renamed to ToInt64Unchecked.
  Finds the minimum number of bits needed to represent this number's
  absolute value.
 * `static EInteger getZero()`<br>
- Gets a value not documented yet.
+ Gets the number zero as an arbitrary-precision integer.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
 * `boolean isEven()`<br>
@@ -113,7 +113,7 @@ Renamed to ToInt64Unchecked.
  the value of an arbitrary-precision integer.
 * `EInteger ModPow(EInteger pow,
       EInteger mod)`<br>
- Calculates the remainder when an arbitrary-precision integer raised to a
+ Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
 * `EInteger Multiply(EInteger bigintMult)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
@@ -192,11 +192,11 @@ Gets the number 10 as an arbitrary-precision integer.
 
 ### getZero
     public static EInteger getZero()
-Gets a value not documented yet.
+Gets the number zero as an arbitrary-precision integer.
 
 **Returns:**
 
-* A value not documented yet.
+* The number zero as an arbitrary-precision integer.
 
 ### isEven
     public final boolean isEven()
@@ -510,7 +510,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - The integer to compare to this value.
 
 **Returns:**
 
@@ -583,8 +583,9 @@ Determines whether this object and another object are equal and have the
 
 ### Gcd
     public EInteger Gcd(EInteger bigintSecond)
-Returns the greatest common divisor of two integers. The greatest common
- divisor (GCD) is also known as the greatest common factor (GCF).
+Returns the greatest common divisor of this integer and the given integer.
+ The greatest common divisor (GCD) is also known as the greatest
+ common factor (GCF).
 
 **Parameters:**
 
@@ -601,11 +602,12 @@ Returns the greatest common divisor of two integers. The greatest common
 
 ### GetDigitCount
     public int GetDigitCount()
-Not documented yet.
+Returns the number of decimal digits used by this integer.
 
 **Returns:**
 
-* A 32-bit signed integer.
+* The number of digits in the decimal form of this integer. Returns 1
+ if this number is 0.
 
 ### hashCode
     public int hashCode()
@@ -725,18 +727,18 @@ Finds the modulus remainder that results when this instance is divided by
 
 ### ModPow
     public EInteger ModPow(EInteger pow, EInteger mod)
-Calculates the remainder when an arbitrary-precision integer raised to a
+Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>pow</code> - Another arbitrary-precision integer.
+* <code>pow</code> - The power to raise this integer by.
 
-* <code>mod</code> - An arbitrary-precision integer. (3).
+* <code>mod</code> - The integer to divide the raised number by.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* The value (<code>this</code> ^ <code>pow</code>)% <code>mod</code>.
 
 **Throws:**
 
@@ -835,8 +837,8 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 **Parameters:**
 
 * <code>numberBits</code> - The number of bits to shift. Can be negative, in which
- case this is the same as shiftRight with the absolute value of
- numberBits.
+ case this is the same as shiftRight with the absolute value of this
+ parameter.
 
 **Returns:**
 

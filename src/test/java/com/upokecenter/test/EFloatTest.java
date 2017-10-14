@@ -71,7 +71,7 @@ import com.upokecenter.numbers.*;
         EFloat.Zero.Add(null, EContext.Unlimited);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -116,7 +116,7 @@ import com.upokecenter.numbers.*;
  EFloat.CreateNaN(null);
 Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -125,7 +125,7 @@ throw new IllegalStateException("", ex);
  EFloat.CreateNaN(EInteger.FromString("-1"));
 Assert.fail("Should have failed");
 } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -134,7 +134,7 @@ throw new IllegalStateException("", ex);
  EFloat.CreateNaN(null, false, false, null);
 Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -352,7 +352,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("0..1");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -361,7 +361,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("0.1x+222");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -370,7 +370,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("0.1g-222");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -385,7 +385,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -394,7 +394,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -405,7 +405,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -414,7 +414,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -423,7 +423,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString(null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -432,7 +432,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", -1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -441,7 +441,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 2, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -450,7 +450,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 0, -1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -459,7 +459,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 0, 2);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -468,7 +468,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -477,7 +477,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString(null, 0, 1, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -486,7 +486,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", -1, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -495,7 +495,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 2, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -504,7 +504,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 0, -1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -513,7 +513,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 0, 2, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -522,7 +522,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.FromString("x", 1, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -533,7 +533,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -544,7 +544,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -555,7 +555,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -566,7 +566,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -577,7 +577,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -588,7 +588,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -599,7 +599,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -610,7 +610,7 @@ public void TestPrecisionOneHalfEven() {
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -709,7 +709,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.Max(null, EFloat.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -718,7 +718,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.Max(EFloat.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -755,7 +755,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.MaxMagnitude(null, EFloat.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -764,7 +764,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.MaxMagnitude(EFloat.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -776,7 +776,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.Min(null, EFloat.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -785,7 +785,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.Min(EFloat.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -823,7 +823,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.MinMagnitude(null, EFloat.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -832,7 +832,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.MinMagnitude(EFloat.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1027,7 +1027,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.Zero.Subtract(null, EContext.Unlimited);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1043,7 +1043,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.PositiveInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1052,7 +1052,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.NegativeInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1061,7 +1061,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.NaN.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1070,7 +1070,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.SignalingNaN.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1086,7 +1086,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.PositiveInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1095,7 +1095,7 @@ public void TestPrecisionOneHalfEven() {
         EFloat.NegativeInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1424,7 +1424,7 @@ Assert.assertEquals(
  enumber.ToByteChecked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1436,7 +1436,7 @@ throw new IllegalStateException("", ex);
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1445,7 +1445,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt16Checked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1457,7 +1457,7 @@ Assert.assertEquals(
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1466,7 +1466,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt32Checked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1478,7 +1478,7 @@ Assert.assertEquals(
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1487,7 +1487,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt64Checked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1499,7 +1499,7 @@ Assert.assertEquals(
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1531,7 +1531,7 @@ throw new IllegalStateException("", ex);
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1548,7 +1548,7 @@ throw new IllegalStateException("", ex);
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1558,7 +1558,7 @@ throw new IllegalStateException("", ex);
  enumber.ToByteChecked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1574,7 +1574,7 @@ throw new IllegalStateException("", ex);
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1584,7 +1584,7 @@ throw new IllegalStateException("", ex);
  enumber.ToByteIfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1613,7 +1613,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1630,7 +1630,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1640,7 +1640,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt16Checked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1656,7 +1656,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1666,7 +1666,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt16IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1696,7 +1696,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1713,7 +1713,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1723,7 +1723,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt32Checked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1739,7 +1739,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1749,7 +1749,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt32IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1779,7 +1779,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1796,7 +1796,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1806,7 +1806,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt64Checked();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1822,7 +1822,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1832,7 +1832,7 @@ throw new IllegalStateException("", ex);
  enumber.ToInt64IfExact();
 Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1874,7 +1874,7 @@ TestToFloatRoundingOne(objectTemp, true);
         flo.ToEIntegerIfExact();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);

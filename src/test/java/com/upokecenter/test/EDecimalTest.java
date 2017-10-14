@@ -138,7 +138,7 @@ import com.upokecenter.numbers.*;
         EDecimal.Zero.Add(null, EContext.Unlimited);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -278,7 +278,7 @@ import com.upokecenter.numbers.*;
             enumber.ToByteChecked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -290,7 +290,7 @@ import com.upokecenter.numbers.*;
             enumber.ToByteIfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -299,7 +299,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt16Checked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -311,7 +311,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt16IfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -320,7 +320,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt32Checked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -332,7 +332,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt32IfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -341,7 +341,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt64Checked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -353,7 +353,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt64IfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -385,7 +385,7 @@ import com.upokecenter.numbers.*;
               enumber.ToByteIfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -402,7 +402,7 @@ import com.upokecenter.numbers.*;
             enumber.ToByteIfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -412,7 +412,7 @@ import com.upokecenter.numbers.*;
             enumber.ToByteChecked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -428,7 +428,7 @@ import com.upokecenter.numbers.*;
               enumber.ToByteIfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -438,7 +438,7 @@ import com.upokecenter.numbers.*;
               enumber.ToByteIfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -468,7 +468,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt16IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -485,7 +485,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt16IfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -495,7 +495,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt16Checked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -511,7 +511,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt16IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -521,7 +521,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt16IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -551,7 +551,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt32IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -568,7 +568,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt32IfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -578,7 +578,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt32Checked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -594,7 +594,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt32IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -604,7 +604,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt32IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -635,7 +635,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt64IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -652,7 +652,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt64IfExact();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -662,7 +662,7 @@ import com.upokecenter.numbers.*;
             enumber.ToInt64Checked();
             Assert.fail("Should have failed");
           } catch (ArithmeticException ex) {
-            new Object();
+            // NOTE: Intentionally empty
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -678,7 +678,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt64IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -688,7 +688,7 @@ import com.upokecenter.numbers.*;
               enumber.ToInt64IfExact();
               Assert.fail("Should have failed");
             } catch (ArithmeticException ex) {
-              new Object();
+              // NOTE: Intentionally empty
             } catch (Exception ex) {
               Assert.fail(ex.toString());
               throw new IllegalStateException("", ex);
@@ -708,7 +708,7 @@ import com.upokecenter.numbers.*;
         EDecimal.Create(null, EInteger.FromInt32(1));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -717,7 +717,7 @@ import com.upokecenter.numbers.*;
         EDecimal.Create(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -726,7 +726,7 @@ import com.upokecenter.numbers.*;
         EDecimal.Create(EInteger.FromInt32(1), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -738,7 +738,7 @@ import com.upokecenter.numbers.*;
  EDecimal.CreateNaN(null);
 Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -747,7 +747,7 @@ throw new IllegalStateException("", ex);
  EDecimal.CreateNaN(EInteger.FromString("-1"));
 Assert.fail("Should have failed");
 } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -756,7 +756,7 @@ throw new IllegalStateException("", ex);
  EDecimal.CreateNaN(null, false, false, null);
 Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -1958,7 +1958,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromEFloat(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2031,7 +2031,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2040,7 +2040,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2053,7 +2053,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2062,7 +2062,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2071,7 +2071,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString(null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2081,7 +2081,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("0..1");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2090,7 +2090,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("0.1x+222");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2099,7 +2099,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("0.1g-222");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2109,7 +2109,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", -1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2118,7 +2118,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 2, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2127,7 +2127,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 0, -1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2136,7 +2136,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 0, 2);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2145,7 +2145,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2154,7 +2154,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString(null, 0, 1, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2163,7 +2163,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", -1, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2172,7 +2172,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 2, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2181,7 +2181,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 0, -1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2190,7 +2190,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 0, 2, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2199,7 +2199,7 @@ throw new IllegalStateException("", ex);
         EDecimal.FromString("x", 1, 1, null);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2321,7 +2321,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Max(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2330,7 +2330,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Max(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2367,7 +2367,7 @@ throw new IllegalStateException("", ex);
         EDecimal.MaxMagnitude(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2376,7 +2376,7 @@ throw new IllegalStateException("", ex);
         EDecimal.MaxMagnitude(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2388,7 +2388,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Min(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2397,7 +2397,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Min(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2434,7 +2434,7 @@ throw new IllegalStateException("", ex);
         EDecimal.MinMagnitude(null, EDecimal.One);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2443,7 +2443,7 @@ throw new IllegalStateException("", ex);
         EDecimal.MinMagnitude(EDecimal.One, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2525,7 +2525,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndAdd(null, EDecimal.Zero, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2534,7 +2534,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndAdd(EDecimal.Zero, null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2543,7 +2543,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndAdd(null, null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2552,7 +2552,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndAdd(null, EDecimal.Zero);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2561,7 +2561,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndAdd(EDecimal.Zero, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2570,7 +2570,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndAdd(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2585,7 +2585,7 @@ throw new IllegalStateException("", ex);
    null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2597,7 +2597,7 @@ throw new IllegalStateException("", ex);
    null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2606,7 +2606,7 @@ throw new IllegalStateException("", ex);
         EDecimal.One.MultiplyAndSubtract(null, null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2938,7 +2938,7 @@ throw new IllegalStateException("", ex);
         EDecimal.Zero.Subtract(null, EContext.Unlimited);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2950,7 +2950,7 @@ throw new IllegalStateException("", ex);
         EDecimal.PositiveInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2959,7 +2959,7 @@ throw new IllegalStateException("", ex);
         EDecimal.NegativeInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2968,7 +2968,7 @@ throw new IllegalStateException("", ex);
         EDecimal.PositiveInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2977,7 +2977,7 @@ throw new IllegalStateException("", ex);
         EDecimal.NegativeInfinity.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2986,7 +2986,7 @@ throw new IllegalStateException("", ex);
         EDecimal.NaN.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2995,7 +2995,7 @@ throw new IllegalStateException("", ex);
         EDecimal.SignalingNaN.ToEInteger();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -3015,7 +3015,7 @@ throw new IllegalStateException("", ex);
         dec.ToEIntegerIfExact();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);

@@ -131,7 +131,7 @@ import com.upokecenter.numbers.*;
           bigintA.DivRem(bigintB);
           Assert.fail("Should have failed");
         } catch (ArithmeticException ex) {
-          new Object();
+          // NOTE: Intentionally empty
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -209,7 +209,7 @@ import com.upokecenter.numbers.*;
           bigintA.DivRem(bigintB);
           Assert.fail("Should have failed");
         } catch (ArithmeticException ex) {
-          new Object();
+          // NOTE: Intentionally empty
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -414,7 +414,7 @@ import com.upokecenter.numbers.*;
         BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -423,7 +423,7 @@ import com.upokecenter.numbers.*;
         BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -432,7 +432,7 @@ import com.upokecenter.numbers.*;
         BigFromString("999999999999999999999999999999999").ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -447,7 +447,7 @@ import com.upokecenter.numbers.*;
         BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -456,7 +456,7 @@ import com.upokecenter.numbers.*;
         BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -477,7 +477,7 @@ import com.upokecenter.numbers.*;
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -488,7 +488,7 @@ import com.upokecenter.numbers.*;
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -529,7 +529,7 @@ import com.upokecenter.numbers.*;
         BigFromString("999999999999999999999999999999999").ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -546,7 +546,7 @@ import com.upokecenter.numbers.*;
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -557,7 +557,7 @@ import com.upokecenter.numbers.*;
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -605,7 +605,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -614,7 +614,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(null, EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -623,7 +623,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(EInteger.FromInt32(0), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -632,7 +632,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(BigFromString("-1"), BigFromString("1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -641,7 +641,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -650,7 +650,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -659,7 +659,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -668,7 +668,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -821,7 +821,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).DivRem(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -830,7 +830,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).DivRem(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -873,7 +873,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -883,7 +883,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(0).GetSignedBit(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -892,7 +892,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString("x11");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -901,7 +901,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString(".");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -910,7 +910,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString("..");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -919,7 +919,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString("e200");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -929,7 +929,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Mod(EInteger.FromInt64(-1));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -938,7 +938,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Add(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -947,7 +947,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Subtract(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -956,7 +956,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Divide(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -965,7 +965,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Divide(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -974,7 +974,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Remainder(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -983,7 +983,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Mod(EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -992,7 +992,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Remainder(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1009,7 +1009,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromBytes(null, false);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1021,7 +1021,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixString(null, 10);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1030,7 +1030,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixString("0", 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1039,7 +1039,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixString("0", 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1048,7 +1048,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixString("0", -37);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1057,7 +1057,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixString("0", Integer.MIN_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1066,7 +1066,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixString("0", Integer.MAX_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1087,7 +1087,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring(null, 10, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1096,7 +1096,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0", 1, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1105,7 +1105,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0", 0, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1114,7 +1114,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0", -37, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1123,7 +1123,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0", Integer.MIN_VALUE, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1132,7 +1132,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0", Integer.MAX_VALUE, 0, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1141,7 +1141,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, -1, 2);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1150,7 +1150,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, 4, 5);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1159,7 +1159,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, 0, -8);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1168,7 +1168,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, 0, 6);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1177,7 +1177,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, 2, 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1186,7 +1186,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, 0, 0);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1195,7 +1195,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("123", 10, 1, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1204,7 +1204,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("-", 10, 0, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1213,7 +1213,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("g", 16, 0, 1);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1222,7 +1222,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0123gggg", 16, 0, 8);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1231,7 +1231,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0123gggg", 10, 0, 8);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1240,7 +1240,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromRadixSubstring("0123aaaa", 10, 0, 8);
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1269,7 +1269,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString("xyz");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1278,7 +1278,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1287,7 +1287,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         BigFromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1299,7 +1299,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring(null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1309,7 +1309,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring("123", -1, 2);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1318,7 +1318,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring("123", 4, 2);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1327,7 +1327,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring("123", 1, -1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1336,7 +1336,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring("123", 1, 4);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1345,7 +1345,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring("123", 1, 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1354,7 +1354,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromSubstring("123", 2, 1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1414,7 +1414,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(0).Gcd(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1872,7 +1872,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         System.out.println(minValueTimes2.ToInt32Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1882,7 +1882,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         System.out.println(verybig.ToInt32Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1891,7 +1891,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         System.out.println(verybig.ToInt64Checked());
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1900,7 +1900,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1909,7 +1909,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Pow(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1918,7 +1918,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         (EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1941,7 +1941,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Mod(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1950,7 +1950,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         (EInteger.FromInt64(13)).Mod(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1959,7 +1959,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         (EInteger.FromInt64(13)).Mod(EInteger.FromInt64(-4));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1968,7 +1968,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         (EInteger.FromInt64(-13)).Mod(EInteger.FromInt64(-4));
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -1980,7 +1980,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
         EInteger.FromInt32(1).Multiply(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2433,7 +2433,7 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
         EInteger.FromInt32(1).ToRadixString(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2442,7 +2442,7 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
         EInteger.FromInt32(1).ToRadixString(0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2451,7 +2451,7 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
         EInteger.FromInt32(1).ToRadixString(1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2460,7 +2460,7 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
         EInteger.FromInt32(1).ToRadixString(37);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2469,7 +2469,7 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
         EInteger.FromInt32(1).ToRadixString(Integer.MIN_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -2478,7 +2478,7 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
         EInteger.FromInt32(1).ToRadixString(Integer.MAX_VALUE);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);

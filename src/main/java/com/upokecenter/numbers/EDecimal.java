@@ -131,8 +131,8 @@ at: http://peteroupc.github.io/
      * Highest bit: If one, this is a negative number.</li> </ul> <p>The
      * elements described above are in the same order as the order of each
      * bit of each element, that is, either most significant first or least
-     * significant first.</p> <p><b>32-bit floating-point number</b> : A
-     * 32-bit binary number which is stored similarly to a <i>64-bit
+     * significant first.</p> <p><b>32-bit binary floating-point number</b>
+     * : A 32-bit binary number which is stored similarly to a <i>64-bit
      * floating-point number</i> , except that:</p> <ul><li>Precision is 24
      * bits.</li> <li>EMin is -149.</li> <li>EMax is 104.</li> <li>A. The
      * low 23 bits (Precision minus 1 bits) are the lowest bits of the
@@ -555,15 +555,18 @@ private static final FastIntegerFixed FastIntZero = new
      * Converts an arbitrary-precision integer to an arbitrary precision decimal.
      * @param bigint An arbitrary-precision integer.
      * @return An arbitrary-precision decimal number with the exponent set to 0.
+     * @throws java.lang.NullPointerException The parameter {@code bigint} is null.
      */
     public static EDecimal FromEInteger(EInteger bigint) {
       return EDecimal.Create(bigint, EInteger.FromInt32(0));
     }
 
     /**
-     * Not documented yet.
-     * @param ef The parameter {@code ef} is not documented yet.
-     * @return An EDecimal object.
+     * Converts an arbitrary-precision binary floating-point number to an arbitrary
+     * precision decimal.
+     * @param ef An arbitrary-precision binary floating-point number.
+     * @return An arbitrary-precision decimal number.
+     * @throws java.lang.NullPointerException The parameter {@code ef} is null.
      * @deprecated Renamed to FromEFloat.
  */
 @Deprecated
@@ -700,7 +703,8 @@ private static final FastIntegerFixed FastIntZero = new
      * arbitrary-precision decimal number from a decimal number, use
      * FromString instead in most cases (for example:
      * <code>ExtendedDecimal.FromString("0.1")</code>).
-     * @param flt The parameter {@code flt} is a 32-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 32-bit binary floating-point
+     * number.
      * @return A decimal number with the same value as {@code flt}.
      */
     public static EDecimal FromSingle(float flt) {
@@ -3746,9 +3750,9 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * zeros and this is a signaling NaN. Unfortunately, in the .NET
      * implementation, the return value of this method may be a quiet NaN
      * even if a signaling NaN would otherwise be generated.</p>
-     * @return The closest 32-bit floating-point number to this value. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 32-bit floating point number.
+     * @return The closest 32-bit binary floating-point number to this value. The
+     * return value can be positive infinity or negative infinity if this
+     * value exceeds the range of a 32-bit floating point number.
      */
     public float ToSingle() {
       if (this.IsPositiveInfinity()) {
@@ -4026,9 +4030,16 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Not documented yet.
-     * @param ec The parameter {@code ec} is not documented yet.
-     * @return An EFloat object.
+     * Creates a binary floating-point number from this object&#x27;s value. Note
+     * that if the binary floating-point number contains a negative
+     * exponent, the resulting value might not be exact, in which case the
+     * resulting binary float will be an approximation of this decimal
+     * number's value.
+     * @param ec An arithmetic context to control precision, rounding, and exponent
+     * range of the result. If {@code HasFlags} of the context is true, will
+     * also store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags).
+     * @return an arbitrary-precision float floating-point number.
      */
     public EFloat ToEFloat(EContext ec) {
       // TODO: Investigate speeding up Binary64 case

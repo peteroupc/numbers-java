@@ -636,7 +636,7 @@ public final void setFlags(int value) {
     /**
      * Copies this arithmetic context and sets the copy's "ClampNormalExponents"
      * flag to the given value.
-     * @param clamp The parameter {@code clamp} is not documented yet.
+     * @param clamp The desired value of the "ClampNormalExponents" flag.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithExponentClamp(boolean clamp) {

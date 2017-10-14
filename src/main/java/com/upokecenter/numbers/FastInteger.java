@@ -568,7 +568,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter {@code val} is not documented yet.
+     * @param val The parameter {@code val} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
@@ -651,7 +651,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter {@code val} is not documented yet.
+     * @param val The parameter {@code val} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
@@ -702,7 +702,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter {@code val} is not documented yet.
+     * @param val The parameter {@code val} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {

@@ -13,7 +13,7 @@ import com.upokecenter.numbers.*;
           new EContext(-1, ERounding.HalfEven, 0, 0, false));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -24,7 +24,7 @@ new Object();
           new EContext(0, ERounding.HalfEven, 0, -1, false));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -67,7 +67,7 @@ new Object();
  EContext.Unlimited.ExponentWithinRange(null);
 Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
 throw new IllegalStateException("", ex);
@@ -80,7 +80,7 @@ throw new IllegalStateException("", ex);
         ctx.setFlags(5);
         Assert.fail("Should have failed");
       } catch (IllegalStateException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -97,7 +97,7 @@ new Object();
         ctx.setFlags(5);
         Assert.fail("Should have failed");
       } catch (IllegalStateException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -218,7 +218,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithBigPrecision(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-        new Object();
+        // NOTE: Intentionally empty
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -227,7 +227,7 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithBigPrecision(EInteger.FromInt64(-1));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -247,7 +247,7 @@ new Object();
         EContext.Unlimited.WithExponentRange(1, 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -256,7 +256,7 @@ new Object();
         EContext.Unlimited.WithBigExponentRange(null, EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -265,7 +265,7 @@ new Object();
         EContext.Unlimited.WithBigExponentRange(EInteger.FromInt32(0), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -277,7 +277,7 @@ new Object();
           EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
@@ -293,7 +293,7 @@ new Object();
         EContext.Unlimited.WithPrecision(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-new Object();
+// NOTE: Intentionally empty
 } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);

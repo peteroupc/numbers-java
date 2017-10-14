@@ -293,7 +293,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts an arbitrary-precision decimal number to a rational number.
-     * @param ef An arbitrary-precision decimal number.
+     * @param ef The number to convert as an arbitrary-precision decimal number.
      * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter {@code ef} is null.
      * @deprecated Renamed to FromEDecimal.
@@ -304,8 +304,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param ef An arbitrary-precision binary float.
+     * Converts an arbitrary-precision binary float to a rational number.
+     * @param ef The number to convert as an arbitrary-precision binary float.
      * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter {@code ef} is null.
      * @deprecated Renamed to FromEFloat.
@@ -317,7 +317,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts an arbitrary-precision decimal number to a rational number.
-     * @param ef An arbitrary-precision decimal number.
+     * @param ef The number to convert as an arbitrary-precision decimal number.
      * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter {@code ef} is null.
      */
@@ -365,8 +365,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param ef An arbitrary-precision binary float.
+     * Converts an arbitrary-precision binary float to a rational number.
+     * @param ef The number to convert as an arbitrary-precision binary float.
      * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter {@code ef} is null.
      */
@@ -414,7 +414,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts an arbitrary-precision integer to a rational number.
-     * @param bigint An arbitrary-precision integer.
+     * @param bigint The number to convert as an arbitrary-precision integer.
      * @return The exact value of the integer as a rational number.
      */
     public static ERational FromEInteger(EInteger bigint) {
@@ -422,11 +422,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a 32-bit floating-point number to a rational number. This method
-     * computes the exact value of the floating point number, not an
+     * Converts a 32-bit binary floating-point number to a rational number. This
+     * method computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the number to a
      * string.
-     * @param flt The parameter {@code flt} is a 32-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 32-bit binary floating-point
+     * number.
      * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromSingle(float flt) {
@@ -862,7 +863,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * Returns the absolute value of this rational number, that is, a number with
+     * the same value as this one but as a nonnegative number.
      * @return An arbitrary-precision rational number.
      */
     public ERational Abs() {
@@ -1295,7 +1297,7 @@ at: http://peteroupc.github.io/
      * Determines whether this object&#x27;s numerator, denominator, and properties
      * are equal to those of another object. Not-a-number values are
      * considered equal if the rest of their properties are equal.
-     * @param other The parameter {@code other} is not documented yet.
+     * @param other An arbitrary-precision rational number to compare to.
      * @return Either {@code true} or {@code false}.
      */
     public boolean equals(ERational other) {
@@ -1424,7 +1426,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns a rational number with the sign reversed.
+     * Returns a rational number with the same value as this one but with the sign
+     * reversed.
      * @return An arbitrary-precision rational number.
      */
     public ERational Negate() {
@@ -1885,11 +1888,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts this value to a 32-bit floating-point number. The half-even
+     * Converts this value to a 32-bit binary floating-point number. The half-even
      * rounding mode is used.
-     * @return The closest 32-bit floating-point number to this value. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 32-bit floating point number.
+     * @return The closest 32-bit binary floating-point number to this value. The
+     * return value can be positive infinity or negative infinity if this
+     * value exceeds the range of a 32-bit floating point number.
      */
     public float ToSingle() {
       return

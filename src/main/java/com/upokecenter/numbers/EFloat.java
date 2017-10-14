@@ -374,7 +374,8 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the floating point
      * number to a string first.
-     * @param flt The parameter {@code flt} is a 32-bit floating-point number.
+     * @param flt The parameter {@code flt} is a 32-bit binary floating-point
+     * number.
      * @return A binary float with the same value as {@code flt}.
      */
     public static EFloat FromSingle(float flt) {
@@ -446,7 +447,7 @@ at: http://peteroupc.github.io/
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @param ctx An EContext object specifying the precision, rounding, and
+     * @param ctx A precision context specifying the precision, rounding, and
      * exponent range (in bits) to apply to the parsed number. Can be null.
      * @return The parsed number, converted to arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
@@ -471,9 +472,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param str The parameter {@code str} is not documented yet.
-     * @return An EFloat object.
+     * Creates a binary float from a text string that represents a number, using an
+     * unlimited precision context. For more information, see the
+     * <code>FromString(String, int, int, EContext)</code> method.
+     * @param str A text string to convert to a binary float.
+     * @return The parsed number, converted to arbitrary-precision binary float.
      */
     public static EFloat FromString(String str) {
       return FromString(str, 0, str == null ? 0 : str.length(), null);
@@ -481,9 +484,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the FromString(String, int, int, EContext) method.
-     * @param str The parameter {@code str} is a text string.
-     * @param ctx An EContext object specifying the precision, rounding, and
+     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * method.
+     * @param str A text string to convert to a binary float.
+     * @param ctx A precision context specifying the precision, rounding, and
      * exponent range to apply to the parsed number. Can be null.
      * @return The parsed number, converted to arbitrary-precision binary float.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
@@ -2489,8 +2493,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @return A 64-bit floating-point number.
+     * Converts this value to a 64-bit floating-point number.
+     * @return This number, converted to a 64-bit floating-point number.
      */
     public double ToDouble() {
       if (this.IsPositiveInfinity()) {
@@ -2571,7 +2575,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts this value to an arbitrary-precision decimal number.
-     * @return An arbitrary-precision decimal number.
+     * @return This number, converted to an arbitrary-precision decimal number.
      */
     public EDecimal ToEDecimal() {
       return EDecimal.FromEFloat(this);
@@ -2737,9 +2741,9 @@ at: http://peteroupc.github.io/
      * zeros and this is a signaling NaN. Unfortunately, in the .NET
      * implementation, the return value of this method may be a quiet NaN
      * even if a signaling NaN would otherwise be generated.</p>
-     * @return The closest 32-bit floating-point number to this value. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 32-bit floating point number.
+     * @return The closest 32-bit binary floating-point number to this value. The
+     * return value can be positive infinity or negative infinity if this
+     * value exceeds the range of a 32-bit floating point number.
      */
     public float ToSingle() {
       if (this.IsPositiveInfinity()) {

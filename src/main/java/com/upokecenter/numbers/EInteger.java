@@ -92,8 +92,8 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     * Gets a value not documented yet.
-     * @return A value not documented yet.
+     * Gets the number zero as an arbitrary-precision integer.
+     * @return The number zero as an arbitrary-precision integer.
      */
     public static EInteger getZero() {
         return ValueZero;
@@ -1035,7 +1035,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Compares an arbitrary-precision integer with this instance.
-     * @param other The parameter {@code other} is not documented yet.
+     * @param other The integer to compare to this value.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
      */
@@ -1932,8 +1932,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the greatest common divisor of two integers. The greatest common
-     * divisor (GCD) is also known as the greatest common factor (GCF).
+     * Returns the greatest common divisor of this integer and the given integer.
+     * The greatest common divisor (GCD) is also known as the greatest
+     * common factor (GCF).
      * @param bigintSecond Another arbitrary-precision integer.
      * @return An arbitrary-precision integer.
      * @throws java.lang.NullPointerException The parameter {@code bigintSecond} is
@@ -2052,8 +2053,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Not documented yet.
-     * @return A 32-bit signed integer.
+     * Returns the number of decimal digits used by this integer.
+     * @return The number of digits in the decimal form of this integer. Returns 1
+     * if this number is 0.
      */
     public int GetDigitCount() {
       if (this.isZero()) {
@@ -2513,11 +2515,11 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Calculates the remainder when an arbitrary-precision integer raised to a
+     * Calculates the remainder when this arbitrary-precision integer raised to a
      * certain power is divided by another arbitrary-precision integer.
-     * @param pow Another arbitrary-precision integer.
-     * @param mod An arbitrary-precision integer. (3).
-     * @return An arbitrary-precision integer.
+     * @param pow The power to raise this integer by.
+     * @param mod The integer to divide the raised number by.
+     * @return The value ({@code this} ^ {@code pow})% {@code mod}.
      * @throws java.lang.NullPointerException The parameter {@code pow} or {@code
      * mod} is null.
      */
@@ -2829,8 +2831,8 @@ WordsShiftRightOne(bu, buc);
      * a number of bits. A value of 1 doubles this value, a value of 2
      * multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.
      * @param numberBits The number of bits to shift. Can be negative, in which
-     * case this is the same as shiftRight with the absolute value of
-     * numberBits.
+     * case this is the same as shiftRight with the absolute value of this
+     * parameter.
      * @return An arbitrary-precision integer.
      */
     public EInteger ShiftLeft(int numberBits) {
