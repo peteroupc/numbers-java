@@ -8,7 +8,7 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 ## Methods
 
-* `ETrapException(int flag,
+* `ETrapException​(int flag,
               EContext ctx,
               Object result) ETrapException`<br>
  Initializes a new instance of the ETrapException class.
@@ -22,7 +22,7 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 ## Constructors
 
-* `ETrapException(int flag,
+* `ETrapException​(int flag,
               EContext ctx,
               Object result) ETrapException`<br>
  Initializes a new instance of the ETrapException class.
@@ -30,24 +30,28 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 ## Method Details
 
 ### ETrapException
-    public ETrapException(int flag, EContext ctx, Object result)
+    public ETrapException​(int flag, EContext ctx, Object result)
 Initializes a new instance of the <code>ETrapException</code> class.
 
 **Parameters:**
 
-* <code>flag</code> - A flag that specifies the kind of error (<code>EContext.FlagXXYY</code>). This will only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.
+* <code>flag</code> - A flag that specifies the kind of error (<code>
+ EContext.FlagXXYY</code>). This will only be one flag, such as <code>
+ FlagInexact</code> or FlagSubnormal.
 
 * <code>ctx</code> - A context object for arbitrary-precision arithmetic settings.
 
 * <code>result</code> - The parameter <code>result</code> is an arbitrary object.
 
 ### ETrapException
-    public ETrapException(int flag, EContext ctx, Object result)
+    public ETrapException​(int flag, EContext ctx, Object result)
 Initializes a new instance of the <code>ETrapException</code> class.
 
 **Parameters:**
 
-* <code>flag</code> - A flag that specifies the kind of error (<code>EContext.FlagXXYY</code>). This will only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.
+* <code>flag</code> - A flag that specifies the kind of error (<code>
+ EContext.FlagXXYY</code>). This will only be one flag, such as <code>
+ FlagInexact</code> or FlagSubnormal.
 
 * <code>ctx</code> - A context object for arbitrary-precision arithmetic settings.
 

@@ -4039,7 +4039,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * range of the result. If {@code HasFlags} of the context is true, will
      * also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags).
-     * @return an arbitrary-precision float floating-point number.
+     * @return An arbitrary-precision float floating-point number.
      */
     public EFloat ToEFloat(EContext ec) {
       // TODO: Investigate speeding up Binary64 case

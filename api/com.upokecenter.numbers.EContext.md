@@ -78,7 +78,7 @@ Contains parameters for controlling the precision, rounding, and exponent
 
 ## Constructors
 
-* `EContext(int precision,
+* `EContext​(int precision,
         ERounding rounding,
         int exponentMinSmall,
         int exponentMaxSmall,
@@ -90,17 +90,17 @@ Contains parameters for controlling the precision, rounding, and exponent
 
 * `EContext Copy()`<br>
  Initializes a new EContext that is a copy of another EContext.
-* `boolean ExponentWithinRange(EInteger exponent)`<br>
+* `boolean ExponentWithinRange​(EInteger exponent)`<br>
  Determines whether a number can have the given Exponent property under this
  arithmetic context.
-* `static EContext ForPrecision(int precision)`<br>
+* `static EContext ForPrecision​(int precision)`<br>
  Creates a new arithmetic context using the given maximum number of digits,
  an unlimited exponent range, and the HalfUp rounding mode.
-* `static EContext ForPrecisionAndRounding(int precision,
+* `static EContext ForPrecisionAndRounding​(int precision,
                        ERounding rounding)`<br>
  Creates a new EContext object initialized with an unlimited exponent range,
  and the given rounding mode and maximum precision.
-* `static EContext ForRounding(ERounding rounding)`<br>
+* `static EContext ForRounding​(ERounding rounding)`<br>
  Creates a new EContext object initialized with an unlimited precision, an
  unlimited exponent range, and the given rounding mode.
 * `boolean getAdjustExponent()`<br>
@@ -139,40 +139,40 @@ Contains parameters for controlling the precision, rounding, and exponent
  bits, rather than digits.
 * `boolean isSimplified()`<br>
  Gets a value indicating whether to use a "simplified" arithmetic.
-* `void setFlags(int value)`<br>
+* `void setFlags​(int value)`<br>
 * `String toString()`<br>
  Gets a string representation of this object.
-* `EContext WithAdjustExponent(boolean adjustExponent)`<br>
+* `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
-* `EContext WithBigExponentRange(EInteger exponentMin,
+* `EContext WithBigExponentRange​(EInteger exponentMin,
                     EInteger exponentMax)`<br>
  Copies this arithmetic context and sets the copy's exponent range.
-* `EContext WithBigPrecision(EInteger bigintPrecision)`<br>
+* `EContext WithBigPrecision​(EInteger bigintPrecision)`<br>
  Copies this EContext and gives it a particular precision value.
 * `EContext WithBlankFlags() HasFlags`<br>
  Copies this EContext with HasFlags set to true and a Flags value of
  0.
-* `EContext WithExponentClamp(boolean clamp)`<br>
+* `EContext WithExponentClamp​(boolean clamp)`<br>
  Copies this arithmetic context and sets the copy's "ClampNormalExponents"
  flag to the given value.
-* `EContext WithExponentRange(int exponentMinSmall,
+* `EContext WithExponentRange​(int exponentMinSmall,
                  int exponentMaxSmall)`<br>
  Copies this arithmetic context and sets the copy's exponent range.
 * `EContext WithNoFlags() HasFlags`<br>
  Copies this EContext with HasFlags set to false and a Flags value of
  0.
-* `EContext WithPrecision(int precision)`<br>
+* `EContext WithPrecision​(int precision)`<br>
  Copies this EContext and gives it a particular precision value.
-* `EContext WithPrecisionInBits(boolean isPrecisionBits)`<br>
+* `EContext WithPrecisionInBits​(boolean isPrecisionBits)`<br>
  Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
  given value.
-* `EContext WithRounding(ERounding rounding)`<br>
+* `EContext WithRounding​(ERounding rounding)`<br>
  Copies this EContext with the specified rounding mode.
-* `EContext WithSimplified(boolean simplified)`<br>
+* `EContext WithSimplified​(boolean simplified)`<br>
  Copies this EContext and sets the copy's "IsSimplified" property to the
  given value.
-* `EContext WithTraps(int traps)`<br>
+* `EContext WithTraps​(int traps)`<br>
  Copies this EContext with Traps set to the given value.
 * `EContext WithUnlimitedExponents()`<br>
  Copies this EContext with an unlimited exponent range.
@@ -343,7 +343,7 @@ Gets the flags that are set from converting numbers according to this
  0.
 
 ### setFlags
-    public final void setFlags(int value)
+    public final void setFlags​(int value)
 ### getHasExponentRange
     public final boolean getHasExponentRange()
 Gets a value indicating whether this context defines a minimum and maximum
@@ -433,7 +433,7 @@ Gets the traps that are set for each flag in the context. Whenever a flag is
 * The traps that are set for each flag in the context.
 
 ### ForPrecision
-    public static EContext ForPrecision(int precision)
+    public static EContext ForPrecision​(int precision)
 Creates a new arithmetic context using the given maximum number of digits,
  an unlimited exponent range, and the HalfUp rounding mode.
 
@@ -446,7 +446,7 @@ Creates a new arithmetic context using the given maximum number of digits,
 * A context object for arbitrary-precision arithmetic settings.
 
 ### ForPrecisionAndRounding
-    public static EContext ForPrecisionAndRounding(int precision, ERounding rounding)
+    public static EContext ForPrecisionAndRounding​(int precision, ERounding rounding)
 Creates a new EContext object initialized with an unlimited exponent range,
  and the given rounding mode and maximum precision.
 
@@ -461,7 +461,7 @@ Creates a new EContext object initialized with an unlimited exponent range,
 * A context object for arbitrary-precision arithmetic settings.
 
 ### ForRounding
-    public static EContext ForRounding(ERounding rounding)
+    public static EContext ForRounding​(ERounding rounding)
 Creates a new EContext object initialized with an unlimited precision, an
  unlimited exponent range, and the given rounding mode.
 
@@ -482,7 +482,7 @@ Initializes a new EContext that is a copy of another EContext.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### ExponentWithinRange
-    public boolean ExponentWithinRange(EInteger exponent)
+    public boolean ExponentWithinRange​(EInteger exponent)
 Determines whether a number can have the given Exponent property under this
  arithmetic context.
 
@@ -516,7 +516,7 @@ Gets a string representation of this object. Note that the format is not
 * A string representation of this object.
 
 ### WithAdjustExponent
-    public EContext WithAdjustExponent(boolean adjustExponent)
+    public EContext WithAdjustExponent​(boolean adjustExponent)
 Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
 
@@ -530,7 +530,7 @@ Copies this EContext and sets the copy's "AdjustExponent" property to the
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithBigExponentRange
-    public EContext WithBigExponentRange(EInteger exponentMin, EInteger exponentMax)
+    public EContext WithBigExponentRange​(EInteger exponentMin, EInteger exponentMax)
 Copies this arithmetic context and sets the copy's exponent range.
 
 **Parameters:**
@@ -552,7 +552,7 @@ Copies this arithmetic context and sets the copy's exponent range.
  null.
 
 ### WithBigPrecision
-    public EContext WithBigPrecision(EInteger bigintPrecision)
+    public EContext WithBigPrecision​(EInteger bigintPrecision)
 Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
@@ -578,7 +578,7 @@ Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithExponentClamp
-    public EContext WithExponentClamp(boolean clamp)
+    public EContext WithExponentClamp​(boolean clamp)
 Copies this arithmetic context and sets the copy's "ClampNormalExponents"
  flag to the given value.
 
@@ -591,7 +591,7 @@ Copies this arithmetic context and sets the copy's "ClampNormalExponents"
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithExponentRange
-    public EContext WithExponentRange(int exponentMinSmall, int exponentMaxSmall)
+    public EContext WithExponentRange​(int exponentMinSmall, int exponentMaxSmall)
 Copies this arithmetic context and sets the copy&#x27;s exponent range.
 
 **Parameters:**
@@ -614,7 +614,7 @@ Copies this EContext with <code>HasFlags</code> set to false and a Flags value o
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithPrecision
-    public EContext WithPrecision(int precision)
+    public EContext WithPrecision​(int precision)
 Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
@@ -626,7 +626,7 @@ Copies this EContext and gives it a particular precision value.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithPrecisionInBits
-    public EContext WithPrecisionInBits(boolean isPrecisionBits)
+    public EContext WithPrecisionInBits​(boolean isPrecisionBits)
 Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
  given value.
 
@@ -640,7 +640,7 @@ Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithRounding
-    public EContext WithRounding(ERounding rounding)
+    public EContext WithRounding​(ERounding rounding)
 Copies this EContext with the specified rounding mode.
 
 **Parameters:**
@@ -652,7 +652,7 @@ Copies this EContext with the specified rounding mode.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithSimplified
-    public EContext WithSimplified(boolean simplified)
+    public EContext WithSimplified​(boolean simplified)
 Copies this EContext and sets the copy's "IsSimplified" property to the
  given value.
 
@@ -665,7 +665,7 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithTraps
-    public EContext WithTraps(int traps)
+    public EContext WithTraps​(int traps)
 Copies this EContext with Traps set to the given value.
 
 **Parameters:**

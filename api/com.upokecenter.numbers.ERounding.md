@@ -45,7 +45,7 @@ Specifies the mode to use when &#x22;shortening&#x22; numbers that otherwise
 
 ## Methods
 
-* `static ERounding valueOf(String name)`<br>
+* `static ERounding valueOf​(String name)`<br>
  Returns the enum constant of this type with the specified name.
 * `static ERounding[] values()`<br>
  Returns an array containing the constants of this enum type, in
@@ -78,7 +78,7 @@ the order they are declared.
 ### values
     public static ERounding[] values()
 ### valueOf
-    public static ERounding valueOf(String name)
+    public static ERounding valueOf​(String name)
 ## Enum Constant Details
 
 ### None

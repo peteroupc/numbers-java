@@ -1077,7 +1077,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets an internal value.
-     * @return an internal value.
+     * @return An internal value.
      */
     final int signum() {
         switch (this.integerMode) {
