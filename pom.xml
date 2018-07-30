@@ -35,6 +35,9 @@
             <version>2.9.1</version>
             <configuration>
               <bottom>CBOR for Java documentation, generated in {currentYear}.</bottom>
+              <additionalJOptions>
+              <additionalJOption>-html5</additionalJOption>
+              </additionalJOptions>
             </configuration>
             <executions>
               <execution>
@@ -94,7 +97,7 @@
             <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.5.1</version>
+            <version>3.7.0</version>
             <configuration>
               <compilerArgs>
               <arg>-Xlint:all</arg>
