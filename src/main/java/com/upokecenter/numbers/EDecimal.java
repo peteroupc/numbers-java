@@ -119,7 +119,7 @@ at: http://peteroupc.github.io/
      * <sup><i>exponent</i> </sup> . The significand is 53 bits long
      * (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax).
      * The number is stored in the following format (commonly called the
-     * IEEE 754 format):</p> <code>|C|BBB...BBB|AAAAAA...AAAAAA|</code>
+     * IEEE 754 format):</p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre>
      * <ul><li>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the
      * significand.</li> <li>B. Next 11 bits: Exponent area: <ul><li>If all
      * bits are ones, this value is infinity if all bits in area A are
@@ -2866,11 +2866,11 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * number has a fixed number of digits after the decimal point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the decimal point:</p>
-     * <code>  // After performing arithmetic operations, adjust  // the
+     * <pre>  // After performing arithmetic operations, adjust  // the
      * number to 5  // digits after the decimal point number =
      * number.Quantize(EInteger.FromInt32(-5),  // five digits after the
      * decimal point EContext.ForPrecision(25)  // 25-digit precision);
-     * </code> <p>A fixed-point decimal arithmetic in which no digits come
+     * </pre> <p>A fixed-point decimal arithmetic in which no digits come
      * after the decimal point (a desired exponent of 0) is considered an
      * "integer arithmetic".</p>
      * @param desiredExponent The desired exponent for the result. The exponent is
@@ -2944,10 +2944,10 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * number has a fixed number of digits after the decimal point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the decimal point:</p>
-     * <code>  // After performing arithmetic operations, adjust  // the
+     * <pre>  // After performing arithmetic operations, adjust  // the
      * number to 5 digits after the decimal point number =
      * number.Quantize(-5,  // five digits after the decimal point
-     * EContext.ForPrecision(25)  // 25-digit precision); </code> <p>A
+     * EContext.ForPrecision(25)  // 25-digit precision); </pre> <p>A
      * fixed-point decimal arithmetic in which no digits come after the
      * decimal point (a desired exponent of 0) is considered an "integer
      * arithmetic".</p>
