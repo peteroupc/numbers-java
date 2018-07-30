@@ -185,6 +185,10 @@ at: http://peteroupc.github.io/
     public static final EContext UnlimitedHalfEven =
       EContext.ForPrecision(0).WithRounding(ERounding.HalfEven);
 
+    // TODO: Improve API's immutability (make all
+    // fields except flags and traps readonly/final)
+    // and include a construtor setting all fields
+
     private boolean adjustExponent;
 
     private EInteger bigintPrecision;
