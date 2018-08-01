@@ -188,7 +188,6 @@ at: http://peteroupc.github.io/
     // TODO: Improve API's immutability (make all
     // fields except flags and traps readonly/final)
     // and include a construtor setting all fields
-
     private boolean adjustExponent;
 
     private EInteger bigintPrecision;
