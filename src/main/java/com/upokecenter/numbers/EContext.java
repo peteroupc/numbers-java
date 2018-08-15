@@ -549,8 +549,8 @@ public final void setFlags(int value) {
     }
 
     /**
-     * Gets a string representation of this object. Note that the format is not
-     * intended to be parsed and may change at any time.
+     * Gets a string representation of this object. Note that the string's format
+     * is not intended to be parsed and may change at any time.
      * @return A string representation of this object.
      */
     @Override public String toString() {
