@@ -35,6 +35,7 @@ package com.upokecenter.util;
      * @param p A probability from 0 through 1. 0 means always false, and 1 means
      * always true.
      * @return A Boolean object.
+     * @throws IllegalArgumentException
      */
     public boolean Bernoulli(double p) {
       if (p < 0) {
@@ -73,6 +74,7 @@ package com.upokecenter.util;
      * @param p The probability for each trial to succeed, from 0 (never) to 1
      * (always).
      * @return The number of successes in a given number of trials.
+     * @throws IllegalArgumentException
      */
     public int Binomial(int trials, double p) {
       if (p < 0) {
@@ -119,6 +121,7 @@ package com.upokecenter.util;
      * @param df Degrees of freedom (the number of independently chosen
      * normally-distributed numbers).
      * @return A 64-bit floating-point number.
+     * @throws IllegalArgumentException
      */
     public double ChiSquared(int df) {
       if (df <= 0) {
@@ -140,6 +143,7 @@ package com.upokecenter.util;
      * @param a Another 64-bit floating-point number.
      * @param b A 64-bit floating-point number. (3).
      * @return A 64-bit floating-point number.
+     * @throws IllegalArgumentException
      */
     public double Gamma(double a, double b) {
       if (b <= 0) {
@@ -152,6 +156,7 @@ package com.upokecenter.util;
      * Not documented yet.
      * @param a Another 64-bit floating-point number.
      * @return A 64-bit floating-point number.
+     * @throws IllegalArgumentException
      */
     public double Gamma(double a) {
       if (a <= 0) {
@@ -204,6 +209,7 @@ package com.upokecenter.util;
      * @param ones The number of tokens labeled 1.
      * @param count The number of tokens labeled 1 or 0.
      * @return A 32-bit signed integer.
+     * @throws IllegalArgumentException
      */
     public int Hypergeometric(int trials, int ones, int count) {
       if (ones < 0) {
@@ -256,6 +262,7 @@ package com.upokecenter.util;
      * (always).
      * @return The number of 0's generated. Returns Integer.MAX_VALUE if {@code p} is
      * 0.
+     * @throws IllegalArgumentException
      */
     public int NegativeBinomial(int trials, double p) {
       if (p < 0) {
@@ -362,6 +369,7 @@ package com.upokecenter.util;
      * repeatedly with the same mean.
      * @param mean The expected mean of the random numbers.
      * @return A 32-bit signed integer.
+     * @throws IllegalArgumentException
      */
     public int Poisson(double mean) {
       if (mean < 0) {
@@ -385,6 +393,7 @@ package com.upokecenter.util;
      * @param min Smallest possible number that will be generated.
      * @param max Number that the randomly-generated number will be less than.
      * @return A 64-bit floating-point number.
+     * @throws IllegalArgumentException
      */
     public double Uniform(double min, double max) {
       if (min >= max) {
@@ -428,6 +437,7 @@ package com.upokecenter.util;
      * @param maxExclusive One plus the largest possible value of the random
      * number.
      * @return A 32-bit signed integer.
+     * @throws IllegalArgumentException
      */
         public int UniformInt(int minInclusive, int maxExclusive) {
       if (minInclusive > maxExclusive) {
@@ -455,6 +465,7 @@ if (minInclusive == maxExclusive) {
      * @param maxExclusive One plus the largest possible value of the random
      * number.
      * @return A 64-bit signed integer.
+     * @throws IllegalArgumentException
      */
     public long UniformLong(long minInclusive, long maxExclusive) {
       if (minInclusive > maxExclusive) {
@@ -499,6 +510,7 @@ if (minInclusive == maxExclusive) {
      * @param maxExclusive One plus the largest possible value of the random
      * number.
      * @return A 32-bit signed integer.
+     * @throws IllegalArgumentException
      */
     public int UniformInt(int maxExclusive) {
       if (maxExclusive < 0) {
@@ -557,6 +569,7 @@ if (minInclusive == maxExclusive) {
      * @param maxExclusive One plus the largest possible value of the random
      * number.
      * @return A 64-bit signed integer.
+     * @throws IllegalArgumentException
      */
         public long UniformLong(long maxExclusive) {
       if (maxExclusive < 0) {
