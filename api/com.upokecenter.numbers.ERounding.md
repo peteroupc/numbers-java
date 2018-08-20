@@ -2,12 +2,12 @@
 
     public enum ERounding extends Enum<ERounding>
 
-Specifies the mode to use when &#x22;shortening&#x22; numbers that otherwise
- can&#x27;t fit a given number of digits, so that the shortened number
- has about the same value. This &#x22;shortening&#x22; is known as
- rounding. (The "E" stands for "extended", and has this prefix to
- group it with the other classes common to this library, particularly
- EDecimal, EFloat, and ERational.).
+Specifies the mode to use when "shortening" numbers that otherwise can't fit
+ a given number of digits, so that the shortened number has about the
+ same value. This "shortening" is known as rounding. (The "E" stands
+ for "extended", and has this prefix to group it with the other
+ classes common to this library, particularly EDecimal, EFloat, and
+ ERational.).
 
 ## Enum Constants
 
@@ -105,15 +105,15 @@ Rounded to the nearest number; if the fractional part is exactly half, it is
     public static final ERounding HalfEven
 Rounded to the nearest number; if the fractional part is exactly half, the
  number is rounded to the closest representable number that is even.
- This is sometimes also known as &#x22;banker&#x27;s rounding&#x22;.
+ This is sometimes also known as "banker's rounding".
 ### Ceiling
     public static final ERounding Ceiling
 If there is a fractional part, the number is rounded to the highest
- representable number that&#x27;s closest to it.
+ representable number that's closest to it.
 ### Floor
     public static final ERounding Floor
 If there is a fractional part, the number is rounded to the lowest
- representable number that&#x27;s closest to it.
+ representable number that's closest to it.
 ### Odd
     public static final ERounding Odd
 If there is a fractional part and the whole number part is even, the number

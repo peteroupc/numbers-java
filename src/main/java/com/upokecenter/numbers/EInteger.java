@@ -76,43 +76,35 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Gets the number 1 as an arbitrary-precision integer.
-     * @return The number 1 as an arbitrary-precision integer.
+     *
      */
     public static EInteger getOne() {
         return ValueOne;
       }
 
     /**
-     * Gets the number 10 as an arbitrary-precision integer.
-     * @return The number 10 as an arbitrary-precision integer.
+     *
      */
     public static EInteger getTen() {
         return ValueTen;
       }
 
     /**
-     * Gets the number zero as an arbitrary-precision integer.
-     * @return The number zero as an arbitrary-precision integer.
+     *
      */
     public static EInteger getZero() {
         return ValueZero;
       }
 
     /**
-     * Gets a value indicating whether this value is even.
-     * @return <code>true</code> if this value is even; otherwise, <code>false</code>. {@code
-     * true} if this value is even; otherwise, {@code false}.
+     *
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
       }
 
     /**
-     * Gets a value indicating whether this object's value is a power of two.
-     * @return <code>true</code> if this object's value is a power of two; otherwise,
-     * <code>false</code>. {@code true} if this object's value is a power of two;
-     * otherwise, {@code false} .
+     *
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -123,18 +115,14 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     * Gets a value indicating whether this value is 0.
-     * @return <code>true</code> if this value is 0; otherwise, <code>false</code>. {@code
-     * true} if this value is 0; otherwise, {@code false}.
+     *
      */
     public final boolean isZero() {
         return this.wordCount == 0;
       }
 
     /**
-     * Gets the sign of this object's value.
-     * @return 0 if this value is zero; -1 if this value is negative, or 1 if this
-     * value is positive.
+     *
      */
     public final int signum() {
         return (this.wordCount == 0) ? 0 : (this.negative ? -1 : 1);
@@ -160,33 +148,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Initializes an arbitrary-precision integer from an array of bytes.
-     * @param bytes A byte array consisting of the two's-complement form (see
-     * {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}) of the
-     * arbitrary-precision integer to create. The byte array is encoded
-     * using the following rules: <ul> <li>Positive numbers have the first
-     * byte's highest bit cleared, and negative numbers have the bit
-     * set.</li> <li>The last byte contains the lowest 8-bits, the
-     * next-to-last contains the next lowest 8 bits, and so on. For example,
-     * the number 300 can be encoded as {@code 0x01, 0x2c} and 200 as {@code
-     * 0x00, 0xc8}. (Note that the second example contains a set high bit in
-     * {@code 0xC8}, so an additional 0 is added at the start to ensure it's
-     * interpreted as positive.)</li> <li>To encode negative numbers, take
-     * the absolute value of the number, subtract by 1, encode the number
-     * into bytes, and toggle each bit of each byte. Any further bits that
-     * appear beyond the most significant bit of the number will be all
-     * ones. For example, the number -450 can be encoded as {@code 0xfe,
-     * 0x70} and -52869 as {@code 0xff, 0x31, 0x7b}. (Note that the second
-     * example contains a cleared high bit in {@code 0x31, 0x7b}, so an
-     * additional 0xff is added at the start to ensure it's interpreted as
-     * negative.)</li></ul> <p>For little-endian, the byte order is reversed
-     * from the byte order just discussed.</p>.
-     * @param littleEndian If true, the byte order is little-endian, or
-     * least-significant-byte first. If false, the byte order is big-endian,
-     * or most-significant-byte first.
-     * @return An arbitrary-precision integer. Returns 0 if the byte array's length
-     * is 0.
-     * @throws java.lang.NullPointerException The parameter {@code bytes} is null.
+     *
+     * @param bytes Not documented yet.
+     * @param littleEndian Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public static EInteger FromBytes(byte[] bytes, boolean littleEndian) {
       if (bytes == null) {
@@ -258,10 +224,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a 32-bit signed integer to an arbitrary-precision integer.
-     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return An arbitrary-precision integer with the same value as the 64-bit
-     * number.
+     *
+     * @param intValue Not documented yet.
+     * @return An EInteger object.
      */
     public static EInteger FromInt32(int intValue) {
       if (intValue == 0) {
@@ -305,11 +270,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a 64-bit signed integer to an arbitrary-precision integer.
-     * @param longerValue The parameter {@code longerValue} is a 64-bit signed
-     * integer.
-     * @return An arbitrary-precision integer with the same value as the 64-bit
-     * number.
+     *
+     * @param longerValue Not documented yet.
+     * @return An EInteger object.
      */
     public static EInteger FromInt64(long longerValue) {
       if (longerValue == 0) {
@@ -376,15 +339,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a string to an arbitrary-precision integer in a given radix.
-     * @param str A string described by the FromRadixSubstring method.
-     * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-     * A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16.
-     * @return An arbitrary-precision integer with the same value as the given
-     * string.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     *
+     * @param str Not documented yet.
+     * @param radix Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public static EInteger FromRadixString(String str, int radix) {
       if (str == null) {
@@ -394,28 +353,13 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a portion of a string to an arbitrary-precision integer in a given
-     * radix.
-     * @param str A text string. The desired portion of the string must contain
-     * only characters allowed by the given radix, except that it may start
-     * with a minus sign ("-", U+002D) to indicate a negative number. The
-     * desired portion is not allowed to contain white space characters,
-     * including spaces.
-     * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-     * A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16.
-     * @param index The index of the string that starts the string portion.
-     * @param endIndex The index of the string that ends the string portion. The
-     * length will be index + endIndex - 1.
-     * @return An arbitrary-precision integer with the same value as given in the
-     * string portion.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException The parameter {@code index} is less than 0,
-     * {@code endIndex} is less than 0, or either is greater than the
-     * string's length, or {@code endIndex} is less than {@code index}.
-     * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
-     * format.
+     *
+     * @param str Not documented yet.
+     * @param radix Not documented yet.
+     * @param index Not documented yet. (3).
+     * @param endIndex Not documented yet. (4).
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public static EInteger FromRadixSubstring(
       String str,
@@ -636,16 +580,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a string to an arbitrary-precision integer.
-     * @param str A text string. The string must contain only basic digits 0 to 9
-     * (U+0030 to U+0039), except that it may start with a minus sign ("-",
-     * U + 002D) to indicate a negative number. The string is not allowed to
-     * contain white space characters, including spaces.
-     * @return An arbitrary-precision integer with the same value as given in the
-     * string.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is in an invalid
-     * format.
+     *
+     * @param str Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public static EInteger FromString(String str) {
       if (str == null) {
@@ -655,23 +593,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts a portion of a string to an arbitrary-precision integer.
-     * @param str A text string. The desired portion of the string must contain
-     * only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may start
-     * with a minus sign ("-", U+002D) to indicate a negative number. The
-     * desired portion is not allowed to contain white space characters,
-     * including spaces.
-     * @param index The index of the string that starts the string portion.
-     * @param endIndex The index of the string that ends the string portion. The
-     * length will be index + endIndex - 1.
-     * @return An arbitrary-precision integer with the same value as given in the
-     * string portion.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException The parameter {@code index} is less than 0,
-     * {@code endIndex} is less than 0, or either is greater than the
-     * string's length, or {@code endIndex} is less than {@code index}.
-     * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
-     * format.
+     *
+     * @param str Not documented yet.
+     * @param index Not documented yet.
+     * @param endIndex Not documented yet. (3).
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public static EInteger FromSubstring(
       String str,
@@ -684,8 +611,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the absolute value of this object's value.
-     * @return This object's value with the sign removed.
+     *
+     * @return An EInteger object.
      */
     public EInteger Abs() {
       return (this.wordCount == 0 || !this.negative) ? this : new
@@ -693,11 +620,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.
-     * @param bigintAugend Another arbitrary-precision integer.
-     * @return The sum of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
-     * null.
+     *
+     * @param bigintAugend Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger Add(EInteger bigintAugend) {
       if (bigintAugend == null) {
@@ -949,11 +875,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts this object's value to a 32-bit signed integer, throwing an
-     * exception if it can't fit.
+     *
      * @return A 32-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
-     * 32-bit signed integer.
      * @deprecated Renamed to ToInt32Checked.
  */
 @Deprecated
@@ -962,11 +885,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts this object's value to a 32-bit signed integer. If the value can't
-     * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers"}) (in which case the return value might have a
-     * different sign than this object's value).
+     *
      * @return A 32-bit signed integer.
      * @deprecated Renamed to ToInt32Unchecked.
  */
@@ -976,11 +895,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts this object's value to a 64-bit signed integer, throwing an
-     * exception if it can't fit.
+     *
      * @return A 64-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
-     * 64-bit signed integer.
      * @deprecated Renamed to ToInt64Checked.
  */
 @Deprecated
@@ -989,11 +905,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts this object's value to a 64-bit signed integer. If the value can't
-     * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers"}) (in which case the return value might have a
-     * different sign than this object's value).
+     *
      * @return A 64-bit signed integer.
      * @deprecated Renamed to ToInt64Unchecked.
  */
@@ -1003,9 +915,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns whether this object's value can fit in a 32-bit signed integer.
-     * @return {@code true} if this object's value is from -2147483648 through
-     * 2147483647; otherwise, {@code false}.
+     *
+     * @return A Boolean object.
      */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
@@ -1020,9 +931,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns whether this object's value can fit in a 64-bit signed integer.
-     * @return {@code true} if this object's value is from -9223372036854775808
-     * through 9223372036854775807; otherwise, {@code false}.
+     *
+     * @return A Boolean object.
      */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
@@ -1037,10 +947,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Compares an arbitrary-precision integer with this instance.
-     * @param other The integer to compare to this value.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
+     *
+     * @param other Not documented yet.
+     * @return A 32-bit signed integer.
      */
     public int compareTo(EInteger other) {
       if (other == null) {
@@ -1081,17 +990,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of an arbitrary-precision integer. The
-     * result is rounded down (the fractional part is discarded). Except if
-     * the result is 0, it will be negative if this object is positive and
-     * the other is negative, or vice versa, and will be positive if both
-     * are positive or both are negative.
-     * @param bigintDivisor Another arbitrary-precision integer.
-     * @return The quotient of the two objects.
-     * @throws ArithmeticException The parameter {@code bigintDivisor} is
-     * zero.
-     * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
-     * null.
+     *
+     * @param bigintDivisor Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
+     * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Divide(EInteger bigintDivisor) {
       if (bigintDivisor == null) {
@@ -1744,13 +1647,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this object by another arbitrary-precision integer and returns the
-     * quotient and remainder.
-     * @param divisor The number to divide by.
-     * @return An array with two arbitrary-precision integers: the first is the
-     * quotient, and the second is the remainder.
-     * @throws java.lang.NullPointerException The parameter divisor is null.
-     * @throws ArithmeticException The parameter divisor is 0.
+     *
+     * @param divisor Not documented yet.
+     * @return An EInteger[] object.
+     * @throws NullPointerException The parameter is null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger[] DivRem(EInteger divisor) {
@@ -1865,11 +1765,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Determines whether this object and another object are equal and have the
-     * same type.
-     * @param obj The parameter {@code obj} is an arbitrary object.
-     * @return {@code true} if this object and another object are equal; otherwise,
-     * {@code false}.
+     *
+     * @param obj Not documented yet.
+     * @return A Boolean object.
      */
     @Override public boolean equals(Object obj) {
       EInteger other = ((obj instanceof EInteger) ? (EInteger)obj : null);
@@ -1935,13 +1833,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the greatest common divisor of this integer and the given integer.
-     * The greatest common divisor (GCD) is also known as the greatest
-     * common factor (GCF).
-     * @param bigintSecond Another arbitrary-precision integer.
-     * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code bigintSecond} is
-     * null.
+     *
+     * @param bigintSecond Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -2056,9 +1951,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns the number of decimal digits used by this integer.
-     * @return The number of digits in the decimal form of this integer. Returns 1
-     * if this number is 0.
+     *
+     * @return A 32-bit signed integer.
      */
     public int GetDigitCount() {
       if (this.isZero()) {
@@ -2241,8 +2135,7 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns the hash code for this instance. No application or process IDs are
-     * used in the hash code calculation.
+     *
      * @return A 32-bit signed integer.
      */
     @Override public int hashCode() {
@@ -2259,11 +2152,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
-     * @return The lowest bit set in the number, starting at 0. Returns -1 if this
-     * value is 0 or odd.
+     *
+     * @return A 32-bit signed integer.
      */
     public int GetLowBit() {
       int retSetBit = 0;
@@ -2294,11 +2184,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
-     * @return The lowest bit set in the number, starting at 0. Returns -1 if this
-     * value is 0 or odd.
+     *
+     * @return An EInteger object.
      */
     public EInteger GetLowBitAsEInteger() {
       long retSetBitLong = 0;
@@ -2327,14 +2214,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns whether a bit is set in the two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
-     * object' s value.
-     * @param index Zero based index of the bit to test. 0 means the least
-     * significant bit.
-     * @return {@code true} if a bit is set in the two's-complement form (see
-     * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
-     * otherwise, {@code false}.
+     *
+     * @param index Not documented yet.
+     * @return A Boolean object.
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -2366,11 +2248,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this object's value,
-     * except for its sign. If the value is negative, finds the number of
-     * bits in the value equal to this object's absolute value minus 1.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0 or negative 1.
+     *
+     * @return A 32-bit signed integer.
      */
     public int GetSignedBitLength() {
       int wc = this.wordCount;
@@ -2404,11 +2283,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns whether a bit is set in this number's absolute value.
-     * @param index Zero based index of the bit to test. 0 means the least
-     * significant bit.
-     * @return {@code true} if a bit is set in this number's absolute value.
-     * @throws IllegalArgumentException
+     *
+     * @param index Not documented yet.
+     * @return A Boolean object.
      */
     public boolean GetUnsignedBit(int index) {
       if (index < 0) {
@@ -2419,10 +2296,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this number's absolute
-     * value.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0, and returns 1 if the value is negative 1.
+     *
+     * @return An EInteger object.
      */
     public EInteger GetUnsignedBitLengthAsEInteger() {
       int wc = this.wordCount;
@@ -2456,10 +2331,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this number's absolute
-     * value.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0, and returns 1 if the value is negative 1.
+     *
+     * @return A 32-bit signed integer.
      */
     public int GetUnsignedBitLength() {
       int wc = this.wordCount;
@@ -2493,15 +2366,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the modulus remainder that results when this instance is divided by
-     * the value of an arbitrary-precision integer. The modulus remainder is
-     * the same as the normal remainder if the normal remainder is positive,
-     * and equals divisor plus normal remainder if the normal remainder is
-     * negative.
-     * @param divisor A divisor greater than 0 (the modulus).
-     * @return An arbitrary-precision integer.
-     * @throws ArithmeticException The parameter {@code divisor} is negative.
-     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     *
+     * @param divisor Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger Mod(EInteger divisor) {
       if (divisor == null) {
@@ -2518,14 +2386,11 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Calculates the remainder when this arbitrary-precision integer raised to a
-     * certain power is divided by another arbitrary-precision integer.
-     * @param pow The power to raise this integer by.
-     * @param mod The integer to divide the raised number by.
-     * @return The value ({@code this} ^ {@code pow})% {@code mod}.
-     * @throws java.lang.NullPointerException The parameter {@code pow} or {@code
-     * mod} is null.
-     * @throws IllegalArgumentException
+     *
+     * @param pow Not documented yet.
+     * @param mod Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger ModPow(EInteger pow, EInteger mod) {
       if (pow == null) {
@@ -2555,12 +2420,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.
-     * @param bigintMult Another arbitrary-precision integer.
-     * @return The product of the two numbers.
-     * @throws java.lang.NullPointerException The parameter {@code bigintMult} is
-     * null.
+     *
+     * @param bigintMult Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger Multiply(EInteger bigintMult) {
       if (bigintMult == null) {
@@ -2680,8 +2543,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Gets the value of this object with the sign reversed.
-     * @return This object's value with the sign reversed.
+     *
+     * @return An EInteger object.
      */
     public EInteger Negate() {
       return this.wordCount == 0 ? this : new EInteger(
@@ -2691,11 +2554,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Raises an arbitrary-precision integer to a power.
-     * @param powerSmall The exponent to raise to.
-     * @return The result. Returns 1 if {@code powerSmall} is 0.
-     * @throws IllegalArgumentException The parameter {@code powerSmall} is less
-     * than 0.
+     *
+     * @param powerSmall Not documented yet.
+     * @return An EInteger object.
      */
     public EInteger Pow(int powerSmall) {
       if (powerSmall < 0) {
@@ -2730,12 +2591,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Raises an arbitrary-precision integer to a power, which is given as another
-     * arbitrary-precision integer.
-     * @param power The exponent to raise to.
-     * @return The result. Returns 1 if {@code power} is 0.
-     * @throws java.lang.NullPointerException The parameter {@code power} is null.
-     * @throws IllegalArgumentException The parameter {@code power} is less than 0.
+     *
+     * @param power Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger PowBigIntVar(EInteger power) {
       if (power == null) {
@@ -2773,14 +2632,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the remainder that results when this instance is divided by the value
-     * of an arbitrary-precision integer. The remainder is the value that
-     * remains when the absolute value of this object is divided by the
-     * absolute value of the other object; the remainder has the same sign
-     * (positive or negative) as this object.
-     * @param divisor Another arbitrary-precision integer.
-     * @return The remainder of the two numbers.
-     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     *
+     * @param divisor Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Remainder(EInteger divisor) {
@@ -2831,13 +2686,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns an arbitrary-precision integer with the bits shifted to the left by
-     * a number of bits. A value of 1 doubles this value, a value of 2
-     * multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.
-     * @param numberBits The number of bits to shift. Can be negative, in which
-     * case this is the same as shiftRight with the absolute value of this
-     * parameter.
-     * @return An arbitrary-precision integer.
+     *
+     * @param numberBits Not documented yet.
+     * @return An EInteger object.
      */
     public EInteger ShiftLeft(int numberBits) {
       if (numberBits == 0 || this.wordCount == 0) {
@@ -3074,13 +2925,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns an arbitrary-precision integer with the bits shifted to the right.
-     * For this operation, the arbitrary-precision integer is treated as a
-     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers"}). Thus, for negative values, the
-     * arbitrary-precision integer is sign-extended.
-     * @param numberBits Number of bits to shift right.
-     * @return An arbitrary-precision integer.
+     *
+     * @param numberBits Not documented yet.
+     * @return An EInteger object.
      */
     public EInteger ShiftRight(int numberBits) {
       if (numberBits == 0 || this.wordCount == 0) {
@@ -3135,9 +2982,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the square root of this instance's value, rounded down.
-     * @return The square root of this object's value. Returns 0 if this value is 0
-     * or less.
+     *
+     * @return An EInteger object.
      */
     public EInteger Sqrt() {
       EInteger[] srrem = this.SqrtRemInternal(false);
@@ -3145,23 +2991,18 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Calculates the square root and the remainder.
-     * @return An array of two arbitrary-precision integers: the first integer is
-     * the square root, and the second is the difference between this value
-     * and the square of the first integer. Returns two zeros if this value
-     * is 0 or less, or one and zero if this value equals 1.
+     *
+     * @return An EInteger[] object.
      */
     public EInteger[] SqrtRem() {
       return this.SqrtRemInternal(true);
     }
 
     /**
-     * Subtracts an arbitrary-precision integer from this arbitrary-precision
-     * integer.
-     * @param subtrahend Another arbitrary-precision integer.
-     * @return The difference of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code subtrahend} is
-     * null.
+     *
+     * @param subtrahend Not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter is null.
      */
     public EInteger Subtract(EInteger subtrahend) {
       if (subtrahend == null) {
@@ -3172,19 +3013,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns a byte array of this integer's value. The byte array will take the
-     * number's two' s-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
-     * fewest bytes necessary to store its value unambiguously. If this
-     * value is negative, the bits that appear beyond the most significant
-     * bit of the number will be all ones. The resulting byte array can be
-     * passed to the <code>FromBytes()</code> method (with the same byte order) to
-     * reconstruct this integer's value.
-     * @param littleEndian If true, the byte order is little-endian, or
-     * least-significant-byte first. If false, the byte order is big-endian,
-     * or most-significant-byte first.
-     * @return A byte array. If this value is 0, returns a byte array with the
-     * single element 0.
+     *
+     * @param littleEndian Not documented yet.
+     * @return A byte array.
      */
     public byte[] ToBytes(boolean littleEndian) {
       int sign = this.signum();
@@ -3249,11 +3080,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this object's value to a 32-bit signed integer, throwing an
-     * exception if it can't fit.
+     *
      * @return A 32-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
-     * 32-bit signed integer.
      */
     public int ToInt32Checked() {
       int count = this.wordCount;
@@ -3274,11 +3102,7 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this object's value to a 32-bit signed integer. If the value can't
-     * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers"}) (in which case the return value might have a
-     * different sign than this object's value).
+     *
      * @return A 32-bit signed integer.
      */
     public int ToInt32Unchecked() {
@@ -3298,11 +3122,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this object's value to a 64-bit signed integer, throwing an
-     * exception if it can't fit.
+     *
      * @return A 64-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
-     * 64-bit signed integer.
      */
     public long ToInt64Checked() {
       int count = this.wordCount;
@@ -3324,11 +3145,7 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this object's value to a 64-bit signed integer. If the value can't
-     * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers"}) (in which case the return value might have a
-     * different sign than this object's value).
+     *
      * @return A 64-bit signed integer.
      */
     public long ToInt64Unchecked() {
@@ -3469,21 +3286,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Generates a string representing the value of this object, in the given
-     * radix.
-     * @param radix A radix from 2 through 36. For example, to generate a
-     * hexadecimal (base-16) string, specify 16. To generate a decimal
-     * (base-10) string, specify 10.
-     * @return A string representing the value of this object. If this value is 0,
-     * returns "0". If negative, the string will begin with a minus sign
-     * ("-", U+002D). Depending on the radix, the string will use the basic
-     * digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
-     * (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
-     * in radix 16.
-     * @throws IllegalArgumentException The parameter "index" is less than 0,
-     * "endIndex" is less than 0, or either is greater than the string's
-     * length, or "endIndex" is less than "index" ; or radix is less than 2
-     * or greater than 36.
+     *
+     * @param radix Not documented yet.
+     * @return A string object.
      */
     public String ToRadixString(int radix) {
       if (radix < 2) {
@@ -3620,10 +3425,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this object to a text string in base 10.
-     * @return A string representation of this object. If negative, the string will
-     * begin with a minus sign ("-", U+002D). The string will use the basic
-     * digits 0 to 9 (U + 0030 to U + 0039).
+     *
+     * @return A string object.
      */
     @Override public String toString() {
       if (this.isZero()) {
@@ -6346,11 +6149,8 @@ WordsShiftRightOne(bu, buc);
     // Begin integer conversions
 
     /**
-     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
-     * byte (from 0 to 255).
-     * @return This number's value as a byte (from 0 to 255).
-     * @throws java.lang.ArithmeticException This value is less than 0 or greater than
-     * 255.
+     *
+     * @return A Byte object.
      */
     public byte ToByteChecked() {
       int val = this.ToInt32Checked();
@@ -6361,9 +6161,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this number to a byte (from 0 to 255), returning the
-     * least-significant bits of this number's two's-complement form.
-     * @return This number, converted to a byte (from 0 to 255).
+     *
+     * @return A Byte object.
      */
     public byte ToByteUnchecked() {
       int val = this.ToInt32Unchecked();
@@ -6371,9 +6170,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts a byte (from 0 to 255) to an arbitrary-precision integer.
-     * @param inputByte The number to convert as a byte (from 0 to 255).
-     * @return This number's value as an arbitrary-precision integer.
+     *
+     * @param inputByte Not documented yet.
+     * @return An EInteger object.
      */
     public static EInteger FromByte(byte inputByte) {
       int val = ((int)inputByte) & 0xff;
@@ -6381,11 +6180,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this number's value to a 16-bit signed integer if it can fit in a
-     * 16-bit signed integer.
-     * @return This number's value as a 16-bit signed integer.
-     * @throws java.lang.ArithmeticException This value is less than -32768 or greater
-     * than 32767.
+     *
+     * @return A 16-bit signed integer.
      */
     public short ToInt16Checked() {
       int val = this.ToInt32Checked();
@@ -6396,9 +6192,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts this number to a 16-bit signed integer, returning the
-     * least-significant bits of this number's two's-complement form.
-     * @return This number, converted to a 16-bit signed integer.
+     *
+     * @return A 16-bit signed integer.
      */
     public short ToInt16Unchecked() {
       int val = this.ToInt32Unchecked();
@@ -6406,9 +6201,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Converts a 16-bit signed integer to an arbitrary-precision integer.
-     * @param inputInt16 The number to convert as a 16-bit signed integer.
-     * @return This number's value as an arbitrary-precision integer.
+     *
+     * @param inputInt16 Not documented yet.
+     * @return An EInteger object.
      */
     public static EInteger FromInt16(short inputInt16) {
       int val = (int)inputInt16;

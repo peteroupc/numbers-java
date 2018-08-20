@@ -17,9 +17,9 @@ Represents an arbitrary-precision integer.
 Represents an arbitrary-precision rational number.
 
 * [com.upokecenter.numbers.ERounding](com.upokecenter.numbers.ERounding.md) -
-Specifies the mode to use when "shortening" numbers that otherwise
- can't fit a given number of digits, so that the shortened number
- has about the same value.
+Specifies the mode to use when "shortening" numbers that otherwise can't fit
+ a given number of digits, so that the shortened number has about the
+ same value.
 
 * [com.upokecenter.numbers.ETrapException](com.upokecenter.numbers.ETrapException.md) -
 Exception thrown for arithmetic trap errors.
