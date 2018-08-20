@@ -144,8 +144,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} if this object is finite (not infinity or not-a-number
-     * (NaN)); otherwise, {@code false}.
+     * @return <code>true</code> if this object is finite (not infinity or NaN);
+     * otherwise, <code>false</code>. {@code true} if this object is finite (not
+     * infinity or not-a-number (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
@@ -154,8 +155,9 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return {@code true} if this object's value is negative; otherwise, {@code
-     * false}.
+     * @return <code>true</code> if this object's value is negative (including negative
+     * zero); otherwise, <code>false</code>. {@code true} if this object's value
+     * is negative; otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -163,8 +165,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, . {@code
-     * false}.
+     * @return <code>true</code> if this object's value equals 0; otherwise,
+     * <code>false</code>. {@code true} if this object's value equals 0;
+     * otherwise, . {@code false}.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -436,7 +439,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a rational number from a text string that represents a number. See
-     * <code>FromString(String, int, int)</code> for more information.
+     * <code>FromString(string, int, int)</code> for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
      * given string.
@@ -924,6 +927,7 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision rational number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
+     * @throws IllegalArgumentException
      */
     public int compareTo(ERational other) {
       if (other == null) {
@@ -988,6 +992,7 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision binary float.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
+     * @throws IllegalArgumentException
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
@@ -1101,6 +1106,7 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision decimal number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
+     * @throws IllegalArgumentException
      */
     public int CompareToDecimal(EDecimal other) {
       if (other == null) {
@@ -1275,8 +1281,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Determines whether this object&#x27;s numerator, denominator, and properties
-     * are equal to those of another object and that other object is an
+     * Determines whether this object's numerator, denominator, and properties are
+     * equal to those of another object and that other object is an
      * arbitrary-precision rational number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
      * @param obj The parameter {@code obj} is an arbitrary object.
@@ -1294,9 +1300,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Determines whether this object&#x27;s numerator, denominator, and properties
-     * are equal to those of another object. Not-a-number values are
-     * considered equal if the rest of their properties are equal.
+     * Determines whether this object's numerator, denominator, and properties are
+     * equal to those of another object. Not-a-number values are considered
+     * equal if the rest of their properties are equal.
      * @param other An arbitrary-precision rational number to compare to.
      * @return Either {@code true} or {@code false}.
      */
@@ -1377,7 +1383,7 @@ at: http://peteroupc.github.io/
      * class).
      * @return {@code true} if this object is a signaling not-a-number value (which
      * causes an error if the value is passed to any arithmetic operation in
-     * this class); otherwise, {@code false}.
+     * this class); otherwise, {@code false} .
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -1905,7 +1911,7 @@ at: http://peteroupc.github.io/
      * @return A string representation of this object. If this object's value is
      * infinity or not-a-number, the result is the analogous return value of
      * the {@code EDecimal.toString} method. Otherwise, the return value has
-     * the following form: {@code [-]numerator/denominator}.
+     * the following form: {@code [-]numerator.Divide(denominator)}.
      */
     @Override public String toString() {
       if (!this.isFinite()) {

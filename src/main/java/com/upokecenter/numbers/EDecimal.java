@@ -73,15 +73,15 @@ at: http://peteroupc.github.io/
      * -- due to the current use of a 32-bit integer internally as a
      * length), the operation may signal an invalid-operation flag and
      * return not-a-number (NaN). In certain rare cases, the compareTo
-     * method may throw OutOfMemoryError (called OutOfMemoryError in
-     * Java) in the same circumstances.</p> <p><b>Serialization</b> </p>
-     * <p>An arbitrary-precision decimal value can be serialized (converted
-     * to a stable format) in one of the following ways:</p> <ul><li>By
-     * calling the toString() method, which will always return distinct
-     * strings for distinct arbitrary-precision decimal values.</li> <li>By
-     * calling the UnsignedMantissa, Exponent, and IsNegative properties,
-     * and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods.
-     * The return values combined will uniquely identify a particular
+     * method may throw OutOfMemoryError (called OutOfMemoryError in Java)
+     * in the same circumstances.</p> <p><b>Serialization</b> </p> <p>An
+     * arbitrary-precision decimal value can be serialized (converted to a
+     * stable format) in one of the following ways:</p> <ul><li>By calling
+     * the toString() method, which will always return distinct strings for
+     * distinct arbitrary-precision decimal values.</li> <li>By calling the
+     * UnsignedMantissa, Exponent, and IsNegative properties, and calling
+     * the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return
+     * values combined will uniquely identify a particular
      * arbitrary-precision decimal value.</li> </ul> <p><b>Thread safety</b>
      * </p> <p>Instances of this class are immutable, so they are inherently
      * safe for use by multiple threads. Multiple instances of this object
@@ -99,12 +99,12 @@ at: http://peteroupc.github.io/
      * of numbers</b> </p> <p>There are several other types of numbers that
      * are mentioned in this class and elsewhere in this documentation. For
      * reference, they are specified here.</p> <p><b>Unsigned integer</b> :
-     * An integer that&#39;s always 0 or greater, with the following maximum
+     * An integer that's always 0 or greater, with the following maximum
      * values:</p> <ul><li>8-bit unsigned integer, or <i>byte</i> :
      * 255.</li> <li>16-bit unsigned integer: 65535.</li> <li>32-bit
      * unsigned integer: (2 <sup>32</sup> -1).</li> <li>64-bit unsigned
      * integer: (2 <sup>64</sup> -1).</li> </ul> <p><b>Signed integer</b> :
-     * An integer in <i>two&#39;s complement form</i> , with the following
+     * An integer in <i>two's-complement form</i> , with the following
      * ranges:</p> <ul><li>8-bit signed integer: -128 to 127.</li>
      * <li>16-bit signed integer: -32768 to 32767.</li> <li>32-bit signed
      * integer: -2 <sup>31</sup> to (2 <sup>31</sup> - 1).</li> <li>64-bit
@@ -119,7 +119,7 @@ at: http://peteroupc.github.io/
      * <sup><i>exponent</i> </sup> . The significand is 53 bits long
      * (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax).
      * The number is stored in the following format (commonly called the
-     * IEEE 754 format):</p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre>
+     * IEEE 754 format):</p> <pre> |C|BBB...BBB|AAAAAA...AAAAAA| </pre>
      * <ul><li>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the
      * significand.</li> <li>B. Next 11 bits: Exponent area: <ul><li>If all
      * bits are ones, this value is infinity if all bits in area A are
@@ -146,7 +146,7 @@ at: http://peteroupc.github.io/
      * allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16 bits are
      * unused.</li> <li>Next 8 bits are the scale, stored as an 8-bit
      * unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If the
-     * highest bit is one, it&#39;s a negative number.</li> </ul> <p>The
+     * highest bit is one, it's a negative number.</li> </ul> <p>The
      * elements described above are in the same order as the order of each
      * bit of each element, that is, either most significant first or least
      * significant first.</p>
@@ -201,9 +201,9 @@ at: http://peteroupc.github.io/
         BigNumberFlags.FlagInfinity);
 
     /**
-     * A not-a-number value that signals an invalid operation flag when it&#x27;s
-     * passed as an argument to any arithmetic operation in
-     * arbitrary-precision decimal.
+     * A not-a-number value that signals an invalid operation flag when it's passed
+     * as an argument to any arithmetic operation in arbitrary-precision
+     * decimal.
      */
 
 public static final EDecimal SignalingNaN =
@@ -275,8 +275,8 @@ private static final FastIntegerFixed FastIntZero = new
     }
 
     /**
-     * Gets this object&#x27;s exponent. This object&#x27;s value will be an
-     * integer if the exponent is positive or zero.
+     * Gets this object's exponent. This object's value will be an integer if the
+     * exponent is positive or zero.
      * @return This object's exponent. This object's value will be an integer if
      * the exponent is positive or zero.
      */
@@ -286,8 +286,9 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} if this object is finite (not infinity or not-a-number
-     * (NaN)); otherwise, {@code false}.
+     * @return <code>true</code> if this object is finite (not infinity or NaN);
+     * otherwise, <code>false</code>. {@code true} if this object is finite (not
+     * infinity or not-a-number (NaN)); otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -297,17 +298,19 @@ private static final FastIntegerFixed FastIntZero = new
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return {@code true} if this object is negative, including negative zero;
-     * otherwise, {@code false}.
+     * @return <code>true</code> if this object is negative, including negative zero;
+     * otherwise, <code>false</code>. {@code true} if this object is negative,
+     * including negative zero; otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
       }
 
     /**
-     * Gets a value indicating whether this object&#x27;s value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, . {@code
-     * false}.
+     * Gets a value indicating whether this object's value equals 0.
+     * @return <code>true</code> if this object's value equals 0; otherwise,
+     * <code>false</code>. {@code true} if this object's value equals 0;
+     * otherwise, . {@code false}.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -315,7 +318,7 @@ private static final FastIntegerFixed FastIntZero = new
       }
 
     /**
-     * Gets this object&#x27;s unscaled value.
+     * Gets this object's unscaled value.
      * @return This object's unscaled value. Will be negative if this object's
      * value is negative (including a negative NaN).
      */
@@ -325,7 +328,7 @@ private static final FastIntegerFixed FastIntZero = new
       }
 
     /**
-     * Gets this value&#x27;s sign: -1 if negative; 1 if positive; 0 if zero.
+     * Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
      * @return This value's sign: -1 if negative; 1 if positive; 0 if zero.
      */
     public final int signum() {
@@ -333,7 +336,7 @@ private static final FastIntegerFixed FastIntZero = new
       }
 
     /**
-     * Gets the absolute value of this object&#x27;s unscaled value.
+     * Gets the absolute value of this object's unscaled value.
      * @return The absolute value of this object's unscaled value.
      */
     public final EInteger getUnsignedMantissa() {
@@ -424,6 +427,7 @@ private static final FastIntegerFixed FastIntZero = new
      * @return An arbitrary-precision decimal number.
      * @throws java.lang.NullPointerException The parameter {@code diag} is null or
      * is less than 0.
+     * @throws IllegalArgumentException
      */
     public static EDecimal CreateNaN(
       EInteger diag,
@@ -769,7 +773,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(String, int, int, EContext)</code> for more information.
+     * <code>FromString(string, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
@@ -783,7 +787,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(String, int, int, EContext)</code> for more information.
+     * <code>FromString(string, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -802,7 +806,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(String, int, int, EContext)</code> for more information.
+     * <code>FromString(string, int, int, EContext)</code> for more information.
      * @param str A string that represents a number.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
@@ -1362,13 +1366,12 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the constant &#x3c0;, the circumference of a circle divided by its
-     * diameter.
+     * Finds the constant π, the circumference of a circle divided by its diameter.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * can't be null, as &#x3c0; can never be represented exactly.</i>.
+     * can't be null, as π can never be represented exactly.</i>.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
      * or the precision is unlimited (the context's Precision property is
@@ -1379,7 +1382,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the absolute value of this object (if it&#x27;s negative, it becomes
+     * Finds the absolute value of this object (if it's negative, it becomes
      * positive).
      * @return An arbitrary-precision decimal number. Returns signaling NaN if this
      * value is signaling NaN.
@@ -1415,7 +1418,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the absolute value of this object (if it&#x27;s negative, it becomes
+     * Finds the absolute value of this object (if it's negative, it becomes
      * positive).
      * @param context An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -1449,8 +1452,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the sum of this object and another object. The result&#x27;s exponent
-     * is set to the lower of the exponents of the two operands.
+     * Finds the sum of this object and another object. The result's exponent is
+     * set to the lower of the exponents of the two operands.
      * @param otherValue The number to add to.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -1492,6 +1495,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * both values are NaN (even signaling NaN) and 1 if this value is NaN
      * (even signaling NaN) and the other isn't, or if the other value is
      * null.
+     * @throws IllegalArgumentException
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
@@ -1799,8 +1803,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     /**
      * Divides this arbitrary-precision decimal number by another
      * arbitrary-precision decimal number. The preferred exponent for the
-     * result is this object&#x27;s exponent minus the divisor&#x27;s
-     * exponent.
+     * result is this object's exponent minus the divisor's exponent.
      * @param divisor An arbitrary-precision decimal number to divide by.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -2162,7 +2165,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     /**
      * Divides two arbitrary-precision decimal numbers, and returns the integer
      * part of the result, rounded down, with the preferred exponent set to
-     * this value&#x27;s exponent minus the divisor&#x27;s exponent.
+     * this value's exponent minus the divisor's exponent.
      * @param divisor An arbitrary-precision decimal number to divide by.
      * @return The integer part of the quotient of the two objects. Signals
      * FlagDivideByZero and returns infinity if the divisor is 0 and the
@@ -2179,7 +2182,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     /**
      * Divides this object by another object, and returns the integer part of the
      * result (which is initially rounded down), with the preferred exponent
-     * set to this value&#x27;s exponent minus the divisor&#x27;s exponent.
+     * set to this value's exponent minus the divisor's exponent.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the integer part of the result. Flags will be
@@ -2247,7 +2250,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Determines whether this object&#x27;s mantissa (significand), exponent, and
+     * Determines whether this object's mantissa (significand), exponent, and
      * properties are equal to those of another object. Not-a-number values
      * are considered equal if the rest of their properties are equal.
      * @param other An arbitrary-precision decimal number.
@@ -2259,7 +2262,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Determines whether this object&#x27;s mantissa (significand), exponent, and
+     * Determines whether this object's mantissa (significand), exponent, and
      * properties are equal to those of another object and that other object
      * is an arbitrary-precision decimal number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
@@ -2272,7 +2275,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
 
     /**
      * Finds e (the base of natural logarithms) raised to the power of this
-     * object&#x27;s value.
+     * object's value.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2291,8 +2294,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Calculates this object&#x27;s hash code. No application or process IDs are
-     * used in the hash code calculation.
+     * Calculates this object's hash code. No application or process IDs are used
+     * in the hash code calculation.
      * @return This object's hash code.
      */
     @Override public int hashCode() {
@@ -2368,7 +2371,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     /**
      * Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to
-     * equal this object&#x27;s value.
+     * equal this object's value.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2391,8 +2394,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
 
     /**
      * Finds the base-10 logarithm of this object, that is, the power (exponent)
-     * that the number 10 must be raised to in order to equal this
-     * object&#x27;s value.
+     * that the number 10 must be raised to in order to equal this object's
+     * value.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -2603,9 +2606,9 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
 
     /**
      * Multiplies two decimal numbers. The resulting scale will be the sum of the
-     * scales of the two decimal numbers. The result&#x27;s sign is positive
-     * if both operands have the same sign, and negative if they have
-     * different signs.
+     * scales of the two decimal numbers. The result's sign is positive if
+     * both operands have the same sign, and negative if they have different
+     * signs.
      * @param op Another decimal number.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -2640,8 +2643,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed. If
      * the precision doesn't indicate a simplified arithmetic, rounding and
-     * precision/exponent adjustment is done only once, namely, after
-     * multiplying and adding.
+     * precision.Divide(exponent) adjustment is done only once, namely,
+     * after multiplying and adding.
      * @return The result thisValue * multiplicand + augend.
      */
     public EDecimal MultiplyAndAdd(
@@ -2661,8 +2664,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed. If
      * the precision doesn't indicate a simplified arithmetic, rounding and
-     * precision/exponent adjustment is done only once, namely, after
-     * multiplying and subtracting.
+     * precision.Divide(exponent) adjustment is done only once, namely,
+     * after multiplying and subtracting.
      * @return The result thisValue * multiplicand - subtrahend.
      * @throws java.lang.NullPointerException The parameter {@code op} or {@code
      * subtrahend} is null.
@@ -2721,7 +2724,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the largest value that&#x27;s smaller than the given value.
+     * Finds the largest value that's smaller than the given value.
      * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store
@@ -2738,7 +2741,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the smallest value that&#x27;s greater than the given value.
+     * Finds the smallest value that's greater than the given value.
      * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store
@@ -2755,9 +2758,9 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the next value that is closer to the other object&#x27;s value than
-     * this object&#x27;s value. Returns a copy of this value with the same
-     * sign as the other value if both values are equal.
+     * Finds the next value that is closer to the other object's value than this
+     * object's value. Returns a copy of this value with the same sign as
+     * the other value if both values are equal.
      * @param otherValue An arbitrary-precision decimal number that the return
      * value will approach.
      * @param ctx An arithmetic context object to control the precision and
@@ -2778,9 +2781,9 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Rounds this object&#x27;s value to a given precision, using the given
-     * rounding mode and range of exponent, and also converts negative zero
-     * to positive zero.
+     * Rounds this object's value to a given precision, using the given rounding
+     * mode and range of exponent, and also converts negative zero to
+     * positive zero.
      * @param ctx A context for controlling the precision, rounding mode, and
      * exponent range. Can be null, in which case the precision is unlimited
      * and rounding isn't needed.
@@ -2793,7 +2796,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Raises this object&#x27;s value to the given exponent.
+     * Raises this object's value to the given exponent.
      * @param exponent An arbitrary-precision decimal number expressing the
      * exponent to raise this object's value to.
      * @param ctx An arithmetic context to control precision, rounding, and
@@ -2813,7 +2816,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Raises this object&#x27;s value to the given exponent.
+     * Raises this object's value to the given exponent.
      * @param exponentSmall The exponent to raise this object's value to.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -2828,7 +2831,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Raises this object&#x27;s value to the given exponent.
+     * Raises this object's value to the given exponent.
      * @param exponentSmall The exponent to raise this object's value to.
      * @return This^exponent. Returns not-a-number (NaN) if this object and
      * exponent are both 0.
@@ -3024,7 +3027,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Removes trailing zeros from this object&#x27;s mantissa (significand). For
+     * Removes trailing zeros from this object's mantissa (significand). For
      * example, 1.00 becomes 1. <p>If this object's value is 0, changes the
      * exponent to 0.</p>
      * @param ctx An arithmetic context to control precision, rounding, and
@@ -3101,21 +3104,20 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
 
     /**
      * Finds the distance to the closest multiple of the given divisor, based on
-     * the result of dividing this object&#x27;s value by another
-     * object&#x27;s value. <ul> <li>If this and the other object divide
-     * evenly, the result is 0.</li> <li>If the remainder's absolute value
-     * is less than half of the divisor's absolute value, the result has the
-     * same sign as this object and will be the distance to the closest
-     * multiple.</li> <li>If the remainder's absolute value is more than
-     * half of the divisor' s absolute value, the result has the opposite
-     * sign of this object and will be the distance to the closest
-     * multiple.</li> <li>If the remainder's absolute value is exactly half
-     * of the divisor's absolute value, the result has the opposite sign of
-     * this object if the quotient, rounded down, is odd, and has the same
-     * sign as this object if the quotient, rounded down, is even, and the
-     * result's absolute value is half of the divisor's absolute
-     * value.</li></ul> This function is also known as the "IEEE Remainder"
-     * function.
+     * the result of dividing this object's value by another object's value.
+     * <ul> <li>If this and the other object divide evenly, the result is
+     * 0.</li> <li>If the remainder's absolute value is less than half of
+     * the divisor's absolute value, the result has the same sign as this
+     * object and will be the distance to the closest multiple.</li> <li>If
+     * the remainder's absolute value is more than half of the divisor' s
+     * absolute value, the result has the opposite sign of this object and
+     * will be the distance to the closest multiple.</li> <li>If the
+     * remainder's absolute value is exactly half of the divisor's absolute
+     * value, the result has the opposite sign of this object if the
+     * quotient, rounded down, is odd, and has the same sign as this object
+     * if the quotient, rounded down, is even, and the result's absolute
+     * value is half of the divisor's absolute value.</li></ul> This
+     * function is also known as the "IEEE Remainder" function.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context object to control the precision. The
      * rounding and exponent range settings of this context are ignored (the
@@ -3461,8 +3463,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Rounds this object&#x27;s value to a given precision, using the given
-     * rounding mode and range of exponent.
+     * Rounds this object's value to a given precision, using the given rounding
+     * mode and range of exponent.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -3536,7 +3538,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the square root of this object&#x27;s value.
+     * Finds the square root of this object's value.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -3555,7 +3557,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Finds the square root of this object&#x27;s value.
+     * Finds the square root of this object's value.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
@@ -3706,11 +3708,10 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Creates a binary floating-point number from this object&#x27;s value. Note
-     * that if the binary floating-point number contains a negative
-     * exponent, the resulting value might not be exact, in which case the
-     * resulting binary float will be an approximation of this decimal
-     * number's value.
+     * Creates a binary floating-point number from this object's value. Note that
+     * if the binary floating-point number contains a negative exponent, the
+     * resulting value might not be exact, in which case the resulting
+     * binary float will be an approximation of this decimal number's value.
      * @return An arbitrary-precision binary float.
      * @deprecated Renamed to ToEFloat.
  */
@@ -3720,11 +3721,10 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Creates a binary floating-point number from this object&#x27;s value. Note
-     * that if the binary floating-point number contains a negative
-     * exponent, the resulting value might not be exact, in which case the
-     * resulting binary float will be an approximation of this decimal
-     * number's value.
+     * Creates a binary floating-point number from this object's value. Note that
+     * if the binary floating-point number contains a negative exponent, the
+     * resulting value might not be exact, in which case the resulting
+     * binary float will be an approximation of this decimal number's value.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ToEFloat() {
@@ -4030,11 +4030,10 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
-     * Creates a binary floating-point number from this object&#x27;s value. Note
-     * that if the binary floating-point number contains a negative
-     * exponent, the resulting value might not be exact, in which case the
-     * resulting binary float will be an approximation of this decimal
-     * number's value.
+     * Creates a binary floating-point number from this object's value. Note that
+     * if the binary floating-point number contains a negative exponent, the
+     * resulting value might not be exact, in which case the resulting
+     * binary float will be an approximation of this decimal number's value.
      * @param ec An arithmetic context to control precision, rounding, and exponent
      * range of the result. If {@code HasFlags} of the context is true, will
      * also store the flags resulting from the operation (the flags are in

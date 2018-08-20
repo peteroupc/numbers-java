@@ -101,16 +101,18 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return {@code true} if this value is even; otherwise, {@code false} .
+     * @return <code>true</code> if this value is even; otherwise, <code>false</code>. {@code
+     * true} if this value is even; otherwise, {@code false}.
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
       }
 
     /**
-     * Gets a value indicating whether this object&#x27;s value is a power of two.
-     * @return {@code true} if this object's value is a power of two; otherwise,
-     * {@code false}.
+     * Gets a value indicating whether this object's value is a power of two.
+     * @return <code>true</code> if this object's value is a power of two; otherwise,
+     * <code>false</code>. {@code true} if this object's value is a power of two;
+     * otherwise, {@code false} .
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -122,7 +124,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return {@code true} if this value is 0; otherwise, {@code false} .
+     * @return <code>true</code> if this value is 0; otherwise, <code>false</code>. {@code
+     * true} if this value is 0; otherwise, {@code false}.
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -2363,10 +2366,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this object&#x27;s
-     * value, except for its sign. If the value is negative, finds the
-     * number of bits in the value equal to this object's absolute value
-     * minus 1.
+     * Finds the minimum number of bits needed to represent this object's value,
+     * except for its sign. If the value is negative, finds the number of
+     * bits in the value equal to this object's absolute value minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      */
@@ -2406,6 +2408,7 @@ WordsShiftRightOne(bu, buc);
      * @param index Zero based index of the bit to test. 0 means the least
      * significant bit.
      * @return {@code true} if a bit is set in this number's absolute value.
+     * @throws IllegalArgumentException
      */
     public boolean GetUnsignedBit(int index) {
       if (index < 0) {
@@ -2416,8 +2419,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this number&#x27;s
-     * absolute value.
+     * Finds the minimum number of bits needed to represent this number's absolute
+     * value.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
      */
@@ -2453,8 +2456,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the minimum number of bits needed to represent this number&#x27;s
-     * absolute value.
+     * Finds the minimum number of bits needed to represent this number's absolute
+     * value.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
      */
@@ -2522,6 +2525,7 @@ WordsShiftRightOne(bu, buc);
      * @return The value ({@code this} ^ {@code pow})% {@code mod}.
      * @throws java.lang.NullPointerException The parameter {@code pow} or {@code
      * mod} is null.
+     * @throws IllegalArgumentException
      */
     public EInteger ModPow(EInteger pow, EInteger mod) {
       if (pow == null) {
@@ -3131,7 +3135,7 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Finds the square root of this instance&#x27;s value, rounded down.
+     * Finds the square root of this instance's value, rounded down.
      * @return The square root of this object's value. Returns 0 if this value is 0
      * or less.
      */
@@ -3168,8 +3172,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns a byte array of this integer&#x27;s value. The byte array will take
-     * the number's two' s-complement form (see {@link
+     * Returns a byte array of this integer's value. The byte array will take the
+     * number's two' s-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
