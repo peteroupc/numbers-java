@@ -1442,8 +1442,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * both values are NaN (even signaling NaN) and 1 if this value is NaN
      * (even signaling NaN) and the other isn't, or if the other value is
      * null.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't
+     * satisfy other.isFinite().
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
