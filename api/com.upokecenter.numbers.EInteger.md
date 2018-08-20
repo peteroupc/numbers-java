@@ -238,13 +238,14 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Parameters:**
 
-* <code>bytes</code> - Not documented yet.
+* <code>bytes</code> - The parameter <code>bytes</code> is not documented yet.
 
-* <code>littleEndian</code> - Not documented yet.
+* <code>littleEndian</code> - The parameter <code>littleEndian</code> is not documented
+ yet.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -256,7 +257,7 @@ Converts a 32-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>intValue</code> - Not documented yet.
+* <code>intValue</code> - The parameter <code>intValue</code> is not documented yet.
 
 **Returns:**
 
@@ -269,7 +270,7 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>longerValue</code> - Not documented yet.
+* <code>longerValue</code> - The parameter <code>longerValue</code> is not documented yet.
 
 **Returns:**
 
@@ -282,13 +283,13 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
-* <code>radix</code> - Not documented yet.
+* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -301,17 +302,17 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
-* <code>radix</code> - Not documented yet.
+* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
 
-* <code>index</code> - Not documented yet. (3).
+* <code>index</code> - The parameter <code>index</code> is not documented yet.
 
-* <code>endIndex</code> - Not documented yet. (4).
+* <code>endIndex</code> - The parameter <code>endIndex</code> is not documented yet.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -320,7 +321,8 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 * <code>NumberFormatException</code> - The string portion is empty or in an invalid
  format.
 
-* <code>IllegalArgumentException</code> - "Doesn't satisfy (endIndex - index) % 4 == 0".
+* <code>IllegalArgumentException</code> - "Doesn't satisfy (endIndex - index) % 4 ==
+ 0".
 
 ### FromString
     public static EInteger FromString​(String str)
@@ -328,7 +330,7 @@ Converts a string to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
 **Returns:**
 
@@ -348,11 +350,11 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
-* <code>index</code> - Not documented yet.
+* <code>index</code> - The parameter <code>index</code> is not documented yet.
 
-* <code>endIndex</code> - Not documented yet. (3).
+* <code>endIndex</code> - The parameter <code>endIndex</code> is not documented yet.
 
 **Returns:**
 
@@ -373,7 +375,7 @@ Returns the absolute value of this object's value.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### Add
     public EInteger Add​(EInteger bigintAugend)
@@ -381,7 +383,8 @@ Adds this object and another object.
 
 **Parameters:**
 
-* <code>bigintAugend</code> - Not documented yet.
+* <code>bigintAugend</code> - The parameter <code>bigintAugend</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -389,7 +392,8 @@ Adds this object and another object.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is null.
+* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+ null.
 
 ### AsInt32Checked
     @Deprecated public int AsInt32Checked()
@@ -443,8 +447,8 @@ Returns whether this object's value can fit in a 32-bit signed integer.
 
 **Returns:**
 
-* True if this object's value can fit in a 32-bit signed integer;
- otherwise, false.
+* <code>true</code> if this object's value can fit in a 32-bit signed
+ integer; otherwise, <code>false</code>.
 
 ### CanFitInInt64
     public boolean CanFitInInt64()
@@ -452,8 +456,8 @@ Returns whether this object's value can fit in a 64-bit signed integer.
 
 **Returns:**
 
-* True if this object's value can fit in a 64-bit signed integer;
- otherwise, false.
+* <code>true</code> if this object's value can fit in a 64-bit signed
+ integer; otherwise, <code>false</code>.
 
 ### compareTo
     public int compareTo​(EInteger other)
@@ -465,7 +469,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -482,7 +486,8 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Parameters:**
 
-* <code>bigintDivisor</code> - Not documented yet.
+* <code>bigintDivisor</code> - The parameter <code>bigintDivisor</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -502,7 +507,7 @@ Divides this object by another arbitrary-precision integer and returns the
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -526,7 +531,7 @@ Determines whether this object and another object are equal and have the
 
 **Parameters:**
 
-* <code>obj</code> - Not documented yet.
+* <code>obj</code> - The parameter <code>obj</code> is not documented yet.
 
 **Returns:**
 
@@ -541,7 +546,8 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Parameters:**
 
-* <code>bigintSecond</code> - Not documented yet.
+* <code>bigintSecond</code> - The parameter <code>bigintSecond</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -549,7 +555,8 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintSecond</code> is null.
+* <code>NullPointerException</code> - The parameter <code>bigintSecond</code> is
+ null.
 
 ### GetDigitCount
     public int GetDigitCount()
@@ -588,7 +595,7 @@ Gets the lowest set bit in this number's absolute value. (This will also be
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### GetSignedBit
     public boolean GetSignedBit​(int index)
@@ -597,7 +604,7 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Parameters:**
 
-* <code>index</code> - Not documented yet.
+* <code>index</code> - The parameter <code>index</code> is not documented yet.
 
 **Returns:**
 
@@ -621,7 +628,7 @@ Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
 
-* <code>index</code> - Not documented yet.
+* <code>index</code> - The parameter <code>index</code> is not documented yet.
 
 **Returns:**
 
@@ -634,7 +641,7 @@ Finds the minimum number of bits needed to represent this number's absolute
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### GetUnsignedBitLength
     public int GetUnsignedBitLength()
@@ -655,7 +662,7 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -672,13 +679,13 @@ Calculates the remainder when this arbitrary-precision integer raised to a
 
 **Parameters:**
 
-* <code>pow</code> - Not documented yet.
+* <code>pow</code> - The parameter <code>pow</code> is not documented yet.
 
-* <code>mod</code> - Not documented yet.
+* <code>mod</code> - The parameter <code>mod</code> is not documented yet.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -692,7 +699,7 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Parameters:**
 
-* <code>bigintMult</code> - Not documented yet.
+* <code>bigintMult</code> - The parameter <code>bigintMult</code> is not documented yet.
 
 **Returns:**
 
@@ -700,7 +707,8 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is null.
+* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+ null.
 
 ### Negate
     public EInteger Negate()
@@ -708,7 +716,7 @@ Gets the value of this object with the sign reversed.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### Pow
     public EInteger Pow​(int powerSmall)
@@ -716,7 +724,7 @@ Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
 
-* <code>powerSmall</code> - Not documented yet.
+* <code>powerSmall</code> - The parameter <code>powerSmall</code> is not documented yet.
 
 **Returns:**
 
@@ -729,7 +737,7 @@ Raises an arbitrary-precision integer to a power, which is given as another
 
 **Parameters:**
 
-* <code>power</code> - Not documented yet.
+* <code>power</code> - The parameter <code>power</code> is not documented yet.
 
 **Returns:**
 
@@ -751,7 +759,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -771,7 +779,7 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 
 **Parameters:**
 
-* <code>numberBits</code> - Not documented yet.
+* <code>numberBits</code> - The parameter <code>numberBits</code> is not documented yet.
 
 **Returns:**
 
@@ -786,7 +794,7 @@ Returns an arbitrary-precision integer with the bits shifted to the right.
 
 **Parameters:**
 
-* <code>numberBits</code> - Not documented yet.
+* <code>numberBits</code> - The parameter <code>numberBits</code> is not documented yet.
 
 **Returns:**
 
@@ -798,7 +806,7 @@ Finds the square root of this instance's value, rounded down.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### SqrtRem
     public EInteger[] SqrtRem()
@@ -815,7 +823,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Parameters:**
 
-* <code>subtrahend</code> - Not documented yet.
+* <code>subtrahend</code> - The parameter <code>subtrahend</code> is not documented yet.
 
 **Returns:**
 
@@ -823,7 +831,8 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is null.
+* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+ null.
 
 ### ToBytes
     public byte[] ToBytes​(boolean littleEndian)
@@ -837,7 +846,8 @@ Returns a byte array of this integer's value. The byte array will take the
 
 **Parameters:**
 
-* <code>littleEndian</code> - Not documented yet.
+* <code>littleEndian</code> - The parameter <code>littleEndian</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -901,7 +911,7 @@ Generates a string representing the value of this object, in the given
 
 **Parameters:**
 
-* <code>radix</code> - Not documented yet.
+* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
 
 **Returns:**
 
@@ -922,7 +932,7 @@ Converts this object to a text string in base 10.
 
 **Returns:**
 
-* A string object.
+* A text string.
 
 ### ToByteChecked
     public byte ToByteChecked()
@@ -931,7 +941,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 **Throws:**
 
@@ -945,7 +955,7 @@ Converts this number to a byte (from 0 to 255), returning the
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 ### FromByte
     public static EInteger FromByte​(byte inputByte)
@@ -953,7 +963,7 @@ Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>inputByte</code> - Not documented yet.
+* <code>inputByte</code> - The parameter <code>inputByte</code> is not documented yet.
 
 **Returns:**
 
@@ -988,7 +998,7 @@ Converts a 16-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>inputInt16</code> - Not documented yet.
+* <code>inputInt16</code> - The parameter <code>inputInt16</code> is not documented yet.
 
 **Returns:**
 

@@ -344,8 +344,8 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
- != 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+ 0</code> returns <code>true</code> if the Inexact flag is set.
 
 **Returns:**
 
@@ -353,8 +353,8 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
- != 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+ 0</code> returns <code>true</code> if the Inexact flag is set.
 
 ### setFlags
     public final void setFlags​(int value)
@@ -451,7 +451,7 @@ Gets the traps that are set for each flag in the context. Whenever a flag is
  Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
  will be thrown if an operation's return value is not the same as the
  exact result (FlagInexact) or if the return value's exponent is lower
- than the lowest allowed (FlagSubnormal).</p>
+ than the lowest allowed (FlagSubnormal). </p>
 
 **Returns:**
 
@@ -470,7 +470,7 @@ Creates a new arithmetic context using the given maximum number of digits,
 
 **Parameters:**
 
-* <code>precision</code> - Not documented yet.
+* <code>precision</code> - The parameter <code>precision</code> is not documented yet.
 
 **Returns:**
 
@@ -483,9 +483,9 @@ Creates a new EContext object initialized with an unlimited exponent range,
 
 **Parameters:**
 
-* <code>precision</code> - Not documented yet.
+* <code>precision</code> - The parameter <code>precision</code> is not documented yet.
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -498,7 +498,7 @@ Creates a new EContext object initialized with an unlimited precision, an
 
 **Parameters:**
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -519,7 +519,7 @@ Determines whether a number can have the given Exponent property under this
 
 **Parameters:**
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
 **Returns:**
 
@@ -543,7 +543,7 @@ Gets a string representation of this object. Note that the string's format
 
 **Returns:**
 
-* A string object.
+* A text string.
 
 ### WithAdjustExponent
     public EContext WithAdjustExponent​(boolean adjustExponent)
@@ -552,7 +552,8 @@ Copies this EContext and sets the copy's "AdjustExponent" property to the
 
 **Parameters:**
 
-* <code>adjustExponent</code> - Not documented yet.
+* <code>adjustExponent</code> - The parameter <code>adjustExponent</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -564,9 +565,9 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Parameters:**
 
-* <code>exponentMin</code> - Not documented yet.
+* <code>exponentMin</code> - The parameter <code>exponentMin</code> is not documented yet.
 
-* <code>exponentMax</code> - Not documented yet.
+* <code>exponentMax</code> - The parameter <code>exponentMax</code> is not documented yet.
 
 **Returns:**
 
@@ -585,7 +586,8 @@ Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
 
-* <code>bigintPrecision</code> - Not documented yet.
+* <code>bigintPrecision</code> - The parameter <code>bigintPrecision</code> is not
+ documented yet.
 
 **Returns:**
 
@@ -593,7 +595,8 @@ Copies this EContext and gives it a particular precision value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintPrecision</code> is null.
+* <code>NullPointerException</code> - The parameter <code>bigintPrecision</code>
+ is null.
 
 ### WithBlankFlags
     public EContext WithBlankFlags()
@@ -611,7 +614,7 @@ Copies this arithmetic context and sets the copy's "ClampNormalExponents"
 
 **Parameters:**
 
-* <code>clamp</code> - Not documented yet.
+* <code>clamp</code> - The parameter <code>clamp</code> is not documented yet.
 
 **Returns:**
 
@@ -623,9 +626,11 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Parameters:**
 
-* <code>exponentMinSmall</code> - Not documented yet.
+* <code>exponentMinSmall</code> - The parameter <code>exponentMinSmall</code> is not
+ documented yet.
 
-* <code>exponentMaxSmall</code> - Not documented yet.
+* <code>exponentMaxSmall</code> - The parameter <code>exponentMaxSmall</code> is not
+ documented yet.
 
 **Returns:**
 
@@ -646,7 +651,7 @@ Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
 
-* <code>precision</code> - Not documented yet.
+* <code>precision</code> - The parameter <code>precision</code> is not documented yet.
 
 **Returns:**
 
@@ -659,7 +664,8 @@ Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
 
 **Parameters:**
 
-* <code>isPrecisionBits</code> - Not documented yet.
+* <code>isPrecisionBits</code> - The parameter <code>isPrecisionBits</code> is not
+ documented yet.
 
 **Returns:**
 
@@ -671,7 +677,7 @@ Copies this EContext with the specified rounding mode.
 
 **Parameters:**
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -684,7 +690,7 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 
 **Parameters:**
 
-* <code>simplified</code> - Not documented yet.
+* <code>simplified</code> - The parameter <code>simplified</code> is not documented yet.
 
 **Returns:**
 
@@ -696,7 +702,7 @@ Copies this EContext with Traps set to the given value.
 
 **Parameters:**
 
-* <code>traps</code> - Not documented yet.
+* <code>traps</code> - The parameter <code>traps</code> is not documented yet.
 
 **Returns:**
 

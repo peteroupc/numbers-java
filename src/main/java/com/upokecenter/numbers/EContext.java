@@ -213,11 +213,14 @@ at: http://peteroupc.github.io/
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class. <code>HasFlags</code> will be set to false.
-     * @param precision Not documented yet.
-     * @param rounding Not documented yet.
-     * @param exponentMinSmall Not documented yet. (3).
-     * @param exponentMaxSmall Not documented yet. (4).
-     * @param clampNormalExponents Not documented yet. (5).
+     * @param precision The parameter {@code precision} is not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
+     * @param exponentMinSmall The parameter {@code exponentMinSmall} is not
+     * documented yet.
+     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is not
+     * documented yet.
+     * @param clampNormalExponents The parameter {@code clampNormalExponents} is
+     * not documented yet.
      */
     public EContext(
   int precision,
@@ -323,14 +326,14 @@ at: http://peteroupc.github.io/
      * arithmetic context. If <code>HasFlags</code> is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
-     * != 0</code> returns <code>true</code> if the Inexact flag is set.
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+     * 0</code> returns <code>true</code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
      * arithmetic context. If <code>HasFlags</code> is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
-     * != 0</code> returns <code>true</code> if the Inexact flag is set.
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+     * 0</code> returns <code>true</code> if the Inexact flag is set.
      */
     public final int getFlags() {
         return this.flags;
@@ -436,7 +439,7 @@ public final void setFlags(int value) {
      * Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
      * will be thrown if an operation's return value is not the same as the
      * exact result (FlagInexact) or if the return value's exponent is lower
-     * than the lowest allowed (FlagSubnormal).</p>
+     * than the lowest allowed (FlagSubnormal). </p>
      * @return The traps that are set for each flag in the context. Whenever a flag
      * is signaled, even if <code>HasFlags</code> is false, and the flag's trap is
      * enabled, the operation will throw a TrapException. <para>For example,
@@ -452,7 +455,7 @@ public final void setFlags(int value) {
     /**
      * Creates a new arithmetic context using the given maximum number of digits,
      * an unlimited exponent range, and the HalfUp rounding mode.
-     * @param precision Not documented yet.
+     * @param precision The parameter {@code precision} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public static EContext ForPrecision(int precision) {
@@ -467,8 +470,8 @@ public final void setFlags(int value) {
     /**
      * Creates a new EContext object initialized with an unlimited exponent range,
      * and the given rounding mode and maximum precision.
-     * @param precision Not documented yet.
-     * @param rounding Not documented yet.
+     * @param precision The parameter {@code precision} is not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
      * @return An EContext object.
      */
     public static EContext ForPrecisionAndRounding(
@@ -499,7 +502,7 @@ public final void setFlags(int value) {
     /**
      * Creates a new EContext object initialized with an unlimited precision, an
      * unlimited exponent range, and the given rounding mode.
-     * @param rounding Not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public static EContext ForRounding(ERounding rounding) {
@@ -545,12 +548,12 @@ public final void setFlags(int value) {
     /**
      * Determines whether a number can have the given Exponent property under this
      * arithmetic context.
-     * @param exponent Not documented yet.
+     * @param exponent The parameter {@code exponent} is not documented yet.
      * @return {@code true} if a number can have the given Exponent property under
      * this arithmetic context; otherwise, {@code false}. If this context
      * allows unlimited precision, returns true for the exponent EMax and
      * any exponent less than EMax.
-     * @throws NullPointerException The parameter {@code exponent} is null.
+     * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
      */
     public boolean ExponentWithinRange(EInteger exponent) {
       if (exponent == null) {
@@ -578,7 +581,7 @@ public final void setFlags(int value) {
     /**
      * Gets a string representation of this object. Note that the string's format
      * is not intended to be parsed and may change at any time.
-     * @return A string object.
+     * @return A text string.
      */
     @Override public String toString() {
       return "[PrecisionContext ExponentMax=" + this.exponentMax +
@@ -592,7 +595,8 @@ public final void setFlags(int value) {
     /**
      * Copies this EContext and sets the copy's "AdjustExponent" property to the
      * given value.
-     * @param adjustExponent Not documented yet.
+     * @param adjustExponent The parameter {@code adjustExponent} is not documented
+     * yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithAdjustExponent(boolean adjustExponent) {
@@ -603,8 +607,8 @@ public final void setFlags(int value) {
 
     /**
      * Copies this arithmetic context and sets the copy's exponent range.
-     * @param exponentMin Not documented yet.
-     * @param exponentMax Not documented yet.
+     * @param exponentMin The parameter {@code exponentMin} is not documented yet.
+     * @param exponentMax The parameter {@code exponentMax} is not documented yet.
      * @return An EContext object.
      * @throws java.lang.NullPointerException The parameter {@code exponentMin} is
      * null.
@@ -631,9 +635,11 @@ public final void setFlags(int value) {
 
     /**
      * Copies this EContext and gives it a particular precision value.
-     * @param bigintPrecision Not documented yet.
+     * @param bigintPrecision The parameter {@code bigintPrecision} is not
+     * documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws NullPointerException The parameter {@code bigintPrecision} is null.
+     * @throws java.lang.NullPointerException The parameter {@code bigintPrecision}
+     * is null.
      */
     public EContext WithBigPrecision(EInteger bigintPrecision) {
       if (bigintPrecision == null) {
@@ -663,7 +669,7 @@ public final void setFlags(int value) {
     /**
      * Copies this arithmetic context and sets the copy's "ClampNormalExponents"
      * flag to the given value.
-     * @param clamp Not documented yet.
+     * @param clamp The parameter {@code clamp} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithExponentClamp(boolean clamp) {
@@ -674,8 +680,10 @@ public final void setFlags(int value) {
 
     /**
      * Copies this arithmetic context and sets the copy's exponent range.
-     * @param exponentMinSmall Not documented yet.
-     * @param exponentMaxSmall Not documented yet.
+     * @param exponentMinSmall The parameter {@code exponentMinSmall} is not
+     * documented yet.
+     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is not
+     * documented yet.
      * @return An EContext object.
      */
     public EContext WithExponentRange(
@@ -706,7 +714,7 @@ public final void setFlags(int value) {
 
     /**
      * Copies this EContext and gives it a particular precision value.
-     * @param precision Not documented yet.
+     * @param precision The parameter {@code precision} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithPrecision(int precision) {
@@ -722,7 +730,8 @@ public final void setFlags(int value) {
     /**
      * Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
      * given value.
-     * @param isPrecisionBits Not documented yet.
+     * @param isPrecisionBits The parameter {@code isPrecisionBits} is not
+     * documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithPrecisionInBits(boolean isPrecisionBits) {
@@ -733,7 +742,7 @@ public final void setFlags(int value) {
 
     /**
      * Copies this EContext with the specified rounding mode.
-     * @param rounding Not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithRounding(ERounding rounding) {
@@ -745,7 +754,7 @@ public final void setFlags(int value) {
     /**
      * Copies this EContext and sets the copy's "IsSimplified" property to the
      * given value.
-     * @param simplified Not documented yet.
+     * @param simplified The parameter {@code simplified} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithSimplified(boolean simplified) {
@@ -756,7 +765,7 @@ public final void setFlags(int value) {
 
     /**
      * Copies this EContext with Traps set to the given value.
-     * @param traps Not documented yet.
+     * @param traps The parameter {@code traps} is not documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithTraps(int traps) {

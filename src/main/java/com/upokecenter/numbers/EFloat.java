@@ -215,9 +215,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a number with the value exponent*2^mantissa (significand).
-     * @param mantissaSmall Not documented yet.
-     * @param exponentSmall Not documented yet.
-     * @return An EFloat object.
+     * @param mantissaSmall The parameter {@code mantissaSmall} is not documented
+     * yet.
+     * @param exponentSmall The parameter {@code exponentSmall} is not documented
+     * yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
       return Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
@@ -225,9 +227,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a number with the value exponent*2^mantissa (significand).
-     * @param mantissa Not documented yet.
-     * @param exponent Not documented yet.
-     * @return An EFloat object.
+     * @param mantissa The parameter {@code mantissa} is not documented yet.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter "mantissa (significand)"
      * or {@code exponent} is null.
      */
@@ -249,7 +251,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a not-a-number arbitrary-precision binary float.
-     * @param diag Not documented yet.
+     * @param diag The parameter {@code diag} is not documented yet.
      * @return A quiet not-a-number.
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
@@ -259,11 +261,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a not-a-number arbitrary-precision binary float.
-     * @param diag Not documented yet.
-     * @param signaling Not documented yet.
-     * @param negative Not documented yet. (3).
-     * @param ctx Not documented yet. (4).
-     * @return An EFloat object.
+     * @param diag The parameter {@code diag} is not documented yet.
+     * @param signaling The parameter {@code signaling} is not documented yet.
+     * @param negative The parameter {@code negative} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code diag} is null.
      */
     public static EFloat CreateNaN(
@@ -308,7 +310,7 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the floating point
      * number to a string first.
-     * @param dbl Not documented yet.
+     * @param dbl The parameter {@code dbl} is not documented yet.
      * @return A binary float with the same value as {@code dbl}.
      */
     public static EFloat FromDouble(double dbl) {
@@ -354,7 +356,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts an arbitrary-precision integer to the same value as a binary float.
-     * @param bigint Not documented yet.
+     * @param bigint The parameter {@code bigint} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat FromEInteger(EInteger bigint) {
@@ -366,7 +368,7 @@ at: http://peteroupc.github.io/
      * computes the exact value of the floating point number, not an
      * approximation, as is often the case by converting the floating point
      * number to a string first.
-     * @param flt Not documented yet.
+     * @param flt The parameter {@code flt} is not documented yet.
      * @return A binary float with the same value as {@code flt}.
      */
     public static EFloat FromSingle(float flt) {
@@ -433,16 +435,16 @@ at: http://peteroupc.github.io/
      * digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
      * is not allowed to contain white space characters, including
      * spaces.</p>
-     * @param str Not documented yet.
+     * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
+     * less than 0 or greater than {@code str} 's length, or {@code str} 's
      * length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
@@ -464,8 +466,8 @@ at: http://peteroupc.github.io/
     /**
      * Creates a binary float from a text string that represents a number, using an
      * unlimited precision context. For more information, see the
-     * <code>FromString(string, int, int, EContext)</code> method.
-     * @param str Not documented yet.
+     * <code>FromString(String, int, int, EContext)</code> method.
+     * @param str The parameter {@code str} is not documented yet.
      * @return The parsed number, converted to arbitrary-precision binary float.
      */
     public static EFloat FromString(String str) {
@@ -474,11 +476,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * information, see the <code>FromString(String, int, int, EContext)</code>
      * method.
-     * @param str Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param str The parameter {@code str} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, EContext ctx) {
@@ -487,9 +489,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * information, see the <code>FromString(String, int, int, EContext)</code>
      * method.
-     * @param str Not documented yet.
+     * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
@@ -498,7 +500,7 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is
      * less than 0 or greater than {@code str} 's length, or {@code str} ' s
      * length minus {@code offset} is less than {@code length}.
-     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -506,9 +508,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the greater value between two binary floats.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The larger value of the two numbers.
      */
     public static EFloat Max(
@@ -520,9 +522,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the greater value between two binary floats.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @return An EFloat object.
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Max(
       EFloat first,
@@ -533,9 +535,9 @@ at: http://peteroupc.github.io/
     /**
      * Gets the greater value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Max.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat MaxMagnitude(
@@ -548,9 +550,9 @@ at: http://peteroupc.github.io/
     /**
      * Gets the greater value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Max.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @return An EFloat object.
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat MaxMagnitude(
       EFloat first,
@@ -560,9 +562,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the lesser value between two binary floats.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The smaller value of the two numbers.
      */
     public static EFloat Min(
@@ -574,9 +576,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the lesser value between two binary floats.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @return An EFloat object.
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Min(
       EFloat first,
@@ -587,9 +589,9 @@ at: http://peteroupc.github.io/
     /**
      * Gets the lesser value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Min.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
     public static EFloat MinMagnitude(
@@ -602,9 +604,9 @@ at: http://peteroupc.github.io/
     /**
      * Gets the lesser value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Min.
-     * @param first Not documented yet.
-     * @param second Not documented yet.
-     * @return An EFloat object.
+     * @param first The parameter {@code first} is not documented yet.
+     * @param second The parameter {@code second} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat MinMagnitude(
       EFloat first,
@@ -614,7 +616,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the constant π, the circumference of a circle divided by its diameter.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
      * or the precision is unlimited (the context's Precision property is
@@ -627,7 +629,7 @@ at: http://peteroupc.github.io/
     /**
      * Finds the absolute value of this object (if it's negative, it becomes
      * positive).
-     * @return An EFloat object.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Abs() {
       if (this.isNegative()) {
@@ -643,7 +645,7 @@ at: http://peteroupc.github.io/
     /**
      * Finds the absolute value of this object (if it's negative, it becomes
      * positive).
-     * @param context Not documented yet.
+     * @param context The parameter {@code context} is not documented yet.
      * @return The absolute value of this object. Signals FlagInvalid and returns
      * quiet NaN if this value is signaling NaN.
      */
@@ -653,7 +655,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Adds this object and another binary float and returns the result.
-     * @param otherValue Not documented yet.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The sum of the two objects.
      */
     public EFloat Add(EFloat otherValue) {
@@ -663,9 +665,9 @@ at: http://peteroupc.github.io/
     /**
      * Finds the sum of this object and another object. The result's exponent is
      * set to the lower of the exponents of the two operands.
-     * @param otherValue Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Add(
       EFloat otherValue,
@@ -683,7 +685,7 @@ at: http://peteroupc.github.io/
      * quiet NaN or signaling NaN, this method will not trigger an error.
      * Instead, NaN will compare greater than any other number, including
      * infinity. Two different NaN values will be considered equal.</p>
-     * @param other Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other value
      * or if {@code other} is null, or 0 if both values are equal.
@@ -698,9 +700,9 @@ at: http://peteroupc.github.io/
      * zero are considered equal.</p> <p>If this object or the other object
      * is a quiet NaN or signaling NaN, this method will return a quiet NaN
      * and will signal a FlagInvalid flag.</p>
-     * @param other Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param other The parameter {@code other} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat CompareToSignal(
       EFloat other,
@@ -720,8 +722,8 @@ at: http://peteroupc.github.io/
      * infinity.</li> <li>Infinity has a higher "absolute value" than any
      * finite number.</li> <li>Negative numbers are less than positive
      * numbers.</li></ul>
-     * @param other Not documented yet.
-     * @param ctx Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return A 32-bit signed integer.
      */
     public int CompareToTotal(EFloat other, EContext ctx) {
@@ -751,7 +753,7 @@ at: http://peteroupc.github.io/
      * infinity.</li> <li>Infinity has a higher "absolute value" than any
      * finite number.</li> <li>Negative numbers are less than positive
      * numbers.</li></ul>
-     * @param other Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
      */
@@ -814,7 +816,7 @@ at: http://peteroupc.github.io/
      * information has a greater "absolute value".</li> <li>NaN has a higher
      * "absolute value" than infinity.</li> <li>Infinity has a higher
      * "absolute value" than any finite number.</li></ul>
-     * @param other Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
      */
@@ -867,9 +869,9 @@ at: http://peteroupc.github.io/
      * equal.</p> <p>If this object or the other object is a quiet NaN or
      * signaling NaN, this method returns a quiet NaN, and will signal a
      * FlagInvalid flag if either is a signaling NaN.</p>
-     * @param other Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param other The parameter {@code other} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat CompareToWithContext(
       EFloat other,
@@ -880,9 +882,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number with the same value as this one, but copying the sign
      * (positive or negative) of another number.
-     * @param other Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
      * @return An arbitrary-precision binary float.
-     * @throws NullPointerException The parameter {@code other} is null.
+     * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EFloat CopySign(EFloat other) {
       if (other == null) {
@@ -898,7 +900,7 @@ at: http://peteroupc.github.io/
     /**
      * Divides this object by another binary float and returns the result. When
      * possible, the result will be exact.
-     * @param divisor Not documented yet.
+     * @param divisor The number to divide by.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
      * divisor and the dividend are 0. Returns NaN if the result can't be
@@ -914,9 +916,9 @@ at: http://peteroupc.github.io/
      * Divides this arbitrary-precision binary float by another arbitrary-precision
      * binary float. The preferred exponent for the result is this object's
      * exponent minus the divisor's exponent.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Divide(
       EFloat divisor,
@@ -927,7 +929,7 @@ at: http://peteroupc.github.io/
     /**
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
-     * @param divisor Not documented yet.
+     * @param divisor The number to divide by.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      * @deprecated Renamed to DivRemNaturalScale.
@@ -941,8 +943,8 @@ at: http://peteroupc.github.io/
     /**
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EFloat[] object.
      * @deprecated Renamed to DivRemNaturalScale.
  */
@@ -956,9 +958,10 @@ at: http://peteroupc.github.io/
     /**
      * Divides two arbitrary-precision binary floats, and gives a particular
      * exponent to the result.
-     * @param divisor Not documented yet.
-     * @param desiredExponentSmall Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param divisor The number to divide by.
+     * @param desiredExponentSmall The parameter {@code desiredExponentSmall} is
+     * not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -981,9 +984,10 @@ at: http://peteroupc.github.io/
     /**
      * Divides two arbitrary-precision binary floats, and gives a particular
      * exponent to the result.
-     * @param divisor Not documented yet.
-     * @param desiredExponentSmall Not documented yet.
-     * @param rounding Not documented yet. (3).
+     * @param divisor The number to divide by.
+     * @param desiredExponentSmall The parameter {@code desiredExponentSmall} is
+     * not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1004,9 +1008,9 @@ at: http://peteroupc.github.io/
     /**
      * Divides two arbitrary-precision binary floats, and gives a particular
      * exponent to the result.
-     * @param divisor Not documented yet.
-     * @param exponent Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param divisor The number to divide by.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
@@ -1026,9 +1030,10 @@ at: http://peteroupc.github.io/
     /**
      * Divides two arbitrary-precision binary floats, and gives a particular
      * exponent to the result.
-     * @param divisor Not documented yet.
-     * @param desiredExponent Not documented yet.
-     * @param rounding Not documented yet. (3).
+     * @param divisor The number to divide by.
+     * @param desiredExponent The parameter {@code desiredExponent} is not
+     * documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
      * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero.
      * Returns not-a-number (NaN) if the divisor and the dividend are 0.
@@ -1049,7 +1054,7 @@ at: http://peteroupc.github.io/
      * Divides two arbitrary-precision binary floats, and returns the integer part
      * of the result, rounded down, with the preferred exponent set to this
      * value's exponent minus the divisor's exponent.
-     * @param divisor Not documented yet.
+     * @param divisor The number to divide by.
      * @return The integer part of the quotient of the two objects. Signals
      * FlagDivideByZero and returns infinity if the divisor is 0 and the
      * dividend is nonzero. Signals FlagInvalid and returns not-a-number
@@ -1066,9 +1071,9 @@ at: http://peteroupc.github.io/
      * Divides this object by another object, and returns the integer part of the
      * result (which is initially rounded down), with the preferred exponent
      * set to this value's exponent minus the divisor's exponent.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat DivideToIntegerNaturalScale(
       EFloat divisor,
@@ -1079,9 +1084,9 @@ at: http://peteroupc.github.io/
     /**
      * Divides this object by another object, and returns the integer part of the
      * result, with the exponent set to 0.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat DivideToIntegerZeroScale(
       EFloat divisor,
@@ -1092,9 +1097,9 @@ at: http://peteroupc.github.io/
     /**
      * Divides this object by another binary float and returns a result with the
      * same exponent as this object (the dividend).
-     * @param divisor Not documented yet.
-     * @param rounding Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param rounding The parameter {@code rounding} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat DivideToSameExponent(
       EFloat divisor,
@@ -1108,7 +1113,7 @@ at: http://peteroupc.github.io/
     /**
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
-     * @param divisor Not documented yet.
+     * @param divisor The number to divide by.
      * @return A 2 element array consisting of the quotient and remainder in that
      * order.
      */
@@ -1119,8 +1124,8 @@ at: http://peteroupc.github.io/
     /**
      * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
      * and the formula in RemainderNaturalScale.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EFloat[] object.
      */
     public EFloat[] DivRemNaturalScale(
@@ -1138,7 +1143,7 @@ at: http://peteroupc.github.io/
      * Determines whether this object's mantissa (significand), exponent, and
      * properties are equal to those of another object. Not-a-number values
      * are considered equal if the rest of their properties are equal.
-     * @param other Not documented yet.
+     * @param other The parameter {@code other} is not documented yet.
      * @return {@code true} if this object's mantissa (significand) and exponent
      * are equal to those of another object; otherwise, {@code false}.
      */
@@ -1151,7 +1156,7 @@ at: http://peteroupc.github.io/
      * properties are equal to those of another object and that other object
      * is an arbitrary-precision binary float. Not-a-number values are
      * considered equal if the rest of their properties are equal.
-     * @param obj Not documented yet.
+     * @param obj The parameter {@code obj} is not documented yet.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
@@ -1161,7 +1166,7 @@ at: http://peteroupc.github.io/
     /**
      * Determines whether this object's mantissa (significand) and exponent are
      * equal to those of another object.
-     * @param otherValue Not documented yet.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return {@code true} if this object's mantissa (significand) and exponent
      * are equal to those of another object; otherwise, {@code false}.
      */
@@ -1177,7 +1182,7 @@ at: http://peteroupc.github.io/
     /**
      * Finds e (the base of natural logarithms) raised to the power of this
      * object's value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Exponential of this object. If this object's value is 1, returns an
      * approximation to " e" within the given precision. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -1206,8 +1211,8 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object is positive or negative
      * infinity.
-     * @return True if this object is positive or negative infinity; otherwise,
-     * false.
+     * @return {@code true} if this object is positive or negative infinity;
+     * otherwise, {@code false}.
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
@@ -1215,7 +1220,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object is not a number (NaN).
-     * @return True if this object is not a number (NaN); otherwise, false.
+     * @return {@code true} if this object is not a number (NaN); otherwise, {@code
+     * false}.
      */
     public boolean IsNaN() {
       return (this.flags & (BigNumberFlags.FlagQuietNaN |
@@ -1224,7 +1230,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns whether this object is negative infinity.
-     * @return True if this object is negative infinity; otherwise, false.
+     * @return {@code true} if this object is negative infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1234,7 +1241,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns whether this object is positive infinity.
-     * @return True if this object is positive infinity; otherwise, false.
+     * @return {@code true} if this object is positive infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1243,7 +1251,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object is a quiet not-a-number value.
-     * @return True if this object is a quiet not-a-number value; otherwise, false.
+     * @return {@code true} if this object is a quiet not-a-number value;
+     * otherwise, {@code false}.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
@@ -1252,8 +1261,8 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object is a signaling not-a-number
      * value.
-     * @return True if this object is a signaling not-a-number value; otherwise,
-     * false.
+     * @return {@code true} if this object is a signaling not-a-number value;
+     * otherwise, {@code false}.
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
@@ -1263,7 +1272,7 @@ at: http://peteroupc.github.io/
      * Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to
      * equal this object's value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the result would be a complex number with
      * a real part equal to Ln of this object's absolute value and an
@@ -1281,7 +1290,7 @@ at: http://peteroupc.github.io/
      * Finds the base-10 logarithm of this object, that is, the power (exponent)
      * that the number 10 must be raised to in order to equal this object's
      * value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null
@@ -1295,7 +1304,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the left.
-     * @param places Not documented yet.
+     * @param places The parameter {@code places} is not documented yet.
      * @return A number whose exponent is decreased by {@code places}, but not to
      * more than 0.
      */
@@ -1306,9 +1315,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the left.
-     * @param places Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param places The parameter {@code places} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat MovePointLeft(int places, EContext ctx) {
       return this.MovePointLeft(EInteger.FromInt32(places), ctx);
@@ -1317,7 +1326,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the left.
-     * @param bigPlaces Not documented yet.
+     * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
      * @return A number whose exponent is decreased by {@code bigPlaces}, but not
      * to more than 0.
      */
@@ -1328,9 +1337,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the left.
-     * @param bigPlaces Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat MovePointLeft(
   EInteger bigPlaces,
@@ -1342,7 +1351,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the right.
-     * @param places Not documented yet.
+     * @param places The parameter {@code places} is not documented yet.
      * @return A number whose exponent is increased by {@code places}, but not to
      * more than 0.
      */
@@ -1353,9 +1362,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the right.
-     * @param places Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param places The parameter {@code places} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat MovePointRight(int places, EContext ctx) {
       return this.MovePointRight(EInteger.FromInt32(places), ctx);
@@ -1364,7 +1373,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the right.
-     * @param bigPlaces Not documented yet.
+     * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
      * @return A number whose exponent is increased by {@code bigPlaces}, but not
      * to more than 0.
      */
@@ -1375,9 +1384,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the radix point moved to
      * the right.
-     * @param bigPlaces Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat MovePointRight(
   EInteger bigPlaces,
@@ -1405,7 +1414,7 @@ at: http://peteroupc.github.io/
     /**
      * Multiplies two binary floats. The resulting exponent will be the sum of the
      * exponents of the two binary floats.
-     * @param otherValue Not documented yet.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The product of the two binary floats.
      */
     public EFloat Multiply(EFloat otherValue) {
@@ -1432,9 +1441,9 @@ at: http://peteroupc.github.io/
      * scales of the two binary floats. The result's sign is positive if
      * both operands have the same sign, and negative if they have different
      * signs.
-     * @param op Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param op The parameter {@code op} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Multiply(
       EFloat op,
@@ -1444,9 +1453,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Multiplies by one binary float, and then adds another binary float.
-     * @param multiplicand Not documented yet.
-     * @param augend Not documented yet.
-     * @return An EFloat object.
+     * @param multiplicand The parameter {@code multiplicand} is not documented
+     * yet.
+     * @param augend The parameter {@code augend} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat MultiplyAndAdd(
       EFloat multiplicand,
@@ -1456,9 +1466,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Multiplies by one value, and then adds another value.
-     * @param op Not documented yet.
-     * @param augend Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param op The parameter {@code op} is not documented yet.
+     * @param augend The parameter {@code augend} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The result thisValue * multiplicand + augend.
      */
     public EFloat MultiplyAndAdd(
@@ -1470,12 +1480,12 @@ at: http://peteroupc.github.io/
 
     /**
      * Multiplies by one value, and then subtracts another value.
-     * @param op Not documented yet.
-     * @param subtrahend Not documented yet.
-     * @param ctx Not documented yet. (3).
+     * @param op The parameter {@code op} is not documented yet.
+     * @param subtrahend The parameter {@code subtrahend} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The result thisValue * multiplicand - subtrahend.
-     * @throws NullPointerException The parameter {@code op} or {@code subtrahend}
-     * is null.
+     * @throws java.lang.NullPointerException The parameter {@code op} or {@code
+     * subtrahend} is null.
      */
     public EFloat MultiplyAndSubtract(
       EFloat op,
@@ -1500,7 +1510,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets an object with the same value as this one, but with the sign reversed.
-     * @return An EFloat object.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Negate() {
       return new EFloat(
@@ -1512,7 +1522,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary float with the same value as this object but with the sign
      * reversed.
-     * @param context Not documented yet.
+     * @param context The parameter {@code context} is not documented yet.
      * @return An arbitrary-precision binary float. If this value is positive zero,
      * returns positive zero. Signals FlagInvalid and returns quiet NaN if
      * this value is signaling NaN.
@@ -1523,7 +1533,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the largest value that's smaller than the given value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
@@ -1536,7 +1546,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the smallest value that's greater than the given value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the
      * parameter {@code ctx} is null, the precision is 0, or {@code ctx} has
@@ -1550,9 +1560,9 @@ at: http://peteroupc.github.io/
      * Finds the next value that is closer to the other object's value than this
      * object's value. Returns a copy of this value with the same sign as
      * the other value if both values are equal.
-     * @param otherValue Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat NextToward(
       EFloat otherValue,
@@ -1564,7 +1574,7 @@ at: http://peteroupc.github.io/
      * Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent, and also converts negative zero to
      * positive zero.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The closest value to this object's value, rounded to the specified
      * precision. Returns the same value as this object if {@code ctx} is
      * null or the precision and exponent range are unlimited.
@@ -1575,9 +1585,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Raises this object's value to the given exponent.
-     * @param exponent Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Pow(EFloat exponent, EContext ctx) {
       return MathValue.Power(this, exponent, ctx);
@@ -1585,9 +1595,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Raises this object's value to the given exponent.
-     * @param exponentSmall Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param exponentSmall The parameter {@code exponentSmall} is not documented
+     * yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Pow(int exponentSmall, EContext ctx) {
       return this.Pow(EFloat.FromInt64(exponentSmall), ctx);
@@ -1595,7 +1606,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Raises this object's value to the given exponent.
-     * @param exponentSmall Not documented yet.
+     * @param exponentSmall The parameter {@code exponentSmall} is not documented
+     * yet.
      * @return This^exponent. Returns not-a-number (NaN) if this object and
      * exponent are both 0.
      */
@@ -1607,7 +1619,7 @@ at: http://peteroupc.github.io/
      * Finds the number of digits in this number's mantissa (significand). Returns
      * 1 if this value is 0, and 0 if this value is infinity or not-a-number
      * (NaN).
-     * @return An EInteger object.
+     * @return An arbitrary-precision integer.
      */
     public EInteger Precision() {
       if (!this.isFinite()) {
@@ -1631,17 +1643,18 @@ at: http://peteroupc.github.io/
      * can be used to implement fixed-point binary arithmetic, in which each
      * binary float has a fixed number of digits after the radix point. The
      * following code example returns a fixed-point number with up to 20
-     * digits before and exactly 5 digits after the radix point:</p> <pre>
-     *  // After performing arithmetic operations, adjust  // the number to 5
-     *  // digits after the radix point number = number.Quantize(
+     * digits before and exactly 5 digits after the radix point:</p>
+     * <pre>  // After performing arithmetic operations, adjust  // the number
+     * to 5  // digits after the radix point number = number.Quantize(
      * EInteger.FromInt32(-5),  // five digits after the radix point
      * EContext.ForPrecision(25)  // 25-digit precision); </pre> <p>A
      * fixed-point binary arithmetic in which no digits come after the radix
      * point (a desired exponent of 0) is considered an "integer
      * arithmetic".</p>
-     * @param desiredExponent Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param desiredExponent The parameter {@code desiredExponent} is not
+     * documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Quantize(
       EInteger desiredExponent,
@@ -1662,16 +1675,16 @@ at: http://peteroupc.github.io/
      * can be used to implement fixed-point binary arithmetic, in which each
      * binary float has a fixed number of digits after the radix point. The
      * following code example returns a fixed-point number with up to 20
-     * digits before and exactly 5 digits after the radix point:</p> <pre>
-     *  // After performing arithmetic operations, adjust  // the number to 5
-     * digits after the radix point number = number.Quantize(-5,  // five
-     * digits after the radix point EContext.ForPrecision(25)  // 25-digit
-     * precision); </pre> <p>A fixed-point binary arithmetic in which no
-     * digits come after the radix point (a desired exponent of 0) is
-     * considered an "integer arithmetic".</p>
-     * @param desiredExponentInt Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * digits before and exactly 5 digits after the radix point:</p>
+     * <pre>  // After performing arithmetic operations, adjust  // the number
+     * to 5 digits after the radix point number = number.Quantize(-5, //
+     * five digits after the radix point EContext.ForPrecision(25)  // * 25-digit precision); </pre> <p>A fixed-point binary arithmetic in
+     * which no digits come after the radix point (a desired exponent of 0)
+     * is considered an "integer arithmetic".</p>
+     * @param desiredExponentInt The parameter {@code desiredExponentInt} is not
+     * documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Quantize(
       int desiredExponentInt,
@@ -1694,9 +1707,9 @@ at: http://peteroupc.github.io/
      * radix point. A fixed-point binary arithmetic in which no digits come
      * after the radix point (a desired exponent of 0) is considered an
      * "integer arithmetic".</p>
-     * @param otherValue Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Quantize(
       EFloat otherValue,
@@ -1708,7 +1721,7 @@ at: http://peteroupc.github.io/
      * Removes trailing zeros from this object's mantissa (significand). For
      * example, 1.00 becomes 1. <p>If this object's value is 0, changes the
      * exponent to 0.</p>
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return This value with trailing zeros removed. Note that if the result has
      * a very high exponent and the context says to clamp high exponents,
      * there may still be some trailing zeros in the mantissa (significand).
@@ -1723,9 +1736,9 @@ at: http://peteroupc.github.io/
      * absolute value of this object is divided by the absolute value of the
      * other object; the remainder has the same sign (positive or negative)
      * as this object's value.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Remainder(
       EFloat divisor,
@@ -1736,7 +1749,7 @@ at: http://peteroupc.github.io/
     /**
      * Calculates the remainder of a number by the formula <code>"this" - (("this" /
      * "divisor") * "divisor")</code>
-     * @param divisor Not documented yet.
+     * @param divisor The number to divide by.
      * @return An arbitrary-precision binary float.
      */
     public EFloat RemainderNaturalScale(
@@ -1747,9 +1760,9 @@ at: http://peteroupc.github.io/
     /**
      * Calculates the remainder of a number by the formula "this" - (("this" /
      * "divisor") * "divisor").
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RemainderNaturalScale(
       EFloat divisor,
@@ -1775,9 +1788,9 @@ at: http://peteroupc.github.io/
      * if the quotient, rounded down, is even, and the result's absolute
      * value is half of the divisor's absolute value.</li></ul> This
      * function is also known as the "IEEE Remainder" function.
-     * @param divisor Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param divisor The number to divide by.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RemainderNear(
       EFloat divisor,
@@ -1788,9 +1801,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary float with the same value as this object but rounded to a
      * new exponent if necessary.
-     * @param exponent Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RoundToExponent(
       EInteger exponent,
@@ -1801,9 +1814,10 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary float with the same value as this object but rounded to a
      * new exponent if necessary.
-     * @param exponentSmall Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param exponentSmall The parameter {@code exponentSmall} is not documented
+     * yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RoundToExponent(
       int exponentSmall,
@@ -1815,9 +1829,9 @@ at: http://peteroupc.github.io/
      * Returns a binary float with the same value as this object but rounded to the
      * given exponent, and signals an inexact flag if the result would be
      * inexact.
-     * @param exponent Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RoundToExponentExact(
       EInteger exponent,
@@ -1828,9 +1842,9 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary number with the same value as this object but rounded to
      * the given exponent.
-     * @param exponent Not documented yet.
-     * @param rounding Not documented yet.
-     * @return An EFloat object.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param rounding The parameter {@code rounding} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RoundToExponentExact(
       EInteger exponent,
@@ -1844,9 +1858,10 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary float with the same value as this object but rounded to an
      * integer, and signals an inexact flag if the result would be inexact.
-     * @param exponentSmall Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param exponentSmall The parameter {@code exponentSmall} is not documented
+     * yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RoundToExponentExact(
       int exponentSmall,
@@ -1857,7 +1872,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary float with the same value as this object but rounded to an
      * integer, and signals an inexact flag if the result would be inexact.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return A binary float rounded to the closest integer representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
@@ -1874,7 +1889,7 @@ at: http://peteroupc.github.io/
      * Returns a binary float with the same value as this object but rounded to an
      * integer, without adding the <code>FlagInexact</code> or <code>FlagRounded</code>
      * flags.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return A binary float rounded to the closest integer representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
@@ -1889,7 +1904,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a binary float with the same value as this object but rounded to an
      * integer, and signals an inexact flag if the result would be inexact.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return A binary float rounded to the closest integer representable in the
      * given precision. Signals FlagInvalid and returns not-a-number (NaN)
      * if the result can't fit the given precision without rounding. Signals
@@ -1908,7 +1923,7 @@ at: http://peteroupc.github.io/
      * Returns a binary float with the same value as this object but rounded to an
      * integer, without adding the <code>FlagInexact</code> or <code>FlagRounded</code>
      * flags.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return A binary float rounded to the closest integer representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
@@ -1925,7 +1940,7 @@ at: http://peteroupc.github.io/
     /**
      * Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The closest value to this object's value, rounded to the specified
      * precision. Returns the same value as this object if {@code ctx} is
      * null or the precision and exponent range are unlimited.
@@ -1936,7 +1951,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns a number similar to this number but with the scale adjusted.
-     * @param places Not documented yet.
+     * @param places The parameter {@code places} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
     public EFloat ScaleByPowerOfTwo(int places) {
@@ -1945,9 +1960,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns a number similar to this number but with the scale adjusted.
-     * @param places Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param places The parameter {@code places} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(int places, EContext ctx) {
       return this.ScaleByPowerOfTwo(EInteger.FromInt32(places), ctx);
@@ -1955,7 +1970,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns a number similar to this number but with the scale adjusted.
-     * @param bigPlaces Not documented yet.
+     * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
      * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) {
@@ -1964,9 +1979,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Returns a number similar to this number but with its scale adjusted.
-     * @param bigPlaces Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(
   EInteger bigPlaces,
@@ -1987,7 +2002,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the square root of this object's value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
@@ -2000,7 +2015,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the square root of this object's value.
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
@@ -2016,7 +2031,7 @@ at: http://peteroupc.github.io/
     /**
      * Subtracts an arbitrary-precision binary float from this instance and returns
      * the result.
-     * @param otherValue Not documented yet.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The difference of the two objects.
      */
     public EFloat Subtract(EFloat otherValue) {
@@ -2025,9 +2040,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Subtracts an arbitrary-precision binary float from this instance.
-     * @param otherValue Not documented yet.
-     * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @param otherValue The parameter {@code otherValue} is not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code otherValue} is
      * null.
      */
@@ -2142,7 +2157,7 @@ at: http://peteroupc.github.io/
      * Converts this value to an arbitrary-precision integer. Any fractional part
      * of this value will be discarded when converting to an
      * arbitrary-precision integer.
-     * @return An EInteger object.
+     * @return An arbitrary-precision integer.
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).
      */
@@ -2153,7 +2168,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts this value to an arbitrary-precision integer, checking whether the
      * value contains a fractional part.
-     * @return An EInteger object.
+     * @return An arbitrary-precision integer.
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).
      * @deprecated Renamed to ToEIntegerIfExact.
@@ -2166,7 +2181,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts this value to an arbitrary-precision integer, checking whether the
      * value contains a fractional part.
-     * @return An EInteger object.
+     * @return An arbitrary-precision integer.
      * @throws java.lang.ArithmeticException This object's value is infinity or
      * not-a-number (NaN).
      */
@@ -2177,7 +2192,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts this value to an arbitrary-precision decimal number, then returns
      * the value of that decimal's ToEngineeringString method.
-     * @return A string object.
+     * @return A text string.
      */
     public String ToEngineeringString() {
       return this.ToEDecimal().ToEngineeringString();
@@ -2195,7 +2210,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts this value to a string, but without exponential notation.
-     * @return A string object.
+     * @return A text string.
      */
     public String ToPlainString() {
       return this.ToEDecimal().ToPlainString();
@@ -2215,7 +2230,7 @@ at: http://peteroupc.github.io/
      * this number's value that results in the rounded number after the
      * decimal form is converted to binary floating-point format (using the
      * given arithmetic context).
-     * @param ctx Not documented yet.
+     * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Shortest decimal form of this number's value for the given
      * arithmetic context. The text string will be in exponential notation
      * if the number's first nonzero decimal digit is more than five digits
@@ -2368,7 +2383,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts this number's value to a text string.
-     * @return A string object.
+     * @return A text string.
      */
     @Override public String toString() {
       return EDecimal.FromEFloat(this).toString();
@@ -2378,7 +2393,7 @@ at: http://peteroupc.github.io/
      * Returns the unit in the last place. The mantissa (significand) will be 1 and
      * the exponent will be this number's exponent. Returns 1 with an
      * exponent of 0 if this number is infinity or not-a-number (NaN).
-     * @return An EFloat object.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Ulp() {
       return (!this.isFinite()) ? EFloat.One :
@@ -2464,7 +2479,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param value Not documented yet.
+     * @param value The parameter {@code value} is not documented yet.
      * @return A 32-bit signed integer.
      */
       public int GetSign(EFloat value) {
@@ -2473,7 +2488,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param value Not documented yet.
+     * @param value The parameter {@code value} is not documented yet.
      * @return An arbitrary-precision integer.
      */
       public EInteger GetMantissa(EFloat value) {
@@ -2482,7 +2497,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param value Not documented yet.
+     * @param value The parameter {@code value} is not documented yet.
      * @return An arbitrary-precision integer.
      */
       public EInteger GetExponent(EFloat value) {
@@ -2499,9 +2514,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param bigint Not documented yet.
-     * @param lastDigit Not documented yet.
-     * @param olderDigits Not documented yet. (3).
+     * @param bigint The parameter {@code bigint} is not documented yet.
+     * @param lastDigit The parameter {@code lastDigit} is not documented yet.
+     * @param olderDigits The parameter {@code olderDigits} is not documented yet.
      * @return An IShiftAccumulator object.
      */
       public IShiftAccumulator CreateShiftAccumulatorWithDigits(
@@ -2530,7 +2545,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param bigint Not documented yet.
+     * @param bigint The parameter {@code bigint} is not documented yet.
      * @return An IShiftAccumulator object.
      */
       public IShiftAccumulator CreateShiftAccumulator(EInteger bigint) {
@@ -2539,8 +2554,8 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param num Not documented yet.
-     * @param den Not documented yet.
+     * @param num The parameter {@code num} is not documented yet.
+     * @param den The parameter {@code den} is not documented yet.
      * @return A FastInteger object.
      */
       public FastInteger DivisionShift(EInteger num, EInteger den) {
@@ -2557,9 +2572,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param bigint Not documented yet.
-     * @param power Not documented yet.
-     * @return An EInteger object.
+     * @param bigint The parameter {@code bigint} is not documented yet.
+     * @param power The parameter {@code power} is not documented yet.
+     * @return An arbitrary-precision integer.
      */
       public EInteger MultiplyByRadixPower(
         EInteger bigint,
@@ -2590,7 +2605,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param value Not documented yet.
+     * @param value The parameter {@code value} is not documented yet.
      * @return A 32-bit signed integer.
      */
       public int GetFlags(EFloat value) {
@@ -2599,9 +2614,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param mantissa Not documented yet.
-     * @param exponent Not documented yet.
-     * @param flags Not documented yet. (3).
+     * @param mantissa The parameter {@code mantissa} is not documented yet.
+     * @param exponent The parameter {@code exponent} is not documented yet.
+     * @param flags The parameter {@code flags} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
       public EFloat CreateNewWithFlags(
@@ -2631,7 +2646,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal method.
-     * @param val Not documented yet.
+     * @param val The parameter {@code val} is not documented yet.
      * @return An arbitrary-precision binary float.
      */
       public EFloat ValueOf(int val) {
@@ -2643,7 +2658,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after truncating to an integer.
-     * @return A Byte object.
+     * @return A byte (from 0 to 255).
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
      * the truncated integer is less than 0 or greater than 255.
      */
@@ -2658,7 +2673,7 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * Truncates this number's value to an integer and returns the
      * least-significant bits of its two's-complement form as a byte (from 0
      * to 255).
-     * @return A Byte object.
+     * @return A byte (from 0 to 255).
      */
 public byte ToByteUnchecked() {
  return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
@@ -2667,7 +2682,7 @@ public byte ToByteUnchecked() {
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) without rounding to a different numerical value.
-     * @return A Byte object.
+     * @return A byte (from 0 to 255).
      * @throws ArithmeticException This value is infinity or not-a-number, is not
      * an exact integer, or is less than 0 or greater than 255.
      */
@@ -2680,7 +2695,7 @@ public byte ToByteIfExact() {
 
     /**
      * Converts a byte (from 0 to 255) to an arbitrary-precision binary float.
-     * @param inputByte Not documented yet.
+     * @param inputByte The parameter {@code inputByte} is not documented yet.
      * @return This number's value as an arbitrary-precision binary float.
      */
 public static EFloat FromByte(byte inputByte) {
@@ -2730,7 +2745,7 @@ public short ToInt16IfExact() {
 
     /**
      * Converts a 16-bit signed integer to an arbitrary-precision binary float.
-     * @param inputInt16 Not documented yet.
+     * @param inputInt16 The parameter {@code inputInt16} is not documented yet.
      * @return This number's value as an arbitrary-precision binary float.
      */
 public static EFloat FromInt16(short inputInt16) {
@@ -2781,7 +2796,7 @@ public int ToInt32IfExact() {
 
     /**
      * Converts a 32-bit signed integer to an arbitrary-precision binary float.
-     * @param inputInt32 Not documented yet.
+     * @param inputInt32 The parameter {@code inputInt32} is not documented yet.
      * @return This number's value as an arbitrary-precision binary float.
      */
 public static EFloat FromInt32(int inputInt32) {
@@ -2831,7 +2846,7 @@ public long ToInt64IfExact() {
 
     /**
      * Converts a 64-bit signed integer to an arbitrary-precision binary float.
-     * @param inputInt64 Not documented yet.
+     * @param inputInt64 The parameter {@code inputInt64} is not documented yet.
      * @return This number's value as an arbitrary-precision binary float.
      */
 public static EFloat FromInt64(long inputInt64) {

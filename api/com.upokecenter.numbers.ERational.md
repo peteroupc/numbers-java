@@ -358,13 +358,15 @@ Creates a rational number with the given numerator and denominator.
 
 **Parameters:**
 
-* <code>numeratorSmall</code> - Not documented yet.
+* <code>numeratorSmall</code> - The parameter <code>numeratorSmall</code> is not documented
+ yet.
 
-* <code>denominatorSmall</code> - Not documented yet.
+* <code>denominatorSmall</code> - The parameter <code>denominatorSmall</code> is not
+ documented yet.
 
 **Returns:**
 
-* An ERational object.
+* An arbitrary-precision binary rational number.
 
 **Throws:**
 
@@ -376,13 +378,13 @@ Creates a rational number with the given numerator and denominator.
 
 **Parameters:**
 
-* <code>numerator</code> - Not documented yet.
+* <code>numerator</code> - The parameter <code>numerator</code> is not documented yet.
 
-* <code>denominator</code> - Not documented yet.
+* <code>denominator</code> - The parameter <code>denominator</code> is not documented yet.
 
 **Returns:**
 
-* An ERational object.
+* An arbitrary-precision binary rational number.
 
 **Throws:**
 
@@ -394,7 +396,7 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>diag</code> - Not documented yet.
+* <code>diag</code> - The parameter <code>diag</code> is not documented yet.
 
 **Returns:**
 
@@ -410,11 +412,11 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>diag</code> - Not documented yet.
+* <code>diag</code> - The parameter <code>diag</code> is not documented yet.
 
-* <code>signaling</code> - Not documented yet.
+* <code>signaling</code> - The parameter <code>signaling</code> is not documented yet.
 
-* <code>negative</code> - Not documented yet. (3).
+* <code>negative</code> - The parameter <code>negative</code> is not documented yet.
 
 **Returns:**
 
@@ -435,7 +437,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 **Parameters:**
 
-* <code>flt</code> - Not documented yet.
+* <code>flt</code> - The parameter <code>flt</code> is not documented yet.
 
 **Returns:**
 
@@ -448,7 +450,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ef</code> - Not documented yet.
+* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
 
 **Returns:**
 
@@ -461,7 +463,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ef</code> - Not documented yet.
+* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
 
 **Returns:**
 
@@ -473,7 +475,7 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 **Parameters:**
 
-* <code>ef</code> - Not documented yet.
+* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
 
 **Returns:**
 
@@ -489,7 +491,7 @@ Converts an arbitrary-precision binary float to a rational number.
 
 **Parameters:**
 
-* <code>ef</code> - Not documented yet.
+* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
 
 **Returns:**
 
@@ -505,7 +507,7 @@ Converts an arbitrary-precision integer to a rational number.
 
 **Parameters:**
 
-* <code>bigint</code> - Not documented yet.
+* <code>bigint</code> - The parameter <code>bigint</code> is not documented yet.
 
 **Returns:**
 
@@ -520,7 +522,7 @@ Converts a 32-bit binary floating-point number to a rational number. This
 
 **Parameters:**
 
-* <code>flt</code> - Not documented yet.
+* <code>flt</code> - The parameter <code>flt</code> is not documented yet.
 
 **Returns:**
 
@@ -529,11 +531,11 @@ Converts a 32-bit binary floating-point number to a rational number. This
 ### FromString
     public static ERational FromString​(String str)
 Creates a rational number from a text string that represents a number. See
- <code>FromString(string, int, int)</code> for more information.
+ <code>FromString(String, int, int)</code> for more information.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
 **Returns:**
 
@@ -565,7 +567,7 @@ Creates a rational number from a text string that represents a number. See
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
 * <code>offset</code> - A zero-based index showing where the desired portion of <code>
  str</code> begins.
@@ -599,7 +601,7 @@ Compares the absolute values of this object and another object, imposing a
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -622,7 +624,7 @@ Compares the values of this object and another object, imposing a total
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -636,7 +638,7 @@ Returns the absolute value of this rational number, that is, a number with
 
 **Returns:**
 
-* An ERational object.
+* An arbitrary-precision binary rational number.
 
 ### Add
     public ERational Add​(ERational otherValue)
@@ -644,7 +646,7 @@ Adds two rational numbers.
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -653,7 +655,8 @@ Adds two rational numbers.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is null.
+* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+ null.
 
 ### compareTo
     public int compareTo​(ERational other)
@@ -665,7 +668,7 @@ Compares an arbitrary-precision rational number with this instance.
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -674,8 +677,8 @@ Compares an arbitrary-precision rational number with this instance.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
+ satisfy other.isFinite().
 
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
@@ -683,7 +686,7 @@ Compares an arbitrary-precision binary float with this instance.
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -692,8 +695,8 @@ Compares an arbitrary-precision binary float with this instance.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
+ satisfy other.isFinite().
 
 ### CompareToDecimal
     public int CompareToDecimal​(EDecimal other)
@@ -701,7 +704,7 @@ Compares an arbitrary-precision decimal number with this instance.
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -710,8 +713,8 @@ Compares an arbitrary-precision decimal number with this instance.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
+ satisfy other.isFinite().
 
 ### CopySign
     public ERational CopySign​(ERational other)
@@ -720,7 +723,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -737,7 +740,7 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -745,7 +748,8 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is null.
+* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+ null.
 
 ### equals
     public boolean equals​(Object obj)
@@ -760,7 +764,7 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Parameters:**
 
-* <code>obj</code> - Not documented yet.
+* <code>obj</code> - The parameter <code>obj</code> is not documented yet.
 
 **Returns:**
 
@@ -774,7 +778,7 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -799,7 +803,8 @@ Gets a value indicating whether this object's value is infinity.
 
 **Returns:**
 
-* True if this object's value is infinity; otherwise, false.
+* <code>true</code> if this object's value is infinity; otherwise, <code>
+ false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -807,7 +812,8 @@ Returns whether this object is a not-a-number value.
 
 **Returns:**
 
-* True if this object is a not-a-number value; otherwise, false.
+* <code>true</code> if this object is a not-a-number value; otherwise,
+ <code>false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -815,7 +821,8 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* True if this object is negative infinity; otherwise, false.
+* <code>true</code> if this object is negative infinity; otherwise, <code>
+ false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -823,7 +830,8 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* True if this object is positive infinity; otherwise, false.
+* <code>true</code> if this object is positive infinity; otherwise, <code>
+ false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -831,7 +839,8 @@ Returns whether this object is a quiet not-a-number value.
 
 **Returns:**
 
-* True if this object is a quiet not-a-number value; otherwise, false.
+* <code>true</code> if this object is a quiet not-a-number value;
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -841,9 +850,9 @@ Returns whether this object is a signaling not-a-number value (which causes
 
 **Returns:**
 
-* True if this object is a signaling not-a-number value (which causes
- an error if the value is passed to any arithmetic operation in this
- class); otherwise, false.
+* <code>true</code> if this object is a signaling not-a-number value (which
+ causes an error if the value is passed to any arithmetic operation in
+ this class); otherwise, <code>false</code>.
 
 ### Multiply
     public ERational Multiply​(ERational otherValue)
@@ -852,7 +861,7 @@ Multiplies this instance by the value of an arbitrary-precision rational
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -860,7 +869,8 @@ Multiplies this instance by the value of an arbitrary-precision rational
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is null.
+* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+ null.
 
 ### Negate
     public ERational Negate()
@@ -869,7 +879,7 @@ Returns a rational number with the same value as this one but with the sign
 
 **Returns:**
 
-* An ERational object.
+* An arbitrary-precision binary rational number.
 
 ### Remainder
     public ERational Remainder​(ERational otherValue)
@@ -878,7 +888,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -886,7 +896,8 @@ Finds the remainder that results when this instance is divided by the value
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is null.
+* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+ null.
 
 ### Subtract
     public ERational Subtract​(ERational otherValue)
@@ -894,7 +905,7 @@ Subtracts an arbitrary-precision rational number from this instance.
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -902,7 +913,8 @@ Subtracts an arbitrary-precision rational number from this instance.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is null.
+* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+ null.
 
 ### ToDouble
     public double ToDouble()
@@ -921,7 +933,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -935,7 +947,7 @@ Deprecated.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -949,7 +961,7 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -971,7 +983,7 @@ Converts this rational number to a decimal number and rounds the result to
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -987,7 +999,7 @@ Converts this rational number to a decimal number, but if the result would
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1012,7 +1024,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1027,7 +1039,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1042,7 +1054,7 @@ Converts this rational number to a binary float.
 
 **Returns:**
 
-* An EFloat object.
+* An arbitrary-precision binary floating-point number.
 
 ### ToEFloat
     public EFloat ToEFloat​(EContext ctx)
@@ -1051,7 +1063,7 @@ Converts this rational number to a binary float and rounds that result to
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1067,7 +1079,7 @@ Converts this rational number to a binary float, but if the result would
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1083,7 +1095,7 @@ Deprecated.
 
 **Returns:**
 
-* An EFloat object.
+* An arbitrary-precision binary floating-point number.
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat​(EContext ctx)
@@ -1092,7 +1104,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1107,7 +1119,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1135,7 +1147,7 @@ Converts this object to a text string.
 
 **Returns:**
 
-* A string object.
+* A text string.
 
 ### ToByteChecked
     public byte ToByteChecked()
@@ -1144,7 +1156,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 **Throws:**
 
@@ -1159,7 +1171,7 @@ Truncates this number's value to an integer and returns the
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 ### ToByteIfExact
     public byte ToByteIfExact()
@@ -1168,7 +1180,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 **Throws:**
 
@@ -1181,7 +1193,7 @@ Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputByte</code> - Not documented yet.
+* <code>inputByte</code> - The parameter <code>inputByte</code> is not documented yet.
 
 **Returns:**
 
@@ -1232,7 +1244,7 @@ Converts a 16-bit signed integer to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputInt16</code> - Not documented yet.
+* <code>inputInt16</code> - The parameter <code>inputInt16</code> is not documented yet.
 
 **Returns:**
 
@@ -1285,7 +1297,7 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputInt32</code> - Not documented yet.
+* <code>inputInt32</code> - The parameter <code>inputInt32</code> is not documented yet.
 
 **Returns:**
 
@@ -1338,7 +1350,7 @@ Converts a 64-bit signed integer to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputInt64</code> - Not documented yet.
+* <code>inputInt64</code> - The parameter <code>inputInt64</code> is not documented yet.
 
 **Returns:**
 

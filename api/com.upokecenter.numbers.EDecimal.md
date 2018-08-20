@@ -773,9 +773,11 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 **Parameters:**
 
-* <code>mantissaSmall</code> - Not documented yet.
+* <code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is not documented
+ yet.
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -787,9 +789,9 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 **Parameters:**
 
-* <code>mantissa</code> - Not documented yet.
+* <code>mantissa</code> - The parameter <code>mantissa</code> is not documented yet.
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
 **Returns:**
 
@@ -806,7 +808,7 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 **Parameters:**
 
-* <code>diag</code> - Not documented yet.
+* <code>diag</code> - The parameter <code>diag</code> is not documented yet.
 
 **Returns:**
 
@@ -818,13 +820,13 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 **Parameters:**
 
-* <code>diag</code> - Not documented yet.
+* <code>diag</code> - The parameter <code>diag</code> is not documented yet.
 
-* <code>signaling</code> - Not documented yet.
+* <code>signaling</code> - The parameter <code>signaling</code> is not documented yet.
 
-* <code>negative</code> - Not documented yet. (3).
+* <code>negative</code> - The parameter <code>negative</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (4).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -853,7 +855,7 @@ Creates a decimal number from a 64-bit binary floating-point number. This
 
 **Parameters:**
 
-* <code>dbl</code> - Not documented yet.
+* <code>dbl</code> - The parameter <code>dbl</code> is not documented yet.
 
 **Returns:**
 
@@ -865,7 +867,7 @@ Converts an arbitrary-precision integer to an arbitrary precision decimal.
 
 **Parameters:**
 
-* <code>bigint</code> - Not documented yet.
+* <code>bigint</code> - The parameter <code>bigint</code> is not documented yet.
 
 **Returns:**
 
@@ -878,7 +880,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ef</code> - Not documented yet.
+* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
 
 **Returns:**
 
@@ -891,7 +893,7 @@ Creates a decimal number from an arbitrary-precision binary floating-point
 
 **Parameters:**
 
-* <code>bigfloat</code> - Not documented yet.
+* <code>bigfloat</code> - The parameter <code>bigfloat</code> is not documented yet.
 
 **Returns:**
 
@@ -907,7 +909,8 @@ Creates a decimal number from a 32-bit signed integer.
 
 **Parameters:**
 
-* <code>valueSmaller</code> - Not documented yet.
+* <code>valueSmaller</code> - The parameter <code>valueSmaller</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -919,7 +922,7 @@ Creates a decimal number from a 64-bit signed integer.
 
 **Parameters:**
 
-* <code>valueSmall</code> - Not documented yet.
+* <code>valueSmall</code> - The parameter <code>valueSmall</code> is not documented yet.
 
 **Returns:**
 
@@ -943,7 +946,7 @@ Creates a decimal number from a 32-bit binary floating-point number. This
 
 **Parameters:**
 
-* <code>flt</code> - Not documented yet.
+* <code>flt</code> - The parameter <code>flt</code> is not documented yet.
 
 **Returns:**
 
@@ -952,11 +955,11 @@ Creates a decimal number from a 32-bit binary floating-point number. This
 ### FromString
     public static EDecimal FromString​(String str)
 Creates a decimal number from a text string that represents a number. See
- <code>FromString(string, int, int, EContext)</code> for more information.
+ <code>FromString(String, int, int, EContext)</code> for more information.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
 **Returns:**
 
@@ -971,13 +974,13 @@ Creates a decimal number from a text string that represents a number. See
 ### FromString
     public static EDecimal FromString​(String str, EContext ctx)
 Creates a decimal number from a text string that represents a number. See
- <code>FromString(string, int, int, EContext)</code> for more information.
+ <code>FromString(String, int, int, EContext)</code> for more information.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -990,11 +993,11 @@ Creates a decimal number from a text string that represents a number. See
 ### FromString
     public static EDecimal FromString​(String str, int offset, int length)
 Creates a decimal number from a text string that represents a number. See
- <code>FromString(string, int, int, EContext)</code> for more information.
+ <code>FromString(String, int, int, EContext)</code> for more information.
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
 * <code>offset</code> - A zero-based index showing where the desired portion of <code>
  str</code> begins.
@@ -1035,7 +1038,7 @@ Creates a decimal number from a text string that represents a number. See
 
 **Parameters:**
 
-* <code>str</code> - Not documented yet.
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
 
 * <code>offset</code> - A zero-based index showing where the desired portion of <code>
  str</code> begins.
@@ -1043,7 +1046,7 @@ Creates a decimal number from a text string that represents a number. See
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1053,8 +1056,8 @@ Creates a decimal number from a text string that represents a number. See
 
 * <code>NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
- than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
+* <code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+ less than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
 ### Max
@@ -1063,11 +1066,11 @@ Gets the greater value between two decimal numbers.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1079,9 +1082,9 @@ Gets the greater value between two decimal numbers.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
 **Returns:**
 
@@ -1094,11 +1097,11 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1111,9 +1114,9 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
 **Returns:**
 
@@ -1125,11 +1128,11 @@ Gets the lesser value between two decimal numbers.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1141,9 +1144,9 @@ Gets the lesser value between two decimal numbers.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
 **Returns:**
 
@@ -1156,11 +1159,11 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1173,9 +1176,9 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is not documented yet.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is not documented yet.
 
 **Returns:**
 
@@ -1187,7 +1190,7 @@ Finds the constant π, the circumference of a circle divided by its diameter.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1212,7 +1215,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -1229,7 +1232,7 @@ Finds the absolute value of this object (if it's negative, it becomes
 
 **Parameters:**
 
-* <code>context</code> - Not documented yet.
+* <code>context</code> - The parameter <code>context</code> is not documented yet.
 
 **Returns:**
 
@@ -1242,7 +1245,7 @@ Adds this object and another decimal number and returns the result.
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -1255,9 +1258,9 @@ Finds the sum of this object and another object. The result's exponent is
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1281,7 +1284,7 @@ Compares the mathematical values of this object and another object,
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -1295,7 +1298,7 @@ Compares an arbitrary-precision binary float with this instance.
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -1304,6 +1307,11 @@ Compares an arbitrary-precision binary float with this instance.
  both values are NaN (even signaling NaN) and 1 if this value is NaN
  (even signaling NaN) and the other isn't, or if the other value is
  null.
+
+**Throws:**
+
+* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
+ other.isFinite().
 
 ### CompareToSignal
     public EDecimal CompareToSignal​(EDecimal other, EContext ctx)
@@ -1315,9 +1323,9 @@ Compares the mathematical values of this object and another object, treating
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1338,7 +1346,7 @@ Compares the absolute values of this object and another object, imposing a
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -1361,9 +1369,9 @@ Compares the values of this object and another object, imposing a total
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1385,7 +1393,7 @@ Compares the values of this object and another object, imposing a total
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -1402,9 +1410,9 @@ Compares the mathematical values of this object and another object. <p>In
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1417,7 +1425,7 @@ Divides this object by another decimal number and returns the result. When
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -1434,9 +1442,9 @@ Divides this arbitrary-precision decimal number by another
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1449,7 +1457,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -1463,9 +1471,9 @@ Deprecated.
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1478,7 +1486,7 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -1492,9 +1500,9 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1507,11 +1515,12 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponentSmall</code> - Not documented yet.
+* <code>desiredExponentSmall</code> - The parameter <code>desiredExponentSmall</code> is
+ not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1532,11 +1541,12 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponentInt</code> - Not documented yet.
+* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
+ documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1556,11 +1566,12 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponentSmall</code> - Not documented yet.
+* <code>desiredExponentSmall</code> - The parameter <code>desiredExponentSmall</code> is
+ not documented yet.
 
-* <code>rounding</code> - Not documented yet. (3).
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -1579,11 +1590,12 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponentInt</code> - Not documented yet.
+* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
+ documented yet.
 
-* <code>rounding</code> - Not documented yet. (3).
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -1601,11 +1613,11 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1625,9 +1637,9 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
 **Returns:**
 
@@ -1641,9 +1653,10 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponentSmall</code> - Not documented yet.
+* <code>desiredExponentSmall</code> - The parameter <code>desiredExponentSmall</code> is
+ not documented yet.
 
 **Returns:**
 
@@ -1657,9 +1670,10 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponentInt</code> - Not documented yet.
+* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
+ documented yet.
 
 **Returns:**
 
@@ -1672,11 +1686,12 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>desiredExponent</code> - Not documented yet.
+* <code>desiredExponent</code> - The parameter <code>desiredExponent</code> is not
+ documented yet.
 
-* <code>rounding</code> - Not documented yet. (3).
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -1694,7 +1709,7 @@ Divides two arbitrary-precision decimal numbers, and returns the integer
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -1711,9 +1726,9 @@ Divides this object by another object, and returns the integer part of the
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1726,9 +1741,9 @@ Divides this object by another object, and returns the integer part of the
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1741,9 +1756,9 @@ Divides this object by another decimal number and returns a result with the
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -1757,7 +1772,7 @@ Determines whether this object's mantissa (significand), exponent, and
 
 **Parameters:**
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
 
 **Returns:**
 
@@ -1777,7 +1792,7 @@ Determines whether this object's mantissa (significand), exponent, and
 
 **Parameters:**
 
-* <code>obj</code> - Not documented yet.
+* <code>obj</code> - The parameter <code>obj</code> is not documented yet.
 
 **Returns:**
 
@@ -1790,7 +1805,7 @@ Finds e (the base of natural logarithms) raised to the power of this
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1820,8 +1835,8 @@ Gets a value indicating whether this object is positive or negative
 
 **Returns:**
 
-* True if this object is positive or negative infinity; otherwise,
- false.
+* <code>true</code> if this object is positive or negative infinity;
+ otherwise, <code>false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -1829,7 +1844,8 @@ Gets a value indicating whether this object is not a number (NaN).
 
 **Returns:**
 
-* True if this object is not a number (NaN); otherwise, false.
+* <code>true</code> if this object is not a number (NaN); otherwise, <code>
+ false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -1837,7 +1853,8 @@ Returns whether this object is negative infinity.
 
 **Returns:**
 
-* True if this object is negative infinity; otherwise, false.
+* <code>true</code> if this object is negative infinity; otherwise, <code>
+ false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -1845,7 +1862,8 @@ Returns whether this object is positive infinity.
 
 **Returns:**
 
-* True if this object is positive infinity; otherwise, false.
+* <code>true</code> if this object is positive infinity; otherwise, <code>
+ false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -1853,7 +1871,8 @@ Gets a value indicating whether this object is a quiet not-a-number value.
 
 **Returns:**
 
-* True if this object is a quiet not-a-number value; otherwise, false.
+* <code>true</code> if this object is a quiet not-a-number value;
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -1862,8 +1881,8 @@ Gets a value indicating whether this object is a signaling not-a-number
 
 **Returns:**
 
-* True if this object is a signaling not-a-number value; otherwise,
- false.
+* <code>true</code> if this object is a signaling not-a-number value;
+ otherwise, <code>false</code>.
 
 ### Log
     public EDecimal Log​(EContext ctx)
@@ -1873,7 +1892,7 @@ Finds the natural logarithm of this object, that is, the power (exponent)
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1894,7 +1913,7 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1911,7 +1930,7 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>places</code> - Not documented yet.
+* <code>places</code> - The parameter <code>places</code> is not documented yet.
 
 **Returns:**
 
@@ -1925,9 +1944,9 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>places</code> - Not documented yet.
+* <code>places</code> - The parameter <code>places</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1940,7 +1959,7 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>bigPlaces</code> - Not documented yet.
+* <code>bigPlaces</code> - The parameter <code>bigPlaces</code> is not documented yet.
 
 **Returns:**
 
@@ -1954,9 +1973,9 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>bigPlaces</code> - Not documented yet.
+* <code>bigPlaces</code> - The parameter <code>bigPlaces</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1969,7 +1988,7 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>places</code> - Not documented yet.
+* <code>places</code> - The parameter <code>places</code> is not documented yet.
 
 **Returns:**
 
@@ -1983,9 +2002,9 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>places</code> - Not documented yet.
+* <code>places</code> - The parameter <code>places</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -1998,7 +2017,7 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>bigPlaces</code> - Not documented yet.
+* <code>bigPlaces</code> - The parameter <code>bigPlaces</code> is not documented yet.
 
 **Returns:**
 
@@ -2012,9 +2031,9 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Parameters:**
 
-* <code>bigPlaces</code> - Not documented yet.
+* <code>bigPlaces</code> - The parameter <code>bigPlaces</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2027,7 +2046,7 @@ Multiplies two decimal numbers. The resulting exponent will be the sum of
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -2042,9 +2061,9 @@ Multiplies two decimal numbers. The resulting scale will be the sum of the
 
 **Parameters:**
 
-* <code>op</code> - Not documented yet.
+* <code>op</code> - The parameter <code>op</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2056,9 +2075,10 @@ Multiplies by one decimal number, and then adds another decimal number.
 
 **Parameters:**
 
-* <code>multiplicand</code> - Not documented yet.
+* <code>multiplicand</code> - The parameter <code>multiplicand</code> is not documented
+ yet.
 
-* <code>augend</code> - Not documented yet.
+* <code>augend</code> - The parameter <code>augend</code> is not documented yet.
 
 **Returns:**
 
@@ -2070,11 +2090,11 @@ Multiplies by one value, and then adds another value.
 
 **Parameters:**
 
-* <code>op</code> - Not documented yet.
+* <code>op</code> - The parameter <code>op</code> is not documented yet.
 
-* <code>augend</code> - Not documented yet.
+* <code>augend</code> - The parameter <code>augend</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2086,11 +2106,11 @@ Multiplies by one value, and then subtracts another value.
 
 **Parameters:**
 
-* <code>op</code> - Not documented yet.
+* <code>op</code> - The parameter <code>op</code> is not documented yet.
 
-* <code>subtrahend</code> - Not documented yet.
+* <code>subtrahend</code> - The parameter <code>subtrahend</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet. (3).
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2098,8 +2118,8 @@ Multiplies by one value, and then subtracts another value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>op</code> or <code>subtrahend</code>
- is null.
+* <code>NullPointerException</code> - The parameter <code>op</code> or <code>
+ subtrahend</code> is null.
 
 ### Negate
     public EDecimal Negate()
@@ -2116,7 +2136,7 @@ Returns a decimal number with the same value as this object but with the
 
 **Parameters:**
 
-* <code>context</code> - Not documented yet.
+* <code>context</code> - The parameter <code>context</code> is not documented yet.
 
 **Returns:**
 
@@ -2130,7 +2150,7 @@ Finds the largest value that's smaller than the given value.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2146,7 +2166,7 @@ Finds the smallest value that's greater than the given value.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2163,9 +2183,9 @@ Finds the next value that is closer to the other object's value than this
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2179,7 +2199,7 @@ Rounds this object's value to a given precision, using the given rounding
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2193,9 +2213,9 @@ Raises this object's value to the given exponent.
 
 **Parameters:**
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2207,9 +2227,10 @@ Raises this object's value to the given exponent.
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2221,7 +2242,8 @@ Raises this object's value to the given exponent.
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -2236,7 +2258,7 @@ Finds the number of digits in this number's mantissa (significand). Returns
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### Quantize
     public EDecimal Quantize​(EInteger desiredExponent, EContext ctx)
@@ -2251,19 +2273,20 @@ Returns a decimal number with the same value but a new exponent. <p>Note
  number has a fixed number of digits after the decimal point. The
  following code example returns a fixed-point number with up to 20
  digits before and exactly 5 digits after the decimal point:</p>
- <pre>  // After performing arithmetic operations, adjust  // the
- number to 5  // digits after the decimal point number =
- number.Quantize(EInteger.FromInt32(-5),  // five digits after the
- decimal point EContext.ForPrecision(25)  // 25-digit precision);
- </pre> <p>A fixed-point decimal arithmetic in which no digits come
- after the decimal point (a desired exponent of 0) is considered an
- "integer arithmetic".</p>
+ <pre>  // After performing arithmetic operations, adjust  // the number
+ to 5  // digits after the decimal point number = number.Quantize(
+ EInteger.FromInt32(-5),  // five digits after the decimal point
+ EContext.ForPrecision(25)  // 25-digit precision); </pre> <p>A
+ fixed-point decimal arithmetic in which no digits come after the
+ decimal point (a desired exponent of 0) is considered an "integer
+ arithmetic".</p>
 
 **Parameters:**
 
-* <code>desiredExponent</code> - Not documented yet.
+* <code>desiredExponent</code> - The parameter <code>desiredExponent</code> is not
+ documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2280,9 +2303,10 @@ Returns a decimal number with the same value as this one but a new exponent.
 
 **Parameters:**
 
-* <code>desiredExponentInt</code> - Not documented yet.
+* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
+ documented yet.
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -2301,19 +2325,18 @@ Returns a decimal number with the same value but a new exponent. <p>Note
  number has a fixed number of digits after the decimal point. The
  following code example returns a fixed-point number with up to 20
  digits before and exactly 5 digits after the decimal point:</p>
- <pre>  // After performing arithmetic operations, adjust  // the
- number to 5 digits after the decimal point number =
- number.Quantize(-5,  // five digits after the decimal point
- EContext.ForPrecision(25)  // 25-digit precision); </pre> <p>A
- fixed-point decimal arithmetic in which no digits come after the
- decimal point (a desired exponent of 0) is considered an "integer
- arithmetic".</p>
+ <pre>  // After performing arithmetic operations, adjust  // the number
+ to 5 digits after the decimal point number = number.Quantize(-5, //
+ five digits after the decimal point EContext.ForPrecision(25)  // * 25-digit precision); </pre> <p>A fixed-point decimal arithmetic in
+ which no digits come after the decimal point (a desired exponent of
+ 0) is considered an "integer arithmetic".</p>
 
 **Parameters:**
 
-* <code>desiredExponentInt</code> - Not documented yet.
+* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
+ documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2336,9 +2359,9 @@ Returns a decimal number with the same value as this object but with the
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2352,7 +2375,7 @@ Removes trailing zeros from this object's mantissa (significand). For
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2370,9 +2393,9 @@ Finds the remainder that results when dividing two arbitrary-precision
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2385,7 +2408,7 @@ Calculates the remainder of a number by the formula <code>"this" - (("this" /
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
 **Returns:**
 
@@ -2398,9 +2421,9 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2426,9 +2449,9 @@ Finds the distance to the closest multiple of the given divisor, based on
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2441,9 +2464,9 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Parameters:**
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2456,7 +2479,7 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Parameters:**
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
 **Returns:**
 
@@ -2470,9 +2493,9 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Parameters:**
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -2485,7 +2508,8 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
 **Returns:**
 
@@ -2499,9 +2523,10 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2514,9 +2539,10 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -2530,9 +2556,9 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Parameters:**
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2546,9 +2572,10 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2562,9 +2589,10 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Parameters:**
 
-* <code>exponentSmall</code> - Not documented yet.
+* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
+ yet.
 
-* <code>rounding</code> - Not documented yet.
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
 
 **Returns:**
 
@@ -2578,7 +2606,7 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2598,7 +2626,7 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2616,7 +2644,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2635,7 +2663,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2653,7 +2681,7 @@ Rounds this object's value to a given precision, using the given rounding
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2667,7 +2695,7 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
 
-* <code>places</code> - Not documented yet.
+* <code>places</code> - The parameter <code>places</code> is not documented yet.
 
 **Returns:**
 
@@ -2679,9 +2707,9 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
 
-* <code>places</code> - Not documented yet.
+* <code>places</code> - The parameter <code>places</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2693,7 +2721,7 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
 
-* <code>bigPlaces</code> - Not documented yet.
+* <code>bigPlaces</code> - The parameter <code>bigPlaces</code> is not documented yet.
 
 **Returns:**
 
@@ -2705,9 +2733,9 @@ Returns a number similar to this number but with its scale adjusted.
 
 **Parameters:**
 
-* <code>bigPlaces</code> - Not documented yet.
+* <code>bigPlaces</code> - The parameter <code>bigPlaces</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2719,7 +2747,7 @@ Finds the square root of this object's value.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2736,7 +2764,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2753,7 +2781,7 @@ Subtracts an arbitrary-precision decimal number from this instance and
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
 **Returns:**
 
@@ -2765,9 +2793,9 @@ Subtracts an arbitrary-precision decimal number from this instance.
 
 **Parameters:**
 
-* <code>otherValue</code> - Not documented yet.
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
@@ -2803,7 +2831,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -2817,7 +2845,7 @@ Deprecated.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -2831,7 +2859,7 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 **Throws:**
 
@@ -2845,7 +2873,7 @@ Same as toString(), except that when an exponent is used it will be a
 
 **Returns:**
 
-* A string object.
+* A text string.
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat()
@@ -2854,7 +2882,7 @@ Deprecated.
 
 **Returns:**
 
-* An EFloat object.
+* An arbitrary-precision binary floating-point number.
 
 ### ToEFloat
     public EFloat ToEFloat()
@@ -2865,7 +2893,7 @@ Creates a binary floating-point number from this object's value. Note that
 
 **Returns:**
 
-* An EFloat object.
+* An arbitrary-precision binary floating-point number.
 
 ### ToPlainString
     public String ToPlainString()
@@ -2873,7 +2901,7 @@ Converts this value to a string, but without using exponential notation.
 
 **Returns:**
 
-* A string object.
+* A text string.
 
 ### ToSingle
     public float ToSingle()
@@ -2903,7 +2931,7 @@ Converts this value to a string. Returns a value compatible with this
 
 **Returns:**
 
-* A string object.
+* A text string.
 
 ### Ulp
     public EDecimal Ulp()
@@ -2924,7 +2952,7 @@ Creates a binary floating-point number from this object's value. Note that
 
 **Parameters:**
 
-* <code>ec</code> - Not documented yet.
+* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
 
 **Returns:**
 
@@ -2937,7 +2965,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 **Throws:**
 
@@ -2952,7 +2980,7 @@ Truncates this number's value to an integer and returns the
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 ### ToByteIfExact
     public byte ToByteIfExact()
@@ -2961,7 +2989,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A Byte object.
+* A byte (from 0 to 255).
 
 **Throws:**
 
@@ -2974,7 +3002,7 @@ Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
 
 **Parameters:**
 
-* <code>inputByte</code> - Not documented yet.
+* <code>inputByte</code> - The parameter <code>inputByte</code> is not documented yet.
 
 **Returns:**
 
@@ -3025,7 +3053,7 @@ Converts a 16-bit signed integer to an arbitrary-precision decimal number.
 
 **Parameters:**
 
-* <code>inputInt16</code> - Not documented yet.
+* <code>inputInt16</code> - The parameter <code>inputInt16</code> is not documented yet.
 
 **Returns:**
 
