@@ -16,7 +16,7 @@ at: http://peteroupc.github.io/
      * threads. Multiple instances of this object with the same properties
      * are interchangeable, so they should not be compared using the "=="
      * operator (which might only check if each side of the operator is the
-     * same instance).</p>
+     * same instance). </p>
      */
   public final class ERational implements Comparable<ERational> {
     private static final int MaxSafeInt = 214748363;
@@ -119,9 +119,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
-     * @param numerator An EInteger object.
-     * @param denominator An EInteger object.
+     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
+     * class.
+     * @param numerator Not documented yet.
+     * @param denominator Not documented yet.
+     * @throws IllegalArgumentException The denominator is zero.
      * @deprecated Use the ERational.Create method instead. This constructor will be private or
 * unavailable in version 1.0.
  */
@@ -131,28 +133,38 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Gets this object's denominator.
+     * @return This object's denominator.
      */
     public final EInteger getDenominator() {
         return this.denominator;
       }
 
     /**
-     *
+     * Gets a value indicating whether this object is finite (not infinity or NaN).
+     * @return <code>true</code> if this object is finite (not infinity or NaN);
+     * otherwise, <code>false</code>.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
       }
 
     /**
-     *
+     * Gets a value indicating whether this object's value is negative (including
+     * negative zero).
+     * @return <code>true</code> if this object's value is negative (including negative
+     * zero); otherwise, <code>false</code>. {@code true} if this object's value
+     * is negative; otherwise, {@code false} .
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
       }
 
     /**
-     *
+     * Gets a value indicating whether this object's value equals 0.
+     * @return <code>true</code> if this object's value equals 0; otherwise,
+     * <code>false</code>. {@code true} if this object's value equals 0;
+     * otherwise, . {@code false} .
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -160,7 +172,10 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     *
+     * Gets this object's numerator.
+     * @return This object's numerator. If this object is a not-a-number value,
+     * returns the diagnostic information (which will be negative if this
+     * object is negative).
      */
     public final EInteger getNumerator() {
         return this.isNegative() ? ((this.unsignedNumerator).Negate()) :
@@ -168,7 +183,8 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     *
+     * Gets the sign of this rational number.
+     * @return The sign of this rational number.
      */
     public final int signum() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -177,17 +193,20 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     *
+     * Gets this object's numerator with the sign removed.
+     * @return This object's numerator. If this object is a not-a-number value,
+     * returns the diagnostic information.
      */
     public final EInteger getUnsignedNumerator() {
         return this.unsignedNumerator;
       }
 
     /**
-     *
+     * Creates a rational number with the given numerator and denominator.
      * @param numeratorSmall Not documented yet.
      * @param denominatorSmall Not documented yet.
      * @return An ERational object.
+     * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
   int numeratorSmall,
@@ -196,10 +215,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Creates a rational number with the given numerator and denominator.
      * @param numerator Not documented yet.
      * @param denominator Not documented yet.
      * @return An ERational object.
+     * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
   EInteger numerator,
@@ -210,21 +230,23 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Creates a not-a-number arbitrary-precision rational number.
      * @param diag Not documented yet.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
     public static ERational CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false);
     }
 
     /**
-     *
+     * Creates a not-a-number arbitrary-precision rational number.
      * @param diag Not documented yet.
      * @param signaling Not documented yet.
      * @param negative Not documented yet. (3).
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
+     * @throws NullPointerException The parameter {@code diag} is null.
      */
     public static ERational CreateNaN(
   EInteger diag,
@@ -253,18 +275,21 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts a 64-bit floating-point number to a rational number. This method
+     * computes the exact value of the floating point number, not an
+     * approximation, as is often the case by converting the number to a
+     * string.
      * @param flt Not documented yet.
-     * @return An ERational object.
+     * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromDouble(double flt) {
       return FromEFloat(EFloat.FromDouble(flt));
     }
 
     /**
-     *
+     * Converts an arbitrary-precision decimal number to a rational number.
      * @param ef Not documented yet.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number.
      * @deprecated Renamed to FromEDecimal.
  */
 @Deprecated
@@ -273,9 +298,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts an arbitrary-precision binary float to a rational number.
      * @param ef Not documented yet.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number.
      * @deprecated Renamed to FromEFloat.
  */
 @Deprecated
@@ -284,10 +309,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts an arbitrary-precision decimal number to a rational number.
      * @param ef Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return An arbitrary-precision rational number.
+     * @throws NullPointerException The parameter {@code ef} is null.
      */
     public static ERational FromEDecimal(EDecimal ef) {
       if (ef == null) {
@@ -333,10 +358,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts an arbitrary-precision binary float to a rational number.
      * @param ef Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return An arbitrary-precision rational number.
+     * @throws NullPointerException The parameter {@code ef} is null.
      */
     public static ERational FromEFloat(EFloat ef) {
       if (ef == null) {
@@ -381,44 +406,64 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts an arbitrary-precision integer to a rational number.
      * @param bigint Not documented yet.
-     * @return An ERational object.
+     * @return The exact value of the integer as a rational number.
      */
     public static ERational FromEInteger(EInteger bigint) {
       return ERational.Create(bigint, EInteger.FromInt32(1));
     }
 
     /**
-     *
+     * Converts a 32-bit binary floating-point number to a rational number. This
+     * method computes the exact value of the floating point number, not an
+     * approximation, as is often the case by converting the number to a
+     * string.
      * @param flt Not documented yet.
-     * @return An ERational object.
+     * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromSingle(float flt) {
       return FromEFloat(EFloat.FromSingle(flt));
     }
 
     /**
-     *
+     * Creates a rational number from a text string that represents a number. See
+     * <code>FromString(string, int, int)</code> for more information.
      * @param str Not documented yet.
-     * @return An ERational object.
+     * @return An arbitrary-precision rational number with the same value as the
+     * given string.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * formatted number string.
      */
     public static ERational FromString(String str) {
       return FromString(str, 0, str == null ? 0 : str.length());
     }
 
     /**
-     *
+     * <p>Creates a rational number from a text string that represents a
+     * number.</p> <p>The format of the string generally consists of:</p>
+     * <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
+     * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
+     * the form of one or more digits.</li> <li>Optionally, "/" followed by
+     * the denominator in the form of one or more digits. If a denominator
+     * is not given, it's equal to 1.</li></ul> <p>The string can also be
+     * "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+     * followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+     * followed by any number of digits, all in any combination of upper and
+     * lower case.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular, the
+     * digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
+     * is not allowed to contain white space characters, including
+     * spaces.</p>
      * @param str Not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     * greater than "str"'s length, or "str"'s length minus "offset" is less
-     * than "length".
+     * @return An arbitrary-precision rational number.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * formatted number string.
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static ERational FromString(
       String str,
@@ -687,9 +732,19 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Compares the absolute values of this object and another object, imposing a
+     * total ordering on all possible values (ignoring their signs). In this
+     * method: <ul> <li>For objects with the same value, the one with the
+     * higher denominator has a greater "absolute value".</li> <li>Negative
+     * zero and positive zero are considered equal.</li> <li>Quiet NaN has a
+     * higher "absolute value" than signaling NaN. If both objects are quiet
+     * NaN or both are signaling NaN, the one with the higher diagnostic
+     * information has a greater "absolute value".</li> <li>NaN has a higher
+     * "absolute value" than infinity.</li> <li>Infinity has a higher
+     * "absolute value" than any finite number.</li></ul>
      * @param other Not documented yet.
-     * @return A 32-bit signed integer.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
      */
     public int CompareToTotalMagnitude(ERational other) {
       if (other == null) {
@@ -735,9 +790,20 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Compares the values of this object and another object, imposing a total
+     * ordering on all possible values. In this method: <ul> <li>For objects
+     * with the same value, the one with the higher denominator has a
+     * greater "absolute value".</li> <li>Negative zero is less than
+     * positive zero.</li> <li>Quiet NaN has a higher "absolute value" than
+     * signaling NaN. If both objects are quiet NaN or both are signaling
+     * NaN, the one with the higher diagnostic information has a greater
+     * "absolute value".</li> <li>NaN has a higher "absolute value" than
+     * infinity.</li> <li>Infinity has a higher "absolute value" than any
+     * finite number.</li> <li>Negative numbers are less than positive
+     * numbers.</li></ul>
      * @param other Not documented yet.
-     * @return A 32-bit signed integer.
+     * @return The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater.
      */
     public int CompareToTotal(ERational other) {
       if (other == null) {
@@ -788,7 +854,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Returns the absolute value of this rational number, that is, a number with
+     * the same value as this one but as a nonnegative number.
      * @return An ERational object.
      */
     public ERational Abs() {
@@ -803,10 +870,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Adds two rational numbers.
      * @param otherValue Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return The sum of the two numbers. Returns not-a-number (NaN) if either
+     * operand is NaN.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Add(ERational otherValue) {
       if (otherValue == null) {
@@ -842,9 +910,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Compares an arbitrary-precision rational number with this instance.
      * @param other Not documented yet.
-     * @return A 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
+     * other.isFinite().
      */
     public int compareTo(ERational other) {
       if (other == null) {
@@ -905,9 +976,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Compares an arbitrary-precision binary float with this instance.
      * @param other Not documented yet.
-     * @return A 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
+     * other.isFinite().
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
@@ -1017,9 +1091,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Compares an arbitrary-precision decimal number with this instance.
      * @param other Not documented yet.
-     * @return A 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
+     * other.isFinite().
      */
     public int CompareToDecimal(EDecimal other) {
       if (other == null) {
@@ -1129,10 +1206,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Returns a number with the same value as this one, but copying the sign
+     * (positive or negative) of another number.
      * @param other Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return An arbitrary-precision rational number.
+     * @throws NullPointerException The parameter {@code other} is null.
      */
     public ERational CopySign(ERational other) {
       if (other == null) {
@@ -1146,10 +1224,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Divides this instance by the value of an arbitrary-precision rational number
+     * object.
      * @param otherValue Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return The quotient of the two objects.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Divide(ERational otherValue) {
       if (otherValue == null) {
@@ -1191,9 +1270,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Determines whether this object's numerator, denominator, and properties are
+     * equal to those of another object and that other object is an
+     * arbitrary-precision rational number. Not-a-number values are
+     * considered equal if the rest of their properties are equal.
      * @param obj Not documented yet.
-     * @return A Boolean object.
+     * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1207,16 +1289,19 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Determines whether this object's numerator, denominator, and properties are
+     * equal to those of another object. Not-a-number values are considered
+     * equal if the rest of their properties are equal.
      * @param other Not documented yet.
-     * @return A Boolean object.
+     * @return Either {@code true} or {@code false}.
      */
     public boolean equals(ERational other) {
       return this.equals((Object)other);
     }
 
     /**
-     *
+     * Returns the hash code for this instance. No application or process IDs are
+     * used in the hash code calculation.
      * @return A 32-bit signed integer.
      */
     @Override public int hashCode() {
@@ -1234,24 +1319,24 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
-     * @return A Boolean object.
+     * Gets a value indicating whether this object's value is infinity.
+     * @return True if this object's value is infinity; otherwise, false.
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
     }
 
     /**
-     *
-     * @return A Boolean object.
+     * Returns whether this object is a not-a-number value.
+     * @return True if this object is a not-a-number value; otherwise, false.
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
     }
 
     /**
-     *
-     * @return A Boolean object.
+     * Returns whether this object is negative infinity.
+     * @return True if this object is negative infinity; otherwise, false.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1260,8 +1345,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
-     * @return A Boolean object.
+     * Returns whether this object is positive infinity.
+     * @return True if this object is positive infinity; otherwise, false.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1269,26 +1354,31 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
-     * @return A Boolean object.
+     * Returns whether this object is a quiet not-a-number value.
+     * @return True if this object is a quiet not-a-number value; otherwise, false.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
     }
 
     /**
-     *
-     * @return A Boolean object.
+     * Returns whether this object is a signaling not-a-number value (which causes
+     * an error if the value is passed to any arithmetic operation in this
+     * class).
+     * @return True if this object is a signaling not-a-number value (which causes
+     * an error if the value is passed to any arithmetic operation in this
+     * class); otherwise, false.
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
     }
 
     /**
-     *
+     * Multiplies this instance by the value of an arbitrary-precision rational
+     * number.
      * @param otherValue Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return The product of the two numbers.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Multiply(ERational otherValue) {
       if (otherValue == null) {
@@ -1325,7 +1415,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Returns a rational number with the same value as this one but with the sign
+     * reversed.
      * @return An ERational object.
      */
     public ERational Negate() {
@@ -1335,10 +1426,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Finds the remainder that results when this instance is divided by the value
+     * of an arbitrary-precision rational number.
      * @param otherValue Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return The remainder of the two numbers.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Remainder(ERational otherValue) {
       if (otherValue == null) {
@@ -1386,10 +1478,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Subtracts an arbitrary-precision rational number from this instance.
      * @param otherValue Not documented yet.
-     * @return An ERational object.
-     * @throws NullPointerException The parameter is null.
+     * @return The difference of the two objects.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Subtract(ERational otherValue) {
       if (otherValue == null) {
@@ -1428,7 +1520,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this value to a 64-bit floating-point number. The half-even
+     * rounding mode is used.
      * @return A 64-bit floating-point number.
      */
     public double ToDouble() {
@@ -1444,8 +1537,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this value to an arbitrary-precision integer. Any fractional part
+     * in this value will be discarded when converting to an
+     * arbitrary-precision integer.
      * @return An EInteger object.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      */
     public EInteger ToEInteger() {
       if (!this.isFinite()) {
@@ -1455,8 +1552,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this value to an arbitrary-precision integer, checking whether the
+     * value is an exact integer.
      * @return An EInteger object.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      * @deprecated Renamed to ToEIntegerIfExact.
  */
 @Deprecated
@@ -1465,8 +1565,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this value to an arbitrary-precision integer, checking whether the
+     * value is an exact integer.
      * @return An EInteger object.
+     * @throws java.lang.ArithmeticException This object's value is infinity or
+     * not-a-number (NaN).
      */
     public EInteger ToEIntegerIfExact() {
       if (!this.isFinite()) {
@@ -1486,7 +1589,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number.
      * @return An EDecimal object.
      */
     public EDecimal ToEDecimal() {
@@ -1494,9 +1597,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number and rounds the result to
+     * the given precision.
      * @param ctx Not documented yet.
-     * @return An EDecimal object.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
@@ -1518,9 +1624,14 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number, but if the result would
+     * have a nonterminating decimal expansion, rounds that result to the
+     * given precision.
      * @param ctx Not documented yet.
-     * @return An EDecimal object.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
           ctx) {
@@ -1555,7 +1666,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number.
      * @return An EDecimal object.
      * @deprecated Renamed to ToEDecimal.
  */
@@ -1565,9 +1676,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number and rounds the result to
+     * the given precision.
      * @param ctx Not documented yet.
-     * @return An EDecimal object.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -1576,9 +1690,14 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a decimal number, but if the result would
+     * have a nonterminating decimal expansion, rounds that result to the
+     * given precision.
      * @param ctx Not documented yet.
-     * @return An EDecimal object.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimalExactIfPossible.
  */
 @Deprecated
@@ -1587,7 +1706,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a binary float.
      * @return An EFloat object.
      */
     public EFloat ToEFloat() {
@@ -1595,9 +1714,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a binary float and rounds that result to
+     * the given precision.
      * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
@@ -1619,9 +1741,14 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a binary float, but if the result would
+     * have a nonterminating binary expansion, rounds that result to the
+     * given precision.
      * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {
       if (ctx == null) {
@@ -1656,7 +1783,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a binary float.
      * @return An EFloat object.
      * @deprecated Renamed to ToEFloat.
  */
@@ -1666,9 +1793,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a binary float and rounds that result to
+     * the given precision.
      * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @return The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -1677,9 +1807,14 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this rational number to a binary float, but if the result would
+     * have a nonterminating binary expansion, rounds that result to the
+     * given precision.
      * @param ctx Not documented yet.
-     * @return An EFloat object.
+     * @return The exact value of the rational number if possible; otherwise, the
+     * rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloatExactIfPossible.
  */
 @Deprecated
@@ -1688,7 +1823,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this value to a 32-bit binary floating-point number. The half-even
+     * rounding mode is used.
      * @return A 32-bit floating-point number.
      */
     public float ToSingle() {
@@ -1698,7 +1834,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Converts this object to a text string.
      * @return A string object.
      */
     @Override public String toString() {
@@ -1746,8 +1882,11 @@ at: http://peteroupc.github.io/
         // Begin integer conversions
 
     /**
-     *
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) after truncating to an integer.
      * @return A Byte object.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is less than 0 or greater than 255.
      */
 public byte ToByteChecked() {
  if (!this.isFinite()) {
@@ -1757,7 +1896,9 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
 }
 
     /**
-     *
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a byte (from 0
+     * to 255).
      * @return A Byte object.
      */
 public byte ToByteUnchecked() {
@@ -1765,8 +1906,11 @@ public byte ToByteUnchecked() {
 }
 
     /**
-     *
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) without rounding to a different numerical value.
      * @return A Byte object.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than 0 or greater than 255.
      */
 public byte ToByteIfExact() {
  if (!this.isFinite()) {
@@ -1776,9 +1920,9 @@ public byte ToByteIfExact() {
 }
 
     /**
-     *
+     * Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
      * @param inputByte Not documented yet.
-     * @return An ERational object.
+     * @return This number's value as an arbitrary-precision rational number.
      */
 public static ERational FromByte(byte inputByte) {
  int val = ((int)inputByte) & 0xff;
@@ -1786,8 +1930,11 @@ public static ERational FromByte(byte inputByte) {
 }
 
     /**
-     *
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer after truncating to an integer.
      * @return A 16-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is less than -32768 or greater than 32767.
      */
 public short ToInt16Checked() {
  if (!this.isFinite()) {
@@ -1797,7 +1944,9 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
 }
 
     /**
-     *
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 16-bit
+     * signed integer.
      * @return A 16-bit signed integer.
      */
 public short ToInt16Unchecked() {
@@ -1805,8 +1954,12 @@ public short ToInt16Unchecked() {
 }
 
     /**
-     *
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer without rounding to a different numerical
+     * value.
      * @return A 16-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
 public short ToInt16IfExact() {
  if (!this.isFinite()) {
@@ -1817,9 +1970,9 @@ public short ToInt16IfExact() {
 }
 
     /**
-     *
+     * Converts a 16-bit signed integer to an arbitrary-precision rational number.
      * @param inputInt16 Not documented yet.
-     * @return An ERational object.
+     * @return This number's value as an arbitrary-precision rational number.
      */
 public static ERational FromInt16(short inputInt16) {
  int val = (int)inputInt16;
@@ -1827,8 +1980,12 @@ public static ERational FromInt16(short inputInt16) {
 }
 
     /**
-     *
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer after truncating to an integer.
      * @return A 32-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is less than -2147483648 or greater than
+     * 2147483647.
      */
 public int ToInt32Checked() {
  if (!this.isFinite()) {
@@ -1838,7 +1995,9 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
 }
 
     /**
-     *
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 32-bit
+     * signed integer.
      * @return A 32-bit signed integer.
      */
 public int ToInt32Unchecked() {
@@ -1846,8 +2005,13 @@ public int ToInt32Unchecked() {
 }
 
     /**
-     *
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer without rounding to a different numerical
+     * value.
      * @return A 32-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -2147483648 or greater than
+     * 2147483647.
      */
 public int ToInt32IfExact() {
  if (!this.isFinite()) {
@@ -1857,17 +2021,21 @@ public int ToInt32IfExact() {
 }
 
     /**
-     *
+     * Converts a 32-bit signed integer to an arbitrary-precision rational number.
      * @param inputInt32 Not documented yet.
-     * @return An ERational object.
+     * @return This number's value as an arbitrary-precision rational number.
      */
 public static ERational FromInt32(int inputInt32) {
  return FromEInteger(EInteger.FromInt32(inputInt32));
 }
 
     /**
-     *
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer after truncating to an integer.
      * @return A 64-bit signed integer.
+     * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
+     * the truncated integer is less than -9223372036854775808 or greater
+     * than 9223372036854775807.
      */
 public long ToInt64Checked() {
  if (!this.isFinite()) {
@@ -1877,7 +2045,9 @@ return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
 }
 
     /**
-     *
+     * Truncates this number's value to an integer and returns the
+     * least-significant bits of its two's-complement form as a 64-bit
+     * signed integer.
      * @return A 64-bit signed integer.
      */
 public long ToInt64Unchecked() {
@@ -1885,8 +2055,13 @@ public long ToInt64Unchecked() {
 }
 
     /**
-     *
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer without rounding to a different numerical
+     * value.
      * @return A 64-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -9223372036854775808 or greater
+     * than 9223372036854775807.
      */
 public long ToInt64IfExact() {
  if (!this.isFinite()) {
@@ -1896,9 +2071,9 @@ public long ToInt64IfExact() {
 }
 
     /**
-     *
+     * Converts a 64-bit signed integer to an arbitrary-precision rational number.
      * @param inputInt64 Not documented yet.
-     * @return An ERational object.
+     * @return This number's value as an arbitrary-precision rational number.
      */
 public static ERational FromInt64(long inputInt64) {
  return FromEInteger(EInteger.FromInt64(inputInt64));
