@@ -313,7 +313,7 @@ Gets a value indicating whether this object's value is negative (including
 
 * <code>true</code> if this object's value is negative (including negative
  zero); otherwise, <code>false</code>. <code>true</code> if this object's value
- is negative; otherwise, <code>false</code> .
+ is negative; otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -321,9 +321,9 @@ Gets a value indicating whether this object's value equals 0.
 
 **Returns:**
 
-* <code>true</code> if this object's value equals 0; otherwise,
- <code>false</code>. <code>true</code> if this object's value equals 0;
- otherwise, . <code>false</code> .
+* <code>true</code> if this object's value equals 0; otherwise, <code>
+ false</code>. <code>true</code> if this object's value equals 0; otherwise, .
+ <code>false</code>.
 
 ### getNumerator
     public final EInteger getNumerator()
@@ -404,7 +404,7 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
+* <code>IllegalArgumentException</code> - The parameter "diag" is less than 0.
 
 ### CreateNaN
     public static ERational CreateNaN​(EInteger diag, boolean signaling, boolean negative)
@@ -424,9 +424,9 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
+* <code>IllegalArgumentException</code> - The parameter "diag" is less than 0.
 
-* <code>NullPointerException</code> - The parameter <code>diag</code> is null.
+* <code>NullPointerException</code> - The parameter "diag" is null.
 
 ### FromDouble
     public static ERational FromDouble​(double flt)
@@ -441,7 +441,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 **Returns:**
 
-* A rational number with the same value as <code>flt</code>.
+* A rational number with the same value as "flt".
 
 ### FromExtendedDecimal
     @Deprecated public static ERational FromExtendedDecimal​(EDecimal ef)
@@ -483,7 +483,7 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>ef</code> is null.
+* <code>NullPointerException</code> - The parameter "ef" is null.
 
 ### FromEFloat
     public static ERational FromEFloat​(EFloat ef)
@@ -499,7 +499,7 @@ Converts an arbitrary-precision binary float to a rational number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>ef</code> is null.
+* <code>NullPointerException</code> - The parameter "ef" is null.
 
 ### FromEInteger
     public static ERational FromEInteger​(EInteger bigint)
@@ -526,12 +526,12 @@ Converts a 32-bit binary floating-point number to a rational number. This
 
 **Returns:**
 
-* A rational number with the same value as <code>flt</code>.
+* A rational number with the same value as "flt".
 
 ### FromString
     public static ERational FromString​(String str)
 Creates a rational number from a text string that represents a number. See
- <code>FromString(String, int, int)</code> for more information.
+ <code>FromString(string, int, int)</code> for more information.
 
 **Parameters:**
 
@@ -544,7 +544,7 @@ Creates a rational number from a text string that represents a number. See
 
 **Throws:**
 
-* <code>NumberFormatException</code> - The parameter <code>str</code> is not a correctly
+* <code>NumberFormatException</code> - The parameter "str" is not a correctly
  formatted number string.
 
 ### FromString
@@ -581,10 +581,10 @@ Creates a rational number from a text string that represents a number. See
 
 **Throws:**
 
-* <code>NumberFormatException</code> - The parameter <code>str</code> is not a correctly
+* <code>NumberFormatException</code> - The parameter "str" is not a correctly
  formatted number string.
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>NullPointerException</code> - The parameter "str" is null.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(ERational other)
@@ -655,8 +655,7 @@ Adds two rational numbers.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
- null.
+* <code>NullPointerException</code> - The parameter "otherValue" is null.
 
 ### compareTo
     public int compareTo​(ERational other)
@@ -731,7 +730,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>other</code> is null.
+* <code>NullPointerException</code> - The parameter "other" is null.
 
 ### Divide
     public ERational Divide​(ERational otherValue)
@@ -748,8 +747,7 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
- null.
+* <code>NullPointerException</code> - The parameter "otherValue" is null.
 
 ### equals
     public boolean equals​(Object obj)
@@ -869,8 +867,7 @@ Multiplies this instance by the value of an arbitrary-precision rational
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
- null.
+* <code>NullPointerException</code> - The parameter "otherValue" is null.
 
 ### Negate
     public ERational Negate()
@@ -896,8 +893,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
- null.
+* <code>NullPointerException</code> - The parameter "otherValue" is null.
 
 ### Subtract
     public ERational Subtract​(ERational otherValue)
@@ -913,8 +909,7 @@ Subtracts an arbitrary-precision rational number from this instance.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
- null.
+* <code>NullPointerException</code> - The parameter "otherValue" is null.
 
 ### ToDouble
     public double ToDouble()

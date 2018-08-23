@@ -287,8 +287,8 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return <code>true</code> if this object is finite (not infinity or NaN);
-     * otherwise, <code>false</code>.
+     * @return {@code true} if this object is finite (not infinity or NaN);
+     * otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -298,8 +298,8 @@ private static final FastIntegerFixed FastIntZero = new
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return <code>true</code> if this object is negative, including negative zero;
-     * otherwise, <code>false</code>.
+     * @return {@code true} if this object is negative, including negative zero;
+     * otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -307,9 +307,9 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return <code>true</code> if this object's value equals 0; otherwise,
-     * <code>false</code>. {@code true} if this object's value equals 0;
-     * otherwise, . {@code false} .
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * false}. {@code true} if this object's value equals 0; otherwise, .
+     * {@code false}.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -379,8 +379,8 @@ private static final FastIntegerFixed FastIntZero = new
      * @param mantissa The parameter {@code mantissa} is not documented yet.
      * @param exponent The parameter {@code exponent} is not documented yet.
      * @return An EDecimal object.
-     * @throws java.lang.NullPointerException The parameter {@code mantissa} or
-     * {@code exponent} is null.
+     * @throws java.lang.NullPointerException The parameter "mantissa" or "exponent"
+     * is null.
      */
     public static EDecimal Create(
       EInteger mantissa,
@@ -416,8 +416,8 @@ private static final FastIntegerFixed FastIntZero = new
      * @param negative The parameter {@code negative} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EDecimal object.
-     * @throws java.lang.NullPointerException The parameter {@code diag} is null or
-     * is less than 0.
+     * @throws java.lang.NullPointerException The parameter "diag" is null or is less
+     * than 0.
      */
     public static EDecimal CreateNaN(
       EInteger diag,
@@ -480,7 +480,7 @@ private static final FastIntegerFixed FastIntZero = new
      * FromString instead in most cases (for example:
      * <code>ExtendedDecimal.FromString("0.1")</code>).
      * @param dbl The parameter {@code dbl} is not documented yet.
-     * @return A decimal number with the same value as {@code dbl}.
+     * @return A decimal number with the same value as "dbl".
      */
     public static EDecimal FromDouble(double dbl) {
       int[] value = Extras.DoubleToIntegers(dbl);
@@ -571,7 +571,7 @@ private static final FastIntegerFixed FastIntZero = new
      * number.
      * @param bigfloat The parameter {@code bigfloat} is not documented yet.
      * @return An arbitrary-precision decimal number.
-     * @throws java.lang.NullPointerException The parameter {@code bigfloat} is null.
+     * @throws java.lang.NullPointerException The parameter "bigfloat" is null.
      */
     public static EDecimal FromEFloat(EFloat bigfloat) {
       if (bigfloat == null) {
@@ -695,7 +695,7 @@ private static final FastIntegerFixed FastIntZero = new
      * FromString instead in most cases (for example:
      * <code>ExtendedDecimal.FromString("0.1")</code>).
      * @param flt The parameter {@code flt} is not documented yet.
-     * @return A decimal number with the same value as {@code flt}.
+     * @return A decimal number with the same value as "flt".
      */
     public static EDecimal FromSingle(float flt) {
       int value = Float.floatToRawIntBits(flt);
@@ -759,11 +759,11 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(String, int, int, EContext)</code> for more information.
+     * <code>FromString(string, int, int, EContext)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
      * formatted number string.
      */
     public static EDecimal FromString(String str) {
@@ -772,11 +772,11 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(String, int, int, EContext)</code> for more information.
+     * <code>FromString(string, int, int, EContext)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EDecimal object.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NullPointerException The parameter "str" is null.
      */
     public static EDecimal FromString(String str, EContext ctx) {
       return FromString(str, 0, str == null ? 0 : str.length(), ctx);
@@ -784,7 +784,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(String, int, int, EContext)</code> for more information.
+     * <code>FromString(string, int, int, EContext)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
@@ -792,9 +792,9 @@ private static final FastIntegerFixed FastIntZero = new
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
      * formatted number string.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NullPointerException The parameter "str" is null.
      */
     public static EDecimal FromString(
       String str,
@@ -827,10 +827,10 @@ private static final FastIntegerFixed FastIntZero = new
      * str} (but not more than {@code str} 's length).
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EDecimal object.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
-     * less than 0 or greater than {@code str} 's length, or {@code str} 's
-     * length minus {@code offset} is less than {@code length}.
+     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
+     * or greater than "str" 's length, or "str" 's length minus "offset" is
+     * less than "length".
      */
     public static EDecimal FromString(
       String str,
@@ -1329,9 +1329,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * Finds the constant π, the circumference of a circle divided by its diameter.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
-     * or the precision is unlimited (the context's Precision property is
-     * 0).
+     * and returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public static EDecimal PI(EContext ctx) {
       return GetMathValue(ctx).Pi(ctx);
@@ -1359,7 +1358,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * (positive or negative) of another number.
      * @param other The parameter {@code other} is not documented yet.
      * @return An arbitrary-precision decimal number.
-     * @throws java.lang.NullPointerException The parameter {@code other} is null.
+     * @throws java.lang.NullPointerException The parameter "other" is null.
      */
     public EDecimal CopySign(EDecimal other) {
       if (other == null) {
@@ -1428,7 +1427,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param other The parameter {@code other} is not documented yet.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other value
-     * or if {@code other} is null, or 0 if both values are equal.
+     * or if "other" is null, or 0 if both values are equal.
      */
     public int compareTo(EDecimal other) {
       return ExtendedMathValue.compareTo(this, other);
@@ -2092,9 +2091,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Exponential of this object. If this object's value is 1, returns an
      * approximation to " e" within the given precision. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
-     * or the precision is unlimited (the context's Precision property is
-     * 0).
+     * and returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EDecimal Exp(EContext ctx) {
       return GetMathValue(ctx).Exp(this, ctx);
@@ -2185,9 +2183,9 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * a real part equal to Ln of this object's absolute value and an
      * imaginary part equal to pi, but the return value is still NaN.).
      * Signals FlagInvalid and returns not-a-number (NaN) if the parameter
-     * {@code ctx} is null or the precision is unlimited (the context's
-     * Precision property is 0). Signals no flags and returns negative
-     * infinity if this object's value is 0.
+     * "ctx" is null or the precision is unlimited (the context's Precision
+     * property is 0). Signals no flags and returns negative infinity if
+     * this object's value is 0.
      */
     public EDecimal Log(EContext ctx) {
       return GetMathValue(ctx).Ln(this, ctx);
@@ -2200,9 +2198,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
-     * or the precision is unlimited (the context's Precision property is
-     * 0).
+     * and returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EDecimal Log10(EContext ctx) {
       return GetMathValue(ctx).Log10(this, ctx);
@@ -2212,8 +2209,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * Returns a number similar to this number but with the decimal point moved to
      * the left.
      * @param places The parameter {@code places} is not documented yet.
-     * @return A number whose exponent is decreased by {@code places}, but not to
-     * more than 0.
+     * @return A number whose exponent is decreased by "places", but not to more
+     * than 0.
      */
     public EDecimal MovePointLeft(int places) {
       return this.MovePointLeft(EInteger.FromInt32(places), null);
@@ -2234,8 +2231,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * Returns a number similar to this number but with the decimal point moved to
      * the left.
      * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
-     * @return A number whose exponent is decreased by {@code bigPlaces}, but not
-     * to more than 0.
+     * @return A number whose exponent is decreased by "bigPlaces", but not to more
+     * than 0.
      */
     public EDecimal MovePointLeft(EInteger bigPlaces) {
       return this.MovePointLeft(bigPlaces, null);
@@ -2259,8 +2256,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * Returns a number similar to this number but with the decimal point moved to
      * the right.
      * @param places The parameter {@code places} is not documented yet.
-     * @return A number whose exponent is increased by {@code places}, but not to
-     * more than 0.
+     * @return A number whose exponent is increased by "places", but not to more
+     * than 0.
      */
     public EDecimal MovePointRight(int places) {
       return this.MovePointRight(EInteger.FromInt32(places), null);
@@ -2281,8 +2278,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * Returns a number similar to this number but with the decimal point moved to
      * the right.
      * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
-     * @return A number whose exponent is increased by {@code bigPlaces}, but not
-     * to more than 0.
+     * @return A number whose exponent is increased by "bigPlaces", but not to more
+     * than 0.
      */
     public EDecimal MovePointRight(EInteger bigPlaces) {
       return this.MovePointRight(bigPlaces, null);
@@ -2409,8 +2406,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param subtrahend The parameter {@code subtrahend} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The result thisValue * multiplicand - subtrahend.
-     * @throws java.lang.NullPointerException The parameter {@code op} or {@code
-     * subtrahend} is null.
+     * @throws java.lang.NullPointerException The parameter "op" or "subtrahend" is
+     * null.
      */
     public EDecimal MultiplyAndSubtract(
       EDecimal op,
@@ -2464,9 +2461,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
-     * ctx} is null, the precision is 0, or {@code ctx} has an unlimited
-     * exponent range.
+     * FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
+     * null, the precision is 0, or "ctx" has an unlimited exponent range.
      */
     public EDecimal NextMinus(EContext ctx) {
       return GetMathValue(ctx).NextMinus(this, ctx);
@@ -2477,8 +2473,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the
-     * parameter {@code ctx} is null, the precision is 0, or {@code ctx} has
-     * an unlimited exponent range.
+     * parameter "ctx" is null, the precision is 0, or "ctx" has an
+     * unlimited exponent range.
      */
     public EDecimal NextPlus(EContext ctx) {
       return GetMathValue(ctx)
@@ -2506,8 +2502,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * positive zero.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The closest value to this object's value, rounded to the specified
-     * precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if "ctx" is null or
+     * the precision and exponent range are unlimited.
      */
     public EDecimal Plus(EContext ctx) {
       return GetMathValue(ctx).Plus(this, ctx);
@@ -2990,8 +2986,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * mode and range of exponent.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The closest value to this object's value, rounded to the specified
-     * precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if "ctx" is null or
+     * the precision and exponent range are unlimited.
      */
     public EDecimal RoundToPrecision(EContext ctx) {
       return GetMathValue(ctx).RoundToPrecision(this, ctx);
@@ -3054,8 +3050,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
-     * the precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EDecimal Sqrt(EContext ctx) {
       return GetMathValue(ctx).SquareRoot(this, ctx);
@@ -3067,8 +3063,8 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
-     * the precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      * @deprecated Renamed to Sqrt.
  */
 @Deprecated
@@ -3091,8 +3087,7 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EDecimal object.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public EDecimal Subtract(
       EDecimal otherValue,

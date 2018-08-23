@@ -344,8 +344,8 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
- 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+ != 0</code> returns <code>true</code> if the Inexact flag is set.
 
 **Returns:**
 
@@ -353,8 +353,8 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
- 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+ != 0</code> returns <code>true</code> if the Inexact flag is set.
 
 ### setFlags
     public final void setFlags​(int value)
@@ -370,7 +370,7 @@ Gets a value indicating whether this context defines a minimum and maximum
  otherwise, <code>false</code>.. If false, converted exponents can have any
  exponent and operations can't cause overflow or underflow. <code>
  true</code> if this context defines a minimum and maximum exponent;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### getHasFlags
     public final boolean getHasFlags()
@@ -400,25 +400,14 @@ Gets a value indicating whether this context's Precision property is in
 * <code>true</code> if this context's Precision property is in bits, rather
  than digits; otherwise, <code>false</code>.. The default is false. <code>
  true</code> if this context's Precision property is in bits, rather than
- digits; otherwise, <code>false</code> . The default is false.
+ digits; otherwise, <code>false</code>. The default is false.
 
 ### isSimplified
     public final boolean isSimplified()
 Gets a value indicating whether to use a "simplified" arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
- zero. For further details, see
- <code>http://speleotrove.com/decimal/dax3274.html</code>
-
-**Returns:**
-
-* <code>true</code> if to use a "simplified" arithmetic; otherwise,
- <code>false</code>.. In the simplified arithmetic, infinity, not-a-number,
- and subnormal numbers are not allowed, and negative zero is treated
- the same as positive zero. For further details, see
- <code>http://speleotrove.com/decimal/dax3274.html</code> . <code>true</code>
- if a "simplified" arithmetic will be used; otherwise, <code>false</code> .
-
+ zero. For further details, see <code>http://speleotrove.com/decimal/dax3274.html</code>
 ### getPrecision
     public final EInteger getPrecision()
 Gets the maximum length of a converted number in digits, ignoring the radix
@@ -451,17 +440,14 @@ Gets the traps that are set for each flag in the context. Whenever a flag is
  Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
  will be thrown if an operation's return value is not the same as the
  exact result (FlagInexact) or if the return value's exponent is lower
- than the lowest allowed (FlagSubnormal). </p>
+ than the lowest allowed (FlagSubnormal).</p>
 
 **Returns:**
 
 * The traps that are set for each flag in the context. Whenever a flag
- is signaled, even if <code>HasFlags</code> is false, and the flag's trap is
- enabled, the operation will throw a TrapException. <para>For example,
- if Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
- will be thrown if an operation's return value is not the same as the
- exact result (FlagInexact) or if the return value's exponent is lower
- than the lowest allowed (FlagSubnormal). </para>.
+ is signaled, even if <code>HasFlags</code> is false, and the flag's trap
+ is enabled, the operation will throw a TrapException. For example, if
+ Traps equals .
 
 ### ForPrecision
     public static EContext ForPrecision​(int precision)
@@ -530,7 +516,7 @@ Determines whether a number can have the given Exponent property under this
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>exponent</code> is null.
+* <code>NullPointerException</code> - The parameter "exponent" is null.
 
 ### toString
     public String toString()
@@ -575,8 +561,7 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>exponentMin</code> is
- null.
+* <code>NullPointerException</code> - The parameter "exponentMin" is null.
 
 * <code>IllegalArgumentException</code> - "ExponentMin greater than exponentMax".
 
@@ -595,8 +580,8 @@ Copies this EContext and gives it a particular precision value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintPrecision</code>
- is null.
+* <code>NullPointerException</code> - The parameter "bigintPrecision" is
+ null.
 
 ### WithBlankFlags
     public EContext WithBlankFlags()

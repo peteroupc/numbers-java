@@ -204,7 +204,7 @@ Gets a value indicating whether this value is even.
 
 **Returns:**
 
-* <code>true</code> if this value is even; otherwise, <code>false</code>.
+* <code>true</code> if this value is even; otherwise, <code>false</code> .
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
@@ -214,7 +214,7 @@ Gets a value indicating whether this object's value is a power of two.
 
 * <code>true</code> if this object's value is a power of two; otherwise,
  <code>false</code>. <code>true</code> if this object's value is a power of two;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -222,7 +222,7 @@ Gets a value indicating whether this value is 0.
 
 **Returns:**
 
-* <code>true</code> if this value is 0; otherwise, <code>false</code>.
+* <code>true</code> if this value is 0; otherwise, <code>false</code> .
 
 ### signum
     public final int signum()
@@ -249,7 +249,7 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bytes</code> is null.
+* <code>NullPointerException</code> - The parameter "bytes" is null.
 
 ### FromInt32
     public static EInteger FromInt32​(int intValue)
@@ -293,7 +293,7 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>NullPointerException</code> - The parameter "str" is null.
 
 ### FromRadixSubstring
     public static EInteger FromRadixSubstring​(String str, int radix, int index, int endIndex)
@@ -316,7 +316,7 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>NullPointerException</code> - The parameter "str" is null.
 
 * <code>NumberFormatException</code> - The string portion is empty or in an invalid
  format.
@@ -339,10 +339,9 @@ Converts a string to an arbitrary-precision integer.
 
 **Throws:**
 
-* <code>NumberFormatException</code> - The parameter <code>str</code> is in an invalid
- format.
+* <code>NumberFormatException</code> - The parameter "str" is in an invalid format.
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>NullPointerException</code> - The parameter "str" is null.
 
 ### FromSubstring
     public static EInteger FromSubstring​(String str, int index, int endIndex)
@@ -363,11 +362,11 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
- <code>endIndex</code> is less than 0, or either is greater than the
- string's length, or <code>endIndex</code> is less than <code>index</code>.
+* <code>IllegalArgumentException</code> - The parameter "index" is less than 0,
+ "endIndex" is less than 0, or either is greater than the string's
+ length, or "endIndex" is less than "index".
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>NullPointerException</code> - The parameter "str" is null.
 
 ### Abs
     public EInteger Abs()
@@ -392,8 +391,7 @@ Adds this object and another object.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
- null.
+* <code>NullPointerException</code> - The parameter "bigintAugend" is null.
 
 ### AsInt32Checked
     @Deprecated public int AsInt32Checked()
@@ -495,8 +493,7 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
- null.
+* <code>NullPointerException</code> - The parameter "bigintDivisor" is null.
 
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 
@@ -518,7 +515,7 @@ Divides this object by another arbitrary-precision integer and returns the
 
 * <code>ArithmeticException</code> - The parameter divisor is 0.
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>NullPointerException</code> - The parameter "divisor" is null.
 
 ### equals
     public boolean equals​(Object obj)
@@ -555,8 +552,7 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintSecond</code> is
- null.
+* <code>NullPointerException</code> - The parameter "bigintSecond" is null.
 
 ### GetDigitCount
     public int GetDigitCount()
@@ -670,7 +666,7 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>NullPointerException</code> - The parameter "divisor" is null.
 
 ### ModPow
     public EInteger ModPow​(EInteger pow, EInteger mod)
@@ -689,8 +685,7 @@ Calculates the remainder when this arbitrary-precision integer raised to a
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>pow</code> or <code>
- mod</code> is null.
+* <code>NullPointerException</code> - The parameter "pow" or "mod" is null.
 
 ### Multiply
     public EInteger Multiply​(EInteger bigintMult)
@@ -707,8 +702,7 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
- null.
+* <code>NullPointerException</code> - The parameter "bigintMult" is null.
 
 ### Negate
     public EInteger Negate()
@@ -728,7 +722,7 @@ Raises an arbitrary-precision integer to a power.
 
 **Returns:**
 
-* The result. Returns 1 if <code>powerSmall</code> is 0.
+* The result. Returns 1 if "powerSmall" is 0.
 
 ### PowBigIntVar
     public EInteger PowBigIntVar​(EInteger power)
@@ -741,13 +735,13 @@ Raises an arbitrary-precision integer to a power, which is given as another
 
 **Returns:**
 
-* The result. Returns 1 if <code>power</code> is 0.
+* The result. Returns 1 if "power" is 0.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>power</code> is less than 0.
+* <code>IllegalArgumentException</code> - The parameter "power" is less than 0.
 
-* <code>NullPointerException</code> - The parameter <code>power</code> is null.
+* <code>NullPointerException</code> - The parameter "power" is null.
 
 ### Remainder
     public EInteger Remainder​(EInteger divisor)
@@ -769,7 +763,7 @@ Finds the remainder that results when this instance is divided by the value
 
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>NullPointerException</code> - The parameter "divisor" is null.
 
 ### ShiftLeft
     public EInteger ShiftLeft​(int numberBits)
@@ -831,8 +825,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
- null.
+* <code>NullPointerException</code> - The parameter "subtrahend" is null.
 
 ### ToBytes
     public byte[] ToBytes​(boolean littleEndian)

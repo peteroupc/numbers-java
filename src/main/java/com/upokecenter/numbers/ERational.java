@@ -142,8 +142,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return <code>true</code> if this object is finite (not infinity or NaN);
-     * otherwise, <code>false</code>.
+     * @return {@code true} if this object is finite (not infinity or NaN);
+     * otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
@@ -152,9 +152,9 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
-     * @return <code>true</code> if this object's value is negative (including negative
-     * zero); otherwise, <code>false</code>. {@code true} if this object's value
-     * is negative; otherwise, {@code false} .
+     * @return {@code true} if this object's value is negative (including negative
+     * zero); otherwise, {@code false}. {@code true} if this object's value
+     * is negative; otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -162,9 +162,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return <code>true</code> if this object's value equals 0; otherwise,
-     * <code>false</code>. {@code true} if this object's value equals 0;
-     * otherwise, . {@code false} .
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * false}. {@code true} if this object's value equals 0; otherwise, .
+     * {@code false}.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -235,7 +235,7 @@ at: http://peteroupc.github.io/
      * Creates a not-a-number arbitrary-precision rational number.
      * @param diag The parameter {@code diag} is not documented yet.
      * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
+     * @throws IllegalArgumentException The parameter "diag" is less than 0.
      */
     public static ERational CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false);
@@ -247,8 +247,8 @@ at: http://peteroupc.github.io/
      * @param signaling The parameter {@code signaling} is not documented yet.
      * @param negative The parameter {@code negative} is not documented yet.
      * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
-     * @throws java.lang.NullPointerException The parameter {@code diag} is null.
+     * @throws IllegalArgumentException The parameter "diag" is less than 0.
+     * @throws java.lang.NullPointerException The parameter "diag" is null.
      */
     public static ERational CreateNaN(
   EInteger diag,
@@ -282,7 +282,7 @@ at: http://peteroupc.github.io/
      * approximation, as is often the case by converting the number to a
      * string.
      * @param flt The parameter {@code flt} is not documented yet.
-     * @return A rational number with the same value as {@code flt}.
+     * @return A rational number with the same value as "flt".
      */
     public static ERational FromDouble(double flt) {
       return FromEFloat(EFloat.FromDouble(flt));
@@ -314,7 +314,7 @@ at: http://peteroupc.github.io/
      * Converts an arbitrary-precision decimal number to a rational number.
      * @param ef The parameter {@code ef} is not documented yet.
      * @return An arbitrary-precision rational number.
-     * @throws java.lang.NullPointerException The parameter {@code ef} is null.
+     * @throws java.lang.NullPointerException The parameter "ef" is null.
      */
     public static ERational FromEDecimal(EDecimal ef) {
       if (ef == null) {
@@ -363,7 +363,7 @@ at: http://peteroupc.github.io/
      * Converts an arbitrary-precision binary float to a rational number.
      * @param ef The parameter {@code ef} is not documented yet.
      * @return An arbitrary-precision rational number.
-     * @throws java.lang.NullPointerException The parameter {@code ef} is null.
+     * @throws java.lang.NullPointerException The parameter "ef" is null.
      */
     public static ERational FromEFloat(EFloat ef) {
       if (ef == null) {
@@ -422,7 +422,7 @@ at: http://peteroupc.github.io/
      * approximation, as is often the case by converting the number to a
      * string.
      * @param flt The parameter {@code flt} is not documented yet.
-     * @return A rational number with the same value as {@code flt}.
+     * @return A rational number with the same value as "flt".
      */
     public static ERational FromSingle(float flt) {
       return FromEFloat(EFloat.FromSingle(flt));
@@ -430,11 +430,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a rational number from a text string that represents a number. See
-     * <code>FromString(String, int, int)</code> for more information.
+     * <code>FromString(string, int, int)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @return An arbitrary-precision rational number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
      * formatted number string.
      */
     public static ERational FromString(String str) {
@@ -463,9 +463,9 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision rational number.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
      * formatted number string.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NullPointerException The parameter "str" is null.
      */
     public static ERational FromString(
       String str,
@@ -876,8 +876,7 @@ at: http://peteroupc.github.io/
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The sum of the two numbers. Returns not-a-number (NaN) if either
      * operand is NaN.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public ERational Add(ERational otherValue) {
       if (otherValue == null) {
@@ -1213,7 +1212,7 @@ at: http://peteroupc.github.io/
      * (positive or negative) of another number.
      * @param other The parameter {@code other} is not documented yet.
      * @return An arbitrary-precision rational number.
-     * @throws java.lang.NullPointerException The parameter {@code other} is null.
+     * @throws java.lang.NullPointerException The parameter "other" is null.
      */
     public ERational CopySign(ERational other) {
       if (other == null) {
@@ -1231,8 +1230,7 @@ at: http://peteroupc.github.io/
      * object.
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The quotient of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public ERational Divide(ERational otherValue) {
       if (otherValue == null) {
@@ -1387,8 +1385,7 @@ at: http://peteroupc.github.io/
      * number.
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The product of the two numbers.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public ERational Multiply(ERational otherValue) {
       if (otherValue == null) {
@@ -1440,8 +1437,7 @@ at: http://peteroupc.github.io/
      * of an arbitrary-precision rational number.
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The remainder of the two numbers.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public ERational Remainder(ERational otherValue) {
       if (otherValue == null) {
@@ -1492,8 +1488,7 @@ at: http://peteroupc.github.io/
      * Subtracts an arbitrary-precision rational number from this instance.
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @return The difference of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public ERational Subtract(ERational otherValue) {
       if (otherValue == null) {

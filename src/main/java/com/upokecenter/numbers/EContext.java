@@ -256,9 +256,9 @@ at: http://peteroupc.github.io/
      * this value to false (using WithAdjustExponent) is useful for modeling
      * floating point representations with an integer mantissa (significand)
      * and an integer exponent, such as Java's BigDecimal.
-     * @return <code>true</code> if the EMax and EMin properties refer to the number's
+     * @return {@code true} if the EMax and EMin properties refer to the number's
      * Exponent property adjusted to the number's precision, or just the
-     * number's Exponent property; otherwise, <code>false</code>.. The default
+     * number's Exponent property; otherwise, {@code false}.. The default
      * value is true, meaning that EMax and EMin refer to the adjusted
      * exponent. Setting this value to false (using WithAdjustExponent) is
      * useful for modeling floating point representations with an integer
@@ -326,14 +326,14 @@ at: http://peteroupc.github.io/
      * arithmetic context. If <code>HasFlags</code> is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
-     * 0</code> returns <code>true</code> if the Inexact flag is set.
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+     * != 0</code> returns <code>true</code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
-     * arithmetic context. If <code>HasFlags</code> is false, this value will be
+     * arithmetic context. If {@code HasFlags} is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
-     * 0</code> returns <code>true</code> if the Inexact flag is set.
+     * method. For example: {@code (this.getFlags() & EContext.FlagInexact)
+     * != 0} returns {@code true} if the Inexact flag is set.
      */
     public final int getFlags() {
         return this.flags;
@@ -349,11 +349,11 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context defines a minimum and maximum
      * exponent. If false, converted exponents can have any exponent and
      * operations can't cause overflow or underflow.
-     * @return <code>true</code> if this context defines a minimum and maximum exponent;
-     * otherwise, <code>false</code>.. If false, converted exponents can have any
+     * @return {@code true} if this context defines a minimum and maximum exponent;
+     * otherwise, {@code false}.. If false, converted exponents can have any
      * exponent and operations can't cause overflow or underflow. {@code
      * true} if this context defines a minimum and maximum exponent;
-     * otherwise, {@code false} .
+     * otherwise, {@code false}.
      */
     public final boolean getHasExponentRange() {
         return this.hasExponentRange;
@@ -361,8 +361,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context has a mutable Flags field.
-     * @return <code>true</code> if this context has a mutable Flags field; otherwise,
-     * <code>false</code>.
+     * @return {@code true} if this context has a mutable Flags field; otherwise,
+     * {@code false}.
      */
     public final boolean getHasFlags() {
         return this.hasFlags;
@@ -370,8 +370,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
-     * @return <code>true</code> if this context defines a maximum precision; otherwise,
-     * <code>false</code>.
+     * @return {@code true} if this context defines a maximum precision; otherwise,
+     * {@code false}.
      */
     public final boolean getHasMaxPrecision() {
         return !this.bigintPrecision.isZero();
@@ -380,10 +380,10 @@ public final void setFlags(int value) {
     /**
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
-     * @return <code>true</code> if this context's Precision property is in bits, rather
-     * than digits; otherwise, <code>false</code>.. The default is false. {@code
+     * @return {@code true} if this context's Precision property is in bits, rather
+     * than digits; otherwise, {@code false}.. The default is false. {@code
      * true} if this context's Precision property is in bits, rather than
-     * digits; otherwise, {@code false} . The default is false.
+     * digits; otherwise, {@code false}. The default is false.
      */
     public final boolean isPrecisionInBits() {
         return this.precisionInBits;
@@ -394,15 +394,7 @@ public final void setFlags(int value) {
      * simplified arithmetic, infinity, not-a-number, and subnormal numbers
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
-     * href='http://speleotrove.com/decimal/dax3274.html'>
-     * <code>http://speleotrove.com/decimal/dax3274.html</code> </a>
-     * @return <code>true</code> if to use a "simplified" arithmetic; otherwise,
-     * <code>false</code>.. In the simplified arithmetic, infinity, not-a-number,
-     * and subnormal numbers are not allowed, and negative zero is treated
-     * the same as positive zero. For further details, see <a
-     * href='http://speleotrove.com/decimal/dax3274.html'>
-     * <code>http://speleotrove.com/decimal/dax3274.html</code> </a>. {@code true}
-     * if a "simplified" arithmetic will be used; otherwise, {@code false} .
+  * href='http://speleotrove.com/decimal/dax3274.html'><code>http://speleotrove.com/decimal/dax3274.html</code></a>
      */
     public final boolean isSimplified() {
         return this.simplified;
@@ -439,14 +431,11 @@ public final void setFlags(int value) {
      * Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
      * will be thrown if an operation's return value is not the same as the
      * exact result (FlagInexact) or if the return value's exponent is lower
-     * than the lowest allowed (FlagSubnormal). </p>
+     * than the lowest allowed (FlagSubnormal).</p>
      * @return The traps that are set for each flag in the context. Whenever a flag
-     * is signaled, even if <code>HasFlags</code> is false, and the flag's trap is
-     * enabled, the operation will throw a TrapException. <para>For example,
-     * if Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
-     * will be thrown if an operation's return value is not the same as the
-     * exact result (FlagInexact) or if the return value's exponent is lower
-     * than the lowest allowed (FlagSubnormal). </para>.
+     * is signaled, even if {@code HasFlags} is false, and the flag's trap
+     * is enabled, the operation will throw a TrapException. For example, if
+     * Traps equals .
      */
     public final int getTraps() {
         return this.traps;
@@ -553,7 +542,7 @@ public final void setFlags(int value) {
      * this arithmetic context; otherwise, {@code false}. If this context
      * allows unlimited precision, returns true for the exponent EMax and
      * any exponent less than EMax.
-     * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
+     * @throws java.lang.NullPointerException The parameter "exponent" is null.
      */
     public boolean ExponentWithinRange(EInteger exponent) {
       if (exponent == null) {
@@ -610,8 +599,7 @@ public final void setFlags(int value) {
      * @param exponentMin The parameter {@code exponentMin} is not documented yet.
      * @param exponentMax The parameter {@code exponentMax} is not documented yet.
      * @return An EContext object.
-     * @throws java.lang.NullPointerException The parameter {@code exponentMin} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "exponentMin" is null.
      * @throws IllegalArgumentException "ExponentMin greater than exponentMax".
      */
     public EContext WithBigExponentRange(
@@ -638,8 +626,8 @@ public final void setFlags(int value) {
      * @param bigintPrecision The parameter {@code bigintPrecision} is not
      * documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws java.lang.NullPointerException The parameter {@code bigintPrecision}
-     * is null.
+     * @throws java.lang.NullPointerException The parameter "bigintPrecision" is
+     * null.
      */
     public EContext WithBigPrecision(EInteger bigintPrecision) {
       if (bigintPrecision == null) {

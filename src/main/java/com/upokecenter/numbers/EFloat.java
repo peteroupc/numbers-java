@@ -156,8 +156,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return <code>true</code> if this object is finite (not infinity or NaN);
-     * otherwise, <code>false</code>.
+     * @return {@code true} if this object is finite (not infinity or NaN);
+     * otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -167,8 +167,8 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object is negative, including negative
      * zero.
-     * @return <code>true</code> if this object is negative, including negative zero;
-     * otherwise, <code>false</code>.
+     * @return {@code true} if this object is negative, including negative zero;
+     * otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -176,9 +176,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this object's value equals 0.
-     * @return <code>true</code> if this object's value equals 0; otherwise,
-     * <code>false</code>. {@code true} if this object's value equals 0;
-     * otherwise, . {@code false} .
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
+     * false}. {@code true} if this object's value equals 0; otherwise, .
+     * {@code false}.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -231,7 +231,7 @@ at: http://peteroupc.github.io/
      * @param exponent The parameter {@code exponent} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter "mantissa (significand)"
-     * or {@code exponent} is null.
+     * or "exponent" is null.
      */
     public static EFloat Create(
       EInteger mantissa,
@@ -253,7 +253,7 @@ at: http://peteroupc.github.io/
      * Creates a not-a-number arbitrary-precision binary float.
      * @param diag The parameter {@code diag} is not documented yet.
      * @return A quiet not-a-number.
-     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
+     * @throws IllegalArgumentException The parameter "diag" is less than 0.
      */
     public static EFloat CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false, null);
@@ -266,7 +266,7 @@ at: http://peteroupc.github.io/
      * @param negative The parameter {@code negative} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter {@code diag} is null.
+     * @throws java.lang.NullPointerException The parameter "diag" is null.
      */
     public static EFloat CreateNaN(
       EInteger diag,
@@ -311,7 +311,7 @@ at: http://peteroupc.github.io/
      * approximation, as is often the case by converting the floating point
      * number to a string first.
      * @param dbl The parameter {@code dbl} is not documented yet.
-     * @return A binary float with the same value as {@code dbl}.
+     * @return A binary float with the same value as "dbl".
      */
     public static EFloat FromDouble(double dbl) {
       int[] value = Extras.DoubleToIntegers(dbl);
@@ -369,7 +369,7 @@ at: http://peteroupc.github.io/
      * approximation, as is often the case by converting the floating point
      * number to a string first.
      * @param flt The parameter {@code flt} is not documented yet.
-     * @return A binary float with the same value as {@code flt}.
+     * @return A binary float with the same value as "flt".
      */
     public static EFloat FromSingle(float flt) {
       int value = Float.floatToRawIntBits(flt);
@@ -442,10 +442,10 @@ at: http://peteroupc.github.io/
      * str} (but not more than {@code str} 's length).
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
-     * less than 0 or greater than {@code str} 's length, or {@code str} 's
-     * length minus {@code offset} is less than {@code length}.
+     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
+     * or greater than "str" 's length, or "str" 's length minus "offset" is
+     * less than "length".
      */
     public static EFloat FromString(
       String str,
@@ -476,12 +476,12 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws java.lang.NullPointerException The parameter "str" is null.
      */
     public static EFloat FromString(String str, EContext ctx) {
       return FromString(str, 0, str == null ? 0 : str.length(), ctx);
@@ -489,7 +489,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
@@ -497,10 +497,10 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision binary float.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
-     * less than 0 or greater than {@code str} 's length, or {@code str} ' s
-     * length minus {@code offset} is less than {@code length}.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
+     * or greater than "str" 's length, or "str" ' s length minus "offset"
+     * is less than "length".
+     * @throws java.lang.NullPointerException The parameter "str" is null.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -618,9 +618,8 @@ at: http://peteroupc.github.io/
      * Finds the constant π, the circumference of a circle divided by its diameter.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
-     * or the precision is unlimited (the context's Precision property is
-     * 0).
+     * and returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public static EFloat PI(EContext ctx) {
       return MathValue.Pi(ctx);
@@ -688,7 +687,7 @@ at: http://peteroupc.github.io/
      * @param other The parameter {@code other} is not documented yet.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other value
-     * or if {@code other} is null, or 0 if both values are equal.
+     * or if "other" is null, or 0 if both values are equal.
      */
     public int compareTo(EFloat other) {
       return MathValue.compareTo(this, other);
@@ -884,7 +883,7 @@ at: http://peteroupc.github.io/
      * (positive or negative) of another number.
      * @param other The parameter {@code other} is not documented yet.
      * @return An arbitrary-precision binary float.
-     * @throws java.lang.NullPointerException The parameter {@code other} is null.
+     * @throws java.lang.NullPointerException The parameter "other" is null.
      */
     public EFloat CopySign(EFloat other) {
       if (other == null) {
@@ -1185,9 +1184,8 @@ at: http://peteroupc.github.io/
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Exponential of this object. If this object's value is 1, returns an
      * approximation to " e" within the given precision. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
-     * or the precision is unlimited (the context's Precision property is
-     * 0).
+     * and returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Exp(EContext ctx) {
       return MathValue.Exp(this, ctx);
@@ -1278,9 +1276,9 @@ at: http://peteroupc.github.io/
      * a real part equal to Ln of this object's absolute value and an
      * imaginary part equal to pi, but the return value is still NaN.).
      * Signals FlagInvalid and returns not-a-number (NaN) if the parameter
-     * {@code ctx} is null or the precision is unlimited (the context's
-     * Precision property is 0). Signals no flags and returns negative
-     * infinity if this object's value is 0.
+     * "ctx" is null or the precision is unlimited (the context's Precision
+     * property is 0). Signals no flags and returns negative infinity if
+     * this object's value is 0.
      */
     public EFloat Log(EContext ctx) {
       return MathValue.Ln(this, ctx);
@@ -1293,9 +1291,8 @@ at: http://peteroupc.github.io/
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
-     * or the precision is unlimited (the context's Precision property is
-     * 0).
+     * and returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Log10(EContext ctx) {
       return MathValue.Log10(this, ctx);
@@ -1305,8 +1302,8 @@ at: http://peteroupc.github.io/
      * Returns a number similar to this number but with the radix point moved to
      * the left.
      * @param places The parameter {@code places} is not documented yet.
-     * @return A number whose exponent is decreased by {@code places}, but not to
-     * more than 0.
+     * @return A number whose exponent is decreased by "places", but not to more
+     * than 0.
      */
     public EFloat MovePointLeft(int places) {
       return this.MovePointLeft(EInteger.FromInt32(places), null);
@@ -1327,8 +1324,8 @@ at: http://peteroupc.github.io/
      * Returns a number similar to this number but with the radix point moved to
      * the left.
      * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
-     * @return A number whose exponent is decreased by {@code bigPlaces}, but not
-     * to more than 0.
+     * @return A number whose exponent is decreased by "bigPlaces", but not to more
+     * than 0.
      */
     public EFloat MovePointLeft(EInteger bigPlaces) {
       return this.MovePointLeft(bigPlaces, null);
@@ -1352,8 +1349,8 @@ at: http://peteroupc.github.io/
      * Returns a number similar to this number but with the radix point moved to
      * the right.
      * @param places The parameter {@code places} is not documented yet.
-     * @return A number whose exponent is increased by {@code places}, but not to
-     * more than 0.
+     * @return A number whose exponent is increased by "places", but not to more
+     * than 0.
      */
     public EFloat MovePointRight(int places) {
       return this.MovePointRight(EInteger.FromInt32(places), null);
@@ -1374,8 +1371,8 @@ at: http://peteroupc.github.io/
      * Returns a number similar to this number but with the radix point moved to
      * the right.
      * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
-     * @return A number whose exponent is increased by {@code bigPlaces}, but not
-     * to more than 0.
+     * @return A number whose exponent is increased by "bigPlaces", but not to more
+     * than 0.
      */
     public EFloat MovePointRight(EInteger bigPlaces) {
       return this.MovePointRight(bigPlaces, null);
@@ -1484,8 +1481,8 @@ at: http://peteroupc.github.io/
      * @param subtrahend The parameter {@code subtrahend} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The result thisValue * multiplicand - subtrahend.
-     * @throws java.lang.NullPointerException The parameter {@code op} or {@code
-     * subtrahend} is null.
+     * @throws java.lang.NullPointerException The parameter "op" or "subtrahend" is
+     * null.
      */
     public EFloat MultiplyAndSubtract(
       EFloat op,
@@ -1536,9 +1533,8 @@ at: http://peteroupc.github.io/
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
-     * ctx} is null, the precision is 0, or {@code ctx} has an unlimited
-     * exponent range.
+     * FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
+     * null, the precision is 0, or "ctx" has an unlimited exponent range.
      */
     public EFloat NextMinus(EContext ctx) {
       return MathValue.NextMinus(this, ctx);
@@ -1549,8 +1545,8 @@ at: http://peteroupc.github.io/
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the
-     * parameter {@code ctx} is null, the precision is 0, or {@code ctx} has
-     * an unlimited exponent range.
+     * parameter "ctx" is null, the precision is 0, or "ctx" has an
+     * unlimited exponent range.
      */
     public EFloat NextPlus(EContext ctx) {
       return MathValue.NextPlus(this, ctx);
@@ -1576,8 +1572,8 @@ at: http://peteroupc.github.io/
      * positive zero.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The closest value to this object's value, rounded to the specified
-     * precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if "ctx" is null or
+     * the precision and exponent range are unlimited.
      */
     public EFloat Plus(EContext ctx) {
       return MathValue.Plus(this, ctx);
@@ -1942,8 +1938,8 @@ at: http://peteroupc.github.io/
      * mode and range of exponent.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The closest value to this object's value, rounded to the specified
-     * precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if "ctx" is null or
+     * the precision and exponent range are unlimited.
      */
     public EFloat RoundToPrecision(EContext ctx) {
       return MathValue.RoundToPrecision(this, ctx);
@@ -1971,7 +1967,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param bigPlaces The parameter {@code bigPlaces} is not documented yet.
-     * @return A number whose exponent is increased by {@code bigPlaces}.
+     * @return A number whose exponent is increased by "bigPlaces".
      */
     public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) {
       return this.ScaleByPowerOfTwo(bigPlaces, null);
@@ -2006,8 +2002,8 @@ at: http://peteroupc.github.io/
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
-     * the precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Sqrt(EContext ctx) {
       return MathValue.SquareRoot(this, ctx);
@@ -2019,8 +2015,8 @@ at: http://peteroupc.github.io/
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
-     * the precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter "ctx" is null or the
+     * precision is unlimited (the context's Precision property is 0).
      * @deprecated Renamed to Sqrt.
  */
 @Deprecated
@@ -2043,8 +2039,7 @@ at: http://peteroupc.github.io/
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
      */
     public EFloat Subtract(
       EFloat otherValue,
