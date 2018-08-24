@@ -955,7 +955,7 @@ Creates a decimal number from a 32-bit binary floating-point number. This
 ### FromString
     public static EDecimal FromString​(String str)
 Creates a decimal number from a text string that represents a number. See
- <code>FromString(string, int, int, EContext)</code> for more information.
+ <code>FromString(String, int, int, EContext)</code> for more information.
 
 **Parameters:**
 
@@ -974,7 +974,7 @@ Creates a decimal number from a text string that represents a number. See
 ### FromString
     public static EDecimal FromString​(String str, EContext ctx)
 Creates a decimal number from a text string that represents a number. See
- <code>FromString(string, int, int, EContext)</code> for more information.
+ <code>FromString(String, int, int, EContext)</code> for more information.
 
 **Parameters:**
 
@@ -993,7 +993,7 @@ Creates a decimal number from a text string that represents a number. See
 ### FromString
     public static EDecimal FromString​(String str, int offset, int length)
 Creates a decimal number from a text string that represents a number. See
- <code>FromString(string, int, int, EContext)</code> for more information.
+ <code>FromString(String, int, int, EContext)</code> for more information.
 
 **Parameters:**
 

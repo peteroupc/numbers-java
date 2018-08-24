@@ -476,7 +476,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * information, see the <code>FromString(String, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
@@ -489,7 +489,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * information, see the <code>FromString(String, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code

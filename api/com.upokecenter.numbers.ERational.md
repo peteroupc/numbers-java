@@ -531,7 +531,7 @@ Converts a 32-bit binary floating-point number to a rational number. This
 ### FromString
     public static ERational FromString​(String str)
 Creates a rational number from a text string that represents a number. See
- <code>FromString(string, int, int)</code> for more information.
+ <code>FromString(String, int, int)</code> for more information.
 
 **Parameters:**
 

@@ -759,7 +759,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(string, int, int, EContext)</code> for more information.
+     * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
@@ -772,7 +772,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(string, int, int, EContext)</code> for more information.
+     * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An EDecimal object.
@@ -784,7 +784,7 @@ private static final FastIntegerFixed FastIntZero = new
 
     /**
      * Creates a decimal number from a text string that represents a number. See
-     * <code>FromString(string, int, int, EContext)</code> for more information.
+     * <code>FromString(String, int, int, EContext)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.

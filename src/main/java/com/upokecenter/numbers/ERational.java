@@ -430,7 +430,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a rational number from a text string that represents a number. See
-     * <code>FromString(string, int, int)</code> for more information.
+     * <code>FromString(String, int, int)</code> for more information.
      * @param str The parameter {@code str} is not documented yet.
      * @return An arbitrary-precision rational number with the same value as the
      * given string.
