@@ -476,7 +476,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
@@ -489,7 +489,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is not documented yet.
      * @param offset A zero-based index showing where the desired portion of {@code
@@ -678,12 +678,12 @@ at: http://peteroupc.github.io/
      * Compares the mathematical values of this object and another object,
      * accepting NaN values. <p>This method is not consistent with the
      * Equals method because two different numbers with the same
-     * mathematical value, but different exponents, will compare as
-     * equal.</p> <p>In this method, negative zero and positive zero are
-     * considered equal.</p> <p>If this object or the other object is a
+     * mathematical value, but different exponents, will compare as equal.
+     * </p> <p>In this method, negative zero and positive zero are
+     * considered equal. </p> <p>If this object or the other object is a
      * quiet NaN or signaling NaN, this method will not trigger an error.
      * Instead, NaN will compare greater than any other number, including
-     * infinity. Two different NaN values will be considered equal.</p>
+     * infinity. Two different NaN values will be considered equal. </p>
      * @param other The parameter {@code other} is not documented yet.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other value
