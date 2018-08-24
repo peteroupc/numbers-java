@@ -542,7 +542,7 @@ public final void setFlags(int value) {
      * this arithmetic context; otherwise, {@code false}. If this context
      * allows unlimited precision, returns true for the exponent EMax and
      * any exponent less than EMax.
-     * @throws java.lang.NullPointerException The parameter "exponent" is null.
+     * @throws java.lang.NullPointerException The parameter {@code exponent} is null.
      */
     public boolean ExponentWithinRange(EInteger exponent) {
       if (exponent == null) {
@@ -599,7 +599,8 @@ public final void setFlags(int value) {
      * @param exponentMin The parameter {@code exponentMin} is not documented yet.
      * @param exponentMax The parameter {@code exponentMax} is not documented yet.
      * @return An EContext object.
-     * @throws java.lang.NullPointerException The parameter "exponentMin" is null.
+     * @throws java.lang.NullPointerException The parameter {@code exponentMin} is
+     * null.
      * @throws IllegalArgumentException "ExponentMin greater than exponentMax".
      */
     public EContext WithBigExponentRange(
@@ -626,8 +627,8 @@ public final void setFlags(int value) {
      * @param bigintPrecision The parameter {@code bigintPrecision} is not
      * documented yet.
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws java.lang.NullPointerException The parameter "bigintPrecision" is
-     * null.
+     * @throws java.lang.NullPointerException The parameter {@code bigintPrecision}
+     * is null.
      */
     public EContext WithBigPrecision(EInteger bigintPrecision) {
       if (bigintPrecision == null) {

@@ -516,7 +516,7 @@ Determines whether a number can have the given Exponent property under this
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "exponent" is null.
+* <code>NullPointerException</code> - The parameter <code>exponent</code> is null.
 
 ### toString
     public String toString()
@@ -561,7 +561,8 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "exponentMin" is null.
+* <code>NullPointerException</code> - The parameter <code>exponentMin</code> is
+ null.
 
 * <code>IllegalArgumentException</code> - "ExponentMin greater than exponentMax".
 
@@ -580,8 +581,8 @@ Copies this EContext and gives it a particular precision value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "bigintPrecision" is
- null.
+* <code>NullPointerException</code> - The parameter <code>bigintPrecision</code>
+ is null.
 
 ### WithBlankFlags
     public EContext WithBlankFlags()

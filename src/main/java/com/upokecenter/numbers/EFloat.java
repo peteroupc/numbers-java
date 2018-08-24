@@ -231,7 +231,7 @@ at: http://peteroupc.github.io/
      * @param exponent The parameter {@code exponent} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter "mantissa (significand)"
-     * or "exponent" is null.
+     * or {@code exponent} is null.
      */
     public static EFloat Create(
       EInteger mantissa,
@@ -253,7 +253,7 @@ at: http://peteroupc.github.io/
      * Creates a not-a-number arbitrary-precision binary float.
      * @param diag The parameter {@code diag} is not documented yet.
      * @return A quiet not-a-number.
-     * @throws IllegalArgumentException The parameter "diag" is less than 0.
+     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
     public static EFloat CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false, null);
@@ -266,7 +266,7 @@ at: http://peteroupc.github.io/
      * @param negative The parameter {@code negative} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter "diag" is null.
+     * @throws java.lang.NullPointerException The parameter {@code diag} is null.
      */
     public static EFloat CreateNaN(
       EInteger diag,
@@ -442,10 +442,10 @@ at: http://peteroupc.github.io/
      * str} (but not more than {@code str} 's length).
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter "str" is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
-     * or greater than "str" 's length, or "str" 's length minus "offset" is
-     * less than "length".
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
+     * less than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
       String str,
@@ -481,7 +481,7 @@ at: http://peteroupc.github.io/
      * @param str The parameter {@code str} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, EContext ctx) {
       return FromString(str, 0, str == null ? 0 : str.length(), ctx);
@@ -497,10 +497,10 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision binary float.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
-     * or greater than "str" 's length, or "str" ' s length minus "offset"
-     * is less than "length".
-     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
+     * less than 0 or greater than {@code str} 's length, or {@code str} ' s
+     * length minus {@code offset} is less than {@code length}.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -883,7 +883,7 @@ at: http://peteroupc.github.io/
      * (positive or negative) of another number.
      * @param other The parameter {@code other} is not documented yet.
      * @return An arbitrary-precision binary float.
-     * @throws java.lang.NullPointerException The parameter "other" is null.
+     * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EFloat CopySign(EFloat other) {
       if (other == null) {
@@ -1481,8 +1481,8 @@ at: http://peteroupc.github.io/
      * @param subtrahend The parameter {@code subtrahend} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return The result thisValue * multiplicand - subtrahend.
-     * @throws java.lang.NullPointerException The parameter "op" or "subtrahend" is
-     * null.
+     * @throws java.lang.NullPointerException The parameter {@code op} or {@code
+     * subtrahend} is null.
      */
     public EFloat MultiplyAndSubtract(
       EFloat op,
@@ -2039,7 +2039,8 @@ at: http://peteroupc.github.io/
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
-     * @throws java.lang.NullPointerException The parameter "otherValue" is null.
+     * @throws java.lang.NullPointerException The parameter {@code otherValue} is
+     * null.
      */
     public EFloat Subtract(
       EFloat otherValue,

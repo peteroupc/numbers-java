@@ -162,7 +162,7 @@ at: http://peteroupc.github.io/
      * @param littleEndian The parameter {@code littleEndian} is not documented
      * yet.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter "bytes" is null.
+     * @throws java.lang.NullPointerException The parameter {@code bytes} is null.
      */
     public static EInteger FromBytes(byte[] bytes, boolean littleEndian) {
       if (bytes == null) {
@@ -355,7 +355,7 @@ at: http://peteroupc.github.io/
      * @param str The parameter {@code str} is not documented yet.
      * @param radix The parameter {@code radix} is not documented yet.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromRadixString(String str, int radix) {
       if (str == null) {
@@ -372,7 +372,7 @@ at: http://peteroupc.github.io/
      * @param index The parameter {@code index} is not documented yet.
      * @param endIndex The parameter {@code endIndex} is not documented yet.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
      * format.
      * @throws IllegalArgumentException "Doesn't satisfy (endIndex - index) % 4 ==
@@ -601,8 +601,9 @@ at: http://peteroupc.github.io/
      * @param str The parameter {@code str} is not documented yet.
      * @return An arbitrary-precision integer with the same value as given in the
      * string.
-     * @throws java.lang.NumberFormatException The parameter "str" is in an invalid format.
-     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws java.lang.NumberFormatException The parameter {@code str} is in an invalid
+     * format.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromString(String str) {
       if (str == null) {
@@ -618,10 +619,10 @@ at: http://peteroupc.github.io/
      * @param endIndex The parameter {@code endIndex} is not documented yet.
      * @return An arbitrary-precision integer with the same value as given in the
      * string portion.
-     * @throws IllegalArgumentException The parameter "index" is less than 0,
-     * "endIndex" is less than 0, or either is greater than the string's
-     * length, or "endIndex" is less than "index".
-     * @throws java.lang.NullPointerException The parameter "str" is null.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0,
+     * {@code endIndex} is less than 0, or either is greater than the
+     * string's length, or {@code endIndex} is less than {@code index}.
+     * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromSubstring(
       String str,
@@ -647,7 +648,8 @@ at: http://peteroupc.github.io/
      * @param bigintAugend The parameter {@code bigintAugend} is not documented
      * yet.
      * @return The sum of the two objects.
-     * @throws java.lang.NullPointerException The parameter "bigintAugend" is null.
+     * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
+     * null.
      */
     public EInteger Add(EInteger bigintAugend) {
       if (bigintAugend == null) {
@@ -1039,7 +1041,8 @@ at: http://peteroupc.github.io/
      * @param bigintDivisor The parameter {@code bigintDivisor} is not documented
      * yet.
      * @return The quotient of the two objects.
-     * @throws java.lang.NullPointerException The parameter "bigintDivisor" is null.
+     * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
+     * null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Divide(EInteger bigintDivisor) {
@@ -1699,7 +1702,7 @@ at: http://peteroupc.github.io/
      * @return An array with two arbitrary-precision integers: the first is the
      * quotient, and the second is the remainder.
      * @throws ArithmeticException The parameter divisor is 0.
-     * @throws java.lang.NullPointerException The parameter "divisor" is null.
+     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger[] DivRem(EInteger divisor) {
       if (divisor == null) {
@@ -1889,7 +1892,8 @@ at: http://peteroupc.github.io/
      * @param bigintSecond The parameter {@code bigintSecond} is not documented
      * yet.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter "bigintSecond" is null.
+     * @throws java.lang.NullPointerException The parameter {@code bigintSecond} is
+     * null.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -2439,7 +2443,7 @@ WordsShiftRightOne(bu, buc);
      * negative.
      * @param divisor The number to divide by.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter "divisor" is null.
+     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger Mod(EInteger divisor) {
       if (divisor == null) {
@@ -2461,7 +2465,8 @@ WordsShiftRightOne(bu, buc);
      * @param pow The parameter {@code pow} is not documented yet.
      * @param mod The parameter {@code mod} is not documented yet.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter "pow" or "mod" is null.
+     * @throws java.lang.NullPointerException The parameter {@code pow} or {@code
+     * mod} is null.
      */
     public EInteger ModPow(EInteger pow, EInteger mod) {
       if (pow == null) {
@@ -2495,7 +2500,8 @@ WordsShiftRightOne(bu, buc);
      * object.
      * @param bigintMult The parameter {@code bigintMult} is not documented yet.
      * @return The product of the two numbers.
-     * @throws java.lang.NullPointerException The parameter "bigintMult" is null.
+     * @throws java.lang.NullPointerException The parameter {@code bigintMult} is
+     * null.
      */
     public EInteger Multiply(EInteger bigintMult) {
       if (bigintMult == null) {
@@ -2667,8 +2673,8 @@ WordsShiftRightOne(bu, buc);
      * arbitrary-precision integer.
      * @param power The parameter {@code power} is not documented yet.
      * @return The result. Returns 1 if "power" is 0.
-     * @throws IllegalArgumentException The parameter "power" is less than 0.
-     * @throws java.lang.NullPointerException The parameter "power" is null.
+     * @throws IllegalArgumentException The parameter {@code power} is less than 0.
+     * @throws java.lang.NullPointerException The parameter {@code power} is null.
      */
     public EInteger PowBigIntVar(EInteger power) {
       if (power == null) {
@@ -2714,7 +2720,7 @@ WordsShiftRightOne(bu, buc);
      * @param divisor The number to divide by.
      * @return The remainder of the two numbers.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws java.lang.NullPointerException The parameter "divisor" is null.
+     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger Remainder(EInteger divisor) {
       if (divisor == null) {
@@ -3087,7 +3093,8 @@ WordsShiftRightOne(bu, buc);
      * integer.
      * @param subtrahend The parameter {@code subtrahend} is not documented yet.
      * @return The difference of the two objects.
-     * @throws java.lang.NullPointerException The parameter "subtrahend" is null.
+     * @throws java.lang.NullPointerException The parameter {@code subtrahend} is
+     * null.
      */
     public EInteger Subtract(EInteger subtrahend) {
       if (subtrahend == null) {
