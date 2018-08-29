@@ -1019,22 +1019,22 @@ Creates a decimal number from a text string that represents a number. See
 
 ### FromString
     public static EDecimal FromString​(String str, int offset, int length, EContext ctx)
-<p>Creates a decimal number from a text string that represents a number.</p>
- <p>The format of the string generally consists of:</p> <ul> <li>An
- optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if the
- minus sign, the value is negative.)</li> <li>One or more digits, with
- a single optional decimal point after the first digit and before the
- last digit.</li> <li>Optionally, "E"/"e" followed by an optional
- (positive exponent) or "-" (negative exponent) and followed by one or
- more digits specifying the exponent.</li></ul> <p>The string can also
- be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
- followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
- followed by any number of digits, all in any combination of upper and
- lower case.</p> <p>All characters mentioned above are the
- corresponding characters in the Basic Latin range. In particular, the
- digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
- is not allowed to contain white space characters, including
- spaces.</p>
+<p>Creates a decimal number from a text string that represents a number.
+ </p> <p>The format of the string generally consists of: </p> <ul>
+ <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
+ (if the minus sign, the value is negative.) </li> <li>One or more
+ digits, with a single optional decimal point after the first digit
+ and before the last digit. </li> <li>Optionally, "E"/"e" followed by
+ an optional (positive exponent) or "-" (negative exponent) and
+ followed by one or more digits specifying the exponent. </li> </ul>
+ <p>The string can also be "-INF", "-Infinity", "Infinity", "INF",
+ quiet NaN ("NaN" /"-NaN") followed by any number of digits, or
+ signaling NaN ("sNaN" /"-sNaN") followed by any number of digits, all
+ in any combination of upper and lower case. </p> <p>All characters
+ mentioned above are the corresponding characters in the Basic Latin
+ range. In particular, the digits must be the basic digits 0 to 9
+ (U + 0030 to U + 0039). The string is not allowed to contain white space
+ characters, including spaces. </p>
 
 **Parameters:**
 
@@ -1270,12 +1270,12 @@ Finds the sum of this object and another object. The result's exponent is
 Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
  Equals method because two different numbers with the same
- mathematical value, but different exponents, will compare as
- equal.</p> <p>In this method, negative zero and positive zero are
- considered equal.</p> <p>If this object or the other object is a
+ mathematical value, but different exponents, will compare as equal.
+ </p> <p>In this method, negative zero and positive zero are
+ considered equal. </p> <p>If this object or the other object is a
  quiet NaN or signaling NaN, this method will not trigger an error.
  Instead, NaN will compare greater than any other number, including
- infinity. Two different NaN values will be considered equal.</p>
+ infinity. Two different NaN values will be considered equal. </p>
 
 **Specified by:**
 
