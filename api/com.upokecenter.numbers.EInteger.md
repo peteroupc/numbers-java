@@ -14,6 +14,8 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
 
 * `EInteger Abs()`<br>
  Returns the absolute value of this object's value.
+* `EInteger Add​(int intValue)`<br>
+ Adds this object and another object.
 * `EInteger Add​(EInteger bigintAugend)`<br>
  Adds this object and another object.
 * `int AsInt32Checked()`<br>
@@ -36,8 +38,12 @@ Renamed to ToInt64Unchecked.
  Returns whether this object's value can fit in a 32-bit signed integer.
 * `boolean CanFitInInt64()`<br>
  Returns whether this object's value can fit in a 64-bit signed integer.
+* `int compareTo​(int intValue)`<br>
+ Compares an arbitrary-precision integer with this instance.
 * `int compareTo​(EInteger other)`<br>
  Compares an arbitrary-precision integer with this instance.
+* `EInteger Divide​(int intValue)`<br>
+ Divides this instance by the value of an arbitrary-precision integer.
 * `EInteger Divide​(EInteger bigintDivisor)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
 * `EInteger[] DivRem​(EInteger divisor)`<br>
@@ -115,6 +121,9 @@ Renamed to ToInt64Unchecked.
       EInteger mod)`<br>
  Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
+* `EInteger Multiply​(int intValue)`<br>
+ Multiplies this instance by the value of an arbitrary-precision integer
+ object.
 * `EInteger Multiply​(EInteger bigintMult)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
  object.
@@ -125,6 +134,9 @@ Renamed to ToInt64Unchecked.
 * `EInteger PowBigIntVar​(EInteger power)`<br>
  Raises an arbitrary-precision integer to a power, which is given as another
  arbitrary-precision integer.
+* `EInteger Remainder​(int intValue)`<br>
+ Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision integer.
 * `EInteger Remainder​(EInteger divisor)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision integer.
@@ -139,6 +151,9 @@ Renamed to ToInt64Unchecked.
  Finds the square root of this instance's value, rounded down.
 * `EInteger[] SqrtRem()`<br>
  Calculates the square root and the remainder.
+* `EInteger Subtract​(int intValue)`<br>
+ Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.
 * `EInteger Subtract​(EInteger subtrahend)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer.
@@ -470,6 +485,117 @@ Compares an arbitrary-precision integer with this instance.
 **Parameters:**
 
 * <code>other</code> - The parameter <code>other</code> is not documented yet.
+
+**Returns:**
+
+* Zero if the values are equal; a negative number if this instance is
+ less, or a positive number if this instance is greater.
+
+### Add
+    public EInteger Add​(int intValue)
+Adds this object and another object.
+
+**Parameters:**
+
+* <code>intValue</code> - A 32-bit signed integer.
+
+**Returns:**
+
+* The sum of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+ null.
+
+### Subtract
+    public EInteger Subtract​(int intValue)
+Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.
+
+**Parameters:**
+
+* <code>intValue</code> - A 32-bit signed integer.
+
+**Returns:**
+
+* The difference of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+ null.
+
+### Multiply
+    public EInteger Multiply​(int intValue)
+Multiplies this instance by the value of an arbitrary-precision integer
+ object.
+
+**Parameters:**
+
+* <code>intValue</code> - A 32-bit signed integer.
+
+**Returns:**
+
+* The product of the two numbers.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+ null.
+
+### Divide
+    public EInteger Divide​(int intValue)
+Divides this instance by the value of an arbitrary-precision integer. The
+ result is rounded down (the fractional part is discarded). Except if
+ the result is 0, it will be negative if this object is positive and
+ the other is negative, or vice versa, and will be positive if both
+ are positive or both are negative.
+
+**Parameters:**
+
+* <code>intValue</code> - A 32-bit signed integer.
+
+**Returns:**
+
+* The quotient of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+ null.
+
+* <code>ArithmeticException</code> - Attempted to divide by zero.
+
+### Remainder
+    public EInteger Remainder​(int intValue)
+Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision integer. The remainder is the value that
+ remains when the absolute value of this object is divided by the
+ absolute value of the other object; the remainder has the same sign
+ (positive or negative) as this object.
+
+**Parameters:**
+
+* <code>intValue</code> - A 32-bit signed integer.
+
+**Returns:**
+
+* The remainder of the two numbers.
+
+**Throws:**
+
+* <code>ArithmeticException</code> - Attempted to divide by zero.
+
+* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+
+### compareTo
+    public int compareTo​(int intValue)
+Compares an arbitrary-precision integer with this instance.
+
+**Parameters:**
+
+* <code>intValue</code> - A 32-bit signed integer.
 
 **Returns:**
 

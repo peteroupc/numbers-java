@@ -400,6 +400,24 @@ import com.upokecenter.numbers.*;
           Assert.assertEquals("TestAddSubtract " + bigintA + "; " + bigintB,bigintA,bigintD);
         }
       }
+      for (int i = 0; i < 10000; ++i) {
+        EInteger bigintA = RandomBigInteger(r);
+        int smallIntB = r.UniformInt(0x7fffffff);
+        EInteger bigintC = bigintA.Add(smallIntB);
+        EInteger bigintD = bigintC.Subtract(smallIntB);
+        if (!bigintD.equals(bigintA)) {
+          Assert.assertEquals("TestAddSubtract " + bigintA + "; " + smallIntB,bigintA,bigintD);
+        }
+        bigintD = bigintC.Subtract(bigintA);
+        if (!bigintD.equals(EInteger.FromInt32(smallIntB))) {
+          Assert.assertEquals("TestAddSubtract " + bigintA + "; " + smallIntB,EInteger.FromInt32(smallIntB),bigintD);
+        }
+        bigintC = bigintA.Subtract(smallIntB);
+        bigintD = bigintC.Add(smallIntB);
+        if (!bigintD.equals(bigintA)) {
+          Assert.assertEquals("TestAddSubtract " + bigintA + "; " + smallIntB,bigintA,bigintD);
+        }
+      }
     }
 
     @Test

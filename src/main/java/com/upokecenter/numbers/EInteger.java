@@ -1033,6 +1033,82 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Adds this object and another object.
+     * @param intValue A 32-bit signed integer.
+     * @return The sum of the two objects.
+     * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
+     * null.
+     */
+public EInteger Add(int intValue) {
+ return Add(EInteger.FromInt32(intValue));
+}
+
+    /**
+     * Subtracts an arbitrary-precision integer from this arbitrary-precision
+     * integer.
+     * @param intValue A 32-bit signed integer.
+     * @return The difference of the two objects.
+     * @throws java.lang.NullPointerException The parameter {@code subtrahend} is
+     * null.
+     */
+public EInteger Subtract(int intValue) {
+ return Subtract(EInteger.FromInt32(intValue));
+}
+
+    /**
+     * Multiplies this instance by the value of an arbitrary-precision integer
+     * object.
+     * @param intValue A 32-bit signed integer.
+     * @return The product of the two numbers.
+     * @throws java.lang.NullPointerException The parameter {@code bigintMult} is
+     * null.
+     */
+public EInteger Multiply(int intValue) {
+ return Multiply(EInteger.FromInt32(intValue));
+}
+
+    /**
+     * Divides this instance by the value of an arbitrary-precision integer. The
+     * result is rounded down (the fractional part is discarded). Except if
+     * the result is 0, it will be negative if this object is positive and
+     * the other is negative, or vice versa, and will be positive if both
+     * are positive or both are negative.
+     * @param intValue A 32-bit signed integer.
+     * @return The quotient of the two objects.
+     * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
+     * null.
+     * @throws ArithmeticException Attempted to divide by zero.
+     */
+public EInteger Divide(int intValue) {
+ return Divide(EInteger.FromInt32(intValue));
+}
+
+    /**
+     * Finds the remainder that results when this instance is divided by the value
+     * of an arbitrary-precision integer. The remainder is the value that
+     * remains when the absolute value of this object is divided by the
+     * absolute value of the other object; the remainder has the same sign
+     * (positive or negative) as this object.
+     * @param intValue A 32-bit signed integer.
+     * @return The remainder of the two numbers.
+     * @throws ArithmeticException Attempted to divide by zero.
+     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     */
+public EInteger Remainder(int intValue) {
+ return Remainder(EInteger.FromInt32(intValue));
+}
+
+    /**
+     * Compares an arbitrary-precision integer with this instance.
+     * @param intValue A 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     */
+public int compareTo(int intValue) {
+ return compareTo(EInteger.FromInt32(intValue));
+}
+
+    /**
      * Divides this instance by the value of an arbitrary-precision integer. The
      * result is rounded down (the fractional part is discarded). Except if
      * the result is 0, it will be negative if this object is positive and
@@ -2286,7 +2362,7 @@ WordsShiftRightOne(bu, buc);
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
-        throw new IllegalArgumentException("index");
+        throw new java.lang.IllegalArgumentException("index");
       }
       if (this.wordCount == 0) {
         return false;
