@@ -497,7 +497,7 @@ Adds this object and another object.
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -515,7 +515,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -533,7 +533,7 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -554,7 +554,7 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -577,7 +577,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -595,7 +595,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>intValue</code> - A 32-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
