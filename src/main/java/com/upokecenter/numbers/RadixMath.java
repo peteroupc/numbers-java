@@ -2224,7 +2224,7 @@ ctx.getPrecision()).WithBlankFlags();
         TransferFlags(ctx, ctx2);
         return ret;
       }
-      ret = this.DivideToIntegerZeroScale(thisValue, divisor, ctx2);
+      ret = this.DivideToIntegerZeroScale(thisValue, divisor, null);
       if ((ctx2.getFlags() & EContext.FlagInvalid) != 0) {
         return this.SignalInvalid(ctx);
       }
@@ -2251,7 +2251,7 @@ ctx.getPrecision()).WithBlankFlags();
       ret = this.DivideInternal(
   thisValue,
   divisor,
-  ctx2,
+  null,
   IntegerModeFixedScale,
   EInteger.FromInt32(0));
       if ((ctx2.getFlags() & EContext.FlagInvalid) != 0) {

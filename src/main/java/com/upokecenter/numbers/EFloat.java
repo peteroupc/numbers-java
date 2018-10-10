@@ -1131,10 +1131,11 @@ at: http://peteroupc.github.io/
       EFloat divisor,
       EContext ctx) {
       EFloat[] result = new EFloat[2];
-      result[0] = this.DivideToIntegerNaturalScale(divisor, ctx);
+      result[0] = this.DivideToIntegerNaturalScale(divisor, null);
       result[1] = this.Subtract(
         result[0].Multiply(divisor, null),
-        null);
+        ctx);
+      result[0] = result[0].RoundToPrecision(ctx);
       return result;
     }
 
@@ -1764,8 +1765,8 @@ at: http://peteroupc.github.io/
       EFloat divisor,
       EContext ctx) {
       return this.Subtract(
-        this.DivideToIntegerNaturalScale(divisor, ctx).Multiply(divisor, null),
-        null);
+        this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
+        ctx);
     }
 
     /**
