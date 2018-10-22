@@ -9,14 +9,14 @@ Contains parameters for controlling the precision, rounding, and exponent
  safety:</b> With one exception, instances of this class are immutable
  and are safe to use among multiple threads. The one exception
  involves the <code>Flags</code> property. If the context's <code>HasFlags</code>
- property (a read-only property) is <code>true</code> , the <code>Flags</code>
+ property (a read-only property) is <code>true</code>, the <code>Flags</code>
  property is mutable, thus making the context mutable. This class
  doesn't synchronize access to such mutable contexts, so applications
  should provide their own synchronization if a context with the
  <code>HasFlags</code> property set to <code>true</code> will be shared among
  multiple threads and at least one of those threads needs to write the
  <code>Flags</code> property (which can happen, for example, by passing the
- context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p>
+ context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
 
 ## Fields
 
@@ -37,8 +37,8 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `static EContext Binary64`<br>
  An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision.
-* `static EContext CliDecimal "Forms of numbers" `<br>
- An arithmetic context for the .NET Framework decimal format (see "Forms of numbers" ), 96 bits
+* `static EContext CliDecimal "Forms of numbers"`<br>
+ An arithmetic context for the .NET Framework decimal format (see "Forms of numbers"), 96 bits
  precision, and a valid exponent range of -28 to 0.
 * `static EContext Decimal128`<br>
  An arithmetic context for the IEEE-754-2008 decimal128 format.
@@ -78,11 +78,11 @@ Contains parameters for controlling the precision, rounding, and exponent
 
 ## Constructors
 
-* `EContext​(int precision,
-        ERounding rounding,
-        int exponentMinSmall,
-        int exponentMaxSmall,
-        boolean clampNormalExponents) EContext`<br>
+* `EContext​(int precision,
+        ERounding rounding,
+        int exponentMinSmall,
+        int exponentMaxSmall,
+        boolean clampNormalExponents) EContext`<br>
  Initializes a new instance of the EContext
  class.
 
@@ -90,17 +90,17 @@ Contains parameters for controlling the precision, rounding, and exponent
 
 * `EContext Copy()`<br>
  Initializes a new EContext that is a copy of another EContext.
-* `boolean ExponentWithinRange​(EInteger exponent)`<br>
+* `boolean ExponentWithinRange​(EInteger exponent)`<br>
  Determines whether a number can have the given Exponent property under this
  arithmetic context.
-* `static EContext ForPrecision​(int precision)`<br>
+* `static EContext ForPrecision​(int precision)`<br>
  Creates a new arithmetic context using the given maximum number of digits,
  an unlimited exponent range, and the HalfUp rounding mode.
-* `static EContext ForPrecisionAndRounding​(int precision,
-                       ERounding rounding)`<br>
+* `static EContext ForPrecisionAndRounding​(int precision,
+                       ERounding rounding)`<br>
  Creates a new EContext object initialized with an unlimited exponent range,
  and the given rounding mode and maximum precision.
-* `static EContext ForRounding​(ERounding rounding)`<br>
+* `static EContext ForRounding​(ERounding rounding)`<br>
  Creates a new EContext object initialized with an unlimited precision, an
  unlimited exponent range, and the given rounding mode.
 * `boolean getAdjustExponent()`<br>
@@ -139,40 +139,40 @@ Contains parameters for controlling the precision, rounding, and exponent
  bits, rather than digits.
 * `boolean isSimplified()`<br>
  Gets a value indicating whether to use a "simplified" arithmetic.
-* `void setFlags​(int value)`<br>
+* `void setFlags​(int value)`<br>
 * `String toString()`<br>
  Gets a string representation of this object.
-* `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
+* `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
-* `EContext WithBigExponentRange​(EInteger exponentMin,
-                    EInteger exponentMax)`<br>
+* `EContext WithBigExponentRange​(EInteger exponentMin,
+                    EInteger exponentMax)`<br>
  Copies this arithmetic context and sets the copy's exponent range.
-* `EContext WithBigPrecision​(EInteger bigintPrecision)`<br>
+* `EContext WithBigPrecision​(EInteger bigintPrecision)`<br>
  Copies this EContext and gives it a particular precision value.
 * `EContext WithBlankFlags() HasFlags`<br>
  Copies this EContext with HasFlags set to true and a Flags value of
  0.
-* `EContext WithExponentClamp​(boolean clamp)`<br>
+* `EContext WithExponentClamp​(boolean clamp)`<br>
  Copies this arithmetic context and sets the copy's "ClampNormalExponents"
  flag to the given value.
-* `EContext WithExponentRange​(int exponentMinSmall,
-                 int exponentMaxSmall)`<br>
+* `EContext WithExponentRange​(int exponentMinSmall,
+                 int exponentMaxSmall)`<br>
  Copies this arithmetic context and sets the copy's exponent range.
 * `EContext WithNoFlags() HasFlags`<br>
  Copies this EContext with HasFlags set to false and a Flags value of
  0.
-* `EContext WithPrecision​(int precision)`<br>
+* `EContext WithPrecision​(int precision)`<br>
  Copies this EContext and gives it a particular precision value.
-* `EContext WithPrecisionInBits​(boolean isPrecisionBits)`<br>
+* `EContext WithPrecisionInBits​(boolean isPrecisionBits)`<br>
  Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
  given value.
-* `EContext WithRounding​(ERounding rounding)`<br>
+* `EContext WithRounding​(ERounding rounding)`<br>
  Copies this EContext with the specified rounding mode.
-* `EContext WithSimplified​(boolean simplified)`<br>
+* `EContext WithSimplified​(boolean simplified)`<br>
  Copies this EContext and sets the copy's "IsSimplified" property to the
  given value.
-* `EContext WithTraps​(int traps)`<br>
+* `EContext WithTraps​(int traps)`<br>
  Copies this EContext with Traps set to the given value.
 * `EContext WithUnlimitedExponents()`<br>
  Copies this EContext with an unlimited exponent range.
@@ -239,7 +239,7 @@ An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision. The default rounding mode is HalfEven.
 ### CliDecimal
     public static final EContext CliDecimal
-An arithmetic context for the .NET Framework decimal format (see <code>"Forms of numbers" </code>), 96 bits
+An arithmetic context for the .NET Framework decimal format (see <code>"Forms of numbers"</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
  rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
  Language Infrastructure", which defined this format as the .NET
@@ -525,7 +525,7 @@ Gets a string representation of this object. Note that the string's format
 
 **Overrides:**
 
-* <code>toString</code>&nbsp;in class&nbsp;<code>Object</code>
+* <code>toString</code> in class <code>Object</code>
 
 **Returns:**
 

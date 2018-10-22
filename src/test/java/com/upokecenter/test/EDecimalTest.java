@@ -2285,10 +2285,10 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsZero() {
-      if (EDecimal.NaN.isZero()) {
+      if (EDecimal.NaN.IsZero) {
  Assert.fail();
  }
-      if (EDecimal.SignalingNaN.isZero()) {
+      if (EDecimal.SignalingNaN.IsZero) {
  Assert.fail();
  }
     }

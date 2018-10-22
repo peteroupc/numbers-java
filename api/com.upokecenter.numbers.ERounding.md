@@ -45,7 +45,7 @@ Specifies the mode to use when "shortening" numbers that otherwise can't fit
 
 ## Methods
 
-* `static ERounding valueOf​(String name)`<br>
+* `static ERounding valueOf​(String name)`<br>
  Returns the enum constant of this type with the specified name.
 * `static ERounding[] values()`<br>
  Returns an array containing the constants of this enum type, in

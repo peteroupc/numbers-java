@@ -677,10 +677,10 @@ public void TestPrecisionOneHalfEven() {
     }
     @Test
     public void TestIsZero() {
-      if (EFloat.NaN.isZero()) {
+      if (EFloat.NaN.IsZero) {
  Assert.fail();
  }
-      if (EFloat.SignalingNaN.isZero()) {
+      if (EFloat.SignalingNaN.IsZero) {
  Assert.fail();
  }
     }

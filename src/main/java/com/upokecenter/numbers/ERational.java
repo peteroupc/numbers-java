@@ -16,7 +16,7 @@ at: http://peteroupc.github.io/
      * threads. Multiple instances of this object with the same properties
      * are interchangeable, so they should not be compared using the "=="
      * operator (which might only check if each side of the operator is the
-     * same instance). </p>
+     * same instance).</p>
      */
   public final class ERational implements Comparable<ERational> {
     private static final int MaxSafeInt = 214748363;
@@ -134,7 +134,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets this object's denominator.
-     * @return This object's denominator.
+     * @return This object' s denominator.
      */
     public final EInteger getDenominator() {
         return this.denominator;
@@ -161,10 +161,7 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     * Gets a value indicating whether this object's value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object's value equals 0; otherwise, .
-     * {@code false}.
+     *
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -173,7 +170,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets this object's numerator.
-     * @return This object's numerator. If this object is a not-a-number value,
+     * @return This object' s numerator. If this object is a not-a-number value,
      * returns the diagnostic information (which will be negative if this
      * object is negative).
      */
@@ -1374,7 +1371,7 @@ at: http://peteroupc.github.io/
      * class).
      * @return {@code true} if this object is a signaling not-a-number value (which
      * causes an error if the value is passed to any arithmetic operation in
-     * this class); otherwise, {@code false}.
+     * this class); otherwise, {@code false} .
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;

@@ -790,25 +790,25 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsZero() {
-      if (!(ERational.NegativeZero.isZero())) {
+      if (!(ERational.NegativeZero.IsZero)) {
  Assert.fail();
  }
-      if (!(ERational.Zero.isZero())) {
+      if (!(ERational.Zero.IsZero)) {
  Assert.fail();
  }
-      if (ERational.One.isZero()) {
+      if (ERational.One.IsZero) {
  Assert.fail();
  }
-      if (ERational.NegativeInfinity.isZero()) {
+      if (ERational.NegativeInfinity.IsZero) {
  Assert.fail();
  }
-      if (ERational.PositiveInfinity.isZero()) {
+      if (ERational.PositiveInfinity.IsZero) {
  Assert.fail();
  }
-      if (ERational.NaN.isZero()) {
+      if (ERational.NaN.IsZero) {
  Assert.fail();
  }
-      if (ERational.SignalingNaN.isZero()) {
+      if (ERational.SignalingNaN.IsZero) {
  Assert.fail();
  }
     }

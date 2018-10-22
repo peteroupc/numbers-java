@@ -8,15 +8,15 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  of this class are immutable, so they are inherently safe for use by
  multiple threads. Multiple instances of this object with the same
  value are interchangeable, but they should be compared using the
- "Equals" method rather than the "==" operator. </p>
+ "Equals" method rather than the "==" operator.</p>
 
 ## Methods
 
 * `EInteger Abs()`<br>
  Returns the absolute value of this object's value.
-* `EInteger Add​(int intValue)`<br>
+* `EInteger Add​(int intValue)`<br>
  Adds this object and another object.
-* `EInteger Add​(EInteger bigintAugend)`<br>
+* `EInteger Add​(EInteger bigintAugend)`<br>
  Adds this object and another object.
 * `int AsInt32Checked()`<br>
  Deprecated.
@@ -38,47 +38,47 @@ Renamed to ToInt64Unchecked.
  Returns whether this object's value can fit in a 32-bit signed integer.
 * `boolean CanFitInInt64()`<br>
  Returns whether this object's value can fit in a 64-bit signed integer.
-* `int compareTo​(int intValue)`<br>
+* `int compareTo​(int intValue)`<br>
  Compares an arbitrary-precision integer with this instance.
-* `int compareTo​(EInteger other)`<br>
+* `int compareTo​(EInteger other)`<br>
  Compares an arbitrary-precision integer with this instance.
-* `EInteger Divide​(int intValue)`<br>
+* `EInteger Divide​(int intValue)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
-* `EInteger Divide​(EInteger bigintDivisor)`<br>
+* `EInteger Divide​(EInteger bigintDivisor)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
-* `EInteger[] DivRem​(EInteger divisor)`<br>
+* `EInteger[] DivRem​(EInteger divisor)`<br>
  Divides this object by another arbitrary-precision integer and returns the
  quotient and remainder.
-* `boolean equals​(Object obj)`<br>
+* `boolean equals​(Object obj)`<br>
  Determines whether this object and another object are equal and have the
  same type.
-* `static EInteger FromByte​(byte inputByte)`<br>
+* `static EInteger FromByte​(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision integer.
-* `static EInteger FromBytes​(byte[] bytes,
-         boolean littleEndian)`<br>
+* `static EInteger FromBytes​(byte[] bytes,
+         boolean littleEndian)`<br>
  Initializes an arbitrary-precision integer from an array of bytes.
-* `static EInteger FromInt16​(short inputInt16)`<br>
+* `static EInteger FromInt16​(short inputInt16)`<br>
  Converts a 16-bit signed integer to an arbitrary-precision integer.
-* `static EInteger FromInt32​(int intValue)`<br>
+* `static EInteger FromInt32​(int intValue)`<br>
  Converts a 32-bit signed integer to an arbitrary-precision integer.
-* `static EInteger FromInt64​(long longerValue)`<br>
+* `static EInteger FromInt64​(long longerValue)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision integer.
-* `static EInteger FromRadixString​(String str,
-               int radix)`<br>
+* `static EInteger FromRadixString​(String str,
+               int radix)`<br>
  Converts a string to an arbitrary-precision integer in a given radix.
-* `static EInteger FromRadixSubstring​(String str,
-                  int radix,
-                  int index,
-                  int endIndex)`<br>
+* `static EInteger FromRadixSubstring​(String str,
+                  int radix,
+                  int index,
+                  int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer in a given
  radix.
-* `static EInteger FromString​(String str)`<br>
+* `static EInteger FromString​(String str)`<br>
  Converts a string to an arbitrary-precision integer.
-* `static EInteger FromSubstring​(String str,
-             int index,
-             int endIndex)`<br>
+* `static EInteger FromSubstring​(String str,
+             int index,
+             int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer.
-* `EInteger Gcd​(EInteger bigintSecond)`<br>
+* `EInteger Gcd​(EInteger bigintSecond)`<br>
  Returns the greatest common divisor of this integer and the given integer.
 * `int GetDigitCount()`<br>
  Returns the number of decimal digits used by this integer.
@@ -88,7 +88,7 @@ Renamed to ToInt64Unchecked.
  Gets the lowest set bit in this number's absolute value.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
-* `boolean GetSignedBit​(int index) "Forms of numbers"`<br>
+* `boolean GetSignedBit​(int index) "Forms of numbers"`<br>
  Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
  object' s value.
 * `int GetSignedBitLength()`<br>
@@ -96,7 +96,7 @@ Renamed to ToInt64Unchecked.
  except for its sign.
 * `static EInteger getTen()`<br>
  Gets the number 10 as an arbitrary-precision integer.
-* `boolean GetUnsignedBit​(int index)`<br>
+* `boolean GetUnsignedBit​(int index)`<br>
  Returns whether a bit is set in this number's absolute value.
 * `int GetUnsignedBitLength()`<br>
  Finds the minimum number of bits needed to represent this number's absolute
@@ -113,37 +113,36 @@ Renamed to ToInt64Unchecked.
 * `boolean isPowerOfTwo()`<br>
  Gets a value indicating whether this object's value is a power of two.
 * `boolean isZero()`<br>
- Gets a value indicating whether this value is 0.
-* `EInteger Mod​(EInteger divisor)`<br>
+* `EInteger Mod​(EInteger divisor)`<br>
  Finds the modulus remainder that results when this instance is divided by
  the value of an arbitrary-precision integer.
-* `EInteger ModPow​(EInteger pow,
-      EInteger mod)`<br>
+* `EInteger ModPow​(EInteger pow,
+      EInteger mod)`<br>
  Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
-* `EInteger Multiply​(int intValue)`<br>
+* `EInteger Multiply​(int intValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
  object.
-* `EInteger Multiply​(EInteger bigintMult)`<br>
+* `EInteger Multiply​(EInteger bigintMult)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
  object.
 * `EInteger Negate()`<br>
  Gets the value of this object with the sign reversed.
-* `EInteger Pow​(int powerSmall)`<br>
+* `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
-* `EInteger PowBigIntVar​(EInteger power)`<br>
+* `EInteger PowBigIntVar​(EInteger power)`<br>
  Raises an arbitrary-precision integer to a power, which is given as another
  arbitrary-precision integer.
-* `EInteger Remainder​(int intValue)`<br>
+* `EInteger Remainder​(int intValue)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision integer.
-* `EInteger Remainder​(EInteger divisor)`<br>
+* `EInteger Remainder​(EInteger divisor)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision integer.
-* `EInteger ShiftLeft​(int numberBits)`<br>
+* `EInteger ShiftLeft​(int numberBits)`<br>
  Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits.
-* `EInteger ShiftRight​(int numberBits)`<br>
+* `EInteger ShiftRight​(int numberBits)`<br>
  Returns an arbitrary-precision integer with the bits shifted to the right.
 * `int signum()`<br>
  Gets the sign of this object's value.
@@ -151,16 +150,16 @@ Renamed to ToInt64Unchecked.
  Finds the square root of this instance's value, rounded down.
 * `EInteger[] SqrtRem()`<br>
  Calculates the square root and the remainder.
-* `EInteger Subtract​(int intValue)`<br>
+* `EInteger Subtract​(int intValue)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer.
-* `EInteger Subtract​(EInteger subtrahend)`<br>
+* `EInteger Subtract​(EInteger subtrahend)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255).
-* `byte[] ToBytes​(boolean littleEndian)`<br>
+* `byte[] ToBytes​(boolean littleEndian)`<br>
  Returns a byte array of this integer's value.
 * `byte ToByteUnchecked()`<br>
  Converts this number to a byte (from 0 to 255), returning the
@@ -181,7 +180,7 @@ Renamed to ToInt64Unchecked.
  exception if it can't fit.
 * `long ToInt64Unchecked()`<br>
  Converts this object's value to a 64-bit signed integer.
-* `String ToRadixString​(int radix)`<br>
+* `String ToRadixString​(int radix)`<br>
  Generates a string representing the value of this object, in the given
  radix.
 * `String toString()`<br>
@@ -228,24 +227,18 @@ Gets a value indicating whether this object's value is a power of two.
 **Returns:**
 
 * <code>true</code> if this object's value is a power of two; otherwise,
- <code>false</code>. <code>true</code> if this object's value is a power of two;
- otherwise, <code>false</code>.
+ <code>false</code>. <code>true</code> if this object' s value is a power of
+ two; otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
-Gets a value indicating whether this value is 0.
-
-**Returns:**
-
-* <code>true</code> if this value is 0; otherwise, <code>false</code> .
-
 ### signum
     public final int signum()
 Gets the sign of this object's value.
 
 **Returns:**
 
-* The sign of this object's value.
+* The sign of this object' s value.
 
 ### FromBytes
     public static EInteger FromBytes​(byte[] bytes, boolean littleEndian)
@@ -419,11 +412,6 @@ Deprecated.
 
 * A 32-bit signed integer.
 
-**Throws:**
-
-* <code>ArithmeticException</code> - This object's value is too big to fit a
- 32-bit signed integer.
-
 ### AsInt32Unchecked
     @Deprecated public int AsInt32Unchecked()
 Deprecated.
@@ -441,11 +429,6 @@ Deprecated.
 **Returns:**
 
 * A 64-bit signed integer.
-
-**Throws:**
-
-* <code>ArithmeticException</code> - This object's value is too big to fit a
- 64-bit signed integer.
 
 ### AsInt64Unchecked
     @Deprecated public long AsInt64Unchecked()
@@ -480,7 +463,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Specified by:**
 
-* <code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;EInteger&gt;</code>
+* <code>compareTo</code> in interface <code>Comparable&lt;EInteger&gt;</code>
 
 **Parameters:**
 
@@ -653,7 +636,7 @@ Determines whether this object and another object are equal and have the
 
 **Overrides:**
 
-* <code>equals</code>&nbsp;in class&nbsp;<code>Object</code>
+* <code>equals</code> in class <code>Object</code>
 
 **Parameters:**
 
@@ -699,7 +682,7 @@ Returns the hash code for this instance. No application or process IDs are
 
 **Overrides:**
 
-* <code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code>
+* <code>hashCode</code> in class <code>Object</code>
 
 **Returns:**
 
@@ -730,11 +713,11 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Parameters:**
 
-* <code>index</code> - The parameter <code>index</code> is not documented yet.
+* <code>index</code> - The parameter <code>index</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* <code>true</code> if a bit is set in the two's-complement form (see
+* <code>true</code> if a bit is set in the two' s-complement form (see
  <code>EDecimal</code>) of this object' s value;
  otherwise, <code>false</code>.
 
@@ -972,8 +955,7 @@ Returns a byte array of this integer's value. The byte array will take the
 
 **Parameters:**
 
-* <code>littleEndian</code> - The parameter <code>littleEndian</code> is not documented
- yet.
+* <code>littleEndian</code> - Either <code>true</code> or <code>false</code> .
 
 **Returns:**
 
@@ -988,11 +970,6 @@ Converts this object's value to a 32-bit signed integer, throwing an
 **Returns:**
 
 * A 32-bit signed integer.
-
-**Throws:**
-
-* <code>ArithmeticException</code> - This object's value is too big to fit a
- 32-bit signed integer.
 
 ### ToInt32Unchecked
     public int ToInt32Unchecked()
@@ -1013,11 +990,6 @@ Converts this object's value to a 64-bit signed integer, throwing an
 **Returns:**
 
 * A 64-bit signed integer.
-
-**Throws:**
-
-* <code>ArithmeticException</code> - This object's value is too big to fit a
- 64-bit signed integer.
 
 ### ToInt64Unchecked
     public long ToInt64Unchecked()
@@ -1054,7 +1026,7 @@ Converts this object to a text string in base 10.
 
 **Overrides:**
 
-* <code>toString</code>&nbsp;in class&nbsp;<code>Object</code>
+* <code>toString</code> in class <code>Object</code>
 
 **Returns:**
 

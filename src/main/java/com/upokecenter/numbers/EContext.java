@@ -15,14 +15,14 @@ at: http://peteroupc.github.io/
      * safety:</b> With one exception, instances of this class are immutable
      * and are safe to use among multiple threads. The one exception
      * involves the <code>Flags</code> property. If the context's <code>HasFlags</code>
-     * property (a read-only property) is <code>true</code> , the <code>Flags</code>
+     * property (a read-only property) is <code>true</code>, the <code>Flags</code>
      * property is mutable, thus making the context mutable. This class
      * doesn't synchronize access to such mutable contexts, so applications
      * should provide their own synchronization if a context with the
      * <code>HasFlags</code> property set to <code>true</code> will be shared among
      * multiple threads and at least one of those threads needs to write the
      * <code>Flags</code> property (which can happen, for example, by passing the
-     * context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p>
+     * context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
      */
   public final class EContext {
     /**
@@ -135,7 +135,7 @@ at: http://peteroupc.github.io/
 
     /**
      * An arithmetic context for the .NET Framework decimal format (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers" }), 96 bits
+     * com.upokecenter.numbers.EDecimal "Forms of numbers"}), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
      * rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
      * Language Infrastructure", which defined this format as the .NET

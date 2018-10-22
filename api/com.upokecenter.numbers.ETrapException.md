@@ -8,9 +8,9 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 ## Methods
 
-* `ETrapException​(int flag,
-              EContext ctx,
-              Object result) ETrapException`<br>
+* `ETrapException​(int flag,
+              EContext ctx,
+              Object result) ETrapException`<br>
  Initializes a new instance of the ETrapException class.
 * `EContext getContext()`<br>
  Gets the arithmetic context used during the operation that triggered the
@@ -22,9 +22,9 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 ## Constructors
 
-* `ETrapException​(int flag,
-              EContext ctx,
-              Object result) ETrapException`<br>
+* `ETrapException​(int flag,
+              EContext ctx,
+              Object result) ETrapException`<br>
  Initializes a new instance of the ETrapException class.
 
 ## Method Details

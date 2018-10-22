@@ -18,43 +18,42 @@ at: http://peteroupc.github.io/
      * <p>Passing a signaling NaN to any arithmetic operation shown here
      * will signal the flag FlagInvalid and return a quiet NaN, even if
      * another operand to that operation is a quiet NaN, unless noted
-     * otherwise. </p> <p>Passing a quiet NaN to any arithmetic operation
-     * shown here will return a quiet NaN, unless noted otherwise. </p>
+     * otherwise.</p> <p>Passing a quiet NaN to any arithmetic operation
+     * shown here will return a quiet NaN, unless noted otherwise.</p>
      * <p>Unless noted otherwise, passing a null arbitrary-precision binary
-     * float argument to any method here will throw an exception. </p>
+     * float argument to any method here will throw an exception.</p>
      * <p>When an arithmetic operation signals the flag FlagInvalid,
      * FlagOverflow, or FlagDivideByZero, it will not throw an exception
      * too, unless the operation's trap is enabled in the precision context
-     * (see EContext's Traps property). </p> <p>An arbitrary-precision
-     * binary float value can be serialized in one of the following ways:
-     * </p> <ul> <li>By calling the toString() method. However, not all
-     * strings can be converted back to an arbitrary-precision binary float
-     * without loss, especially if the string has a fractional part. </li>
-     * <li>By calling the UnsignedMantissa, Exponent, and IsNegative
-     * properties, and calling the IsInfinity, IsQuietNaN, and
-     * IsSignalingNaN methods. The return values combined will uniquely
-     * identify a particular arbitrary-precision binary float value. </li>
-     * </ul> <p>If an operation requires creating an intermediate value that
-     * might be too big to fit in memory (or might require more than 2
-     * gigabytes of memory to store -- due to the current use of a 32-bit
-     * integer internally as a length), the operation may signal an
-     * invalid-operation flag and return not-a-number (NaN). In certain rare
-     * cases, the compareTo method may throw OutOfMemoryError (called
-     * OutOfMemoryError in Java) in the same circumstances. </p>
-     * <p><b>Thread safety</b> </p> <p>Instances of this class are
-     * immutable, so they are inherently safe for use by multiple threads.
-     * Multiple instances of this object with the same properties are
-     * interchangeable, so they should not be compared using the "=="
-     * operator (which might only check if each side of the operator is the
-     * same instance). </p> <p><b>Comparison considerations</b> </p> <p>This
-     * class's natural ordering (under the compareTo method) is not
-     * consistent with the Equals method. This means that two values that
-     * compare as equal under the compareTo method might not be equal under
-     * the Equals method. The compareTo method compares the mathematical
-     * values of the two instances passed to it (and considers two different
-     * NaN values as equal), while two instances with the same mathematical
-     * value, but different exponents, will be considered unequal under the
-     * Equals method. </p>
+     * (see EContext's Traps property).</p> <p>An arbitrary-precision binary
+     * float value can be serialized in one of the following ways:</p> <ul>
+     * <li>By calling the toString() method. However, not all strings can be
+     * converted back to an arbitrary-precision binary float without loss,
+     * especially if the string has a fractional part.</li> <li>By calling
+     * the UnsignedMantissa, Exponent, and IsNegative properties, and
+     * calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The
+     * return values combined will uniquely identify a particular
+     * arbitrary-precision binary float value.</li></ul> <p>If an operation
+     * requires creating an intermediate value that might be too big to fit
+     * in memory (or might require more than 2 gigabytes of memory to store
+     * -- due to the current use of a 32-bit integer internally as a
+     * length), the operation may signal an invalid-operation flag and
+     * return not-a-number (NaN). In certain rare cases, the compareTo
+     * method may throw OutOfMemoryError (called OutOfMemoryError in
+     * Java) in the same circumstances.</p> <p><b>Thread safety</b></p>
+     * <p>Instances of this class are immutable, so they are inherently safe
+     * for use by multiple threads. Multiple instances of this object with
+     * the same properties are interchangeable, so they should not be
+     * compared using the "==" operator (which might only check if each side
+     * of the operator is the same instance).</p> <p><b>Comparison
+     * considerations</b></p> <p>This class's natural ordering (under the
+     * compareTo method) is not consistent with the Equals method. This
+     * means that two values that compare as equal under the compareTo
+     * method might not be equal under the Equals method. The compareTo
+     * method compares the mathematical values of the two instances passed
+     * to it (and considers two different NaN values as equal), while two
+     * instances with the same mathematical value, but different exponents,
+     * will be considered unequal under the Equals method.</p>
      */
   public final class EFloat implements Comparable<EFloat> {
     //----------------------------------------------------------------
@@ -147,7 +146,7 @@ at: http://peteroupc.github.io/
     /**
      * Gets this object's exponent. This object's value will be an integer if the
      * exponent is positive or zero.
-     * @return This object's exponent. This object's value will be an integer if
+     * @return This object's exponent. This object' s value will be an integer if
      * the exponent is positive or zero.
      */
     public final EInteger getExponent() {
@@ -175,10 +174,7 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     * Gets a value indicating whether this object's value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object's value equals 0; otherwise, .
-     * {@code false}.
+     *
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -187,7 +183,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets this object's unscaled value.
-     * @return This object's unscaled value. Will be negative if this object's
+     * @return This object' s unscaled value. Will be negative if this object's
      * value is negative (including a negative NaN).
      */
     public final EInteger getMantissa() {
@@ -440,11 +436,11 @@ at: http://peteroupc.github.io/
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @param ctx The parameter {@code ctx} is an EContext object.
      * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is
-     * less than 0 or greater than {@code str} 's length, or {@code str} 's
+     * less than 0 or greater than {@code str} 's length, or {@code str} ' s
      * length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
@@ -497,10 +493,13 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision binary float.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
-     * less than 0 or greater than {@code str} 's length, or {@code str} ' s
-     * length minus {@code offset} is less than {@code length}.
+     * @throws T:java.lang.IllegalArgumentException Either {@code offset} or {@code length}
+     * is less than 0 or greater than {@code str} 's length, or {@code str}
+     * ' s length minus {@code offset} is less than {@code length} .
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
+     * or greater than "str"'s length, or "str"'s length minus "offset" is
+     * less than "length".
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -1070,8 +1069,8 @@ at: http://peteroupc.github.io/
      * Divides this object by another object, and returns the integer part of the
      * result (which is initially rounded down), with the preferred exponent
      * set to this value's exponent minus the divisor's exponent.
-     * @param divisor The number to divide by.
-     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @param divisor An arbitrary-precision binary floating-point number.
+     * @param ctx The parameter {@code ctx} is an EContext object.
      * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat DivideToIntegerNaturalScale(
@@ -1703,7 +1702,7 @@ at: http://peteroupc.github.io/
      * binary arithmetic, in which a fixed number of digits come after the
      * radix point. A fixed-point binary arithmetic in which no digits come
      * after the radix point (a desired exponent of 0) is considered an
-     * "integer arithmetic".</p>
+     * "integer arithmetic" .</p>
      * @param otherValue The parameter {@code otherValue} is not documented yet.
      * @param ctx The parameter {@code ctx} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
@@ -1733,8 +1732,8 @@ at: http://peteroupc.github.io/
      * absolute value of this object is divided by the absolute value of the
      * other object; the remainder has the same sign (positive or negative)
      * as this object's value.
-     * @param divisor The number to divide by.
-     * @param ctx The parameter {@code ctx} is not documented yet.
+     * @param divisor An arbitrary-precision binary floating-point number.
+     * @param ctx The parameter {@code ctx} is an EContext object.
      * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Remainder(
@@ -2063,7 +2062,6 @@ at: http://peteroupc.github.io/
     /**
      * Converts this value to a 64-bit floating-point number.
      * @return A 64-bit floating-point number.
-     * @throws IllegalArgumentException "Doesn't satisfy bitLength<= 53".
      */
     public double ToDouble() {
       if (this.IsPositiveInfinity()) {
@@ -2111,7 +2109,6 @@ at: http://peteroupc.github.io/
       // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
       // thisValue.exponent));
       int bitLength = mant.GetUnsignedBitLength();
-
       int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
       if (bitLength < 53) {
@@ -2304,7 +2301,6 @@ at: http://peteroupc.github.io/
      * implementation, the return value of this method may be a quiet NaN
      * even if a signaling NaN would otherwise be generated.</p>
      * @return A 32-bit floating-point number.
-     * @throws IllegalArgumentException "Doesn't satisfy bitLength<= 24".
      */
     public float ToSingle() {
       if (this.IsPositiveInfinity()) {
@@ -2351,7 +2347,6 @@ at: http://peteroupc.github.io/
       // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
       // thisValue.exponent));
       int bitLength = mant.GetUnsignedBitLength();
-
       int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
       if (bitLength < 24) {

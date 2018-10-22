@@ -1,352 +1,225 @@
-# com.upokecenter.numbers.EDecimal
+# com.upokecenter.numbers.EFloat
 
-    public final class EDecimal extends Object implements Comparable<EDecimal>
+    public final class EFloat extends Object implements Comparable<EFloat>
 
-Represents an arbitrary-precision decimal floating-point number. (The "E"
+Represents an arbitrary-precision binary floating-point number. (The "E"
  stands for "extended", meaning that instances of this class can be
  values other than numbers proper, such as infinity and not-a-number.)
- <p><b>About decimal arithmetic</b> </p> <p>Decimal (base-10)
- arithmetic, such as that provided by this class, is appropriate for
- calculations involving such real-world data as prices and other sums
- of money, tax rates, and measurements. These calculations often
- involve multiplying or dividing one decimal with another decimal, or
- performing other operations on decimal numbers. Many of these
- calculations also rely on rounding behavior in which the result after
- rounding is a decimal number (for example, multiplying a price by a
- premium rate, then rounding, should result in a decimal amount of
- money).</p> <p>On the other hand, most implementations of
- <code>float</code> and <code>double</code> , including in C# and Java, store
- numbers in a binary (base-2) floating-point format and use binary
- floating-point arithmetic. Many decimal numbers can't be represented
- exactly in binary floating-point format (regardless of its length).
- Applying binary arithmetic to numbers intended to be decimals can
- sometimes lead to unintuitive results, as is shown in the description
- for the FromDouble() method of this class.</p> <p><b>About EDecimal
- instances</b> </p> <p>Each instance of this class consists of an
- integer mantissa (significand) and an integer exponent, both
- arbitrary-precision. The value of the number equals mantissa
- (significand) * 10^exponent.</p> <p>The mantissa (significand) is the
- value of the digits that make up a number, ignoring the decimal point
- and exponent. For example, in the number 2356.78, the mantissa
- (significand) is 235678. The exponent is where the "floating" decimal
- point of the number is located. A positive exponent means "move it to
- the right", and a negative exponent means "move it to the left." In
- the example 2, 356.78, the exponent is -2, since it has 2 decimal
- places and the decimal point is "moved to the left by 2." Therefore,
- in the arbitrary-precision decimal representation, this number would
- be stored as 235678 * 10^-2.</p> <p>The mantissa (significand) and
- exponent format preserves trailing zeros in the number's value. This
- may give rise to multiple ways to store the same value. For example,
- 1.00 and 1 would be stored differently, even though they have the
- same value. In the first case, 100 * 10^-2 (100 with decimal point
- moved left by 2), and in the second case, 1 * 10^0 (1 with decimal
- point moved 0).</p> <p>This class also supports values for negative
- zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b>
- is generally used when a negative number is rounded to 0; it has the
- same mathematical value as positive zero. <b>Infinity</b> is
- generally used when a non-zero number is divided by zero, or when a
- very high or very low number can't be represented in a given exponent
- range. <b>Not-a-number</b> is generally used to signal errors.</p>
- <p>This class implements the General Decimal Arithmetic Specification
- version 1.70 (except part of chapter 6):
- <code>http://speleotrove.com/decimal/decarith.html</code> </p> <p><b>Errors
- and Exceptions</b> </p> <p>Passing a signaling NaN to any arithmetic
- operation shown here will signal the flag FlagInvalid and return a
- quiet NaN, even if another operand to that operation is a quiet NaN,
- unless noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
- operation shown here will return a quiet NaN, unless noted otherwise.
- Invalid operations will also return a quiet NaN, as stated in the
- individual methods.</p> <p>Unless noted otherwise, passing a null
- arbitrary-precision decimal argument to any method here will throw an
- exception.</p> <p>When an arithmetic operation signals the flag
- FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an
- exception too, unless the flag's trap is enabled in the arithmetic
- context (see EContext's Traps property).</p> <p>If an operation
+ Each number consists of an integer mantissa (significand) and an
+ integer exponent, both arbitrary-precision. The value of the number
+ equals mantissa (significand) * 2^exponent. This class also supports
+ values for negative zero, not-a-number (NaN) values, and infinity.
+ <p>Passing a signaling NaN to any arithmetic operation shown here
+ will signal the flag FlagInvalid and return a quiet NaN, even if
+ another operand to that operation is a quiet NaN, unless noted
+ otherwise.</p> <p>Passing a quiet NaN to any arithmetic operation
+ shown here will return a quiet NaN, unless noted otherwise.</p>
+ <p>Unless noted otherwise, passing a null arbitrary-precision binary
+ float argument to any method here will throw an exception.</p>
+ <p>When an arithmetic operation signals the flag FlagInvalid,
+ FlagOverflow, or FlagDivideByZero, it will not throw an exception
+ too, unless the operation's trap is enabled in the precision context
+ (see EContext's Traps property).</p> <p>An arbitrary-precision binary
+ float value can be serialized in one of the following ways:</p> <ul>
+ <li>By calling the toString() method. However, not all strings can be
+ converted back to an arbitrary-precision binary float without loss,
+ especially if the string has a fractional part.</li> <li>By calling
+ the UnsignedMantissa, Exponent, and IsNegative properties, and
+ calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The
+ return values combined will uniquely identify a particular
+ arbitrary-precision binary float value.</li></ul> <p>If an operation
  requires creating an intermediate value that might be too big to fit
  in memory (or might require more than 2 gigabytes of memory to store
  -- due to the current use of a 32-bit integer internally as a
  length), the operation may signal an invalid-operation flag and
  return not-a-number (NaN). In certain rare cases, the compareTo
  method may throw OutOfMemoryError (called OutOfMemoryError in
- Java) in the same circumstances.</p> <p><b>Serialization</b> </p>
- <p>An arbitrary-precision decimal value can be serialized (converted
- to a stable format) in one of the following ways:</p> <ul><li>By
- calling the toString() method, which will always return distinct
- strings for distinct arbitrary-precision decimal values.</li> <li>By
- calling the UnsignedMantissa, Exponent, and IsNegative properties,
- and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN methods.
- The return values combined will uniquely identify a particular
- arbitrary-precision decimal value.</li> </ul> <p><b>Thread safety</b>
- </p> <p>Instances of this class are immutable, so they are inherently
- safe for use by multiple threads. Multiple instances of this object
- with the same properties are interchangeable, so they should not be
+ Java) in the same circumstances.</p> <p><b>Thread safety</b></p>
+ <p>Instances of this class are immutable, so they are inherently safe
+ for use by multiple threads. Multiple instances of this object with
+ the same properties are interchangeable, so they should not be
  compared using the "==" operator (which might only check if each side
  of the operator is the same instance).</p> <p><b>Comparison
- considerations</b> </p> <p>This class's natural ordering (under the
+ considerations</b></p> <p>This class's natural ordering (under the
  compareTo method) is not consistent with the Equals method. This
  means that two values that compare as equal under the compareTo
  method might not be equal under the Equals method. The compareTo
  method compares the mathematical values of the two instances passed
  to it (and considers two different NaN values as equal), while two
  instances with the same mathematical value, but different exponents,
- will be considered unequal under the Equals method.</p> <p><b>Forms
- of numbers</b> </p> <p>There are several other types of numbers that
- are mentioned in this class and elsewhere in this documentation. For
- reference, they are specified here.</p> <p><b>Unsigned integer</b> :
- An integer that's always 0 or greater, with the following maximum
- values:</p> <ul><li>8-bit unsigned integer, or <i>byte</i> :
- 255.</li> <li>16-bit unsigned integer: 65535.</li> <li>32-bit
- unsigned integer: (2 <sup>32</sup> -1).</li> <li>64-bit unsigned
- integer: (2 <sup>64</sup> -1).</li> </ul> <p><b>Signed integer</b> :
- An integer in <i>two's-complement form</i> , with the following
- ranges:</p> <ul><li>8-bit signed integer: -128 to 127.</li>
- <li>16-bit signed integer: -32768 to 32767.</li> <li>32-bit signed
- integer: -2 <sup>31</sup> to (2 <sup>31</sup> - 1).</li> <li>64-bit
- signed integer: -2 <sup>63</sup> to (2 <sup>63</sup> - 1).</li> </ul>
- <p><b>Two's complement form</b> : In <i>two' s-complement form</i> ,
- nonnegative numbers have the highest (most significant) bit set to
- zero, and negative numbers have that bit (and all bits beyond) set to
- one, and a negative number is stored in such form by decreasing its
- absolute value by 1 and swapping the bits of the resulting
- number.</p> <p><b>64-bit floating-point number</b> : A 64-bit binary
- floating-point number, in the form <i>significand</i> * 2
- <sup><i>exponent</i> </sup> . The significand is 53 bits long
- (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax).
- The number is stored in the following format (commonly called the
- IEEE 754 format):</p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA| </pre>
- <ul><li>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the
- significand.</li> <li>B. Next 11 bits: Exponent area: <ul><li>If all
- bits are ones, this value is infinity if all bits in area A are
- zeros, or not-a-number (NaN) otherwise.</li> <li>If all bits are
- zeros, this is a subnormal number. The exponent is EMin and the
- highest bit of the significand is zero.</li> <li>If any other number,
- the exponent is this value reduced by 1, then raised by EMin, and the
- highest bit of the significand is one.</li> </ul> </li> <li>C.
- Highest bit: If one, this is a negative number.</li> </ul> <p>The
- elements described above are in the same order as the order of each
- bit of each element, that is, either most significant first or least
- significant first.</p> <p><b>32-bit binary floating-point number</b>
- : A 32-bit binary number which is stored similarly to a <i>64-bit
- floating-point number</i> , except that:</p> <ul><li>Precision is 24
- bits.</li> <li>EMin is -149.</li> <li>EMax is 104.</li> <li>A. The
- low 23 bits (Precision minus 1 bits) are the lowest bits of the
- significand.</li> <li>B. The next 8 bits are the exponent area.</li>
- <li>C. If the highest bit is one, this is a negative number.</li>
- </ul> <p><b>.NET Framework decimal</b> : A 128-bit decimal
- floating-point number, in the form <i>significand</i> * 10 <sup>-
- <i>scale</i> </sup> , where the scale ranges from 0 to 28. The number
- is stored in the following format:</p> <ul><li>Low 96 bits are the
- significand, as a 96-bit unsigned integer (all 96-bit values are
- allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16 bits are
- unused.</li> <li>Next 8 bits are the scale, stored as an 8-bit
- unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If the
- highest bit is one, it's a negative number.</li> </ul> <p>The
- elements described above are in the same order as the order of each
- bit of each element, that is, either most significant first or least
- significant first.</p>
+ will be considered unequal under the Equals method.</p>
 
 ## Fields
 
-* `static EDecimal NaN`<br>
+* `static EFloat NaN`<br>
  A not-a-number value.
-* `static EDecimal NegativeInfinity`<br>
+* `static EFloat NegativeInfinity`<br>
  Negative infinity, less than any other number.
-* `static EDecimal NegativeZero`<br>
+* `static EFloat NegativeZero`<br>
  Represents the number negative zero.
-* `static EDecimal One`<br>
+* `static EFloat One`<br>
  Represents the number 1.
-* `static EDecimal PositiveInfinity`<br>
+* `static EFloat PositiveInfinity`<br>
  Positive infinity, greater than any other number.
-* `static EDecimal SignalingNaN`<br>
+* `static EFloat SignalingNaN`<br>
  A not-a-number value that signals an invalid operation flag when it's passed
  as an argument to any arithmetic operation in arbitrary-precision
- decimal.
-* `static EDecimal Ten`<br>
+ binary float.
+* `static EFloat Ten`<br>
  Represents the number 10.
-* `static EDecimal Zero`<br>
+* `static EFloat Zero`<br>
  Represents the number 0.
 
 ## Methods
 
-* `EDecimal Abs()`<br>
+* `EFloat Abs()`<br>
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
-* `EDecimal Abs​(EContext context)`<br>
+* `EFloat Abs​(EContext context)`<br>
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
-* `EDecimal Add​(EDecimal otherValue)`<br>
- Adds this object and another decimal number and returns the result.
-* `EDecimal Add​(EDecimal otherValue,
+* `EFloat Add​(EFloat otherValue)`<br>
+ Adds this object and another binary float and returns the result.
+* `EFloat Add​(EFloat otherValue,
    EContext ctx)`<br>
  Finds the sum of this object and another object.
-* `int compareTo​(EDecimal other)`<br>
+* `int compareTo​(EFloat other)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
-* `int CompareToBinary​(EFloat other)`<br>
- Compares an arbitrary-precision binary float with this instance.
-* `EDecimal CompareToSignal​(EDecimal other,
+* `EFloat CompareToSignal​(EFloat other,
                EContext ctx)`<br>
  Compares the mathematical values of this object and another object, treating
  quiet NaN as signaling.
-* `int CompareToTotal​(EDecimal other)`<br>
+* `int CompareToTotal​(EFloat other)`<br>
  Compares the values of this object and another object, imposing a total
  ordering on all possible values.
-* `int CompareToTotal​(EDecimal other,
+* `int CompareToTotal​(EFloat other,
               EContext ctx)`<br>
  Compares the values of this object and another object, imposing a total
  ordering on all possible values.
-* `int CompareToTotalMagnitude​(EDecimal other)`<br>
+* `int CompareToTotalMagnitude​(EFloat other)`<br>
  Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs).
-* `EDecimal CompareToWithContext​(EDecimal other,
+* `EFloat CompareToWithContext​(EFloat other,
                     EContext ctx)`<br>
  Compares the mathematical values of this object and another object.
-* `EDecimal CopySign​(EDecimal other)`<br>
+* `EFloat CopySign​(EFloat other)`<br>
  Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number.
-* `static EDecimal Create​(int mantissaSmall,
-      int exponentSmall) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa
-* `static EDecimal Create​(EInteger mantissa,
-      EInteger exponent) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa
-* `static EDecimal CreateNaN​(EInteger diag)`<br>
- Creates a not-a-number arbitrary-precision decimal number.
-* `static EDecimal CreateNaN​(EInteger diag,
+* `static EFloat Create​(int mantissaSmall,
+      int exponentSmall)`<br>
+ Creates a number with the value exponent*2^mantissa (significand).
+* `static EFloat Create​(EInteger mantissa,
+      EInteger exponent)`<br>
+ Creates a number with the value exponent*2^mantissa (significand).
+* `static EFloat CreateNaN​(EInteger diag)`<br>
+ Creates a not-a-number arbitrary-precision binary float.
+* `static EFloat CreateNaN​(EInteger diag,
          boolean signaling,
          boolean negative,
          EContext ctx)`<br>
- Creates a not-a-number arbitrary-precision decimal number.
-* `EDecimal Divide​(EDecimal divisor)`<br>
- Divides this object by another decimal number and returns the result.
-* `EDecimal Divide​(EDecimal divisor,
+ Creates a not-a-number arbitrary-precision binary float.
+* `EFloat Divide​(EFloat divisor)`<br>
+ Divides this object by another binary float and returns the result.
+* `EFloat Divide​(EFloat divisor,
       EContext ctx)`<br>
- Divides this arbitrary-precision decimal number by another
- arbitrary-precision decimal number.
-* `EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)`<br>
+ Divides this arbitrary-precision binary float by another arbitrary-precision
+ binary float.
+* `EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)`<br>
  Deprecated.
 Renamed to DivRemNaturalScale.
  Renamed to DivRemNaturalScale.
-* `EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor,
+* `EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor,
                               EContext ctx)`<br>
  Deprecated.
 Renamed to DivRemNaturalScale.
  Renamed to DivRemNaturalScale.
-* `EDecimal DivideToExponent​(EDecimal divisor,
-                int desiredExponentInt)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 32-bit signed integer) to the result, using
- the half-even rounding mode.
-* `EDecimal DivideToExponent​(EDecimal divisor,
-                int desiredExponentInt,
-                EContext ctx)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 32-bit signed integer) to the result, using
- the half-even rounding mode.
-* `EDecimal DivideToExponent​(EDecimal divisor,
-                int desiredExponentInt,
-                ERounding rounding)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 32-bit signed integer) to the result, using
- the half-even rounding mode.
-* `EDecimal DivideToExponent​(EDecimal divisor,
-                long desiredExponentSmall)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 64-bit signed integer) to the result, using
- the half-even rounding mode.
-* `EDecimal DivideToExponent​(EDecimal divisor,
+* `EFloat DivideToExponent​(EFloat divisor,
                 long desiredExponentSmall,
                 EContext ctx)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
+ Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
-* `EDecimal DivideToExponent​(EDecimal divisor,
+* `EFloat DivideToExponent​(EFloat divisor,
                 long desiredExponentSmall,
                 ERounding rounding)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
+ Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
-* `EDecimal DivideToExponent​(EDecimal divisor,
-                EInteger exponent)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent to the result, using the half-even rounding mode.
-* `EDecimal DivideToExponent​(EDecimal divisor,
+* `EFloat DivideToExponent​(EFloat divisor,
                 EInteger exponent,
                 EContext ctx)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
+ Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
-* `EDecimal DivideToExponent​(EDecimal divisor,
+* `EFloat DivideToExponent​(EFloat divisor,
                 EInteger desiredExponent,
                 ERounding rounding)`<br>
- Divides two arbitrary-precision decimal numbers, and gives a particular
+ Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
-* `EDecimal DivideToIntegerNaturalScale​(EDecimal divisor)`<br>
- Divides two arbitrary-precision decimal numbers, and returns the integer
- part of the result, rounded down, with the preferred exponent set to
- this value's exponent minus the divisor's exponent.
-* `EDecimal DivideToIntegerNaturalScale​(EDecimal divisor,
+* `EFloat DivideToIntegerNaturalScale​(EFloat divisor)`<br>
+ Divides two arbitrary-precision binary floats, and returns the integer part
+ of the result, rounded down, with the preferred exponent set to this
+ value's exponent minus the divisor's exponent.
+* `EFloat DivideToIntegerNaturalScale​(EFloat divisor,
                            EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
  result (which is initially rounded down), with the preferred exponent
  set to this value's exponent minus the divisor's exponent.
-* `EDecimal DivideToIntegerZeroScale​(EDecimal divisor,
+* `EFloat DivideToIntegerZeroScale​(EFloat divisor,
                         EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
  result, with the exponent set to 0.
-* `EDecimal DivideToSameExponent​(EDecimal divisor,
+* `EFloat DivideToSameExponent​(EFloat divisor,
                     ERounding rounding)`<br>
- Divides this object by another decimal number and returns a result with the
+ Divides this object by another binary float and returns a result with the
  same exponent as this object (the dividend).
-* `EDecimal[] DivRemNaturalScale​(EDecimal divisor)`<br>
+* `EFloat[] DivRemNaturalScale​(EFloat divisor)`<br>
  Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and the formula in RemainderNaturalScale.
-* `EDecimal[] DivRemNaturalScale​(EDecimal divisor,
+* `EFloat[] DivRemNaturalScale​(EFloat divisor,
                   EContext ctx)`<br>
  Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and the formula in RemainderNaturalScale.
-* `boolean equals​(EDecimal other)`<br>
+* `boolean equals​(EFloat other)`<br>
  Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object.
 * `boolean equals​(Object obj)`<br>
  Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object and that other object
- is an arbitrary-precision decimal number.
-* `EDecimal Exp​(EContext ctx)`<br>
+ is an arbitrary-precision binary float.
+* `boolean EqualsInternal​(EFloat otherValue)`<br>
+ Determines whether this object's mantissa (significand) and exponent are
+ equal to those of another object.
+* `EFloat Exp​(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
-* `static EDecimal FromByte​(byte inputByte)`<br>
- Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
-* `static EDecimal FromDouble​(double dbl)`<br>
- Creates a decimal number from a 64-bit binary floating-point number.
-* `static EDecimal FromEFloat​(EFloat bigfloat)`<br>
- Creates a decimal number from an arbitrary-precision binary floating-point
- number.
-* `static EDecimal FromEInteger​(EInteger bigint)`<br>
- Converts an arbitrary-precision integer to an arbitrary precision decimal.
-* `static EDecimal FromExtendedFloat​(EFloat ef)`<br>
- Deprecated.
-Renamed to FromEFloat.
- Renamed to FromEFloat.
-* `static EDecimal FromInt16​(short inputInt16)`<br>
- Converts a 16-bit signed integer to an arbitrary-precision decimal number.
-* `static EDecimal FromInt32​(int valueSmaller)`<br>
- Creates a decimal number from a 32-bit signed integer.
-* `static EDecimal FromInt64​(long valueSmall)`<br>
- Creates a decimal number from a 64-bit signed integer.
-* `static EDecimal FromSingle​(float flt)`<br>
- Creates a decimal number from a 32-bit binary floating-point number.
-* `static EDecimal FromString​(String str)`<br>
- Creates a decimal number from a text string that represents a number.
-* `static EDecimal FromString​(String str,
+* `static EFloat FromByte​(byte inputByte)`<br>
+ Converts a byte (from 0 to 255) to an arbitrary-precision binary float.
+* `static EFloat FromDouble​(double dbl)`<br>
+ Creates a binary float from a 64-bit floating-point number.
+* `static EFloat FromEInteger​(EInteger bigint)`<br>
+ Converts an arbitrary-precision integer to the same value as a binary float.
+* `static EFloat FromInt16​(short inputInt16)`<br>
+ Converts a 16-bit signed integer to an arbitrary-precision binary float.
+* `static EFloat FromInt32​(int inputInt32)`<br>
+ Converts a 32-bit signed integer to an arbitrary-precision binary float.
+* `static EFloat FromInt64​(long inputInt64)`<br>
+ Converts a 64-bit signed integer to an arbitrary-precision binary float.
+* `static EFloat FromSingle​(float flt)`<br>
+ Creates a binary float from a 32-bit floating-point number.
+* `static EFloat FromString​(String str)`<br>
+ Creates a binary float from a text string that represents a number, using an
+ unlimited precision context.
+* `static EFloat FromString​(String str,
           int offset,
           int length)`<br>
- Creates a decimal number from a text string that represents a number.
-* `static EDecimal FromString​(String str,
+ Creates a binary float from a text string that represents a number.
+* `static EFloat FromString​(String str,
           int offset,
           int length,
           EContext ctx)`<br>
- Creates a decimal number from a text string that represents a number.
-* `static EDecimal FromString​(String str,
+ Creates a binary float from a text string that represents a number.
+* `static EFloat FromString​(String str,
           EContext ctx)`<br>
- Creates a decimal number from a text string that represents a number.
+ Creates a binary float from a text string that represents a number.
 * `EInteger getExponent()`<br>
  Gets this object's exponent.
 * `EInteger getMantissa()`<br>
@@ -375,226 +248,206 @@ Renamed to FromEFloat.
  Gets a value indicating whether this object is a signaling not-a-number
  value.
 * `boolean isZero()`<br>
-* `EDecimal Log​(EContext ctx)`<br>
+* `EFloat Log​(EContext ctx)`<br>
  Finds the natural logarithm of this object, that is, the power (exponent)
  that e (the base of natural logarithms) must be raised to in order to
  equal this object's value.
-* `EDecimal Log10​(EContext ctx)`<br>
+* `EFloat Log10​(EContext ctx)`<br>
  Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
  value.
-* `static EDecimal Max​(EDecimal first,
-   EDecimal second)`<br>
- Gets the greater value between two decimal numbers.
-* `static EDecimal Max​(EDecimal first,
-   EDecimal second,
+* `static EFloat Max​(EFloat first,
+   EFloat second)`<br>
+ Gets the greater value between two binary floats.
+* `static EFloat Max​(EFloat first,
+   EFloat second,
    EContext ctx)`<br>
- Gets the greater value between two decimal numbers.
-* `static EDecimal MaxMagnitude​(EDecimal first,
-            EDecimal second)`<br>
+ Gets the greater value between two binary floats.
+* `static EFloat MaxMagnitude​(EFloat first,
+            EFloat second)`<br>
  Gets the greater value between two values, ignoring their signs.
-* `static EDecimal MaxMagnitude​(EDecimal first,
-            EDecimal second,
+* `static EFloat MaxMagnitude​(EFloat first,
+            EFloat second,
             EContext ctx)`<br>
  Gets the greater value between two values, ignoring their signs.
-* `static EDecimal Min​(EDecimal first,
-   EDecimal second)`<br>
- Gets the lesser value between two decimal numbers.
-* `static EDecimal Min​(EDecimal first,
-   EDecimal second,
+* `static EFloat Min​(EFloat first,
+   EFloat second)`<br>
+ Gets the lesser value between two binary floats.
+* `static EFloat Min​(EFloat first,
+   EFloat second,
    EContext ctx)`<br>
- Gets the lesser value between two decimal numbers.
-* `static EDecimal MinMagnitude​(EDecimal first,
-            EDecimal second)`<br>
+ Gets the lesser value between two binary floats.
+* `static EFloat MinMagnitude​(EFloat first,
+            EFloat second)`<br>
  Gets the lesser value between two values, ignoring their signs.
-* `static EDecimal MinMagnitude​(EDecimal first,
-            EDecimal second,
+* `static EFloat MinMagnitude​(EFloat first,
+            EFloat second,
             EContext ctx)`<br>
  Gets the lesser value between two values, ignoring their signs.
-* `EDecimal MovePointLeft​(int places)`<br>
- Returns a number similar to this number but with the decimal point moved to
+* `EFloat MovePointLeft​(int places)`<br>
+ Returns a number similar to this number but with the radix point moved to
  the left.
-* `EDecimal MovePointLeft​(int places,
+* `EFloat MovePointLeft​(int places,
              EContext ctx)`<br>
- Returns a number similar to this number but with the decimal point moved to
+ Returns a number similar to this number but with the radix point moved to
  the left.
-* `EDecimal MovePointLeft​(EInteger bigPlaces)`<br>
- Returns a number similar to this number but with the decimal point moved to
+* `EFloat MovePointLeft​(EInteger bigPlaces)`<br>
+ Returns a number similar to this number but with the radix point moved to
  the left.
-* `EDecimal MovePointLeft​(EInteger bigPlaces,
+* `EFloat MovePointLeft​(EInteger bigPlaces,
              EContext ctx)`<br>
- Returns a number similar to this number but with the decimal point moved to
+ Returns a number similar to this number but with the radix point moved to
  the left.
-* `EDecimal MovePointRight​(int places)`<br>
- Returns a number similar to this number but with the decimal point moved to
+* `EFloat MovePointRight​(int places)`<br>
+ Returns a number similar to this number but with the radix point moved to
  the right.
-* `EDecimal MovePointRight​(int places,
+* `EFloat MovePointRight​(int places,
               EContext ctx)`<br>
- Returns a number similar to this number but with the decimal point moved to
+ Returns a number similar to this number but with the radix point moved to
  the right.
-* `EDecimal MovePointRight​(EInteger bigPlaces)`<br>
- Returns a number similar to this number but with the decimal point moved to
+* `EFloat MovePointRight​(EInteger bigPlaces)`<br>
+ Returns a number similar to this number but with the radix point moved to
  the right.
-* `EDecimal MovePointRight​(EInteger bigPlaces,
+* `EFloat MovePointRight​(EInteger bigPlaces,
               EContext ctx)`<br>
- Returns a number similar to this number but with the decimal point moved to
+ Returns a number similar to this number but with the radix point moved to
  the right.
-* `EDecimal Multiply​(EDecimal otherValue)`<br>
- Multiplies two decimal numbers.
-* `EDecimal Multiply​(EDecimal op,
+* `EFloat Multiply​(EFloat otherValue)`<br>
+ Multiplies two binary floats.
+* `EFloat Multiply​(EFloat op,
         EContext ctx)`<br>
- Multiplies two decimal numbers.
-* `EDecimal MultiplyAndAdd​(EDecimal multiplicand,
-              EDecimal augend)`<br>
- Multiplies by one decimal number, and then adds another decimal number.
-* `EDecimal MultiplyAndAdd​(EDecimal op,
-              EDecimal augend,
+ Multiplies two binary floats.
+* `EFloat MultiplyAndAdd​(EFloat multiplicand,
+              EFloat augend)`<br>
+ Multiplies by one binary float, and then adds another binary float.
+* `EFloat MultiplyAndAdd​(EFloat op,
+              EFloat augend,
               EContext ctx)`<br>
  Multiplies by one value, and then adds another value.
-* `EDecimal MultiplyAndSubtract​(EDecimal op,
-                   EDecimal subtrahend,
+* `EFloat MultiplyAndSubtract​(EFloat op,
+                   EFloat subtrahend,
                    EContext ctx)`<br>
  Multiplies by one value, and then subtracts another value.
-* `EDecimal Negate()`<br>
+* `EFloat Negate()`<br>
  Gets an object with the same value as this one, but with the sign reversed.
-* `EDecimal Negate​(EContext context)`<br>
- Returns a decimal number with the same value as this object but with the
- sign reversed.
-* `EDecimal NextMinus​(EContext ctx)`<br>
+* `EFloat Negate​(EContext context)`<br>
+ Returns a binary float with the same value as this object but with the sign
+ reversed.
+* `EFloat NextMinus​(EContext ctx)`<br>
  Finds the largest value that's smaller than the given value.
-* `EDecimal NextPlus​(EContext ctx)`<br>
+* `EFloat NextPlus​(EContext ctx)`<br>
  Finds the smallest value that's greater than the given value.
-* `EDecimal NextToward​(EDecimal otherValue,
+* `EFloat NextToward​(EFloat otherValue,
           EContext ctx)`<br>
  Finds the next value that is closer to the other object's value than this
  object's value.
-* `static EDecimal PI​(EContext ctx)`<br>
+* `static EFloat PI​(EContext ctx)`<br>
  Finds the constant π, the circumference of a circle divided by its diameter.
-* `EDecimal Plus​(EContext ctx)`<br>
+* `EFloat Plus​(EContext ctx)`<br>
  Rounds this object's value to a given precision, using the given rounding
  mode and range of exponent, and also converts negative zero to
  positive zero.
-* `EDecimal Pow​(int exponentSmall)`<br>
+* `EFloat Pow​(int exponentSmall)`<br>
  Raises this object's value to the given exponent.
-* `EDecimal Pow​(int exponentSmall,
+* `EFloat Pow​(int exponentSmall,
    EContext ctx)`<br>
  Raises this object's value to the given exponent.
-* `EDecimal Pow​(EDecimal exponent,
+* `EFloat Pow​(EFloat exponent,
    EContext ctx)`<br>
  Raises this object's value to the given exponent.
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's mantissa (significand).
-* `EDecimal Quantize​(int desiredExponentInt,
+* `EFloat Quantize​(int desiredExponentInt,
         EContext ctx)`<br>
- Returns a decimal number with the same value but a new exponent.
-* `EDecimal Quantize​(int desiredExponentInt,
-        ERounding rounding)`<br>
- Returns a decimal number with the same value as this one but a new exponent.
-* `EDecimal Quantize​(EDecimal otherValue,
+ Returns a binary float with the same value but a new exponent.
+* `EFloat Quantize​(EFloat otherValue,
         EContext ctx)`<br>
- Returns a decimal number with the same value as this object but with the
- same exponent as another decimal number.
-* `EDecimal Quantize​(EInteger desiredExponent,
+ Returns a binary float with the same value as this object but with the same
+ exponent as another binary float.
+* `EFloat Quantize​(EInteger desiredExponent,
         EContext ctx)`<br>
- Returns a decimal number with the same value but a new exponent.
-* `EDecimal Reduce​(EContext ctx)`<br>
+ Returns a binary float with the same value but a new exponent.
+* `EFloat Reduce​(EContext ctx)`<br>
  Removes trailing zeros from this object's mantissa (significand).
-* `EDecimal Remainder​(EDecimal divisor,
+* `EFloat Remainder​(EFloat divisor,
          EContext ctx)`<br>
  Finds the remainder that results when dividing two arbitrary-precision
- decimal numbers.
-* `EDecimal RemainderNaturalScale​(EDecimal divisor) "this" - (("this" /
+ binary floats.
+* `EFloat RemainderNaturalScale​(EFloat divisor) "this" - (("this" /
  "divisor") * "divisor")`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
  "divisor") * "divisor")
-* `EDecimal RemainderNaturalScale​(EDecimal divisor,
+* `EFloat RemainderNaturalScale​(EFloat divisor,
                      EContext ctx)`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
  "divisor") * "divisor").
-* `EDecimal RemainderNear​(EDecimal divisor,
+* `EFloat RemainderNear​(EFloat divisor,
              EContext ctx)`<br>
  Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object's value by another object's value.
-* `EDecimal RoundToExponent​(int exponentSmall)`<br>
- Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary, using the HalfEven rounding mode.
-* `EDecimal RoundToExponent​(int exponentSmall,
+* `EFloat RoundToExponent​(int exponentSmall,
                EContext ctx)`<br>
- Returns a decimal number with the same value as this object but rounded to a
+ Returns a binary float with the same value as this object but rounded to a
  new exponent if necessary.
-* `EDecimal RoundToExponent​(int exponentSmall,
-               ERounding rounding)`<br>
- Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary.
-* `EDecimal RoundToExponent​(EInteger exponent)`<br>
- Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary, using the HalfEven rounding mode.
-* `EDecimal RoundToExponent​(EInteger exponent,
+* `EFloat RoundToExponent​(EInteger exponent,
                EContext ctx)`<br>
- Returns a decimal number with the same value as this object but rounded to a
+ Returns a binary float with the same value as this object but rounded to a
  new exponent if necessary.
-* `EDecimal RoundToExponent​(EInteger exponent,
-               ERounding rounding)`<br>
- Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary, using the given rounding mode.
-* `EDecimal RoundToExponentExact​(int exponentSmall,
+* `EFloat RoundToExponentExact​(int exponentSmall,
                     EContext ctx)`<br>
- Returns a decimal number with the same value as this object but rounded to
- an integer, and signals an inexact flag if the result would be
+ Returns a binary float with the same value as this object but rounded to an
+ integer, and signals an inexact flag if the result would be inexact.
+* `EFloat RoundToExponentExact​(EInteger exponent,
+                    EContext ctx)`<br>
+ Returns a binary float with the same value as this object but rounded to the
+ given exponent, and signals an inexact flag if the result would be
  inexact.
-* `EDecimal RoundToExponentExact​(int exponentSmall,
+* `EFloat RoundToExponentExact​(EInteger exponent,
                     ERounding rounding)`<br>
- Returns a decimal number with the same value as this object but rounded to
- an integer, and signals an inexact flag if the result would be
- inexact.
-* `EDecimal RoundToExponentExact​(EInteger exponent,
-                    EContext ctx)`<br>
- Returns a decimal number with the same value as this object but rounded to
- the given exponent, and signals an inexact flag if the result would
- be inexact.
-* `EDecimal RoundToIntegerExact​(EContext ctx)`<br>
- Returns a decimal number with the same value as this object but rounded to
- an integer, and signals an inexact flag if the result would be
- inexact.
-* `EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded`<br>
- Returns a decimal number with the same value as this object but rounded to
- an integer, without adding the FlagInexact or
- FlagRounded flags.
-* `EDecimal RoundToIntegralExact​(EContext ctx)`<br>
+ Returns a binary number with the same value as this object but rounded to
+ the given exponent.
+* `EFloat RoundToIntegerExact​(EContext ctx)`<br>
+ Returns a binary float with the same value as this object but rounded to an
+ integer, and signals an inexact flag if the result would be inexact.
+* `EFloat RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded`<br>
+ Returns a binary float with the same value as this object but rounded to an
+ integer, without adding the FlagInexact or FlagRounded
+ flags.
+* `EFloat RoundToIntegralExact​(EContext ctx)`<br>
  Deprecated.
 Renamed to RoundToIntegerExact.
  Renamed to RoundToIntegerExact.
-* `EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)`<br>
+* `EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)`<br>
  Deprecated.
 Renamed to RoundToIntegerNoRoundedFlag.
  Renamed to RoundToIntegerNoRoundedFlag.
-* `EDecimal RoundToPrecision​(EContext ctx)`<br>
+* `EFloat RoundToPrecision​(EContext ctx)`<br>
  Rounds this object's value to a given precision, using the given rounding
  mode and range of exponent.
-* `EDecimal ScaleByPowerOfTen​(int places)`<br>
+* `EFloat ScaleByPowerOfTwo​(int places)`<br>
  Returns a number similar to this number but with the scale adjusted.
-* `EDecimal ScaleByPowerOfTen​(int places,
+* `EFloat ScaleByPowerOfTwo​(int places,
                  EContext ctx)`<br>
  Returns a number similar to this number but with the scale adjusted.
-* `EDecimal ScaleByPowerOfTen​(EInteger bigPlaces)`<br>
+* `EFloat ScaleByPowerOfTwo​(EInteger bigPlaces)`<br>
  Returns a number similar to this number but with the scale adjusted.
-* `EDecimal ScaleByPowerOfTen​(EInteger bigPlaces,
+* `EFloat ScaleByPowerOfTwo​(EInteger bigPlaces,
                  EContext ctx)`<br>
  Returns a number similar to this number but with its scale adjusted.
 * `int signum()`<br>
  Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
-* `EDecimal Sqrt​(EContext ctx)`<br>
+* `EFloat Sqrt​(EContext ctx)`<br>
  Finds the square root of this object's value.
-* `EDecimal SquareRoot​(EContext ctx)`<br>
+* `EFloat SquareRoot​(EContext ctx)`<br>
  Deprecated.
 Renamed to Sqrt.
  Renamed to Sqrt.
-* `EDecimal Subtract​(EDecimal otherValue)`<br>
- Subtracts an arbitrary-precision decimal number from this instance and
- returns the result.
-* `EDecimal Subtract​(EDecimal otherValue,
+* `EFloat Subtract​(EFloat otherValue)`<br>
+ Subtracts an arbitrary-precision binary float from this instance and returns
+ the result.
+* `EFloat Subtract​(EFloat otherValue,
         EContext ctx)`<br>
- Subtracts an arbitrary-precision decimal number from this instance.
+ Subtracts an arbitrary-precision binary float from this instance.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after truncating to an integer.
@@ -606,12 +459,9 @@ Renamed to Sqrt.
  least-significant bits of its two's-complement form as a byte (from 0
  to 255).
 * `double ToDouble()`<br>
- Converts this value to its closest equivalent as a 64-bit floating-point
- number.
-* `EFloat ToEFloat()`<br>
- Creates a binary floating-point number from this object's value.
-* `EFloat ToEFloat​(EContext ec)`<br>
- Creates a binary floating-point number from this object's value.
+ Converts this value to a 64-bit floating-point number.
+* `EDecimal ToEDecimal()`<br>
+ Converts this value to an arbitrary-precision decimal number.
 * `EInteger ToEInteger()`<br>
  Converts this value to an arbitrary-precision integer.
 * `EInteger ToEIntegerExact()`<br>
@@ -620,14 +470,14 @@ Renamed to ToEIntegerIfExact.
  Renamed to ToEIntegerIfExact.
 * `EInteger ToEIntegerIfExact()`<br>
  Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the value would be lost.
+ value contains a fractional part.
 * `String ToEngineeringString()`<br>
- Same as toString(), except that when an exponent is used it will be a
- multiple of 3.
-* `EFloat ToExtendedFloat()`<br>
+ Converts this value to an arbitrary-precision decimal number, then returns
+ the value of that decimal's ToEngineeringString method.
+* `EDecimal ToExtendedDecimal()`<br>
  Deprecated.
-Renamed to ToEFloat.
- Renamed to ToEFloat.
+Renamed to ToEDecimal.
+ Renamed to ToEDecimal.
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after truncating to an integer.
@@ -662,42 +512,45 @@ Renamed to ToEFloat.
  least-significant bits of its two's-complement form as a 64-bit
  signed integer.
 * `String ToPlainString()`<br>
- Converts this value to a string, but without using exponential notation.
+ Converts this value to a string, but without exponential notation.
+* `String ToShortestString​(EContext ctx)`<br>
+ Returns a string representation of this number's value after rounding to the
+ given precision (using the given arithmetic context).
 * `float ToSingle()`<br>
- Converts this value to its closest equivalent as a 32-bit floating-point
+ Converts this value to its closest equivalent as 32-bit floating-point
  number.
 * `String toString()`<br>
- Converts this value to a string.
-* `EDecimal Ulp()`<br>
+ Converts this number's value to a text string.
+* `EFloat Ulp()`<br>
  Returns the unit in the last place.
 
 ## Field Details
 
 ### NaN
-    public static final EDecimal NaN
+    public static final EFloat NaN
 A not-a-number value.
 ### NegativeInfinity
-    public static final EDecimal NegativeInfinity
+    public static final EFloat NegativeInfinity
 Negative infinity, less than any other number.
 ### NegativeZero
-    public static final EDecimal NegativeZero
+    public static final EFloat NegativeZero
 Represents the number negative zero.
 ### One
-    public static final EDecimal One
+    public static final EFloat One
 Represents the number 1.
 ### PositiveInfinity
-    public static final EDecimal PositiveInfinity
+    public static final EFloat PositiveInfinity
 Positive infinity, greater than any other number.
 ### SignalingNaN
-    public static final EDecimal SignalingNaN
+    public static final EFloat SignalingNaN
 A not-a-number value that signals an invalid operation flag when it's passed
  as an argument to any arithmetic operation in arbitrary-precision
- decimal.
+ binary float.
 ### Ten
-    public static final EDecimal Ten
+    public static final EFloat Ten
 Represents the number 10.
 ### Zero
-    public static final EDecimal Zero
+    public static final EFloat Zero
 Represents the number 0.
 ## Method Details
 
@@ -758,8 +611,8 @@ Gets the absolute value of this object's unscaled value.
 * The absolute value of this object's unscaled value.
 
 ### Create
-    public static EDecimal Create​(int mantissaSmall, int exponentSmall)
-Creates a number with the value <code>exponent*10^mantissa</code>
+    public static EFloat Create​(int mantissaSmall, int exponentSmall)
+Creates a number with the value exponent*2^mantissa (significand).
 
 **Parameters:**
 
@@ -771,11 +624,11 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Create
-    public static EDecimal Create​(EInteger mantissa, EInteger exponent)
-Creates a number with the value <code>exponent*10^mantissa</code>
+    public static EFloat Create​(EInteger mantissa, EInteger exponent)
+Creates a number with the value exponent*2^mantissa (significand).
 
 **Parameters:**
 
@@ -785,16 +638,16 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "mantissa" or "exponent"
- is null.
+* <code>NullPointerException</code> - The parameter "mantissa (significand)"
+ or <code>exponent</code> is null.
 
 ### CreateNaN
-    public static EDecimal CreateNaN​(EInteger diag)
-Creates a not-a-number arbitrary-precision decimal number.
+    public static EFloat CreateNaN​(EInteger diag)
+Creates a not-a-number arbitrary-precision binary float.
 
 **Parameters:**
 
@@ -804,9 +657,13 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 * A quiet not-a-number.
 
+**Throws:**
+
+* <code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
+
 ### CreateNaN
-    public static EDecimal CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
-Creates a not-a-number arbitrary-precision decimal number.
+    public static EFloat CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
+Creates a not-a-number arbitrary-precision binary float.
 
 **Parameters:**
 
@@ -820,28 +677,18 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "diag" is null or is less
- than 0.
+* <code>NullPointerException</code> - The parameter <code>diag</code> is null.
 
 ### FromDouble
-    public static EDecimal FromDouble​(double dbl)
-Creates a decimal number from a 64-bit binary floating-point number. This
- method computes the exact value of the floating point number, not an
+    public static EFloat FromDouble​(double dbl)
+Creates a binary float from a 64-bit floating-point number. This method
+ computes the exact value of the floating point number, not an
  approximation, as is often the case by converting the floating point
- number to a string first. Remember, though, that the exact value of a
- 64-bit binary floating-point number is not always the value that
- results when passing a literal decimal number (for example, calling
- <code>ExtendedDecimal.FromDouble(0.1f)</code>), since not all decimal
- numbers can be converted to exact binary numbers (in the example
- given, the resulting arbitrary-precision decimal will be the value of
- the closest "double" to 0.1, not 0.1 exactly). To create an
- arbitrary-precision decimal number from a decimal number, use
- FromString instead in most cases (for example:
- <code>ExtendedDecimal.FromString("0.1")</code>).
+ number to a string first.
 
 **Parameters:**
 
@@ -849,11 +696,11 @@ Creates a decimal number from a 64-bit binary floating-point number. This
 
 **Returns:**
 
-* A decimal number with the same value as "dbl".
+* A binary float with the same value as "dbl".
 
 ### FromEInteger
-    public static EDecimal FromEInteger​(EInteger bigint)
-Converts an arbitrary-precision integer to an arbitrary precision decimal.
+    public static EFloat FromEInteger​(EInteger bigint)
+Converts an arbitrary-precision integer to the same value as a binary float.
 
 **Parameters:**
 
@@ -861,78 +708,14 @@ Converts an arbitrary-precision integer to an arbitrary precision decimal.
 
 **Returns:**
 
-* An arbitrary-precision decimal number with the exponent set to 0.
-
-### FromExtendedFloat
-    @Deprecated public static EDecimal FromExtendedFloat​(EFloat ef)
-Deprecated.
-<div class='deprecationComment'>Renamed to FromEFloat.</div>
-
-**Parameters:**
-
-* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision decimal number.
-
-### FromEFloat
-    public static EDecimal FromEFloat​(EFloat bigfloat)
-Creates a decimal number from an arbitrary-precision binary floating-point
- number.
-
-**Parameters:**
-
-* <code>bigfloat</code> - The parameter <code>bigfloat</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision decimal number.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter "bigfloat" is null.
-
-### FromInt32
-    public static EDecimal FromInt32​(int valueSmaller)
-Creates a decimal number from a 32-bit signed integer.
-
-**Parameters:**
-
-* <code>valueSmaller</code> - The parameter <code>valueSmaller</code> is not documented
- yet.
-
-**Returns:**
-
-* An arbitrary-precision decimal number with the exponent set to 0.
-
-### FromInt64
-    public static EDecimal FromInt64​(long valueSmall)
-Creates a decimal number from a 64-bit signed integer.
-
-**Parameters:**
-
-* <code>valueSmall</code> - The parameter <code>valueSmall</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision decimal number with the exponent set to 0.
+* An arbitrary-precision binary float.
 
 ### FromSingle
-    public static EDecimal FromSingle​(float flt)
-Creates a decimal number from a 32-bit binary floating-point number. This
- method computes the exact value of the floating point number, not an
+    public static EFloat FromSingle​(float flt)
+Creates a binary float from a 32-bit floating-point number. This method
+ computes the exact value of the floating point number, not an
  approximation, as is often the case by converting the floating point
- number to a string first. Remember, though, that the exact value of a
- 32-bit binary floating-point number is not always the value that
- results when passing a literal decimal number (for example, calling
- <code>ExtendedDecimal.FromSingle(0.1f)</code>), since not all decimal
- numbers can be converted to exact binary numbers (in the example
- given, the resulting arbitrary-precision decimal will be the the
- value of the closest "float" to 0.1, not 0.1 exactly). To create an
- arbitrary-precision decimal number from a decimal number, use
- FromString instead in most cases (for example:
- <code>ExtendedDecimal.FromString("0.1")</code>).
+ number to a string first.
 
 **Parameters:**
 
@@ -940,91 +723,28 @@ Creates a decimal number from a 32-bit binary floating-point number. This
 
 **Returns:**
 
-* A decimal number with the same value as "flt".
+* A binary float with the same value as "flt".
 
 ### FromString
-    public static EDecimal FromString​(String str)
-Creates a decimal number from a text string that represents a number. See
- <code>FromString(String, int, int, EContext)</code> for more information.
-
-**Parameters:**
-
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision decimal number with the same value as the
- given string.
-
-**Throws:**
-
-* <code>NumberFormatException</code> - The parameter "str" is not a correctly
- formatted number string.
-
-### FromString
-    public static EDecimal FromString​(String str, EContext ctx)
-Creates a decimal number from a text string that represents a number. See
- <code>FromString(String, int, int, EContext)</code> for more information.
-
-**Parameters:**
-
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
-
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter "str" is null.
-
-### FromString
-    public static EDecimal FromString​(String str, int offset, int length)
-Creates a decimal number from a text string that represents a number. See
- <code>FromString(String, int, int, EContext)</code> for more information.
-
-**Parameters:**
-
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
-
-* <code>offset</code> - A zero-based index showing where the desired portion of <code>
- str</code> begins.
-
-* <code>length</code> - The length, in code units, of the desired portion of <code>
- str</code> (but not more than <code>str</code> 's length).
-
-**Returns:**
-
-* An arbitrary-precision decimal number with the same value as the
- given string.
-
-**Throws:**
-
-* <code>NumberFormatException</code> - The parameter "str" is not a correctly
- formatted number string.
-
-* <code>NullPointerException</code> - The parameter "str" is null.
-
-### FromString
-    public static EDecimal FromString​(String str, int offset, int length, EContext ctx)
-<p>Creates a decimal number from a text string that represents a number.
- </p> <p>The format of the string generally consists of: </p> <ul>
- <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
- (if the minus sign, the value is negative.) </li> <li>One or more
- digits, with a single optional decimal point after the first digit
- and before the last digit. </li> <li>Optionally, "E"/"e" followed by
- an optional (positive exponent) or "-" (negative exponent) and
- followed by one or more digits specifying the exponent. </li> </ul>
+    public static EFloat FromString​(String str, int offset, int length, EContext ctx)
+Creates a binary float from a text string that represents a number. Note
+ that if the string contains a negative exponent, the resulting value
+ might not be exact, in which case the resulting binary float will be
+ an approximation of this decimal number's value. <p>The format of the
+ string generally consists of:</p> <ul> <li>An optional plus sign ("+"
+ , U+002B) or minus sign ("-", U+002D) (if '-' , the value is
+ negative.)</li> <li>One or more digits, with a single optional
+ decimal point after the first digit and before the last digit.</li>
+ <li>Optionally, "E+"/"e+" (positive exponent) or "E-"/"e-" (negative
+ exponent) plus one or more digits specifying the exponent.</li></ul>
  <p>The string can also be "-INF", "-Infinity", "Infinity", "INF",
- quiet NaN ("NaN" /"-NaN") followed by any number of digits, or
- signaling NaN ("sNaN" /"-sNaN") followed by any number of digits, all
- in any combination of upper and lower case. </p> <p>All characters
- mentioned above are the corresponding characters in the Basic Latin
- range. In particular, the digits must be the basic digits 0 to 9
- (U + 0030 to U + 0039). The string is not allowed to contain white space
- characters, including spaces. </p>
+ quiet NaN ("NaN") followed by any number of digits, or signaling NaN
+ ("sNaN") followed by any number of digits, all in any combination of
+ upper and lower case.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular, the
+ digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
+ is not allowed to contain white space characters, including
+ spaces.</p>
 
 **Parameters:**
 
@@ -1036,23 +756,85 @@ Creates a decimal number from a text string that represents a number. See
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
 
+* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+
+* <code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+ less than 0 or greater than <code>str</code> 's length, or <code>str</code> ' s
+ length minus <code>offset</code> is less than <code>length</code>.
+
+### FromString
+    public static EFloat FromString​(String str)
+Creates a binary float from a text string that represents a number, using an
+ unlimited precision context. For more information, see the
+ <code>FromString(String, int, int, EContext)</code> method.
+
+**Parameters:**
+
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary float.
+
+### FromString
+    public static EFloat FromString​(String str, EContext ctx)
+Creates a binary float from a text string that represents a number. For more
+ information, see the <code>FromString(String, int, int, EContext)</code>
+ method.
+
+**Parameters:**
+
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
+
 * <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "str" is null.
+* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+
+### FromString
+    public static EFloat FromString​(String str, int offset, int length)
+Creates a binary float from a text string that represents a number. For more
+ information, see the <code>FromString(String, int, int, EContext)</code>
+ method.
+
+**Parameters:**
+
+* <code>str</code> - The parameter <code>str</code> is not documented yet.
+
+* <code>offset</code> - A zero-based index showing where the desired portion of <code>
+ str</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ str</code> (but not more than <code>str</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision binary float.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>str</code> is null.
 
 * <code>IllegalArgumentException</code> - Either "offset" or "length" is less than 0
- or greater than "str" 's length, or "str" 's length minus "offset" is
+ or greater than "str"'s length, or "str"'s length minus "offset" is
  less than "length".
 
 ### Max
-    public static EDecimal Max​(EDecimal first, EDecimal second, EContext ctx)
-Gets the greater value between two decimal numbers.
+    public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
+Gets the greater value between two binary floats.
 
 **Parameters:**
 
@@ -1067,8 +849,8 @@ Gets the greater value between two decimal numbers.
 * The larger value of the two numbers.
 
 ### Max
-    public static EDecimal Max​(EDecimal first, EDecimal second)
-Gets the greater value between two decimal numbers.
+    public static EFloat Max​(EFloat first, EFloat second)
+Gets the greater value between two binary floats.
 
 **Parameters:**
 
@@ -1078,10 +860,10 @@ Gets the greater value between two decimal numbers.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MaxMagnitude
-    public static EDecimal MaxMagnitude​(EDecimal first, EDecimal second, EContext ctx)
+    public static EFloat MaxMagnitude​(EFloat first, EFloat second, EContext ctx)
 Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.
 
@@ -1095,10 +877,10 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* An arbitrary-precision binary float.
 
 ### MaxMagnitude
-    public static EDecimal MaxMagnitude​(EDecimal first, EDecimal second)
+    public static EFloat MaxMagnitude​(EFloat first, EFloat second)
 Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.
 
@@ -1110,11 +892,11 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Min
-    public static EDecimal Min​(EDecimal first, EDecimal second, EContext ctx)
-Gets the lesser value between two decimal numbers.
+    public static EFloat Min​(EFloat first, EFloat second, EContext ctx)
+Gets the lesser value between two binary floats.
 
 **Parameters:**
 
@@ -1129,8 +911,8 @@ Gets the lesser value between two decimal numbers.
 * The smaller value of the two numbers.
 
 ### Min
-    public static EDecimal Min​(EDecimal first, EDecimal second)
-Gets the lesser value between two decimal numbers.
+    public static EFloat Min​(EFloat first, EFloat second)
+Gets the lesser value between two binary floats.
 
 **Parameters:**
 
@@ -1140,10 +922,10 @@ Gets the lesser value between two decimal numbers.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MinMagnitude
-    public static EDecimal MinMagnitude​(EDecimal first, EDecimal second, EContext ctx)
+    public static EFloat MinMagnitude​(EFloat first, EFloat second, EContext ctx)
 Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.
 
@@ -1157,10 +939,10 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* An arbitrary-precision binary float.
 
 ### MinMagnitude
-    public static EDecimal MinMagnitude​(EDecimal first, EDecimal second)
+    public static EFloat MinMagnitude​(EFloat first, EFloat second)
 Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.
 
@@ -1172,10 +954,10 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### PI
-    public static EDecimal PI​(EContext ctx)
+    public static EFloat PI​(EContext ctx)
 Finds the constant π, the circumference of a circle divided by its diameter.
 
 **Parameters:**
@@ -1189,33 +971,16 @@ Finds the constant π, the circumference of a circle divided by its diameter.
  precision is unlimited (the context's Precision property is 0).
 
 ### Abs
-    public EDecimal Abs()
+    public EFloat Abs()
 Finds the absolute value of this object (if it's negative, it becomes
  positive).
 
 **Returns:**
 
-* An EDecimal object.
-
-### CopySign
-    public EDecimal CopySign​(EDecimal other)
-Returns a number with the same value as this one, but copying the sign
- (positive or negative) of another number.
-
-**Parameters:**
-
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
-
-**Returns:**
-
-* An arbitrary-precision decimal number.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter "other" is null.
+* An arbitrary-precision binary floating-point number.
 
 ### Abs
-    public EDecimal Abs​(EContext context)
+    public EFloat Abs​(EContext context)
 Finds the absolute value of this object (if it's negative, it becomes
  positive).
 
@@ -1229,8 +994,8 @@ Finds the absolute value of this object (if it's negative, it becomes
  quiet NaN if this value is signaling NaN.
 
 ### Add
-    public EDecimal Add​(EDecimal otherValue)
-Adds this object and another decimal number and returns the result.
+    public EFloat Add​(EFloat otherValue)
+Adds this object and another binary float and returns the result.
 
 **Parameters:**
 
@@ -1241,7 +1006,7 @@ Adds this object and another decimal number and returns the result.
 * The sum of the two objects.
 
 ### Add
-    public EDecimal Add​(EDecimal otherValue, EContext ctx)
+    public EFloat Add​(EFloat otherValue, EContext ctx)
 Finds the sum of this object and another object. The result's exponent is
  set to the lower of the exponents of the two operands.
 
@@ -1253,10 +1018,10 @@ Finds the sum of this object and another object. The result's exponent is
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### compareTo
-    public int compareTo​(EDecimal other)
+    public int compareTo​(EFloat other)
 Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
  Equals method because two different numbers with the same
@@ -1269,7 +1034,7 @@ Compares the mathematical values of this object and another object,
 
 **Specified by:**
 
-* <code>compareTo</code> in interface <code>Comparable&lt;EDecimal&gt;</code>
+* <code>compareTo</code> in interface <code>Comparable&lt;EFloat&gt;</code>
 
 **Parameters:**
 
@@ -1281,29 +1046,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other value
  or if "other" is null, or 0 if both values are equal.
 
-### CompareToBinary
-    public int CompareToBinary​(EFloat other)
-Compares an arbitrary-precision binary float with this instance.
-
-**Parameters:**
-
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
-
-**Returns:**
-
-* Zero if the values are equal; a negative number if this instance is
- less, or a positive number if this instance is greater. Returns 0 if
- both values are NaN (even signaling NaN) and 1 if this value is NaN
- (even signaling NaN) and the other isn't, or if the other value is
- null.
-
-**Throws:**
-
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
- satisfy other.isFinite().
-
 ### CompareToSignal
-    public EDecimal CompareToSignal​(EDecimal other, EContext ctx)
+    public EFloat CompareToSignal​(EFloat other, EContext ctx)
 Compares the mathematical values of this object and another object, treating
  quiet NaN as signaling. <p>In this method, negative zero and positive
  zero are considered equal.</p> <p>If this object or the other object
@@ -1318,32 +1062,10 @@ Compares the mathematical values of this object and another object, treating
 
 **Returns:**
 
-* An EDecimal object.
-
-### CompareToTotalMagnitude
-    public int CompareToTotalMagnitude​(EDecimal other)
-Compares the absolute values of this object and another object, imposing a
- total ordering on all possible values (ignoring their signs). In this
- method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater "absolute value".</li> <li>Negative
- zero and positive zero are considered equal.</li> <li>Quiet NaN has a
- higher "absolute value" than signaling NaN. If both objects are quiet
- NaN or both are signaling NaN, the one with the higher diagnostic
- information has a greater "absolute value".</li> <li>NaN has a higher
- "absolute value" than infinity.</li> <li>Infinity has a higher
- "absolute value" than any finite number.</li></ul>
-
-**Parameters:**
-
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
-
-**Returns:**
-
-* The number 0 if both objects have the same value, or -1 if this
- object is less than the other value, or 1 if this object is greater.
+* An arbitrary-precision binary floating-point number.
 
 ### CompareToTotal
-    public int CompareToTotal​(EDecimal other, EContext ctx)
+    public int CompareToTotal​(EFloat other, EContext ctx)
 Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For objects
  with the same value, the one with the higher exponent has a greater
@@ -1367,7 +1089,7 @@ Compares the values of this object and another object, imposing a total
 * A 32-bit signed integer.
 
 ### CompareToTotal
-    public int CompareToTotal​(EDecimal other)
+    public int CompareToTotal​(EFloat other)
 Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For objects
  with the same value, the one with the higher exponent has a greater
@@ -1389,8 +1111,30 @@ Compares the values of this object and another object, imposing a total
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
 
+### CompareToTotalMagnitude
+    public int CompareToTotalMagnitude​(EFloat other)
+Compares the absolute values of this object and another object, imposing a
+ total ordering on all possible values (ignoring their signs). In this
+ method: <ul> <li>For objects with the same value, the one with the
+ higher exponent has a greater "absolute value".</li> <li>Negative
+ zero and positive zero are considered equal.</li> <li>Quiet NaN has a
+ higher "absolute value" than signaling NaN. If both objects are quiet
+ NaN or both are signaling NaN, the one with the higher diagnostic
+ information has a greater "absolute value".</li> <li>NaN has a higher
+ "absolute value" than infinity.</li> <li>Infinity has a higher
+ "absolute value" than any finite number.</li></ul>
+
+**Parameters:**
+
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
+
+**Returns:**
+
+* The number 0 if both objects have the same value, or -1 if this
+ object is less than the other value, or 1 if this object is greater.
+
 ### CompareToWithContext
-    public EDecimal CompareToWithContext​(EDecimal other, EContext ctx)
+    public EFloat CompareToWithContext​(EFloat other, EContext ctx)
 Compares the mathematical values of this object and another object. <p>In
  this method, negative zero and positive zero are considered
  equal.</p> <p>If this object or the other object is a quiet NaN or
@@ -1405,11 +1149,28 @@ Compares the mathematical values of this object and another object. <p>In
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
+
+### CopySign
+    public EFloat CopySign​(EFloat other)
+Returns a number with the same value as this one, but copying the sign
+ (positive or negative) of another number.
+
+**Parameters:**
+
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
+
+**Returns:**
+
+* An arbitrary-precision binary float.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### Divide
-    public EDecimal Divide​(EDecimal divisor)
-Divides this object by another decimal number and returns the result. When
+    public EFloat Divide​(EFloat divisor)
+Divides this object by another binary float and returns the result. When
  possible, the result will be exact.
 
 **Parameters:**
@@ -1421,13 +1182,13 @@ Divides this object by another decimal number and returns the result. When
 * The quotient of the two numbers. Returns infinity if the divisor is
  0 and the dividend is nonzero. Returns not-a-number (NaN) if the
  divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating decimal expansion.
+ exact because it would have a nonterminating binary expansion.
 
 ### Divide
-    public EDecimal Divide​(EDecimal divisor, EContext ctx)
-Divides this arbitrary-precision decimal number by another
- arbitrary-precision decimal number. The preferred exponent for the
- result is this object's exponent minus the divisor's exponent.
+    public EFloat Divide​(EFloat divisor, EContext ctx)
+Divides this arbitrary-precision binary float by another arbitrary-precision
+ binary float. The preferred exponent for the result is this object's
+ exponent minus the divisor's exponent.
 
 **Parameters:**
 
@@ -1437,10 +1198,10 @@ Divides this arbitrary-precision decimal number by another
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### DivideAndRemainderNaturalScale
-    @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
+    @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)
 Deprecated.
 <div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
 
@@ -1454,7 +1215,7 @@ Deprecated.
  order.
 
 ### DivideAndRemainderNaturalScale
-    @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor, EContext ctx)
+    @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor, EContext ctx)
 Deprecated.
 <div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
 
@@ -1466,40 +1227,11 @@ Deprecated.
 
 **Returns:**
 
-* An EDecimal[] object.
-
-### DivRemNaturalScale
-    public EDecimal[] DivRemNaturalScale​(EDecimal divisor)
-Calculates the quotient and remainder using the DivideToIntegerNaturalScale
- and the formula in RemainderNaturalScale.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-**Returns:**
-
-* A 2 element array consisting of the quotient and remainder in that
- order.
-
-### DivRemNaturalScale
-    public EDecimal[] DivRemNaturalScale​(EDecimal divisor, EContext ctx)
-Calculates the quotient and remainder using the DivideToIntegerNaturalScale
- and the formula in RemainderNaturalScale.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal[] object.
+* An EFloat[] object.
 
 ### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, long desiredExponentSmall, EContext ctx)
-Divides two arbitrary-precision decimal numbers, and gives a particular
+    public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, EContext ctx)
+Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
 
 **Parameters:**
@@ -1523,34 +1255,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  result is not exact.
 
 ### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, int desiredExponentInt, EContext ctx)
-Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 32-bit signed integer) to the result, using
- the half-even rounding mode.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
- documented yet.
-
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
-
-**Returns:**
-
-* The quotient of the two objects. Signals FlagDivideByZero and
- returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
- (NaN) if the context defines an exponent range and the desired
- exponent is outside that range. Signals FlagInvalid and returns
- not-a-number (NaN) if the rounding mode is ERounding.None and the
- result is not exact.
-
-### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, long desiredExponentSmall, ERounding rounding)
-Divides two arbitrary-precision decimal numbers, and gives a particular
+    public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, ERounding rounding)
+Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
 
 **Parameters:**
@@ -1572,32 +1278,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  exact.
 
 ### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, int desiredExponentInt, ERounding rounding)
-Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 32-bit signed integer) to the result, using
- the half-even rounding mode.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
- documented yet.
-
-* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
-
-**Returns:**
-
-* The quotient of the two objects. Signals FlagDivideByZero and
- returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
- (NaN) if the rounding mode is ERounding.None and the result is not
- exact.
-
-### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, EInteger exponent, EContext ctx)
-Divides two arbitrary-precision decimal numbers, and gives a particular
+    public EFloat DivideToExponent​(EFloat divisor, EInteger exponent, EContext ctx)
+Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
 
 **Parameters:**
@@ -1620,57 +1302,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  result is not exact.
 
 ### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, EInteger exponent)
-Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent to the result, using the half-even rounding mode.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, long desiredExponentSmall)
-Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 64-bit signed integer) to the result, using
- the half-even rounding mode.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-* <code>desiredExponentSmall</code> - The parameter <code>desiredExponentSmall</code> is
- not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, int desiredExponentInt)
-Divides two arbitrary-precision decimal numbers, and gives a particular
- exponent (expressed as a 32-bit signed integer) to the result, using
- the half-even rounding mode.
-
-**Parameters:**
-
-* <code>divisor</code> - The number to divide by.
-
-* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
- documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-### DivideToExponent
-    public EDecimal DivideToExponent​(EDecimal divisor, EInteger desiredExponent, ERounding rounding)
-Divides two arbitrary-precision decimal numbers, and gives a particular
+    public EFloat DivideToExponent​(EFloat divisor, EInteger desiredExponent, ERounding rounding)
+Divides two arbitrary-precision binary floats, and gives a particular
  exponent to the result.
 
 **Parameters:**
@@ -1691,10 +1324,10 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  not exact.
 
 ### DivideToIntegerNaturalScale
-    public EDecimal DivideToIntegerNaturalScale​(EDecimal divisor)
-Divides two arbitrary-precision decimal numbers, and returns the integer
- part of the result, rounded down, with the preferred exponent set to
- this value's exponent minus the divisor's exponent.
+    public EFloat DivideToIntegerNaturalScale​(EFloat divisor)
+Divides two arbitrary-precision binary floats, and returns the integer part
+ of the result, rounded down, with the preferred exponent set to this
+ value's exponent minus the divisor's exponent.
 
 **Parameters:**
 
@@ -1708,23 +1341,23 @@ Divides two arbitrary-precision decimal numbers, and returns the integer
  (NaN) if the divisor and the dividend are 0.
 
 ### DivideToIntegerNaturalScale
-    public EDecimal DivideToIntegerNaturalScale​(EDecimal divisor, EContext ctx)
+    public EFloat DivideToIntegerNaturalScale​(EFloat divisor, EContext ctx)
 Divides this object by another object, and returns the integer part of the
  result (which is initially rounded down), with the preferred exponent
  set to this value's exponent minus the divisor's exponent.
 
 **Parameters:**
 
-* <code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.
+* <code>divisor</code> - An arbitrary-precision binary floating-point number.
 
 * <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### DivideToIntegerZeroScale
-    public EDecimal DivideToIntegerZeroScale​(EDecimal divisor, EContext ctx)
+    public EFloat DivideToIntegerZeroScale​(EFloat divisor, EContext ctx)
 Divides this object by another object, and returns the integer part of the
  result, with the exponent set to 0.
 
@@ -1736,11 +1369,11 @@ Divides this object by another object, and returns the integer part of the
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### DivideToSameExponent
-    public EDecimal DivideToSameExponent​(EDecimal divisor, ERounding rounding)
-Divides this object by another decimal number and returns a result with the
+    public EFloat DivideToSameExponent​(EFloat divisor, ERounding rounding)
+Divides this object by another binary float and returns a result with the
  same exponent as this object (the dividend).
 
 **Parameters:**
@@ -1751,10 +1384,39 @@ Divides this object by another decimal number and returns a result with the
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
+
+### DivRemNaturalScale
+    public EFloat[] DivRemNaturalScale​(EFloat divisor)
+Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+**Returns:**
+
+* A 2 element array consisting of the quotient and remainder in that
+ order.
+
+### DivRemNaturalScale
+    public EFloat[] DivRemNaturalScale​(EFloat divisor, EContext ctx)
+Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+
+**Returns:**
+
+* An EFloat[] object.
 
 ### equals
-    public boolean equals​(EDecimal other)
+    public boolean equals​(EFloat other)
 Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object. Not-a-number values
  are considered equal if the rest of their properties are equal.
@@ -1772,7 +1434,7 @@ Determines whether this object's mantissa (significand), exponent, and
     public boolean equals​(Object obj)
 Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object and that other object
- is an arbitrary-precision decimal number. Not-a-number values are
+ is an arbitrary-precision binary float. Not-a-number values are
  considered equal if the rest of their properties are equal.
 
 **Overrides:**
@@ -1787,8 +1449,22 @@ Determines whether this object's mantissa (significand), exponent, and
 
 * <code>true</code> if the objects are equal; otherwise, <code>false</code>.
 
+### EqualsInternal
+    public boolean EqualsInternal​(EFloat otherValue)
+Determines whether this object's mantissa (significand) and exponent are
+ equal to those of another object.
+
+**Parameters:**
+
+* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
+
+**Returns:**
+
+* <code>true</code> if this object's mantissa (significand) and exponent
+ are equal to those of another object; otherwise, <code>false</code>.
+
 ### Exp
-    public EDecimal Exp​(EContext ctx)
+    public EFloat Exp​(EContext ctx)
 Finds e (the base of natural logarithms) raised to the power of this
  object's value.
 
@@ -1873,7 +1549,7 @@ Gets a value indicating whether this object is a signaling not-a-number
  otherwise, <code>false</code>.
 
 ### Log
-    public EDecimal Log​(EContext ctx)
+    public EFloat Log​(EContext ctx)
 Finds the natural logarithm of this object, that is, the power (exponent)
  that e (the base of natural logarithms) must be raised to in order to
  equal this object's value.
@@ -1894,7 +1570,7 @@ Finds the natural logarithm of this object, that is, the power (exponent)
  this object's value is 0.
 
 ### Log10
-    public EDecimal Log10​(EContext ctx)
+    public EFloat Log10​(EContext ctx)
 Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
  value.
@@ -1911,8 +1587,8 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  precision is unlimited (the context's Precision property is 0).
 
 ### MovePointLeft
-    public EDecimal MovePointLeft​(int places)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointLeft​(int places)
+Returns a number similar to this number but with the radix point moved to
  the left.
 
 **Parameters:**
@@ -1925,8 +1601,8 @@ Returns a number similar to this number but with the decimal point moved to
  than 0.
 
 ### MovePointLeft
-    public EDecimal MovePointLeft​(int places, EContext ctx)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointLeft​(int places, EContext ctx)
+Returns a number similar to this number but with the radix point moved to
  the left.
 
 **Parameters:**
@@ -1937,11 +1613,11 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MovePointLeft
-    public EDecimal MovePointLeft​(EInteger bigPlaces)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointLeft​(EInteger bigPlaces)
+Returns a number similar to this number but with the radix point moved to
  the left.
 
 **Parameters:**
@@ -1954,8 +1630,8 @@ Returns a number similar to this number but with the decimal point moved to
  than 0.
 
 ### MovePointLeft
-    public EDecimal MovePointLeft​(EInteger bigPlaces, EContext ctx)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointLeft​(EInteger bigPlaces, EContext ctx)
+Returns a number similar to this number but with the radix point moved to
  the left.
 
 **Parameters:**
@@ -1966,11 +1642,11 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MovePointRight
-    public EDecimal MovePointRight​(int places)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointRight​(int places)
+Returns a number similar to this number but with the radix point moved to
  the right.
 
 **Parameters:**
@@ -1983,8 +1659,8 @@ Returns a number similar to this number but with the decimal point moved to
  than 0.
 
 ### MovePointRight
-    public EDecimal MovePointRight​(int places, EContext ctx)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointRight​(int places, EContext ctx)
+Returns a number similar to this number but with the radix point moved to
  the right.
 
 **Parameters:**
@@ -1995,11 +1671,11 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MovePointRight
-    public EDecimal MovePointRight​(EInteger bigPlaces)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointRight​(EInteger bigPlaces)
+Returns a number similar to this number but with the radix point moved to
  the right.
 
 **Parameters:**
@@ -2012,8 +1688,8 @@ Returns a number similar to this number but with the decimal point moved to
  than 0.
 
 ### MovePointRight
-    public EDecimal MovePointRight​(EInteger bigPlaces, EContext ctx)
-Returns a number similar to this number but with the decimal point moved to
+    public EFloat MovePointRight​(EInteger bigPlaces, EContext ctx)
+Returns a number similar to this number but with the radix point moved to
  the right.
 
 **Parameters:**
@@ -2024,12 +1700,12 @@ Returns a number similar to this number but with the decimal point moved to
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Multiply
-    public EDecimal Multiply​(EDecimal otherValue)
-Multiplies two decimal numbers. The resulting exponent will be the sum of
- the exponents of the two decimal numbers.
+    public EFloat Multiply​(EFloat otherValue)
+Multiplies two binary floats. The resulting exponent will be the sum of the
+ exponents of the two binary floats.
 
 **Parameters:**
 
@@ -2037,12 +1713,12 @@ Multiplies two decimal numbers. The resulting exponent will be the sum of
 
 **Returns:**
 
-* The product of the two decimal numbers.
+* The product of the two binary floats.
 
 ### Multiply
-    public EDecimal Multiply​(EDecimal op, EContext ctx)
-Multiplies two decimal numbers. The resulting scale will be the sum of the
- scales of the two decimal numbers. The result's sign is positive if
+    public EFloat Multiply​(EFloat op, EContext ctx)
+Multiplies two binary floats. The resulting scale will be the sum of the
+ scales of the two binary floats. The result's sign is positive if
  both operands have the same sign, and negative if they have different
  signs.
 
@@ -2054,11 +1730,11 @@ Multiplies two decimal numbers. The resulting scale will be the sum of the
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MultiplyAndAdd
-    public EDecimal MultiplyAndAdd​(EDecimal multiplicand, EDecimal augend)
-Multiplies by one decimal number, and then adds another decimal number.
+    public EFloat MultiplyAndAdd​(EFloat multiplicand, EFloat augend)
+Multiplies by one binary float, and then adds another binary float.
 
 **Parameters:**
 
@@ -2069,10 +1745,10 @@ Multiplies by one decimal number, and then adds another decimal number.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### MultiplyAndAdd
-    public EDecimal MultiplyAndAdd​(EDecimal op, EDecimal augend, EContext ctx)
+    public EFloat MultiplyAndAdd​(EFloat op, EFloat augend, EContext ctx)
 Multiplies by one value, and then adds another value.
 
 **Parameters:**
@@ -2088,7 +1764,7 @@ Multiplies by one value, and then adds another value.
 * The result thisValue * multiplicand + augend.
 
 ### MultiplyAndSubtract
-    public EDecimal MultiplyAndSubtract​(EDecimal op, EDecimal subtrahend, EContext ctx)
+    public EFloat MultiplyAndSubtract​(EFloat op, EFloat subtrahend, EContext ctx)
 Multiplies by one value, and then subtracts another value.
 
 **Parameters:**
@@ -2105,21 +1781,21 @@ Multiplies by one value, and then subtracts another value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "op" or "subtrahend" is
- null.
+* <code>NullPointerException</code> - The parameter <code>op</code> or <code>
+ subtrahend</code> is null.
 
 ### Negate
-    public EDecimal Negate()
+    public EFloat Negate()
 Gets an object with the same value as this one, but with the sign reversed.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Negate
-    public EDecimal Negate​(EContext context)
-Returns a decimal number with the same value as this object but with the
- sign reversed.
+    public EFloat Negate​(EContext context)
+Returns a binary float with the same value as this object but with the sign
+ reversed.
 
 **Parameters:**
 
@@ -2127,12 +1803,12 @@ Returns a decimal number with the same value as this object but with the
 
 **Returns:**
 
-* An arbitrary-precision decimal number. If this value is positive
- zero, returns positive zero. Signals FlagInvalid and returns quiet
- NaN if this value is signaling NaN.
+* An arbitrary-precision binary float. If this value is positive zero,
+ returns positive zero. Signals FlagInvalid and returns quiet NaN if
+ this value is signaling NaN.
 
 ### NextMinus
-    public EDecimal NextMinus​(EContext ctx)
+    public EFloat NextMinus​(EContext ctx)
 Finds the largest value that's smaller than the given value.
 
 **Parameters:**
@@ -2147,7 +1823,7 @@ Finds the largest value that's smaller than the given value.
  null, the precision is 0, or "ctx" has an unlimited exponent range.
 
 ### NextPlus
-    public EDecimal NextPlus​(EContext ctx)
+    public EFloat NextPlus​(EContext ctx)
 Finds the smallest value that's greater than the given value.
 
 **Parameters:**
@@ -2162,7 +1838,7 @@ Finds the smallest value that's greater than the given value.
  unlimited exponent range.
 
 ### NextToward
-    public EDecimal NextToward​(EDecimal otherValue, EContext ctx)
+    public EFloat NextToward​(EFloat otherValue, EContext ctx)
 Finds the next value that is closer to the other object's value than this
  object's value. Returns a copy of this value with the same sign as
  the other value if both values are equal.
@@ -2175,10 +1851,10 @@ Finds the next value that is closer to the other object's value than this
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Plus
-    public EDecimal Plus​(EContext ctx)
+    public EFloat Plus​(EContext ctx)
 Rounds this object's value to a given precision, using the given rounding
  mode and range of exponent, and also converts negative zero to
  positive zero.
@@ -2194,7 +1870,7 @@ Rounds this object's value to a given precision, using the given rounding
  the precision and exponent range are unlimited.
 
 ### Pow
-    public EDecimal Pow​(EDecimal exponent, EContext ctx)
+    public EFloat Pow​(EFloat exponent, EContext ctx)
 Raises this object's value to the given exponent.
 
 **Parameters:**
@@ -2205,10 +1881,10 @@ Raises this object's value to the given exponent.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Pow
-    public EDecimal Pow​(int exponentSmall, EContext ctx)
+    public EFloat Pow​(int exponentSmall, EContext ctx)
 Raises this object's value to the given exponent.
 
 **Parameters:**
@@ -2220,10 +1896,10 @@ Raises this object's value to the given exponent.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Pow
-    public EDecimal Pow​(int exponentSmall)
+    public EFloat Pow​(int exponentSmall)
 Raises this object's value to the given exponent.
 
 **Parameters:**
@@ -2247,24 +1923,24 @@ Finds the number of digits in this number's mantissa (significand). Returns
 * An arbitrary-precision integer.
 
 ### Quantize
-    public EDecimal Quantize​(EInteger desiredExponent, EContext ctx)
-Returns a decimal number with the same value but a new exponent. <p>Note
- that this is not always the same as rounding to a given number of
- decimal places, since it can fail if the difference between this
+    public EFloat Quantize​(EInteger desiredExponent, EContext ctx)
+Returns a binary float with the same value but a new exponent. <p>Note that
+ this is not always the same as rounding to a given number of binary
+ digit places, since it can fail if the difference between this
  value's exponent and the desired exponent is too big, depending on
- the maximum precision. If rounding to a number of decimal places is
- desired, it's better to use the RoundToExponent and RoundToIntegral
- methods instead.</p> <p><b>Remark:</b> This method can be used to
- implement fixed-point decimal arithmetic, in which each decimal
- number has a fixed number of digits after the decimal point. The
+ the maximum precision. If rounding to a number of binary digit places
+ is desired, it's better to use the RoundToExponent and
+ RoundToIntegral methods instead.</p> <p><b>Remark:</b> This method
+ can be used to implement fixed-point binary arithmetic, in which each
+ binary float has a fixed number of digits after the radix point. The
  following code example returns a fixed-point number with up to 20
- digits before and exactly 5 digits after the decimal point:</p>
+ digits before and exactly 5 digits after the radix point:</p>
  <pre>  // After performing arithmetic operations, adjust  // the number
- to 5  // digits after the decimal point number = number.Quantize(
- EInteger.FromInt32(-5),  // five digits after the decimal point
+ to 5  // digits after the radix point number = number.Quantize(
+ EInteger.FromInt32(-5),  // five digits after the radix point
  EContext.ForPrecision(25)  // 25-digit precision); </pre> <p>A
- fixed-point decimal arithmetic in which no digits come after the
- decimal point (a desired exponent of 0) is considered an "integer
+ fixed-point binary arithmetic in which no digits come after the radix
+ point (a desired exponent of 0) is considered an "integer
  arithmetic".</p>
 
 **Parameters:**
@@ -2276,46 +1952,26 @@ Returns a decimal number with the same value but a new exponent. <p>Note
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Quantize
-    public EDecimal Quantize​(int desiredExponentInt, ERounding rounding)
-Returns a decimal number with the same value as this one but a new exponent.
- <p><b>Remark:</b> This method can be used to implement fixed-point
- decimal arithmetic, in which a fixed number of digits come after the
- decimal point. A fixed-point decimal arithmetic in which no digits
- come after the decimal point (a desired exponent of 0) is considered
- an "integer arithmetic" .</p>
-
-**Parameters:**
-
-* <code>desiredExponentInt</code> - The parameter <code>desiredExponentInt</code> is not
- documented yet.
-
-* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-### Quantize
-    public EDecimal Quantize​(int desiredExponentInt, EContext ctx)
-Returns a decimal number with the same value but a new exponent. <p>Note
- that this is not always the same as rounding to a given number of
- decimal places, since it can fail if the difference between this
+    public EFloat Quantize​(int desiredExponentInt, EContext ctx)
+Returns a binary float with the same value but a new exponent. <p>Note that
+ this is not always the same as rounding to a given number of binary
+ digit places, since it can fail if the difference between this
  value's exponent and the desired exponent is too big, depending on
- the maximum precision. If rounding to a number of decimal places is
- desired, it's better to use the RoundToExponent and RoundToIntegral
- methods instead.</p> <p><b>Remark:</b> This method can be used to
- implement fixed-point decimal arithmetic, in which each decimal
- number has a fixed number of digits after the decimal point. The
+ the maximum precision. If rounding to a number of binary digit places
+ is desired, it's better to use the RoundToExponent and
+ RoundToIntegral methods instead.</p> <p><b>Remark:</b> This method
+ can be used to implement fixed-point binary arithmetic, in which each
+ binary float has a fixed number of digits after the radix point. The
  following code example returns a fixed-point number with up to 20
- digits before and exactly 5 digits after the decimal point:</p>
+ digits before and exactly 5 digits after the radix point:</p>
  <pre>  // After performing arithmetic operations, adjust  // the number
- to 5 digits after the decimal point number = number.Quantize(-5, //
- five digits after the decimal point EContext.ForPrecision(25)  // * 25-digit precision); </pre> <p>A fixed-point decimal arithmetic in
- which no digits come after the decimal point (a desired exponent of
- 0) is considered an "integer arithmetic".</p>
+ to 5 digits after the radix point number = number.Quantize(-5, //
+ five digits after the radix point EContext.ForPrecision(25)  // * 25-digit precision); </pre> <p>A fixed-point binary arithmetic in
+ which no digits come after the radix point (a desired exponent of 0)
+ is considered an "integer arithmetic".</p>
 
 **Parameters:**
 
@@ -2326,22 +1982,22 @@ Returns a decimal number with the same value but a new exponent. <p>Note
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Quantize
-    public EDecimal Quantize​(EDecimal otherValue, EContext ctx)
-Returns a decimal number with the same value as this object but with the
- same exponent as another decimal number. <p>Note that this is not
- always the same as rounding to a given number of decimal places,
- since it can fail if the difference between this value's exponent and
- the desired exponent is too big, depending on the maximum precision.
- If rounding to a number of decimal places is desired, it's better to
- use the RoundToExponent and RoundToIntegral methods instead.</p>
+    public EFloat Quantize​(EFloat otherValue, EContext ctx)
+Returns a binary float with the same value as this object but with the same
+ exponent as another binary float. <p>Note that this is not always the
+ same as rounding to a given number of binary digit places, since it
+ can fail if the difference between this value's exponent and the
+ desired exponent is too big, depending on the maximum precision. If
+ rounding to a number of binary digit places is desired, it's better
+ to use the RoundToExponent and RoundToIntegral methods instead.</p>
  <p><b>Remark:</b> This method can be used to implement fixed-point
- decimal arithmetic, in which a fixed number of digits come after the
- decimal point. A fixed-point decimal arithmetic in which no digits
- come after the decimal point (a desired exponent of 0) is considered
- an "integer arithmetic" .</p>
+ binary arithmetic, in which a fixed number of digits come after the
+ radix point. A fixed-point binary arithmetic in which no digits come
+ after the radix point (a desired exponent of 0) is considered an
+ "integer arithmetic" .</p>
 
 **Parameters:**
 
@@ -2351,10 +2007,10 @@ Returns a decimal number with the same value as this object but with the
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Reduce
-    public EDecimal Reduce​(EContext ctx)
+    public EFloat Reduce​(EContext ctx)
 Removes trailing zeros from this object's mantissa (significand). For
  example, 1.00 becomes 1. <p>If this object's value is 0, changes the
  exponent to 0.</p>
@@ -2370,25 +2026,25 @@ Removes trailing zeros from this object's mantissa (significand). For
  there may still be some trailing zeros in the mantissa (significand).
 
 ### Remainder
-    public EDecimal Remainder​(EDecimal divisor, EContext ctx)
+    public EFloat Remainder​(EFloat divisor, EContext ctx)
 Finds the remainder that results when dividing two arbitrary-precision
- decimal numbers. The remainder is the value that remains when the
+ binary floats. The remainder is the value that remains when the
  absolute value of this object is divided by the absolute value of the
  other object; the remainder has the same sign (positive or negative)
  as this object's value.
 
 **Parameters:**
 
-* <code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.
+* <code>divisor</code> - An arbitrary-precision binary floating-point number.
 
 * <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### RemainderNaturalScale
-    public EDecimal RemainderNaturalScale​(EDecimal divisor)
+    public EFloat RemainderNaturalScale​(EFloat divisor)
 Calculates the remainder of a number by the formula <code>"this" - (("this" /
  "divisor") * "divisor")</code>
 
@@ -2398,10 +2054,10 @@ Calculates the remainder of a number by the formula <code>"this" - (("this" /
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* An arbitrary-precision binary float.
 
 ### RemainderNaturalScale
-    public EDecimal RemainderNaturalScale​(EDecimal divisor, EContext ctx)
+    public EFloat RemainderNaturalScale​(EFloat divisor, EContext ctx)
 Calculates the remainder of a number by the formula "this" - (("this" /
  "divisor") * "divisor").
 
@@ -2413,10 +2069,10 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### RemainderNear
-    public EDecimal RemainderNear​(EDecimal divisor, EContext ctx)
+    public EFloat RemainderNear​(EFloat divisor, EContext ctx)
 Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object's value by another object's value.
  <ul> <li>If this and the other object divide evenly, the result is
@@ -2441,11 +2097,11 @@ Finds the distance to the closest multiple of the given divisor, based on
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### RoundToExponent
-    public EDecimal RoundToExponent​(EInteger exponent, EContext ctx)
-Returns a decimal number with the same value as this object but rounded to a
+    public EFloat RoundToExponent​(EInteger exponent, EContext ctx)
+Returns a binary float with the same value as this object but rounded to a
  new exponent if necessary.
 
 **Parameters:**
@@ -2456,55 +2112,11 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### RoundToExponent
-    public EDecimal RoundToExponent​(EInteger exponent)
-Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary, using the HalfEven rounding mode.
-
-**Parameters:**
-
-* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
-
-**Returns:**
-
-* A decimal number rounded to the closest value representable for the
- given exponent.
-
-### RoundToExponent
-    public EDecimal RoundToExponent​(EInteger exponent, ERounding rounding)
-Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary, using the given rounding mode.
-
-**Parameters:**
-
-* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
-
-* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-### RoundToExponent
-    public EDecimal RoundToExponent​(int exponentSmall)
-Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary, using the HalfEven rounding mode.
-
-**Parameters:**
-
-* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
- yet.
-
-**Returns:**
-
-* A decimal number rounded to the closest value representable for the
- given exponent.
-
-### RoundToExponent
-    public EDecimal RoundToExponent​(int exponentSmall, EContext ctx)
-Returns a decimal number with the same value as this object but rounded to a
+    public EFloat RoundToExponent​(int exponentSmall, EContext ctx)
+Returns a binary float with the same value as this object but rounded to a
  new exponent if necessary.
 
 **Parameters:**
@@ -2516,48 +2128,46 @@ Returns a decimal number with the same value as this object but rounded to a
 
 **Returns:**
 
-* An EDecimal object.
-
-### RoundToExponent
-    public EDecimal RoundToExponent​(int exponentSmall, ERounding rounding)
-Returns a decimal number with the same value as this object but rounded to a
- new exponent if necessary.
-
-**Parameters:**
-
-* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
- yet.
-
-* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### RoundToExponentExact
-    public EDecimal RoundToExponentExact​(EInteger exponent, EContext ctx)
-Returns a decimal number with the same value as this object but rounded to
- the given exponent, and signals an inexact flag if the result would
- be inexact.
-
-**Parameters:**
-
-* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
-
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
-### RoundToExponentExact
-    public EDecimal RoundToExponentExact​(int exponentSmall, EContext ctx)
-Returns a decimal number with the same value as this object but rounded to
- an integer, and signals an inexact flag if the result would be
+    public EFloat RoundToExponentExact​(EInteger exponent, EContext ctx)
+Returns a binary float with the same value as this object but rounded to the
+ given exponent, and signals an inexact flag if the result would be
  inexact.
 
 **Parameters:**
 
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
+
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+### RoundToExponentExact
+    public EFloat RoundToExponentExact​(EInteger exponent, ERounding rounding)
+Returns a binary number with the same value as this object but rounded to
+ the given exponent.
+
+**Parameters:**
+
+* <code>exponent</code> - The parameter <code>exponent</code> is not documented yet.
+
+* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+### RoundToExponentExact
+    public EFloat RoundToExponentExact​(int exponentSmall, EContext ctx)
+Returns a binary float with the same value as this object but rounded to an
+ integer, and signals an inexact flag if the result would be inexact.
+
+**Parameters:**
+
 * <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
  yet.
 
@@ -2565,30 +2175,12 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Returns:**
 
-* An EDecimal object.
-
-### RoundToExponentExact
-    public EDecimal RoundToExponentExact​(int exponentSmall, ERounding rounding)
-Returns a decimal number with the same value as this object but rounded to
- an integer, and signals an inexact flag if the result would be
- inexact.
-
-**Parameters:**
-
-* <code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
- yet.
-
-* <code>rounding</code> - The parameter <code>rounding</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### RoundToIntegerExact
-    public EDecimal RoundToIntegerExact​(EContext ctx)
-Returns a decimal number with the same value as this object but rounded to
- an integer, and signals an inexact flag if the result would be
- inexact.
+    public EFloat RoundToIntegerExact​(EContext ctx)
+Returns a binary float with the same value as this object but rounded to an
+ integer, and signals an inexact flag if the result would be inexact.
 
 **Parameters:**
 
@@ -2596,7 +2188,7 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Returns:**
 
-* A decimal number rounded to the closest integer representable in the
+* A binary float rounded to the closest integer representable in the
  given precision. Signals FlagInvalid and returns not-a-number (NaN)
  if the result can't fit the given precision without rounding. Signals
  FlagInvalid and returns not-a-number (NaN) if the arithmetic context
@@ -2605,10 +2197,10 @@ Returns a decimal number with the same value as this object but rounded to
  context.
 
 ### RoundToIntegerNoRoundedFlag
-    public EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx)
-Returns a decimal number with the same value as this object but rounded to
- an integer, without adding the <code>FlagInexact</code> or
- <code>FlagRounded</code> flags.
+    public EFloat RoundToIntegerNoRoundedFlag​(EContext ctx)
+Returns a binary float with the same value as this object but rounded to an
+ integer, without adding the <code>FlagInexact</code> or <code>FlagRounded</code>
+ flags.
 
 **Parameters:**
 
@@ -2616,7 +2208,7 @@ Returns a decimal number with the same value as this object but rounded to
 
 **Returns:**
 
-* A decimal number rounded to the closest integer representable in the
+* A binary float rounded to the closest integer representable in the
  given precision. If the result can't fit the precision, additional
  digits are discarded to make it fit. Signals FlagInvalid and returns
  not-a-number (NaN) if the precision context defines an exponent
@@ -2624,7 +2216,7 @@ Returns a decimal number with the same value as this object but rounded to
  outside of the valid range of the arithmetic context.
 
 ### RoundToIntegralExact
-    @Deprecated public EDecimal RoundToIntegralExact​(EContext ctx)
+    @Deprecated public EFloat RoundToIntegralExact​(EContext ctx)
 Deprecated.
 <div class='deprecationComment'>Renamed to RoundToIntegerExact.</div>
 
@@ -2634,7 +2226,7 @@ Deprecated.
 
 **Returns:**
 
-* A decimal number rounded to the closest integer representable in the
+* A binary float rounded to the closest integer representable in the
  given precision. Signals FlagInvalid and returns not-a-number (NaN)
  if the result can't fit the given precision without rounding. Signals
  FlagInvalid and returns not-a-number (NaN) if the arithmetic context
@@ -2643,7 +2235,7 @@ Deprecated.
  context.
 
 ### RoundToIntegralNoRoundedFlag
-    @Deprecated public EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)
+    @Deprecated public EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)
 Deprecated.
 <div class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</div>
 
@@ -2653,7 +2245,7 @@ Deprecated.
 
 **Returns:**
 
-* A decimal number rounded to the closest integer representable in the
+* A binary float rounded to the closest integer representable in the
  given precision. If the result can't fit the precision, additional
  digits are discarded to make it fit. Signals FlagInvalid and returns
  not-a-number (NaN) if the precision context defines an exponent
@@ -2661,7 +2253,7 @@ Deprecated.
  outside of the valid range of the arithmetic context.
 
 ### RoundToPrecision
-    public EDecimal RoundToPrecision​(EContext ctx)
+    public EFloat RoundToPrecision​(EContext ctx)
 Rounds this object's value to a given precision, using the given rounding
  mode and range of exponent.
 
@@ -2675,8 +2267,8 @@ Rounds this object's value to a given precision, using the given rounding
  precision. Returns the same value as this object if "ctx" is null or
  the precision and exponent range are unlimited.
 
-### ScaleByPowerOfTen
-    public EDecimal ScaleByPowerOfTen​(int places)
+### ScaleByPowerOfTwo
+    public EFloat ScaleByPowerOfTwo​(int places)
 Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
@@ -2685,10 +2277,10 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* An arbitrary-precision binary float.
 
-### ScaleByPowerOfTen
-    public EDecimal ScaleByPowerOfTen​(int places, EContext ctx)
+### ScaleByPowerOfTwo
+    public EFloat ScaleByPowerOfTwo​(int places, EContext ctx)
 Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
@@ -2699,10 +2291,10 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
-### ScaleByPowerOfTen
-    public EDecimal ScaleByPowerOfTen​(EInteger bigPlaces)
+### ScaleByPowerOfTwo
+    public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces)
 Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
@@ -2711,10 +2303,10 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* A number whose exponent is increased by "bigPlaces".
 
-### ScaleByPowerOfTen
-    public EDecimal ScaleByPowerOfTen​(EInteger bigPlaces, EContext ctx)
+### ScaleByPowerOfTwo
+    public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces, EContext ctx)
 Returns a number similar to this number but with its scale adjusted.
 
 **Parameters:**
@@ -2725,10 +2317,10 @@ Returns a number similar to this number but with its scale adjusted.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 ### Sqrt
-    public EDecimal Sqrt​(EContext ctx)
+    public EFloat Sqrt​(EContext ctx)
 Finds the square root of this object's value.
 
 **Parameters:**
@@ -2744,7 +2336,7 @@ Finds the square root of this object's value.
  precision is unlimited (the context's Precision property is 0).
 
 ### SquareRoot
-    @Deprecated public EDecimal SquareRoot​(EContext ctx)
+    @Deprecated public EFloat SquareRoot​(EContext ctx)
 Deprecated.
 <div class='deprecationComment'>Renamed to Sqrt.</div>
 
@@ -2761,9 +2353,9 @@ Deprecated.
  precision is unlimited (the context's Precision property is 0).
 
 ### Subtract
-    public EDecimal Subtract​(EDecimal otherValue)
-Subtracts an arbitrary-precision decimal number from this instance and
- returns the result.
+    public EFloat Subtract​(EFloat otherValue)
+Subtracts an arbitrary-precision binary float from this instance and returns
+ the result.
 
 **Parameters:**
 
@@ -2774,8 +2366,8 @@ Subtracts an arbitrary-precision decimal number from this instance and
 * The difference of the two objects.
 
 ### Subtract
-    public EDecimal Subtract​(EDecimal otherValue, EContext ctx)
-Subtracts an arbitrary-precision decimal number from this instance.
+    public EFloat Subtract​(EFloat otherValue, EContext ctx)
+Subtracts an arbitrary-precision binary float from this instance.
 
 **Parameters:**
 
@@ -2785,33 +2377,33 @@ Subtracts an arbitrary-precision decimal number from this instance.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision binary floating-point number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "otherValue" is null.
+* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+ null.
 
 ### ToDouble
     public double ToDouble()
-Converts this value to its closest equivalent as a 64-bit floating-point
- number. The half-even rounding mode is used. <p>If this value is a
- NaN, sets the high bit of the 64-bit floating point number's
- significand area for a quiet NaN, and clears it for a signaling NaN.
- Then the other bits of the significand area are set to the lowest
- bits of this object's unsigned mantissa (significand), and the
- next-highest bit of the significand area is set if those bits are all
- zeros and this is a signaling NaN. Unfortunately, in the .NET
- implementation, the return value of this method may be a quiet NaN
- even if a signaling NaN would otherwise be generated.</p>
+Converts this value to a 64-bit floating-point number.
 
 **Returns:**
 
 * A 64-bit floating-point number.
 
+### ToEDecimal
+    public EDecimal ToEDecimal()
+Converts this value to an arbitrary-precision decimal number.
+
+**Returns:**
+
+* An EDecimal object.
+
 ### ToEInteger
     public EInteger ToEInteger()
 Converts this value to an arbitrary-precision integer. Any fractional part
- in this value will be discarded when converting to an
+ of this value will be discarded when converting to an
  arbitrary-precision integer.
 
 **Returns:**
@@ -2840,7 +2432,7 @@ Deprecated.
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
 Converts this value to an arbitrary-precision integer, checking whether the
- fractional part of the value would be lost.
+ value contains a fractional part.
 
 **Returns:**
 
@@ -2853,44 +2445,55 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 ### ToEngineeringString
     public String ToEngineeringString()
-Same as toString(), except that when an exponent is used it will be a
- multiple of 3.
+Converts this value to an arbitrary-precision decimal number, then returns
+ the value of that decimal's ToEngineeringString method.
 
 **Returns:**
 
 * A text string.
 
-### ToExtendedFloat
-    @Deprecated public EFloat ToExtendedFloat()
+### ToExtendedDecimal
+    @Deprecated public EDecimal ToExtendedDecimal()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEFloat.</div>
+<div class='deprecationComment'>Renamed to ToEDecimal.</div>
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
-
-### ToEFloat
-    public EFloat ToEFloat()
-Creates a binary floating-point number from this object's value. Note that
- if the binary floating-point number contains a negative exponent, the
- resulting value might not be exact, in which case the resulting
- binary float will be an approximation of this decimal number's value.
-
-**Returns:**
-
-* An arbitrary-precision binary floating-point number.
+* An EDecimal object.
 
 ### ToPlainString
     public String ToPlainString()
-Converts this value to a string, but without using exponential notation.
+Converts this value to a string, but without exponential notation.
 
 **Returns:**
 
 * A text string.
 
+### ToShortestString
+    public String ToShortestString​(EContext ctx)
+Returns a string representation of this number's value after rounding to the
+ given precision (using the given arithmetic context). If the number
+ after rounding is neither infinity nor not-a-number (NaN), returns
+ the shortest decimal form (in terms of nonzero decimal digits) of
+ this number's value that results in the rounded number after the
+ decimal form is converted to binary floating-point format (using the
+ given arithmetic context).
+
+**Parameters:**
+
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+
+**Returns:**
+
+* Shortest decimal form of this number's value for the given
+ arithmetic context. The text string will be in exponential notation
+ if the number's first nonzero decimal digit is more than five digits
+ after the decimal point, or if the number's exponent is greater than
+ 0 and its value is 10, 000, 000 or greater.
+
 ### ToSingle
     public float ToSingle()
-Converts this value to its closest equivalent as a 32-bit floating-point
+Converts this value to its closest equivalent as 32-bit floating-point
  number. The half-even rounding mode is used. <p>If this value is a
  NaN, sets the high bit of the 32-bit floating point number's
  significand area for a quiet NaN, and clears it for a signaling NaN.
@@ -2907,8 +2510,7 @@ Converts this value to its closest equivalent as a 32-bit floating-point
 
 ### toString
     public String toString()
-Converts this value to a string. Returns a value compatible with this
- class's FromString method.
+Converts this number's value to a text string.
 
 **Overrides:**
 
@@ -2919,29 +2521,14 @@ Converts this value to a string. Returns a value compatible with this
 * A text string.
 
 ### Ulp
-    public EDecimal Ulp()
+    public EFloat Ulp()
 Returns the unit in the last place. The mantissa (significand) will be 1 and
  the exponent will be this number's exponent. Returns 1 with an
  exponent of 0 if this number is infinity or not-a-number (NaN).
 
 **Returns:**
 
-* An EDecimal object.
-
-### ToEFloat
-    public EFloat ToEFloat​(EContext ec)
-Creates a binary floating-point number from this object's value. Note that
- if the binary floating-point number contains a negative exponent, the
- resulting value might not be exact, in which case the resulting
- binary float will be an approximation of this decimal number's value.
-
-**Parameters:**
-
-* <code>ec</code> - The parameter <code>ec</code> is an EContext object.
-
-**Returns:**
-
-* An arbitrary-precision float floating-point number.
+* An arbitrary-precision binary floating-point number.
 
 ### ToByteChecked
     public byte ToByteChecked()
@@ -2982,8 +2569,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
  an exact integer, or is less than 0 or greater than 255.
 
 ### FromByte
-    public static EDecimal FromByte​(byte inputByte)
-Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
+    public static EFloat FromByte​(byte inputByte)
+Converts a byte (from 0 to 255) to an arbitrary-precision binary float.
 
 **Parameters:**
 
@@ -2991,7 +2578,7 @@ Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
 
 **Returns:**
 
-* This number's value as an arbitrary-precision decimal number.
+* This number's value as an arbitrary-precision binary float.
 
 ### ToInt16Checked
     public short ToInt16Checked()
@@ -3033,8 +2620,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
  an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
-    public static EDecimal FromInt16​(short inputInt16)
-Converts a 16-bit signed integer to an arbitrary-precision decimal number.
+    public static EFloat FromInt16​(short inputInt16)
+Converts a 16-bit signed integer to an arbitrary-precision binary float.
 
 **Parameters:**
 
@@ -3042,7 +2629,7 @@ Converts a 16-bit signed integer to an arbitrary-precision decimal number.
 
 **Returns:**
 
-* This number's value as an arbitrary-precision decimal number.
+* This number's value as an arbitrary-precision binary float.
 
 ### ToInt32Checked
     public int ToInt32Checked()
@@ -3085,6 +2672,18 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
  an exact integer, or is less than -2147483648 or greater than
  2147483647.
 
+### FromInt32
+    public static EFloat FromInt32​(int inputInt32)
+Converts a 32-bit signed integer to an arbitrary-precision binary float.
+
+**Parameters:**
+
+* <code>inputInt32</code> - The parameter <code>inputInt32</code> is not documented yet.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision binary float.
+
 ### ToInt64Checked
     public long ToInt64Checked()
 Converts this number's value to a 64-bit signed integer if it can fit in a
@@ -3125,3 +2724,15 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 * <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -9223372036854775808 or greater
  than 9223372036854775807.
+
+### FromInt64
+    public static EFloat FromInt64​(long inputInt64)
+Converts a 64-bit signed integer to an arbitrary-precision binary float.
+
+**Parameters:**
+
+* <code>inputInt64</code> - The parameter <code>inputInt64</code> is not documented yet.
+
+**Returns:**
+
+* This number's value as an arbitrary-precision binary float.

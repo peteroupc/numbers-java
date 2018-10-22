@@ -22,7 +22,7 @@ at: http://peteroupc.github.io/
      * of this class are immutable, so they are inherently safe for use by
      * multiple threads. Multiple instances of this object with the same
      * value are interchangeable, but they should be compared using the
-     * "Equals" method rather than the "==" operator. </p>
+     * "Equals" method rather than the "==" operator.</p>
      */
   public final class EInteger implements Comparable<EInteger> {
     // TODO: Investigate using 32-bit words instead of 16-bit
@@ -110,8 +110,8 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value is a power of two.
      * @return {@code true} if this object's value is a power of two; otherwise,
-     * {@code false}. {@code true} if this object's value is a power of two;
-     * otherwise, {@code false}.
+     * {@code false}. {@code true} if this object' s value is a power of
+     * two; otherwise, {@code false}.
      */
     public final boolean isPowerOfTwo() {
         if (this.negative) {
@@ -122,8 +122,7 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     * Gets a value indicating whether this value is 0.
-     * @return {@code true} if this value is 0; otherwise, {@code false} .
+     *
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -131,7 +130,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the sign of this object's value.
-     * @return The sign of this object's value.
+     * @return The sign of this object' s value.
      */
     public final int signum() {
         return (this.wordCount == 0) ? 0 : (this.negative ? -1 : 1);
@@ -904,7 +903,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
      * 32-bit signed integer.
      * @deprecated Renamed to ToInt32Checked.
  */
@@ -931,7 +930,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
      * 64-bit signed integer.
      * @deprecated Renamed to ToInt64Checked.
  */
@@ -2355,8 +2354,8 @@ WordsShiftRightOne(bu, buc);
      * Returns whether a bit is set in the two's-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
      * object' s value.
-     * @param index The parameter {@code index} is not documented yet.
-     * @return {@code true} if a bit is set in the two's-complement form (see
+     * @param index The parameter {@code index} is a 32-bit signed integer.
+     * @return {@code true} if a bit is set in the two' s-complement form (see
      * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
      * otherwise, {@code false}.
      */
@@ -3189,8 +3188,7 @@ WordsShiftRightOne(bu, buc);
      * bit of the number will be all ones. The resulting byte array can be
      * passed to the <code>FromBytes()</code> method (with the same byte order) to
      * reconstruct this integer's value.
-     * @param littleEndian The parameter {@code littleEndian} is not documented
-     * yet.
+     * @param littleEndian Either {@code true} or {@code false} .
      * @return A byte array. If this value is 0, returns a byte array with the
      * single element 0.
      */
@@ -3260,7 +3258,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
      * 32-bit signed integer.
      */
     public int ToInt32Checked() {
@@ -3309,7 +3307,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws java.lang.ArithmeticException This object's value is too big to fit a
+     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
      * 64-bit signed integer.
      */
     public long ToInt64Checked() {
