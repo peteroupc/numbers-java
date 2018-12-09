@@ -677,10 +677,10 @@ public void TestPrecisionOneHalfEven() {
     }
     @Test
     public void TestIsZero() {
-      if (EFloat.NaN.IsZero) {
+      if (EFloat.NaN.isZero()) {
  Assert.fail();
  }
-      if (EFloat.SignalingNaN.IsZero) {
+      if (EFloat.SignalingNaN.isZero()) {
  Assert.fail();
  }
     }
@@ -1331,7 +1331,16 @@ TestBinaryToDecimal(
     @Test(timeout = 120000)
     public void TestToShortestString() {
       {
-String stringTemp = EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
+        EFloat ef = EFloat.FromDouble(64.1);
+        {
+String stringTemp = ef.ToShortestString(EContext.Binary64);
+Assert.assertEquals(
+  "64.1",
+  stringTemp);
+}
+
+        String stringTemp =
+          EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
 Assert.assertEquals(
   "0.1",
   stringTemp);

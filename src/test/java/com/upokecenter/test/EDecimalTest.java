@@ -2285,10 +2285,10 @@ throw new IllegalStateException("", ex);
     }
     @Test
     public void TestIsZero() {
-      if (EDecimal.NaN.IsZero) {
+      if (EDecimal.NaN.isZero()) {
  Assert.fail();
  }
-      if (EDecimal.SignalingNaN.IsZero) {
+      if (EDecimal.SignalingNaN.isZero()) {
  Assert.fail();
  }
     }
@@ -2754,9 +2754,108 @@ throw new IllegalStateException("", ex);
     public void TestReduce() {
       // not implemented yet
     }
-    @Test
+    @Test(timeout = 60000)
     public void TestRemainder() {
-      // not implemented yet
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("59840771232212955222033039906"),
+        EInteger.FromInt32(0));
+        EDecimal divisor = EDecimal.Create(56, -3);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.24e-1")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("71335024459231687631753628354"),
+        EInteger.FromInt32(-1));
+        EDecimal divisor = EDecimal.Create(99, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.42e-2")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("68541311159644774501062173149"),
+        EInteger.FromInt32(0));
+        EDecimal divisor = EDecimal.Create(68, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.4e-3")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("72230705069845418380625072039"),
+        EInteger.FromInt32(0));
+        EDecimal divisor = EDecimal.Create(67, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.36e-2")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("66072931440684617011747269944"),
+        EInteger.FromInt32(-1));
+        EDecimal divisor = EDecimal.Create(29, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.2e-2")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("25599757933935193456538556810"),
+        EInteger.FromInt32(0));
+        EDecimal divisor = EDecimal.Create(74, -3);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.3e-1")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("56970681730399566214724883073"),
+        EInteger.FromInt32(0));
+        EDecimal divisor = EDecimal.Create(38, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.12e-2")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("76187141448183306266415732331"),
+        EInteger.FromInt32(-2));
+        EDecimal divisor = EDecimal.Create(71, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.6e-2")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("56333974884046765961647166477"),
+        EInteger.FromInt32(-2));
+        EDecimal divisor = EDecimal.Create(63, -4);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.35e-2")));
+      }
+      {
+        EDecimal dividend = EDecimal.Create(
+        EInteger.FromString("53394382853562286627297867112"),
+        EInteger.FromInt32(0));
+        EDecimal divisor = EDecimal.Create(99, -3);
+        EDecimal remainder = dividend.RemainderNoRoundAfterDivide(
+  divisor,
+  EContext.CliDecimal);
+        Assert.assertEquals(remainder.toString(),0,remainder.compareTo(EDecimal.FromString("0.32e-1")));
+      }
     }
     @Test
     public void TestRemainderNaturalScale() {
@@ -2766,7 +2865,7 @@ throw new IllegalStateException("", ex);
     public void TestRemainderNear() {
       // not implemented yet
     }
-    @Test
+    @Test(timeout = 60000)
     public void TestRoundToExponent() {
       this.TestRoundToExponentOne("-0", "-0", 0, ERounding.Down);
       this.TestRoundToExponentOne("-0", "-0", 0, ERounding.HalfEven);

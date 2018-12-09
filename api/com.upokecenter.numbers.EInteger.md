@@ -8,7 +8,21 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  of this class are immutable, so they are inherently safe for use by
  multiple threads. Multiple instances of this object with the same
  value are interchangeable, but they should be compared using the
- "Equals" method rather than the "==" operator.</p>
+ "Equals" method rather than the "==" operator. </p> <p><b>Security
+ note</b> </p> <p>It is not recommended to implement
+ security-sensitive algorithms using the methods in this class, for
+ several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
+ so they can't be modified, and the memory they occupy is not
+ guaranteed to be cleared in a timely fashion due to garbage
+ collection. This is relevant for applications that use many-bit-long
+ numbers as secret parameters. </li> <li>The methods in this class
+ (especially those that involve arithmetic) are not guaranteed to run
+ in constant time for all relevant inputs. Certain attacks that
+ involve encrypted communications have exploited the timing and other
+ aspects of such communications to derive keying material or cleartext
+ indirectly. </li> </ul> <p>Applications should instead use dedicated
+ security libraries to handle big numbers in security-sensitive
+ algorithms. </p>
 
 ## Methods
 
@@ -88,8 +102,8 @@ Renamed to ToInt64Unchecked.
  Gets the lowest set bit in this number's absolute value.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
-* `boolean GetSignedBit​(int index) "Forms of numbers"`<br>
- Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
+* `boolean GetSignedBit​(int index) "Forms of numbers" `<br>
+ Returns whether a bit is set in the two's-complement form (see "Forms of numbers" ) of this
  object' s value.
 * `int GetSignedBitLength()`<br>
  Finds the minimum number of bits needed to represent this object's value,
@@ -113,6 +127,7 @@ Renamed to ToInt64Unchecked.
 * `boolean isPowerOfTwo()`<br>
  Gets a value indicating whether this object's value is a power of two.
 * `boolean isZero()`<br>
+ Gets a value indicating whether this value is 0.
 * `EInteger Mod​(EInteger divisor)`<br>
  Finds the modulus remainder that results when this instance is divided by
  the value of an arbitrary-precision integer.
@@ -227,11 +242,17 @@ Gets a value indicating whether this object's value is a power of two.
 **Returns:**
 
 * <code>true</code> if this object's value is a power of two; otherwise,
- <code>false</code>. <code>true</code> if this object' s value is a power of
- two; otherwise, <code>false</code>.
+ <code>false</code> . <code>true</code> if this object' s value is a power of
+ two; otherwise, <code>false</code> .
 
 ### isZero
     public final boolean isZero()
+Gets a value indicating whether this value is 0.
+
+**Returns:**
+
+* <code>true</code> if this value is 0; otherwise, <code>false</code> .
+
 ### signum
     public final int signum()
 Gets the sign of this object's value.
@@ -246,14 +267,35 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Parameters:**
 
-* <code>bytes</code> - The parameter <code>bytes</code> is not documented yet.
+* <code>bytes</code> - A byte array consisting of the two's-complement form (see
+ <code>"Forms of numbers" </code>) of the
+ arbitrary-precision integer to create. The byte array is encoded
+ using the following rules: <ul> <li>Positive numbers have the first
+ byte's highest bit cleared, and negative numbers have the bit set.
+ </li> <li>The last byte contains the lowest 8-bits, the next-to-last
+ contains the next lowest 8 bits, and so on. For example, the number
+ 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00,
+ 0xc8</code> . (Note that the second example contains a set high bit in
+ <code>0xc8</code> , so an additional 0 is added at the start to ensure
+ it's interpreted as positive.) </li> <li>To encode negative numbers,
+ take the absolute value of the number, subtract by 1, encode the
+ number into bytes, and toggle each bit of each byte. Any further bits
+ that appear beyond the most significant bit of the number will be all
+ ones. For example, the number -450 can be encoded as <code>0xfe,
+ 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the second
+ example contains a cleared high bit in <code>0x31, 0x7b</code> , so an
+ additional 0xff is added at the start to ensure it's interpreted as
+ negative.) </li> </ul> <p>For little-endian, the byte order is
+ reversed from the byte order just discussed. </p> .
 
-* <code>littleEndian</code> - The parameter <code>littleEndian</code> is not documented
- yet.
+* <code>littleEndian</code> - If true, the byte order is little-endian, or
+ least-significant-byte first. If false, the byte order is big-endian,
+ or most-significant-byte first.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* An arbitrary-precision integer. Returns 0 if the byte array's length
+ is 0.
 
 **Throws:**
 
@@ -265,7 +307,7 @@ Converts a 32-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>intValue</code> - The parameter <code>intValue</code> is not documented yet.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
 
 **Returns:**
 
@@ -278,7 +320,8 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>longerValue</code> - The parameter <code>longerValue</code> is not documented yet.
+* <code>longerValue</code> - The parameter <code>longerValue</code> is a 64-bit signed
+ integer.
 
 **Returns:**
 
@@ -291,13 +334,17 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A string described by the FromRadixSubstring method.
 
-* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+ the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+ A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+ then A-F in radix 16.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* An arbitrary-precision integer with the same value as the given
+ string.
 
 **Throws:**
 
@@ -310,17 +357,26 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A text string. The desired portion of the string must contain
+ only characters allowed by the given radix, except that it may start
+ with a minus sign ("-", U+002D) to indicate a negative number. The
+ desired portion is not allowed to contain white space characters,
+ including spaces.
 
-* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+ the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+ A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+ then A-F in radix 16.
 
-* <code>index</code> - The parameter <code>index</code> is not documented yet.
+* <code>index</code> - The index of the string that starts the string portion.
 
-* <code>endIndex</code> - The parameter <code>endIndex</code> is not documented yet.
+* <code>endIndex</code> - The index of the string that ends the string portion. The
+ length will be index + endIndex - 1.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* An arbitrary-precision integer with the same value as given in the
+ string portion.
 
 **Throws:**
 
@@ -338,7 +394,10 @@ Converts a string to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A text string. The string must contain only basic digits 0 to 9
+ (U+0030 to U+0039), except that it may start with a minus sign ("-",
+ U + 002D) to indicate a negative number. The string is not allowed to
+ contain white space characters, including spaces.
 
 **Returns:**
 
@@ -358,11 +417,16 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A text string. The desired portion of the string must contain
+ only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may start
+ with a minus sign ("-", U+002D) to indicate a negative number. The
+ desired portion is not allowed to contain white space characters,
+ including spaces.
 
-* <code>index</code> - The parameter <code>index</code> is not documented yet.
+* <code>index</code> - The index of the string that starts the string portion.
 
-* <code>endIndex</code> - The parameter <code>endIndex</code> is not documented yet.
+* <code>endIndex</code> - The index of the string that ends the string portion. The
+ length will be index + endIndex - 1.
 
 **Returns:**
 
@@ -373,7 +437,7 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 * <code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
  <code>endIndex</code> is less than 0, or either is greater than the
- string's length, or <code>endIndex</code> is less than <code>index</code>.
+ string's length, or <code>endIndex</code> is less than <code>index</code> .
 
 * <code>NullPointerException</code> - The parameter <code>str</code> is null.
 
@@ -383,7 +447,7 @@ Returns the absolute value of this object's value.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* This object's value with the sign removed.
 
 ### Add
     public EInteger Add​(EInteger bigintAugend)
@@ -391,8 +455,7 @@ Adds this object and another object.
 
 **Parameters:**
 
-* <code>bigintAugend</code> - The parameter <code>bigintAugend</code> is not documented
- yet.
+* <code>bigintAugend</code> - Another arbitrary-precision integer.
 
 **Returns:**
 
@@ -445,8 +508,8 @@ Returns whether this object's value can fit in a 32-bit signed integer.
 
 **Returns:**
 
-* <code>true</code> if this object's value can fit in a 32-bit signed
- integer; otherwise, <code>false</code>.
+* <code>true</code> if this object's value is from -2147483648 through
+ 2147483647; otherwise, <code>false</code> .
 
 ### CanFitInInt64
     public boolean CanFitInInt64()
@@ -454,8 +517,8 @@ Returns whether this object's value can fit in a 64-bit signed integer.
 
 **Returns:**
 
-* <code>true</code> if this object's value can fit in a 64-bit signed
- integer; otherwise, <code>false</code>.
+* <code>true</code> if this object's value is from -9223372036854775808
+ through 9223372036854775807; otherwise, <code>false</code> .
 
 ### compareTo
     public int compareTo​(EInteger other)
@@ -467,7 +530,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - The integer to compare to this value.
 
 **Returns:**
 
@@ -595,8 +658,7 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Parameters:**
 
-* <code>bigintDivisor</code> - The parameter <code>bigintDivisor</code> is not documented
- yet.
+* <code>bigintDivisor</code> - Another arbitrary-precision integer.
 
 **Returns:**
 
@@ -640,12 +702,12 @@ Determines whether this object and another object are equal and have the
 
 **Parameters:**
 
-* <code>obj</code> - The parameter <code>obj</code> is not documented yet.
+* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
 
 **Returns:**
 
 * <code>true</code> if this object and another object are equal; otherwise,
- <code>false</code>.
+ <code>false</code> .
 
 ### Gcd
     public EInteger Gcd​(EInteger bigintSecond)
@@ -655,8 +717,7 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Parameters:**
 
-* <code>bigintSecond</code> - The parameter <code>bigintSecond</code> is not documented
- yet.
+* <code>bigintSecond</code> - Another arbitrary-precision integer.
 
 **Returns:**
 
@@ -673,7 +734,8 @@ Returns the number of decimal digits used by this integer.
 
 **Returns:**
 
-* A 32-bit signed integer.
+* The number of digits in the decimal form of this integer. Returns 1
+ if this number is 0.
 
 ### hashCode
     public int hashCode()
@@ -691,24 +753,26 @@ Returns the hash code for this instance. No application or process IDs are
 ### GetLowBit
     public int GetLowBit()
 Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers"</code>).).
+ the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers" </code>).).
 
 **Returns:**
 
-* A 32-bit signed integer.
+* The lowest bit set in the number, starting at 0. Returns -1 if this
+ value is 0 or odd.
 
 ### GetLowBitAsEInteger
     public EInteger GetLowBitAsEInteger()
 Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers"</code>).).
+ the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers" </code>).).
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* The lowest bit set in the number, starting at 0. Returns -1 if this
+ value is 0 or odd.
 
 ### GetSignedBit
     public boolean GetSignedBit​(int index)
-Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this
+Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers" </code>) of this
  object' s value.
 
 **Parameters:**
@@ -719,7 +783,7 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 * <code>true</code> if a bit is set in the two' s-complement form (see
  <code>EDecimal</code>) of this object' s value;
- otherwise, <code>false</code>.
+ otherwise, <code>false</code> .
 
 ### GetSignedBitLength
     public int GetSignedBitLength()
@@ -729,7 +793,8 @@ Finds the minimum number of bits needed to represent this object's value,
 
 **Returns:**
 
-* A 32-bit signed integer.
+* The number of bits in this object's value. Returns 0 if this
+ object's value is 0 or negative 1.
 
 ### GetUnsignedBit
     public boolean GetUnsignedBit​(int index)
@@ -737,7 +802,8 @@ Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
 
-* <code>index</code> - The parameter <code>index</code> is not documented yet.
+* <code>index</code> - Zero based index of the bit to test. 0 means the least
+ significant bit.
 
 **Returns:**
 
@@ -750,7 +816,8 @@ Finds the minimum number of bits needed to represent this number's absolute
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* The number of bits in this object's value. Returns 0 if this
+ object's value is 0, and returns 1 if the value is negative 1.
 
 ### GetUnsignedBitLength
     public int GetUnsignedBitLength()
@@ -759,7 +826,8 @@ Finds the minimum number of bits needed to represent this number's absolute
 
 **Returns:**
 
-* A 32-bit signed integer.
+* The number of bits in this object's value. Returns 0 if this
+ object's value is 0, and returns 1 if the value is negative 1.
 
 ### Mod
     public EInteger Mod​(EInteger divisor)
@@ -788,9 +856,9 @@ Calculates the remainder when this arbitrary-precision integer raised to a
 
 **Parameters:**
 
-* <code>pow</code> - The parameter <code>pow</code> is not documented yet.
+* <code>pow</code> - The power to raise this integer by.
 
-* <code>mod</code> - The parameter <code>mod</code> is not documented yet.
+* <code>mod</code> - The integer to divide the raised number by.
 
 **Returns:**
 
@@ -808,7 +876,7 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Parameters:**
 
-* <code>bigintMult</code> - The parameter <code>bigintMult</code> is not documented yet.
+* <code>bigintMult</code> - Another arbitrary-precision integer.
 
 **Returns:**
 
@@ -825,7 +893,7 @@ Gets the value of this object with the sign reversed.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* This object's value with the sign reversed.
 
 ### Pow
     public EInteger Pow​(int powerSmall)
@@ -833,7 +901,7 @@ Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
 
-* <code>powerSmall</code> - The parameter <code>powerSmall</code> is not documented yet.
+* <code>powerSmall</code> - The exponent to raise to.
 
 **Returns:**
 
@@ -846,7 +914,7 @@ Raises an arbitrary-precision integer to a power, which is given as another
 
 **Parameters:**
 
-* <code>power</code> - The parameter <code>power</code> is not documented yet.
+* <code>power</code> - The exponent to raise to.
 
 **Returns:**
 
@@ -888,7 +956,9 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 
 **Parameters:**
 
-* <code>numberBits</code> - The parameter <code>numberBits</code> is not documented yet.
+* <code>numberBits</code> - The number of bits to shift. Can be negative, in which
+ case this is the same as shiftRight with the absolute value of this
+ parameter.
 
 **Returns:**
 
@@ -898,12 +968,12 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
     public EInteger ShiftRight​(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two's-complement form (see <code>"Forms of numbers"</code>). Thus, for negative values, the
+ two's-complement form (see <code>"Forms of numbers" </code>). Thus, for negative values, the
  arbitrary-precision integer is sign-extended.
 
 **Parameters:**
 
-* <code>numberBits</code> - The parameter <code>numberBits</code> is not documented yet.
+* <code>numberBits</code> - Number of bits to shift right.
 
 **Returns:**
 
@@ -915,7 +985,8 @@ Finds the square root of this instance's value, rounded down.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* The square root of this object's value. Returns 0 if this value is 0
+ or less.
 
 ### SqrtRem
     public EInteger[] SqrtRem()
@@ -923,7 +994,10 @@ Calculates the square root and the remainder.
 
 **Returns:**
 
-* An EInteger[] object.
+* An array of two arbitrary-precision integers: the first integer is
+ the square root, and the second is the difference between this value
+ and the square of the first integer. Returns two zeros if this value
+ is 0 or less, or one and zero if this value equals 1.
 
 ### Subtract
     public EInteger Subtract​(EInteger subtrahend)
@@ -932,7 +1006,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Parameters:**
 
-* <code>subtrahend</code> - The parameter <code>subtrahend</code> is not documented yet.
+* <code>subtrahend</code> - Another arbitrary-precision integer.
 
 **Returns:**
 
@@ -975,7 +1049,7 @@ Converts this object's value to a 32-bit signed integer, throwing an
     public int ToInt32Unchecked()
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
- two' s-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ two' s-complement form (see <code>"Forms of numbers" </code>) (in which case the return value might have a
  different sign than this object's value).
 
 **Returns:**
@@ -995,7 +1069,7 @@ Converts this object's value to a 64-bit signed integer, throwing an
     public long ToInt64Unchecked()
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
- two' s-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ two' s-complement form (see <code>"Forms of numbers" </code>) (in which case the return value might have a
  different sign than this object's value).
 
 **Returns:**
@@ -1009,7 +1083,9 @@ Generates a string representing the value of this object, in the given
 
 **Parameters:**
 
-* <code>radix</code> - The parameter <code>radix</code> is not documented yet.
+* <code>radix</code> - A radix from 2 through 36. For example, to generate a
+ hexadecimal (base-16) string, specify 16. To generate a decimal
+ (base-10) string, specify 10.
 
 **Returns:**
 
@@ -1030,7 +1106,9 @@ Converts this object to a text string in base 10.
 
 **Returns:**
 
-* A text string.
+* A string representation of this object. If negative, the string will
+ begin with a minus sign ("-", U+002D). The string will use the basic
+ digits 0 to 9 (U + 0030 to U + 0039).
 
 ### ToByteChecked
     public byte ToByteChecked()
@@ -1039,7 +1117,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A byte (from 0 to 255).
+* This number's value as a byte (from 0 to 255).
 
 **Throws:**
 
@@ -1053,7 +1131,7 @@ Converts this number to a byte (from 0 to 255), returning the
 
 **Returns:**
 
-* A byte (from 0 to 255).
+* This number, converted to a byte (from 0 to 255).
 
 ### FromByte
     public static EInteger FromByte​(byte inputByte)
@@ -1061,7 +1139,7 @@ Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>inputByte</code> - The parameter <code>inputByte</code> is not documented yet.
+* <code>inputByte</code> - The number to convert as a byte (from 0 to 255).
 
 **Returns:**
 
@@ -1074,7 +1152,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 16-bit signed integer.
+* This number's value as a 16-bit signed integer.
 
 **Throws:**
 
@@ -1088,7 +1166,7 @@ Converts this number to a 16-bit signed integer, returning the
 
 **Returns:**
 
-* A 16-bit signed integer.
+* This number, converted to a 16-bit signed integer.
 
 ### FromInt16
     public static EInteger FromInt16​(short inputInt16)
@@ -1096,7 +1174,7 @@ Converts a 16-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>inputInt16</code> - The parameter <code>inputInt16</code> is not documented yet.
+* <code>inputInt16</code> - The number to convert as a 16-bit signed integer.
 
 **Returns:**
 

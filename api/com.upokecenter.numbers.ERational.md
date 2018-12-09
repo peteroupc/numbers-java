@@ -10,7 +10,7 @@ Represents an arbitrary-precision rational number. This class can't be
  threads. Multiple instances of this object with the same properties
  are interchangeable, so they should not be compared using the "=="
  operator (which might only check if each side of the operator is the
- same instance).</p>
+ same instance). </p>
 
 ## Fields
 
@@ -143,6 +143,7 @@ Renamed to FromEFloat.
  an error if the value is passed to any arithmetic operation in this
  class).
 * `boolean isZero()`<br>
+ Gets a value indicating whether this object's value equals 0.
 * `ERational Multiply​(ERational otherValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision rational
  number.
@@ -300,7 +301,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 **Returns:**
 
 * <code>true</code> if this object is finite (not infinity or NaN);
- otherwise, <code>false</code>.
+ otherwise, <code>false</code> .
 
 ### isNegative
     public final boolean isNegative()
@@ -310,11 +311,19 @@ Gets a value indicating whether this object's value is negative (including
 **Returns:**
 
 * <code>true</code> if this object's value is negative (including negative
- zero); otherwise, <code>false</code>. <code>true</code> if this object's value
- is negative; otherwise, <code>false</code>.
+ zero); otherwise, <code>false</code> . <code>true</code> if this object's value
+ is negative; otherwise, <code>false</code> .
 
 ### isZero
     public final boolean isZero()
+Gets a value indicating whether this object's value equals 0.
+
+**Returns:**
+
+* <code>true</code> if this object's value equals 0; otherwise, <code>
+ false</code> . <code>true</code> if this object' s value equals 0; otherwise, .
+ <code>false</code> .
+
 ### getNumerator
     public final EInteger getNumerator()
 Gets this object's numerator.
@@ -348,11 +357,9 @@ Creates a rational number with the given numerator and denominator.
 
 **Parameters:**
 
-* <code>numeratorSmall</code> - The parameter <code>numeratorSmall</code> is not documented
- yet.
+* <code>numeratorSmall</code> - The numerator.
 
-* <code>denominatorSmall</code> - The parameter <code>denominatorSmall</code> is not
- documented yet.
+* <code>denominatorSmall</code> - The denominator.
 
 **Returns:**
 
@@ -368,9 +375,9 @@ Creates a rational number with the given numerator and denominator.
 
 **Parameters:**
 
-* <code>numerator</code> - The parameter <code>numerator</code> is not documented yet.
+* <code>numerator</code> - The numerator.
 
-* <code>denominator</code> - The parameter <code>denominator</code> is not documented yet.
+* <code>denominator</code> - The denominator.
 
 **Returns:**
 
@@ -386,7 +393,8 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>diag</code> - The parameter <code>diag</code> is not documented yet.
+* <code>diag</code> - A number to use as diagnostic information associated with this
+ object. If none is needed, should be zero.
 
 **Returns:**
 
@@ -402,11 +410,13 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>diag</code> - The parameter <code>diag</code> is not documented yet.
+* <code>diag</code> - A number to use as diagnostic information associated with this
+ object. If none is needed, should be zero.
 
-* <code>signaling</code> - The parameter <code>signaling</code> is not documented yet.
+* <code>signaling</code> - Whether the return value will be signaling (true) or quiet
+ (false).
 
-* <code>negative</code> - The parameter <code>negative</code> is not documented yet.
+* <code>negative</code> - Whether the return value is negative.
 
 **Returns:**
 
@@ -427,7 +437,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 **Parameters:**
 
-* <code>flt</code> - The parameter <code>flt</code> is not documented yet.
+* <code>flt</code> - The parameter <code>flt</code> is a 64-bit floating-point number.
 
 **Returns:**
 
@@ -440,7 +450,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
+* <code>ef</code> - The number to convert as an arbitrary-precision decimal number.
 
 **Returns:**
 
@@ -453,7 +463,7 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
+* <code>ef</code> - The number to convert as an arbitrary-precision binary float.
 
 **Returns:**
 
@@ -465,7 +475,7 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 **Parameters:**
 
-* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
+* <code>ef</code> - The number to convert as an arbitrary-precision decimal number.
 
 **Returns:**
 
@@ -481,7 +491,7 @@ Converts an arbitrary-precision binary float to a rational number.
 
 **Parameters:**
 
-* <code>ef</code> - The parameter <code>ef</code> is not documented yet.
+* <code>ef</code> - The number to convert as an arbitrary-precision binary float.
 
 **Returns:**
 
@@ -497,7 +507,7 @@ Converts an arbitrary-precision integer to a rational number.
 
 **Parameters:**
 
-* <code>bigint</code> - The parameter <code>bigint</code> is not documented yet.
+* <code>bigint</code> - The number to convert as an arbitrary-precision integer.
 
 **Returns:**
 
@@ -512,7 +522,8 @@ Converts a 32-bit binary floating-point number to a rational number. This
 
 **Parameters:**
 
-* <code>flt</code> - The parameter <code>flt</code> is not documented yet.
+* <code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+ number.
 
 **Returns:**
 
@@ -525,7 +536,7 @@ Creates a rational number from a text string that represents a number. See
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A string that represents a number.
 
 **Returns:**
 
@@ -557,7 +568,7 @@ Creates a rational number from a text string that represents a number. See
 
 **Parameters:**
 
-* <code>str</code> - The parameter <code>str</code> is not documented yet.
+* <code>str</code> - A text string, a portion of which represents a number.
 
 * <code>offset</code> - A zero-based index showing where the desired portion of <code>
  str</code> begins.
@@ -581,17 +592,18 @@ Creates a rational number from a text string that represents a number. See
 Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs). In this
  method: <ul> <li>For objects with the same value, the one with the
- higher denominator has a greater "absolute value".</li> <li>Negative
- zero and positive zero are considered equal.</li> <li>Quiet NaN has a
- higher "absolute value" than signaling NaN. If both objects are quiet
- NaN or both are signaling NaN, the one with the higher diagnostic
- information has a greater "absolute value".</li> <li>NaN has a higher
- "absolute value" than infinity.</li> <li>Infinity has a higher
- "absolute value" than any finite number.</li></ul>
+ higher denominator has a greater "absolute value". </li> <li>Negative
+ zero and positive zero are considered equal. </li> <li>Quiet NaN has
+ a higher "absolute value" than signaling NaN. If both objects are
+ quiet NaN or both are signaling NaN, the one with the higher
+ diagnostic information has a greater "absolute value". </li> <li>NaN
+ has a higher "absolute value" than infinity. </li> <li>Infinity has a
+ higher "absolute value" than any finite number. </li> </ul>
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An arbitrary-precision rational number to compare with this
+ one.
 
 **Returns:**
 
@@ -603,18 +615,19 @@ Compares the absolute values of this object and another object, imposing a
 Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For objects
  with the same value, the one with the higher denominator has a
- greater "absolute value".</li> <li>Negative zero is less than
- positive zero.</li> <li>Quiet NaN has a higher "absolute value" than
+ greater "absolute value". </li> <li>Negative zero is less than
+ positive zero. </li> <li>Quiet NaN has a higher "absolute value" than
  signaling NaN. If both objects are quiet NaN or both are signaling
  NaN, the one with the higher diagnostic information has a greater
- "absolute value".</li> <li>NaN has a higher "absolute value" than
- infinity.</li> <li>Infinity has a higher "absolute value" than any
- finite number.</li> <li>Negative numbers are less than positive
- numbers.</li></ul>
+ "absolute value". </li> <li>NaN has a higher "absolute value" than
+ infinity. </li> <li>Infinity has a higher "absolute value" than any
+ finite number. </li> <li>Negative numbers are less than positive
+ numbers. </li> </ul>
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An arbitrary-precision rational number to compare with this
+ one.
 
 **Returns:**
 
@@ -636,7 +649,7 @@ Adds two rational numbers.
 
 **Parameters:**
 
-* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
+* <code>otherValue</code> - Another arbitrary-precision rational number.
 
 **Returns:**
 
@@ -657,7 +670,7 @@ Compares an arbitrary-precision rational number with this instance.
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An arbitrary-precision rational number.
 
 **Returns:**
 
@@ -675,7 +688,7 @@ Compares an arbitrary-precision binary float with this instance.
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An arbitrary-precision binary float.
 
 **Returns:**
 
@@ -693,7 +706,7 @@ Compares an arbitrary-precision decimal number with this instance.
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An arbitrary-precision decimal number.
 
 **Returns:**
 
@@ -712,7 +725,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - A number whose sign will be copied.
 
 **Returns:**
 
@@ -729,7 +742,7 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 **Parameters:**
 
-* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
+* <code>otherValue</code> - An arbitrary-precision rational number.
 
 **Returns:**
 
@@ -752,11 +765,11 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Parameters:**
 
-* <code>obj</code> - The parameter <code>obj</code> is not documented yet.
+* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
+* <code>true</code> if the objects are equal; otherwise, <code>false</code> .
 
 ### equals
     public boolean equals​(ERational other)
@@ -766,11 +779,11 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Parameters:**
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An arbitrary-precision rational number to compare to.
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code>.
+* Either <code>true</code> or <code>false</code> .
 
 ### hashCode
     public int hashCode()
@@ -792,7 +805,7 @@ Gets a value indicating whether this object's value is infinity.
 **Returns:**
 
 * <code>true</code> if this object's value is infinity; otherwise, <code>
- false</code>.
+ false</code> .
 
 ### IsNaN
     public boolean IsNaN()
@@ -801,7 +814,7 @@ Returns whether this object is a not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a not-a-number value; otherwise,
- <code>false</code>.
+ <code>false</code> .
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -810,7 +823,7 @@ Returns whether this object is negative infinity.
 **Returns:**
 
 * <code>true</code> if this object is negative infinity; otherwise, <code>
- false</code>.
+ false</code> .
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -819,7 +832,7 @@ Returns whether this object is positive infinity.
 **Returns:**
 
 * <code>true</code> if this object is positive infinity; otherwise, <code>
- false</code>.
+ false</code> .
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -828,7 +841,7 @@ Returns whether this object is a quiet not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a quiet not-a-number value;
- otherwise, <code>false</code>.
+ otherwise, <code>false</code> .
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -849,7 +862,7 @@ Multiplies this instance by the value of an arbitrary-precision rational
 
 **Parameters:**
 
-* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
+* <code>otherValue</code> - An arbitrary-precision rational number.
 
 **Returns:**
 
@@ -875,7 +888,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Parameters:**
 
-* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
+* <code>otherValue</code> - An arbitrary-precision rational number.
 
 **Returns:**
 
@@ -891,7 +904,7 @@ Subtracts an arbitrary-precision rational number from this instance.
 
 **Parameters:**
 
-* <code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.
+* <code>otherValue</code> - An arbitrary-precision rational number.
 
 **Returns:**
 
@@ -908,7 +921,9 @@ Converts this value to a 64-bit floating-point number. The half-even
 
 **Returns:**
 
-* A 64-bit floating-point number.
+* The closest 64-bit floating-point number to this value. The return
+ value can be positive infinity or negative infinity if this value
+ exceeds the range of a 64-bit floating point number.
 
 ### ToEInteger
     public EInteger ToEInteger()
@@ -959,7 +974,9 @@ Converts this rational number to a decimal number.
 
 **Returns:**
 
-* An EDecimal object.
+* The exact value of the rational number, or not-a-number (NaN) if the
+ result can't be exact because it has a nonterminating decimal
+ expansion.
 
 ### ToEDecimal
     public EDecimal ToEDecimal​(EContext ctx)
@@ -968,7 +985,11 @@ Converts this rational number to a decimal number and rounds the result to
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags are
+ in addition to the pre-existing flags). Can be null, in which case
+ the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -984,7 +1005,13 @@ Converts this rational number to a decimal number, but if the result would
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. This context will be used only if
+ the exact result would have a nonterminating decimal expansion. If
+ HasFlags of the context is true, will also store the flags resulting
+ from the operation (the flags are in addition to the pre-existing
+ flags). Can be null, in which case the precision is unlimited and no
+ rounding is needed.
 
 **Returns:**
 
@@ -1000,7 +1027,9 @@ Deprecated.
 
 **Returns:**
 
-* An EDecimal object.
+* The exact value of the rational number, or not-a-number (NaN) if the
+ result can't be exact because it has a nonterminating decimal
+ expansion.
 
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal​(EContext ctx)
@@ -1009,7 +1038,11 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags are
+ in addition to the pre-existing flags). Can be null, in which case
+ the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1024,7 +1057,13 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. This context will be used only if
+ the exact result would have a nonterminating decimal expansion. If
+ HasFlags of the context is true, will also store the flags resulting
+ from the operation (the flags are in addition to the pre-existing
+ flags). Can be null, in which case the precision is unlimited and no
+ rounding is needed.
 
 **Returns:**
 
@@ -1039,7 +1078,9 @@ Converts this rational number to a binary float.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The exact value of the rational number, or not-a-number (NaN) if the
+ result can't be exact because it has a nonterminating binary
+ expansion.
 
 ### ToEFloat
     public EFloat ToEFloat​(EContext ctx)
@@ -1048,7 +1089,11 @@ Converts this rational number to a binary float and rounds that result to
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags are
+ in addition to the pre-existing flags). Can be null, in which case
+ the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1064,7 +1109,13 @@ Converts this rational number to a binary float, but if the result would
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. This context will be used only if
+ the exact result would have a nonterminating binary expansion. If
+ HasFlags of the context is true, will also store the flags resulting
+ from the operation (the flags are in addition to the pre-existing
+ flags). Can be null, in which case the precision is unlimited and no
+ rounding is needed.
 
 **Returns:**
 
@@ -1080,7 +1131,9 @@ Deprecated.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The exact value of the rational number, or not-a-number (NaN) if the
+ result can't be exact because it has a nonterminating binary
+ expansion.
 
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat​(EContext ctx)
@@ -1089,7 +1142,11 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags are
+ in addition to the pre-existing flags). Can be null, in which case
+ the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1104,7 +1161,13 @@ Deprecated.
 
 **Parameters:**
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result. This context will be used only if
+ the exact result would have a nonterminating binary expansion. If
+ HasFlags of the context is true, will also store the flags resulting
+ from the operation (the flags are in addition to the pre-existing
+ flags). Can be null, in which case the precision is unlimited and no
+ rounding is needed.
 
 **Returns:**
 
@@ -1120,7 +1183,9 @@ Converts this value to a 32-bit binary floating-point number. The half-even
 
 **Returns:**
 
-* A 32-bit floating-point number.
+* The closest 32-bit binary floating-point number to this value. The
+ return value can be positive infinity or negative infinity if this
+ value exceeds the range of a 32-bit floating point number.
 
 ### toString
     public String toString()
@@ -1132,7 +1197,10 @@ Converts this object to a text string.
 
 **Returns:**
 
-* A text string.
+* A string representation of this object. If this object's value is
+ infinity or not-a-number, the result is the analogous return value of
+ the <code>EDecimal.toString</code> method. Otherwise, the return value has
+ the following form: <code>[-]numerator/denominator</code> .
 
 ### ToByteChecked
     public byte ToByteChecked()
@@ -1141,7 +1209,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A byte (from 0 to 255).
+* This number's value, truncated to a byte (from 0 to 255).
 
 **Throws:**
 
@@ -1156,7 +1224,8 @@ Truncates this number's value to an integer and returns the
 
 **Returns:**
 
-* A byte (from 0 to 255).
+* This number, converted to a byte (from 0 to 255). Returns 0 if this
+ value is infinity or not-a-number.
 
 ### ToByteIfExact
     public byte ToByteIfExact()
@@ -1165,7 +1234,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Returns:**
 
-* A byte (from 0 to 255).
+* This number's value as a byte (from 0 to 255).
 
 **Throws:**
 
@@ -1178,7 +1247,7 @@ Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputByte</code> - The parameter <code>inputByte</code> is not documented yet.
+* <code>inputByte</code> - The number to convert as a byte (from 0 to 255).
 
 **Returns:**
 
@@ -1191,7 +1260,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 16-bit signed integer.
+* This number's value, truncated to a 16-bit signed integer.
 
 **Throws:**
 
@@ -1206,7 +1275,8 @@ Truncates this number's value to an integer and returns the
 
 **Returns:**
 
-* A 16-bit signed integer.
+* This number, converted to a 16-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
 
 ### ToInt16IfExact
     public short ToInt16IfExact()
@@ -1216,7 +1286,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 16-bit signed integer.
+* This number's value as a 16-bit signed integer.
 
 **Throws:**
 
@@ -1229,7 +1299,7 @@ Converts a 16-bit signed integer to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputInt16</code> - The parameter <code>inputInt16</code> is not documented yet.
+* <code>inputInt16</code> - The number to convert as a 16-bit signed integer.
 
 **Returns:**
 
@@ -1242,7 +1312,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 32-bit signed integer.
+* This number's value, truncated to a 32-bit signed integer.
 
 **Throws:**
 
@@ -1258,7 +1328,8 @@ Truncates this number's value to an integer and returns the
 
 **Returns:**
 
-* A 32-bit signed integer.
+* This number, converted to a 32-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
 
 ### ToInt32IfExact
     public int ToInt32IfExact()
@@ -1268,7 +1339,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 32-bit signed integer.
+* This number's value as a 32-bit signed integer.
 
 **Throws:**
 
@@ -1282,7 +1353,7 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputInt32</code> - The parameter <code>inputInt32</code> is not documented yet.
+* <code>inputInt32</code> - The number to convert as a 32-bit signed integer.
 
 **Returns:**
 
@@ -1295,7 +1366,7 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 64-bit signed integer.
+* This number's value, truncated to a 64-bit signed integer.
 
 **Throws:**
 
@@ -1311,7 +1382,8 @@ Truncates this number's value to an integer and returns the
 
 **Returns:**
 
-* A 64-bit signed integer.
+* This number, converted to a 64-bit signed integer. Returns 0 if this
+ value is infinity or not-a-number.
 
 ### ToInt64IfExact
     public long ToInt64IfExact()
@@ -1321,7 +1393,7 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Returns:**
 
-* A 64-bit signed integer.
+* This number's value as a 64-bit signed integer.
 
 **Throws:**
 
@@ -1335,7 +1407,7 @@ Converts a 64-bit signed integer to an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>inputInt64</code> - The parameter <code>inputInt64</code> is not documented yet.
+* <code>inputInt64</code> - The number to convert as a 64-bit signed integer.
 
 **Returns:**
 

@@ -375,7 +375,7 @@ at: http://peteroupc.github.io/
           EInteger[] quorem = this.shiftedBigInt.DivRem(
           NumberUtility.FindPowerOfTen(digits));
           bigquo = quorem[0];
-          this.bitLeftmost |= quorem[1].IsZero ? 0 : 1;
+          this.bitLeftmost |= quorem[1].isZero() ? 0 : 1;
         } else {
           this.bitLeftmost = 1;
           bigquo = this.shiftedBigInt.Divide(

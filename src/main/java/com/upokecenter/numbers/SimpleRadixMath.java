@@ -343,7 +343,11 @@ at: http://peteroupc.github.io/
     // <param name='divisor'></param>
     // <param name='ctx'> (3).</param>
     // <returns>The remainder of the two objects.</returns>
-    public T Remainder(T thisValue, T divisor, EContext ctx) {
+    public T Remainder(
+  T thisValue,
+  T divisor,
+  EContext ctx,
+  boolean roundAfterDivide) {
       T ret = this.CheckNotANumber2(thisValue, divisor, ctx);
       if ((Object)ret != (Object)null) {
         return ret;
@@ -351,7 +355,11 @@ at: http://peteroupc.github.io/
       EContext ctx2 = GetContextWithFlags(ctx);
       thisValue = this.RoundBeforeOp(thisValue, ctx2);
       divisor = this.RoundBeforeOp(divisor, ctx2);
-      thisValue = this.wrapper.Remainder(thisValue, divisor, ctx2);
+thisValue = this.wrapper.Remainder(
+  thisValue,
+  divisor,
+  ctx2,
+  roundAfterDivide);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
 

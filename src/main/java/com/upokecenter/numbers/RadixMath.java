@@ -2217,14 +2217,21 @@ ctx.getPrecision()).WithBlankFlags();
       return this.ReduceToPrecisionAndIdealExponent(thisValue, ctx, null, null);
     }
 
-    public T Remainder(T thisValue, T divisor, EContext ctx) {
+    public T Remainder(
+  T thisValue,
+  T divisor,
+  EContext ctx,
+  boolean roundAfterDivide) {
       EContext ctx2 = ctx == null ? null : ctx.WithBlankFlags();
       T ret = this.RemainderHandleSpecial(thisValue, divisor, ctx2);
       if ((Object)ret != (Object)null) {
         TransferFlags(ctx, ctx2);
         return ret;
       }
-      ret = this.DivideToIntegerZeroScale(thisValue, divisor, null);
+      ret = this.DivideToIntegerZeroScale(
+  thisValue,
+  divisor,
+  roundAfterDivide ? ctx2 : null);
       if ((ctx2.getFlags() & EContext.FlagInvalid) != 0) {
         return this.SignalInvalid(ctx);
       }
@@ -5018,7 +5025,7 @@ accum = this.helper.CreateShiftAccumulatorWithDigitsFastInt(
           }
         }
       }
-      if (ctx.getHasFlags()) {
+      if (ctx != null && ctx.getHasFlags()) {
         ctx.setFlags(ctx.getFlags()|(flags));
       }
       return this.helper.CreateNewWithFlags(

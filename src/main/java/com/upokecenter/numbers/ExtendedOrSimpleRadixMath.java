@@ -51,10 +51,14 @@ at: http://peteroupc.github.io/
         this.simp.Negate(value, ctx);
     }
 
-    public T Remainder(T thisValue, T divisor, EContext ctx) {
+    public T Remainder(
+  T thisValue,
+  T divisor,
+  EContext ctx,
+  boolean roundAfterDivide) {
       return (ctx == null || !ctx.isSimplified()) ?
-      this.ext.Remainder(thisValue, divisor, ctx) :
-        this.simp.Remainder(thisValue, divisor, ctx);
+      this.ext.Remainder(thisValue, divisor, ctx, roundAfterDivide) :
+        this.simp.Remainder(thisValue, divisor, ctx, roundAfterDivide);
     }
 
     public T RemainderNear(T thisValue, T divisor, EContext ctx) {

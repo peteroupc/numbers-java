@@ -115,18 +115,17 @@ at: http://peteroupc.github.io/
       return this.TriggerTraps(result, tctx, ctx);
     }
 
-    // <summary>Finds the remainder that results when dividing two T
-    // objects.</summary>
-    // <param name='thisValue'></param>
-    // <summary>Finds the remainder that results when dividing two T
-    // objects.</summary>
-    // <param name='thisValue'></param>
-    // <param name='divisor'></param>
-    // <param name='ctx'> (3).</param>
-    // <returns>The remainder of the two objects.</returns>
-    public T Remainder(T thisValue, T divisor, EContext ctx) {
+    public T Remainder(
+  T thisValue,
+  T divisor,
+  EContext ctx,
+  boolean roundAfterDivide) {
       EContext tctx = GetTrappableContext(ctx);
-      T result = this.math.Remainder(thisValue, divisor, tctx);
+    T result = this.math.Remainder(
+  thisValue,
+  divisor,
+  tctx,
+  roundAfterDivide);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
@@ -208,13 +207,6 @@ at: http://peteroupc.github.io/
       return this.TriggerTraps(result, tctx, ctx);
     }
 
-    // <summary>Divides two T objects.</summary>
-    // <param name='thisValue'></param>
-    // <summary>Divides two T objects.</summary>
-    // <param name='thisValue'></param>
-    // <param name='divisor'></param>
-    // <param name='ctx'> (3).</param>
-    // <returns>The quotient of the two objects.</returns>
     public T Divide(T thisValue, T divisor, EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.Divide(thisValue, divisor, tctx);
@@ -245,13 +237,6 @@ at: http://peteroupc.github.io/
       return this.TriggerTraps(result, tctx, ctx);
     }
 
-    // <summary>Multiplies two T objects.</summary>
-    // <param name='thisValue'></param>
-    // <summary>Multiplies two T objects.</summary>
-    // <param name='thisValue'></param>
-    // <param name='other'></param>
-    // <param name='ctx'> (3).</param>
-    // <returns>The product of the two objects.</returns>
     public T Multiply(T thisValue, T other, EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.Multiply(thisValue, other, tctx);

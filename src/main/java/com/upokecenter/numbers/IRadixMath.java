@@ -18,7 +18,7 @@ at: http://peteroupc.github.io/
 
     T Negate(T value, EContext ctx);
 
-    T Remainder(T thisValue, T divisor, EContext ctx);
+    T Remainder(T thisValue, T divisor, EContext ctx, boolean roundAfterDivide);
 
     T RemainderNear(T thisValue, T divisor, EContext ctx);
 
