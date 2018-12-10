@@ -2622,6 +2622,60 @@ newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
     }
 
     /**
+     * Adds this object and another object.<p> <pre>EInteger result =
+     * EInteger.FromString("5").Add(200);</pre> </p>
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The sum of the two objects.
+     * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
+     * null.
+     */
+public EDecimal Add(int intValue) {
+ return this.Add(EDecimal.FromInt32(intValue));
+}
+
+    /**
+     * Subtracts an arbitrary-precision integer from this arbitrary-precision
+     * integer.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The difference of the two objects.
+     * @throws java.lang.NullPointerException The parameter {@code subtrahend} is
+     * null.
+     */
+public EDecimal Subtract(int intValue) {
+ return (intValue == Integer.MIN_VALUE) ?
+   (this.Subtract(EDecimal.FromInt32(intValue))) : (this.Add(-intValue));
+}
+
+    /**
+     * Multiplies this instance by the value of an arbitrary-precision integer
+     * object.<p> <pre>EInteger result =
+     * EInteger.FromString("5").Multiply(200);</pre> </p>
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The product of the two numbers.
+     * @throws java.lang.NullPointerException The parameter {@code bigintMult} is
+     * null.
+     */
+public EDecimal Multiply(int intValue) {
+ return this.Multiply(EDecimal.FromInt32(intValue));
+}
+
+    /**
+     * Divides this instance by the value of an arbitrary-precision integer. The
+     * result is rounded down (the fractional part is discarded). Except if
+     * the result is 0, it will be negative if this object is positive and
+     * the other is negative, or vice versa, and will be positive if both
+     * are positive or both are negative.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The quotient of the two objects.
+     * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
+     * null.
+     * @throws ArithmeticException Attempted to divide by zero.
+     */
+public EDecimal Divide(int intValue) {
+ return this.Divide(EDecimal.FromInt32(intValue));
+}
+
+    /**
      * Multiplies by one decimal number, and then adds another decimal number.
      * @param multiplicand The value to multiply.
      * @param augend The value to add.

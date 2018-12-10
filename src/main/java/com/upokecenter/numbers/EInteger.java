@@ -1089,13 +1089,43 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.
+     * Adds this object and another object.<p> <pre>EInteger result =
+     * EInteger.FromString("5").Add(200);</pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
      * null.
      */
 public EInteger Add(int intValue) {
+ if (intValue == 0) {
+ return this;
+}
+ if (this.wordCount == 1 && intValue<65535 && intValue>=-65535) {
+        short[] sumreg;
+        if (intValue< 0) {
+          int intSum = (((int)this.words[0]) & 0xffff) - intValue;
+          sumreg = new short[2];
+          sumreg[0] = ((short)intSum);
+          sumreg[1] = ((short)(intSum >> 16));
+          return new EInteger(
+            ((intSum >> 16) == 0) ? 1 : 2,
+            sumreg,
+            this.negative);
+        } else {
+          int a = ((int)this.words[0]) & 0xffff;
+          int b = intValue;
+          if (a > b) {
+            a -= b;
+            sumreg = new short[2];
+            sumreg[0] = ((short)a);
+            return new EInteger(1, sumreg, this.negative);
+          }
+          b -= a;
+          sumreg = new short[2];
+          sumreg[0] = ((short)b);
+          return new EInteger(1, sumreg, !this.negative);
+        }
+ }
  return this.Add(EInteger.FromInt32(intValue));
 }
 
@@ -1108,12 +1138,15 @@ public EInteger Add(int intValue) {
      * null.
      */
 public EInteger Subtract(int intValue) {
- return this.Subtract(EInteger.FromInt32(intValue));
+ return (intValue == Integer.MIN_VALUE) ?
+   (this.Subtract(EInteger.FromInt32(intValue))) : ((intValue == 0) ? (this):
+   (this.Add(-intValue)));
 }
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.
+     * object.<p> <pre>EInteger result =
+     * EInteger.FromString("5").Multiply(200);</pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      * @throws java.lang.NullPointerException The parameter {@code bigintMult} is

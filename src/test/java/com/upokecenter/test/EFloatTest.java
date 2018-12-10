@@ -1332,14 +1332,11 @@ TestBinaryToDecimal(
     public void TestToShortestString() {
       {
         EFloat ef = EFloat.FromDouble(64.1);
-{
 String stringTemp = ef.ToShortestString(EContext.Binary64);
 Assert.assertEquals(
   "64.1",
   stringTemp);
-}
-
-        String stringTemp =
+stringTemp =
           EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
 Assert.assertEquals(
   "0.1",

@@ -188,6 +188,8 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
 * `EDecimal Abs​(EContext context)`<br>
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
+* `EDecimal Add​(int intValue)`<br>
+ Adds this object and another object.
 * `EDecimal Add​(EDecimal otherValue)`<br>
  Adds this object and another decimal number and returns the result.
 * `EDecimal Add​(EDecimal otherValue,
@@ -231,6 +233,8 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
          boolean negative,
          EContext ctx)`<br>
  Creates a not-a-number arbitrary-precision decimal number.
+* `EDecimal Divide​(int intValue)`<br>
+ Divides this instance by the value of an arbitrary-precision integer.
 * `EDecimal Divide​(EDecimal divisor)`<br>
  Divides this object by another decimal number and returns the result.
 * `EDecimal Divide​(EDecimal divisor,
@@ -454,6 +458,9 @@ Renamed to FromEFloat.
               EContext ctx)`<br>
  Returns a number similar to this number but with the decimal point moved to
  the right.
+* `EDecimal Multiply​(int intValue)`<br>
+ Multiplies this instance by the value of an arbitrary-precision integer
+ object.
 * `EDecimal Multiply​(EDecimal otherValue)`<br>
  Multiplies two decimal numbers.
 * `EDecimal Multiply​(EDecimal op,
@@ -606,6 +613,9 @@ Renamed to RoundToIntegerNoRoundedFlag.
  Deprecated.
 Renamed to Sqrt.
  Renamed to Sqrt.
+* `EDecimal Subtract​(int intValue)`<br>
+ Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.
 * `EDecimal Subtract​(EDecimal otherValue)`<br>
  Subtracts an arbitrary-precision decimal number from this instance and
  returns the result.
@@ -2314,6 +2324,84 @@ Multiplies two decimal numbers. The resulting scale will be the sum of the
 **Returns:**
 
 * The product of the two decimal numbers.
+
+### Add
+    public EDecimal Add​(int intValue)
+Adds this object and another object.<p> </p><pre>EInteger result =
+ EInteger.FromString("5").Add(200);</pre>
+
+**Parameters:**
+
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
+
+**Returns:**
+
+* The sum of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+ null.
+
+### Subtract
+    public EDecimal Subtract​(int intValue)
+Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.
+
+**Parameters:**
+
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
+
+**Returns:**
+
+* The difference of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+ null.
+
+### Multiply
+    public EDecimal Multiply​(int intValue)
+Multiplies this instance by the value of an arbitrary-precision integer
+ object.<p> </p><pre>EInteger result =
+ EInteger.FromString("5").Multiply(200);</pre>
+
+**Parameters:**
+
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
+
+**Returns:**
+
+* The product of the two numbers.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+ null.
+
+### Divide
+    public EDecimal Divide​(int intValue)
+Divides this instance by the value of an arbitrary-precision integer. The
+ result is rounded down (the fractional part is discarded). Except if
+ the result is 0, it will be negative if this object is positive and
+ the other is negative, or vice versa, and will be positive if both
+ are positive or both are negative.
+
+**Parameters:**
+
+* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
+
+**Returns:**
+
+* The quotient of the two objects.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+ null.
+
+* <code>ArithmeticException</code> - Attempted to divide by zero.
 
 ### MultiplyAndAdd
     public EDecimal MultiplyAndAdd​(EDecimal multiplicand, EDecimal augend)
