@@ -1066,7 +1066,7 @@ Finds the absolute value of this object (if it's negative, it becomes
 
 ### Add
     public EFloat Add​(int intValue)
-Adds this object and another object.<p> </p><pre>EInteger result =
+Adds this object and another object.<p/><pre>EInteger result =
  EInteger.FromString("5").Add(200);</pre>
 
 **Parameters:**
@@ -1076,11 +1076,6 @@ Adds this object and another object.<p> </p><pre>EInteger result =
 **Returns:**
 
 * The sum of the two objects.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
- null.
 
 ### Subtract
     public EFloat Subtract​(int intValue)
@@ -1095,15 +1090,10 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 * The difference of the two objects.
 
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
- null.
-
 ### Multiply
     public EFloat Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision integer
- object.<p> </p><pre>EInteger result =
+ object.<p/><pre>EInteger result =
  EInteger.FromString("5").Multiply(200);</pre>
 
 **Parameters:**
@@ -1113,11 +1103,6 @@ Multiplies this instance by the value of an arbitrary-precision integer
 **Returns:**
 
 * The product of the two numbers.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
- null.
 
 ### Divide
     public EFloat Divide​(int intValue)
@@ -1129,16 +1114,13 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Parameters:**
 
-* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
+* <code>intValue</code> - The divisor.
 
 **Returns:**
 
 * The quotient of the two objects.
 
 **Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
- null.
 
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 

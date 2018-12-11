@@ -539,6 +539,7 @@ Renamed to FromEFloat.
  the result of dividing this object's value by another object's value.
 * `EDecimal RemainderNoRoundAfterDivide​(EDecimal divisor,
                            EContext ctx)`<br>
+ Not documented yet.
 * `EDecimal RoundToExponent​(int exponentSmall)`<br>
  Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary, using the HalfEven rounding mode.
@@ -2327,7 +2328,7 @@ Multiplies two decimal numbers. The resulting scale will be the sum of the
 
 ### Add
     public EDecimal Add​(int intValue)
-Adds this object and another object.<p> </p><pre>EInteger result =
+Adds this object and another object.<p/><pre>EInteger result =
  EInteger.FromString("5").Add(200);</pre>
 
 **Parameters:**
@@ -2337,11 +2338,6 @@ Adds this object and another object.<p> </p><pre>EInteger result =
 **Returns:**
 
 * The sum of the two objects.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
- null.
 
 ### Subtract
     public EDecimal Subtract​(int intValue)
@@ -2356,15 +2352,10 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 * The difference of the two objects.
 
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
- null.
-
 ### Multiply
     public EDecimal Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision integer
- object.<p> </p><pre>EInteger result =
+ object.<p/><pre>EInteger result =
  EInteger.FromString("5").Multiply(200);</pre>
 
 **Parameters:**
@@ -2374,11 +2365,6 @@ Multiplies this instance by the value of an arbitrary-precision integer
 **Returns:**
 
 * The product of the two numbers.
-
-**Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
- null.
 
 ### Divide
     public EDecimal Divide​(int intValue)
@@ -2390,16 +2376,13 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Parameters:**
 
-* <code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.
+* <code>intValue</code> - The divisor.
 
 **Returns:**
 
 * The quotient of the two objects.
 
 **Throws:**
-
-* <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
- null.
 
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 
@@ -2838,12 +2821,13 @@ Finds the remainder that results when dividing two arbitrary-precision
 
 ### RemainderNoRoundAfterDivide
     public EDecimal RemainderNoRoundAfterDivide​(EDecimal divisor, EContext ctx)
+Not documented yet.
 
 **Parameters:**
 
-* <code>divisor</code> - Not documented yet.
+* <code>divisor</code> - The number to divide by.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
 
 **Returns:**
 

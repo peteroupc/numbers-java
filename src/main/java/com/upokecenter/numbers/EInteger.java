@@ -1089,20 +1089,18 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.<p> <pre>EInteger result =
+     * Adds this object and another object.<p><pre>EInteger result =
      * EInteger.FromString("5").Add(200);</pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
-     * null.
      */
 public EInteger Add(int intValue) {
  if (intValue == 0) {
  return this;
 }
- if (this.wordCount == 1 && intValue<65535 && intValue>=-65535) {
+ if (this.wordCount == 1 && intValue < 65535 && intValue >= -65535) {
         short[] sumreg;
-        if (intValue< 0) {
+        if (intValue < 0) {
           int intSum = (((int)this.words[0]) & 0xffff) - intValue;
           sumreg = new short[2];
           sumreg[0] = ((short)intSum);
@@ -1134,23 +1132,19 @@ public EInteger Add(int intValue) {
      * integer.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The difference of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code subtrahend} is
-     * null.
      */
 public EInteger Subtract(int intValue) {
  return (intValue == Integer.MIN_VALUE) ?
-   (this.Subtract(EInteger.FromInt32(intValue))) : ((intValue == 0) ? (this):
-   (this.Add(-intValue)));
+   this.Subtract(EInteger.FromInt32(intValue)) : ((intValue == 0) ? this :
+     this.Add(-intValue));
 }
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.<p> <pre>EInteger result =
+     * object.<p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200);</pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
-     * @throws java.lang.NullPointerException The parameter {@code bigintMult} is
-     * null.
      */
 public EInteger Multiply(int intValue) {
  return this.Multiply(EInteger.FromInt32(intValue));
@@ -1162,10 +1156,8 @@ public EInteger Multiply(int intValue) {
      * the result is 0, it will be negative if this object is positive and
      * the other is negative, or vice versa, and will be positive if both
      * are positive or both are negative.
-     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @param intValue The divisor.
      * @return The quotient of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
-     * null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
 public EInteger Divide(int intValue) {
@@ -1203,7 +1195,7 @@ public int compareTo(int intValue) {
      * the result is 0, it will be negative if this object is positive and
      * the other is negative, or vice versa, and will be positive if both
      * are positive or both are negative.
-     * @param bigintDivisor Another arbitrary-precision integer.
+     * @param bigintDivisor The divisor.
      * @return The quotient of the two objects.
      * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
      * null.
