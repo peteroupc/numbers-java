@@ -3092,8 +3092,13 @@ public EDecimal Divide(int intValue) {
      * absolute value of this object is divided by the absolute value of the
      * other object; the remainder has the same sign (positive or negative)
      * as this object's value.
-     * @param divisor The parameter {@code divisor} is an EDecimal object.
-     * @param ctx The parameter {@code ctx} is an EContext object.
+     * @param divisor The number to divide by, .
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result, and of the intermediate integer
+     * division. If {@code HasFlags} of the context is true, will also store
+     * the flags resulting from the operation (the flags are in addition to
+     * the pre-existing flags). Can be null, in which the precision is
+     * unlimited.
      * @return The remainder of the two numbers. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
      * the given precision.
@@ -3106,9 +3111,16 @@ public EDecimal Divide(int intValue) {
 
     /**
      * Not documented yet.
-     * @param divisor The number to divide by.
-     * @param ctx The parameter {@code ctx} is not documented yet.
-     * @return An EDecimal object.
+     * @param divisor The number to divide by, .
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result, but not also of the intermediate
+     * integer division. If {@code HasFlags} of the context is true, will
+     * also store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null, in which the
+     * precision is unlimited.
+     * @return The remainder of the two numbers. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
+     * the given precision.
      */
     public EDecimal RemainderNoRoundAfterDivide(
       EDecimal divisor,

@@ -2809,9 +2809,14 @@ Finds the remainder that results when dividing two arbitrary-precision
 
 **Parameters:**
 
-* <code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.
+* <code>divisor</code> - The number to divide by, .
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result, and of the intermediate integer
+ division. If <code>HasFlags</code> of the context is true, will also store
+ the flags resulting from the operation (the flags are in addition to
+ the pre-existing flags). Can be null, in which the precision is
+ unlimited.
 
 **Returns:**
 
@@ -2825,13 +2830,20 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>divisor</code> - The number to divide by.
+* <code>divisor</code> - The number to divide by, .
 
-* <code>ctx</code> - The parameter <code>ctx</code> is not documented yet.
+* <code>ctx</code> - An arithmetic context object to control the precision, rounding,
+ and exponent range of the result, but not also of the intermediate
+ integer division. If <code>HasFlags</code> of the context is true, will
+ also store the flags resulting from the operation (the flags are in
+ addition to the pre-existing flags). Can be null, in which the
+ precision is unlimited.
 
 **Returns:**
 
-* An EDecimal object.
+* The remainder of the two numbers. Signals FlagInvalid and returns
+ not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
+ the given precision.
 
 ### RemainderNaturalScale
     public EDecimal RemainderNaturalScale​(EDecimal divisor)
