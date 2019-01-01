@@ -12,7 +12,9 @@ at: http://peteroupc.github.io/
      * @param <T> Data type for a numeric value in a particular radix.
      */
   class RadixMath<T> implements IRadixMath<T> {
+    // Use given exponent
     private static final int IntegerModeFixedScale = 1;
+    // Use flexible exponent
     private static final int IntegerModeRegular = 0;
 
     private static final int[] BitMasks = {
@@ -2258,7 +2260,7 @@ ctx.getPrecision()).WithBlankFlags();
       ret = this.DivideInternal(
   thisValue,
   divisor,
-  null,
+  ctx2,
   IntegerModeFixedScale,
   EInteger.FromInt32(0));
       if ((ctx2.getFlags() & EContext.FlagInvalid) != 0) {
