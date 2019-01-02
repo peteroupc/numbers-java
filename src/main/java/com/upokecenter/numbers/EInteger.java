@@ -1100,8 +1100,17 @@ public EInteger Add(int intValue) {
 }
  if (this.wordCount == 1 && intValue < 65535 && intValue >= -65535) {
         short[] sumreg;
-        if (intValue < 0) {
-          int intSum = (((int)this.words[0]) & 0xffff) - intValue;
+        if (intValue > 0 && !this.negative) {
+          int intSum = (((int)this.words[0]) & 0xffff) + intValue;
+          sumreg = new short[2];
+          sumreg[0] = ((short)intSum);
+          sumreg[1] = ((short)(intSum >> 16));
+          return new EInteger(
+            ((intSum >> 16) == 0) ? 1 : 2,
+            sumreg,
+            this.negative);
+        } else if (intValue < 0 && this.negative) {
+          int intSum = (((int)this.words[0]) & 0xffff) - (intValue);
           sumreg = new short[2];
           sumreg[0] = ((short)intSum);
           sumreg[1] = ((short)(intSum >> 16));
@@ -1111,7 +1120,7 @@ public EInteger Add(int intValue) {
             this.negative);
         } else {
           int a = ((int)this.words[0]) & 0xffff;
-          int b = intValue;
+          int b = Math.abs(intValue);
           if (a > b) {
             a -= b;
             sumreg = new short[2];
@@ -1173,7 +1182,7 @@ public EInteger Divide(int intValue) {
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The remainder of the two numbers.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     * @throws java.lang.NullPointerException The parameter {@code intValue} is null.
      */
 public EInteger Remainder(int intValue) {
  return this.Remainder(EInteger.FromInt32(intValue));

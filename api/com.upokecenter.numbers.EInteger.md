@@ -617,7 +617,7 @@ Finds the remainder that results when this instance is divided by the value
 
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>NullPointerException</code> - The parameter <code>intValue</code> is null.
 
 ### compareTo
     public int compareTo​(int intValue)

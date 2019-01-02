@@ -420,6 +420,96 @@ import com.upokecenter.numbers.*;
       }
     }
 
+@Test
+public void TestAddSubSmall() {
+// Test int overloads
+Assert.assertEquals(
+  EInteger.FromInt32(2370),
+  EInteger.FromInt32(1970).Add(400));
+Assert.assertEquals(
+  EInteger.FromInt32(1570),
+  EInteger.FromInt32(1970).Add(-400));
+Assert.assertEquals(
+  EInteger.FromInt32(1970),
+  EInteger.FromInt32(1570).Add(400));
+Assert.assertEquals(
+  EInteger.FromInt32(770),
+  EInteger.FromInt32(370).Add(400));
+Assert.assertEquals(
+  EInteger.FromInt32(-30),
+  EInteger.FromInt32(370).Add(-400));
+Assert.assertEquals(
+  EInteger.FromInt32(370),
+  EInteger.FromInt32(-30).Add(400));
+Assert.assertEquals(
+  EInteger.FromInt32(-430),
+  EInteger.FromInt32(-30).Add(-400));
+Assert.assertEquals(
+  EInteger.FromInt32(1570),
+  EInteger.FromInt32(1970).Subtract(400));
+Assert.assertEquals(
+  EInteger.FromInt32(2370),
+  EInteger.FromInt32(1970).Subtract(-400));
+Assert.assertEquals(
+  EInteger.FromInt32(1170),
+  EInteger.FromInt32(1570).Subtract(400));
+Assert.assertEquals(
+  EInteger.FromInt32(-30),
+  EInteger.FromInt32(370).Subtract(400));
+Assert.assertEquals(
+  EInteger.FromInt32(770),
+  EInteger.FromInt32(370).Subtract(-400));
+Assert.assertEquals(
+  EInteger.FromInt32(-430),
+  EInteger.FromInt32(-30).Subtract(400));
+Assert.assertEquals(
+  EInteger.FromInt32(370),
+  EInteger.FromInt32(-30).Subtract(-400));
+// Check with EInteger overloads
+Assert.assertEquals(
+  EInteger.FromInt32(2370),
+  EInteger.FromInt32(1970).Add(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(1570),
+  EInteger.FromInt32(1970).Add(EInteger.FromInt32(-400)));
+Assert.assertEquals(
+  EInteger.FromInt32(1970),
+  EInteger.FromInt32(1570).Add(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(770),
+  EInteger.FromInt32(370).Add(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(-30),
+  EInteger.FromInt32(370).Add(EInteger.FromInt32(-400)));
+Assert.assertEquals(
+  EInteger.FromInt32(370),
+  EInteger.FromInt32(-30).Add(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(-430),
+  EInteger.FromInt32(-30).Add(EInteger.FromInt32(-400)));
+Assert.assertEquals(
+  EInteger.FromInt32(1570),
+  EInteger.FromInt32(1970).Subtract(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(2370),
+  EInteger.FromInt32(1970).Subtract(EInteger.FromInt32(-400)));
+Assert.assertEquals(
+  EInteger.FromInt32(1170),
+  EInteger.FromInt32(1570).Subtract(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(-30),
+  EInteger.FromInt32(370).Subtract(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(770),
+  EInteger.FromInt32(370).Subtract(EInteger.FromInt32(-400)));
+Assert.assertEquals(
+  EInteger.FromInt32(-430),
+  EInteger.FromInt32(-30).Subtract(EInteger.FromInt32(400)));
+Assert.assertEquals(
+  EInteger.FromInt32(370),
+  EInteger.FromInt32(-30).Subtract(EInteger.FromInt32(-400)));
+}
+
     @Test
     public void TestAsInt32Checked() {
       Assert.assertEquals(
