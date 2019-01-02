@@ -1098,6 +1098,9 @@ public EInteger Add(int intValue) {
  if (intValue == 0) {
  return this;
 }
+ if (this.wordCount == 0) {
+ return EInteger.FromInt32(intValue);
+}
  if (this.wordCount == 1 && intValue < 65535 && intValue >= -65535) {
         short[] sumreg;
         if (intValue > 0 && !this.negative) {
@@ -1126,11 +1129,14 @@ public EInteger Add(int intValue) {
             sumreg = new short[2];
             sumreg[0] = ((short)a);
             return new EInteger(1, sumreg, this.negative);
-          }
+          }else if (a == b) {
+            return EInteger.FromInt32(0);
+          } else {
           b -= a;
           sumreg = new short[2];
           sumreg[0] = ((short)b);
           return new EInteger(1, sumreg, !this.negative);
+          }
         }
  }
  return this.Add(EInteger.FromInt32(intValue));
