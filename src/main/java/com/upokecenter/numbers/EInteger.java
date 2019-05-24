@@ -2483,6 +2483,7 @@ WordsShiftRightOne(bu, buc);
      * object's value is 0 or negative 1.
      */
     public int GetSignedBitLength() {
+      // TODO: AddAsEInteger version
       int wc = this.wordCount;
       if (wc != 0) {
         if (this.negative) {
