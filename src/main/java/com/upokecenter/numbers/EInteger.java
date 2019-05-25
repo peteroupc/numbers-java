@@ -18,23 +18,23 @@ at: http://peteroupc.github.io/
     /**
      * Represents an arbitrary-precision integer. (The "E" stands for "extended",
      * and has this prefix to group it with the other classes common to this
-     * library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+     * library, particularly EDecimal, EFloat, and ERational.) <p> Instances
      * of this class are immutable, so they are inherently safe for use by
      * multiple threads. Multiple instances of this object with the same
      * value are interchangeable, but they should be compared using the
-     * "Equals" method rather than the "==" operator. </p> <p><b>Security
-     * note</b> </p> <p>It is not recommended to implement
+     * "Equals" method rather than the "==" operator. </p> <p> <b> Security
+     * note </b> </p> <p> It is not recommended to implement
      * security-sensitive algorithms using the methods in this class, for
-     * several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
-     * so they can't be modified, and the memory they occupy is not
-     * guaranteed to be cleared in a timely fashion due to garbage
+     * several reasons: </p> <ul> <li> <code> EInteger </code> objects are
+     * immutable, so they can't be modified, and the memory they occupy is
+     * not guaranteed to be cleared in a timely fashion due to garbage
      * collection. This is relevant for applications that use many-bit-long
-     * numbers as secret parameters. </li> <li>The methods in this class
+     * numbers as secret parameters. </li> <li> The methods in this class
      * (especially those that involve arithmetic) are not guaranteed to run
      * in constant time for all relevant inputs. Certain attacks that
      * involve encrypted communications have exploited the timing and other
      * aspects of such communications to derive keying material or cleartext
-     * indirectly. </li> </ul> <p>Applications should instead use dedicated
+     * indirectly. </li> </ul> <p> Applications should instead use dedicated
      * security libraries to handle big numbers in security-sensitive
      * algorithms. </p>
      */
@@ -175,23 +175,23 @@ at: http://peteroupc.github.io/
      * @param bytes A byte array consisting of the two's-complement form (see
      * {@link com.upokecenter.numbers.EDecimal "Forms of numbers" }) of the
      * arbitrary-precision integer to create. The byte array is encoded
-     * using the following rules: <ul> <li>Positive numbers have the first
+     * using the following rules: <ul> <li> Positive numbers have the first
      * byte's highest bit cleared, and negative numbers have the bit set.
-     * </li> <li>The last byte contains the lowest 8-bits, the next-to-last
+     * </li> <li> The last byte contains the lowest 8-bits, the next-to-last
      * contains the next lowest 8 bits, and so on. For example, the number
-     * 300 can be encoded as {@code 0x01, 0x2c} and 200 as {@code 0x00,
-     * 0xc8} . (Note that the second example contains a set high bit in
-     * {@code 0xc8} , so an additional 0 is added at the start to ensure
-     * it's interpreted as positive.) </li> <li>To encode negative numbers,
+     * 300 can be encoded as {@code 0x01, 0x2c } and 200 as {@code 0x00,
+     * 0xc8 } . (Note that the second example contains a set high bit in
+     * {@code 0xc8 } , so an additional 0 is added at the start to ensure
+     * it's interpreted as positive.) </li> <li> To encode negative numbers,
      * take the absolute value of the number, subtract by 1, encode the
      * number into bytes, and toggle each bit of each byte. Any further bits
      * that appear beyond the most significant bit of the number will be all
      * ones. For example, the number -450 can be encoded as {@code 0xfe,
-     * 0x70} and -52869 as {@code 0xff, 0x31, 0x7b} . (Note that the second
-     * example contains a cleared high bit in {@code 0x31, 0x7b} , so an
-     * additional 0xff is added at the start to ensure it's interpreted as
-     * negative.) </li> </ul> <p>For little-endian, the byte order is
-     * reversed from the byte order just discussed. </p> .
+     * 0x70 } and -52869 as {@code 0xff, 0x31, 0x7b } . (Note that the
+     * second example contains a cleared high bit in {@code 0x31, 0x7b } ,
+     * so an additional 0xff is added at the start to ensure it's
+     * interpreted as negative.) </li> </ul> <p> For little-endian, the byte
+     * order is reversed from the byte order just discussed. </p> .
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is big-endian,
      * or most-significant-byte first.
@@ -424,8 +424,8 @@ at: http://peteroupc.github.io/
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
      * format.
-     * @throws IllegalArgumentException "Doesn't satisfy (endIndex - index) % 4 ==
-     * 0".
+     * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 ==
+     * 0.
      */
     public static EInteger FromRadixSubstring(
       String str,
@@ -1089,8 +1089,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Add(200);</pre> </p>
+     * Adds this object and another object.<p> <pre> EInteger result =
+     * EInteger.FromString("5").Add(200); </pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      */
@@ -1129,7 +1129,7 @@ public EInteger Add(int intValue) {
             sumreg = new short[2];
             sumreg[0] = ((short)a);
             return new EInteger(1, sumreg, this.negative);
-          }else if (a == b) {
+          } else if (a == b) {
             return EInteger.FromInt32(0);
           } else {
           b -= a;
@@ -1156,8 +1156,8 @@ public EInteger Subtract(int intValue) {
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Multiply(200);</pre> </p>
+     * object.<p> <pre> EInteger result =
+     * EInteger.FromString("5").Multiply(200); </pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -3280,13 +3280,13 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns a byte array of this integer's value. The byte array will take the
      * number's two' s-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
+     * com.upokecenter.numbers.EDecimal "Forms of numbers" }), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
-     * passed to the <code>FromBytes()</code> method (with the same byte order) to
-     * reconstruct this integer's value.
-     * @param littleEndian Either {@code true} or {@code false} .
+     * passed to the <code> FromBytes() </code> method (with the same byte order)
+     * to reconstruct this integer's value.
+     * @param littleEndian Either {@code true } or {@code false } .
      * @return A byte array. If this value is 0, returns a byte array with the
      * single element 0.
      */
