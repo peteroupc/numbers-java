@@ -11,19 +11,19 @@ at: http://peteroupc.github.io/
      * Contains parameters for controlling the precision, rounding, and exponent
      * range of arbitrary-precision numbers. (The "E" stands for "extended",
      * and has this prefix to group it with the other classes common to this
-     * library, particularly EDecimal, EFloat, and ERational.). <p> <b>
-     * Thread safety: </b> With one exception, instances of this class are
+     * library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
+     * safety: </b> With one exception, instances of this class are
      * immutable and are safe to use among multiple threads. The one
-     * exception involves the <code> Flags </code> property. If the context's <code>
-     * HasFlags </code> property (a read-only property) is <code> true </code> , the
-     * <code> Flags </code> property is mutable, thus making the context mutable.
-     * This class doesn't synchronize access to such mutable contexts, so
-     * applications should provide their own synchronization if a context
-     * with the <code> HasFlags </code> property set to <code> true </code> will be
-     * shared among multiple threads and at least one of those threads needs
-     * to write the <code> Flags </code> property (which can happen, for example,
-     * by passing the context to most methods of <code> EDecimal </code> such as
-     * <code> Add </code>). </p>
+     * exception involves the <code>Flags </code> property. If the context's
+     * <code>HasFlags </code> property (a read-only property) is <code>true </code> ,
+     * the <code>Flags </code> property is mutable, thus making the context
+     * mutable. This class doesn't synchronize access to such mutable
+     * contexts, so applications should provide their own synchronization if
+     * a context with the <code>HasFlags </code> property set to <code>true </code> will
+     * be shared among multiple threads and at least one of those threads
+     * needs to write the <code>Flags </code> property (which can happen, for
+     * example, by passing the context to most methods of <code>EDecimal </code>
+     * such as <code>Add </code>). </p>
      */
   public final class EContext {
     /**
@@ -138,7 +138,7 @@ at: http://peteroupc.github.io/
      * An arithmetic context for the .NET Framework decimal format (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers" }), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
-     * rounding mode is HalfEven. (The <code> "Cli" </code> stands for "Common
+     * rounding mode is HalfEven. (The <code>"Cli" </code> stands for "Common
      * Language Infrastructure", which defined this format as the .NET
      * Framework decimal format in version 1, but leaves it unspecified in
      * later versions.).
@@ -320,11 +320,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the flags that are set from converting numbers according to this
-     * arithmetic context. If <code> HasFlags </code> is false, this value will be
+     * arithmetic context. If <code>HasFlags </code> is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code> (this.getFlags() &amp; EContext.FlagInexact) != 0
-     * </code> returns <code> true </code> if the Inexact flag is set.
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) != 0
+     * </code> returns <code>true </code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
      * arithmetic context. If {@code HasFlags} is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
@@ -391,8 +391,8 @@ public final void setFlags(int value) {
      * simplified arithmetic, infinity, not-a-number, and subnormal numbers
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
-     * href='http://speleotrove.com/decimal/dax3274.html'> <code>
-     * http://speleotrove.com/decimal/dax3274.html </code> </a>
+     * href='http://speleotrove.com/decimal/dax3274.html'>
+     * <code>http://speleotrove.com/decimal/dax3274.html </code> </a>
      * @return {@code true} if to use a "simplified" arithmetic; otherwise, {@code
      * false} .. In the simplified arithmetic, infinity, not-a-number, and
      * subnormal numbers are not allowed, and negative zero is treated the
@@ -429,12 +429,12 @@ public final void setFlags(int value) {
 
     /**
      * Gets the traps that are set for each flag in the context. Whenever a flag is
-     * signaled, even if <code> HasFlags </code> is false, and the flag's trap is
-     * enabled, the operation will throw a TrapException. <p> For example,
-     * if Traps equals <code> FlagInexact </code> and FlagSubnormal, a
-     * TrapException will be thrown if an operation's return value is not
-     * the same as the exact result (FlagInexact) or if the return value's
-     * exponent is lower than the lowest allowed (FlagSubnormal). </p>
+     * signaled, even if <code>HasFlags </code> is false, and the flag's trap is
+     * enabled, the operation will throw a TrapException. <p>For example, if
+     * Traps equals <code>FlagInexact </code> and FlagSubnormal, a TrapException
+     * will be thrown if an operation's return value is not the same as the
+     * exact result (FlagInexact) or if the return value's exponent is lower
+     * than the lowest allowed (FlagSubnormal). </p>
      * @return The traps that are set for each flag in the context. Whenever a flag
      * is signaled, even if {@code HasFlags} is false, and the flag's trap
      * is enabled, the operation will throw a TrapException. For example, if
@@ -605,8 +605,7 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      * @throws java.lang.NullPointerException The parameter {@code exponentMin} is
      * null.
-     * @throws IllegalArgumentException The parameter {@code exponentMin} is
-     * greater than {@code exponentMax}.
+     * @throws IllegalArgumentException ExponentMin greater than exponentMax".
      */
     public EContext WithBigExponentRange(
       EInteger exponentMin,
@@ -648,7 +647,7 @@ public final void setFlags(int value) {
     }
 
     /**
-     * Copies this EContext with <code> HasFlags </code> set to true and a Flags value of
+     * Copies this EContext with <code>HasFlags </code> set to true and a Flags value of
      * 0.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -692,8 +691,8 @@ public final void setFlags(int value) {
     }
 
     /**
-     * Copies this EContext with <code> HasFlags </code> set to false and a Flags value
-     * of 0.
+     * Copies this EContext with <code>HasFlags </code> set to false and a Flags value of
+     * 0.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithNoFlags() {
