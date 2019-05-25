@@ -220,7 +220,7 @@ at: http://peteroupc.github.io/
      * signed integer.
      * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
      * signed integer.
-     * @param clampNormalExponents Either {@code true} or {@code false}.
+     * @param clampNormalExponents Either {@code true } or {@code false } .
      */
     public EContext(
   int precision,
