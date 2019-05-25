@@ -2679,7 +2679,7 @@ private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
 
     /**
      * Not documented yet.
-     * @param intValue Not documented yet.
+     * @param intValue The parameter {@code intValue} is not documented yet.
      * @return An EDecimal object.
      */
 public EDecimal Add(int intValue) {
@@ -2688,7 +2688,7 @@ public EDecimal Add(int intValue) {
 
     /**
      * Not documented yet.
-     * @param intValue Not documented yet.
+     * @param intValue The parameter {@code intValue} is not documented yet.
      * @return An EDecimal object.
      */
 public EDecimal Subtract(int intValue) {
@@ -2698,7 +2698,7 @@ public EDecimal Subtract(int intValue) {
 
     /**
      * Not documented yet.
-     * @param intValue Not documented yet.
+     * @param intValue The parameter {@code intValue} is not documented yet.
      * @return An EDecimal object.
      */
 public EDecimal Multiply(int intValue) {
@@ -2707,7 +2707,7 @@ public EDecimal Multiply(int intValue) {
 
     /**
      * Not documented yet.
-     * @param intValue Not documented yet.
+     * @param intValue The parameter {@code intValue} is not documented yet.
      * @return An EDecimal object.
      */
 public EDecimal Divide(int intValue) {
