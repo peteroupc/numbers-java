@@ -212,12 +212,15 @@ at: http://peteroupc.github.io/
     private int traps;
 
     /**
-     * Initializes a new instance of the {@link EContext} class.
-     * @param precision A 32-bit signed integer.
-     * @param rounding An ERounding object.
-     * @param exponentMinSmall Another 32-bit signed integer.
-     * @param exponentMaxSmall A 32-bit signed integer. (3).
-     * @param clampNormalExponents A Boolean object.
+     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
+     * class.
+     * @param precision The parameter {@code precision} is a 32-bit signed integer.
+     * @param rounding The parameter {@code rounding} is an ERounding object.
+     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
+     * signed integer.
+     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
+     * signed integer.
+     * @param clampNormalExponents Either {@code true} or {@code false}.
      */
     public EContext(
   int precision,

@@ -39,7 +39,7 @@ private static final long serialVersionUID = 1L;
 
     /**
      * Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
-     * only be one flag, such as <code> FlagInexact </code> or FlagSubnormal.
+     * only be one flag, such as <code>FlagInexact </code> or FlagSubnormal.
      * @return The flag that specifies the kind of error (EContext.FlagXXX). This
      * will only be one flag, such as. {@code FlagInexact} or FlagSubnormal.
      */
@@ -59,10 +59,11 @@ private static final long serialVersionUID = 1L;
     }
 
     /**
-     * Initializes a new instance of the {@link ETrapException} class.
-     * @param flag A 32-bit signed integer.
-     * @param ctx An EContext object.
-     * @param result An arbitrary object.
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
+     * @param flag The parameter {@code flag} is a 32-bit signed integer.
+     * @param ctx The parameter {@code ctx} is an EContext object.
+     * @param result The parameter {@code result} is an arbitrary object.
      */
     public ETrapException(int flag, EContext ctx, Object result) {
  super(FlagToMessage(flag));
