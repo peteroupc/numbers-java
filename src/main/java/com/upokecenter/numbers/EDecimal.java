@@ -1574,7 +1574,15 @@ private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
    }
         EInteger thisAdjExp = GetAdjustedExponent(ed);
         EInteger otherAdjExp = GetAdjustedExponentBinary(ef);
-// DebugUtility.Log("taexp=" + thisAdjExp + ", oaexp=" + otherAdjExp);
+ // DebugUtility.Log("taexp=" + thisAdjExp + ", oaexp=" + otherAdjExp);
+ // DebugUtility.Log("td=" + ed.ToDouble() + ", tf=" + ef.ToDouble());
+      if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) >= 0 &&
+        otherAdjExp.signum() < 0 && otherAdjExp.compareTo(EInteger.FromInt64(-4000)) <
+            0) {
+        // With these exponent combinations, the binary's absolute
+        // value is less than the decimal's
+        return (signA > 0) ? 1 : -1;
+      }
       if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0 &&
           otherAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0) {
           thisAdjExp = thisAdjExp.Add(EInteger.FromInt32(1)).Abs();
@@ -2678,18 +2686,18 @@ private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
     }
 
     /**
-     * Not documented yet.
+     * Adds this object and an 32-bit signed integer and returns the result.
      * @param intValue The parameter {@code intValue} is not documented yet.
-     * @return An EDecimal object.
+     * @return The sum of the two objects.
      */
 public EDecimal Add(int intValue) {
  return this.Add(EDecimal.FromInt32(intValue));
 }
 
     /**
-     * Not documented yet.
+     * Subtracts a 32-bit signed integer from this instance and returns the result.
      * @param intValue The parameter {@code intValue} is not documented yet.
-     * @return An EDecimal object.
+     * @return The difference of the two objects.
      */
 public EDecimal Subtract(int intValue) {
  return (intValue == Integer.MIN_VALUE) ?
@@ -2697,18 +2705,23 @@ public EDecimal Subtract(int intValue) {
 }
 
     /**
-     * Not documented yet.
+     * Multiplies this object by the given 32-bit signed integer. The resulting
+     * exponent will be the sum of the exponents of the two numbers.
      * @param intValue The parameter {@code intValue} is not documented yet.
-     * @return An EDecimal object.
+     * @return The product of the two numbers.
      */
 public EDecimal Multiply(int intValue) {
  return this.Multiply(EDecimal.FromInt32(intValue));
 }
 
     /**
-     * Not documented yet.
+     * Divides this object by an 32-bit signed integer and returns the result. When
+     * possible, the result will be exact.
      * @param intValue The parameter {@code intValue} is not documented yet.
-     * @return An EDecimal object.
+     * @return The quotient of the two numbers. Returns infinity if the divisor is
+     * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
+     * divisor and the dividend are 0. Returns NaN if the result can't be
+     * exact because it would have a nonterminating decimal expansion.
      */
 public EDecimal Divide(int intValue) {
  return this.Divide(EDecimal.FromInt32(intValue));
@@ -3992,9 +4005,8 @@ public EDecimal Divide(int intValue) {
         return EInteger.FromInt32(0);
       }
       EInteger retEInt = ed.getExponent();
-      // TODO: Use EInteger version when available
-      EInteger valueEiPrecision = EInteger.FromInt32(
-          ed.getUnsignedMantissa().GetDigitCount());
+      EInteger valueEiPrecision =
+          ed.getUnsignedMantissa().GetDigitCountAsEInteger();
       retEInt = retEInt.Add(valueEiPrecision.Subtract(1));
       return retEInt;
     }
@@ -4007,9 +4019,8 @@ public EDecimal Divide(int intValue) {
         return EInteger.FromInt32(0);
       }
       EInteger retEInt = ef.getExponent();
-      // TODO: Use GetSignedBitLengthAsEInteger when available
-      EInteger valueEiPrecision = EInteger.FromInt32(
-           ef.getUnsignedMantissa().GetSignedBitLength());
+      EInteger valueEiPrecision =
+           ef.getUnsignedMantissa().GetSignedBitLengthAsEInteger();
       retEInt = retEInt.Add(valueEiPrecision.Subtract(1));
       return retEInt;
     }
@@ -4219,7 +4230,7 @@ ec = (ec == null) ? (EContext.UnlimitedHalfEven) : ec;
             divisor = den;
           }
         }
-        // NOTE: Precision added by 2 to accommodate rounding
+        // NOTE: Precision raised by 2 to accommodate rounding
         // to odd
         EInteger valueEcPrec = ec.getHasMaxPrecision() ? ec.getPrecision().Add(EInteger.FromInt32(2)) : EInteger.FromInt32(0);
         int valueEcPrecInt = 0;

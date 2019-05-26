@@ -18,23 +18,23 @@ at: http://peteroupc.github.io/
     /**
      * Represents an arbitrary-precision integer. (The "E" stands for "extended",
      * and has this prefix to group it with the other classes common to this
-     * library, particularly EDecimal, EFloat, and ERational.) <p> Instances
+     * library, particularly EDecimal, EFloat, and ERational.) <p>Instances
      * of this class are immutable, so they are inherently safe for use by
      * multiple threads. Multiple instances of this object with the same
      * value are interchangeable, but they should be compared using the
-     * "Equals" method rather than the "==" operator. </p> <p> <b> Security
-     * note </b> </p> <p> It is not recommended to implement
+     * "Equals" method rather than the "==" operator. </p> <p><b>Security
+     * note </b> </p> <p>It is not recommended to implement
      * security-sensitive algorithms using the methods in this class, for
-     * several reasons: </p> <ul> <li> <code> EInteger </code> objects are
+     * several reasons: </p> <ul> <li><code>EInteger </code> objects are
      * immutable, so they can't be modified, and the memory they occupy is
      * not guaranteed to be cleared in a timely fashion due to garbage
      * collection. This is relevant for applications that use many-bit-long
-     * numbers as secret parameters. </li> <li> The methods in this class
+     * numbers as secret parameters. </li> <li>The methods in this class
      * (especially those that involve arithmetic) are not guaranteed to run
      * in constant time for all relevant inputs. Certain attacks that
      * involve encrypted communications have exploited the timing and other
      * aspects of such communications to derive keying material or cleartext
-     * indirectly. </li> </ul> <p> Applications should instead use dedicated
+     * indirectly. </li> </ul> <p>Applications should instead use dedicated
      * security libraries to handle big numbers in security-sensitive
      * algorithms. </p>
      */
@@ -175,14 +175,14 @@ at: http://peteroupc.github.io/
      * @param bytes A byte array consisting of the two's-complement form (see
      * {@link com.upokecenter.numbers.EDecimal "Forms of numbers" }) of the
      * arbitrary-precision integer to create. The byte array is encoded
-     * using the following rules: <ul> <li> Positive numbers have the first
+     * using the following rules: <ul> <li>Positive numbers have the first
      * byte's highest bit cleared, and negative numbers have the bit set.
-     * </li> <li> The last byte contains the lowest 8-bits, the next-to-last
+     * </li> <li>The last byte contains the lowest 8-bits, the next-to-last
      * contains the next lowest 8 bits, and so on. For example, the number
      * 300 can be encoded as {@code 0x01, 0x2c } and 200 as {@code 0x00,
      * 0xc8 } . (Note that the second example contains a set high bit in
      * {@code 0xc8 } , so an additional 0 is added at the start to ensure
-     * it's interpreted as positive.) </li> <li> To encode negative numbers,
+     * it's interpreted as positive.) </li> <li>To encode negative numbers,
      * take the absolute value of the number, subtract by 1, encode the
      * number into bytes, and toggle each bit of each byte. Any further bits
      * that appear beyond the most significant bit of the number will be all
@@ -190,7 +190,7 @@ at: http://peteroupc.github.io/
      * 0x70 } and -52869 as {@code 0xff, 0x31, 0x7b } . (Note that the
      * second example contains a cleared high bit in {@code 0x31, 0x7b } ,
      * so an additional 0xff is added at the start to ensure it's
-     * interpreted as negative.) </li> </ul> <p> For little-endian, the byte
+     * interpreted as negative.) </li> </ul> <p>For little-endian, the byte
      * order is reversed from the byte order just discussed. </p> .
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is big-endian,
@@ -425,7 +425,7 @@ at: http://peteroupc.github.io/
      * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
      * format.
      * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 ==
-     * 0.
+     * 0".
      */
     public static EInteger FromRadixSubstring(
       String str,
@@ -1089,7 +1089,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.<p> <pre> EInteger result =
+     * Adds this object and another object.<p><pre>EInteger result =
      * EInteger.FromString("5").Add(200); </pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
@@ -1156,7 +1156,7 @@ public EInteger Subtract(int intValue) {
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.<p> <pre> EInteger result =
+     * object.<p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200); </pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
@@ -2167,6 +2167,18 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
+     * Returns the number of decimal digits used by this integer.<p> TODO: Adjust
+     * this documentation for this new API </p>
+     * @return The number of digits in the decimal form of this integer. Returns 1
+     * if this number is 0.
+     */
+    public EInteger GetDigitCountAsEInteger() {
+       // NOTE: All digit counts can currently fit in Int32, so just
+       // use GetDigitCount for the time being
+       return EInteger.FromInt32(this.GetDigitCount());
+    }
+
+    /**
      * Returns the number of decimal digits used by this integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
      * if this number is 0.
@@ -2478,40 +2490,66 @@ WordsShiftRightOne(bu, buc);
     /**
      * Finds the minimum number of bits needed to represent this object's value,
      * except for its sign. If the value is negative, finds the number of
+     * bits in the value equal to this object's absolute value minus 1.<p>
+     * TODO: Adjust this documentation for the new API. </p>
+     * @return The number of bits in this object's value. Returns 0 if this
+     * object's value is 0 or negative 1.
+     */
+    public EInteger GetSignedBitLengthAsEInteger() {
+      int wc = this.wordCount;
+      if (wc != 0) {
+        if (this.negative) {
+// Two's complement operation
+EInteger eiabs = this.Abs();
+if (wc > 1 && this.words[0] == 0) {
+ // No need to subtract by 1; the signed bit length will
+ // be the same in either case
+ return eiabs.GetSignedBitLengthAsEInteger();
+} else {
+ return eiabs.Subtract(EInteger.FromInt32(1)).GetSignedBitLengthAsEInteger();
+}
+        }
+        int numberValue = ((int)this.words[wc - 1]) & 0xffff;
+int wcextra = 0;
+if (numberValue != 0) {
+ wcextra = 16;
+         {
+          if ((numberValue >> 8) == 0) {
+            numberValue <<= 8;
+            wcextra -= 8;
+          }
+          if ((numberValue >> 12) == 0) {
+            numberValue <<= 4;
+            wcextra -= 4;
+          }
+          if ((numberValue >> 14) == 0) {
+            numberValue <<= 2;
+            wcextra -= 2;
+          }
+          wcextra = ((numberValue >> 15) == 0) ?
+   wcextra - 1 : wcextra;
+}
+}
+        if (wc < 0x3ffffff0) {
+         wc = (((wc - 1) << 4) + wcextra);
+         return EInteger.FromInt32(wc);
+        } else {
+EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
+  .Multiply(16).Add(wcextra);
+        }
+      }
+      return EInteger.FromInt32(0);
+    }
+
+    /**
+     * Finds the minimum number of bits needed to represent this object's value,
+     * except for its sign. If the value is negative, finds the number of
      * bits in the value equal to this object's absolute value minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      */
     public int GetSignedBitLength() {
-      // TODO: AddAsEInteger version
-      int wc = this.wordCount;
-      if (wc != 0) {
-        if (this.negative) {
-          return this.Abs().Subtract(EInteger.FromInt32(1)).GetSignedBitLength();
-        }
-        int numberValue = ((int)this.words[wc - 1]) & 0xffff;
-        wc = (wc - 1) << 4;
-        if (numberValue == 0) {
-          return wc;
-        }
-        wc += 16;
-        {
-          if ((numberValue >> 8) == 0) {
-            numberValue <<= 8;
-            wc -= 8;
-          }
-          if ((numberValue >> 12) == 0) {
-            numberValue <<= 4;
-            wc -= 4;
-          }
-          if ((numberValue >> 14) == 0) {
-            numberValue <<= 2;
-            wc -= 2;
-          }
-          return ((numberValue >> 15) == 0) ? wc - 1 : wc;
-        }
-      }
-      return 0;
+      return this.GetSignedBitLengthAsEInteger().ToInt32Checked();
     }
 
     /**
@@ -2575,7 +2613,7 @@ WordsShiftRightOne(bu, buc);
       int wc = this.wordCount;
       if (wc != 0) {
         int numberValue = ((int)this.words[wc - 1]) & 0xffff;
-        wc = (wc - 1) << 4;
+        wc = ((wc - 1) * 16);
         if (numberValue == 0) {
           return wc;
         }
@@ -3284,7 +3322,7 @@ WordsShiftRightOne(bu, buc);
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
-     * passed to the <code> FromBytes() </code> method (with the same byte order)
+     * passed to the <code>FromBytes() </code> method (with the same byte order)
      * to reconstruct this integer's value.
      * @param littleEndian Either {@code true } or {@code false } .
      * @return A byte array. If this value is 0, returns a byte array with the

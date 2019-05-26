@@ -186,28 +186,69 @@ at: http://peteroupc.github.io/
     public static final EContext UnlimitedHalfEven =
       EContext.ForPrecision(0).WithRounding(ERounding.HalfEven);
 
-    // TODO: Improve API's immutability (make all
-    // fields except flags and traps readonly/final)
-    // and include a construtor setting all fields
-    private boolean adjustExponent;
+    private EContext(
+     boolean adjustExponent,
+     EInteger bigintPrecision,
+     boolean clampNormalExponents,
+     EInteger exponentMax,
+     EInteger exponentMin,
+     int flags,
+     boolean hasExponentRange,
+     boolean hasFlags,
+     boolean precisionInBits,
+     ERounding rounding,
+     boolean simplified,
+     int traps) {
+if (bigintPrecision == null) {
+ throw new NullPointerException("bigintPrecision");
+}
+if (exponentMin == null) {
+ throw new NullPointerException("exponentMin");
+}
+if (exponentMax == null) {
+ throw new NullPointerException("exponentMax");
+}
+      if (bigintPrecision.signum() < 0) {
+        throw new IllegalArgumentException("precision (" + bigintPrecision +
+          ") is less than 0");
+      }
+      if (exponentMin.compareTo(exponentMax) > 0) {
+        throw new IllegalArgumentException("exponentMinSmall (" + exponentMin +
+          ") is more than " + exponentMax);
+      }
+this.adjustExponent = adjustExponent;
+this.bigintPrecision = bigintPrecision;
+this.clampNormalExponents = clampNormalExponents;
+this.exponentMax = exponentMax;
+this.exponentMin = exponentMin;
+this.flags = flags;
+this.hasExponentRange = hasExponentRange;
+this.hasFlags = hasFlags;
+this.precisionInBits = precisionInBits;
+this.rounding = rounding;
+this.simplified = simplified;
+this.traps = traps;
+}
 
-    private EInteger bigintPrecision;
+    private final boolean adjustExponent;
 
-    private boolean clampNormalExponents;
-    private EInteger exponentMax;
+    private final EInteger bigintPrecision;
 
-    private EInteger exponentMin;
+    private final boolean clampNormalExponents;
+    private final EInteger exponentMax;
+
+    private final EInteger exponentMin;
 
     private int flags;
 
-    private boolean hasExponentRange;
-    private boolean hasFlags;
+    private final boolean hasExponentRange;
+    private final boolean hasFlags;
 
-    private boolean precisionInBits;
+    private final boolean precisionInBits;
 
-    private ERounding rounding;
+    private final ERounding rounding;
 
-    private boolean simplified;
+    private final boolean simplified;
 
     private int traps;
 
@@ -227,26 +268,51 @@ at: http://peteroupc.github.io/
   ERounding rounding,
   int exponentMinSmall,
   int exponentMaxSmall,
-  boolean clampNormalExponents) {
-      if (precision < 0) {
-        throw new IllegalArgumentException("precision (" + precision +
-          ") is less than 0");
-      }
-      if (exponentMinSmall > exponentMaxSmall) {
-        throw new IllegalArgumentException("exponentMinSmall (" + exponentMinSmall +
-          ") is more than " + exponentMaxSmall);
-      }
-      this.bigintPrecision = precision == 0 ? EInteger.FromInt32(0) :
-        EInteger.FromInt32(precision);
-      this.rounding = rounding;
-      this.clampNormalExponents = clampNormalExponents;
-      this.hasExponentRange = true;
-      this.adjustExponent = true;
-      this.exponentMax = exponentMaxSmall == 0 ? EInteger.FromInt32(0) :
-        EInteger.FromInt32(exponentMaxSmall);
-      this.exponentMin = exponentMinSmall == 0 ? EInteger.FromInt32(0) :
-        EInteger.FromInt32(exponentMinSmall);
-    }
+  boolean clampNormalExponents) : this(
+      true,
+      EInteger.FromInt32(precision),
+      clampNormalExponents,
+      EInteger.FromInt32(exponentMaxSmall),
+      EInteger.FromInt32(exponentMinSmall),
+      0,
+      true,
+      false,
+      false,
+      rounding,
+      false,
+      0) {
+}
+
+    /**
+     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
+     * class.<p> TODO: Adjust this documentation for the new API. </p>
+     * @param precision The parameter {@code precision} is a 32-bit signed integer.
+     * @param rounding The parameter {@code rounding} is an ERounding object.
+     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
+     * signed integer.
+     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
+     * signed integer.
+     * @param clampNormalExponents Either {@code true } or {@code false } .
+     */
+    public EContext(
+  EInteger precision,
+  ERounding rounding,
+  EInteger exponentMinSmall,
+  EInteger exponentMaxSmall,
+  boolean clampNormalExponents) : this(
+      true,
+      precision,
+      clampNormalExponents,
+      exponentMaxSmall,
+      exponentMinSmall,
+      0,
+      true,
+      false,
+      false,
+      rounding,
+      false,
+      0) {
+}
 
     /**
      * Gets a value indicating whether the EMax and EMin properties refer to the
@@ -520,24 +586,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext Copy() {
-      EContext pcnew = new EContext(
-        0,
-        this.rounding,
-        0,
-        0,
-        this.clampNormalExponents);
-      pcnew.hasFlags = this.hasFlags;
-      pcnew.precisionInBits = this.precisionInBits;
-      pcnew.adjustExponent = this.adjustExponent;
-      pcnew.simplified = this.simplified;
-      pcnew.flags = this.flags;
-      pcnew.exponentMax = this.exponentMax;
-      pcnew.exponentMin = this.exponentMin;
-      pcnew.hasExponentRange = this.hasExponentRange;
-      pcnew.bigintPrecision = this.bigintPrecision;
-      pcnew.rounding = this.rounding;
-      pcnew.clampNormalExponents = this.clampNormalExponents;
-      return pcnew;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -596,9 +657,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithAdjustExponent(boolean adjustExponent) {
-      EContext pc = this.Copy();
-      pc.adjustExponent = adjustExponent;
-      return pc;
+return new EContext(
+  adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -613,20 +684,19 @@ public final void setFlags(int value) {
     public EContext WithBigExponentRange(
       EInteger exponentMin,
       EInteger exponentMax) {
-      if (exponentMin == null) {
-        throw new NullPointerException("exponentMin");
-      }
-      if (exponentMax == null) {
-        throw new NullPointerException("exponentMax");
-      }
-      if (exponentMin.compareTo(exponentMax) > 0) {
-        throw new IllegalArgumentException("exponentMin greater than exponentMax");
-      }
-      EContext pc = this.Copy();
-      pc.hasExponentRange = true;
-      pc.exponentMin = exponentMin;
-      pc.exponentMax = exponentMax;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  exponentMax,
+  exponentMin,
+  this.flags,
+  true,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -637,16 +707,19 @@ public final void setFlags(int value) {
      * is null.
      */
     public EContext WithBigPrecision(EInteger bigintPrecision) {
-      if (bigintPrecision == null) {
-        throw new NullPointerException("bigintPrecision");
-      }
-      if (bigintPrecision.signum() < 0) {
-        throw new IllegalArgumentException("bigintPrecision's sign (" +
-          bigintPrecision.signum() + ") is less than 0");
-      }
-      EContext pc = this.Copy();
-      pc.bigintPrecision = bigintPrecision;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -655,10 +728,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithBlankFlags() {
-      EContext pc = this.Copy();
-      pc.hasFlags = true;
-      pc.flags = 0;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  0,
+  this.hasExponentRange,
+  true,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -668,9 +750,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithExponentClamp(boolean clamp) {
-      EContext pc = this.Copy();
-      pc.clampNormalExponents = clamp;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -682,15 +774,9 @@ public final void setFlags(int value) {
     public EContext WithExponentRange(
       int exponentMinSmall,
       int exponentMaxSmall) {
-      if (exponentMinSmall > exponentMaxSmall) {
-        throw new IllegalArgumentException("exponentMinSmall (" + exponentMinSmall +
-          ") is more than " + exponentMaxSmall);
-      }
-      EContext pc = this.Copy();
-      pc.hasExponentRange = true;
-      pc.exponentMin = EInteger.FromInt32(exponentMinSmall);
-      pc.exponentMax = EInteger.FromInt32(exponentMaxSmall);
-      return pc;
+return this.WithBigExponentRange(
+  EInteger.FromInt32(exponentMinSmall),
+  EInteger.FromInt32(exponentMaxSmall));
     }
 
     /**
@@ -699,10 +785,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithNoFlags() {
-      EContext pc = this.Copy();
-      pc.hasFlags = false;
-      pc.flags = 0;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  0,
+  this.hasExponentRange,
+  false,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -711,13 +806,7 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithPrecision(int precision) {
-      if (precision < 0) {
-        throw new IllegalArgumentException("precision (" + precision +
-          ") is less than 0");
-      }
-      EContext pc = this.Copy();
-      pc.bigintPrecision = EInteger.FromInt32(precision);
-      return pc;
+return this.WithBigPrecision(EInteger.FromInt32(precision));
     }
 
     /**
@@ -728,9 +817,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithPrecisionInBits(boolean isPrecisionBits) {
-      EContext pc = this.Copy();
-      pc.precisionInBits = isPrecisionBits;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  isPrecisionBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -739,9 +838,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithRounding(ERounding rounding) {
-      EContext pc = this.Copy();
-      pc.rounding = rounding;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  this.precisionInBits,
+  rounding,
+  this.simplified,
+  this.traps);
     }
 
     /**
@@ -751,9 +860,19 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithSimplified(boolean simplified) {
-      EContext pc = this.Copy();
-      pc.simplified = simplified;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  simplified,
+  this.traps);
     }
 
     /**
@@ -763,10 +882,22 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithTraps(int traps) {
-      EContext pc = this.Copy();
-      pc.hasFlags = true;
-      pc.traps = traps;
-      return pc;
+// TODO: Verify whether WithTraps is intended to set HasFlags = true
+// and whether WithNoFlags is intended to reset flags by setting
+// HasFlags to false
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  this.hasExponentRange,
+  true,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  traps);
     }
 
     /**
@@ -774,8 +905,18 @@ public final void setFlags(int value) {
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithUnlimitedExponents() {
-      EContext pc = this.Copy();
-      pc.hasExponentRange = false;
-      return pc;
+return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  this.flags,
+  false,
+  this.hasFlags,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  this.traps);
     }
   }

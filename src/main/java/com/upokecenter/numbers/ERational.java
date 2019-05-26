@@ -1888,8 +1888,14 @@ at: http://peteroupc.github.io/
      * value exceeds the range of a 32-bit floating point number.
      */
     public float ToSingle() {
-      return
-  this.ToEFloat(EContext.Binary32.WithRounding(ERounding.Odd))
+      if (!this.isFinite()) {
+        return this.ToEFloat(EContext.Binary32).ToSingle();
+      }
+      if (this.isNegative() && this.isZero()) {
+        return EFloat.NegativeZero.ToSingle();
+      }
+      return EFloat.FromEInteger(this.getNumerator())
+        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary32)
         .ToSingle();
     }
 
