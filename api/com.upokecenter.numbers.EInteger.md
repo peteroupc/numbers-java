@@ -808,6 +808,11 @@ Finds the minimum number of bits needed to represent this object's value,
 * The number of bits in this object's value. Returns 0 if this
  object's value is 0 or negative 1.
 
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
+ a 32-bit signed integer.
+
 ### GetUnsignedBit
     public boolean GetUnsignedBit​(int index)
 Returns whether a bit is set in this number's absolute value.
@@ -840,6 +845,11 @@ Finds the minimum number of bits needed to represent this number's absolute
 
 * The number of bits in this object's value. Returns 0 if this
  object's value is 0, and returns 1 if the value is negative 1.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
+ a 32-bit signed integer.
 
 ### Mod
     public EInteger Mod​(EInteger divisor)

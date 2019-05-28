@@ -2547,11 +2547,11 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * bits in the value equal to this object's absolute value minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
+     * @throws java.lang.ArithmeticException The return value would exceed the range of
+     * a 32-bit signed integer.
      */
     public int GetSignedBitLength() {
-      // NOTE: Unchecked for backward compat only
-      // TODO: In next major version, use Checked instead of Unchecked
-      return this.GetSignedBitLengthAsEInteger().ToInt32Unchecked();
+      return this.GetSignedBitLengthAsEInteger().ToInt32Checked();
     }
 
     /**
@@ -2610,11 +2610,11 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * value.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
+     * @throws java.lang.ArithmeticException The return value would exceed the range of
+     * a 32-bit signed integer.
      */
     public int GetUnsignedBitLength() {
-      // NOTE: Unchecked for backward compat only
-      // TODO: In next major version, use Checked instead of Unchecked
-      return this.GetUnsignedBitLengthAsEInteger().ToInt32Unchecked();
+      return this.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
     }
 
     /**
