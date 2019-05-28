@@ -2167,8 +2167,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Returns the number of decimal digits used by this integer.<p> TODO: Adjust
-     * this documentation for this new API </p>
+     * Returns the number of decimal digits used by this integer, in the form of an
+     * arbitrary-precision integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
      * if this number is 0.
      */
@@ -2489,9 +2489,9 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Finds the minimum number of bits needed to represent this object's value,
-     * except for its sign. If the value is negative, finds the number of
-     * bits in the value equal to this object's absolute value minus 1.<p>
-     * TODO: Adjust this documentation for the new API. </p>
+     * except for its sign, in the form of an arbitrary-precision integer.
+     * If the value is negative, finds the number of bits in the value equal
+     * to this object's absolute value minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      */
@@ -2530,7 +2530,7 @@ if (numberValue != 0) {
    wcextra - 1 : wcextra;
 }
 }
-        if (wc < 0x3ffffff0) {
+        if (wc < 0xffffff0) {
          wc = (((wc - 1) << 4) + wcextra);
          return EInteger.FromInt32(wc);
         } else {
@@ -2549,7 +2549,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * object's value is 0 or negative 1.
      */
     public int GetSignedBitLength() {
-      return this.GetSignedBitLengthAsEInteger().ToInt32Checked();
+      // NOTE: Unchecked for backward compat only
+      // TODO: In next major version, use Checked instead of Unchecked
+      return this.GetSignedBitLengthAsEInteger().ToInt32Unchecked();
     }
 
     /**
@@ -2610,34 +2612,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * object's value is 0, and returns 1 if the value is negative 1.
      */
     public int GetUnsignedBitLength() {
-      int wc = this.wordCount;
-      if (wc != 0) {
-        int numberValue = ((int)this.words[wc - 1]) & 0xffff;
-        wc = ((wc - 1) * 16);
-        if (numberValue == 0) {
-          return wc;
-        }
-        wc += 16;
-        {
-          if ((numberValue >> 8) == 0) {
-            numberValue <<= 8;
-            wc -= 8;
-          }
-          if ((numberValue >> 12) == 0) {
-            numberValue <<= 4;
-            wc -= 4;
-          }
-          if ((numberValue >> 14) == 0) {
-            numberValue <<= 2;
-            wc -= 2;
-          }
-          if ((numberValue >> 15) == 0) {
-            --wc;
-          }
-        }
-        return wc;
-      }
-      return 0;
+      // NOTE: Unchecked for backward compat only
+      // TODO: In next major version, use Checked instead of Unchecked
+      return this.GetUnsignedBitLengthAsEInteger().ToInt32Unchecked();
     }
 
     /**

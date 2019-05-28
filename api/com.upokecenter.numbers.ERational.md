@@ -1,11 +1,11 @@
 # com.upokecenter.numbers.ERational
 
-    public final class ERational extends Object implements Comparable<ERational>
+    public final class ERational extends java.lang.Object implements java.lang.Comparable<ERational>
 
 Represents an arbitrary-precision rational number. This class can't be
  inherited. (The "E" stands for "extended", meaning that instances of
  this class can be values other than numbers proper, such as infinity
- and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+ and not-a-number.) <p><b>Thread safety: </b> Instances of this class
  are immutable, so they are inherently safe for use by multiple
  threads. Multiple instances of this object with the same properties
  are interchangeable, so they should not be compared using the "=="
@@ -34,10 +34,9 @@ Represents an arbitrary-precision rational number. This class can't be
 ## Constructors
 
 * `ERational​(EInteger numerator,
-         EInteger denominator)`<br>
- Deprecated.
-Use the ERational.Create method instead.
- Use the ERational.Create method instead.
+         EInteger denominator) ERational`<br>
+ Initializes a new instance of the ERational
+ class.
 
 ## Methods
 
@@ -79,7 +78,7 @@ Use the ERational.Create method instead.
 * `boolean equals​(ERational other)`<br>
  Determines whether this object's numerator, denominator, and properties are
  equal to those of another object.
-* `boolean equals​(Object obj)`<br>
+* `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object's numerator, denominator, and properties are
  equal to those of another object and that other object is an
  arbitrary-precision rational number.
@@ -109,9 +108,9 @@ Renamed to FromEFloat.
  Converts a 64-bit signed integer to an arbitrary-precision rational number.
 * `static ERational FromSingle​(float flt)`<br>
  Converts a 32-bit binary floating-point number to a rational number.
-* `static ERational FromString​(String str)`<br>
+* `static ERational FromString​(java.lang.String str)`<br>
  Creates a rational number from a text string that represents a number.
-* `static ERational FromString​(String str,
+* `static ERational FromString​(java.lang.String str,
           int offset,
           int length)`<br>
  Creates a rational number from a text string that represents a number.
@@ -255,7 +254,7 @@ Renamed to ToEFloatExactIfPossible.
  signed integer.
 * `float ToSingle()`<br>
  Converts this value to a 32-bit binary floating-point number.
-* `String toString()`<br>
+* `java.lang.String toString()`<br>
  Converts this object to a text string.
 
 ## Field Details
@@ -367,7 +366,7 @@ Creates a rational number with the given numerator and denominator.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The denominator is zero.
+* <code>java.lang.IllegalArgumentException</code> - The denominator is zero.
 
 ### Create
     public static ERational Create​(EInteger numerator, EInteger denominator)
@@ -385,7 +384,7 @@ Creates a rational number with the given numerator and denominator.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The denominator is zero.
+* <code>java.lang.IllegalArgumentException</code> - The denominator is zero.
 
 ### CreateNaN
     public static ERational CreateNaN​(EInteger diag)
@@ -402,7 +401,7 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter "diag" is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter "diag" is less than 0.
 
 ### CreateNaN
     public static ERational CreateNaN​(EInteger diag, boolean signaling, boolean negative)
@@ -424,9 +423,9 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter "diag" is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter "diag" is less than 0.
 
-* <code>NullPointerException</code> - The parameter "diag" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "diag" is null.
 
 ### FromDouble
     public static ERational FromDouble​(double flt)
@@ -483,7 +482,7 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "ef" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "ef" is null.
 
 ### FromEFloat
     public static ERational FromEFloat​(EFloat ef)
@@ -499,7 +498,7 @@ Converts an arbitrary-precision binary float to a rational number.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "ef" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "ef" is null.
 
 ### FromEInteger
     public static ERational FromEInteger​(EInteger bigint)
@@ -530,9 +529,9 @@ Converts a 32-bit binary floating-point number to a rational number. This
 * A rational number with the same value as "flt".
 
 ### FromString
-    public static ERational FromString​(String str)
+    public static ERational FromString​(java.lang.String str)
 Creates a rational number from a text string that represents a number. See
- <code>FromString(String, int, int)</code> for more information.
+ <code>FromString(String, int, int) </code> for more information.
 
 **Parameters:**
 
@@ -545,11 +544,11 @@ Creates a rational number from a text string that represents a number. See
 
 **Throws:**
 
-* <code>NumberFormatException</code> - The parameter "str" is not a correctly
+* <code>java.lang.NumberFormatException</code> - The parameter "str" is not a correctly
  formatted number string.
 
 ### FromString
-    public static ERational FromString​(String str, int offset, int length)
+    public static ERational FromString​(java.lang.String str, int offset, int length)
 <p>Creates a rational number from a text string that represents a number.
  </p> <p>The format of the string generally consists of: </p> <ul>
  <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
@@ -582,10 +581,10 @@ Creates a rational number from a text string that represents a number. See
 
 **Throws:**
 
-* <code>NumberFormatException</code> - The parameter "str" is not a correctly
+* <code>java.lang.NumberFormatException</code> - The parameter "str" is not a correctly
  formatted number string.
 
-* <code>NullPointerException</code> - The parameter "str" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "str" is null.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(ERational other)
@@ -658,7 +657,7 @@ Adds two rational numbers.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
 
 ### compareTo
     public int compareTo​(ERational other)
@@ -666,7 +665,7 @@ Compares an arbitrary-precision rational number with this instance.
 
 **Specified by:**
 
-* <code>compareTo</code> in interface <code>Comparable&lt;ERational&gt;</code>
+* <code>compareTo</code> in interface <code>java.lang.Comparable&lt;ERational&gt;</code>
 
 **Parameters:**
 
@@ -679,7 +678,7 @@ Compares an arbitrary-precision rational number with this instance.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
  satisfy other.isFinite().
 
 ### CompareToBinary
@@ -697,7 +696,7 @@ Compares an arbitrary-precision binary float with this instance.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
  satisfy other.isFinite().
 
 ### CompareToDecimal
@@ -715,7 +714,7 @@ Compares an arbitrary-precision decimal number with this instance.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't
  satisfy other.isFinite().
 
 ### CopySign
@@ -733,7 +732,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "other" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "other" is null.
 
 ### Divide
     public ERational Divide​(ERational otherValue)
@@ -750,10 +749,10 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
 
 ### equals
-    public boolean equals​(Object obj)
+    public boolean equals​(java.lang.Object obj)
 Determines whether this object's numerator, denominator, and properties are
  equal to those of another object and that other object is an
  arbitrary-precision rational number. Not-a-number values are
@@ -761,7 +760,7 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Overrides:**
 
-* <code>equals</code> in class <code>Object</code>
+* <code>equals</code> in class <code>java.lang.Object</code>
 
 **Parameters:**
 
@@ -792,7 +791,7 @@ Returns the hash code for this instance. No application or process IDs are
 
 **Overrides:**
 
-* <code>hashCode</code> in class <code>Object</code>
+* <code>hashCode</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -870,7 +869,7 @@ Multiplies this instance by the value of an arbitrary-precision rational
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
 
 ### Negate
     public ERational Negate()
@@ -896,7 +895,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
 
 ### Subtract
     public ERational Subtract​(ERational otherValue)
@@ -912,7 +911,7 @@ Subtracts an arbitrary-precision rational number from this instance.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
 
 ### ToDouble
     public double ToDouble()
@@ -937,7 +936,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This object's value is infinity or
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
  not-a-number (NaN).
 
 ### ToEIntegerExact
@@ -951,7 +950,7 @@ Deprecated.
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This object's value is infinity or
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
  not-a-number (NaN).
 
 ### ToEIntegerIfExact
@@ -965,7 +964,7 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This object's value is infinity or
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
  not-a-number (NaN).
 
 ### ToEDecimal
@@ -1188,12 +1187,12 @@ Converts this value to a 32-bit binary floating-point number. The half-even
  value exceeds the range of a 32-bit floating point number.
 
 ### toString
-    public String toString()
+    public java.lang.String toString()
 Converts this object to a text string.
 
 **Overrides:**
 
-* <code>toString</code> in class <code>Object</code>
+* <code>toString</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -1213,7 +1212,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than 0 or greater than 255.
 
 ### ToByteUnchecked
@@ -1238,7 +1237,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than 0 or greater than 255.
 
 ### FromByte
@@ -1264,7 +1263,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
@@ -1290,7 +1289,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
@@ -1316,7 +1315,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than -2147483648 or greater than
  2147483647.
 
@@ -1343,7 +1342,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -2147483648 or greater than
  2147483647.
 
@@ -1370,7 +1369,7 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than -9223372036854775808 or greater
  than 9223372036854775807.
 
@@ -1397,7 +1396,7 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -9223372036854775808 or greater
  than 9223372036854775807.
 

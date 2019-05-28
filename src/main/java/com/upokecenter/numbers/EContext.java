@@ -250,25 +250,26 @@ this.traps = traps;
 
     private final boolean simplified;
 
-    private int traps;
+    private final int traps;
 
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class.
-     * @param precision The parameter {@code precision} is a 32-bit signed integer.
-     * @param rounding The parameter {@code rounding} is an ERounding object.
-     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
-     * signed integer.
-     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
-     * signed integer.
-     * @param clampNormalExponents Either {@code true } or {@code false } .
+     * @param precision Maximum precision, in decimal digits, of a number's
+     * significand.
+     * @param rounding The rounding mode for this context.
+     * @param exponentMinSmall Smallest exponent of a number, as a power of 10.
+     * @param exponentMaxSmall Largest exponent of a number, as a power of 10.
+     * @param clampNormalExponents The value of the "ClampNormalExponents" property
+     * for this context.
      */
     public EContext(
   int precision,
   ERounding rounding,
   int exponentMinSmall,
   int exponentMaxSmall,
-  boolean clampNormalExponents) : this(
+  boolean clampNormalExponents) {
+ this(
       true,
       EInteger.FromInt32(precision),
       clampNormalExponents,
@@ -280,38 +281,40 @@ this.traps = traps;
       false,
       rounding,
       false,
-      0) {
+      0);
 }
 
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
-     * class.<p> TODO: Adjust this documentation for the new API. </p>
-     * @param precision The parameter {@code precision} is a 32-bit signed integer.
-     * @param rounding The parameter {@code rounding} is an ERounding object.
-     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
-     * signed integer.
-     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
-     * signed integer.
-     * @param clampNormalExponents Either {@code true } or {@code false } .
+     * class, using arbitrary-precision integers to hold the precision and
+     * exponent range.
+     * @param bigintPrecision Maximum precision, in decimal digits, of a number's
+     * significand.
+     * @param rounding The rounding mode for this context.
+     * @param exponentMin Smallest exponent of a number, as a power of 10.
+     * @param exponentMax Largest exponent of a number, as a power of 10.
+     * @param clampNormalExponents The value of the "ClampNormalExponents" property
+     * for this context.
      */
     public EContext(
-  EInteger precision,
+  EInteger bigintPrecision,
   ERounding rounding,
-  EInteger exponentMinSmall,
-  EInteger exponentMaxSmall,
-  boolean clampNormalExponents) : this(
+  EInteger exponentMin,
+  EInteger exponentMax,
+  boolean clampNormalExponents) {
+ this(
       true,
-      precision,
+      bigintPrecision,
       clampNormalExponents,
-      exponentMaxSmall,
-      exponentMinSmall,
+      exponentMax,
+      exponentMin,
       0,
       true,
       false,
       false,
       rounding,
       false,
-      0) {
+      0);
 }
 
     /**
@@ -323,15 +326,8 @@ this.traps = traps;
      * floating point representations with an integer mantissa (significand)
      * and an integer exponent, such as Java's BigDecimal.
      * @return {@code true} if the EMax and EMin properties refer to the number's
-     * Exponent property adjusted to the number's precision, or just the
-     * number's Exponent property; otherwise, {@code false} .. The default
-     * value is true, meaning that EMax and EMin refer to the adjusted
-     * exponent. Setting this value to false (using WithAdjustExponent) is
-     * useful for modeling floating point representations with an integer
-     * mantissa (significand) and an integer exponent, such as Java's
-     * BigDecimal. {@code true} if the EMax and EMin properties refer to the
-     * number's Exponent property adjusted to the number's precision, or
-     * false if they refer to just the number's Exponent property.
+     * Exponent property adjusted to the number's precision, or false if
+     * they refer to just the number's Exponent property.
      */
     public final boolean getAdjustExponent() {
         return this.adjustExponent;
@@ -876,15 +872,16 @@ return new EContext(
     }
 
     /**
-     * Copies this EContext with Traps set to the given value.
+     * Copies this EContext with Traps set to the given value. (Also sets HasFlags
+     * on the copy to <code>True</code>, but this may change in version 2.0 of
+     * this library.).
      * @param traps Flags representing the traps to enable. See the property
      * "Traps".
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithTraps(int traps) {
-// TODO: Verify whether WithTraps is intended to set HasFlags = true
-// and whether WithNoFlags is intended to reset flags by setting
-// HasFlags to false
+ // TODO: In next major version, copy HasFlags rather than
+ // setting it to true
 return new EContext(
   this.adjustExponent,
   this.bigintPrecision,

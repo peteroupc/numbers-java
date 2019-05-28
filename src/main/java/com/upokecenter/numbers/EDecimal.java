@@ -136,34 +136,35 @@ at: http://peteroupc.github.io/
      * the IEEE 754 format): </p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|
      * </pre> <ul> <li>A. Low 52 bits (Precision minus 1 bits): Lowest bits
      * of the significand. </li> <li>B. Next 11 bits: Exponent area: <ul>
-     * <li>If all bits are ones, this value is infinity if all bits in area
-     * A are zeros, or not-a-number (NaN) otherwise. </li> <li>If all bits
-     * are zeros, this is a subnormal number. The exponent is EMin and the
-     * highest bit of the significand is zero. </li> <li>If any other
-     * number, the exponent is this value reduced by 1, then raised by EMin,
-     * and the highest bit of the significand is one. </li> </ul> </li>
-     * <li>C. Highest bit: If one, this is a negative number. </li> </ul>
-     * <p>The elements described above are in the same order as the order of
-     * each bit of each element, that is, either most significant first or
-     * least significant first. </p> <p><b>32-bit binary floating-point
-     * number </b> : A 32-bit binary number which is stored similarly to a
-     * <i> 64-bit floating-point number </i> , except that: </p> <ul>
-     * <li>Precision is 24 bits. </li> <li>EMin is -149. </li> <li>EMax is
-     * 104. </li> <li>A. The low 23 bits (Precision minus 1 bits) are the
-     * lowest bits of the significand. </li> <li>B. The next 8 bits are the
-     * exponent area. </li> <li>C. If the highest bit is one, this is a
-     * negative number. </li> </ul> <p><b>.NET Framework decimal </b> : A
-     * 128-bit decimal floating-point number, in the form <i> significand
-     * </i> * 10 <sup> - <i> scale </i> </sup> , where the scale ranges from
-     * 0 to 28. The number is stored in the following format: </p> <ul>
-     * <li>Low 96 bits are the significand, as a 96-bit unsigned integer
-     * (all 96-bit values are allowed, up to (2 <sup> 96 </sup> -1)). </li>
-     * <li>Next 16 bits are unused. </li> <li>Next 8 bits are the scale,
-     * stored as an 8-bit unsigned integer. </li> <li>Next 7 bits are
-     * unused. </li> <li>If the highest bit is one, it's a negative number.
-     * </li> </ul> <p>The elements described above are in the same order as
-     * the order of each bit of each element, that is, either most
-     * significant first or least significant first. </p>
+     * <li>If all bits are ones, this value is infinity (positive or
+     * negative depending on the C bit) if all bits in area A are zeros, or
+     * not-a-number (NaN) otherwise. </li> <li>If all bits are zeros, this
+     * is a subnormal number. The exponent is EMin and the highest bit of
+     * the significand is zero. </li> <li>If any other number, the exponent
+     * is this value reduced by 1, then raised by EMin, and the highest bit
+     * of the significand is one. </li> </ul> </li> <li>C. Highest bit: If
+     * one, this is a negative number. </li> </ul> <p>The elements described
+     * above are in the same order as the order of each bit of each element,
+     * that is, either most significant first or least significant first.
+     * </p> <p><b>32-bit binary floating-point number </b> : A 32-bit binary
+     * number which is stored similarly to a <i> 64-bit floating-point
+     * number </i> , except that: </p> <ul> <li>Precision is 24 bits. </li>
+     * <li>EMin is -149. </li> <li>EMax is 104. </li> <li>A. The low 23 bits
+     * (Precision minus 1 bits) are the lowest bits of the significand.
+     * </li> <li>B. The next 8 bits are the exponent area. </li> <li>C. If
+     * the highest bit is one, this is a negative number. </li> </ul>
+     * <p><b>.NET Framework decimal </b> : A 128-bit decimal floating-point
+     * number, in the form <i> significand </i> * 10 <sup> - <i> scale </i>
+     * </sup> , where the scale ranges from 0 to 28. The number is stored in
+     * the following format: </p> <ul> <li>Low 96 bits are the significand,
+     * as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2
+     * <sup> 96 </sup> -1)). </li> <li>Next 16 bits are unused. </li>
+     * <li>Next 8 bits are the scale, stored as an 8-bit unsigned integer.
+     * </li> <li>Next 7 bits are unused. </li> <li>If the highest bit is
+     * one, it's a negative number. </li> </ul> <p>The elements described
+     * above are in the same order as the order of each bit of each element,
+     * that is, either most significant first or least significant first.
+     * </p>
      */
   public final class EDecimal implements Comparable<EDecimal> {
     //----------------------------------------------------------------
@@ -1577,8 +1578,7 @@ private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
  // DebugUtility.Log("taexp=" + thisAdjExp + ", oaexp=" + otherAdjExp);
  // DebugUtility.Log("td=" + ed.ToDouble() + ", tf=" + ef.ToDouble());
       if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) >= 0 &&
-        otherAdjExp.signum() < 0 && otherAdjExp.compareTo(EInteger.FromInt64(-4000)) <
-            0) {
+        otherAdjExp.compareTo(EInteger.FromInt64(-4000)) < 0) {
         // With these exponent combinations, the binary's absolute
         // value is less than the decimal's
         return (signA > 0) ? 1 : -1;
@@ -1628,6 +1628,13 @@ private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
           // have a greater value in decimal than in binary
           return (signA > 0) ? 1 : -1;
         }
+      if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) < 0 &&
+        otherAdjExp.compareTo(EInteger.FromInt64(4000)) >= 0) {
+        // With these exponent combinations, the binary's absolute
+        // value is greater than the decimal's
+        return (signA > 0) ? -1 : 1;
+      }
+
         if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0 &&
                 otherAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0) {
           thisAdjExp = thisAdjExp.Add(EInteger.FromInt32(1));
@@ -2687,7 +2694,7 @@ private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
 
     /**
      * Adds this object and an 32-bit signed integer and returns the result.
-     * @param intValue The parameter {@code intValue} is not documented yet.
+     * @param intValue A 32-bit signed integer to add to this object.
      * @return The sum of the two objects.
      */
 public EDecimal Add(int intValue) {
@@ -2695,8 +2702,8 @@ public EDecimal Add(int intValue) {
 }
 
     /**
-     * Subtracts a 32-bit signed integer from this instance and returns the result.
-     * @param intValue The parameter {@code intValue} is not documented yet.
+     * Subtracts a 32-bit signed integer from this object and returns the result.
+     * @param intValue A 32-bit signed integer to subtract from this object.
      * @return The difference of the two objects.
      */
 public EDecimal Subtract(int intValue) {
@@ -2707,7 +2714,7 @@ public EDecimal Subtract(int intValue) {
     /**
      * Multiplies this object by the given 32-bit signed integer. The resulting
      * exponent will be the sum of the exponents of the two numbers.
-     * @param intValue The parameter {@code intValue} is not documented yet.
+     * @param intValue A 32-bit signed integer to multiply this object by.
      * @return The product of the two numbers.
      */
 public EDecimal Multiply(int intValue) {
@@ -2717,7 +2724,8 @@ public EDecimal Multiply(int intValue) {
     /**
      * Divides this object by an 32-bit signed integer and returns the result. When
      * possible, the result will be exact.
-     * @param intValue The parameter {@code intValue} is not documented yet.
+     * @param intValue A 32-bit signed integer, the divisor, to divide this object
+     * by.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
      * divisor and the dividend are 0. Returns NaN if the result can't be

@@ -1,6 +1,6 @@
 # com.upokecenter.numbers.EInteger
 
-    public final class EInteger extends Object implements Comparable<EInteger>
+    public final class EInteger extends java.lang.Object implements java.lang.Comparable<EInteger>
 
 Represents an arbitrary-precision integer. (The "E" stands for "extended",
  and has this prefix to group it with the other classes common to this
@@ -9,11 +9,11 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  multiple threads. Multiple instances of this object with the same
  value are interchangeable, but they should be compared using the
  "Equals" method rather than the "==" operator. </p> <p><b>Security
- note</b> </p> <p>It is not recommended to implement
+ note </b> </p> <p>It is not recommended to implement
  security-sensitive algorithms using the methods in this class, for
- several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
- so they can't be modified, and the memory they occupy is not
- guaranteed to be cleared in a timely fashion due to garbage
+ several reasons: </p> <ul> <li><code>EInteger </code> objects are
+ immutable, so they can't be modified, and the memory they occupy is
+ not guaranteed to be cleared in a timely fashion due to garbage
  collection. This is relevant for applications that use many-bit-long
  numbers as secret parameters. </li> <li>The methods in this class
  (especially those that involve arithmetic) are not guaranteed to run
@@ -63,7 +63,7 @@ Renamed to ToInt64Unchecked.
 * `EInteger[] DivRem​(EInteger divisor)`<br>
  Divides this object by another arbitrary-precision integer and returns the
  quotient and remainder.
-* `boolean equals​(Object obj)`<br>
+* `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object and another object are equal and have the
  same type.
 * `static EInteger FromByte​(byte inputByte)`<br>
@@ -77,18 +77,18 @@ Renamed to ToInt64Unchecked.
  Converts a 32-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt64​(long longerValue)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision integer.
-* `static EInteger FromRadixString​(String str,
+* `static EInteger FromRadixString​(java.lang.String str,
                int radix)`<br>
  Converts a string to an arbitrary-precision integer in a given radix.
-* `static EInteger FromRadixSubstring​(String str,
+* `static EInteger FromRadixSubstring​(java.lang.String str,
                   int radix,
                   int index,
                   int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer in a given
  radix.
-* `static EInteger FromString​(String str)`<br>
+* `static EInteger FromString​(java.lang.String str)`<br>
  Converts a string to an arbitrary-precision integer.
-* `static EInteger FromSubstring​(String str,
+* `static EInteger FromSubstring​(java.lang.String str,
              int index,
              int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer.
@@ -96,6 +96,9 @@ Renamed to ToInt64Unchecked.
  Returns the greatest common divisor of this integer and the given integer.
 * `int GetDigitCount()`<br>
  Returns the number of decimal digits used by this integer.
+* `EInteger GetDigitCountAsEInteger()`<br>
+ Returns the number of decimal digits used by this integer, in the form of an
+ arbitrary-precision integer.
 * `int GetLowBit()`<br>
  Gets the lowest set bit in this number's absolute value.
 * `EInteger GetLowBitAsEInteger()`<br>
@@ -108,6 +111,9 @@ Renamed to ToInt64Unchecked.
 * `int GetSignedBitLength()`<br>
  Finds the minimum number of bits needed to represent this object's value,
  except for its sign.
+* `EInteger GetSignedBitLengthAsEInteger()`<br>
+ Finds the minimum number of bits needed to represent this object's value,
+ except for its sign, in the form of an arbitrary-precision integer.
 * `static EInteger getTen()`<br>
  Gets the number 10 as an arbitrary-precision integer.
 * `boolean GetUnsignedBit​(int index)`<br>
@@ -195,10 +201,10 @@ Renamed to ToInt64Unchecked.
  exception if it can't fit.
 * `long ToInt64Unchecked()`<br>
  Converts this object's value to a 64-bit signed integer.
-* `String ToRadixString​(int radix)`<br>
+* `java.lang.String ToRadixString​(int radix)`<br>
  Generates a string representing the value of this object, in the given
  radix.
-* `String toString()`<br>
+* `java.lang.String toString()`<br>
  Converts this object to a text string in base 10.
 
 ## Method Details
@@ -274,19 +280,19 @@ Initializes an arbitrary-precision integer from an array of bytes.
  byte's highest bit cleared, and negative numbers have the bit set.
  </li> <li>The last byte contains the lowest 8-bits, the next-to-last
  contains the next lowest 8 bits, and so on. For example, the number
- 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00,
- 0xc8</code> . (Note that the second example contains a set high bit in
- <code>0xc8</code> , so an additional 0 is added at the start to ensure
+ 300 can be encoded as <code>0x01, 0x2c </code> and 200 as <code>0x00,
+ 0xc8 </code> . (Note that the second example contains a set high bit in
+ <code>0xc8 </code> , so an additional 0 is added at the start to ensure
  it's interpreted as positive.) </li> <li>To encode negative numbers,
  take the absolute value of the number, subtract by 1, encode the
  number into bytes, and toggle each bit of each byte. Any further bits
  that appear beyond the most significant bit of the number will be all
  ones. For example, the number -450 can be encoded as <code>0xfe,
- 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the second
- example contains a cleared high bit in <code>0x31, 0x7b</code> , so an
- additional 0xff is added at the start to ensure it's interpreted as
- negative.) </li> </ul> <p>For little-endian, the byte order is
- reversed from the byte order just discussed. </p> .
+ 0x70 </code> and -52869 as <code>0xff, 0x31, 0x7b </code> . (Note that the
+ second example contains a cleared high bit in <code>0x31, 0x7b </code> ,
+ so an additional 0xff is added at the start to ensure it's
+ interpreted as negative.) </li> </ul> <p>For little-endian, the byte
+ order is reversed from the byte order just discussed. </p> .
 
 * <code>littleEndian</code> - If true, the byte order is little-endian, or
  least-significant-byte first. If false, the byte order is big-endian,
@@ -299,7 +305,7 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bytes</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
 
 ### FromInt32
     public static EInteger FromInt32​(int intValue)
@@ -329,7 +335,7 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
  number.
 
 ### FromRadixString
-    public static EInteger FromRadixString​(String str, int radix)
+    public static EInteger FromRadixString​(java.lang.String str, int radix)
 Converts a string to an arbitrary-precision integer in a given radix.
 
 **Parameters:**
@@ -348,10 +354,10 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### FromRadixSubstring
-    public static EInteger FromRadixSubstring​(String str, int radix, int index, int endIndex)
+    public static EInteger FromRadixSubstring​(java.lang.String str, int radix, int index, int endIndex)
 Converts a portion of a string to an arbitrary-precision integer in a given
  radix.
 
@@ -380,16 +386,16 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>NumberFormatException</code> - The string portion is empty or in an invalid
+* <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid
  format.
 
-* <code>IllegalArgumentException</code> - "Doesn't satisfy (endIndex - index) % 4 ==
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy (endIndex - index) % 4 ==
  0".
 
 ### FromString
-    public static EInteger FromString​(String str)
+    public static EInteger FromString​(java.lang.String str)
 Converts a string to an arbitrary-precision integer.
 
 **Parameters:**
@@ -406,13 +412,13 @@ Converts a string to an arbitrary-precision integer.
 
 **Throws:**
 
-* <code>NumberFormatException</code> - The parameter <code>str</code> is in an invalid
+* <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid
  format.
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### FromSubstring
-    public static EInteger FromSubstring​(String str, int index, int endIndex)
+    public static EInteger FromSubstring​(java.lang.String str, int index, int endIndex)
 Converts a portion of a string to an arbitrary-precision integer.
 
 **Parameters:**
@@ -435,11 +441,11 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
  <code>endIndex</code> is less than 0, or either is greater than the
  string's length, or <code>endIndex</code> is less than <code>index</code> .
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### Abs
     public EInteger Abs()
@@ -463,7 +469,7 @@ Adds this object and another object.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintAugend</code> is
  null.
 
 ### AsInt32Checked
@@ -526,7 +532,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Specified by:**
 
-* <code>compareTo</code> in interface <code>Comparable&lt;EInteger&gt;</code>
+* <code>compareTo</code> in interface <code>java.lang.Comparable&lt;EInteger&gt;</code>
 
 **Parameters:**
 
@@ -540,7 +546,7 @@ Compares an arbitrary-precision integer with this instance.
 ### Add
     public EInteger Add​(int intValue)
 Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString("5").Add(200);</pre>
+ EInteger.FromString("5").Add(200); </pre>
 
 **Parameters:**
 
@@ -567,7 +573,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
     public EInteger Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString("5").Multiply(200);</pre>
+ EInteger.FromString("5").Multiply(200); </pre>
 
 **Parameters:**
 
@@ -595,7 +601,7 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Throws:**
 
-* <code>ArithmeticException</code> - Attempted to divide by zero.
+* <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
 ### Remainder
     public EInteger Remainder​(int intValue)
@@ -615,9 +621,9 @@ Finds the remainder that results when this instance is divided by the value
 
 **Throws:**
 
-* <code>ArithmeticException</code> - Attempted to divide by zero.
+* <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
-* <code>NullPointerException</code> - The parameter <code>intValue</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>intValue</code> is null.
 
 ### compareTo
     public int compareTo​(int intValue)
@@ -650,10 +656,10 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintDivisor</code> is
  null.
 
-* <code>ArithmeticException</code> - Attempted to divide by zero.
+* <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
 ### DivRem
     public EInteger[] DivRem​(EInteger divisor)
@@ -671,18 +677,18 @@ Divides this object by another arbitrary-precision integer and returns the
 
 **Throws:**
 
-* <code>ArithmeticException</code> - The parameter divisor is 0.
+* <code>java.lang.ArithmeticException</code> - The parameter divisor is 0.
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 
 ### equals
-    public boolean equals​(Object obj)
+    public boolean equals​(java.lang.Object obj)
 Determines whether this object and another object are equal and have the
  same type.
 
 **Overrides:**
 
-* <code>equals</code> in class <code>Object</code>
+* <code>equals</code> in class <code>java.lang.Object</code>
 
 **Parameters:**
 
@@ -709,8 +715,18 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintSecond</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is
  null.
+
+### GetDigitCountAsEInteger
+    public EInteger GetDigitCountAsEInteger()
+Returns the number of decimal digits used by this integer, in the form of an
+ arbitrary-precision integer.
+
+**Returns:**
+
+* The number of digits in the decimal form of this integer. Returns 1
+ if this number is 0.
 
 ### GetDigitCount
     public int GetDigitCount()
@@ -728,7 +744,7 @@ Returns the hash code for this instance. No application or process IDs are
 
 **Overrides:**
 
-* <code>hashCode</code> in class <code>Object</code>
+* <code>hashCode</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -768,6 +784,18 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 * <code>true</code> if a bit is set in the two' s-complement form (see
  <code>EDecimal</code>) of this object' s value;
  otherwise, <code>false</code> .
+
+### GetSignedBitLengthAsEInteger
+    public EInteger GetSignedBitLengthAsEInteger()
+Finds the minimum number of bits needed to represent this object's value,
+ except for its sign, in the form of an arbitrary-precision integer.
+ If the value is negative, finds the number of bits in the value equal
+ to this object's absolute value minus 1.
+
+**Returns:**
+
+* The number of bits in this object's value. Returns 0 if this
+ object's value is 0 or negative 1.
 
 ### GetSignedBitLength
     public int GetSignedBitLength()
@@ -831,7 +859,7 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 
 ### ModPow
     public EInteger ModPow​(EInteger pow, EInteger mod)
@@ -850,7 +878,7 @@ Calculates the remainder when this arbitrary-precision integer raised to a
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>pow</code> or <code>
+* <code>java.lang.NullPointerException</code> - The parameter <code>pow</code> or <code>
  mod</code> is null.
 
 ### Multiply
@@ -868,7 +896,7 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintMult</code> is
  null.
 
 ### Negate
@@ -906,9 +934,9 @@ Raises an arbitrary-precision integer to a power, which is given as another
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>power</code> is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>power</code> is less than 0.
 
-* <code>NullPointerException</code> - The parameter <code>power</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>power</code> is null.
 
 ### Remainder
     public EInteger Remainder​(EInteger divisor)
@@ -928,9 +956,9 @@ Finds the remainder that results when this instance is divided by the value
 
 **Throws:**
 
-* <code>ArithmeticException</code> - Attempted to divide by zero.
+* <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
-* <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 
 ### ShiftLeft
     public EInteger ShiftLeft​(int numberBits)
@@ -998,22 +1026,22 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>subtrahend</code> is
  null.
 
 ### ToBytes
     public byte[] ToBytes​(boolean littleEndian)
 Returns a byte array of this integer's value. The byte array will take the
- number's two' s-complement form (see <code>"Forms of numbers"</code>), using the
+ number's two' s-complement form (see <code>"Forms of numbers" </code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
- passed to the <code>FromBytes()</code> method (with the same byte order) to
- reconstruct this integer's value.
+ passed to the <code>FromBytes() </code> method (with the same byte order)
+ to reconstruct this integer's value.
 
 **Parameters:**
 
-* <code>littleEndian</code> - Either <code>true</code> or <code>false</code> .
+* <code>littleEndian</code> - Either <code>true </code> or <code>false </code> .
 
 **Returns:**
 
@@ -1061,7 +1089,7 @@ Converts this object's value to a 64-bit signed integer. If the value can't
 * A 64-bit signed integer.
 
 ### ToRadixString
-    public String ToRadixString​(int radix)
+    public java.lang.String ToRadixString​(int radix)
 Generates a string representing the value of this object, in the given
  radix.
 
@@ -1081,12 +1109,12 @@ Generates a string representing the value of this object, in the given
  in radix 16.
 
 ### toString
-    public String toString()
+    public java.lang.String toString()
 Converts this object to a text string in base 10.
 
 **Overrides:**
 
-* <code>toString</code> in class <code>Object</code>
+* <code>toString</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -1105,7 +1133,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is less than 0 or greater than
+* <code>java.lang.ArithmeticException</code> - This value is less than 0 or greater than
  255.
 
 ### ToByteUnchecked
@@ -1140,7 +1168,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is less than -32768 or greater
+* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater
  than 32767.
 
 ### ToInt16Unchecked

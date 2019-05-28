@@ -1,6 +1,6 @@
 # com.upokecenter.numbers.ERounding
 
-    public enum ERounding extends Enum<ERounding>
+    public enum ERounding extends java.lang.Enum<ERounding>
 
 Specifies the mode to use when "shortening" numbers that otherwise can't fit
  a given number of digits, so that the shortened number has about the
@@ -45,7 +45,7 @@ Specifies the mode to use when "shortening" numbers that otherwise can't fit
 
 ## Methods
 
-* `static ERounding valueOf​(String name)`<br>
+* `static ERounding valueOf​(java.lang.String name)`<br>
  Returns the enum constant of this type with the specified name.
 * `static ERounding[] values()`<br>
  Returns an array containing the constants of this enum type, in
@@ -78,7 +78,7 @@ the order they are declared.
 ### values
     public static ERounding[] values()
 ### valueOf
-    public static ERounding valueOf​(String name)
+    public static ERounding valueOf​(java.lang.String name)
 ## Enum Constant Details
 
 ### None

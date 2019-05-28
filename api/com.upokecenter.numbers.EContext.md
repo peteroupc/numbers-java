@@ -1,22 +1,23 @@
 # com.upokecenter.numbers.EContext
 
-    public final class EContext extends Object
+    public final class EContext extends java.lang.Object
 
 Contains parameters for controlling the precision, rounding, and exponent
  range of arbitrary-precision numbers. (The "E" stands for "extended",
  and has this prefix to group it with the other classes common to this
  library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
- safety:</b> With one exception, instances of this class are immutable
- and are safe to use among multiple threads. The one exception
- involves the <code>Flags</code> property. If the context's <code>HasFlags</code>
- property (a read-only property) is <code>true</code> , the <code>Flags</code>
- property is mutable, thus making the context mutable. This class
- doesn't synchronize access to such mutable contexts, so applications
- should provide their own synchronization if a context with the
- <code>HasFlags</code> property set to <code>true</code> will be shared among
- multiple threads and at least one of those threads needs to write the
- <code>Flags</code> property (which can happen, for example, by passing the
- context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p>
+ safety: </b> With one exception, instances of this class are
+ immutable and are safe to use among multiple threads. The one
+ exception involves the <code>Flags </code> property. If the context's
+ <code>HasFlags </code> property (a read-only property) is <code>true </code> ,
+ the <code>Flags </code> property is mutable, thus making the context
+ mutable. This class doesn't synchronize access to such mutable
+ contexts, so applications should provide their own synchronization if
+ a context with the <code>HasFlags </code> property set to <code>true </code> will
+ be shared among multiple threads and at least one of those threads
+ needs to write the <code>Flags </code> property (which can happen, for
+ example, by passing the context to most methods of <code>EDecimal </code>
+ such as <code>Add </code>). </p>
 
 ## Fields
 
@@ -85,6 +86,14 @@ Contains parameters for controlling the precision, rounding, and exponent
         boolean clampNormalExponents) EContext`<br>
  Initializes a new instance of the EContext
  class.
+* `EContext​(EInteger bigintPrecision,
+        ERounding rounding,
+        EInteger exponentMin,
+        EInteger exponentMax,
+        boolean clampNormalExponents) EContext`<br>
+ Initializes a new instance of the EContext
+ class, using arbitrary-precision integers to hold the precision and
+ exponent range.
 
 ## Methods
 
@@ -140,7 +149,7 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `boolean isSimplified()`<br>
  Gets a value indicating whether to use a "simplified" arithmetic.
 * `void setFlags​(int value)`<br>
-* `String toString()`<br>
+* `java.lang.String toString()`<br>
  Gets a string representation of this object.
 * `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
@@ -150,8 +159,8 @@ Contains parameters for controlling the precision, rounding, and exponent
  Copies this arithmetic context and sets the copy's exponent range.
 * `EContext WithBigPrecision​(EInteger bigintPrecision)`<br>
  Copies this EContext and gives it a particular precision value.
-* `EContext WithBlankFlags() HasFlags`<br>
- Copies this EContext with HasFlags set to true and a Flags value of
+* `EContext WithBlankFlags() HasFlags `<br>
+ Copies this EContext with HasFlags  set to true and a Flags value of
  0.
 * `EContext WithExponentClamp​(boolean clamp)`<br>
  Copies this arithmetic context and sets the copy's "ClampNormalExponents"
@@ -159,8 +168,8 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `EContext WithExponentRange​(int exponentMinSmall,
                  int exponentMaxSmall)`<br>
  Copies this arithmetic context and sets the copy's exponent range.
-* `EContext WithNoFlags() HasFlags`<br>
- Copies this EContext with HasFlags set to false and a Flags value of
+* `EContext WithNoFlags() HasFlags `<br>
+ Copies this EContext with HasFlags  set to false and a Flags value of
  0.
 * `EContext WithPrecision​(int precision)`<br>
  Copies this EContext and gives it a particular precision value.
@@ -241,7 +250,7 @@ An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
     public static final EContext CliDecimal
 An arithmetic context for the .NET Framework decimal format (see <code>"Forms of numbers" </code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
- rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
+ rounding mode is HalfEven. (The <code>"Cli" </code> stands for "Common
  Language Infrastructure", which defined this format as the .NET
  Framework decimal format in version 1, but leaves it unspecified in
  later versions.).
@@ -278,15 +287,8 @@ Gets a value indicating whether the EMax and EMin properties refer to the
 **Returns:**
 
 * <code>true</code> if the EMax and EMin properties refer to the number's
- Exponent property adjusted to the number's precision, or just the
- number's Exponent property; otherwise, <code>false</code> .. The default
- value is true, meaning that EMax and EMin refer to the adjusted
- exponent. Setting this value to false (using WithAdjustExponent) is
- useful for modeling floating point representations with an integer
- mantissa (significand) and an integer exponent, such as Java's
- BigDecimal. <code>true</code> if the EMax and EMin properties refer to the
- number's Exponent property adjusted to the number's precision, or
- false if they refer to just the number's Exponent property.
+ Exponent property adjusted to the number's precision, or false if
+ they refer to just the number's Exponent property.
 
 ### getClampNormalExponents
     public final boolean getClampNormalExponents()
@@ -341,11 +343,11 @@ Gets the lowest exponent possible when a converted number is expressed in
 ### getFlags
     public final int getFlags()
 Gets the flags that are set from converting numbers according to this
- arithmetic context. If <code>HasFlags</code> is false, this value will be
+ arithmetic context. If <code>HasFlags </code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
- 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) != 0
+ </code> returns <code>true </code> if the Inexact flag is set.
 
 **Returns:**
 
@@ -408,7 +410,7 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
  zero. For further details, see
- <code>http://speleotrove.com/decimal/dax3274.html</code>
+ <code>http://speleotrove.com/decimal/dax3274.html </code>
 
 **Returns:**
 
@@ -445,9 +447,9 @@ Gets the desired rounding mode when converting numbers that can't be
 ### getTraps
     public final int getTraps()
 Gets the traps that are set for each flag in the context. Whenever a flag is
- signaled, even if <code>HasFlags</code> is false, and the flag's trap is
+ signaled, even if <code>HasFlags </code> is false, and the flag's trap is
  enabled, the operation will throw a TrapException. <p>For example, if
- Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
+ Traps equals <code>FlagInexact </code> and FlagSubnormal, a TrapException
  will be thrown if an operation's return value is not the same as the
  exact result (FlagInexact) or if the return value's exponent is lower
  than the lowest allowed (FlagSubnormal). </p>
@@ -527,16 +529,16 @@ Determines whether a number can have the given Exponent property under this
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>exponent</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>exponent</code> is null.
 
 ### toString
-    public String toString()
+    public java.lang.String toString()
 Gets a string representation of this object. Note that the string's format
  is not intended to be parsed and may change at any time.
 
 **Overrides:**
 
-* <code>toString</code> in class <code>Object</code>
+* <code>toString</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -572,10 +574,10 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>exponentMin</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>exponentMin</code> is
  null.
 
-* <code>IllegalArgumentException</code> - "ExponentMin greater than exponentMax".
+* <code>java.lang.IllegalArgumentException</code> - ExponentMin greater than exponentMax".
 
 ### WithBigPrecision
     public EContext WithBigPrecision​(EInteger bigintPrecision)
@@ -591,12 +593,12 @@ Copies this EContext and gives it a particular precision value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>bigintPrecision</code>
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintPrecision</code>
  is null.
 
 ### WithBlankFlags
     public EContext WithBlankFlags()
-Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
+Copies this EContext with <code>HasFlags </code> set to true and a Flags value of
  0.
 
 **Returns:**
@@ -632,7 +634,7 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 ### WithNoFlags
     public EContext WithNoFlags()
-Copies this EContext with <code>HasFlags</code> set to false and a Flags value of
+Copies this EContext with <code>HasFlags </code> set to false and a Flags value of
  0.
 
 **Returns:**
@@ -692,7 +694,9 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 
 ### WithTraps
     public EContext WithTraps​(int traps)
-Copies this EContext with Traps set to the given value.
+Copies this EContext with Traps set to the given value. (Also sets HasFlags
+ on the copy to <code>True</code>, but this may change in version 2.0 of
+ this library.).
 
 **Parameters:**
 

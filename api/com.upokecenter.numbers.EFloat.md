@@ -1,6 +1,6 @@
 # com.upokecenter.numbers.EFloat
 
-    public final class EFloat extends Object implements Comparable<EFloat>
+    public final class EFloat extends java.lang.Object implements java.lang.Comparable<EFloat>
 
 Represents an arbitrary-precision binary floating-point number. (The "E"
  stands for "extended", meaning that instances of this class can be
@@ -200,7 +200,7 @@ Renamed to DivRemNaturalScale.
 * `boolean equals​(EFloat other)`<br>
  Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object.
-* `boolean equals​(Object obj)`<br>
+* `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object and that other object
  is an arbitrary-precision binary float.
@@ -224,19 +224,19 @@ Renamed to DivRemNaturalScale.
  Converts a 64-bit signed integer to an arbitrary-precision binary float.
 * `static EFloat FromSingle​(float flt)`<br>
  Creates a binary float from a 32-bit floating-point number.
-* `static EFloat FromString​(String str)`<br>
+* `static EFloat FromString​(java.lang.String str)`<br>
  Creates a binary float from a text string that represents a number, using an
  unlimited precision context.
-* `static EFloat FromString​(String str,
+* `static EFloat FromString​(java.lang.String str,
           int offset,
           int length)`<br>
  Creates a binary float from a text string that represents a number.
-* `static EFloat FromString​(String str,
+* `static EFloat FromString​(java.lang.String str,
           int offset,
           int length,
           EContext ctx)`<br>
  Creates a binary float from a text string that represents a number.
-* `static EFloat FromString​(String str,
+* `static EFloat FromString​(java.lang.String str,
           EContext ctx)`<br>
  Creates a binary float from a text string that represents a number.
 * `EInteger getExponent()`<br>
@@ -501,7 +501,7 @@ Renamed to ToEIntegerIfExact.
 * `EInteger ToEIntegerIfExact()`<br>
  Converts this value to an arbitrary-precision integer, checking whether the
  value contains a fractional part.
-* `String ToEngineeringString()`<br>
+* `java.lang.String ToEngineeringString()`<br>
  Converts this value to an arbitrary-precision decimal number, then returns
  the value of that decimal's ToEngineeringString method.
 * `EDecimal ToExtendedDecimal()`<br>
@@ -541,15 +541,15 @@ Renamed to ToEDecimal.
  Truncates this number's value to an integer and returns the
  least-significant bits of its two's-complement form as a 64-bit
  signed integer.
-* `String ToPlainString()`<br>
+* `java.lang.String ToPlainString()`<br>
  Converts this value to a string, but without exponential notation.
-* `String ToShortestString​(EContext ctx)`<br>
+* `java.lang.String ToShortestString​(EContext ctx)`<br>
  Returns a string representation of this number's value after rounding to the
  given precision (using the given arithmetic context).
 * `float ToSingle()`<br>
  Converts this value to its closest equivalent as 32-bit floating-point
  number.
-* `String toString()`<br>
+* `java.lang.String toString()`<br>
  Converts this number's value to a text string.
 * `EFloat Ulp()`<br>
  Returns the unit in the last place.
@@ -678,7 +678,7 @@ Creates a number with the value exponent*2^mantissa (significand).
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter "mantissa (significand)"
+* <code>java.lang.NullPointerException</code> - The parameter "mantissa (significand)"
  or <code>exponent</code> is null.
 
 ### CreateNaN
@@ -696,7 +696,7 @@ Creates a not-a-number arbitrary-precision binary float.
 
 **Throws:**
 
-* <code>IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
 
 ### CreateNaN
     public static EFloat CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
@@ -725,7 +725,7 @@ Creates a not-a-number arbitrary-precision binary float.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>diag</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null.
 
 ### FromDouble
     public static EFloat FromDouble​(double dbl)
@@ -771,7 +771,7 @@ Creates a binary float from a 32-bit floating-point number. This method
 * A binary float with the same value as "flt".
 
 ### FromString
-    public static EFloat FromString​(String str, int offset, int length, EContext ctx)
+    public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
 Creates a binary float from a text string that represents a number. Note
  that if the string contains a negative exponent, the resulting value
  might not be exact, in which case the resulting binary float will be
@@ -809,14 +809,14 @@ Creates a binary float from a text string that represents a number. Note
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
  less than 0 or greater than <code>str</code> 's length, or <code>str</code> ' s
  length minus <code>offset</code> is less than <code>length</code> .
 
 ### FromString
-    public static EFloat FromString​(String str)
+    public static EFloat FromString​(java.lang.String str)
 Creates a binary float from a text string that represents a number, using an
  unlimited precision context. For more information, see the
  <code>FromString(String, int, int, EContext)</code> method.
@@ -830,7 +830,7 @@ Creates a binary float from a text string that represents a number, using an
 * The parsed number, converted to arbitrary-precision binary float.
 
 ### FromString
-    public static EFloat FromString​(String str, EContext ctx)
+    public static EFloat FromString​(java.lang.String str, EContext ctx)
 Creates a binary float from a text string that represents a number. For more
  information, see the <code>FromString(String, int, int, EContext)</code>
  method.
@@ -848,10 +848,10 @@ Creates a binary float from a text string that represents a number. For more
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### FromString
-    public static EFloat FromString​(String str, int offset, int length)
+    public static EFloat FromString​(java.lang.String str, int offset, int length)
 Creates a binary float from a text string that represents a number. For more
  information, see the <code>FromString(String, int, int, EContext)</code>
  method.
@@ -872,9 +872,9 @@ Creates a binary float from a text string that represents a number. For more
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>str</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>IllegalArgumentException</code> - Either "offset" or "length" is less than 0
+* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0
  or greater than "str"'s length, or "str"'s length minus "offset" is
  less than "length".
 
@@ -1122,7 +1122,7 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Throws:**
 
-* <code>ArithmeticException</code> - Attempted to divide by zero.
+* <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
 ### Add
     public EFloat Add​(EFloat otherValue)
@@ -1169,7 +1169,7 @@ Compares the mathematical values of this object and another object,
 
 **Specified by:**
 
-* <code>compareTo</code> in interface <code>Comparable&lt;EFloat&gt;</code>
+* <code>compareTo</code> in interface <code>java.lang.Comparable&lt;EFloat&gt;</code>
 
 **Parameters:**
 
@@ -1316,7 +1316,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>other</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### Divide
     public EFloat Divide​(EFloat divisor)
@@ -1662,7 +1662,7 @@ Determines whether this object's mantissa (significand), exponent, and
  are equal to those of another object; otherwise, <code>false</code> .
 
 ### equals
-    public boolean equals​(Object obj)
+    public boolean equals​(java.lang.Object obj)
 Determines whether this object's mantissa (significand), exponent, and
  properties are equal to those of another object and that other object
  is an arbitrary-precision binary float. Not-a-number values are
@@ -1670,7 +1670,7 @@ Determines whether this object's mantissa (significand), exponent, and
 
 **Overrides:**
 
-* <code>equals</code> in class <code>Object</code>
+* <code>equals</code> in class <code>java.lang.Object</code>
 
 **Parameters:**
 
@@ -1723,7 +1723,7 @@ Calculates this object's hash code. No application or process IDs are used
 
 **Overrides:**
 
-* <code>hashCode</code> in class <code>Object</code>
+* <code>hashCode</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -2083,7 +2083,7 @@ Multiplies by one value, and then subtracts another value.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>op</code> or <code>
+* <code>java.lang.NullPointerException</code> - The parameter <code>op</code> or <code>
  subtrahend</code> is null.
 
 ### Negate
@@ -2911,7 +2911,7 @@ Subtracts an arbitrary-precision binary float from this instance.
 
 **Throws:**
 
-* <code>NullPointerException</code> - The parameter <code>otherValue</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is
  null.
 
 ### ToDouble
@@ -2942,7 +2942,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This object's value is infinity or
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
  not-a-number (NaN).
 
 ### ToEIntegerExact
@@ -2956,7 +2956,7 @@ Deprecated.
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This object's value is infinity or
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
  not-a-number (NaN).
 
 ### ToEIntegerIfExact
@@ -2970,11 +2970,11 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This object's value is infinity or
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
  not-a-number (NaN).
 
 ### ToEngineeringString
-    public String ToEngineeringString()
+    public java.lang.String ToEngineeringString()
 Converts this value to an arbitrary-precision decimal number, then returns
  the value of that decimal's ToEngineeringString method.
 
@@ -2992,7 +2992,7 @@ Deprecated.
 * An arbitrary-precision decimal number.
 
 ### ToPlainString
-    public String ToPlainString()
+    public java.lang.String ToPlainString()
 Converts this value to a string, but without exponential notation.
 
 **Returns:**
@@ -3000,7 +3000,7 @@ Converts this value to a string, but without exponential notation.
 * A text string.
 
 ### ToShortestString
-    public String ToShortestString​(EContext ctx)
+    public java.lang.String ToShortestString​(EContext ctx)
 Returns a string representation of this number's value after rounding to the
  given precision (using the given arithmetic context). If the number
  after rounding is neither infinity nor not-a-number (NaN), returns
@@ -3046,12 +3046,12 @@ Converts this value to its closest equivalent as 32-bit floating-point
  value exceeds the range of a 32-bit floating point number.
 
 ### toString
-    public String toString()
+    public java.lang.String toString()
 Converts this number's value to a text string.
 
 **Overrides:**
 
-* <code>toString</code> in class <code>Object</code>
+* <code>toString</code> in class <code>java.lang.Object</code>
 
 **Returns:**
 
@@ -3082,7 +3082,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than 0 or greater than 255.
 
 ### ToByteUnchecked
@@ -3107,7 +3107,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than 0 or greater than 255.
 
 ### FromByte
@@ -3133,7 +3133,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
@@ -3159,7 +3159,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
@@ -3185,7 +3185,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than -2147483648 or greater than
  2147483647.
 
@@ -3212,7 +3212,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -2147483648 or greater than
  2147483647.
 
@@ -3239,7 +3239,7 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, or
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
  the truncated integer is less than -9223372036854775808 or greater
  than 9223372036854775807.
 
@@ -3266,7 +3266,7 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>ArithmeticException</code> - This value is infinity or not-a-number, is not
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -9223372036854775808 or greater
  than 9223372036854775807.
 

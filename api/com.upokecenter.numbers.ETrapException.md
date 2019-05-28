@@ -1,6 +1,6 @@
 # com.upokecenter.numbers.ETrapException
 
-    public final class ETrapException extends ArithmeticException
+    public final class ETrapException extends java.lang.ArithmeticException
 
 Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
  and has this prefix to group it with the other classes common to this
@@ -10,50 +10,46 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 
 * `ETrapException​(int flag,
               EContext ctx,
-              Object result) ETrapException`<br>
+              java.lang.Object result) ETrapException`<br>
  Initializes a new instance of the ETrapException class.
 * `EContext getContext()`<br>
  Gets the arithmetic context used during the operation that triggered the
  trap.
 * `int getError()`<br>
  Gets the flag that specifies the kind of error (EContext.FlagXXX).
-* `Object getResult()`<br>
+* `java.lang.Object getResult()`<br>
  Gets the defined result of the operation that caused the trap.
 
 ## Constructors
 
 * `ETrapException​(int flag,
               EContext ctx,
-              Object result) ETrapException`<br>
+              java.lang.Object result) ETrapException`<br>
  Initializes a new instance of the ETrapException class.
 
 ## Method Details
 
 ### ETrapException
-    public ETrapException​(int flag, EContext ctx, Object result)
+    public ETrapException​(int flag, EContext ctx, java.lang.Object result)
 Initializes a new instance of the <code>ETrapException</code> class.
 
 **Parameters:**
 
-* <code>flag</code> - A flag that specifies the kind of error (<code>
- EContext.FlagXXYY</code>). This will only be one flag, such as <code>
- FlagInexact</code> or FlagSubnormal.
+* <code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.
 
-* <code>ctx</code> - A context object for arbitrary-precision arithmetic settings.
+* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
 
 * <code>result</code> - The parameter <code>result</code> is an arbitrary object.
 
 ### ETrapException
-    public ETrapException​(int flag, EContext ctx, Object result)
+    public ETrapException​(int flag, EContext ctx, java.lang.Object result)
 Initializes a new instance of the <code>ETrapException</code> class.
 
 **Parameters:**
 
-* <code>flag</code> - A flag that specifies the kind of error (<code>
- EContext.FlagXXYY</code>). This will only be one flag, such as <code>
- FlagInexact</code> or FlagSubnormal.
+* <code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.
 
-* <code>ctx</code> - A context object for arbitrary-precision arithmetic settings.
+* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
 
 * <code>result</code> - The parameter <code>result</code> is an arbitrary object.
 
@@ -68,7 +64,7 @@ Gets the arithmetic context used during the operation that triggered the
  trap. May be null.
 
 ### getResult
-    public final Object getResult()
+    public final java.lang.Object getResult()
 Gets the defined result of the operation that caused the trap.
 
 **Returns:**
@@ -78,7 +74,7 @@ Gets the defined result of the operation that caused the trap.
 ### getError
     public final int getError()
 Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
- only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.
+ only be one flag, such as <code>FlagInexact </code> or FlagSubnormal.
 
 **Returns:**
 
