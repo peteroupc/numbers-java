@@ -1300,7 +1300,7 @@ public void TestPrecisionOneHalfEven() {
 
     private static String EFToString(EFloat ef) {
       return "[" + ef.getMantissa().ToRadixString(2) + "," +
-        ef.getMantissa().GetUnsignedBitLength() + "," + ef.getExponent() + "]";
+        ef.getMantissa().GetUnsignedBitLengthAsEInteger() + "," + ef.getExponent() + "]";
     }
 
     private static void TestBinaryToDecimal(
@@ -1328,7 +1328,7 @@ TestBinaryToDecimal(
   "");
     }
 
-    @Test(timeout = 120000)
+    @Test(timeout = 200000)
     public void TestToShortestString() {
       {
         EFloat ef = EFloat.FromDouble(64.1);
@@ -1412,6 +1412,7 @@ Assert.assertEquals(
             msg);
         }
       }
+      System.out.println("End TestToShortestString");
     }
     @Test
     public void TestToSingleRounding() {
@@ -1852,7 +1853,7 @@ throw new IllegalStateException("", ex);
       }
     }
 
-    @Test
+    @Test(timeout = 100000)
     public void TestToDoubleRounding() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {

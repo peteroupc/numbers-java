@@ -296,7 +296,7 @@ at: http://peteroupc.github.io/
         }
         return new FastInteger(kb);
       }
-      return new FastInteger(this.shiftedBigInt.GetDigitCount());
+      return FastInteger.FromBig(this.shiftedBigInt.GetDigitCountAsEInteger());
     }
 
     private void VerifyKnownLength() {
@@ -342,7 +342,11 @@ at: http://peteroupc.github.io/
         if (digits > 50) {
           // To avoid having to calculate a very big power of 10,
           // check the digit count to see if doing so can be avoided
-          int bitLength = this.shiftedBigInt.GetUnsignedBitLength();
+   EInteger bigBitLength = this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
+          // NOTE: Overflowing bigBitLength will be MaxValue, which is OK
+          // for the use of this variable
+          int bitLength = bigBitLength.CanFitInInt32() ?
+             bigBitLength.ToInt32Checked() : Integer.MAX_VALUE;
           boolean bigPower = false;
           // 10^48 has 160 bits; 10^98 has 326; bit length is cheaper
           // to calculate than base-10 digit length

@@ -224,13 +224,13 @@ at: http://peteroupc.github.io/
           this.bitLeftmost = odd ? 1 : 0;
         } else {
           this.bitsAfterLeftmost |= this.bitLeftmost;
-          int lowestSetBit = this.shiftedBigInt.GetLowBit();
-          if (lowestSetBit < bs - 1) {
+          EInteger lowestSetBit = this.shiftedBigInt.GetLowBitAsEInteger();
+          if (lowestSetBit.compareTo(bs - 1) < 0) {
             // One of the discarded bits after
             // the last one is set
             this.bitsAfterLeftmost |= 1;
             this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 : 0;
-          } else if (lowestSetBit > bs - 1) {
+          } else if (lowestSetBit.compareTo(bs - 1) > 0) {
             // Means all discarded bits are zero
             this.bitLeftmost = 0;
           } else {
@@ -265,8 +265,8 @@ at: http://peteroupc.github.io/
         // System.out.println("{0:X8} kbl=" + kb);
         return new FastInteger(kb);
       }
-      return new FastInteger(this.shiftedBigInt.isZero() ? 1 :
-      this.shiftedBigInt.GetSignedBitLength());
+      return this.shiftedBigInt.isZero() ? (new FastInteger(1)) :
+  FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
     }
 
     private void ShiftBigToBits(int bits) {
@@ -307,13 +307,13 @@ at: http://peteroupc.github.io/
           this.bitLeftmost = odd ? 1 : 0;
         } else {
           this.bitsAfterLeftmost |= this.bitLeftmost;
-          int lowestSetBit = this.shiftedBigInt.GetLowBit();
-          if (lowestSetBit < bs - 1) {
+          EInteger lowestSetBit = this.shiftedBigInt.GetLowBitAsEInteger();
+          if (lowestSetBit.compareTo(bs - 1) < 0) {
             // One of the discarded bits after
             // the last one is set
             this.bitsAfterLeftmost |= 1;
             this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 : 0;
-          } else if (lowestSetBit > bs - 1) {
+          } else if (lowestSetBit.compareTo(bs - 1) > 0) {
             // Means all discarded bits are zero
             this.bitLeftmost = 0;
           } else {

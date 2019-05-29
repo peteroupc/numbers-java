@@ -1070,9 +1070,9 @@ at: http://peteroupc.github.io/
         if (other.getExponent().signum() > 0) {
           // NOTE: if unsigned numerator is 0, bitLength will return
           // 0 instead of 1, but the possibility of 0 was already excluded
-          int digitCount = this.getUnsignedNumerator().GetSignedBitLength();
-          --digitCount;
-          EInteger bigDigitCount = EInteger.FromInt32(digitCount);
+ EInteger bigDigitCount =
+            this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
+             .Subtract(1);
           if (bigDigitCount.compareTo(other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other' s
             // exponent,
@@ -1185,9 +1185,9 @@ at: http://peteroupc.github.io/
         }
         // System.out.println("---" + this + " " + other);
         if (other.getExponent().signum() > 0) {
-          int digitCount = this.getUnsignedNumerator().GetDigitCount();
-          --digitCount;
-          EInteger bigDigitCount = EInteger.FromInt32(digitCount);
+      EInteger bigDigitCount =
+            this.getUnsignedNumerator().GetDigitCountAsEInteger()
+             .Subtract(1);
           if (bigDigitCount.compareTo(other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other' s
             // exponent,

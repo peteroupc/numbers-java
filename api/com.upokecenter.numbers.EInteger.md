@@ -95,22 +95,31 @@ Renamed to ToInt64Unchecked.
 * `EInteger Gcd​(EInteger bigintSecond)`<br>
  Returns the greatest common divisor of this integer and the given integer.
 * `int GetDigitCount()`<br>
- Returns the number of decimal digits used by this integer.
+ Deprecated.
+This method may overflow.
+ This method may overflow.
 * `EInteger GetDigitCountAsEInteger()`<br>
  Returns the number of decimal digits used by this integer, in the form of an
  arbitrary-precision integer.
 * `int GetLowBit()`<br>
- Gets the lowest set bit in this number's absolute value.
+ Deprecated.
+This method may overflow.
+ This method may overflow.
 * `EInteger GetLowBitAsEInteger()`<br>
- Gets the lowest set bit in this number's absolute value.
+ Gets the lowest set bit in this number's absolute value, in the form of an
+ arbitrary-precision integer.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
 * `boolean GetSignedBit​(int index) "Forms of numbers" `<br>
  Returns whether a bit is set in the two's-complement form (see "Forms of numbers" ) of this
  object' s value.
+* `boolean GetSignedBit​(EInteger bigIndex) "Forms of numbers" `<br>
+ Returns whether a bit is set in the two's-complement form (see "Forms of numbers" ) of this
+ object' s value.
 * `int GetSignedBitLength()`<br>
- Finds the minimum number of bits needed to represent this object's value,
- except for its sign.
+ Deprecated.
+This method may overflow.
+ This method may overflow.
 * `EInteger GetSignedBitLengthAsEInteger()`<br>
  Finds the minimum number of bits needed to represent this object's value,
  except for its sign, in the form of an arbitrary-precision integer.
@@ -118,9 +127,12 @@ Renamed to ToInt64Unchecked.
  Gets the number 10 as an arbitrary-precision integer.
 * `boolean GetUnsignedBit​(int index)`<br>
  Returns whether a bit is set in this number's absolute value.
+* `boolean GetUnsignedBit​(EInteger bigIndex)`<br>
+ Returns whether a bit is set in this number's absolute value.
 * `int GetUnsignedBitLength()`<br>
- Finds the minimum number of bits needed to represent this number's absolute
- value.
+ Deprecated.
+This method may overflow.
+ This method may overflow.
 * `EInteger GetUnsignedBitLengthAsEInteger()`<br>
  Finds the minimum number of bits needed to represent this number's absolute
  value.
@@ -131,7 +143,8 @@ Renamed to ToInt64Unchecked.
 * `boolean isEven()`<br>
  Gets a value indicating whether this value is even.
 * `boolean isPowerOfTwo()`<br>
- Gets a value indicating whether this object's value is a power of two.
+ Gets a value indicating whether this object's value is a power of two, and
+ greater than 0.
 * `boolean isZero()`<br>
  Gets a value indicating whether this value is 0.
 * `EInteger Mod​(EInteger divisor)`<br>
@@ -163,7 +176,12 @@ Renamed to ToInt64Unchecked.
 * `EInteger ShiftLeft​(int numberBits)`<br>
  Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits.
+* `EInteger ShiftLeft​(EInteger eshift)`<br>
+ Returns an arbitrary-precision integer with the bits shifted to the left by
+ a number of bits given as an arbitrary-precision integer.
 * `EInteger ShiftRight​(int numberBits)`<br>
+ Returns an arbitrary-precision integer with the bits shifted to the right.
+* `EInteger ShiftRight​(EInteger eshift)`<br>
  Returns an arbitrary-precision integer with the bits shifted to the right.
 * `int signum()`<br>
  Gets the sign of this object's value.
@@ -243,13 +261,13 @@ Gets a value indicating whether this value is even.
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
-Gets a value indicating whether this object's value is a power of two.
+Gets a value indicating whether this object's value is a power of two, and
+ greater than 0.
 
 **Returns:**
 
-* <code>true</code> if this object's value is a power of two; otherwise,
- <code>false</code> . <code>true</code> if this object' s value is a power of
- two; otherwise, <code>false</code> .
+* <code>true</code> if this object' s value is a power of two, and greater
+ than 0; otherwise, <code>false</code> .
 
 ### isZero
     public final boolean isZero()
@@ -729,13 +747,19 @@ Returns the number of decimal digits used by this integer, in the form of an
  if this number is 0.
 
 ### GetDigitCount
-    public int GetDigitCount()
-Returns the number of decimal digits used by this integer.
+    @Deprecated public int GetDigitCount()
+Deprecated.
+<div class='deprecationComment'>This method may overflow. Use GetDigitCountAsEInteger instead.</div>
 
 **Returns:**
 
 * The number of digits in the decimal form of this integer. Returns 1
  if this number is 0.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
+ a 32-bit signed integer.
 
 ### hashCode
     public int hashCode()
@@ -751,24 +775,44 @@ Returns the hash code for this instance. No application or process IDs are
 * A 32-bit signed integer.
 
 ### GetLowBit
-    public int GetLowBit()
-Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers" </code>).).
+    @Deprecated public int GetLowBit()
+Deprecated.
+<div class='deprecationComment'>This method may overflow. Use GetLowBitAsEInteger instead.</div>
 
 **Returns:**
 
 * The lowest bit set in the number, starting at 0. Returns -1 if this
- value is 0 or odd.
+ value is 0.
 
 ### GetLowBitAsEInteger
     public EInteger GetLowBitAsEInteger()
-Gets the lowest set bit in this number's absolute value. (This will also be
- the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers" </code>).).
+Gets the lowest set bit in this number's absolute value, in the form of an
+ arbitrary-precision integer. (This will also be the lowest set bit in
+ the number's two's-complement form (see <code>"Forms of numbers" </code>).).
 
 **Returns:**
 
 * The lowest bit set in the number, starting at 0. Returns -1 if this
  value is 0 or odd.
+
+### GetSignedBit
+    public boolean GetSignedBit​(EInteger bigIndex)
+Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers" </code>) of this
+ object' s value.
+
+**Parameters:**
+
+* <code>bigIndex</code> - An arbitrary-precision integer.
+
+**Returns:**
+
+* <code>true</code> if a bit is set in the two' s-complement form (see
+ <code>EDecimal</code>) of this object' s value;
+ otherwise, <code>false</code> .
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigIndex</code> is null.
 
 ### GetSignedBit
     public boolean GetSignedBit​(int index)
@@ -798,10 +842,9 @@ Finds the minimum number of bits needed to represent this object's value,
  object's value is 0 or negative 1.
 
 ### GetSignedBitLength
-    public int GetSignedBitLength()
-Finds the minimum number of bits needed to represent this object's value,
- except for its sign. If the value is negative, finds the number of
- bits in the value equal to this object's absolute value minus 1.
+    @Deprecated public int GetSignedBitLength()
+Deprecated.
+<div class='deprecationComment'>This method may overflow. Use GetSignedBitLengthAsEInteger instead.</div>
 
 **Returns:**
 
@@ -812,6 +855,22 @@ Finds the minimum number of bits needed to represent this object's value,
 
 * <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
  a 32-bit signed integer.
+
+### GetUnsignedBit
+    public boolean GetUnsignedBit​(EInteger bigIndex)
+Returns whether a bit is set in this number's absolute value.
+
+**Parameters:**
+
+* <code>bigIndex</code> - An arbitrary-precision integer.
+
+**Returns:**
+
+* <code>true</code> if a bit is set in this number's absolute value.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigIndex</code> is null.
 
 ### GetUnsignedBit
     public boolean GetUnsignedBit​(int index)
@@ -837,9 +896,9 @@ Finds the minimum number of bits needed to represent this number's absolute
  object's value is 0, and returns 1 if the value is negative 1.
 
 ### GetUnsignedBitLength
-    public int GetUnsignedBitLength()
-Finds the minimum number of bits needed to represent this number's absolute
- value.
+    @Deprecated public int GetUnsignedBitLength()
+Deprecated.
+<div class='deprecationComment'>This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</div>
 
 **Returns:**
 
@@ -970,6 +1029,48 @@ Finds the remainder that results when this instance is divided by the value
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 
+### ShiftRight
+    public EInteger ShiftRight​(EInteger eshift)
+Returns an arbitrary-precision integer with the bits shifted to the right.
+ For this operation, the arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers" </code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.
+
+**Parameters:**
+
+* <code>eshift</code> - The number of bits to shift. Can be negative, in which case
+ this is the same as shiftLeft with the absolute value of this
+ parameter.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>eshift</code> is null.
+
+### ShiftLeft
+    public EInteger ShiftLeft​(EInteger eshift)
+Returns an arbitrary-precision integer with the bits shifted to the left by
+ a number of bits given as an arbitrary-precision integer. A value of
+ 1 doubles this value, a value of 2 multiplies it by 4, a value of 3
+ by 8, a value of 4 by 16, and so on.
+
+**Parameters:**
+
+* <code>eshift</code> - The number of bits to shift. Can be negative, in which case
+ this is the same as shiftRight with the absolute value of this
+ parameter.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>eshift</code> is null.
+
 ### ShiftLeft
     public EInteger ShiftLeft​(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the left by
@@ -995,7 +1096,9 @@ Returns an arbitrary-precision integer with the bits shifted to the right.
 
 **Parameters:**
 
-* <code>numberBits</code> - Number of bits to shift right.
+* <code>numberBits</code> - The number of bits to shift. Can be negative, in which
+ case this is the same as shiftLeft with the absolute value of this
+ parameter.
 
 **Returns:**
 

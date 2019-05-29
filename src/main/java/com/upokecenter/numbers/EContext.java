@@ -749,7 +749,7 @@ return new EContext(
 return new EContext(
   this.adjustExponent,
   this.bigintPrecision,
-  this.clampNormalExponents,
+  clamp,
   this.exponentMax,
   this.exponentMin,
   this.flags,
@@ -873,7 +873,7 @@ return new EContext(
 
     /**
      * Copies this EContext with Traps set to the given value. (Also sets HasFlags
-     * on the copy to <code>True</code>, but this may change in version 2.0 of
+     * on the copy to <code>True </code> , but this may change in version 2.0 of
      * this library.).
      * @param traps Flags representing the traps to enable. See the property
      * "Traps".

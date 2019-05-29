@@ -695,7 +695,7 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 ### WithTraps
     public EContext WithTraps​(int traps)
 Copies this EContext with Traps set to the given value. (Also sets HasFlags
- on the copy to <code>True</code>, but this may change in version 2.0 of
+ on the copy to <code>True </code> , but this may change in version 2.0 of
  this library.).
 
 **Parameters:**

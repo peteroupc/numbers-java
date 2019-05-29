@@ -800,10 +800,10 @@ Assert.assertEquals(EInteger.FromInt32(0), bigintD);
         EInteger bigintA = RandomBigInteger(r);
         Assert.assertEquals(
               bigintA.CanFitInInt32(),
-              bigintA.GetSignedBitLength() <= 31);
+              bigintA.GetSignedBitLengthAsEInteger().compareTo(31) <= 0);
         Assert.assertEquals(
               bigintA.CanFitInInt64(),
-              bigintA.GetSignedBitLength() <= 63);
+              bigintA.GetSignedBitLengthAsEInteger().compareTo(63) <= 0);
       }
     }
     @Test
@@ -1730,6 +1730,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
     public void TestGetBits() {
       // not implemented yet
     }
+
     @Test
     public void TestGetDigitCount() {
       RandomGenerator r = new RandomGenerator();
@@ -1742,9 +1743,10 @@ DoTestDivide("4294901760", "281470681808895", "0");
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
         String str = bigintA.Abs().toString();
-        Assert.assertEquals(str, str.length(), bigintA.GetDigitCount());
+        Assert.assertEquals(str, EInteger.FromInt32(str.length()), bigintA.GetDigitCountAsEInteger());
       }
     }
+
     @Test
     public void TestGetSignedBit() {
       if (EInteger.FromInt32(0).GetSignedBit(0)) {
@@ -1764,6 +1766,55 @@ DoTestDivide("4294901760", "281470681808895", "0");
  Assert.fail();
  }
       }
+      if (EInteger.FromInt32(0).GetSignedBit(EInteger.FromInt32(0))) {
+ Assert.fail();
+ }
+      if (EInteger.FromInt32(0).GetSignedBit(EInteger.FromInt32(1))) {
+ Assert.fail();
+ }
+      if (!(EInteger.FromInt32(1).GetSignedBit(EInteger.FromInt32(0))))Assert.fail();
+      if (EInteger.FromInt32(1).GetSignedBit(EInteger.FromInt32(1))) {
+ Assert.fail();
+ }
+      for (int i = 0; i < 32; ++i) {
+        if (!(BigValueOf(-1).GetSignedBit(EInteger.FromInt32(i))))Assert.fail();
+      }
+      try {
+ EInteger.FromInt32(0).GetSignedBit(null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EInteger.FromInt32(1).GetSignedBit(null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EInteger.FromInt32(0).GetSignedBit(EInteger.FromInt32(-1));
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EInteger.FromInt32(1).GetSignedBit(EInteger.FromInt32(-1));
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
     }
 
     @Test
@@ -1771,6 +1822,126 @@ DoTestDivide("4294901760", "281470681808895", "0");
       for (int i = 0; i < valueBitLengths.length; i += 2) {
         Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(valueBitLengths[i]).GetSignedBitLength());
       }
+      Assert.assertEquals(31, BigValueOf(-2147483647L).GetSignedBitLength());
+      Assert.assertEquals(31, BigValueOf(-2147483648L).GetSignedBitLength());
+      Assert.assertEquals(32, BigValueOf(-2147483649L).GetSignedBitLength());
+      Assert.assertEquals(32, BigValueOf(-2147483650L).GetSignedBitLength());
+      Assert.assertEquals(31, BigValueOf(2147483647L).GetSignedBitLength());
+      Assert.assertEquals(32, BigValueOf(2147483648L).GetSignedBitLength());
+      Assert.assertEquals(32, BigValueOf(2147483649L).GetSignedBitLength());
+      Assert.assertEquals(32, BigValueOf(2147483650L).GetSignedBitLength());
+      Assert.assertEquals(0, BigValueOf(0).GetSignedBitLength());
+      Assert.assertEquals(1, BigValueOf(1).GetSignedBitLength());
+      Assert.assertEquals(2, BigValueOf(2).GetSignedBitLength());
+      Assert.assertEquals(2, BigValueOf(2).GetSignedBitLength());
+      Assert.assertEquals(31, BigValueOf(Integer.MAX_VALUE).GetSignedBitLength());
+      Assert.assertEquals(31, BigValueOf(Integer.MIN_VALUE).GetSignedBitLength());
+      Assert.assertEquals(16, BigValueOf(65535).GetSignedBitLength());
+      Assert.assertEquals(16, BigValueOf(-65535).GetSignedBitLength());
+      Assert.assertEquals(17, BigValueOf(65536).GetSignedBitLength());
+      Assert.assertEquals(16, BigValueOf(-65536).GetSignedBitLength());
+      Assert.assertEquals(
+        65,
+        BigFromString("19084941898444092059").GetSignedBitLength());
+      Assert.assertEquals(
+        65,
+        BigFromString("-19084941898444092059").GetSignedBitLength());
+      Assert.assertEquals(0, BigValueOf(-1).GetSignedBitLength());
+      Assert.assertEquals(1, BigValueOf(-2).GetSignedBitLength());
+    }
+
+    @Test
+    public void TestGetSignedBitLengthAsEInteger() {
+      for (int i = 0; i < valueBitLengths.length; i += 2) {
+        {
+Object objectTemp = (int)valueBitLengths[i + 1];
+Object objectTemp2 =
+  BigValueOf(valueBitLengths[i]).GetSignedBitLengthAsEInteger()
+            .ToInt32Checked();
+String messageTemp = TestCommon.LongToString(valueBitLengths[i]);
+Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
+}
+      }
+      Assert.assertEquals(
+  31,
+  BigValueOf(-2147483647L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  31,
+  BigValueOf(-2147483648L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  32,
+  BigValueOf(-2147483649L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  32,
+  BigValueOf(-2147483650L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  31,
+  BigValueOf(2147483647L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  32,
+  BigValueOf(2147483648L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  32,
+  BigValueOf(2147483649L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  32,
+  BigValueOf(2147483650L).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      {
+long numberTemp = BigValueOf(0).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(0, numberTemp);
+}
+      {
+long numberTemp = BigValueOf(1).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(1, numberTemp);
+}
+      {
+long numberTemp = BigValueOf(2).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(2, numberTemp);
+}
+      {
+long numberTemp = BigValueOf(2).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(2, numberTemp);
+}
+      Assert.assertEquals(
+  31,
+  BigValueOf(Integer.MAX_VALUE).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  31,
+  BigValueOf(Integer.MIN_VALUE).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  16,
+  BigValueOf(65535).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  16,
+  BigValueOf(-65535).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  17,
+  BigValueOf(65536).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      Assert.assertEquals(
+  16,
+  BigValueOf(-65536).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      {
+Object objectTemp = 65;
+Object objectTemp2 = BigFromString("19084941898444092059")
+.GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 65;
+Object objectTemp2 = BigFromString("-19084941898444092059")
+.GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+long numberTemp =
+  BigValueOf(-1).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(0, numberTemp);
+}
+      {
+long numberTemp =
+  BigValueOf(-2).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(1, numberTemp);
+}
     }
 
     @Test
@@ -1786,6 +1957,12 @@ DoTestDivide("4294901760", "281470681808895", "0");
           if (negint.GetUnsignedBit(j)) {
  Assert.fail();
  }
+          if (posint.GetUnsignedBit(EInteger.FromInt32(j))) {
+ Assert.fail();
+ }
+          if (negint.GetUnsignedBit(EInteger.FromInt32(j))) {
+ Assert.fail();
+ }
         }
         if (lowbit >= 0) {
           if (!(posint.GetUnsignedBit(lowbit))) {
@@ -1794,7 +1971,36 @@ DoTestDivide("4294901760", "281470681808895", "0");
           if (!(negint.GetUnsignedBit(lowbit))) {
  Assert.fail();
  }
+          if (!(posint.GetUnsignedBit(EInteger.FromInt32(lowbit))))Assert.fail();
+          if (!(negint.GetUnsignedBit(EInteger.FromInt32(lowbit))))Assert.fail();
         }
+        try {
+ posint.GetUnsignedBit(EInteger.FromInt32(-1));
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+        try {
+ negint.GetUnsignedBit((int)-1);
+Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+        try {
+ posint.GetUnsignedBit(null);
+Assert.fail("Should have failed");
+} catch (NullPointerException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
       }
     }
 
@@ -1818,6 +2024,18 @@ DoTestDivide("4294901760", "281470681808895", "0");
         Assert.assertEquals(
           (int)valueLowBits[i + 1],
           BigValueOf(-valueLowBits[i]).GetLowBit());
+      }
+    }
+
+    @Test
+    public void TestGetLowBitAsEInteger() {
+      for (int i = 0; i < valueLowBits.length; i += 2) {
+        Assert.assertEquals(
+          (int)valueLowBits[i + 1],
+          BigValueOf(valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked());
+        Assert.assertEquals(
+          (int)valueLowBits[i + 1],
+          BigValueOf(-valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked());
       }
     }
 
@@ -1982,7 +2200,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
 
     @Test
     public void TestMiscellaneous() {
-      Assert.assertEquals(1, EInteger.FromInt32(0).GetDigitCount());
+      Assert.assertEquals(EInteger.FromInt32(1), EInteger.FromInt32(0).GetDigitCountAsEInteger());
       EInteger minValue = EInteger.FromInt64(Integer.MIN_VALUE);
       EInteger minValueTimes2 = minValue.Add(minValue);
       Assert.assertEquals(Integer.MIN_VALUE, minValue.ToInt32Checked());
@@ -2156,7 +2374,9 @@ DoTestDivide("4294901760", "281470681808895", "0");
   int fuzzes,
   RandomGenerator r) {
       byte[] bytes = ei.ToBytes(true);
-      int bits = ei.GetUnsignedBitLength();
+      EInteger ebits = ei.GetUnsignedBitLengthAsEInteger();
+    int bits = ebits.CanFitInInt32() ? ebits.ToInt32Checked() :
+        Integer.MAX_VALUE;
       for (int i = 0; i < fuzzes; ++i) {
         int bit = r.UniformInt(bits);
         bytes[bit / 8] ^= (byte)(1 << (bit & 0x07));
@@ -2217,6 +2437,15 @@ TestMultiplyDivideOne(
       TestMultiplyDivideOne(
   EInteger.FromRadixString("C57DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16),
   EInteger.FromRadixString("C57DFFFFFFFFFFFFFFFFFFFF", 16));
+
+TestMultiplyDivideOne(
+  EInteger.FromRadixString(
+  "C66BE66EC212C77883DAFEB9F73C914BF88E9DEB897CB817EBA7DBC7D0ABEB55A164EAFB9C9A856A8532D901FADC85E7EEC28A329670968AE45AEECDC050F12AA34CBF75B0DC81C588CEE8CDE6138704D73E958DF5FEED5E80C4D86BD0C2D60C8DFCFF72B43BBBF2A3B68760DF35E3F1B1588584971CE9EF983D8678D7C8BB84D196C37585FC8B4FC8F88CDCA65B843F8DBAA4F0F324D003B0AAD4EACA04961EBF63936FFF29F459B0A197D79B38B5B8E31C9E88FA67BD97C2F9DBE8B926D06FF80E8D7AB0D5E7D1C0B2E4DED8FA8EA4E96C9597ABB9F801B9CA8F98F4088990AFB58427A57BBDC983B1",
+  16),
+
+  EInteger.FromRadixString(
+  "EB7E892CD29F9B4182F58769C12BD885B7D7DE038074F48ACCAA9F6CFB63D6CCF1D4C603C5A08721F2F3F81FD380F847AE37EEC8FCF39C87A351F816E9D4EDF3B6C9AB0A958FC3FEF04BA3B38D4BF005A29A9D83F8B9F850BB36C9568C99CF3FFFDE9977BFD7D62AF597E4E8D483DE5FF323B0C49732EE23CC4EAA0EEF4AF47FE4BCB0D1C081F315CBE2D892DCA8F3E9A3AFA4CAE67082EBBDC9A59AB82D96009BC5CC8492699F89E21CD8A3F6DE8E86",
+  16));
 
       {
 String str1 =
@@ -2445,35 +2674,6 @@ TestMultiplyDivideOne(objectTemp, objectTemp2);
     @Test
     public void TestSign() {
       // not implemented yet
-    }
-    @Test
-    public void TestSignedBitLength() {
-      Assert.assertEquals(31, BigValueOf(-2147483647L).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(-2147483648L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(-2147483649L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(-2147483650L).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(2147483647L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(2147483648L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(2147483649L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(2147483650L).GetSignedBitLength());
-      Assert.assertEquals(0, BigValueOf(0).GetSignedBitLength());
-      Assert.assertEquals(1, BigValueOf(1).GetSignedBitLength());
-      Assert.assertEquals(2, BigValueOf(2).GetSignedBitLength());
-      Assert.assertEquals(2, BigValueOf(2).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(Integer.MAX_VALUE).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(Integer.MIN_VALUE).GetSignedBitLength());
-      Assert.assertEquals(16, BigValueOf(65535).GetSignedBitLength());
-      Assert.assertEquals(16, BigValueOf(-65535).GetSignedBitLength());
-      Assert.assertEquals(17, BigValueOf(65536).GetSignedBitLength());
-      Assert.assertEquals(16, BigValueOf(-65536).GetSignedBitLength());
-      Assert.assertEquals(
-        65,
-        BigFromString("19084941898444092059").GetSignedBitLength());
-      Assert.assertEquals(
-        65,
-        BigFromString("-19084941898444092059").GetSignedBitLength());
-      Assert.assertEquals(0, BigValueOf(-1).GetSignedBitLength());
-      Assert.assertEquals(1, BigValueOf(-2).GetSignedBitLength());
     }
 
     @Test

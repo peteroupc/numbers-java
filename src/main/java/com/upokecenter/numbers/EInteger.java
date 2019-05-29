@@ -1,6 +1,6 @@
 package com.upokecenter.numbers;
 /*
-Written in 2013-2016 by Peter O.
+Written in 2013-2018 by Peter O.
 
 Parts of the code were adapted by Peter O. from
 public-domain code by Wei Dai.
@@ -122,17 +122,15 @@ at: http://peteroupc.github.io/
       }
 
     /**
-     * Gets a value indicating whether this object's value is a power of two.
-     * @return {@code true} if this object's value is a power of two; otherwise,
-     * {@code false} . {@code true} if this object' s value is a power of
-     * two; otherwise, {@code false} .
+     * Gets a value indicating whether this object's value is a power of two, and
+     * greater than 0.
+     * @return {@code true} if this object' s value is a power of two, and greater
+     * than 0; otherwise, {@code false} .
      */
     public final boolean isPowerOfTwo() {
-        if (this.negative) {
-          return false;
-        }
-        return (this.wordCount == 0) ? false : (this.GetUnsignedBitLength()
-          - 1 == this.GetLowBit());
+        return !this.negative && this.wordCount > 0 &&
+          this.GetUnsignedBitLengthAsEInteger().Subtract(1)
+           .equals(this.GetLowBitAsEInteger());
       }
 
     /**
@@ -2173,17 +2171,29 @@ WordsShiftRightOne(bu, buc);
      * if this number is 0.
      */
     public EInteger GetDigitCountAsEInteger() {
-       // NOTE: All digit counts can currently fit in Int32, so just
-       // use GetDigitCount for the time being
-       return EInteger.FromInt32(this.GetDigitCount());
+       // NOTE: All digit counts can currently fit in Int64, so just
+       // use GetDigitCountAsInt64 for the time being
+       return EInteger.FromInt64(this.GetDigitCountAsInt64());
     }
 
     /**
      * Returns the number of decimal digits used by this integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
      * if this number is 0.
-     */
+     * @throws java.lang.ArithmeticException The return value would exceed the range of
+     * a 32-bit signed integer.
+     * @deprecated This method may overflow. Use GetDigitCountAsEInteger instead.
+ */
+@Deprecated
     public int GetDigitCount() {
+      long dc = this.GetDigitCountAsInt64();
+      if (dc < Integer.MIN_VALUE || dc > Integer.MAX_VALUE) {
+ throw new ArithmeticException();
+}
+      return (int)dc;
+    }
+
+    private long GetDigitCountAsInt64() {
       if (this.isZero()) {
         return 1;
       }
@@ -2212,7 +2222,11 @@ WordsShiftRightOne(bu, buc);
                     3 : ((v2 >= 10) ? 2 : 1)))))));
         }
       }
-      int bitlen = this.GetUnsignedBitLength();
+      // NOTE: Bitlength accurate for wordCount<1000000 here, only as
+      // an approximation
+      int bitlen = (this.wordCount < 1000000) ?
+        this.GetUnsignedBitLengthAsEInteger().ToInt32Checked() :
+        Integer.MAX_VALUE;
       if (bitlen <= 2135) {
         // (x*631305) >> 21 is an approximation
         // to trunc(x*log10(2)) that is correct up
@@ -2244,20 +2258,21 @@ WordsShiftRightOne(bu, buc);
       }
       short[] tempReg = null;
       int currentCount = this.wordCount;
-      int i = 0;
+      long retval;
+      retval = 0L;
       while (currentCount != 0) {
         if (currentCount == 1 || (currentCount == 2 && tempReg[1] == 0)) {
           int rest = ((int)tempReg[0]) & 0xffff;
           if (rest >= 10000) {
-            i += 5;
+            retval += 5;
           } else if (rest >= 1000) {
-            i += 4;
+            retval += 4;
           } else if (rest >= 100) {
-            i += 3;
+            retval += 3;
           } else if (rest >= 10) {
-            i += 2;
+            retval += 2;
           } else {
-            ++i;
+            ++retval;
           }
           break;
         }
@@ -2265,25 +2280,25 @@ WordsShiftRightOne(bu, buc);
           int rest = ((int)tempReg[0]) & 0xffff;
           rest |= (((int)tempReg[1]) & 0xffff) << 16;
           if (rest >= 1000000000) {
-            i += 10;
+            retval += 10;
           } else if (rest >= 100000000) {
-            i += 9;
+            retval += 9;
           } else if (rest >= 10000000) {
-            i += 8;
+            retval += 8;
           } else if (rest >= 1000000) {
-            i += 7;
+            retval += 7;
           } else if (rest >= 100000) {
-            i += 6;
+            retval += 6;
           } else if (rest >= 10000) {
-            i += 5;
+            retval += 5;
           } else if (rest >= 1000) {
-            i += 4;
+            retval += 4;
           } else if (rest >= 100) {
-            i += 3;
+            retval += 3;
           } else if (rest >= 10) {
-            i += 2;
+            retval += 2;
           } else {
-            ++i;
+            ++retval;
           }
           break;
         } else {
@@ -2303,7 +2318,10 @@ WordsShiftRightOne(bu, buc);
               // Since we are dividing from left to right, the first
               // nonzero result is the first part of the
               // new quotient
-              bitlen = GetUnsignedBitLengthEx(quo, wci + 1);
+              // NOTE: Bitlength accurate for wci<1000000 here, only as
+              // an approximation
+              bitlen = (wci < 1000000) ? GetUnsignedBitLengthEx(quo, wci + 1) :
+                  Integer.MAX_VALUE;
               if (bitlen <= 2135) {
                 // (x*631305) >> 21 is an approximation
                 // to trunc(x*log10(2)) that is correct up
@@ -2318,13 +2336,13 @@ WordsShiftRightOne(bu, buc);
                   // NOTE: The 4 is the number of digits just
                   // taken out of the number, and "i" is the
                   // number of previously known digits
-                  return i + minDigits + 4;
+                  return retval + minDigits + 4;
                 }
                 if (minDigits > 1) {
-                 int maxDigitEstimate = i + maxDigits + 4;
-                 int minDigitEstimate = i + minDigits + 4;
+                 int maxDigitEstimate = maxDigits + 4;
+                 int minDigitEstimate = minDigits + 4;
  return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigitEstimate))
-                >= 0 ? maxDigitEstimate : minDigitEstimate;
+                >= 0 ? retval + maxDigitEstimate : retval + minDigitEstimate;
                 }
               } else if (bitlen <= 6432162) {
                 // Much more accurate approximation
@@ -2333,7 +2351,7 @@ WordsShiftRightOne(bu, buc);
                 if (minDigits == maxDigits) {
                   // Number of digits is the same for
                   // all numbers with this bit length
-                  return i + 1 + minDigits + 4;
+                  return retval + 1 + minDigits + 4;
                 }
               }
             }
@@ -2357,10 +2375,10 @@ WordsShiftRightOne(bu, buc);
           while (currentCount != 0 && tempReg[currentCount - 1] == 0) {
             --currentCount;
           }
-          i += 4;
+          retval += 4;
         }
       }
-      return i;
+      return retval;
     }
 
     /**
@@ -2386,39 +2404,18 @@ WordsShiftRightOne(bu, buc);
      * the lowest set bit in the number's two's-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
-     * value is 0 or odd.
-     */
+     * value is 0.
+     * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
+ */
+@Deprecated
     public int GetLowBit() {
-      int retSetBit = 0;
-      for (int i = 0; i < this.wordCount; ++i) {
-        int c = ((int)this.words[i]) & 0xffff;
-        if (c == 0) {
-          retSetBit += 16;
-        } else {
-          return (((c << 15) & 0xffff) != 0) ? (retSetBit + 0) : ((((c <<
-                    14) & 0xffff) != 0) ? (retSetBit + 1) : ((((c <<
-                    13) & 0xffff) != 0) ? (retSetBit + 2) : ((((c <<
-                    12) & 0xffff) != 0) ? (retSetBit + 3) : ((((c << 11) &
-                    0xffff) != 0) ? (retSetBit +
-                    4) : ((((c << 10) & 0xffff) != 0) ? (retSetBit +
-                    5) : ((((c << 9) & 0xffff) != 0) ? (retSetBit + 6) :
-                    ((((c <<
-                8) & 0xffff) != 0) ? (retSetBit + 7) : ((((c << 7) & 0xffff) !=
-                    0) ? (retSetBit + 8) : ((((c << 6) & 0xffff) !=
-                    0) ? (retSetBit + 9) : ((((c <<
-                    5) & 0xffff) != 0) ? (retSetBit + 10) : ((((c <<
-                    4) & 0xffff) != 0) ? (retSetBit + 11) : ((((c << 3) &
-                    0xffff) != 0) ? (retSetBit + 12) : ((((c << 2) & 0xffff) !=
-                    0) ? (retSetBit + 13) : ((((c << 1) & 0xffff) !=
-                    0) ? (retSetBit + 14) : (retSetBit + 15)))))))))))))));
-        }
-      }
-      return -1;
+      return this.GetLowBitAsEInteger().ToInt32Checked();
     }
 
     /**
-     * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement form (see {@link
+     * Gets the lowest set bit in this number's absolute value, in the form of an
+     * arbitrary-precision integer. (This will also be the lowest set bit in
+     * the number's two's-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
@@ -2447,6 +2444,53 @@ WordsShiftRightOne(bu, buc);
         }
       }
       return EInteger.FromInt32(-1);
+    }
+
+    /**
+     * Returns whether a bit is set in the two's-complement form (see {@link
+     * com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
+     * object' s value.
+     * @param bigIndex An arbitrary-precision integer.
+     * @return {@code true} if a bit is set in the two' s-complement form (see
+     * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
+     * otherwise, {@code false} .
+     * @throws java.lang.NullPointerException The parameter {@code bigIndex} is null.
+     */
+    public boolean GetSignedBit(EInteger bigIndex) {
+       if (bigIndex == null) {
+  throw new NullPointerException("bigIndex");
+}
+       if (bigIndex.signum() < 0) {
+        throw new java.lang.IllegalArgumentException("bigIndex");
+       }
+       if (this.negative) {
+         if (bigIndex.CanFitInInt32()) {
+ return bigIndex.GetSignedBit(bigIndex.ToInt32Checked());
+}
+        EInteger valueEWordPos = bigIndex.Divide(16);
+        if (valueEWordPos.compareTo(this.words.length) >= 0) {
+          return true;
+        }
+        long tcindex = 0;
+        while (valueEWordPos.compareTo(EInteger.FromInt64(tcindex)) > 0 &&
+              this.words[(int)tcindex] == 0) {
+          ++tcindex;
+        }
+        short tc;
+        // NOTE: array indices are currently limited to Int32
+        int wordpos = valueEWordPos.ToInt32Checked();
+        {
+          tc = this.words[wordpos];
+          if (tcindex == wordpos) {
+            --tc;
+          }
+          tc = (short)~tc;
+        }
+        int mod15 = bigIndex.Remainder(16).ToInt32Checked();
+        return (boolean)(((tc >> mod15) & 1) != 0);
+       } else {
+         return this.GetUnsignedBit(bigIndex);
+       }
     }
 
     /**
@@ -2501,7 +2545,7 @@ WordsShiftRightOne(bu, buc);
         if (this.negative) {
 // Two's complement operation
 EInteger eiabs = this.Abs();
-if (wc > 1 && this.words[0] == 0) {
+if (wc > 1 && eiabs.words[0] != 0) {
  // No need to subtract by 1; the signed bit length will
  // be the same in either case
  return eiabs.GetSignedBitLengthAsEInteger();
@@ -2549,9 +2593,36 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * object's value is 0 or negative 1.
      * @throws java.lang.ArithmeticException The return value would exceed the range of
      * a 32-bit signed integer.
-     */
+     * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
+ */
+@Deprecated
     public int GetSignedBitLength() {
       return this.GetSignedBitLengthAsEInteger().ToInt32Checked();
+    }
+
+    /**
+     * Returns whether a bit is set in this number's absolute value.
+     * @param bigIndex An arbitrary-precision integer.
+     * @return {@code true} if a bit is set in this number's absolute value.
+     * @throws java.lang.NullPointerException The parameter {@code bigIndex} is null.
+     */
+    public boolean GetUnsignedBit(EInteger bigIndex) {
+      if (bigIndex == null) {
+  throw new NullPointerException("bigIndex");
+}
+      if (bigIndex.signum() < 0) {
+     throw new IllegalArgumentException("bigIndex (" + bigIndex +
+          ") is less than 0");
+      }
+      if (bigIndex.CanFitInInt32()) {
+ return this.GetUnsignedBit(bigIndex.ToInt32Checked());
+}
+      if (bigIndex.Divide(16).compareTo(this.words.length) < 0) {
+ return false;
+}
+      int index = bigIndex.ShiftRight(4).ToInt32Checked();
+      int indexmod = bigIndex.Remainder(16).ToInt32Checked();
+      return (boolean)(((this.words[index] >> (int)indexmod) & 1) != 0);
     }
 
     /**
@@ -2612,7 +2683,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * object's value is 0, and returns 1 if the value is negative 1.
      * @throws java.lang.ArithmeticException The return value would exceed the range of
      * a 32-bit signed integer.
-     */
+     * @deprecated This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
+ */
+@Deprecated
     public int GetUnsignedBitLength() {
       return this.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
     }
@@ -2952,6 +3025,61 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
     }
 
     /**
+     * Returns an arbitrary-precision integer with the bits shifted to the right.
+     * For this operation, the arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * "Forms of numbers" }). Thus, for negative values, the
+     * arbitrary-precision integer is sign-extended.
+     * @param eshift The number of bits to shift. Can be negative, in which case
+     * this is the same as shiftLeft with the absolute value of this
+     * parameter.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.NullPointerException The parameter {@code eshift} is null.
+     */
+    public EInteger ShiftRight(EInteger eshift) {
+      if (eshift == null) {
+  throw new NullPointerException("eshift");
+}
+      EInteger valueETempShift = eshift;
+      EInteger ret = this;
+      if (valueETempShift.signum() < 0) {
+        return ret.ShiftLeft(valueETempShift.Negate());
+      }
+      while (!valueETempShift.CanFitInInt32()) {
+         valueETempShift = valueETempShift.Subtract(0x7ffffff0);
+         ret = ret.ShiftRight(0x7ffffff0);
+      }
+      return ret.ShiftRight(valueETempShift.ToInt32Checked());
+    }
+
+    /**
+     * Returns an arbitrary-precision integer with the bits shifted to the left by
+     * a number of bits given as an arbitrary-precision integer. A value of
+     * 1 doubles this value, a value of 2 multiplies it by 4, a value of 3
+     * by 8, a value of 4 by 16, and so on.
+     * @param eshift The number of bits to shift. Can be negative, in which case
+     * this is the same as shiftRight with the absolute value of this
+     * parameter.
+     * @return An arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code eshift} is null.
+     */
+    public EInteger ShiftLeft(EInteger eshift) {
+      if (eshift == null) {
+  throw new NullPointerException("eshift");
+}
+      EInteger valueETempShift = eshift;
+      EInteger ret = this;
+      if (valueETempShift.signum() < 0) {
+        return ret.ShiftRight(valueETempShift.Negate());
+      }
+      while (!valueETempShift.CanFitInInt32()) {
+         valueETempShift = valueETempShift.Subtract(0x7ffffff0);
+         ret = ret.ShiftLeft(0x7ffffff0);
+      }
+      return ret.ShiftLeft(valueETempShift.ToInt32Checked());
+    }
+
+    /**
      * Returns an arbitrary-precision integer with the bits shifted to the left by
      * a number of bits. A value of 1 doubles this value, a value of 2
      * multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.
@@ -3200,7 +3328,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      * "Forms of numbers" }). Thus, for negative values, the
      * arbitrary-precision integer is sign-extended.
-     * @param numberBits Number of bits to shift right.
+     * @param numberBits The number of bits to shift. Can be negative, in which
+     * case this is the same as shiftLeft with the absolute value of this
+     * parameter.
      * @return An arbitrary-precision integer.
      */
     public EInteger ShiftRight(int numberBits) {
@@ -3496,8 +3626,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         EInteger pow = NumberUtility.FindPowerOfTen(digits);
         // DebugUtility.Log("---divrem " + (this.wordCount));
         EInteger[] divrem = this.DivRem(pow);
-        // DebugUtility.Log("" + (divrem[0].GetUnsignedBitLength()) + "," +
-        // (// divrem[1].GetUnsignedBitLength()));
+        // DebugUtility.Log("" +
+        // (divrem[0].GetUnsignedBitLengthAsEInteger()) + "," +
+        // (divrem[1].GetUnsignedBitLengthAsEInteger()));
         divrem[0].ToRadixStringDecimal(outputSB, optimize);
         divrem[1].ToRadixStringDecimal(rightBuilder, optimize);
         for (i = rightBuilder.length(); i < digits; ++i) {
@@ -5324,6 +5455,8 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
     }
 
     private static int GetUnsignedBitLengthEx(int numberValue, int wordCount) {
+      // NOTE: Currently called only if wordCount <= 1000000,
+      // so that overflow issues with Int32s are not present
       int wc = wordCount;
       if (wc != 0) {
         wc = (wc - 1) << 4;
@@ -6355,12 +6488,14 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
       EInteger bigintX;
       EInteger bigintY;
       EInteger thisValue = this;
-      int powerBits = (thisValue.GetUnsignedBitLength() + 1) / 2;
       if (thisValue.CanFitInInt32()) {
         int smallValue = thisValue.ToInt32Checked();
+        int smallPowerBits =
+          (thisValue.GetUnsignedBitLengthAsEInteger().ToInt32Checked() + 1)
+          / 2;
         // No need to check for ValueZero; already done above
         int smallintX = 0;
-        int smallintY = 1 << powerBits;
+        int smallintY = 1 << smallPowerBits;
         do {
           smallintX = smallintY;
           smallintY = smallValue / smallintX;
@@ -6374,18 +6509,23 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         smallintY = smallValue - smallintY;
         return new EInteger[] { EInteger.FromInt32(smallintX), EInteger.FromInt32(smallintY) };
       }
+      EInteger valueEPowerBits =
+        thisValue.GetUnsignedBitLengthAsEInteger().Add(1).Divide(2);
       if (this.wordCount >= 4) {
-        int wordsPerPart = (this.wordCount + 3) >> 2;
-        int bitsPerPart = wordsPerPart * 16;
-        int totalBits = bitsPerPart * 4;
-        int bitLength = this.GetUnsignedBitLength();
-        boolean bitLengthEven = (bitLength & 1) == 0;
+     int wordsPerPart = (this.wordCount >> 2) + ((this.wordCount & 3) > 0 ? 1 :
+          0);
+        long bitsPerPart = wordsPerPart * 16;
+        EInteger valueEBitsPerPart = EInteger.FromInt64(bitsPerPart);
+        long totalBits = bitsPerPart * 4;
+        EInteger valueEBitLength = this.GetUnsignedBitLengthAsEInteger();
+        boolean bitLengthEven = valueEBitLength.isEven();
         bigintX = this;
-        int shift = 0;
-        if (bitLength < totalBits - 1) {
-          int targetLength = bitLengthEven ? totalBits : (totalBits - 1);
-          shift = targetLength - bitLength;
-          bigintX = bigintX.ShiftLeft(shift);
+        EInteger eshift = EInteger.FromInt32(0);
+     if (valueEBitLength.compareTo(EInteger.FromInt64(totalBits).Subtract(1)) <
+          0) {
+          long targetLength = bitLengthEven ? totalBits : (totalBits - 1);
+          eshift = EInteger.FromInt64(targetLength).Subtract(valueEBitLength);
+          bigintX = bigintX.ShiftLeft(eshift);
         }
         // DebugUtility.Log("this=" + (this.ToRadixString(16)));
         // DebugUtility.Log("bigx=" + (bigintX.ToRadixString(16)));
@@ -6408,10 +6548,10 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         // if (!srem[0].equals(srem2.get(0)) || !srem[1].equals(srem2.get(1))) {
   // throw new IllegalStateException(this.toString());
    // }
-        EInteger[] qrem = srem[1].ShiftLeft(bitsPerPart).Add(e2).DivRem(
+        EInteger[] qrem = srem[1].ShiftLeft(valueEBitsPerPart).Add(e2).DivRem(
            srem[0].ShiftLeft(1));
-        EInteger sqroot = srem[0].ShiftLeft(bitsPerPart).Add(qrem[0]);
-        EInteger sqrem = qrem[1].ShiftLeft(bitsPerPart).Add(e1).Subtract(
+        EInteger sqroot = srem[0].ShiftLeft(valueEBitsPerPart).Add(qrem[0]);
+        EInteger sqrem = qrem[1].ShiftLeft(valueEBitsPerPart).Add(e1).Subtract(
            qrem[0].Multiply(qrem[0]));
         // DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
         if (sqrem.signum() < 0) {
@@ -6432,9 +6572,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         }
         */
         EInteger[] retarr = new EInteger[2];
-        retarr[0] = sqroot.ShiftRight(shift >> 1);
+        retarr[0] = sqroot.ShiftRight(eshift.ShiftRight(1));
         if (useRem) {
-          if (shift == 0) {
+          if (eshift.isZero()) {
             retarr[1] = sqrem;
           } else {
             retarr[1] = this.Subtract(retarr[0].Multiply(retarr[0]));
@@ -6443,7 +6583,7 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         return retarr;
       }
       bigintX = EInteger.FromInt32(0);
-      bigintY = EInteger.FromInt32(1).ShiftLeft(powerBits);
+      bigintY = EInteger.FromInt32(1).ShiftLeft(valueEPowerBits);
       do {
         bigintX = bigintY;
         // DebugUtility.Log("" + thisValue + " " + bigintX);
