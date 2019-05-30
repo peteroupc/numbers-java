@@ -1853,8 +1853,10 @@ throw new IllegalStateException("", ex);
       }
     }
 
-    @Test(timeout = 100000)
+    @Test(timeout = 250000)
     public void TestToDoubleRounding() {
+     // TODO: Reduce timeout to 100000 once EDecimal.ToEFloat's
+     // performance improves
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {
         EFloat efa = this.RandomDoubleEFloat(fr, i >= 250);
