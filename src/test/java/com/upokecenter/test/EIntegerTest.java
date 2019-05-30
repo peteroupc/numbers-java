@@ -1747,7 +1747,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
       }
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void TestGetSignedBit() {
       if (EInteger.FromInt32(0).GetSignedBit(0)) {
  Assert.fail();

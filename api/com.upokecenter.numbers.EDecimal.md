@@ -910,7 +910,7 @@ Converts an arbitrary-precision integer to an arbitrary precision decimal.
 ### FromExtendedFloat
     @Deprecated public static EDecimal FromExtendedFloat​(EFloat ef)
 Deprecated.
-<div class='deprecationComment'>Renamed to FromEFloat.</div>
+Renamed to FromEFloat.
 
 **Parameters:**
 
@@ -1552,7 +1552,7 @@ Divides this arbitrary-precision decimal number by another
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
 Deprecated.
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+Renamed to DivRemNaturalScale.
 
 **Parameters:**
 
@@ -1566,7 +1566,7 @@ Deprecated.
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor, EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+Renamed to DivRemNaturalScale.
 
 **Parameters:**
 
@@ -3196,7 +3196,7 @@ Returns a decimal number with the same value as this object but rounded to
 ### RoundToIntegralExact
     @Deprecated public EDecimal RoundToIntegralExact​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to RoundToIntegerExact.</div>
+Renamed to RoundToIntegerExact.
 
 **Parameters:**
 
@@ -3219,7 +3219,7 @@ Deprecated.
 ### RoundToIntegralNoRoundedFlag
     @Deprecated public EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</div>
+Renamed to RoundToIntegerNoRoundedFlag.
 
 **Parameters:**
 
@@ -3344,7 +3344,7 @@ Finds the square root of this object's value.
 ### SquareRoot
     @Deprecated public EDecimal SquareRoot​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to Sqrt.</div>
+Renamed to Sqrt.
 
 **Parameters:**
 
@@ -3436,7 +3436,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEIntegerIfExact.</div>
+Renamed to ToEIntegerIfExact.
 
 **Returns:**
 
@@ -3473,7 +3473,7 @@ Same as toString(), except that when an exponent is used it will be a
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEFloat.</div>
+Renamed to ToEFloat.
 
 **Returns:**
 

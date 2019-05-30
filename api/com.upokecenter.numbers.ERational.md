@@ -445,7 +445,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 ### FromExtendedDecimal
     @Deprecated public static ERational FromExtendedDecimal​(EDecimal ef)
 Deprecated.
-<div class='deprecationComment'>Renamed to FromEDecimal.</div>
+Renamed to FromEDecimal.
 
 **Parameters:**
 
@@ -458,7 +458,7 @@ Deprecated.
 ### FromExtendedFloat
     @Deprecated public static ERational FromExtendedFloat​(EFloat ef)
 Deprecated.
-<div class='deprecationComment'>Renamed to FromEFloat.</div>
+Renamed to FromEFloat.
 
 **Parameters:**
 
@@ -942,7 +942,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEIntegerIfExact.</div>
+Renamed to ToEIntegerIfExact.
 
 **Returns:**
 
@@ -1022,7 +1022,7 @@ Converts this rational number to a decimal number, but if the result would
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEDecimal.</div>
+Renamed to ToEDecimal.
 
 **Returns:**
 
@@ -1033,7 +1033,7 @@ Deprecated.
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEDecimal.</div>
+Renamed to ToEDecimal.
 
 **Parameters:**
 
@@ -1052,7 +1052,7 @@ Deprecated.
 ### ToExtendedDecimalExactIfPossible
     @Deprecated public EDecimal ToExtendedDecimalExactIfPossible​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEDecimalExactIfPossible.</div>
+Renamed to ToEDecimalExactIfPossible.
 
 **Parameters:**
 
@@ -1126,7 +1126,7 @@ Converts this rational number to a binary float, but if the result would
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEFloat.</div>
+Renamed to ToEFloat.
 
 **Returns:**
 
@@ -1137,7 +1137,7 @@ Deprecated.
 ### ToExtendedFloat
     @Deprecated public EFloat ToExtendedFloat​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEFloat.</div>
+Renamed to ToEFloat.
 
 **Parameters:**
 
@@ -1156,7 +1156,7 @@ Deprecated.
 ### ToExtendedFloatExactIfPossible
     @Deprecated public EFloat ToExtendedFloatExactIfPossible​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEFloatExactIfPossible.</div>
+Renamed to ToEFloatExactIfPossible.
 
 **Parameters:**
 

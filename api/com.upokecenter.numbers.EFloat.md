@@ -1363,7 +1363,7 @@ Divides this arbitrary-precision binary float by another arbitrary-precision
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)
 Deprecated.
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+Renamed to DivRemNaturalScale.
 
 **Parameters:**
 
@@ -1377,7 +1377,7 @@ Deprecated.
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor, EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
+Renamed to DivRemNaturalScale.
 
 **Parameters:**
 
@@ -2712,7 +2712,7 @@ Returns a binary float with the same value as this object but rounded to an
 ### RoundToIntegralExact
     @Deprecated public EFloat RoundToIntegralExact​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to RoundToIntegerExact.</div>
+Renamed to RoundToIntegerExact.
 
 **Parameters:**
 
@@ -2735,7 +2735,7 @@ Deprecated.
 ### RoundToIntegralNoRoundedFlag
     @Deprecated public EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</div>
+Renamed to RoundToIntegerNoRoundedFlag.
 
 **Parameters:**
 
@@ -2858,7 +2858,7 @@ Finds the square root of this object's value.
 ### SquareRoot
     @Deprecated public EFloat SquareRoot​(EContext ctx)
 Deprecated.
-<div class='deprecationComment'>Renamed to Sqrt.</div>
+Renamed to Sqrt.
 
 **Parameters:**
 
@@ -2948,7 +2948,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEIntegerIfExact.</div>
+Renamed to ToEIntegerIfExact.
 
 **Returns:**
 
@@ -2985,7 +2985,7 @@ Converts this value to an arbitrary-precision decimal number, then returns
 ### ToExtendedDecimal
     @Deprecated public EDecimal ToExtendedDecimal()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToEDecimal.</div>
+Renamed to ToEDecimal.
 
 **Returns:**
 

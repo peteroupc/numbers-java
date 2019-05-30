@@ -493,7 +493,7 @@ Adds this object and another object.
 ### AsInt32Checked
     @Deprecated public int AsInt32Checked()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToInt32Checked.</div>
+Renamed to ToInt32Checked.
 
 **Returns:**
 
@@ -502,7 +502,7 @@ Deprecated.
 ### AsInt32Unchecked
     @Deprecated public int AsInt32Unchecked()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToInt32Unchecked.</div>
+Renamed to ToInt32Unchecked.
 
 **Returns:**
 
@@ -511,7 +511,7 @@ Deprecated.
 ### AsInt64Checked
     @Deprecated public long AsInt64Checked()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToInt64Checked.</div>
+Renamed to ToInt64Checked.
 
 **Returns:**
 
@@ -520,7 +520,7 @@ Deprecated.
 ### AsInt64Unchecked
     @Deprecated public long AsInt64Unchecked()
 Deprecated.
-<div class='deprecationComment'>Renamed to ToInt64Unchecked.</div>
+Renamed to ToInt64Unchecked.
 
 **Returns:**
 
@@ -749,7 +749,7 @@ Returns the number of decimal digits used by this integer, in the form of an
 ### GetDigitCount
     @Deprecated public int GetDigitCount()
 Deprecated.
-<div class='deprecationComment'>This method may overflow. Use GetDigitCountAsEInteger instead.</div>
+This method may overflow. Use GetDigitCountAsEInteger instead.
 
 **Returns:**
 
@@ -777,7 +777,7 @@ Returns the hash code for this instance. No application or process IDs are
 ### GetLowBit
     @Deprecated public int GetLowBit()
 Deprecated.
-<div class='deprecationComment'>This method may overflow. Use GetLowBitAsEInteger instead.</div>
+This method may overflow. Use GetLowBitAsEInteger instead.
 
 **Returns:**
 
@@ -844,7 +844,7 @@ Finds the minimum number of bits needed to represent this object's value,
 ### GetSignedBitLength
     @Deprecated public int GetSignedBitLength()
 Deprecated.
-<div class='deprecationComment'>This method may overflow. Use GetSignedBitLengthAsEInteger instead.</div>
+This method may overflow. Use GetSignedBitLengthAsEInteger instead.
 
 **Returns:**
 
@@ -898,7 +898,7 @@ Finds the minimum number of bits needed to represent this number's absolute
 ### GetUnsignedBitLength
     @Deprecated public int GetUnsignedBitLength()
 Deprecated.
-<div class='deprecationComment'>This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</div>
+This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
 
 **Returns:**
 
