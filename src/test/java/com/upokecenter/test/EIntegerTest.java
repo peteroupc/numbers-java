@@ -1731,6 +1731,7 @@ DoTestDivide("4294901760", "281470681808895", "0");
       // not implemented yet
     }
 
+@SuppressWarnings("deprecation")  // We're testing an obsolete method here
     @Test
     public void TestGetDigitCount() {
       RandomGenerator r = new RandomGenerator();
@@ -1817,6 +1818,7 @@ throw new IllegalStateException("", ex);
 }
     }
 
+@SuppressWarnings("deprecation")  // We're testing an obsolete method here
     @Test
     public void TestGetSignedBitLength() {
       for (int i = 0; i < valueBitLengths.length; i += 2) {
@@ -2004,6 +2006,7 @@ throw new IllegalStateException("", ex);
       }
     }
 
+@SuppressWarnings("deprecation")  // We're testing an obsolete method here
     @Test
     public void TestGetUnsignedBitLength() {
       for (int i = 0; i < valueBitLengths.length; i += 2) {
@@ -2015,6 +2018,7 @@ throw new IllegalStateException("", ex);
       }
     }
 
+@SuppressWarnings("deprecation")  // We're testing an obsolete method here
     @Test
     public void TestGetLowBit() {
       for (int i = 0; i < valueLowBits.length; i += 2) {
