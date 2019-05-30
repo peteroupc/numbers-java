@@ -3290,6 +3290,13 @@ public int ToInt32IfExact() {
  return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
 }
 
+/// <summary>Converts a boolean value (true or false) to an
+/// arbitrary-precision binary number.</summary>
+/// <returns>One if <c>boolValue</c> is <c>true</c>; otherwise, zero.</returns>
+public static EFloat FromBoolean(boolean boolValue) {
+ return boolValue ? EFloat.Zero : EFloat.One;
+}
+
     /**
      * Converts a 32-bit signed integer to an arbitrary-precision binary float.
      * @param inputInt32 The number to convert as a 32-bit signed integer.

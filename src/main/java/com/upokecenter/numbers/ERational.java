@@ -1070,8 +1070,7 @@ at: http://peteroupc.github.io/
         if (other.getExponent().signum() > 0) {
           // NOTE: if unsigned numerator is 0, bitLength will return
           // 0 instead of 1, but the possibility of 0 was already excluded
- EInteger bigDigitCount =
-            this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
+ EInteger bigDigitCount = this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
              .Subtract(1);
           if (bigDigitCount.compareTo(other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other' s
@@ -2090,6 +2089,13 @@ public int ToInt32IfExact() {
  throw new ArithmeticException("Value is infinity or NaN");
 }
  return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
+}
+
+/// <summary>Converts a boolean value (true or false) to an
+/// arbitrary-precision rational number.</summary>
+/// <returns>One if <c>boolValue</c> is <c>true</c>; otherwise, zero.</returns>
+public static ERational FromBoolean(boolean boolValue) {
+ return FromInt32(boolValue ? 1 : 0);
 }
 
     /**

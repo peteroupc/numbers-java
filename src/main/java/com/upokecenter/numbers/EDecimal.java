@@ -647,6 +647,13 @@ private static final FastIntegerFixed FastIntZero = new
       }
     }
 
+/// <summary>Converts a boolean value (true or false) to an
+/// arbitrary-precision decimal number.</summary>
+/// <returns>One if <c>boolValue</c> is <c>true</c>; otherwise, zero.</returns>
+public static EDecimal FromBoolean(boolean boolValue) {
+ return boolValue ? EDecimal.Zero : EDecimal.One;
+}
+
     /**
      * Creates a decimal number from a 32-bit signed integer.
      * @param valueSmaller The parameter {@code valueSmaller} is a 32-bit signed

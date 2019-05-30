@@ -331,6 +331,7 @@ Renamed to DivRemNaturalScale.
 * `EDecimal Exp​(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
+* `static EDecimal FromBoolean​(boolean boolValue)`<br>
 * `static EDecimal FromByte​(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
 * `static EDecimal FromDouble​(double dbl)`<br>
@@ -937,6 +938,8 @@ Creates a decimal number from an arbitrary-precision binary floating-point
 
 * <code>java.lang.NullPointerException</code> - The parameter "bigfloat" is null.
 
+### FromBoolean
+    public static EDecimal FromBoolean​(boolean boolValue)
 ### FromInt32
     public static EDecimal FromInt32​(int valueSmaller)
 Creates a decimal number from a 32-bit signed integer.

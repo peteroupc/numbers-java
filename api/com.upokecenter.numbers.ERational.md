@@ -82,6 +82,7 @@ Represents an arbitrary-precision rational number. This class can't be
  Determines whether this object's numerator, denominator, and properties are
  equal to those of another object and that other object is an
  arbitrary-precision rational number.
+* `static ERational FromBoolean​(boolean boolValue)`<br>
 * `static ERational FromByte​(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 * `static ERational FromDouble​(double flt)`<br>
@@ -1346,6 +1347,8 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
  an exact integer, or is less than -2147483648 or greater than
  2147483647.
 
+### FromBoolean
+    public static ERational FromBoolean​(boolean boolValue)
 ### FromInt32
     public static ERational FromInt32​(int inputInt32)
 Converts a 32-bit signed integer to an arbitrary-precision rational number.
