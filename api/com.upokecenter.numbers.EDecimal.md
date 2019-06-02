@@ -940,6 +940,15 @@ Creates a decimal number from an arbitrary-precision binary floating-point
 
 ### FromBoolean
     public static EDecimal FromBoolean​(boolean boolValue)
+
+**Parameters:**
+
+* <code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.
+
+**Returns:**
+
+* An EDecimal object.
+
 ### FromInt32
     public static EDecimal FromInt32​(int valueSmaller)
 Creates a decimal number from a 32-bit signed integer.

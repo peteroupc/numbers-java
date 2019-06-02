@@ -1349,6 +1349,15 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 ### FromBoolean
     public static ERational FromBoolean​(boolean boolValue)
+
+**Parameters:**
+
+* <code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.
+
+**Returns:**
+
+* An ERational object.
+
 ### FromInt32
     public static ERational FromInt32​(int inputInt32)
 Converts a 32-bit signed integer to an arbitrary-precision rational number.

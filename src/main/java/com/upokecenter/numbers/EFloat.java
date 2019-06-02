@@ -3293,8 +3293,13 @@ public int ToInt32IfExact() {
 /// <summary>Converts a boolean value (true or false) to an
 /// arbitrary-precision binary number.</summary>
 /// <returns>One if <c>boolValue</c> is <c>true</c>; otherwise, zero.</returns>
+    /**
+     *
+     * @param boolValue The parameter {@code boolValue} is not documented yet.
+     * @return An EFloat object.
+     */
 public static EFloat FromBoolean(boolean boolValue) {
- return boolValue ? EFloat.Zero : EFloat.One;
+ return boolValue ? EFloat.One : EFloat.Zero;
 }
 
     /**

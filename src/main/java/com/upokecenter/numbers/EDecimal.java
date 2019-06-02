@@ -650,8 +650,13 @@ private static final FastIntegerFixed FastIntZero = new
 /// <summary>Converts a boolean value (true or false) to an
 /// arbitrary-precision decimal number.</summary>
 /// <returns>One if <c>boolValue</c> is <c>true</c>; otherwise, zero.</returns>
+    /**
+     *
+     * @param boolValue The parameter {@code boolValue} is not documented yet.
+     * @return An EDecimal object.
+     */
 public static EDecimal FromBoolean(boolean boolValue) {
- return boolValue ? EDecimal.Zero : EDecimal.One;
+ return boolValue ? EDecimal.One : EDecimal.Zero;
 }
 
     /**
