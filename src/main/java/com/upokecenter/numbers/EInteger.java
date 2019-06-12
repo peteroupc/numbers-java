@@ -2921,10 +2921,10 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
     }
 
     /**
-     * Not documented yet.
-     * @param bigPower The parameter {@code bigPower} is not documented yet.
-     * @return An EInteger object.
-     * @throws NullPointerException The parameter {@code bigPower} is null.
+     * Raises an arbitrary-precision integer to a power.
+     * @param bigPower The exponent to raise this integer to.
+     * @return The result. Returns 1 if {@code bigPower} is 0.
+     * @throws java.lang.NullPointerException The parameter {@code bigPower} is null.
      * @throws IllegalArgumentException BigPower is negative.
      */
     public EInteger Pow(EInteger bigPower) {
@@ -2965,7 +2965,7 @@ if (bigPower.signum() < 0) {
 
     /**
      * Raises an arbitrary-precision integer to a power.
-     * @param powerSmall The exponent to raise to.
+     * @param powerSmall The exponent to raise this integer to.
      * @return The result. Returns 1 if "powerSmall" is 0.
      */
     public EInteger Pow(int powerSmall) {
@@ -3259,11 +3259,11 @@ if (bigPower.signum() < 0) {
     }
 
     /**
-     * Does an AND operation between two arbitrary-precision integer values.<p>Each
-     * arbitrary-precision integer is treated as a two's-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
-     * @param other An EInteger object.
+     * Does an AND operation between two arbitrary-precision integer values.<p>
+     * Each arbitrary-precision integer is treated as a two's-complement
+     * form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
+     * }) for the purposes of this operator. </p>
+     * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer.
      * @throws java.lang.NullPointerException The parameter {@code a} or {@code b} is
      * null.
@@ -3322,16 +3322,16 @@ if (bigPower.signum() < 0) {
     }
 
     /**
-     * Does an OR operation between two arbitrary-precision integer
-     * instances.<p>Each arbitrary-precision integer is treated as a
-     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers"}) for the purposes of this operator.</p>
+     * Does an OR operation between two arbitrary-precision integer instances.<p>
+     * Each arbitrary-precision integer is treated as a two's-complement
+     * form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
+     * }) for the purposes of this operator. </p>
      * @param second The second operand.
      * @return An arbitrary-precision integer.
      * @throws java.lang.NullPointerException The parameter {@code first} or {@code
      * second} is null.
-     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't satisfy
-     * biggerCount == CountWords(result).
+     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't
+     * satisfy biggerCount == CountWords(result).
      */
     public EInteger Or(EInteger second) {
    if (second == null) {
@@ -3397,9 +3397,9 @@ if (bigPower.signum() < 0) {
     /**
      * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
      * arbitrary-precision integer is treated as a two's-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
-     * @param other An EInteger object.
+     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
+     * for the purposes of this operator. </p>
+     * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if it's set
      * in one input integer but not the other.
      * @throws java.lang.NullPointerException The parameter {@code a} or {@code b} is

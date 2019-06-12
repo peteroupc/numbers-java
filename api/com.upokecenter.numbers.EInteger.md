@@ -172,12 +172,11 @@ This method may overflow.
 * `EInteger Not()`<br>
  Returns an arbitrary-precision integer with every bit flipped.
 * `EInteger Or​(EInteger second)`<br>
- Does an OR operation between two arbitrary-precision integer
- instances.
+ Does an OR operation between two arbitrary-precision integer instances.
 * `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
 * `EInteger Pow​(EInteger bigPower)`<br>
- Not documented yet.
+ Raises an arbitrary-precision integer to a power.
 * `EInteger PowBigIntVar​(EInteger power)`<br>
  Raises an arbitrary-precision integer to a power, which is given as another
  arbitrary-precision integer.
@@ -1029,15 +1028,15 @@ Gets the value of this object with the sign reversed.
 
 ### Pow
     public EInteger Pow​(EInteger bigPower)
-Not documented yet.
+Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
 
-* <code>bigPower</code> - The parameter <code>bigPower</code> is not documented yet.
+* <code>bigPower</code> - The exponent to raise this integer to.
 
 **Returns:**
 
-* An EInteger object.
+* The result. Returns 1 if <code>bigPower</code> is 0.
 
 **Throws:**
 
@@ -1051,7 +1050,7 @@ Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
 
-* <code>powerSmall</code> - The exponent to raise to.
+* <code>powerSmall</code> - The exponent to raise this integer to.
 
 **Returns:**
 
@@ -1170,14 +1169,14 @@ Returns an arbitrary-precision integer with every bit flipped.
 
 ### And
     public EInteger And​(EInteger other)
-Does an AND operation between two arbitrary-precision integer values.<p>Each
- arbitrary-precision integer is treated as a two's-complement form
- (see <code>"Forms of numbers"</code>)
- for the purposes of this operator.</p>
+Does an AND operation between two arbitrary-precision integer values.<p>
+ Each arbitrary-precision integer is treated as a two's-complement
+ form (see <code>"Forms of numbers"
+ </code>) for the purposes of this operator. </p>
 
 **Parameters:**
 
-* <code>other</code> - An EInteger object.
+* <code>other</code> - An arbitrary-precision integer.
 
 **Returns:**
 
@@ -1190,9 +1189,10 @@ Does an AND operation between two arbitrary-precision integer values.<p>Each
 
 ### Or
     public EInteger Or​(EInteger second)
-Does an OR operation between two arbitrary-precision integer
- instances.<p>Each arbitrary-precision integer is treated as a
- two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
+Does an OR operation between two arbitrary-precision integer instances.<p>
+ Each arbitrary-precision integer is treated as a two's-complement
+ form (see <code>"Forms of numbers"
+ </code>) for the purposes of this operator. </p>
 
 **Parameters:**
 
@@ -1207,19 +1207,19 @@ Does an OR operation between two arbitrary-precision integer
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
  second</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't satisfy
- biggerCount == CountWords(result).
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't
+ satisfy biggerCount == CountWords(result).
 
 ### Xor
     public EInteger Xor​(EInteger other)
 Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two's-complement form
- (see <code>"Forms of numbers"</code>)
- for the purposes of this operator.</p>
+ (see <code>"Forms of numbers" </code>)
+ for the purposes of this operator. </p>
 
 **Parameters:**
 
-* <code>other</code> - An EInteger object.
+* <code>other</code> - An arbitrary-precision integer.
 
 **Returns:**
 

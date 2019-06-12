@@ -217,7 +217,8 @@ Renamed to DivRemNaturalScale.
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
 * `static EFloat FromBoolean​(boolean boolValue)`<br>
- Not documented yet.
+ Converts a boolean value (either true or false) to an arbitrary-precision
+ binary float.
 * `static EFloat FromByte​(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision binary float.
 * `static EFloat FromDouble​(double dbl)`<br>
@@ -3303,15 +3304,16 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 ### FromBoolean
     public static EFloat FromBoolean​(boolean boolValue)
-Not documented yet.
+Converts a boolean value (either true or false) to an arbitrary-precision
+ binary float.
 
 **Parameters:**
 
-* <code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.
+* <code>boolValue</code> - Either true or false.
 
 **Returns:**
 
-* An EFloat object.
+* The number 1 if <code>boolValue</code> is true, otherwise, 0.
 
 ### FromInt32
     public static EFloat FromInt32​(int inputInt32)

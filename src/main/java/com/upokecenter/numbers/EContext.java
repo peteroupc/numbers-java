@@ -650,8 +650,10 @@ return new EContext(
     }
 
     /**
-     * Gets a value not documented yet.
-     * @return A value not documented yet.
+     * Gets a value indicating whether this context has a mutable Flags field, one
+     * or more trap enablers, or both.
+     * @return {@code true} if this context has a mutable Flags field, one or more
+     * trap enablers, or both; otherwise, {@code false} .
      */
     public final boolean getHasFlagsOrTraps() {
  return this.getHasFlags() || this.getTraps() != 0;
@@ -708,8 +710,9 @@ return new EContext(
     }
 
     /**
-     * Not documented yet.
-     * @return An EContext object.
+     * Copies this EContext with <code>HasFlags</code> set to false, a Traps value of 0,
+     * and a Flags value of 0.
+     * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithNoFlagsOrTraps() {
  return new EContext(

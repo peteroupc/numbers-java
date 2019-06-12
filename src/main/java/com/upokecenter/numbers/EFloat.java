@@ -3371,9 +3371,10 @@ public int ToInt32IfExact() {
 }
 
     /**
-     * Not documented yet.
-     * @param boolValue The parameter {@code boolValue} is not documented yet.
-     * @return An EFloat object.
+     * Converts a boolean value (either true or false) to an arbitrary-precision
+     * binary float.
+     * @param boolValue Either true or false.
+     * @return The number 1 if {@code boolValue} is true, otherwise, 0.
      */
    public static EFloat FromBoolean(boolean boolValue) {
     return boolValue ? EFloat.One : EFloat.Zero;

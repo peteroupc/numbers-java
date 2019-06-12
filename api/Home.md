@@ -7,6 +7,9 @@ Contains parameters for controlling the precision, rounding, and exponent
 * [com.upokecenter.numbers.EDecimal](com.upokecenter.numbers.EDecimal.md) -
 Represents an arbitrary-precision decimal floating-point number.
 
+* [com.upokecenter.numbers.EDecimalExtras](com.upokecenter.numbers.EDecimalExtras.md) -
+Not documented yet.
+
 * [com.upokecenter.numbers.EFloat](com.upokecenter.numbers.EFloat.md) -
 Represents an arbitrary-precision binary floating-point number.
 

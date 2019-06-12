@@ -133,7 +133,8 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `boolean getHasFlags()`<br>
  Gets a value indicating whether this context has a mutable Flags field.
 * `boolean getHasFlagsOrTraps()`<br>
- Gets a value not documented yet.
+ Gets a value indicating whether this context has a mutable Flags field, one
+ or more trap enablers, or both.
 * `boolean getHasMaxPrecision()`<br>
  Gets a value indicating whether this context defines a maximum precision.
 * `EInteger getPrecision()`<br>
@@ -172,8 +173,9 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `EContext WithNoFlags() HasFlags`<br>
  Copies this EContext with HasFlags set to false and a Flags value of
  0.
-* `EContext WithNoFlagsOrTraps()`<br>
- Not documented yet.
+* `EContext WithNoFlagsOrTraps() HasFlags`<br>
+ Copies this EContext with HasFlags set to false, a Traps value of 0,
+ and a Flags value of 0.
 * `EContext WithPrecision​(int precision)`<br>
  Copies this EContext and gives it a particular precision value.
 * `EContext WithPrecisionInBits​(boolean isPrecisionBits)`<br>
@@ -554,11 +556,13 @@ Gets a string representation of this object. Note that the string's format
 
 ### getHasFlagsOrTraps
     public final boolean getHasFlagsOrTraps()
-Gets a value not documented yet.
+Gets a value indicating whether this context has a mutable Flags field, one
+ or more trap enablers, or both.
 
 **Returns:**
 
-* A value not documented yet.
+* <code>true</code> if this context has a mutable Flags field, one or more
+ trap enablers, or both; otherwise, <code>false</code> .
 
 ### WithAdjustExponent
     public EContext WithAdjustExponent​(boolean adjustExponent)
@@ -597,11 +601,12 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 ### WithNoFlagsOrTraps
     public EContext WithNoFlagsOrTraps()
-Not documented yet.
+Copies this EContext with <code>HasFlags</code> set to false, a Traps value of 0,
+ and a Flags value of 0.
 
 **Returns:**
 
-* An EContext object.
+* A context object for arbitrary-precision arithmetic settings.
 
 ### WithBigPrecision
     public EContext WithBigPrecision​(EInteger bigintPrecision)
