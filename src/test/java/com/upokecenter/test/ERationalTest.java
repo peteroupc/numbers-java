@@ -6,10 +6,12 @@ import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
   public class ERationalTest {
-    @Test
-    public void TestConstructor() {
-      // not implemented yet
-    }
+@Test
+public void TestFromBoolean() {
+Assert.assertEquals(ERational.Zero, ERational.FromBoolean(false));
+Assert.assertEquals(ERational.One, ERational.FromBoolean(true));
+}
+
     @Test
     public void TestAbs() {
       // not implemented yet

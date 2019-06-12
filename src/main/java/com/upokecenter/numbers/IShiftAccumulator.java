@@ -24,9 +24,7 @@ at: http://peteroupc.github.io/
 
     FastInteger getDiscardedDigitCount();
 
-    void TruncateRight(FastInteger bits);
-
-    void ShiftRight(FastInteger bits);
+    void TruncateOrShiftRight(FastInteger bits, boolean truncate);
 
     void ShiftRightInt(int bits);
 

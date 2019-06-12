@@ -122,6 +122,12 @@ import com.upokecenter.numbers.*;
       }
     }
 
+@Test
+public void TestFromBoolean() {
+Assert.assertEquals(EDecimal.Zero, EDecimal.FromBoolean(false));
+Assert.assertEquals(EDecimal.One, EDecimal.FromBoolean(true));
+}
+
     @Test
     public void TestPrecisionOneHalfEven() {
       EDecimal edec = EDecimal.FromString("9.5e-1");
@@ -3237,6 +3243,50 @@ EFloat.Create(
     }
 
     @Test
+public void TestToByteChecked() {
+Assert.assertEquals((byte)0, EDecimal.FromString("-0.1").ToByteChecked());
+Assert.assertEquals((byte)0, EDecimal.FromString("-0.4").ToByteChecked());
+Assert.assertEquals((byte)0, EDecimal.FromString("-0.5").ToByteChecked());
+Assert.assertEquals((byte)0, EDecimal.FromString("-0.6").ToByteChecked());
+try {
+ EDecimal.FromString("-1.0").ToByteChecked();
+Assert.fail("Should have failed");
+} catch (ArithmeticException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+try {
+ EDecimal.FromString("-1.4").ToByteChecked();
+Assert.fail("Should have failed");
+} catch (ArithmeticException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+try {
+ EDecimal.FromString("-1.5").ToByteChecked();
+Assert.fail("Should have failed");
+} catch (ArithmeticException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+try {
+ EDecimal.FromString("-1.6").ToByteChecked();
+Assert.fail("Should have failed");
+} catch (ArithmeticException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+}
+
+    @Test
     public void TestToDouble() {
       // test for correct rounding
       double dbl;
@@ -3262,18 +3312,20 @@ EFloat.Create(
       if (!(dbl == 0.0)) {
  Assert.fail();
  }
-      for (int i = 0; i < 10000; ++i) {
+      for (int i = 0; i < 100000; ++i) {
         EDecimal edec;
+        String edecstr;
         if (fr.UniformInt(100) < 10) {
           String decimals = RandomObjects.RandomBigIntString(fr);
           if (decimals.charAt(0) == '-') {
             decimals = decimals.substring(1);
           }
-          String edecstr = RandomObjects.RandomBigIntString(fr) +
+          edecstr = RandomObjects.RandomBigIntString(fr) +
             "." + decimals + "e" + RandomObjects.RandomBigIntString(fr);
           edec = EDecimal.FromString(edecstr);
         } else {
           edec = RandomObjects.RandomEDecimal(fr);
+          edecstr = edec.toString();
         }
         if (edec.isFinite()) {
           dbl = edec.ToDouble();
@@ -3281,26 +3333,44 @@ EFloat.Create(
             if (!(edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(edec.Abs(), DoubleOverflowToInfinity);
+  TestCommon.CompareTestGreaterEqual(
+  edec.Abs(),
+  DoubleOverflowToInfinity,
+  edecstr);
           } else if (((dbl) == Double.POSITIVE_INFINITY)) {
             if (!(!edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(edec.Abs(), DoubleOverflowToInfinity);
+  TestCommon.CompareTestGreaterEqual(
+  edec.Abs(),
+  DoubleOverflowToInfinity,
+  edecstr);
           } else if (dbl == 0.0) {
-            TestCommon.CompareTestLessEqual(edec.Abs(), DoubleUnderflowToZero);
-Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
+            TestCommon.CompareTestLessEqual(
+  edec.Abs(),
+  DoubleUnderflowToZero,
+  edecstr);
+Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
           } else {
             if (!(!Double.isNaN(dbl))) {
  Assert.fail();
  }
             edec = edec.Abs();
-            TestCommon.CompareTestGreater(edec, DoubleUnderflowToZero);
-            TestCommon.CompareTestLess(edec, DoubleOverflowToInfinity);
+            TestCommon.CompareTestGreater(
+  edec,
+  DoubleUnderflowToZero,
+  edecstr);
+            TestCommon.CompareTestLess(
+  edec,
+  DoubleOverflowToInfinity,
+  edecstr);
             EDecimal halfUlp = GetHalfUlp(dbl);
             EDecimal difference = EDecimal.FromDouble(dbl).Abs()
               .Subtract(edec).Abs();
-            TestCommon.CompareTestLessEqual(difference, halfUlp);
+            TestCommon.CompareTestLessEqual(
+  difference,
+  halfUlp,
+  edecstr);
           }
         }
       }
@@ -4778,18 +4848,20 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
       if (!(sng == 0.0)) {
  Assert.fail();
  }
-      for (int i = 0; i < 10000; ++i) {
+      for (int i = 0; i < 100000; ++i) {
         EDecimal edec;
+        String edecstr;
         if (fr.UniformInt(100) < 10) {
           String decimals = RandomObjects.RandomBigIntString(fr);
           if (decimals.charAt(0) == '-') {
             decimals = decimals.substring(1);
           }
-          String edecstr = RandomObjects.RandomBigIntString(fr) +
+          edecstr = RandomObjects.RandomBigIntString(fr) +
             "." + decimals + "e" + RandomObjects.RandomBigIntString(fr);
           edec = EDecimal.FromString(edecstr);
         } else {
           edec = RandomObjects.RandomEDecimal(fr);
+          edecstr = edec.toString();
         }
         if (edec.isFinite()) {
           sng = edec.ToSingle();
@@ -4797,30 +4869,59 @@ Assert.assertEquals(edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
             if (!(edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
+  TestCommon.CompareTestGreaterEqual(
+  edec.Abs(),
+  SingleOverflowToInfinity,
+  edecstr);
           } else if (((sng) == Float.POSITIVE_INFINITY)) {
             if (!(!edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(edec.Abs(), SingleOverflowToInfinity);
+  TestCommon.CompareTestGreaterEqual(
+  edec.Abs(),
+  SingleOverflowToInfinity,
+  edecstr);
           } else if (sng == 0.0f) {
-            TestCommon.CompareTestLessEqual(edec.Abs(), SingleUnderflowToZero);
-Assert.assertEquals(edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
+    TestCommon.CompareTestLessEqual(
+  edec.Abs(),
+  SingleUnderflowToZero,
+  edecstr);
+Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
           } else {
             if (!(!Float.isNaN(sng))) {
  Assert.fail();
  }
             edec = edec.Abs();
-            TestCommon.CompareTestGreater(edec, SingleUnderflowToZero);
-            TestCommon.CompareTestLess(edec, SingleOverflowToInfinity);
+            TestCommon.CompareTestGreater(edec, SingleUnderflowToZero, edecstr);
+            TestCommon.CompareTestLess(edec, SingleOverflowToInfinity, edecstr);
             EDecimal halfUlp = GetHalfUlp(sng);
             EDecimal difference = EDecimal.FromSingle(sng).Abs()
               .Subtract(edec).Abs();
-            TestCommon.CompareTestLessEqual(difference, halfUlp);
+            TestCommon.CompareTestLessEqual(difference, halfUlp, edecstr);
           }
         }
       }
     }
+
+private static String Repeat(String s, int count) {
+ StringBuilder sb = new StringBuilder();
+ for (int i = 0; i < count; ++i) { sb.append(s);
+}
+ return sb.toString();
+}
+
+@Test
+public void TestOnePlusOne() {
+EContext ec = EContext.ForRounding(ERounding.Up).WithPrecision(4);
+EDecimal ed = EDecimal.FromString("1");
+EDecimal ed2;
+String str;
+for (int i = 10; i < 1000; ++i) {
+ str = "1." + Repeat("0", i) + "3";
+ ed2 = EDecimal.FromString(str);
+ Assert.assertEquals(str,"2.001",ed.Add(ed2, ec).toString());
+}
+}
 
     @Test
     public void TestToString() {

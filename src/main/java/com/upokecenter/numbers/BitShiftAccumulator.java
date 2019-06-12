@@ -47,11 +47,9 @@ at: http://peteroupc.github.io/
         // (//kbl) + " [" + this.shiftedBigInt + "]");
         if (this.knownBitLength.compareTo(bits) <= 0) {
           // Known digit length is already small enough
-          if (truncate) {
-            this.TruncateRight(preShift);
-          } else {
-            this.ShiftRight(preShift);
-          }
+          // NOTE: For BitShiftAccumulator, truncating and shifting
+          // are the same, unlike in DigitShiftAccumulator
+          this.ShiftRight(preShift);
           this.VerifyKnownLength();
           return;
         } else {
@@ -60,21 +58,15 @@ at: http://peteroupc.github.io/
           // DebugUtility.Log("bitDiff=" + bitDiff);
           int cmp = bitDiff.compareTo(preShift);
           if (cmp <= 0) {
-            // Difference between desired digit length and current
-            // length is smaller than the shift, make it the shift
-           if (truncate) {
-             this.TruncateRight(preShift);
-           } else {
-             this.ShiftRight(preShift);
-           }
+          // NOTE: For BitShiftAccumulator, truncating and shifting
+          // are the same, unlike in DigitShiftAccumulator
+          this.ShiftRight(preShift);
           this.VerifyKnownLength();
            return;
           } else {
-           if (truncate) {
-             this.TruncateRight(bitDiff);
-           } else {
-             this.ShiftRight(bitDiff);
-           }
+          // NOTE: For BitShiftAccumulator, truncating and shifting
+          // are the same, unlike in DigitShiftAccumulator
+          this.ShiftRight(bitDiff);
           this.VerifyKnownLength();
            return;
           }
@@ -162,7 +154,7 @@ at: http://peteroupc.github.io/
       return bsa;
     }
 
-    public void TruncateRight(FastInteger fastint) {
+    public void TruncateOrShiftRight(FastInteger fastint, boolean truncate) {
       this.ShiftRight(fastint);
     }
 

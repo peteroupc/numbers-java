@@ -43,9 +43,9 @@ at: http://peteroupc.github.io/
   int lastDigit,
   int olderDigits);
 
-    IShiftAccumulator CreateShiftAccumulator(EInteger value);
-
     FastInteger DivisionShift(EInteger num, EInteger den);
+
+    FastInteger GetDigitLength(EInteger ei);
 
     EInteger MultiplyByRadixPower(EInteger value, FastInteger power);
   }

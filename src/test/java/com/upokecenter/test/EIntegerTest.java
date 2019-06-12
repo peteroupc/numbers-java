@@ -361,6 +361,12 @@ import com.upokecenter.numbers.*;
       return BigFromBytes(bytes);
     }
 
+@Test
+public void TestFromBoolean() {
+Assert.assertEquals(EInteger.FromInt32(1), EInteger.FromBoolean(true));
+Assert.assertEquals(EInteger.FromInt32(0), EInteger.FromBoolean(false));
+}
+
     @Test
     public void TestAdd() {
       EInteger posSmall = EInteger.FromInt64(5);

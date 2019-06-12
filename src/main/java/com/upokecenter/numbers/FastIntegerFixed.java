@@ -169,6 +169,16 @@ at: http://peteroupc.github.io/
       }
     }
 
+    FastIntegerFixed Copy() {
+      switch (this.integerMode) {
+        case 0:
+          return new FastIntegerFixed(this.smallValue);
+        case 2:
+          return FastIntegerFixed.FromBig(this.largeValue);
+        default: throw new IllegalStateException();
+      }
+    }
+
     /**
      * This is an internal API.
      * @return A FastIntegerFixed object.

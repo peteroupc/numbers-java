@@ -5,7 +5,7 @@
 Represents an arbitrary-precision rational number. This class can't be
  inherited. (The "E" stands for "extended", meaning that instances of
  this class can be values other than numbers proper, such as infinity
- and not-a-number.) <p><b>Thread safety: </b> Instances of this class
+ and not-a-number.) <p><b>Thread safety:</b> Instances of this class
  are immutable, so they are inherently safe for use by multiple
  threads. Multiple instances of this object with the same properties
  are interchangeable, so they should not be compared using the "=="
@@ -57,6 +57,8 @@ Represents an arbitrary-precision rational number. This class can't be
 * `int CompareToTotalMagnitude​(ERational other)`<br>
  Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs).
+* `ERational Copy()`<br>
+ Creates a copy of this arbitrary-precision rational number.
 * `ERational CopySign​(ERational other)`<br>
  Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number.
@@ -83,6 +85,8 @@ Represents an arbitrary-precision rational number. This class can't be
  equal to those of another object and that other object is an
  arbitrary-precision rational number.
 * `static ERational FromBoolean​(boolean boolValue)`<br>
+ Converts a boolean value (true or false) to an arbitrary-precision rational
+ number.
 * `static ERational FromByte​(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 * `static ERational FromDouble​(double flt)`<br>
@@ -286,6 +290,14 @@ The rational number ten.
 A rational number for zero.
 ## Method Details
 
+### Copy
+    public ERational Copy()
+Creates a copy of this arbitrary-precision rational number.
+
+**Returns:**
+
+* An arbitrary-precision binary rational number.
+
 ### getDenominator
     public final EInteger getDenominator()
 Gets this object's denominator.
@@ -393,8 +405,11 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>diag</code> - A number to use as diagnostic information associated with this
- object. If none is needed, should be zero.
+* <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
+ associated with this object. If none is needed, should be zero. To
+ get the diagnostic information from another arbitrary-precision
+ binary rational number, use that object's <code>UnsignedNumerator</code>
+ property.
 
 **Returns:**
 
@@ -410,8 +425,11 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>diag</code> - A number to use as diagnostic information associated with this
- object. If none is needed, should be zero.
+* <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
+ associated with this object. If none is needed, should be zero. To
+ get the diagnostic information from another arbitrary-precision
+ binary rational number, use that object's <code>UnsignedNumerator</code>
+ property.
 
 * <code>signaling</code> - Whether the return value will be signaling (true) or quiet
  (false).
@@ -532,7 +550,7 @@ Converts a 32-bit binary floating-point number to a rational number. This
 ### FromString
     public static ERational FromString​(java.lang.String str)
 Creates a rational number from a text string that represents a number. See
- <code>FromString(String, int, int) </code> for more information.
+ <code>FromString(String, int, int)</code> for more information.
 
 **Parameters:**
 
@@ -1349,14 +1367,16 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 ### FromBoolean
     public static ERational FromBoolean​(boolean boolValue)
+Converts a boolean value (true or false) to an arbitrary-precision rational
+ number.
 
 **Parameters:**
 
-* <code>boolValue</code> - The parameter <code>boolValue</code> is not documented yet.
+* <code>boolValue</code> - Either true or false.
 
 **Returns:**
 
-* An ERational object.
+* The number 1 if <code>boolValue</code> is true; otherwise, 0.
 
 ### FromInt32
     public static ERational FromInt32​(int inputInt32)

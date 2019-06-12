@@ -68,7 +68,9 @@ at: http://peteroupc.github.io/
     /**
      * If there is a fractional part and the whole number part is even, the number
      * is rounded to the closest representable odd number away from zero.
-     */
+     * @deprecated Consider using ERounding.OddOrZeroFiveUp instead.
+ */
+@Deprecated
     Odd,
 
     /**
@@ -76,7 +78,9 @@ at: http://peteroupc.github.io/
      * half the radix, the number is rounded to the closest representable
      * number away from zero; otherwise the fractional part is discarded. In
      * overflow, the fractional part is always discarded.
-     */
+     * @deprecated Use ERounding.OddOrZeroFiveUp instead.
+ */
+@Deprecated
     ZeroFiveUp,
 
     /**

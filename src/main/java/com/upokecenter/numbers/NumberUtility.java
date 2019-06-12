@@ -134,35 +134,6 @@ private NumberUtility() {
       }
     }
 
-    private static final EInteger ValueBigShiftIteration =
-      EInteger.FromInt64(1000000);
-
-    static EInteger ShiftLeft(EInteger val, EInteger bigShift) {
-      if (val.isZero()) {
-        return val;
-      }
-      while (bigShift.compareTo(ValueBigShiftIteration) > 0) {
-        val = val.ShiftLeft(1000000);
-        bigShift = bigShift.Subtract(ValueBigShiftIteration);
-      }
-      int lastshift = bigShift.ToInt32Checked();
-      val = val.ShiftLeft(lastshift);
-      return val;
-    }
-
-    static EInteger ShiftLeftInt(EInteger val, int shift) {
-      if (val.isZero()) {
-        return val;
-      }
-      while (shift > 1000000) {
-        val = val.ShiftLeft(1000000);
-        shift -= 1000000;
-      }
-      int lastshift = (int)shift;
-      val = val.ShiftLeft(lastshift);
-      return val;
-    }
-
     static boolean HasBitSet(int[] arr, int bit) {
       return (bit >> 5) < arr.length && (arr[bit >> 5] & (1 << (bit & 31))) !=
       0;
@@ -331,6 +302,7 @@ private NumberUtility() {
       if (intcurexp.CompareToInt(54) <= 0) {
         return FindPowerOfFive(intcurexp.AsInt32());
       }
+      // DebugUtility.Log("Getting power of five from big "+diff);
       EInteger mantissa = EInteger.FromInt32(1);
       EInteger bigpow;
       EInteger origdiff = diff;
@@ -341,6 +313,8 @@ private NumberUtility() {
       EInteger[] otherPower =
       ValuePowerOfFiveCache.FindCachedPowerOrSmaller(origdiff);
       if (otherPower != null) {
+        // DebugUtility.Log("Found cached power " +otherPower[0]+", "
+        // +otherPower[1]);
         intcurexp.SubtractBig(otherPower[0]);
         bigpow = otherPower[1];
         mantissa = bigpow;
@@ -354,7 +328,11 @@ private NumberUtility() {
           break;
         }
         if (intcurexp.CompareToInt(9999999) <= 0) {
-          bigpow = FindPowerOfFive(1).Pow(intcurexp.AsInt32());
+          int icurexp = intcurexp.AsInt32();
+          int halficurexp = icurexp / 2;
+          bigpow = FindPowerOfFive(halficurexp);
+          bigpow = bigpow.Multiply(
+           FindPowerOfFive(icurexp - halficurexp));
           mantissa = mantissa.Multiply(bigpow);
           break;
         }
@@ -385,6 +363,7 @@ private NumberUtility() {
       FastInteger intcurexp = FastInteger.FromBig(bigintExponent);
       EInteger mantissa = EInteger.FromInt32(1);
       EInteger bigpow = EInteger.FromInt32(0);
+      // DebugUtility.Log("Getting power of ten from big "+bigintExponent);
       while (intcurexp.signum() > 0) {
         if (intcurexp.CompareToInt(18) <= 0) {
           bigpow = FindPowerOfTen(intcurexp.AsInt32());
@@ -429,6 +408,7 @@ private NumberUtility() {
         return bigpow;
       }
       EInteger origPrecision = EInteger.FromInt32(precision);
+      // DebugUtility.Log("Getting power of five "+precision);
       if (precision <= 54) {
         if ((precision & 1) == 0) {
           ret = ValueBigIntPowersOfFive[(int)(precision >> 1)];

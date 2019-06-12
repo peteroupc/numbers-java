@@ -12,18 +12,17 @@ at: http://peteroupc.github.io/
      * range of arbitrary-precision numbers. (The "E" stands for "extended",
      * and has this prefix to group it with the other classes common to this
      * library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
-     * safety: </b> With one exception, instances of this class are
-     * immutable and are safe to use among multiple threads. The one
-     * exception involves the <code>Flags </code> property. If the context's
-     * <code>HasFlags </code> property (a read-only property) is <code>true </code> ,
-     * the <code>Flags </code> property is mutable, thus making the context
-     * mutable. This class doesn't synchronize access to such mutable
-     * contexts, so applications should provide their own synchronization if
-     * a context with the <code>HasFlags </code> property set to <code>true </code> will
-     * be shared among multiple threads and at least one of those threads
-     * needs to write the <code>Flags </code> property (which can happen, for
-     * example, by passing the context to most methods of <code>EDecimal </code>
-     * such as <code>Add </code>). </p>
+     * safety:</b> With one exception, instances of this class are immutable
+     * and are safe to use among multiple threads. The one exception
+     * involves the <code>Flags</code> property. If the context's <code>HasFlags</code>
+     * property (a read-only property) is <code>true</code> , the <code>Flags</code>
+     * property is mutable, thus making the context mutable. This class
+     * doesn't synchronize access to such mutable contexts, so applications
+     * should provide their own synchronization if a context with the
+     * <code>HasFlags</code> property set to <code>true</code> will be shared among
+     * multiple threads and at least one of those threads needs to write the
+     * <code>Flags</code> property (which can happen, for example, by passing the
+     * context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p>
      */
   public final class EContext {
     /**
@@ -138,7 +137,7 @@ at: http://peteroupc.github.io/
      * An arithmetic context for the .NET Framework decimal format (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers" }), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
-     * rounding mode is HalfEven. (The <code>"Cli" </code> stands for "Common
+     * rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
      * Language Infrastructure", which defined this format as the .NET
      * Framework decimal format in version 1, but leaves it unspecified in
      * later versions.).
@@ -385,11 +384,11 @@ this.traps = traps;
 
     /**
      * Gets the flags that are set from converting numbers according to this
-     * arithmetic context. If <code>HasFlags </code> is false, this value will be
+     * arithmetic context. If <code>HasFlags</code> is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) != 0
-     * </code> returns <code>true </code> if the Inexact flag is set.
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+     * 0</code> returns <code>true</code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
      * arithmetic context. If {@code HasFlags} is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
@@ -457,7 +456,7 @@ public final void setFlags(int value) {
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
      * href='http://speleotrove.com/decimal/dax3274.html'>
-     * <code>http://speleotrove.com/decimal/dax3274.html </code> </a>
+     * <code>http://speleotrove.com/decimal/dax3274.html</code> </a>
      * @return {@code true} if to use a "simplified" arithmetic; otherwise, {@code
      * false} .. In the simplified arithmetic, infinity, not-a-number, and
      * subnormal numbers are not allowed, and negative zero is treated the
@@ -473,6 +472,11 @@ public final void setFlags(int value) {
      * point and exponent. For example, if precision is 3, a converted
      * number's mantissa (significand) can range from 0 to 999 (up to three
      * digits long). If 0, converted numbers can have any precision.
+     * <p>Not-a-number (NaN) values can carry an optional number, its
+     * payload, that serves as its "diagnostic information", In general, if
+     * an operation requires copying an NaN's payload, only up to as many
+     * digits of that payload as the precision given in this context, namely
+     * the least significant digits, are copied. </p>
      * @return The maximum length of a converted number in digits, ignoring the
      * radix point and exponent. For example, if precision is 3, a converted
      * number's mantissa (significand) can range from 0 to 999 (up to three
@@ -494,9 +498,9 @@ public final void setFlags(int value) {
 
     /**
      * Gets the traps that are set for each flag in the context. Whenever a flag is
-     * signaled, even if <code>HasFlags </code> is false, and the flag's trap is
+     * signaled, even if <code>HasFlags</code> is false, and the flag's trap is
      * enabled, the operation will throw a TrapException. <p>For example, if
-     * Traps equals <code>FlagInexact </code> and FlagSubnormal, a TrapException
+     * Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
      * will be thrown if an operation's return value is not the same as the
      * exact result (FlagInexact) or if the return value's exponent is lower
      * than the lowest allowed (FlagSubnormal). </p>
@@ -646,6 +650,14 @@ return new EContext(
     }
 
     /**
+     * Gets a value not documented yet.
+     * @return A value not documented yet.
+     */
+    public final boolean getHasFlagsOrTraps() {
+ return this.getHasFlags() || this.getTraps() != 0;
+}
+
+    /**
      * Copies this EContext and sets the copy's "AdjustExponent" property to the
      * given value.
      * @param adjustExponent The new value of the "AdjustExponent" property for the
@@ -696,6 +708,26 @@ return new EContext(
     }
 
     /**
+     * Not documented yet.
+     * @return An EContext object.
+     */
+    public EContext WithNoFlagsOrTraps() {
+ return new EContext(
+  this.adjustExponent,
+  this.bigintPrecision,
+  this.clampNormalExponents,
+  this.exponentMax,
+  this.exponentMin,
+  0,
+  this.hasExponentRange,
+  false,
+  this.precisionInBits,
+  this.rounding,
+  this.simplified,
+  0);
+    }
+
+    /**
      * Copies this EContext and gives it a particular precision value.
      * @param bigintPrecision Desired precision. 0 means unlimited precision.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -719,7 +751,7 @@ return new EContext(
     }
 
     /**
-     * Copies this EContext with <code>HasFlags </code> set to true and a Flags value of
+     * Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
      * 0.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -776,7 +808,7 @@ return this.WithBigExponentRange(
     }
 
     /**
-     * Copies this EContext with <code>HasFlags </code> set to false and a Flags value of
+     * Copies this EContext with <code>HasFlags</code> set to false and a Flags value of
      * 0.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -873,15 +905,15 @@ return new EContext(
 
     /**
      * Copies this EContext with Traps set to the given value. (Also sets HasFlags
-     * on the copy to <code>True </code> , but this may change in version 2.0 of
+     * on the copy to <code>True</code> , but this may change in version 2.0 of
      * this library.).
      * @param traps Flags representing the traps to enable. See the property
      * "Traps".
      * @return A context object for arbitrary-precision arithmetic settings.
      */
     public EContext WithTraps(int traps) {
- // TODO: In next major version, copy HasFlags rather than
- // setting it to true
+// NOTE: Apparently HasFlags must be set to true because
+// some parts of code may treat HasFlags as HasFlagsOrTraps
 return new EContext(
   this.adjustExponent,
   this.bigintPrecision,

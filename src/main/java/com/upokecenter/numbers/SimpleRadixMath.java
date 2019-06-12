@@ -109,8 +109,7 @@ at: http://peteroupc.github.io/
           return thisValue;
         }
         FastInteger prec = FastInteger.FromBig(ctxDest.getPrecision());
-        FastInteger digits =
-          this.GetHelper().CreateShiftAccumulator(mant).GetDigitLength();
+        FastInteger digits = this.GetHelper().GetDigitLength(mant);
         prec.Subtract(digits);
         if (prec.signum() > 0 && prec.compareTo(fastExp) >= 0) {
           mant = this.GetHelper().MultiplyByRadixPower(mant, fastExp);
@@ -238,8 +237,7 @@ at: http://peteroupc.github.io/
       }
       FastInteger fastPrecision = FastInteger.FromBig(ctx.getPrecision());
       EInteger mant = this.GetHelper().GetMantissa(val).Abs();
-      FastInteger digits =
-        this.GetHelper().CreateShiftAccumulator(mant).GetDigitLength();
+      FastInteger digits = this.GetHelper().GetDigitLength(mant);
       EContext ctx2 = ctx.WithBlankFlags().WithTraps(0);
       if (digits.compareTo(fastPrecision) <= 0) {
         // Rounding is only to be done if the digit count is
@@ -249,7 +247,7 @@ at: http://peteroupc.github.io/
       }
       val = this.wrapper.RoundToPrecision(val, ctx2);
       // the only time rounding can signal an invalid
-      // operation is if an operand is signaling NaN, but
+      // operation is if an operand is a signaling NaN, but
       // this was already checked beforehand
 
       if ((ctx2.getFlags() & EContext.FlagInexact) != 0) {
@@ -379,6 +377,7 @@ thisValue = this.wrapper.Remainder(
       return this.wrapper.Pi(ctx);
     }
 
+@SuppressWarnings("deprecation")  // certain ERounding values are obsolete
     private T SignalOverflow2(EContext pc, boolean neg) {
       if (pc != null) {
         ERounding roundingOnOverflow = pc.getRounding();
@@ -387,10 +386,10 @@ thisValue = this.wrapper.Remainder(
             EContext.FlagInexact | EContext.FlagRounded));
         }
         if (pc.getHasMaxPrecision() && pc.getHasExponentRange() &&
-            (roundingOnOverflow == ERounding.Down || roundingOnOverflow ==
-             ERounding.ZeroFiveUp ||
-             (roundingOnOverflow == ERounding.OddOrZeroFiveUp) ||
-             (roundingOnOverflow == ERounding.Odd) ||
+            (roundingOnOverflow == ERounding.Down ||
+             roundingOnOverflow == ERounding.ZeroFiveUp ||
+             roundingOnOverflow == ERounding.OddOrZeroFiveUp ||
+             roundingOnOverflow == ERounding.Odd ||
              (roundingOnOverflow == ERounding.Ceiling && neg) ||
              (roundingOnOverflow == ERounding.Floor && !neg))) {
           // Set to the highest possible value for
@@ -433,7 +432,6 @@ thisValue = this.wrapper.Remainder(
         this.wrapper.Power(thisValue, pow, ctx2);
       // System.out.println("was " + thisValue);
       thisValue = this.PostProcessAfterDivision(thisValue, ctx, ctx2);
-      // System.out.println("result was " + thisValue);
       // System.out.println("now " + thisValue);
       return thisValue;
     }
@@ -615,13 +613,6 @@ thisValue = this.wrapper.Remainder(
       return this.PostProcess(a, ctx, ctx2);
     }
 
-    // <summary>Multiplies two T objects.</summary>
-    // <param name='thisValue'></param>
-    // <summary>Multiplies two T objects.</summary>
-    // <param name='thisValue'></param>
-    // <param name='other'></param>
-    // <param name='ctx'> (3).</param>
-    // <returns>The product of the two objects.</returns>
     public T Multiply(T thisValue, T other, EContext ctx) {
       T ret = this.CheckNotANumber2(thisValue, other, ctx);
       if ((Object)ret != (Object)null) {

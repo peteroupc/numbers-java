@@ -31,17 +31,18 @@ Specifies the mode to use when "shortening" numbers that otherwise can't fit
 * `None`<br>
  Indicates that rounding will not be used.
 * `Odd`<br>
- If there is a fractional part and the whole number part is even, the number
- is rounded to the closest representable odd number away from zero.
+ Deprecated.
+Consider using ERounding.OddOrZeroFiveUp instead.
+ Consider using ERounding.OddOrZeroFiveUp instead.
 * `OddOrZeroFiveUp`<br>
  For binary floating point numbers, this is the same as Odd.
 * `Up`<br>
  If there is a fractional part, the number is rounded to the closest
  representable number away from zero.
 * `ZeroFiveUp`<br>
- If there is a fractional part and if the last digit before rounding is 0 or
- half the radix, the number is rounded to the closest representable
- number away from zero; otherwise the fractional part is discarded.
+ Deprecated.
+Use ERounding.OddOrZeroFiveUp instead.
+ Use ERounding.OddOrZeroFiveUp instead.
 
 ## Methods
 
@@ -70,9 +71,9 @@ the order they are declared.
 ### Floor
     public static final ERounding Floor
 ### Odd
-    public static final ERounding Odd
+    @Deprecated public static final ERounding Odd
 ### ZeroFiveUp
-    public static final ERounding ZeroFiveUp
+    @Deprecated public static final ERounding ZeroFiveUp
 ### OddOrZeroFiveUp
     public static final ERounding OddOrZeroFiveUp
 ### values
@@ -115,15 +116,15 @@ If there is a fractional part, the number is rounded to the highest
 If there is a fractional part, the number is rounded to the lowest
  representable number that's closest to it.
 ### Odd
-    public static final ERounding Odd
-If there is a fractional part and the whole number part is even, the number
- is rounded to the closest representable odd number away from zero.
+    @Deprecated public static final ERounding Odd
+Deprecated.
+Consider using ERounding.OddOrZeroFiveUp instead.
+
 ### ZeroFiveUp
-    public static final ERounding ZeroFiveUp
-If there is a fractional part and if the last digit before rounding is 0 or
- half the radix, the number is rounded to the closest representable
- number away from zero; otherwise the fractional part is discarded. In
- overflow, the fractional part is always discarded.
+    @Deprecated public static final ERounding ZeroFiveUp
+Deprecated.
+Use ERounding.OddOrZeroFiveUp instead.
+
 ### OddOrZeroFiveUp
     public static final ERounding OddOrZeroFiveUp
 For binary floating point numbers, this is the same as Odd. For other bases

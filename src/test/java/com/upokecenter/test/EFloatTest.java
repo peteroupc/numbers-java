@@ -60,6 +60,12 @@ import com.upokecenter.numbers.*;
       return EFloat.Create(ret, EInteger.FromInt32(smallExponent));
     }
 
+@Test
+public void TestFromBoolean() {
+Assert.assertEquals(EFloat.Zero, EFloat.FromBoolean(false));
+Assert.assertEquals(EFloat.One, EFloat.FromBoolean(true));
+}
+
     @Test
     public void TestAbs() {
       // not implemented yet

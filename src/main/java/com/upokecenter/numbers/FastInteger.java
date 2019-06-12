@@ -925,6 +925,18 @@ at: http://peteroupc.github.io/
       return this;
     }
 
+    EInteger ShiftEIntegerLeftByThis(EInteger ei) {
+        switch (this.integerMode) {
+          case 0:
+            return ei.ShiftLeft(this.smallValue);
+          case 1:
+            return ei.ShiftLeft(this.mnum.ToEInteger());
+          case 2:
+            return ei.ShiftLeft(this.largeValue);
+          default: throw new IllegalStateException();
+        }
+    }
+
     final boolean isEvenNumber() {
         switch (this.integerMode) {
           case 0:

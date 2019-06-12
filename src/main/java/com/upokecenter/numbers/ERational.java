@@ -11,7 +11,7 @@ at: http://peteroupc.github.io/
      * Represents an arbitrary-precision rational number. This class can't be
      * inherited. (The "E" stands for "extended", meaning that instances of
      * this class can be values other than numbers proper, such as infinity
-     * and not-a-number.) <p><b>Thread safety: </b> Instances of this class
+     * and not-a-number.) <p><b>Thread safety:</b> Instances of this class
      * are immutable, so they are inherently safe for use by multiple
      * threads. Multiple instances of this object with the same properties
      * are interchangeable, so they should not be compared using the "=="
@@ -25,7 +25,7 @@ at: http://peteroupc.github.io/
      * A not-a-number value.
      */
 
-    public static final ERational NaN = CreateWithFlags(
+    public static final ERational NaN = new ERational(
   EInteger.FromInt32(0),
   EInteger.FromInt32(1),
   BigNumberFlags.FlagQuietNaN);
@@ -35,7 +35,7 @@ at: http://peteroupc.github.io/
      */
 
     public static final ERational NegativeInfinity =
-      CreateWithFlags(
+      new ERational(
   EInteger.FromInt32(0),
   EInteger.FromInt32(1),
   BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
@@ -45,7 +45,7 @@ at: http://peteroupc.github.io/
      */
 
     public static final ERational NegativeZero =
-      FromEInteger(EInteger.FromInt32(0)).ChangeSign(false);
+      new ERational(EInteger.FromInt32(0), EInteger.FromInt32(1), BigNumberFlags.FlagNegative);
 
     /**
      * The rational number one.
@@ -58,7 +58,7 @@ at: http://peteroupc.github.io/
      */
 
     public static final ERational PositiveInfinity =
-      CreateWithFlags(
+      new ERational(
   EInteger.FromInt32(0),
   EInteger.FromInt32(1),
   BigNumberFlags.FlagInfinity);
@@ -68,7 +68,7 @@ at: http://peteroupc.github.io/
      */
 
     public static final ERational SignalingNaN =
-      CreateWithFlags(
+      new ERational(
   EInteger.FromInt32(0),
   EInteger.FromInt32(1),
   BigNumberFlags.FlagSignalingNaN);
@@ -85,15 +85,27 @@ at: http://peteroupc.github.io/
 
     public static final ERational Zero = FromEInteger(EInteger.FromInt32(0));
 
-    private EInteger denominator;
+    private final EInteger denominator;
 
-    private int flags;
-    private EInteger unsignedNumerator;
+    private final int flags;
+    private final EInteger unsignedNumerator;
 
-    private ERational() {
+    private ERational(EInteger numerator, EInteger denominator, int flags) {
+this.unsignedNumerator = numerator;
+this.denominator = denominator;
+this.flags = flags;
 }
 
-    private void Initialize(EInteger numerator, EInteger denominator) {
+    /**
+     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
+     * class.
+     * @param numerator The numerator.
+     * @param denominator The denominator.
+     * @throws IllegalArgumentException The denominator is zero.
+     * @throws java.lang.NullPointerException The parameter {@code numerator} or
+     * {@code denominator} is null.
+     */
+    public ERational(EInteger numerator, EInteger denominator) {
             if (numerator == null) {
                 throw new NullPointerException("numerator");
             }
@@ -105,7 +117,7 @@ at: http://peteroupc.github.io/
             }
             boolean numNegative = numerator.signum() < 0;
             boolean denNegative = denominator.signum() < 0;
-      this.flags = (numNegative != denNegative) ?
+            this.flags = (numNegative != denNegative) ?
               BigNumberFlags.FlagNegative : 0;
             if (numNegative) {
                 numerator = numerator.Negate();
@@ -113,20 +125,16 @@ at: http://peteroupc.github.io/
             if (denNegative) {
                 denominator = denominator.Negate();
             }
-
             this.unsignedNumerator = numerator;
             this.denominator = denominator;
     }
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
-     * class.
-     * @param numerator The numerator.
-     * @param denominator The denominator.
-     * @throws IllegalArgumentException The denominator is zero.
+     * Creates a copy of this arbitrary-precision rational number.
+     * @return An arbitrary-precision binary rational number.
      */
-    public ERational(EInteger numerator, EInteger denominator) {
-      this.Initialize(numerator, denominator);
+    public ERational Copy() {
+return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
@@ -221,15 +229,16 @@ at: http://peteroupc.github.io/
     public static ERational Create(
   EInteger numerator,
   EInteger denominator) {
-            ERational er = new ERational();
-      er.Initialize(numerator, denominator);
-            return er;
+      return new ERational(numerator, denominator);
     }
 
     /**
      * Creates a not-a-number arbitrary-precision rational number.
-     * @param diag A number to use as diagnostic information associated with this
-     * object. If none is needed, should be zero.
+     * @param diag An integer, 0 or greater, to use as diagnostic information
+     * associated with this object. If none is needed, should be zero. To
+     * get the diagnostic information from another arbitrary-precision
+     * binary rational number, use that object's {@code UnsignedNumerator}
+     * property.
      * @return An arbitrary-precision rational number.
      * @throws IllegalArgumentException The parameter "diag" is less than 0.
      */
@@ -239,8 +248,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a not-a-number arbitrary-precision rational number.
-     * @param diag A number to use as diagnostic information associated with this
-     * object. If none is needed, should be zero.
+     * @param diag An integer, 0 or greater, to use as diagnostic information
+     * associated with this object. If none is needed, should be zero. To
+     * get the diagnostic information from another arbitrary-precision
+     * binary rational number, use that object's {@code UnsignedNumerator}
+     * property.
      * @param signaling Whether the return value will be signaling (true) or quiet
      * (false).
      * @param negative Whether the return value is negative.
@@ -269,9 +281,7 @@ at: http://peteroupc.github.io/
       }
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
-      ERational er = ERational.Create(diag, EInteger.FromInt32(1));
-      er.flags = flags;
-      return er;
+   return new ERational(diag, EInteger.FromInt32(1), flags);
     }
 
     /**
@@ -319,7 +329,6 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite()) {
-        ERational er = ERational.Create(ef.getMantissa(), EInteger.FromInt32(1));
         int flags = 0;
         if (ef.isNegative()) {
           flags |= BigNumberFlags.FlagNegative;
@@ -333,8 +342,7 @@ at: http://peteroupc.github.io/
         if (ef.IsQuietNaN()) {
           flags |= BigNumberFlags.FlagQuietNaN;
         }
-        er.flags = flags;
-        return er;
+        return new ERational(ef.getUnsignedMantissa(), EInteger.FromInt32(1), flags);
       }
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
@@ -368,7 +376,6 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite()) {
-        ERational er = ERational.Create(ef.getMantissa(), EInteger.FromInt32(1));
         int flags = 0;
         if (ef.isNegative()) {
           flags |= BigNumberFlags.FlagNegative;
@@ -382,8 +389,7 @@ at: http://peteroupc.github.io/
         if (ef.IsQuietNaN()) {
           flags |= BigNumberFlags.FlagQuietNaN;
         }
-        er.flags = flags;
-        return er;
+        return new ERational(ef.getUnsignedMantissa(), EInteger.FromInt32(1), flags);
       }
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
@@ -395,9 +401,9 @@ at: http://peteroupc.github.io/
       EInteger den = EInteger.FromInt32(1);
       if (exp.signum() < 0) {
         exp=(exp).Negate();
-        den = NumberUtility.ShiftLeft(den, exp);
+        den = den.ShiftLeft(exp);
       } else {
-        num = NumberUtility.ShiftLeft(num, exp);
+        num = num.ShiftLeft(exp);
       }
       if (neg) {
         num=(num).Negate();
@@ -429,7 +435,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a rational number from a text string that represents a number. See
-     * <code>FromString(String, int, int) </code> for more information.
+     * <code>FromString(String, int, int)</code> for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
      * given string.
@@ -621,7 +627,7 @@ at: http://peteroupc.github.io/
             BigNumberFlags.FlagSignalingNaN;
           EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
             numer.AsEInteger();
-          return CreateWithFlags(
+          return new ERational(
             bignumer,
             EInteger.FromInt32(1),
             flags3);
@@ -863,11 +869,10 @@ at: http://peteroupc.github.io/
      */
     public ERational Abs() {
       if (this.isNegative()) {
-     ERational er = ERational.Create(
+     return new ERational(
   this.unsignedNumerator,
-  this.denominator);
-        er.flags = this.flags & ~BigNumberFlags.FlagNegative;
-        return er;
+  this.denominator,
+  this.flags & ~BigNumberFlags.FlagNegative);
       }
       return this;
     }
@@ -1268,7 +1273,10 @@ at: http://peteroupc.github.io/
       }
       EInteger ad = this.getNumerator().Multiply(otherValue.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
-      return ERational.Create(ad, bc).ChangeSign(resultNeg);
+      return new ERational(
+  ad.Abs(),
+  bc.Abs(),
+  resultNeg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -1418,7 +1426,10 @@ at: http://peteroupc.github.io/
       EInteger ac = this.getNumerator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       return ac.isZero() ? (resultNeg ? NegativeZero : Zero) :
-               ERational.Create(ac, bd).ChangeSign(resultNeg);
+  new ERational(
+  ac.Abs(),
+  bd.Abs(),
+  resultNeg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -1427,9 +1438,10 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary rational number.
      */
     public ERational Negate() {
-      ERational er = ERational.Create(this.unsignedNumerator, this.denominator);
-      er.flags = this.flags ^ BigNumberFlags.FlagNegative;
-      return er;
+      return new ERational(
+  this.unsignedNumerator,
+  this.denominator,
+  this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
@@ -1481,7 +1493,10 @@ at: http://peteroupc.github.io/
       bc = thisDen.Multiply(tnum);
       tden = tden.Multiply(thisDen);
       ad = ad.Subtract(bc);
-      return ERational.Create(ad, tden).ChangeSign(resultNeg);
+      return new ERational(
+  ad.Abs(),
+  tden.Abs(),
+  resultNeg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -1929,24 +1944,6 @@ at: http://peteroupc.github.io/
         this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
     }
 
-    private static ERational CreateWithFlags(
-  EInteger numerator,
-  EInteger denominator,
-  int flags) {
-      ERational er = ERational.Create(numerator, denominator);
-      er.flags = flags;
-      return er;
-    }
-
-    private ERational ChangeSign(boolean negative) {
-      if (negative) {
-        this.flags |= BigNumberFlags.FlagNegative;
-      } else {
-        this.flags &= ~BigNumberFlags.FlagNegative;
-      }
-      return this;
-    }
-
         // Begin integer conversions
 
     /**
@@ -2091,17 +2088,15 @@ public int ToInt32IfExact() {
  return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
 }
 
-/// <summary>Converts a boolean value (true or false) to an
-/// arbitrary-precision rational number.</summary>
-/// <returns>One if <c>boolValue</c> is <c>true</c>; otherwise, zero.</returns>
     /**
-     *
-     * @param boolValue The parameter {@code boolValue} is not documented yet.
-     * @return An ERational object.
+     * Converts a boolean value (true or false) to an arbitrary-precision rational
+     * number.
+     * @param boolValue Either true or false.
+     * @return The number 1 if {@code boolValue} is true; otherwise, 0.
      */
-public static ERational FromBoolean(boolean boolValue) {
- return FromInt32(boolValue ? 1 : 0);
-}
+    public static ERational FromBoolean(boolean boolValue) {
+     return FromInt32(boolValue ? 1 : 0);
+   }
 
     /**
      * Converts a 32-bit signed integer to an arbitrary-precision rational number.

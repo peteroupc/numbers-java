@@ -9,11 +9,11 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  multiple threads. Multiple instances of this object with the same
  value are interchangeable, but they should be compared using the
  "Equals" method rather than the "==" operator. </p> <p><b>Security
- note </b> </p> <p>It is not recommended to implement
+ note</b> </p> <p>It is not recommended to implement
  security-sensitive algorithms using the methods in this class, for
- several reasons: </p> <ul> <li><code>EInteger </code> objects are
- immutable, so they can't be modified, and the memory they occupy is
- not guaranteed to be cleared in a timely fashion due to garbage
+ several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
+ so they can't be modified, and the memory they occupy is not
+ guaranteed to be cleared in a timely fashion due to garbage
  collection. This is relevant for applications that use many-bit-long
  numbers as secret parameters. </li> <li>The methods in this class
  (especially those that involve arithmetic) are not guaranteed to run
@@ -32,6 +32,8 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  Adds this object and another object.
 * `EInteger Add​(EInteger bigintAugend)`<br>
  Adds this object and another object.
+* `EInteger And​(EInteger other)`<br>
+ Does an AND operation between two arbitrary-precision integer values.
 * `int AsInt32Checked()`<br>
  Deprecated.
 Renamed to ToInt32Checked.
@@ -66,6 +68,8 @@ Renamed to ToInt64Unchecked.
 * `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object and another object are equal and have the
  same type.
+* `static EInteger FromBoolean​(boolean boolValue)`<br>
+ Converts a boolean value (true or false) to an arbitrary-precision integer.
 * `static EInteger FromByte​(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 * `static EInteger FromBytes​(byte[] bytes,
@@ -147,6 +151,9 @@ This method may overflow.
  greater than 0.
 * `boolean isZero()`<br>
  Gets a value indicating whether this value is 0.
+* `EInteger Mod​(int smallDivisor)`<br>
+ Finds the modulus remainder that results when this instance is divided by
+ the value of another integer.
 * `EInteger Mod​(EInteger divisor)`<br>
  Finds the modulus remainder that results when this instance is divided by
  the value of an arbitrary-precision integer.
@@ -162,8 +169,15 @@ This method may overflow.
  object.
 * `EInteger Negate()`<br>
  Gets the value of this object with the sign reversed.
+* `EInteger Not()`<br>
+ Returns an arbitrary-precision integer with every bit flipped.
+* `EInteger Or​(EInteger second)`<br>
+ Does an OR operation between two arbitrary-precision integer
+ instances.
 * `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
+* `EInteger Pow​(EInteger bigPower)`<br>
+ Not documented yet.
 * `EInteger PowBigIntVar​(EInteger power)`<br>
  Raises an arbitrary-precision integer to a power, which is given as another
  arbitrary-precision integer.
@@ -224,6 +238,8 @@ This method may overflow.
  radix.
 * `java.lang.String toString()`<br>
  Converts this object to a text string in base 10.
+* `EInteger Xor​(EInteger other)`<br>
+ Finds the exclusive "or" of two arbitrary-precision integer objects.
 
 ## Method Details
 
@@ -298,19 +314,19 @@ Initializes an arbitrary-precision integer from an array of bytes.
  byte's highest bit cleared, and negative numbers have the bit set.
  </li> <li>The last byte contains the lowest 8-bits, the next-to-last
  contains the next lowest 8 bits, and so on. For example, the number
- 300 can be encoded as <code>0x01, 0x2c </code> and 200 as <code>0x00,
- 0xc8 </code> . (Note that the second example contains a set high bit in
- <code>0xc8 </code> , so an additional 0 is added at the start to ensure
+ 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00,
+ 0xc8</code> . (Note that the second example contains a set high bit in
+ <code>0xc8</code> , so an additional 0 is added at the start to ensure
  it's interpreted as positive.) </li> <li>To encode negative numbers,
  take the absolute value of the number, subtract by 1, encode the
  number into bytes, and toggle each bit of each byte. Any further bits
  that appear beyond the most significant bit of the number will be all
  ones. For example, the number -450 can be encoded as <code>0xfe,
- 0x70 </code> and -52869 as <code>0xff, 0x31, 0x7b </code> . (Note that the
- second example contains a cleared high bit in <code>0x31, 0x7b </code> ,
- so an additional 0xff is added at the start to ensure it's
- interpreted as negative.) </li> </ul> <p>For little-endian, the byte
- order is reversed from the byte order just discussed. </p> .
+ 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the second
+ example contains a cleared high bit in <code>0x31, 0x7b</code> , so an
+ additional 0xff is added at the start to ensure it's interpreted as
+ negative.) </li> </ul> <p>For little-endian, the byte order is
+ reversed from the byte order just discussed. </p> .
 
 * <code>littleEndian</code> - If true, the byte order is little-endian, or
  least-significant-byte first. If false, the byte order is big-endian,
@@ -324,6 +340,18 @@ Initializes an arbitrary-precision integer from an array of bytes.
 **Throws:**
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+### FromBoolean
+    public static EInteger FromBoolean​(boolean boolValue)
+Converts a boolean value (true or false) to an arbitrary-precision integer.
+
+**Parameters:**
+
+* <code>boolValue</code> - Either true or false.
+
+**Returns:**
+
+* The number 1 if <code>boolValue</code> is true; otherwise, 0.
 
 ### FromInt32
     public static EInteger FromInt32​(int intValue)
@@ -564,7 +592,7 @@ Compares an arbitrary-precision integer with this instance.
 ### Add
     public EInteger Add​(int intValue)
 Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString("5").Add(200); </pre>
+ EInteger.FromString("5").Add(200);</pre>
 
 **Parameters:**
 
@@ -591,7 +619,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
     public EInteger Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString("5").Multiply(200); </pre>
+ EInteger.FromString("5").Multiply(200);</pre>
 
 **Parameters:**
 
@@ -928,7 +956,30 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Throws:**
 
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
+ 0.
+
 * <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
+
+### Mod
+    public EInteger Mod​(int smallDivisor)
+Finds the modulus remainder that results when this instance is divided by
+ the value of another integer. The modulus remainder is the same as
+ the normal remainder if the normal remainder is positive, and equals
+ divisor plus normal remainder if the normal remainder is negative.
+
+**Parameters:**
+
+* <code>smallDivisor</code> - The divisor of the modulus.
+
+**Returns:**
+
+* The modulus remainder.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
+ 0.
 
 ### ModPow
     public EInteger ModPow​(EInteger pow, EInteger mod)
@@ -975,6 +1026,24 @@ Gets the value of this object with the sign reversed.
 **Returns:**
 
 * This object's value with the sign reversed.
+
+### Pow
+    public EInteger Pow​(EInteger bigPower)
+Not documented yet.
+
+**Parameters:**
+
+* <code>bigPower</code> - The parameter <code>bigPower</code> is not documented yet.
+
+**Returns:**
+
+* An EInteger object.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigPower</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - BigPower is negative.
 
 ### Pow
     public EInteger Pow​(int powerSmall)
@@ -1087,6 +1156,84 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 
 * An arbitrary-precision integer.
 
+### Not
+    public EInteger Not()
+Returns an arbitrary-precision integer with every bit flipped.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>valueA</code> is null.
+
+### And
+    public EInteger And​(EInteger other)
+Does an AND operation between two arbitrary-precision integer values.<p>Each
+ arbitrary-precision integer is treated as a two's-complement form
+ (see <code>"Forms of numbers"</code>)
+ for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>other</code> - An EInteger object.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
+ null.
+
+### Or
+    public EInteger Or​(EInteger second)
+Does an OR operation between two arbitrary-precision integer
+ instances.<p>Each arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>second</code> - The second operand.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
+ second</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't satisfy
+ biggerCount == CountWords(result).
+
+### Xor
+    public EInteger Xor​(EInteger other)
+Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
+ arbitrary-precision integer is treated as a two's-complement form
+ (see <code>"Forms of numbers"</code>)
+ for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>other</code> - An EInteger object.
+
+**Returns:**
+
+* An arbitrary-precision integer in which each bit is set if it's set
+ in one input integer but not the other.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
+ null.
+
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy smallerCount ==
+ CountWords(result).
+
 ### ShiftRight
     public EInteger ShiftRight​(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the right.
@@ -1149,12 +1296,12 @@ Returns a byte array of this integer's value. The byte array will take the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
- passed to the <code>FromBytes() </code> method (with the same byte order)
- to reconstruct this integer's value.
+ passed to the <code>FromBytes()</code> method (with the same byte order) to
+ reconstruct this integer's value.
 
 **Parameters:**
 
-* <code>littleEndian</code> - Either <code>true </code> or <code>false </code> .
+* <code>littleEndian</code> - Either <code>true</code> or <code>false</code> .
 
 **Returns:**
 

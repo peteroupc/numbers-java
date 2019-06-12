@@ -1,6 +1,6 @@
 package com.upokecenter.numbers;
 /*
-Written in 2013-2018 by Peter O.
+Written in 2013-2019 by Peter O.
 
 Parts of the code were adapted by Peter O. from
 public-domain code by Wei Dai.
@@ -23,11 +23,11 @@ at: http://peteroupc.github.io/
      * multiple threads. Multiple instances of this object with the same
      * value are interchangeable, but they should be compared using the
      * "Equals" method rather than the "==" operator. </p> <p><b>Security
-     * note </b> </p> <p>It is not recommended to implement
+     * note</b> </p> <p>It is not recommended to implement
      * security-sensitive algorithms using the methods in this class, for
-     * several reasons: </p> <ul> <li><code>EInteger </code> objects are
-     * immutable, so they can't be modified, and the memory they occupy is
-     * not guaranteed to be cleared in a timely fashion due to garbage
+     * several reasons: </p> <ul> <li><code>EInteger</code> objects are immutable,
+     * so they can't be modified, and the memory they occupy is not
+     * guaranteed to be cleared in a timely fashion due to garbage
      * collection. This is relevant for applications that use many-bit-long
      * numbers as secret parameters. </li> <li>The methods in this class
      * (especially those that involve arithmetic) are not guaranteed to run
@@ -177,19 +177,19 @@ at: http://peteroupc.github.io/
      * byte's highest bit cleared, and negative numbers have the bit set.
      * </li> <li>The last byte contains the lowest 8-bits, the next-to-last
      * contains the next lowest 8 bits, and so on. For example, the number
-     * 300 can be encoded as {@code 0x01, 0x2c } and 200 as {@code 0x00,
-     * 0xc8 } . (Note that the second example contains a set high bit in
-     * {@code 0xc8 } , so an additional 0 is added at the start to ensure
+     * 300 can be encoded as {@code 0x01, 0x2c} and 200 as {@code 0x00,
+     * 0xc8} . (Note that the second example contains a set high bit in
+     * {@code 0xc8} , so an additional 0 is added at the start to ensure
      * it's interpreted as positive.) </li> <li>To encode negative numbers,
      * take the absolute value of the number, subtract by 1, encode the
      * number into bytes, and toggle each bit of each byte. Any further bits
      * that appear beyond the most significant bit of the number will be all
      * ones. For example, the number -450 can be encoded as {@code 0xfe,
-     * 0x70 } and -52869 as {@code 0xff, 0x31, 0x7b } . (Note that the
-     * second example contains a cleared high bit in {@code 0x31, 0x7b } ,
-     * so an additional 0xff is added at the start to ensure it's
-     * interpreted as negative.) </li> </ul> <p>For little-endian, the byte
-     * order is reversed from the byte order just discussed. </p> .
+     * 0x70} and -52869 as {@code 0xff, 0x31, 0x7b} . (Note that the second
+     * example contains a cleared high bit in {@code 0x31, 0x7b} , so an
+     * additional 0xff is added at the start to ensure it's interpreted as
+     * negative.) </li> </ul> <p>For little-endian, the byte order is
+     * reversed from the byte order just discussed. </p> .
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is big-endian,
      * or most-significant-byte first.
@@ -265,6 +265,15 @@ at: http://peteroupc.github.io/
                     newreg,
                     newnegative));
     }
+
+    /**
+     * Converts a boolean value (true or false) to an arbitrary-precision integer.
+     * @param boolValue Either true or false.
+     * @return The number 1 if {@code boolValue} is true; otherwise, 0.
+     */
+public static EInteger FromBoolean(boolean boolValue) {
+return boolValue ? ValueOne : ValueZero;
+}
 
     /**
      * Converts a 32-bit signed integer to an arbitrary-precision integer.
@@ -1088,7 +1097,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Adds this object and another object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Add(200); </pre> </p>
+     * EInteger.FromString("5").Add(200);</pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      */
@@ -1155,7 +1164,7 @@ public EInteger Subtract(int intValue) {
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
      * object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Multiply(200); </pre> </p>
+     * EInteger.FromString("5").Multiply(200);</pre> </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -1230,6 +1239,7 @@ public int compareTo(int intValue) {
         // where dividend is 0)
         return EInteger.FromInt32(0);
       }
+      // DebugUtility.Log("divide " + this + " " + bigintDivisor);
       if (words1Size <= 2 && words2Size <= 2 && this.CanFitInInt32() &&
           bigintDivisor.CanFitInInt32()) {
         int valueASmall = this.ToInt32Checked();
@@ -2698,6 +2708,8 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * negative.
      * @param divisor The number to divide by.
      * @return An arbitrary-precision integer.
+     * @throws IllegalArgumentException The parameter {@code divisor} is less than
+     * 0.
      * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger Mod(EInteger divisor) {
@@ -2710,6 +2722,27 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
       EInteger remainderEInt = this.Remainder(divisor);
       if (remainderEInt.signum() < 0) {
         remainderEInt = divisor.Add(remainderEInt);
+      }
+      return remainderEInt;
+    }
+
+    /**
+     * Finds the modulus remainder that results when this instance is divided by
+     * the value of another integer. The modulus remainder is the same as
+     * the normal remainder if the normal remainder is positive, and equals
+     * divisor plus normal remainder if the normal remainder is negative.
+     * @param smallDivisor The divisor of the modulus.
+     * @return The modulus remainder.
+     * @throws IllegalArgumentException The parameter {@code divisor} is less than
+     * 0.
+     */
+    public EInteger Mod(int smallDivisor) {
+      if (smallDivisor < 0) {
+        throw new ArithmeticException("Divisor is negative");
+      }
+      EInteger remainderEInt = this.Remainder(smallDivisor);
+      if (remainderEInt.signum() < 0) {
+        remainderEInt = EInteger.FromInt32(smallDivisor).Add(remainderEInt);
       }
       return remainderEInt;
     }
@@ -2771,6 +2804,7 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
       if (bigintMult.wordCount == 1 && bigintMult.words[0] == 1) {
         return bigintMult.negative ? this.Negate() : this;
       }
+      // DebugUtility.Log("multiply " + this + " " + bigintMult);
       short[] productreg;
       int productwordCount;
       boolean needShorten = true;
@@ -2887,6 +2921,49 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
     }
 
     /**
+     * Not documented yet.
+     * @param bigPower The parameter {@code bigPower} is not documented yet.
+     * @return An EInteger object.
+     * @throws NullPointerException The parameter {@code bigPower} is null.
+     * @throws IllegalArgumentException BigPower is negative.
+     */
+    public EInteger Pow(EInteger bigPower) {
+     if (bigPower == null) {
+  throw new NullPointerException("bigPower");
+}
+if (bigPower.signum() < 0) {
+  throw new IllegalArgumentException("bigPower is negative");
+}
+     if (bigPower.signum() == 0) {
+        // however 0 to the power of 0 is undefined
+        return EInteger.FromInt32(1);
+      }
+      if (bigPower.compareTo(1) == 0) {
+        return this;
+      }
+     if (this.isZero() || this.compareTo(1) == 0) {
+ return this;
+}
+     if (this.compareTo(-1) == 0) {
+       return this.isEven() ? EInteger.FromInt32(1) : this;
+     }
+     if (bigPower.CanFitInInt32()) {
+        return this.Pow(bigPower.ToInt32Checked());
+     }
+     EInteger bp = bigPower;
+     EInteger ret = EInteger.FromInt32(1);
+     EInteger rmax = this.Pow(Integer.MAX_VALUE);
+     while (!bp.CanFitInInt32()) {
+        ret = ret.Multiply(rmax);
+        bp = bp.Subtract(Integer.MAX_VALUE);
+     }
+     int lastp = bp.ToInt32Checked();
+     ret = (lastp == Integer.MAX_VALUE) ? ret.Multiply(rmax) :
+       ret.Multiply(this.Pow(lastp));
+     return ret;
+    }
+
+    /**
      * Raises an arbitrary-precision integer to a power.
      * @param powerSmall The exponent to raise to.
      * @return The result. Returns 1 if "powerSmall" is 0.
@@ -2903,6 +2980,12 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
       }
       if (powerSmall == 1) {
         return this;
+      }
+      if (this.isZero() || this.compareTo(1) == 0) {
+ return this;
+}
+      if (this.compareTo(-1) == 0) {
+        return this.isEven() ? EInteger.FromInt32(1) : this;
       }
       if (powerSmall == 2) {
         return thisVar.Multiply(thisVar);
@@ -3061,7 +3144,7 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * this is the same as shiftRight with the absolute value of this
      * parameter.
      * @return An arbitrary-precision integer.
-     * @throws NullPointerException The parameter {@code eshift} is null.
+     * @throws java.lang.NullPointerException The parameter {@code eshift} is null.
      */
     public EInteger ShiftLeft(EInteger eshift) {
       if (eshift == null) {
@@ -3123,6 +3206,273 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         TwosComplement(ret, 0, (int)ret.length);
         return new EInteger(CountWords(ret), ret, true);
       }
+    }
+
+    private static void OrWords(short[] r, short[] a, short[] b, int n) {
+      for (int i = 0; i < n; ++i) {
+        r[i] = ((short)(a[i] | b[i]));
+      }
+    }
+
+    private static void XorWords(short[] r, short[] a, short[] b, int n) {
+      for (int i = 0; i < n; ++i) {
+        r[i] = ((short)(a[i] ^ b[i]));
+      }
+    }
+
+    private static void NotWords(short[] r, int n) {
+      for (int i = 0; i < n; ++i) {
+        r[i] = ((short)(~r[i]));
+      }
+    }
+
+    private static void AndWords(short[] r, short[] a, short[] b, int n) {
+      for (int i = 0; i < n; ++i) {
+        r[i] = ((short)(a[i] & b[i]));
+      }
+    }
+
+    /**
+     * Returns an arbitrary-precision integer with every bit flipped.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.NullPointerException The parameter {@code valueA} is null.
+     */
+    public EInteger Not() {
+      if (this.wordCount == 0) {
+        return EInteger.FromInt32(-1);
+      }
+      boolean valueXaNegative = false; int valueXaWordCount = 0;
+      short[] valueXaReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, valueXaReg, 0, valueXaReg.length);
+      valueXaWordCount = this.wordCount;
+      if (this.negative) {
+        TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      NotWords(valueXaReg, (int)valueXaReg.length);
+      if (this.negative) {
+        TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      valueXaNegative = !this.negative;
+      valueXaWordCount = CountWords(valueXaReg);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+    }
+
+    /**
+     * Does an AND operation between two arbitrary-precision integer values.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param other An EInteger object.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.NullPointerException The parameter {@code a} or {@code b} is
+     * null.
+     */
+    public EInteger And(EInteger other) {
+   if (other == null) {
+  throw new NullPointerException("other");
+}
+      if (other.isZero() || this.isZero()) {
+        return EInteger.FromInt32(0);
+      }
+      if (!this.negative && !other.negative) {
+        int smallerCount = Math.min(this.wordCount, other.wordCount);
+        short[] smaller = (this.wordCount == smallerCount) ?
+            this.words : other.words;
+        short[] bigger = (this.wordCount == smallerCount) ?
+            other.words : this.words;
+        short[] result = new short[smallerCount];
+        for (int i = 0; i < smallerCount; ++i) {
+          result[i] = ((short)(smaller[i] & bigger[i]));
+        }
+        smallerCount = CountWords(result);
+        return (smallerCount == 0) ? EInteger.FromInt32(0) : (new
+          EInteger(smallerCount, result, false));
+      }
+      boolean valueXaNegative = false;
+      int valueXaWordCount = 0;
+      short[] valueXaReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, valueXaReg, 0, valueXaReg.length);
+      boolean valueXbNegative = false;
+      short[] valueXbReg = new short[other.wordCount];
+      System.arraycopy(other.words, 0, valueXbReg, 0, valueXbReg.length);
+      valueXaNegative = this.negative;
+      valueXaWordCount = this.wordCount;
+      valueXbNegative = other.negative;
+      valueXaReg = CleanGrow(
+  valueXaReg,
+  Math.max(valueXaReg.length, valueXbReg.length));
+      valueXbReg = CleanGrow(
+  valueXbReg,
+  Math.max(valueXaReg.length, valueXbReg.length));
+      if (valueXaNegative) {
+          TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      if (valueXbNegative) {
+          TwosComplement(valueXbReg, 0, (int)valueXbReg.length);
+      }
+      valueXaNegative &= valueXbNegative;
+      AndWords(valueXaReg, valueXaReg, valueXbReg, (int)valueXaReg.length);
+      if (valueXaNegative) {
+          TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      valueXaWordCount = CountWords(valueXaReg);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+    }
+
+    /**
+     * Does an OR operation between two arbitrary-precision integer
+     * instances.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second The second operand.
+     * @return An arbitrary-precision integer.
+     * @throws java.lang.NullPointerException The parameter {@code first} or {@code
+     * second} is null.
+     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't satisfy
+     * biggerCount == CountWords(result).
+     */
+    public EInteger Or(EInteger second) {
+   if (second == null) {
+  throw new NullPointerException("second");
+}
+      if (this.wordCount == 0) {
+        return second;
+      }
+      if (second.wordCount == 0) {
+        return this;
+      }
+      if (!this.negative && !second.negative) {
+        int smallerCount = Math.min(this.wordCount, second.wordCount);
+        int biggerCount = Math.max(this.wordCount, second.wordCount);
+        short[] smaller = (this.wordCount == smallerCount) ?
+            this.words : second.words;
+        short[] bigger = (this.wordCount == smallerCount) ?
+            second.words : this.words;
+        short[] result = new short[biggerCount];
+        for (int i = 0; i < smallerCount; ++i) {
+          result[i] = ((short)(smaller[i] | bigger[i]));
+        }
+        System.arraycopy(
+  bigger,
+  smallerCount,
+  result,
+  smallerCount,
+  biggerCount - smallerCount);
+
+        return new EInteger(biggerCount, result, false);
+      }
+      boolean valueXaNegative = false; int valueXaWordCount = 0;
+      short[] valueXaReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, valueXaReg, 0, valueXaReg.length);
+      boolean valueXbNegative = false;
+      short[] valueXbReg = new short[second.wordCount];
+      System.arraycopy(second.words, 0, valueXbReg, 0, valueXbReg.length);
+      valueXaNegative = this.negative;
+      valueXaWordCount = this.wordCount;
+      valueXbNegative = second.negative;
+      valueXaReg = CleanGrow(
+  valueXaReg,
+  Math.max(valueXaReg.length, valueXbReg.length));
+      valueXbReg = CleanGrow(
+  valueXbReg,
+  Math.max(valueXaReg.length, valueXbReg.length));
+      if (valueXaNegative) {
+        TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      if (valueXbNegative) {
+        TwosComplement(valueXbReg, 0, (int)valueXbReg.length);
+      }
+      valueXaNegative |= valueXbNegative;
+      OrWords(valueXaReg, valueXaReg, valueXbReg, (int)valueXaReg.length);
+      if (valueXaNegative) {
+        TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      valueXaWordCount = CountWords(valueXaReg);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+    }
+
+    /**
+     * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param other An EInteger object.
+     * @return An arbitrary-precision integer in which each bit is set if it's set
+     * in one input integer but not the other.
+     * @throws java.lang.NullPointerException The parameter {@code a} or {@code b} is
+     * null.
+     * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
+     * CountWords(result).
+     */
+    public EInteger Xor(EInteger other) {
+      if (other == null) {
+        throw new NullPointerException("other");
+      }
+      if (this.equals(other)) {
+        return EInteger.FromInt32(0);
+      }
+      if (this.wordCount == 0) {
+        return other;
+      }
+      if (other.wordCount == 0) {
+        return this;
+      }
+      if (!this.negative && !other.negative) {
+        int smallerCount = Math.min(this.wordCount, other.wordCount);
+        int biggerCount = Math.max(this.wordCount, other.wordCount);
+        short[] smaller = (this.wordCount == smallerCount) ?
+            this.words : other.words;
+        short[] bigger = (this.wordCount == smallerCount) ?
+            other.words : this.words;
+        short[] result = new short[biggerCount];
+        for (int i = 0; i < smallerCount; ++i) {
+          result[i] = ((short)(smaller[i] ^ bigger[i]));
+        }
+        System.arraycopy(
+  bigger,
+  smallerCount,
+  result,
+  smallerCount,
+  biggerCount - smallerCount);
+        smallerCount = (smallerCount == biggerCount) ?
+            CountWords(result) : biggerCount;
+
+        return (smallerCount == 0) ? EInteger.FromInt32(0) :
+           new EInteger(smallerCount, result, false);
+      }
+      boolean valueXaNegative = false;
+      int valueXaWordCount = 0;
+      short[] valueXaReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, valueXaReg, 0, valueXaReg.length);
+      boolean valueXbNegative = false;
+      short[] valueXbReg = new short[other.wordCount];
+      System.arraycopy(other.words, 0, valueXbReg, 0, valueXbReg.length);
+      valueXaNegative = this.negative;
+      valueXaWordCount = this.wordCount;
+      valueXbNegative = other.negative;
+      valueXaReg = CleanGrow(
+  valueXaReg,
+  Math.max(valueXaReg.length, valueXbReg.length));
+      valueXbReg = CleanGrow(
+  valueXbReg,
+  Math.max(valueXaReg.length, valueXbReg.length));
+      if (valueXaNegative) {
+        TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      if (valueXbNegative) {
+        TwosComplement(valueXbReg, 0, (int)valueXbReg.length);
+      }
+      valueXaNegative ^= valueXbNegative;
+      XorWords(valueXaReg, valueXaReg, valueXbReg, (int)valueXaReg.length);
+      if (valueXaNegative) {
+        TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
+      }
+      valueXaWordCount = CountWords(valueXaReg);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
     }
 
     private short[] Copy() {
@@ -3429,9 +3779,9 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
-     * passed to the <code>FromBytes() </code> method (with the same byte order)
-     * to reconstruct this integer's value.
-     * @param littleEndian Either {@code true } or {@code false } .
+     * passed to the <code>FromBytes()</code> method (with the same byte order) to
+     * reconstruct this integer's value.
+     * @param littleEndian Either {@code true} or {@code false} .
      * @return A byte array. If this value is 0, returns a byte array with the
      * single element 0.
      */
@@ -5439,8 +5789,10 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
       int i = count;
       short remainder = 0;
       while ((i--) > 0) {
+        int dividendSmall = ((int)((((int)dividendReg[i]) & 0xffff) |
+          ((int)remainder << 16)));
         remainder = RemainderUnsigned(
-          MakeUint(dividendReg[i], remainder),
+          dividendSmall,
           divisorSmall);
       }
       return remainder;
@@ -5553,10 +5905,6 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
         carry = (short)(p >> 16);
       }
       return carry;
-    }
-
-    private static int MakeUint(short first, short second) {
-      return ((int)((((int)first) & 0xffff) | ((int)second << 16)));
     }
 
     private static void RecursiveSquare(
