@@ -11,9 +11,13 @@ A class that implements additional operations on arbitrary-precision binary
    EFloat ed2,
    EContext ec)`<br>
  Not documented yet.
+* `static EFloat BooleanToEFloat​(boolean b,
+               EContext ec)`<br>
+ Converts a boolean value (either true or false) to an arbitrary-precision
+ binary floating-point number.
 * `static EFloat BoolToEFloat​(boolean b,
             EContext ec)`<br>
- Not documented yet.
+ Deprecated. 
 * `static EFloat Canonical​(EFloat ed)`<br>
  Returns a canonical version of the given arbitrary-precision number object.
 * `static int CompareTotal​(EFloat ed,
@@ -137,18 +141,35 @@ Not documented yet.
 * An arbitrary-precision binary floating-point number.
 
 ### BoolToEFloat
-    public static EFloat BoolToEFloat​(boolean b, EContext ec)
-Not documented yet.
+    @Deprecated public static EFloat BoolToEFloat​(boolean b, EContext ec)
+Deprecated.
 
 **Parameters:**
 
-* <code>b</code> - The parameter <code>b</code> is not documented yet.
+* <code>b</code> - Either true or false.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - A context used for rounding the result. Can be null.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
+ result will be rounded as specified by the given context, if any.
+
+### BooleanToEFloat
+    public static EFloat BooleanToEFloat​(boolean b, EContext ec)
+Converts a boolean value (either true or false) to an arbitrary-precision
+ binary floating-point number.
+
+**Parameters:**
+
+* <code>b</code> - Either true or false.
+
+* <code>ec</code> - A context used for rounding the result. Can be null.
+
+**Returns:**
+
+* Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
+ result will be rounded as specified by the given context, if any.
 
 ### IsCanonical
     public static boolean IsCanonical​(EFloat ed)
@@ -459,6 +480,14 @@ Compares the values of one arbitrary-precision number object and another
  "absolute value" than infinity.</li> <li>Infinity has a higher
  "absolute value" than any finite number.</li> <li>Negative numbers
  are less than positive numbers.</li></ul>
+
+**Parameters:**
+
+* <code>ed</code> - Not documented yet.
+
+* <code>other</code> - Not documented yet.
+
+* <code>ec</code> - Not documented yet. (3).
 
 **Returns:**
 

@@ -12,10 +12,14 @@ A class that implements additional operations on arbitrary-precision decimal
    EDecimal ed2,
    EContext ec)`<br>
  Performs a logical AND operation on two decimal numbers in the form of
- logical operands  .
+ logical operands.
+* `static EDecimal BooleanToEDecimal​(boolean b,
+                 EContext ec)`<br>
+ Converts a boolean value (either true or false) to an arbitrary-precision
+ decimal number.
 * `static EDecimal BoolToEDecimal​(boolean b,
               EContext ec)`<br>
- Not documented yet.
+ Deprecated. 
 * `static EDecimal Canonical​(EDecimal ed)`<br>
  Returns a canonical version of the given arbitrary-precision number object.
 * `static int CompareTotal​(EDecimal ed,
@@ -81,7 +85,7 @@ A class that implements additional operations on arbitrary-precision decimal
   EDecimal ed2,
   EContext ec)`<br>
  Performs a logical OR operation on two decimal numbers in the form of
- logical operands  .
+ logical operands.
 * `static EDecimal Radix​(EContext ec)`<br>
  Returns the number 10, the decimal radix.
 * `static EDecimal Rescale​(EDecimal ed,
@@ -142,8 +146,8 @@ Not documented yet.
 * An EDecimal object.
 
 ### BoolToEDecimal
-    public static EDecimal BoolToEDecimal​(boolean b, EContext ec)
-Not documented yet.
+    @Deprecated public static EDecimal BoolToEDecimal​(boolean b, EContext ec)
+Deprecated.
 
 **Parameters:**
 
@@ -154,6 +158,22 @@ Not documented yet.
 **Returns:**
 
 * An EDecimal object.
+
+### BooleanToEDecimal
+    public static EDecimal BooleanToEDecimal​(boolean b, EContext ec)
+Converts a boolean value (either true or false) to an arbitrary-precision
+ decimal number.
+
+**Parameters:**
+
+* <code>b</code> - Either true or false.
+
+* <code>ec</code> - A context used for rounding the result. Can be null.
+
+**Returns:**
+
+* Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
+ result will be rounded as specified by the given context, if any.
 
 ### IsCanonical
     public static boolean IsCanonical​(EDecimal ed)
@@ -465,6 +485,14 @@ Compares the values of one arbitrary-precision number object and another
  "absolute value" than any finite number.</li> <li>Negative numbers
  are less than positive numbers.</li></ul>
 
+**Parameters:**
+
+* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+
+* <code>other</code> - The parameter <code>other</code> is not documented yet.
+
+* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+
 **Returns:**
 
 * The number 0 if both objects have the same value, or -1 if the first
@@ -596,14 +624,14 @@ Not documented yet.
 
 ### And
     public static EDecimal And​(EDecimal ed1, EDecimal ed2, EContext ec)
-Performs a logical AND operation on two decimal numbers in the form of <i>
- logical operands </i> . A <code>logical operand</code> is a non-negative
- base-10 number with an exponent of 0 and no other base-10 digits than
- 0 or 1 (examples include <code>01001</code> and <code>111001</code> , but not
- <code>02001</code> or <code>99999</code>). The logical AND operation sets each
- digit of the result to 1 if the corresponding digits of each logical
- operand are both 1, and to 0 otherwise. For example, <code>01001 AND
- 111010 = 01000</code>
+Performs a logical AND operation on two decimal numbers in the form of
+ <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+ base-10 number with an Exponent property of 0 and no other base-10
+ digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+ but not <code>02001</code> or <code>99999</code>). The logical AND operation
+ sets each digit of the result to 1 if the corresponding digits of
+ each logical operand are both 1, and to 0 otherwise. For example,
+ <code>01001 AND 111010 = 01000</code>
 
 **Parameters:**
 
@@ -611,11 +639,17 @@ Performs a logical AND operation on two decimal numbers in the form of <i>
 
 * <code>ed2</code> - The second logical operand to the logical AND operation.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - A context that specifies the maximum precision of
+ arbitrary-precision numbers. If a logical operand passed to this
+ method has more digits than the maximum precision specified in this
+ context, the operand's most significant digits that exceed that
+ precision are discarded. This parameter can be null.
 
 **Returns:**
 
-* An EDecimal object.
+* The result of the logical AND operation as a logical operand.
+ Signals an invalid operation and returns not-a-number (NaN) if <code>
+ ed1</code>, <code>ed2</code>, or both are not logical operands.
 
 ### Invert
     public static EDecimal Invert​(EDecimal ed1, EContext ec)
@@ -666,12 +700,12 @@ Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
 
 ### Or
     public static EDecimal Or​(EDecimal ed1, EDecimal ed2, EContext ec)
-Performs a logical OR operation on two decimal numbers in the form of <i>
- logical operands </i> . A <code>logical operand</code> is a non-negative
- base-10 number with an exponent of 0 and no other base-10 digits than
- 0 or 1 (examples include <code>01001</code> and <code>111001</code> , but not
- <code>02001</code> or <code>99999</code>). The logical OR operation sets each
- digit of the result to 1 if either or both of the corresponding
+Performs a logical OR operation on two decimal numbers in the form of
+ <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+ base-10 number with an Exponent property of 0 and no other base-10
+ digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+ but not <code>02001</code> or <code>99999</code>). The logical OR operation sets
+ each digit of the result to 1 if either or both of the corresponding
  digits of the logical operands are 1, and to 0 otherwise. For
  example, <code>01001 OR 111010 = 111011</code>
 
@@ -681,8 +715,14 @@ Performs a logical OR operation on two decimal numbers in the form of <i>
 
 * <code>ed2</code> - The second logical operand to the logical OR operation.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - A context that specifies the maximum precision of
+ arbitrary-precision numbers. If a logical operand passed to this
+ method has more digits than the maximum precision specified in this
+ context, the operand's most significant digits that exceed that
+ precision are discarded. This parameter can be null.
 
 **Returns:**
 
-* An EDecimal object.
+* The result of the logical OR operation as a logical operand. Signals
+ an invalid operation and returns not-a-number (NaN) if <code>ed1</code>,
+ <code>ed2</code>, or both are not logical operands.
