@@ -8,9 +8,9 @@ at: http://peteroupc.github.io/
  */
 
   final class FastIntegerFixed implements Comparable<FastIntegerFixed> {
-    private int smallValue;  // if integerMode is 0
-    private EInteger largeValue;  // if integerMode is 2
-    private int integerMode;
+    private final int smallValue;  // if integerMode is 0
+    private final EInteger largeValue;  // if integerMode is 2
+    private final int integerMode;
 
     public static final FastIntegerFixed Zero = new FastIntegerFixed(0);
     public static final FastIntegerFixed One = new FastIntegerFixed(1);
@@ -20,8 +20,17 @@ at: http://peteroupc.github.io/
 
     private static final EInteger ValueNegativeInt32MinValue=(ValueInt32MinValue).Negate();
 
-    FastIntegerFixed(int value) {
-      this.smallValue = value;
+    FastIntegerFixed(int smallValue) {
+ this(0, smallValue, null);
+}
+
+    FastIntegerFixed(
+  int integerMode,
+  int smallValue,
+  EInteger largeValue) {
+   this.integerMode = integerMode;
+      this.smallValue = smallValue;
+   this.largeValue = largeValue;
     }
 
     @Override public boolean equals(Object obj) {
@@ -55,23 +64,18 @@ at: http://peteroupc.github.io/
     }
 
     static FastIntegerFixed FromLong(long longVal) {
-      if (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) {
-        return new FastIntegerFixed((int)longVal);
-      }
-      FastIntegerFixed fi = new FastIntegerFixed(0);
-      fi.integerMode = 2;
-      fi.largeValue = EInteger.FromInt64(longVal);
-      return fi;
+      return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? (new
+        FastIntegerFixed(
+  (
+  int)longVal)) : (new FastIntegerFixed(2,
+ 0,
+        EInteger.FromInt64(longVal)));
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {
-      if (bigintVal.CanFitInInt32()) {
-        return new FastIntegerFixed(bigintVal.ToInt32Unchecked());
-      }
-      FastIntegerFixed fi = new FastIntegerFixed(0);
-      fi.integerMode = 2;
-      fi.largeValue = bigintVal;
-      return fi;
+      return (bigintVal.CanFitInInt32()) ? (new
+        FastIntegerFixed(bigintVal.ToInt32Unchecked())) : (new
+        FastIntegerFixed(2, 0, bigintVal));
     }
 
     int AsInt32() {

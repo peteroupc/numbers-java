@@ -8,10 +8,15 @@ Contains parameters for controlling the precision, rounding, and exponent
 Represents an arbitrary-precision decimal floating-point number.
 
 * [com.upokecenter.numbers.EDecimalExtras](com.upokecenter.numbers.EDecimalExtras.md) -
-Not documented yet.
+A class that implements additional operations on arbitrary-precision decimal
+ numbers.
 
 * [com.upokecenter.numbers.EFloat](com.upokecenter.numbers.EFloat.md) -
 Represents an arbitrary-precision binary floating-point number.
+
+* [com.upokecenter.numbers.EFloatExtras](com.upokecenter.numbers.EFloatExtras.md) -
+A class that implements additional operations on arbitrary-precision binary
+ floating-point numbers.
 
 * [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -
 Represents an arbitrary-precision integer.
