@@ -34,24 +34,32 @@ A class that implements additional operations on arbitrary-precision decimal
 * `static EDecimal Copy​(EDecimal ed)`<br>
  Not documented yet.
 * `static EDecimal CopyAbs​(EDecimal ed)`<br>
- Not documented yet.
+ Returns an arbitrary-precision number object with the same value as the
+ given number object but with a nonnegative sign (that is, the given
+ number object's absolute value).
 * `static EDecimal CopyNegate​(EDecimal ed)`<br>
- Not documented yet.
+ Returns an arbitrary-precision number object with the sign reversed from the
+ given number object.
 * `static EDecimal CopySign​(EDecimal ed,
         EDecimal other)`<br>
- Not documented yet.
+ Returns an arbitrary-precision number object with the same value as the
+ first given number object but with a the same sign (positive or
+ negative) as the second given number object.
 * `static EDecimal Int32ToEDecimal​(int i32,
                EContext ec)`<br>
- Not documented yet.
+ Creates a decimal number from a 32-bit signed integer.
 * `static EDecimal Invert​(EDecimal ed1,
       EContext ec)`<br>
- Not documented yet.
+ Performs a logical NOT operation on a decimal numbers in the form of a
+ logical operand.
 * `static boolean IsCanonical​(EDecimal ed)`<br>
  Not documented yet.
 * `static boolean IsFinite​(EDecimal ed)`<br>
- Not documented yet.
+ Returns whether the given arbitrary-precision number object is neither null
+ nor infinity nor not-a-number (NaN).
 * `static boolean IsInfinite​(EDecimal ed)`<br>
- Not documented yet.
+ Returns whether the given arbitrary-precision number object is positive or
+ negative infinity.
 * `static boolean IsNaN​(EDecimal ed)`<br>
  Returns whether the given arbitrary-precision number object is a
  not-a-number (NaN).
@@ -85,7 +93,7 @@ A class that implements additional operations on arbitrary-precision decimal
   EDecimal ed2,
   EContext ec)`<br>
  Performs a logical OR operation on two decimal numbers in the form of
- logical operands.
+ logical operands  .
 * `static EDecimal Radix​(EContext ec)`<br>
  Returns the number 10, the decimal radix.
 * `static EDecimal Rescale​(EDecimal ed,
@@ -106,7 +114,7 @@ A class that implements additional operations on arbitrary-precision decimal
 * `static EDecimal Shift​(EDecimal ed,
      EDecimal ed2,
      EContext ec)`<br>
- Not documented yet.
+ Rotates the digits of an arbitrary-precision decimal number's mantissa.
 * `static EDecimal Trim​(EDecimal ed1,
     EContext ec)`<br>
  Not documented yet.
@@ -114,7 +122,7 @@ A class that implements additional operations on arbitrary-precision decimal
    EDecimal ed2,
    EContext ec)`<br>
  Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
- the form of logical operands.
+ the form of  logical operands  .
 
 ## Method Details
 
@@ -124,41 +132,33 @@ Returns the number 10, the decimal radix.
 
 **Parameters:**
 
-* <code>ec</code> - Specifies a precision context for rounding the number 10. Can be
+* <code>ec</code> - Specifies an arithmetic context for rounding the number 10. Can be
  null.
 
 **Returns:**
 
-* The number 10, rounded as given in the precision context.
+* The number 10, or the closest representable number to 10 in the
+ arithmetic context.
 
 ### Int32ToEDecimal
     public static EDecimal Int32ToEDecimal​(int i32, EContext ec)
-Not documented yet.
+Creates a decimal number from a 32-bit signed integer.
 
 **Parameters:**
 
-* <code>i32</code> - The parameter <code>i32</code> is not documented yet.
+* <code>i32</code> - The parameter <code>i32</code> is a 32-bit signed integer.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. Can be null.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision decimal number with the closest representable
+ value to the given integer.
 
 ### BoolToEDecimal
     @Deprecated public static EDecimal BoolToEDecimal​(boolean b, EContext ec)
 Deprecated.
-
-**Parameters:**
-
-* <code>b</code> - The parameter <code>b</code> is not documented yet.
-
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
-
-**Returns:**
-
-* An EDecimal object.
-
 ### BooleanToEDecimal
     public static EDecimal BooleanToEDecimal​(boolean b, EContext ec)
 Converts a boolean value (either true or false) to an arbitrary-precision
@@ -189,27 +189,32 @@ Not documented yet.
 
 ### IsFinite
     public static boolean IsFinite​(EDecimal ed)
-Not documented yet.
+Returns whether the given arbitrary-precision number object is neither null
+ nor infinity nor not-a-number (NaN).
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object.
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code> .
+* Either <code>true</code> if the given arbitrary-precision number object
+ is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
+ otherwise.
 
 ### IsInfinite
     public static boolean IsInfinite​(EDecimal ed)
-Not documented yet.
+Returns whether the given arbitrary-precision number object is positive or
+ negative infinity.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object.
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code> .
+* Either <code>true</code> if the given arbitrary-precision number object
+ is positive or negative infinity, or <code>false</code> otherwise.
 
 ### IsNaN
     public static boolean IsNaN​(EDecimal ed)
@@ -420,19 +425,32 @@ Not documented yet.
 
 ### Shift
     public static EDecimal Shift​(EDecimal ed, EDecimal ed2, EContext ec)
-Not documented yet.
+Rotates the digits of an arbitrary-precision decimal number's mantissa.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number containing the mantissa to rotate.
+ If this mantissa contains more digits than the precision, the
+ most-significant digits are chopped off the mantissa.
 
-* <code>ed2</code> - The parameter <code>ed2</code> is not documented yet.
+* <code>ed2</code> - An arbitrary-precision number indicating the number of digits to
+ rotate the first operand's mantissa. Must be an integer with an
+ exponent of 0. If this parameter is positive, the mantissa is shifted
+ to the left by the given number of digits . If this parameter is
+ negative, the mantissa is shifted to the right by the given number of
+ digits.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - A context that specifies the precision of arbitrary-precision
+ numbers. Can be null.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision decimal number whose mantissa is rotated the
+ given number of bits. Signals an invalid operation and returns NaN
+ (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is
+ not an integer, is negative, has an exponent other than 0, or has an
+ absolute value that exceeds the maximum precision specified in the
+ context.
 
 **Throws:**
 
@@ -452,15 +470,16 @@ Rotates the digits of an arbitrary-precision decimal number's mantissa.
 * <code>ed2</code> - An arbitrary-precision number indicating the number of digits to
  rotate the first operand's mantissa. Must be an integer with an
  exponent of 0. If this parameter is positive, the mantissa is shifted
- by the given number of digits and the most-significant digits shifted
- out of the mantissa become the least-significant digits instead. If
- this parameter is negative, the number is shifted by the given number
- of digits and the least-significant digits shifted out of the
- mantissa become the most-significant digits instead.
+ to the left by the given number of digits and the most-significant
+ digits shifted out of the mantissa become the least-significant
+ digits instead. If this parameter is negative, the mantissa is
+ shifted to the right by the given number of digits and the
+ least-significant digits shifted out of the mantissa become the
+ most-significant digits instead.
 
 * <code>ec</code> - A context that specifies the precision of arbitrary-precision
  numbers. If this parameter is null or specifies an unlimited
- precision, this method has the same behavior as <code>Shift</code>.
+ precision, this method has the same behavior as <code>Shift</code> .
 
 **Returns:**
 
@@ -476,22 +495,25 @@ Rotates the digits of an arbitrary-precision decimal number's mantissa.
 Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this
  method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater "absolute value".</li> <li>Negative
- zero is less than positive zero.</li> <li>Quiet NaN has a higher
+ higher exponent has a greater "absolute value". </li> <li>Negative
+ zero is less than positive zero. </li> <li>Quiet NaN has a higher
  "absolute value" than signaling NaN. If both objects are quiet NaN or
  both are signaling NaN, the one with the higher diagnostic
- information has a greater "absolute value".</li> <li>NaN has a higher
- "absolute value" than infinity.</li> <li>Infinity has a higher
- "absolute value" than any finite number.</li> <li>Negative numbers
- are less than positive numbers.</li></ul>
+ information has a greater "absolute value". </li> <li>NaN has a
+ higher "absolute value" than infinity. </li> <li>Infinity has a
+ higher "absolute value" than any finite number. </li> <li>Negative
+ numbers are less than positive numbers. </li> </ul>
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - The first arbitrary-precision number to compare.
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - The second arbitrary-precision number to compare.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context. Flags will be set in this context only if
+ <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
+ only if an operand needed to be rounded before carrying out the
+ operation. Can be null.
 
 **Returns:**
 
@@ -505,15 +527,18 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - The first arbitrary-precision number to compare.
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - The second arbitrary-precision number to compare.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context. Flags will be set in this context only if
+ <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
+ only if an operand needed to be rounded before carrying out the
+ operation. Can be null.
 
 **Returns:**
 
-* A 32-bit signed integer.
+* A value not documented yet.
 
 ### Copy
     public static EDecimal Copy​(EDecimal ed)
@@ -538,45 +563,55 @@ Returns a canonical version of the given arbitrary-precision number object.
 
 **Returns:**
 
-* The parameter <code>ed</code>.
+* The parameter <code>ed</code> .
 
 ### CopyAbs
     public static EDecimal CopyAbs​(EDecimal ed)
-Not documented yet.
+Returns an arbitrary-precision number object with the same value as the
+ given number object but with a nonnegative sign (that is, the given
+ number object's absolute value).
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision number object with the same value as the
+ given number object but with a nonnegative sign.
 
 ### CopyNegate
     public static EDecimal CopyNegate​(EDecimal ed)
-Not documented yet.
+Returns an arbitrary-precision number object with the sign reversed from the
+ given number object.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision number object with the sign reversed from the
+ given number object.
 
 ### CopySign
     public static EDecimal CopySign​(EDecimal ed, EDecimal other)
-Not documented yet.
+Returns an arbitrary-precision number object with the same value as the
+ first given number object but with a the same sign (positive or
+ negative) as the second given number object.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object with the value the result
+ will have.
 
-* <code>other</code> - The parameter <code>other</code> is not documented yet.
+* <code>other</code> - An EDecimal object.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision number object with the same value as the
+ first given number object but with a the same sign (positive or
+ negative) as the second given number object.
 
 ### SameQuantum
     public static boolean SameQuantum​(EDecimal ed1, EDecimal ed2)
@@ -653,11 +688,19 @@ Performs a logical AND operation on two decimal numbers in the form of
 
 ### Invert
     public static EDecimal Invert​(EDecimal ed1, EContext ec)
-Not documented yet.
+Performs a logical NOT operation on a decimal numbers in the form of a
+ <i>logical operand</i>. A <code>logical operand</code> is a non-negative
+ base-10 number with an Exponent property of 0 and no other base-10
+ digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code> ,
+ but not <code>02001</code> or <code>99999</code>). The logical NOT operation
+ sets each digit of the result to 1 if the corresponding digit is 0,
+ and to 0 otherwise; it can set no more digits than the maximum
+ precision, however. For example, if the maximum precision is 8
+ digits, then <code>NOT 111010 = 11000101</code>
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The logical operand to the logical NOT operation.
 
 * <code>ec</code> - A context that specifies the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
@@ -669,18 +712,20 @@ Not documented yet.
 
 **Returns:**
 
-* An EDecimal object.
+* The result of the logical NOT operation as a logical operand.
+ Signals an invalid operation and returns not-a-number (NaN) if <code>
+ ed1</code> is not a logical operand.
 
 ### Xor
     public static EDecimal Xor​(EDecimal ed1, EDecimal ed2, EContext ec)
 Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
- the form of <i>logical operands</i>. A <code>logical operand</code> is a
+ the form of <i> logical operands </i> . A <code>logical operand</code> is a
  non-negative base-10 number with an exponent of 0 and no other
  base-10 digits than 0 or 1 (examples include <code>01001</code> and
- <code>111001</code>, but not <code>02001</code> or <code>99999</code>). The logical
+ <code>111001</code> , but not <code>02001</code> or <code>99999</code>). The logical
  exclusive-OR operation sets each digit of the result to 1 if either
- corresponding digit of the logical operands, but not both, are 1, and
- to 0 otherwise. For example, <code>01001 OR 111010 = 101010</code>
+ corresponding digit of the logical operands, but not both, is 1, and
+ to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
 
 **Parameters:**
 
@@ -700,10 +745,10 @@ Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
 
 ### Or
     public static EDecimal Or​(EDecimal ed1, EDecimal ed2, EContext ec)
-Performs a logical OR operation on two decimal numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative
+Performs a logical OR operation on two decimal numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
  base-10 number with an Exponent property of 0 and no other base-10
- digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+ digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code> ,
  but not <code>02001</code> or <code>99999</code>). The logical OR operation sets
  each digit of the result to 1 if either or both of the corresponding
  digits of the logical operands are 1, and to 0 otherwise. For
@@ -724,5 +769,5 @@ Performs a logical OR operation on two decimal numbers in the form of
 **Returns:**
 
 * The result of the logical OR operation as a logical operand. Signals
- an invalid operation and returns not-a-number (NaN) if <code>ed1</code>,
- <code>ed2</code>, or both are not logical operands.
+ an invalid operation and returns not-a-number (NaN) if <code>ed1</code> ,
+ <code>ed2</code> , or both are not logical operands.

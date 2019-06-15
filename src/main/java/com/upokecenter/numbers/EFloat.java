@@ -24,7 +24,7 @@ at: http://peteroupc.github.io/
      * float argument to any method here will throw an exception. </p>
      * <p>When an arithmetic operation signals the flag FlagInvalid,
      * FlagOverflow, or FlagDivideByZero, it will not throw an exception
-     * too, unless the operation's trap is enabled in the precision context
+     * too, unless the operation's trap is enabled in the arithmetic context
      * (see EContext's Traps property). </p> <p>An arbitrary-precision
      * binary float value can be serialized in one of the following ways:
      * </p> <ul> <li>By calling the toString() method. However, not all
@@ -275,7 +275,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     }
 
     /**
-     * Creates a not-a-number arbitrary-precision binary float.
+     * Creates a not-a-number arbitrary-precision binary floating-point number.
      * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To
      * get the diagnostic information from another arbitrary-precision
@@ -289,7 +289,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     }
 
     /**
-     * Creates a not-a-number arbitrary-precision binary float.
+     * Creates a not-a-number arbitrary-precision binary floating-point number.
      * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To
      * get the diagnostic information from another arbitrary-precision
@@ -396,7 +396,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     /**
      * Converts an arbitrary-precision integer to the same value as a binary float.
      * @param bigint An arbitrary-precision integer.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat FromEInteger(EInteger bigint) {
       return EFloat.Create(bigint, EInteger.FromInt32(0));
@@ -481,7 +481,8 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @param ctx The parameter {@code ctx} is an EContext object.
-     * @return The parsed number, converted to arbitrary-precision binary float.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is
      * less than 0 or greater than {@code str} 's length, or {@code str} ' s
@@ -508,7 +509,8 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * unlimited precision context. For more information, see the
      * <code>FromString(String, int, int, EContext)</code> method.
      * @param str A text string to convert to a binary float.
-     * @return The parsed number, converted to arbitrary-precision binary float.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
      */
     public static EFloat FromString(String str) {
       return FromString(str, 0, str == null ? 0 : str.length(), null);
@@ -516,12 +518,13 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
      * @param str A text string to convert to a binary float.
-     * @param ctx A precision context specifying the precision, rounding, and
+     * @param ctx An arithmetic context specifying the precision, rounding, and
      * exponent range to apply to the parsed number. Can be null.
-     * @return The parsed number, converted to arbitrary-precision binary float.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, EContext ctx) {
@@ -537,7 +540,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws T:java.lang.IllegalArgumentException Either {@code offset} or {@code length}
      * is less than 0 or greater than {@code str} 's length, or {@code str}
      * ' s length minus {@code offset} is less than {@code length} .
@@ -570,8 +573,8 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
 
     /**
      * Gets the greater value between two binary floats.
-     * @param first An arbitrary-precision binary float.
-     * @param second Another arbitrary-precision binary float.
+     * @param first An arbitrary-precision binary floating-point number.
+     * @param second Another arbitrary-precision binary floating-point number.
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Max(
@@ -590,7 +593,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat MaxMagnitude(
       EFloat first,
@@ -652,7 +655,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat MinMagnitude(
       EFloat first,
@@ -692,11 +695,11 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     /**
      * Finds the absolute value of this object (if it's negative, it becomes
      * positive).
-     * @return An arbitrary-precision binary float. Returns signaling NaN if this
-     * value is signaling NaN. (In this sense, this method is similar to the
-     * "copy-abs" operation in the General Decimal Arithmetic Specification,
-     * except this method does not necessarily return a copy of this
-     * object.).
+     * @return An arbitrary-precision binary floating-point number. Returns
+     * signaling NaN if this value is signaling NaN. (In this sense, this
+     * method is similar to the "copy-abs" operation in the General Decimal
+     * Arithmetic Specification, except this method does not necessarily
+     * return a copy of this object.).
      */
     public EFloat Abs() {
       if (this.isNegative()) {
@@ -772,7 +775,7 @@ public EFloat Divide(int intValue) {
 
     /**
      * Adds this object and another binary float and returns the result.
-     * @param otherValue An arbitrary-precision binary float.
+     * @param otherValue An arbitrary-precision binary floating-point number.
      * @return The sum of the two objects.
      */
     public EFloat Add(EFloat otherValue) {
@@ -806,7 +809,7 @@ public EFloat Divide(int intValue) {
      * quiet NaN or signaling NaN, this method will not trigger an error.
      * Instead, NaN will compare greater than any other number, including
      * infinity. Two different NaN values will be considered equal. </p>
-     * @param other An arbitrary-precision binary float.
+     * @param other An arbitrary-precision binary floating-point number.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other value
      * or if "other" is null, or 0 if both values are equal.
@@ -821,7 +824,7 @@ public EFloat Divide(int intValue) {
      * zero are considered equal. </p> <p>If this object or the other object
      * is a quiet NaN or signaling NaN, this method will return a quiet NaN
      * and will signal a FlagInvalid flag. </p>
-     * @param other An arbitrary-precision binary float.
+     * @param other An arbitrary-precision binary floating-point number.
      * @param ctx An arithmetic context. The precision, rounding, and exponent
      * range are ignored. If {@code HasFlags} of the context is true, will
      * store the flags resulting from the operation (the flags are in
@@ -1037,7 +1040,7 @@ public EFloat Divide(int intValue) {
      * </p> <p>If this object or the other object is a quiet NaN or
      * signaling NaN, this method returns a quiet NaN, and will signal a
      * FlagInvalid flag if either is a signaling NaN. </p>
-     * @param other An arbitrary-precision binary float.
+     * @param other An arbitrary-precision binary floating-point number.
      * @param ctx An arithmetic context. The precision, rounding, and exponent
      * range are ignored. If {@code HasFlags} of the context is true, will
      * store the flags resulting from the operation (the flags are in
@@ -1059,7 +1062,7 @@ public EFloat Divide(int intValue) {
      * Specification, except this method does not necessarily return a copy
      * of this object.).
      * @param other A number whose sign will be copied.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EFloat CopySign(EFloat other) {
@@ -1090,8 +1093,8 @@ public EFloat Divide(int intValue) {
 
     /**
      * Divides this arbitrary-precision binary float by another arbitrary-precision
-     * binary float. The preferred exponent for the result is this object's
-     * exponent minus the divisor's exponent.
+     * binary floating-point number. The preferred exponent for the result
+     * is this object's exponent minus the divisor's exponent.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context to control precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -1401,7 +1404,7 @@ public EFloat Divide(int intValue) {
      * Determines whether this object's mantissa (significand), exponent, and
      * properties are equal to those of another object. Not-a-number values
      * are considered equal if the rest of their properties are equal.
-     * @param other An arbitrary-precision binary float.
+     * @param other An arbitrary-precision binary floating-point number.
      * @return {@code true} if this object's mantissa (significand) and exponent
      * are equal to those of another object; otherwise, {@code false} .
      */
@@ -1412,8 +1415,9 @@ public EFloat Divide(int intValue) {
     /**
      * Determines whether this object's mantissa (significand), exponent, and
      * properties are equal to those of another object and that other object
-     * is an arbitrary-precision binary float. Not-a-number values are
-     * considered equal if the rest of their properties are equal.
+     * is an arbitrary-precision binary floating-point number. Not-a-number
+     * values are considered equal if the rest of their properties are
+     * equal.
      * @param obj The parameter {@code obj} is an arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false} .
      */
@@ -1424,7 +1428,7 @@ public EFloat Divide(int intValue) {
     /**
      * Determines whether this object's mantissa (significand) and exponent are
      * equal to those of another object.
-     * @param otherValue An arbitrary-precision binary float.
+     * @param otherValue An arbitrary-precision binary floating-point number.
      * @return {@code true} if this object's mantissa (significand) and exponent
      * are equal to those of another object; otherwise, {@code false} .
      */
@@ -1835,10 +1839,10 @@ public EFloat Divide(int intValue) {
 
     /**
      * Gets an object with the same value as this one, but with the sign reversed.
-     * @return An arbitrary-precision binary float. If this value is positive zero,
-     * returns negative zero. Returns signaling NaN if this value is
-     * signaling NaN. (In this sense, this method is similar to the
-     * "copy-negate" operation in the General Decimal Arithmetic
+     * @return An arbitrary-precision binary floating-point number. If this value
+     * is positive zero, returns negative zero. Returns signaling NaN if
+     * this value is signaling NaN. (In this sense, this method is similar
+     * to the "copy-negate" operation in the General Decimal Arithmetic
      * Specification, except this method does not necessarily return a copy
      * of this object.).
      */
@@ -1857,9 +1861,9 @@ public EFloat Divide(int intValue) {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision binary float. If this value is positive zero,
-     * returns positive zero. Signals FlagInvalid and returns quiet NaN if
-     * this value is signaling NaN.
+     * @return An arbitrary-precision binary floating-point number. If this value
+     * is positive zero, returns positive zero. Signals FlagInvalid and
+     * returns quiet NaN if this value is signaling NaN.
      */
     public EFloat Negate(EContext context) {
       return MathValue.Negate(this, context);
@@ -2174,7 +2178,7 @@ public EFloat Divide(int intValue) {
      * Calculates the remainder of a number by the formula <code>"this" - (("this" /
      * "divisor") * "divisor")</code>
      * @param divisor The number to divide by.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RemainderNaturalScale(
       EFloat divisor) {
@@ -2258,7 +2262,7 @@ public EFloat Divide(int intValue) {
      * @return A binary float rounded to the closest value representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the precision context defines an exponent
+     * not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when
      * rounding, and the given exponent is outside of the valid range of the
      * arithmetic context.
@@ -2288,7 +2292,7 @@ public EFloat Divide(int intValue) {
      * @return A binary float rounded to the closest value representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the precision context defines an exponent
+     * not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when
      * rounding, and the given exponent is outside of the valid range of the
      * arithmetic context.
@@ -2423,7 +2427,7 @@ public EFloat Divide(int intValue) {
      * @return A binary float rounded to the closest integer representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the precision context defines an exponent
+     * not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is
      * outside of the valid range of the arithmetic context.
      */
@@ -2467,7 +2471,7 @@ public EFloat Divide(int intValue) {
      * @return A binary float rounded to the closest integer representable in the
      * given precision. If the result can't fit the precision, additional
      * digits are discarded to make it fit. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the precision context defines an exponent
+     * not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is
      * outside of the valid range of the arithmetic context.
      * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
@@ -2496,7 +2500,7 @@ public EFloat Divide(int intValue) {
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param places The parameter {@code places} is a 32-bit signed integer.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(int places) {
       return this.ScaleByPowerOfTwo(EInteger.FromInt32(places), null);
@@ -3067,7 +3071,7 @@ public EFloat Divide(int intValue) {
 
     /**
      * This is an internal method.
-     * @param value An arbitrary-precision binary float.
+     * @param value An arbitrary-precision binary floating-point number.
      * @return A 32-bit signed integer.
      */
       public int GetSign(EFloat value) {
@@ -3076,7 +3080,7 @@ public EFloat Divide(int intValue) {
 
     /**
      * This is an internal method.
-     * @param value An arbitrary-precision binary float.
+     * @param value An arbitrary-precision binary floating-point number.
      * @return An arbitrary-precision integer.
      */
       public EInteger GetMantissa(EFloat value) {
@@ -3085,7 +3089,7 @@ public EFloat Divide(int intValue) {
 
     /**
      * This is an internal method.
-     * @param value An arbitrary-precision binary float.
+     * @param value An arbitrary-precision binary floating-point number.
      * @return An arbitrary-precision integer.
      */
       public EInteger GetExponent(EFloat value) {
@@ -3178,7 +3182,7 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
 
     /**
      * This is an internal method.
-     * @param value An arbitrary-precision binary float.
+     * @param value An arbitrary-precision binary floating-point number.
      * @return A 32-bit signed integer.
      */
       public int GetFlags(EFloat value) {
@@ -3190,7 +3194,7 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
      * @param mantissa The parameter {@code mantissa} is an internal parameter.
      * @param exponent The parameter {@code exponent} is an internal parameter.
      * @param flags The parameter {@code flags} is an internal parameter.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
       public EFloat CreateNewWithFlags(
         EInteger mantissa,
@@ -3220,7 +3224,7 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
     /**
      * This is an internal method.
      * @param val The parameter {@code val} is a 32-bit signed integer.
-     * @return An arbitrary-precision binary float.
+     * @return An arbitrary-precision binary floating-point number.
      */
       public EFloat ValueOf(int val) {
         return FromInt64(val);
@@ -3268,9 +3272,11 @@ public byte ToByteIfExact() {
 }
 
     /**
-     * Converts a byte (from 0 to 255) to an arbitrary-precision binary float.
+     * Converts a byte (from 0 to 255) to an arbitrary-precision binary
+     * floating-point number.
      * @param inputByte The number to convert as a byte (from 0 to 255).
-     * @return This number's value as an arbitrary-precision binary float.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
 public static EFloat FromByte(byte inputByte) {
  int val = ((int)inputByte) & 0xff;
@@ -3319,9 +3325,11 @@ public short ToInt16IfExact() {
 }
 
     /**
-     * Converts a 16-bit signed integer to an arbitrary-precision binary float.
+     * Converts a 16-bit signed integer to an arbitrary-precision binary
+     * floating-point number.
      * @param inputInt16 The number to convert as a 16-bit signed integer.
-     * @return This number's value as an arbitrary-precision binary float.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
 public static EFloat FromInt16(short inputInt16) {
  int val = (int)inputInt16;
@@ -3381,9 +3389,11 @@ public int ToInt32IfExact() {
    }
 
     /**
-     * Converts a 32-bit signed integer to an arbitrary-precision binary float.
+     * Converts a 32-bit signed integer to an arbitrary-precision binary
+     * floating-point number.
      * @param inputInt32 The number to convert as a 32-bit signed integer.
-     * @return This number's value as an arbitrary-precision binary float.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
 public static EFloat FromInt32(int inputInt32) {
  return FromEInteger(EInteger.FromInt32(inputInt32));
@@ -3432,9 +3442,11 @@ public long ToInt64IfExact() {
 }
 
     /**
-     * Converts a 64-bit signed integer to an arbitrary-precision binary float.
+     * Converts a 64-bit signed integer to an arbitrary-precision binary
+     * floating-point number.
      * @param inputInt64 The number to convert as a 64-bit signed integer.
-     * @return This number's value as an arbitrary-precision binary float.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
 public static EFloat FromInt64(long inputInt64) {
  return FromEInteger(EInteger.FromInt64(inputInt64));

@@ -65,11 +65,12 @@ at: http://peteroupc.github.io/
 
     static FastIntegerFixed FromLong(long longVal) {
       return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? (new
-        FastIntegerFixed(
-  (
-  int)longVal)) : (new FastIntegerFixed(2,
- 0,
-        EInteger.FromInt64(longVal)));
+        FastIntegerFixed((
+  int)longVal)) : (
+  new FastIntegerFixed(
+  2,
+  0,
+  EInteger.FromInt64(longVal)));
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {

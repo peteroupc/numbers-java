@@ -1208,7 +1208,21 @@ public EInteger Remainder(int intValue) {
      * less, or a positive number if this instance is greater.
      */
 public int compareTo(int intValue) {
- return this.compareTo(EInteger.FromInt32(intValue));
+      int c = this.wordCount;
+      if (c > 2) {
+        return this.negative ? -1 : 1;
+      }
+      if (c == 2 && (this.words[1] & 0x8000) != 0) {
+        if (this.negative && this.words[1] == ((short)0x8000) &&
+          this.words[0] == 0) {
+           // This value is Integer.MIN_VALUE
+           return intValue == Integer.MIN_VALUE ? 0 : -1;
+        } else {
+           return this.negative ? -1 : 1;
+        }
+      }
+      int thisInt = this.ToInt32Unchecked();
+      return thisInt == intValue ? 0 : (thisInt < intValue ? -1 : 1);
 }
 
     /**

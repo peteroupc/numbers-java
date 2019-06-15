@@ -10,7 +10,8 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat And​(EFloat ed1,
    EFloat ed2,
    EContext ec)`<br>
- Not documented yet.
+ Performs a logical AND operation on two binary numbers in the form of
+ logical operands  .
 * `static EFloat BooleanToEFloat​(boolean b,
                EContext ec)`<br>
  Converts a boolean value (either true or false) to an arbitrary-precision
@@ -40,16 +41,18 @@ A class that implements additional operations on arbitrary-precision binary
  Not documented yet.
 * `static EFloat Int32ToEFloat​(int i32,
              EContext ec)`<br>
- Not documented yet.
+ Creates a binary floating-point number from a 32-bit signed integer.
 * `static EFloat Invert​(EFloat ed1,
       EContext ec)`<br>
  Not documented yet.
 * `static boolean IsCanonical​(EFloat ed)`<br>
  Not documented yet.
 * `static boolean IsFinite​(EFloat ed)`<br>
- Not documented yet.
+ Returns whether the given arbitrary-precision number object is neither null
+ nor infinity nor not-a-number (NaN).
 * `static boolean IsInfinite​(EFloat ed)`<br>
- Not documented yet.
+ Returns whether the given arbitrary-precision number object is positive or
+ negative infinity.
 * `static boolean IsNaN​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is a
  not-a-number (NaN).
@@ -82,9 +85,10 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat Or​(EFloat ed1,
   EFloat ed2,
   EContext ec)`<br>
- Not documented yet.
+ Performs a logical OR operation on two binary numbers in the form of
+ logical operands  .
 * `static EFloat Radix​(EContext ec)`<br>
- Not documented yet.
+ Returns the number 2, the binary radix.
 * `static EFloat Rescale​(EFloat ed,
        EFloat scale,
        EContext ec)`<br>
@@ -110,35 +114,40 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat Xor​(EFloat ed1,
    EFloat ed2,
    EContext ec)`<br>
- Not documented yet.
+ Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
+ form of logical operands.
 
 ## Method Details
 
 ### Radix
     public static EFloat Radix​(EContext ec)
-Not documented yet.
+Returns the number 2, the binary radix.
 
 **Parameters:**
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - Specifies an arithmetic context for rounding the number 2. Can be
+ null.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The number 2, or the closest representable number to 2 in the
+ arithmetic context.
 
 ### Int32ToEFloat
     public static EFloat Int32ToEFloat​(int i32, EContext ec)
-Not documented yet.
+Creates a binary floating-point number from a 32-bit signed integer.
 
 **Parameters:**
 
-* <code>i32</code> - The parameter <code>i32</code> is not documented yet.
+* <code>i32</code> - The parameter <code>i32</code> is a 32-bit signed integer.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. Can be null.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* An arbitrary-precision binary floating-point number with the closest
+ representable value to the given integer.
 
 ### BoolToEFloat
     @Deprecated public static EFloat BoolToEFloat​(boolean b, EContext ec)
@@ -185,27 +194,32 @@ Not documented yet.
 
 ### IsFinite
     public static boolean IsFinite​(EFloat ed)
-Not documented yet.
+Returns whether the given arbitrary-precision number object is neither null
+ nor infinity nor not-a-number (NaN).
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object.
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code> .
+* Either <code>true</code> if the given arbitrary-precision number object
+ is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
+ otherwise.
 
 ### IsInfinite
     public static boolean IsInfinite​(EFloat ed)
-Not documented yet.
+Returns whether the given arbitrary-precision number object is positive or
+ negative infinity.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision number object.
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code> .
+* Either <code>true</code> if the given arbitrary-precision number object
+ is positive or negative infinity, or <code>false</code> otherwise.
 
 ### IsNaN
     public static boolean IsNaN​(EFloat ed)
@@ -448,15 +462,15 @@ Rotates the digits of an arbitrary-precision binary number's mantissa.
 * <code>ed2</code> - An arbitrary-precision number indicating the number of bits to
  rotate the first operand's mantissa. Must be an integer with an
  exponent of 0. If this parameter is positive, the mantissa is shifted
- by the given number of bits and the most-significant bits shifted out
- of the mantissa become the least-significant bits instead. If this
- parameter is negative, the number is shifted by the given number of
- bits and the least-significant bits shifted out of the mantissa
- become the most-significant bits instead.
+ to the left by the given number of bits and the most-significant bits
+ shifted out of the mantissa become the least-significant bits
+ instead. If this parameter is negative, the number is shifted by the
+ given number of bits and the least-significant bits shifted out of
+ the mantissa become the most-significant bits instead.
 
 * <code>ec</code> - A context that specifies the precision of arbitrary-precision
  numbers. If this parameter is null or specifies an unlimited
- precision, this method has the same behavior as <code>Shift</code>.
+ precision, this method has the same behavior as <code>Shift</code> .
 
 **Returns:**
 
@@ -472,22 +486,25 @@ Rotates the digits of an arbitrary-precision binary number's mantissa.
 Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this
  method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater "absolute value".</li> <li>Negative
- zero is less than positive zero.</li> <li>Quiet NaN has a higher
+ higher exponent has a greater "absolute value". </li> <li>Negative
+ zero is less than positive zero. </li> <li>Quiet NaN has a higher
  "absolute value" than signaling NaN. If both objects are quiet NaN or
  both are signaling NaN, the one with the higher diagnostic
- information has a greater "absolute value".</li> <li>NaN has a higher
- "absolute value" than infinity.</li> <li>Infinity has a higher
- "absolute value" than any finite number.</li> <li>Negative numbers
- are less than positive numbers.</li></ul>
+ information has a greater "absolute value". </li> <li>NaN has a
+ higher "absolute value" than infinity. </li> <li>Infinity has a
+ higher "absolute value" than any finite number. </li> <li>Negative
+ numbers are less than positive numbers. </li> </ul>
 
 **Parameters:**
 
-* <code>ed</code> - Not documented yet.
+* <code>ed</code> - The first arbitrary-precision number to compare.
 
-* <code>other</code> - Not documented yet.
+* <code>other</code> - The second arbitrary-precision number to compare.
 
-* <code>ec</code> - Not documented yet. (3).
+* <code>ec</code> - An arithmetic context. Flags will be set in this context only if
+ <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
+ only if an operand needed to be rounded before carrying out the
+ operation. Can be null.
 
 **Returns:**
 
@@ -505,7 +522,10 @@ Not documented yet.
 
 * <code>other</code> - The parameter <code>other</code> is not documented yet.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context. Flags will be set in this context only if
+ <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
+ only if an operand needed to be rounded before carrying out the
+ operation. Can be null.
 
 **Returns:**
 
@@ -534,7 +554,7 @@ Returns a canonical version of the given arbitrary-precision number object.
 
 **Returns:**
 
-* The parameter <code>ed</code>.
+* The parameter <code>ed</code> .
 
 ### CopyAbs
     public static EFloat CopyAbs​(EFloat ed)
@@ -542,11 +562,11 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* An EFloat object.
 
 ### CopyNegate
     public static EFloat CopyNegate​(EFloat ed)
@@ -554,11 +574,11 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* An EFloat object.
 
 ### CopySign
     public static EFloat CopySign​(EFloat ed, EFloat other)
@@ -620,13 +640,19 @@ Not documented yet.
 
 ### And
     public static EFloat And​(EFloat ed1, EFloat ed2, EContext ec)
-Not documented yet.
+Performs a logical AND operation on two binary numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
+ base-2 number with an Exponent property of 0 (examples include the
+ base-2 numbers <code>01001</code> and <code>111001</code>). The logical AND
+ operation sets each bit of the result to 1 if the corresponding bits
+ of each logical operand are both 1, and to 0 otherwise. For example,
+ <code>01001 AND 111010 = 01000</code>
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The first logical operand to the logical AND operation.
 
-* <code>ed2</code> - The parameter <code>ed2</code> is not documented yet.
+* <code>ed2</code> - The second logical operand to the logical AND operation.
 
 * <code>ec</code> - A context that specifies the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
@@ -636,7 +662,9 @@ Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The result of the logical AND operation as a logical operand.
+ Signals an invalid operation and returns not-a-number (NaN) if <code>
+ ed1</code> , <code>ed2</code> , or both are not logical operands.
 
 ### Invert
     public static EFloat Invert​(EFloat ed1, EContext ec)
@@ -644,7 +672,7 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The logical operand to the logical NOT operation.
 
 * <code>ec</code> - A context that specifies the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
@@ -656,17 +684,25 @@ Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The result of the logical NOT operation as a logical operand.
+ Signals an invalid operation and returns not-a-number (NaN) if <code>
+ ed1</code> is not a logical operand.
 
 ### Xor
     public static EFloat Xor​(EFloat ed1, EFloat ed2, EContext ec)
-Not documented yet.
+Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
+ form of <i>logical operands</i>. A <code>logical operand</code> is a
+ non-negative base-2 number with an Exponent property of 0 (examples
+ include the base-2 numbers <code>01001</code> and <code>111001</code>). The
+ logical exclusive-OR operation sets each digit of the result to 1 if
+ either corresponding digit of the logical operands, but not both, is
+ 1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The first logical operand to the logical exclusive-OR operation.
 
-* <code>ed2</code> - The parameter <code>ed2</code> is not documented yet.
+* <code>ed2</code> - The second logical operand to the logical exclusive-OR operation.
 
 * <code>ec</code> - A context that specifies the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
@@ -676,17 +712,25 @@ Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The result of the logical exclusive-OR operation as a logical
+ operand. Signals an invalid operation and returns not-a-number (NaN)
+ if <code>ed1</code>, <code>ed2</code>, or both are not logical operands.
 
 ### Or
     public static EFloat Or​(EFloat ed1, EFloat ed2, EContext ec)
-Not documented yet.
+Performs a logical OR operation on two binary numbers in the form of <i>
+ logical operands </i> . A <code>logical operand</code> is a non-negative
+ base-2 number with an Exponent property of 0 (examples include the
+ base-2 numbers <code>01001</code> and <code>111001</code>). The logical OR
+ operation sets each bit of the result to 1 if either or both of the
+ corresponding bits of each logical operand are 1, and to 0 otherwise.
+ For example, <code>01001 OR 111010 = 111011</code>
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The first logical operand to the logical OR operation.
 
-* <code>ed2</code> - The parameter <code>ed2</code> is not documented yet.
+* <code>ed2</code> - The second logical operand to the logical OR operation.
 
 * <code>ec</code> - A context that specifies the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
@@ -696,4 +740,6 @@ Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The result of the logical OR operation as a logical operand. Signals
+ an invalid operation and returns not-a-number (NaN) if <code>ed1</code> ,
+ <code>ed2</code> , or both are not logical operands.
