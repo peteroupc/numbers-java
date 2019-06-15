@@ -103,14 +103,18 @@ A class that implements additional operations on arbitrary-precision decimal
 * `static EDecimal Rescale​(EDecimal ed,
        EDecimal scale,
        EContext ec)`<br>
- Not documented yet.
+ Returns an arbitrary-precision decimal number with the same value as this
+ object but with the given exponent, expressed as an
+ arbitrary-precision decimal number.
 * `static EDecimal Rotate​(EDecimal ed,
       EDecimal ed2,
       EContext ec)`<br>
  Rotates the digits of an arbitrary-precision decimal number's mantissa.
 * `static boolean SameQuantum​(EDecimal ed1,
            EDecimal ed2)`<br>
- Not documented yet.
+ Returns whether two arbitrary-precision numbers have the same exponent, they
+ both are not-a-number (NaN), or they both are infinity (positive
+ and/or negative).
 * `static EDecimal ScaleB​(EDecimal ed,
       EDecimal ed2,
       EContext ec)`<br>
@@ -121,7 +125,8 @@ A class that implements additional operations on arbitrary-precision decimal
  Shifts the digits of an arbitrary-precision decimal number's mantissa.
 * `static EDecimal Trim​(EDecimal ed1,
     EContext ec)`<br>
- Not documented yet.
+ Returns an arbitrary-precision number with the same value as this one but
+ with certain trailing zeros removed from its mantissa.
 * `static EDecimal Xor​(EDecimal ed1,
    EDecimal ed2,
    EContext ec)`<br>
@@ -635,47 +640,85 @@ Returns an arbitrary-precision number object with the same value as the
 
 ### SameQuantum
     public static boolean SameQuantum​(EDecimal ed1, EDecimal ed2)
-Not documented yet.
+Returns whether two arbitrary-precision numbers have the same exponent, they
+ both are not-a-number (NaN), or they both are infinity (positive
+ and/or negative).
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The first arbitrary-precision number.
 
-* <code>ed2</code> - The parameter <code>ed2</code> is not documented yet.
+* <code>ed2</code> - The second arbitrary-precision number.
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code> .
+* Either <code>true</code> if the given arbitrary-precision numbers have
+ the same exponent, they both are not-a-number (NaN), or they both are
+ infinity (positive and/or negative); otherwise, <code>false</code> .
 
 ### Trim
     public static EDecimal Trim​(EDecimal ed1, EContext ec)
-Not documented yet.
+Returns an arbitrary-precision number with the same value as this one but
+ with certain trailing zeros removed from its mantissa. If the
+ number's exponent is 0, it is returned unchanged (but may be rounded
+ depending on the arithmetic context); if that exponent is greater 0,
+ its trailing zeros are removed from the mantissa (then rounded if
+ necessary); if that exponent is less than 0, its trailing zeros are
+ removed from the mantissa until the exponent reaches 0 (then the
+ number is rounded if necessary).
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - An arbitrary-precision number.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. Can be null.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision number with the same value as this one but
+ with certain trailing zeros removed from its mantissa. If <code>ed1</code>
+ is not-a-number (NaN) or infinity, it is generally returned
+ unchanged.
 
 ### Rescale
     public static EDecimal Rescale​(EDecimal ed, EDecimal scale, EContext ec)
-Not documented yet.
+Returns an arbitrary-precision decimal number with the same value as this
+ object but with the given exponent, expressed as an
+ arbitrary-precision decimal number. <p>Note that this is not always
+ the same as rounding to a given number of decimal places, since it
+ can fail if the difference between this value's exponent and the
+ desired exponent is too big, depending on the maximum precision. If
+ rounding to a number of decimal places is desired, it's better to use
+ the RoundToExponent and RoundToIntegral methods instead. </p>
+ <p><b>Remark:</b> This method can be used to implement fixed-point
+ decimal arithmetic, in which a fixed number of digits come after the
+ decimal point. A fixed-point decimal arithmetic in which no digits
+ come after the decimal point (a desired exponent of 0) is considered
+ an "integer arithmetic" . </p>
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision decimal number whose exponent is to be
+ changed.
 
-* <code>scale</code> - The parameter <code>scale</code> is not documented yet.
+* <code>scale</code> - The desired exponent of the result, expressed as an
+ arbitrary-precision decimal number. The exponent is the number of
+ fractional digits in the result, expressed as a negative number. Can
+ also be positive, which eliminates lower-order places from the
+ number. For example, -3 means round to the thousandth (10^-3,
+ 0.0001), and 3 means round to the thousands-place (10^3, 1000). A
+ value of 0 rounds the number to an integer.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - The parameter <code>ec</code> is an EContext object.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision decimal number with the same value as this
+ object but with the exponent changed. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can't fit the given precision
+ without rounding, or if the arithmetic context defines an exponent
+ range and the given exponent is outside that range.
 
 ### And
     public static EDecimal And​(EDecimal ed1, EDecimal ed2, EContext ec)
