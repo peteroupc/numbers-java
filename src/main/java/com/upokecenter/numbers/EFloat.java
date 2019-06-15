@@ -518,7 +518,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * information, see the <code>FromString(String, int, int, EContext)</code>
      * method.
      * @param str A text string to convert to a binary float.
      * @param ctx An arithmetic context specifying the precision, rounding, and
