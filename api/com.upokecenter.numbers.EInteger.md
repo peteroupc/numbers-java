@@ -170,7 +170,7 @@ This method may overflow.
 * `EInteger Negate()`<br>
  Gets the value of this object with the sign reversed.
 * `EInteger Not()`<br>
- Returns an arbitrary-precision integer with every bit flipped.
+ Returns an arbitrary-precision integer with every bit flipped from this one.
 * `EInteger Or​(EInteger second)`<br>
  Does an OR operation between two arbitrary-precision integer instances.
 * `EInteger Pow​(int powerSmall)`<br>
@@ -977,8 +977,8 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
- 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less
+ than 0.
 
 ### ModPow
     public EInteger ModPow​(EInteger pow, EInteger mod)
@@ -1157,15 +1157,11 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 
 ### Not
     public EInteger Not()
-Returns an arbitrary-precision integer with every bit flipped.
+Returns an arbitrary-precision integer with every bit flipped from this one.
 
 **Returns:**
 
 * An arbitrary-precision integer.
-
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>valueA</code> is null.
 
 ### And
     public EInteger And​(EInteger other)
@@ -1184,8 +1180,7 @@ Does an AND operation between two arbitrary-precision integer values.<p>
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
- null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### Or
     public EInteger Or​(EInteger second)
@@ -1204,8 +1199,7 @@ Does an OR operation between two arbitrary-precision integer instances.<p>
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>
- second</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
 * <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't
  satisfy biggerCount == CountWords(result).
@@ -1214,8 +1208,8 @@ Does an OR operation between two arbitrary-precision integer instances.<p>
     public EInteger Xor​(EInteger other)
 Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two's-complement form
- (see <code>"Forms of numbers" </code>)
- for the purposes of this operator. </p>
+ (see <code>"Forms of numbers"</code>)
+ for the purposes of this operator.</p>
 
 **Parameters:**
 
@@ -1228,11 +1222,10 @@ Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>a</code> or <code>b</code> is
- null.
-
 * <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy smallerCount ==
  CountWords(result).
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### ShiftRight
     public EInteger ShiftRight​(int numberBits)

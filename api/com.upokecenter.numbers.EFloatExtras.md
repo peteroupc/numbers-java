@@ -51,7 +51,8 @@ A class that implements additional operations on arbitrary-precision binary
  Creates a binary floating-point number from a 32-bit signed integer.
 * `static EFloat Invert​(EFloat ed1,
       EContext ec)`<br>
- Not documented yet.
+ Performs a logical NOT operation on a binary number in the form of a
+ logical operand.
 * `static boolean IsCanonical​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is in a
  canonical form.
@@ -85,7 +86,9 @@ A class that implements additional operations on arbitrary-precision binary
  (positive zero or negative zero).
 * `static EFloat LogB​(EFloat ed,
     EContext ec)`<br>
- Not documented yet.
+ Returns the base-2 exponent of an arbitrary-precision binary number (when
+ that number is expressed in scientific notation with one nonzero
+ digit before the radix point).
 * `static int NumberClass​(EFloat ed,
            EContext ec)`<br>
  Finds the number class for an arbitrary-precision decimal number object.
@@ -116,7 +119,8 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat ScaleB​(EFloat ed,
       EFloat ed2,
       EContext ec)`<br>
- Not documented yet.
+ Finds an arbitrary-precision binary number whose binary point is moved a
+ given number of places.
 * `static EFloat Shift​(EFloat ed,
      EFloat ed2,
      EContext ec)`<br>
@@ -255,7 +259,8 @@ Returns whether the given arbitrary-precision number object is a
     public static boolean IsNormal​(EFloat ed, EContext ec)
 Returns whether the given number is a <i> normal </i> number. A <i>
  subnormal number </i> is a nonzero finite number whose Exponent
- property (or the number's exponent in scientific notation) is less
+ property (or the number's exponent when that number is expressed in
+ scientific notation with one digit before the radix point) is less
  than the minimum possible exponent for that number. A <i> normal
  number </i> is nonzero and finite, but not subnormal.
 
@@ -265,14 +270,15 @@ Returns whether the given number is a <i> normal </i> number. A <i>
 
 * <code>ec</code> - A context specifying the exponent range of arbitrary-precision
  numbers. Can be null. If AdjustExponent of the given context is
- <code>true</code> , a nonzero number is normal if the number's exponent in
- scientific notation is at least the given context's EMax property
- (e.g., if EMax is -100, 2.3456 * 10 <sup> -99 </sup> is normal, but
- 2.3456 * 10 <sup> -102 </sup> is not). If AdjustExponent of the given
- context is <code>false</code> , a nonzero number is subnormal if the
- number's Exponent property is at least given context's EMax property
- (e.g., if EMax is -100, 23456 * 10 <sup> -99 </sup> is normal, but
- 23456 * 10 <sup> -102 </sup> is not).
+ <code>true</code> , a nonzero number is normal if the number's exponent
+ (when that number is expressed in scientific notation with one
+ nonzero digit before the radix point) is at least the given context's
+ EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup> -99 </sup> is
+ normal, but 2.3456 * 10 <sup> -102 </sup> is not). If AdjustExponent
+ of the given context is <code>false</code> , a nonzero number is subnormal
+ if the number's Exponent property is at least given context's EMax
+ property (e.g., if EMax is -100, 23456 * 10 <sup> -99 </sup> is
+ normal, but 23456 * 10 <sup> -102 </sup> is not).
 
 **Returns:**
 
@@ -370,7 +376,8 @@ Finds the number class for an arbitrary-precision decimal number object.
     public static boolean IsSubnormal​(EFloat ed, EContext ec)
 Returns whether the given number is a <i> subnormal </i> number. A <i>
  subnormal number </i> is a nonzero finite number whose Exponent
- property (or the number's exponent in scientific notation) is less
+ property (or the number's exponent when that number is expressed in
+ scientific notation with one digit before the radix point) is less
  than the minimum possible exponent for that number.
 
 **Parameters:**
@@ -380,13 +387,15 @@ Returns whether the given number is a <i> subnormal </i> number. A <i>
 * <code>ec</code> - A context specifying the exponent range of arbitrary-precision
  numbers. Can be null. If AdjustExponent of the given context is
  <code>true</code> , a nonzero number is subnormal if the number's exponent
- in scientific notation is less than the given context's EMax property
- (e.g., if EMax is -100, 2.3456 * 10 <sup> -102 </sup> is subnormal,
- but 2.3456 * 10 <sup> -99 </sup> is not). If AdjustExponent of the
- given context is <code>false</code> , a nonzero number is subnormal if the
- number's Exponent property is less than the given context's EMax
- property (e.g., if EMax is -100, 23456 * 10 <sup> -102 </sup> is
- subnormal, but 23456 * 10 <sup> -99 </sup> is not).
+ (when that number is expressed in scientific notation with one
+ nonzero digit before the radix point) is less than the given
+ context's EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
+ -102 </sup> is subnormal, but 2.3456 * 10 <sup> -99 </sup> is not).
+ If AdjustExponent of the given context is <code>false</code> , a nonzero
+ number is subnormal if the number's Exponent property is less than
+ the given context's EMax property (e.g., if EMax is -100, 23456 * 10
+ <sup> -102 </sup> is subnormal, but 23456 * 10 <sup> -99 </sup> is
+ not).
 
 **Returns:**
 
@@ -410,17 +419,25 @@ Returns whether the given arbitrary-precision number object is zero
 
 ### LogB
     public static EFloat LogB​(EFloat ed, EContext ec)
-Not documented yet.
+Returns the base-2 exponent of an arbitrary-precision binary number (when
+ that number is expressed in scientific notation with one nonzero
+ digit before the radix point). For example, returns 3 for the numbers
+ <code>1.11b * 2^3</code> and <code>111 * 2^1</code>
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision binary number.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. Can be null.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The base-2 exponent of the given number (when that number is
+ expressed in scientific notation with one nonzero digit before the
+ radix point). Signals DivideByZero and returns negative infinity if
+ <code>ed</code> is zero. Returns positive infinity if <code>ed</code> is
+ positive infinity or negative infinity.
 
 **Throws:**
 
@@ -428,19 +445,29 @@ Not documented yet.
 
 ### ScaleB
     public static EFloat ScaleB​(EFloat ed, EFloat ed2, EContext ec)
-Not documented yet.
+Finds an arbitrary-precision binary number whose binary point is moved a
+ given number of places.
 
 **Parameters:**
 
-* <code>ed</code> - The parameter <code>ed</code> is not documented yet.
+* <code>ed</code> - An arbitrary-precision binary number.
 
-* <code>ed2</code> - The parameter <code>ed2</code> is not documented yet.
+* <code>ed2</code> - The number of binary places to move the binary point of "ed".
+ This must be an integer with an exponent of 0.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. Can be null.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The given arbitrary-precision binary number whose binary point is
+ moved the given number of places. Signals an invalid operation and
+ returns not-a-number (NaN) if <code>ed2</code> is infinity or NaN, has an
+ Exponent property other than 0. Signals an invalid operation and
+ returns not-a-number (NaN) if <code>ec</code> defines a limited precision
+ and exponent range and if <code>ed2</code> 's absolute value is greater
+ than twice the sum of the context's EMax property and its Precision
+ property.
 
 **Throws:**
 
@@ -464,8 +491,8 @@ Shifts the bits of an arbitrary-precision binary floating point number's
  negative, the mantissa is shifted to the right by the given number of
  bits.
 
-* <code>ec</code> - A context that specifies the precision of arbitrary-precision
- numbers. Can be null.
+* <code>ec</code> - An arithmetic context to control the precision of
+ arbitrary-precision numbers. Can be null.
 
 **Returns:**
 
@@ -500,9 +527,10 @@ Rotates the digits of an arbitrary-precision binary number's mantissa.
  given number of bits and the least-significant bits shifted out of
  the mantissa become the most-significant bits instead.
 
-* <code>ec</code> - A context that specifies the precision of arbitrary-precision
- numbers. If this parameter is null or specifies an unlimited
- precision, this method has the same behavior as <code>Shift</code> .
+* <code>ec</code> - An arithmetic context to control the precision of
+ arbitrary-precision numbers. If this parameter is null or specifies
+ an unlimited precision, this method has the same behavior as <code>
+ Shift</code> .
 
 **Returns:**
 
@@ -591,7 +619,7 @@ Creates a copy of the given arbitrary-precision number object.
 ### Canonical
     public static EFloat Canonical​(EFloat ed)
 Returns a canonical version of the given arbitrary-precision number object.
- In this method, this is the same as that object.
+ In this method, this method behaves like the Copy method.
 
 **Parameters:**
 
@@ -599,7 +627,7 @@ Returns a canonical version of the given arbitrary-precision number object.
 
 **Returns:**
 
-* The parameter <code>ed</code> .
+* A copy of the parameter <code>ed</code>.
 
 ### CopyAbs
     public static EFloat CopyAbs​(EFloat ed)
@@ -751,7 +779,7 @@ Performs a logical AND operation on two binary numbers in the form of <i>
 
 * <code>ed2</code> - The second logical operand to the logical AND operation.
 
-* <code>ec</code> - A context that specifies the maximum precision of
+* <code>ec</code> - An arithmetic context to control the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
  method has more bits than the maximum precision specified in this
  context, the operand's most significant bits that exceed that
@@ -765,19 +793,14 @@ Performs a logical AND operation on two binary numbers in the form of <i>
 
 ### Invert
     public static EFloat Invert​(EFloat ed1, EContext ec)
-Not documented yet.
-
-**Parameters:**
-
-* <code>ed1</code> - The logical operand to the logical NOT operation.
-
-* <code>ec</code> - A context that specifies the maximum precision of
- arbitrary-precision numbers. If a logical operand passed to this
- method has more bits than the maximum precision specified in this
- context, the operand's most significant bits that exceed that
- precision are discarded. This parameter cannot be null and must
- specify a maximum precision (unlimited precision contexts are not
- allowed).
+Performs a logical NOT operation on a binary number in the form of a
+ <i>logical operand</i>. A <code>logical operand</code> is a non-negative
+ base-2 number with an Exponent property of 0 (examples include
+ <code>01001</code> and <code>111001</code>). The logical NOT operation sets each
+ bit of the result to 1 if the corresponding bit is 0, and to 0
+ otherwise; it can set no more bits than the maximum precision,
+ however. For example, if the maximum precision is 8 bits, then <code>NOT
+ 111010 = 11000101</code>
 
 **Returns:**
 
@@ -801,7 +824,7 @@ Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
 
 * <code>ed2</code> - The second logical operand to the logical exclusive-OR operation.
 
-* <code>ec</code> - A context that specifies the maximum precision of
+* <code>ec</code> - An arithmetic context to control the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
  method has more bits than the maximum precision specified in this
  context, the operand's most significant bits that exceed that
@@ -829,7 +852,7 @@ Performs a logical OR operation on two binary numbers in the form of <i>
 
 * <code>ed2</code> - The second logical operand to the logical OR operation.
 
-* <code>ec</code> - A context that specifies the maximum precision of
+* <code>ec</code> - An arithmetic context to control the maximum precision of
  arbitrary-precision numbers. If a logical operand passed to this
  method has more bits than the maximum precision specified in this
  context, the operand's most significant bits that exceed that

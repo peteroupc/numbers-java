@@ -2747,8 +2747,8 @@ EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
      * divisor plus normal remainder if the normal remainder is negative.
      * @param smallDivisor The divisor of the modulus.
      * @return The modulus remainder.
-     * @throws IllegalArgumentException The parameter {@code divisor} is less than
-     * 0.
+     * @throws IllegalArgumentException The parameter {@code smallDivisor} is less
+     * than 0.
      */
     public EInteger Mod(int smallDivisor) {
       if (smallDivisor < 0) {
@@ -3247,9 +3247,8 @@ if (bigPower.signum() < 0) {
     }
 
     /**
-     * Returns an arbitrary-precision integer with every bit flipped.
+     * Returns an arbitrary-precision integer with every bit flipped from this one.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code valueA} is null.
      */
     public EInteger Not() {
       if (this.wordCount == 0) {
@@ -3279,8 +3278,7 @@ if (bigPower.signum() < 0) {
      * }) for the purposes of this operator. </p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code a} or {@code b} is
-     * null.
+     * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EInteger And(EInteger other) {
    if (other == null) {
@@ -3342,8 +3340,7 @@ if (bigPower.signum() < 0) {
      * }) for the purposes of this operator. </p>
      * @param second The second operand.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code first} or {@code
-     * second} is null.
+     * @throws java.lang.NullPointerException The parameter {@code second} is null.
      * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't
      * satisfy biggerCount == CountWords(result).
      */
@@ -3411,15 +3408,14 @@ if (bigPower.signum() < 0) {
     /**
      * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
      * arbitrary-precision integer is treated as a two's-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
-     * for the purposes of this operator. </p>
+     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if it's set
      * in one input integer but not the other.
-     * @throws java.lang.NullPointerException The parameter {@code a} or {@code b} is
-     * null.
      * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
      * CountWords(result).
+     * @throws NullPointerException The parameter {@code other} is null.
      */
     public EInteger Xor(EInteger other) {
       if (other == null) {
