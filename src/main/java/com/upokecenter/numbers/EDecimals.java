@@ -576,7 +576,7 @@ if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision(
      * Returns a canonical version of the given arbitrary-precision number object.
      * In this method, this method behaves like the Copy method.
      * @param ed An arbitrary-precision number object.
-     * @return A copy of the parameter {@code ed}.
+     * @return A copy of the parameter {@code ed} .
      */
     public static EDecimal Canonical(EDecimal ed) {
       return Copy(ed);

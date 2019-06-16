@@ -407,7 +407,7 @@ private EFloats() {
     }
 
     /**
-     * Rotates the digits of an arbitrary-precision binary number's mantissa.
+     * Rotates the bits of an arbitrary-precision binary number's mantissa.
      * @param ed An arbitrary-precision number containing the mantissa to rotate.
      * If this mantissa contains more bits than the precision, the
      * most-significant bits are chopped off the mantissa.
@@ -556,7 +556,7 @@ if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision(
      * Returns a canonical version of the given arbitrary-precision number object.
      * In this method, this method behaves like the Copy method.
      * @param ed An arbitrary-precision number object.
-     * @return A copy of the parameter {@code ed}.
+     * @return A copy of the parameter {@code ed} .
      */
     public static EFloat Canonical(EFloat ed) {
       return Copy(ed);
@@ -803,16 +803,16 @@ if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision(
     }
 
     /**
-     * Performs a logical NOT operation on a binary number in the form of a
-     * <i>logical operand</i>. A <code>logical operand</code> is a non-negative
+     * Performs a logical NOT operation on a binary number in the form of a <i>
+     * logical operand </i> . A <code>logical operand</code> is a non-negative
      * base-2 number with an Exponent property of 0 (examples include
      * <code>01001</code> and <code>111001</code>). The logical NOT operation sets each
      * bit of the result to 1 if the corresponding bit is 0, and to 0
      * otherwise; it can set no more bits than the maximum precision,
      * however. For example, if the maximum precision is 8 bits, then <code>NOT
      * 111010 = 11000101</code>
-     * @param ed1 Not documented yet.
-     * @param ec Not documented yet.
+     * @param ed1 The parameter {@code ed1} is not documented yet.
+     * @param ec The parameter {@code ec} is not documented yet.
      * @return The result of the logical NOT operation as a logical operand.
      * Signals an invalid operation and returns not-a-number (NaN) if {@code
      * ed1} is not a logical operand.

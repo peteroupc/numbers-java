@@ -1208,8 +1208,8 @@ Does an OR operation between two arbitrary-precision integer instances.<p>
     public EInteger Xor​(EInteger other)
 Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two's-complement form
- (see <code>"Forms of numbers"</code>)
- for the purposes of this operator.</p>
+ (see <code>"Forms of numbers" </code>)
+ for the purposes of this operator. </p>
 
 **Parameters:**
 

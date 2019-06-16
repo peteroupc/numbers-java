@@ -609,7 +609,7 @@ Returns a canonical version of the given arbitrary-precision number object.
 
 **Returns:**
 
-* A copy of the parameter <code>ed</code>.
+* A copy of the parameter <code>ed</code> .
 
 ### CopyAbs
     public static EDecimal CopyAbs​(EDecimal ed)

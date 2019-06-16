@@ -49,7 +49,7 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat Invert​(EFloat ed1,
       EContext ec)`<br>
  Performs a logical NOT operation on a binary number in the form of a
- logical operand.
+ logical operand  .
 * `static boolean IsCanonical​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is in a
  canonical form.
@@ -107,7 +107,7 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat Rotate​(EFloat ed,
       EFloat ed2,
       EContext ec)`<br>
- Rotates the digits of an arbitrary-precision binary number's mantissa.
+ Rotates the bits of an arbitrary-precision binary number's mantissa.
 * `static boolean SameQuantum​(EFloat ed1,
            EFloat ed2)`<br>
  Returns whether two arbitrary-precision numbers have the same exponent, they
@@ -492,7 +492,7 @@ Shifts the bits of an arbitrary-precision binary floating point number's
 
 ### Rotate
     public static EFloat Rotate​(EFloat ed, EFloat ed2, EContext ec)
-Rotates the digits of an arbitrary-precision binary number's mantissa.
+Rotates the bits of an arbitrary-precision binary number's mantissa.
 
 **Parameters:**
 
@@ -609,7 +609,7 @@ Returns a canonical version of the given arbitrary-precision number object.
 
 **Returns:**
 
-* A copy of the parameter <code>ed</code>.
+* A copy of the parameter <code>ed</code> .
 
 ### CopyAbs
     public static EFloat CopyAbs​(EFloat ed)
@@ -775,8 +775,8 @@ Performs a logical AND operation on two binary numbers in the form of <i>
 
 ### Invert
     public static EFloat Invert​(EFloat ed1, EContext ec)
-Performs a logical NOT operation on a binary number in the form of a
- <i>logical operand</i>. A <code>logical operand</code> is a non-negative
+Performs a logical NOT operation on a binary number in the form of a <i>
+ logical operand </i> . A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include
  <code>01001</code> and <code>111001</code>). The logical NOT operation sets each
  bit of the result to 1 if the corresponding bit is 0, and to 0
@@ -786,9 +786,9 @@ Performs a logical NOT operation on a binary number in the form of a
 
 **Parameters:**
 
-* <code>ed1</code> - Not documented yet.
+* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
 
-* <code>ec</code> - Not documented yet.
+* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
 
 **Returns:**
 

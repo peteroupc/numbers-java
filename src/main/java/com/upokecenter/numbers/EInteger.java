@@ -3408,14 +3408,14 @@ if (bigPower.signum() < 0) {
     /**
      * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
      * arbitrary-precision integer is treated as a two's-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
+     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
+     * for the purposes of this operator. </p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if it's set
      * in one input integer but not the other.
      * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
      * CountWords(result).
-     * @throws NullPointerException The parameter {@code other} is null.
+     * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EInteger Xor(EInteger other) {
       if (other == null) {
