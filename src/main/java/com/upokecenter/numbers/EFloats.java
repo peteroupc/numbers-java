@@ -263,7 +263,7 @@ private EFloats() {
      * @throws java.lang.NullPointerException The parameter {@code ed} is null.
      */
     public static EFloat LogB(EFloat ed, EContext ec) {
-      if ((ed) == null) {
+      if (ed == null) {
   throw new NullPointerException("ed");
 }
       if (ed.IsNaN()) {
@@ -763,6 +763,7 @@ if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision(
     }
 
     // Logical Operations
+
     /**
      * Performs a logical AND operation on two binary numbers in the form of <i>
      * logical operands </i> . A <code>logical operand</code> is a non-negative
