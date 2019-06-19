@@ -69,7 +69,7 @@ private EFloats() {
      * is neither null nor infinity nor not-a-number (NaN), or {@code false}
      * otherwise.
      */
-   public static boolean IsFinite(EFloat ed) {
+    public static boolean IsFinite(EFloat ed) {
       return ed != null && ed.isFinite();
     }
 
@@ -90,7 +90,7 @@ private EFloats() {
      * @param ed An arbitrary-precision number object.
      * @return Either {@code true} or {@code false} .
      */
-   public static boolean IsNaN(EFloat ed) {
+    public static boolean IsNaN(EFloat ed) {
       return ed != null && ed.IsNaN();
     }
 
@@ -127,7 +127,7 @@ private EFloats() {
      * @param ed An arbitrary-precision number object.
      * @return Either {@code true} or {@code false} .
      */
-  public static boolean IsQuietNaN(EFloat ed) {
+    public static boolean IsQuietNaN(EFloat ed) {
       return ed != null && ed.IsQuietNaN();
     }
 
@@ -138,7 +138,7 @@ private EFloats() {
      * @param ed An arbitrary-precision number object.
      * @return Either {@code true} or {@code false} .
      */
-     public static boolean IsSigned(EFloat ed) {
+    public static boolean IsSigned(EFloat ed) {
       return ed != null && ed.isNegative();
     }
 
@@ -224,7 +224,7 @@ private EFloats() {
      * false} otherwise. Returns {@code false} if the given context is null
      * or HasExponentRange of the given context is {@code false} .
      */
-     public static boolean IsSubnormal(EFloat ed, EContext ec) {
+    public static boolean IsSubnormal(EFloat ed, EContext ec) {
       if (ed.isFinite() && ec != null && !ed.isZero() && ec.getHasExponentRange()) {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
@@ -452,7 +452,7 @@ private EFloats() {
       }
       EInteger mant = ed.getUnsignedMantissa();
       EInteger mantprec = ed.Precision();
-if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision()) >
+      if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision()) >
         0) {
         mant = mant.Remainder(EInteger.FromInt32(1).ShiftLeft(ec.getPrecision()));
         mantprec = ec.getPrecision();
@@ -812,8 +812,14 @@ if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision(
      * otherwise; it can set no more bits than the maximum precision,
      * however. For example, if the maximum precision is 8 bits, then <code>NOT
      * 111010 = 11000101</code>
-     * @param ed1 The parameter {@code ed1} is not documented yet.
-     * @param ec The parameter {@code ec} is not documented yet.
+     * @param ed1 The operand to the logical NOT operation.
+     * @param ec An arithmetic context to control the maximum precision of
+     * arbitrary-precision numbers. If a logical operand passed to this
+     * method has more bits than the maximum precision specified in this
+     * context, the operand's most significant bits that exceed that
+     * precision are discarded. This parameter cannot be null and must
+     * specify a maximum precision (unlimited precision contexts are not
+     * allowed).
      * @return The result of the logical NOT operation as a logical operand.
      * Signals an invalid operation and returns not-a-number (NaN) if {@code
      * ed1} is not a logical operand.

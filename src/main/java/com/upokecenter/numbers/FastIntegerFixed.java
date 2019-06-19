@@ -29,7 +29,7 @@ at: http://peteroupc.github.io/
   int smallValue,
   EInteger largeValue) {
    this.integerMode = integerMode;
-      this.smallValue = smallValue;
+   this.smallValue = smallValue;
    this.largeValue = largeValue;
     }
 
@@ -116,7 +116,7 @@ at: http://peteroupc.github.io/
         return this.smallValue % value;
       } else {
       EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
-        return retval.ToInt32Checked();
+      return retval.ToInt32Checked();
       }
     }
 
@@ -146,7 +146,7 @@ at: http://peteroupc.github.io/
         if (b.smallValue == 0) {
  return a;
 }
-      if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
+if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
           (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
                   a.smallValue)) {
         return new FastIntegerFixed(a.smallValue - b.smallValue);

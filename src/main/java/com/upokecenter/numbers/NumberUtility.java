@@ -266,7 +266,8 @@ private NumberUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-       this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() : -1;
+      this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
+              -1;
             this.outputs[0] = output;
             ++this.size;
           } else {
@@ -277,7 +278,8 @@ private NumberUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-       this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() : -1;
+      this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
+              -1;
             this.outputs[0] = output;
           }
         }
@@ -630,7 +632,7 @@ private NumberUtility() {
         } else {
           EInteger bigrem;
           EInteger bigquo;
-{
+          {
 EInteger[] divrem = bigmant.DivRem(bigradix);
 bigquo = divrem[0];
 bigrem = divrem[1]; }

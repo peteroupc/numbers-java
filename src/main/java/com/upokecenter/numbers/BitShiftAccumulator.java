@@ -29,7 +29,6 @@ at: http://peteroupc.github.io/
       this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
       return FastInteger.CopyFrozen(this.knownBitLength);
     }
-
         private void VerifyKnownLength() {
     }
 
@@ -62,19 +61,19 @@ at: http://peteroupc.github.io/
           // are the same, unlike in DigitShiftAccumulator
           this.ShiftRight(preShift);
           this.VerifyKnownLength();
-           return;
+          return;
           } else {
           // NOTE: For BitShiftAccumulator, truncating and shifting
           // are the same, unlike in DigitShiftAccumulator
           this.ShiftRight(bitDiff);
           this.VerifyKnownLength();
-           return;
+          return;
           }
         }
       }
       if (bits.CanFitInInt32()) {
         this.ShiftToDigitsInt(bits.AsInt32());
-          this.VerifyKnownLength();
+        this.VerifyKnownLength();
       } else {
         this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
         EInteger bigintDiff = this.knownBitLength.AsEInteger();
@@ -85,7 +84,7 @@ at: http://peteroupc.github.io/
           // desired bit length
           this.ShiftRight(FastInteger.FromBig(bigintDiff));
         }
-          this.VerifyKnownLength();
+        this.VerifyKnownLength();
       }
     }
 
@@ -137,9 +136,9 @@ at: http://peteroupc.github.io/
             ") is less than 0");
         }
         this.isSmall = true;
-      this.discardedBitCount = new FastInteger(0);
-      this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
-      this.bitLeftmost = (lastDiscarded != 0) ? 1 : 0;
+        this.discardedBitCount = new FastInteger(0);
+        this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
+        this.bitLeftmost = (lastDiscarded != 0) ? 1 : 0;
     }
 
     public static BitShiftAccumulator FromInt32(int smallNumber) {
@@ -373,7 +372,6 @@ at: http://peteroupc.github.io/
       }
       this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
     }
-
       public void ShiftToDigitsInt(int bits) {
       if (bits < 0) {
         throw new IllegalArgumentException("bits (" + bits + ") is less than 0");

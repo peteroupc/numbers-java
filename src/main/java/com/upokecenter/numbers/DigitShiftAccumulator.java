@@ -80,8 +80,8 @@ at: http://peteroupc.github.io/
             ") is less than 0");
         }
         this.isSmall = true;
-      this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
-      this.bitLeftmost = lastDiscarded;
+        this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
+        this.bitLeftmost = lastDiscarded;
     }
 
     public final FastInteger getDiscardedDigitCount() {
@@ -109,7 +109,7 @@ at: http://peteroupc.github.io/
 
     public FastInteger GetDigitLength() {
   this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
-      return this.knownDigitLength;
+        return this.knownDigitLength;
     }
 
     public void ShiftRight(FastInteger fastint) {
@@ -158,7 +158,7 @@ at: http://peteroupc.github.io/
   FastInteger bits,
   FastInteger preShift,
   boolean truncate) {
-      if (preShift != null && preShift.signum() > 0) {
+if (preShift != null && preShift.signum() > 0) {
         FastInteger kdl = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
         this.knownDigitLength = kdl;
         // DebugUtility.Log("bits=" + bits + " pre=" + preShift + " known=" +
@@ -166,7 +166,7 @@ at: http://peteroupc.github.io/
         if (kdl.compareTo(bits) <= 0) {
           // Known digit length is already small enough
           this.TruncateOrShiftRight(preShift, truncate);
-        this.VerifyKnownLength();
+          this.VerifyKnownLength();
           return;
         } else {
           FastInteger bitDiff = kdl.Copy().Subtract(bits);
@@ -176,11 +176,11 @@ at: http://peteroupc.github.io/
             // Difference between desired digit length and current
             // length is smaller than the shift, make it the shift
            this.TruncateOrShiftRight(preShift, truncate);
-        this.VerifyKnownLength();
+           this.VerifyKnownLength();
            return;
           } else {
            this.TruncateOrShiftRight(bitDiff, truncate);
-        this.VerifyKnownLength();
+           this.VerifyKnownLength();
            return;
           }
         }
@@ -255,7 +255,7 @@ at: http://peteroupc.github.io/
     }
 
     private static int LongDigitLength(long value) {
-      if (value >= 1000000000L) {
+if (value >= 1000000000L) {
         return (value >= 1000000000000000000L) ? 19 : ((value >=
                  100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
                   17 : ((value >= 1000000000000000L) ? 16 :
@@ -337,7 +337,7 @@ at: http://peteroupc.github.io/
           // for the use of this variable
           int bitLength = bigBitLength.CanFitInInt32() ?
              bigBitLength.ToInt32Checked() : Integer.MAX_VALUE;
-          boolean bigPower = false;
+             boolean bigPower = false;
           // 10^48 has 160 bits; 10^98 has 326; bit length is cheaper
           // to calculate than base-10 digit length
           if (bitLength < 160 || (digits > 100 && bitLength < 326)) {
@@ -355,14 +355,14 @@ at: http://peteroupc.github.io/
             // Power of 10 to be divided would be much bigger
        this.discardedBitCount = (this.discardedBitCount == null) ? ((new
               FastInteger(0))) : this.discardedBitCount;
-            this.discardedBitCount.AddInt(digits);
-            this.bitsAfterLeftmost |= this.bitLeftmost;
-            this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
-            this.bitLeftmost = 0;
-            this.knownDigitLength = new FastInteger(1);
-            this.isSmall = true;
-            this.shiftedSmall = 0;
-            return;
+              this.discardedBitCount.AddInt(digits);
+              this.bitsAfterLeftmost |= this.bitLeftmost;
+              this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
+              this.bitLeftmost = 0;
+              this.knownDigitLength = new FastInteger(1);
+              this.isSmall = true;
+              this.shiftedSmall = 0;
+              return;
           }
         }
         if (this.shiftedBigInt.isEven() && this.bitLeftmost == 0) {
@@ -435,7 +435,7 @@ at: http://peteroupc.github.io/
         }
         return;
       }
-  this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
+      this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
       if (new FastInteger(digits).Decrement().compareTo(this.knownDigitLength)
       >= 0) {
         // Shifting more bits than available
@@ -583,12 +583,12 @@ at: http://peteroupc.github.io/
         } else {
         long newShift = (shiftedLong < 43698) ? ((shiftedLong * 26215) >>
             18) : (shiftedLong / 10);
-          int digit = (int)(shiftedLong - (newShift * 10));
-          this.bitsAfterLeftmost |= this.bitLeftmost;
-          this.bitLeftmost = digit;
-          --digits;
-          ++digitsShifted;
-          shiftedLong = newShift;
+            int digit = (int)(shiftedLong - (newShift * 10));
+            this.bitsAfterLeftmost |= this.bitLeftmost;
+            this.bitLeftmost = digit;
+            --digits;
+            ++digitsShifted;
+            shiftedLong = newShift;
         }
       }
       this.isSmall = shiftedLong <= Integer.MAX_VALUE;
@@ -614,7 +614,7 @@ at: http://peteroupc.github.io/
         }
       }
       String str;
-  this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
+      this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
       if (this.knownDigitLength.CompareToInt(digits) <= 0) {
         return;
       }
@@ -634,7 +634,7 @@ at: http://peteroupc.github.io/
         this.shiftedBigInt = bigquo;
         this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
-       this.UpdateKnownLength(digitDiff);
+        this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
         return;
       }

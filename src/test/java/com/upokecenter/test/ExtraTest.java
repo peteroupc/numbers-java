@@ -27,7 +27,6 @@ import com.upokecenter.numbers.*;
             TestCommon.AssertEqualsHashCode(obj, newobj);
             TestCommon.AssertEqualsHashCode(str, str2);
         }
-
         public static void TestStringEqualRoundTrip(EInteger obj) {
       String str = obj.toString();
       EInteger newobj = EInteger.FromString(str);

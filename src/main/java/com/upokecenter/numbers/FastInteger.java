@@ -104,7 +104,6 @@ at: http://peteroupc.github.io/
       int ToInt32() {
         return this.wordCount == 0 ? 0 : this.data[0];
       }
-
     public static MutableNumber FromLong(long longVal) {
       if (longVal < 0) {
         throw new IllegalArgumentException();
@@ -114,7 +113,7 @@ at: http://peteroupc.github.io/
 }
       MutableNumber mbi = new MutableNumber(0);
       mbi.data[0] = ((int)longVal);
-        int mbd = ((int)(longVal >> 32));
+      int mbd = ((int)(longVal >> 32));
       mbi.data[1] = mbd;
       mbi.wordCount = (mbd == 0) ? 1 : 2;
       return mbi;
@@ -129,7 +128,6 @@ at: http://peteroupc.github.io/
         mbi.wordCount = this.wordCount;
         return mbi;
       }
-
         MutableNumber Multiply(int multiplicand) {
         if (multiplicand < 0) {
           throw new IllegalArgumentException("multiplicand (" + multiplicand +
@@ -267,7 +265,6 @@ at: http://peteroupc.github.io/
       final int signum() {
           return this.wordCount == 0 ? 0 : 1;
         }
-
      final boolean isEvenNumber() {
           return this.wordCount == 0 || (this.data[0] & 1) == 0;
         }
@@ -293,7 +290,7 @@ at: http://peteroupc.github.io/
      throw new IllegalArgumentException("other (" + other + ") is less than " +
             "0 ");
         }
-      if (other != 0) {
+        if (other != 0) {
           {
             // Ensure a length of at least 1
             if (this.wordCount == 0) {
@@ -394,7 +391,6 @@ at: http://peteroupc.github.io/
         }
         return 0;
       }
-
        MutableNumber Add(int augend) {
         if (augend < 0) {
    throw new IllegalArgumentException("augend (" + augend + ") is less than " +
@@ -512,29 +508,28 @@ at: http://peteroupc.github.io/
 
     private void CheckFrozen() {
     }
-
      public int compareTo(FastInteger val) {
       switch ((this.integerMode << 2) | val.integerMode) {
           case (0 << 2) | 0: {
             int vsv = val.smallValue;
-        return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
+            return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
               1);
           }
-        case (0 << 2) | 1:
+          case (0 << 2) | 1:
           return -val.mnum.CompareToInt(this.smallValue);
-        case (0 << 2) | 2:
+          case (0 << 2) | 2:
           return this.AsEInteger().compareTo(val.largeValue);
-        case (1 << 2) | 0:
+          case (1 << 2) | 0:
           return this.mnum.CompareToInt(val.smallValue);
-        case (1 << 2) | 1:
+          case (1 << 2) | 1:
           return this.mnum.compareTo(val.mnum);
-        case (1 << 2) | 2:
+          case (1 << 2) | 2:
           return this.AsEInteger().compareTo(val.largeValue);
-        case (2 << 2) | 0:
-        case (2 << 2) | 1:
-        case (2 << 2) | 2:
+          case (2 << 2) | 0:
+          case (2 << 2) | 1:
+          case (2 << 2) | 2:
           return this.largeValue.compareTo(val.AsEInteger());
-        default: throw new IllegalStateException();
+          default: throw new IllegalStateException();
       }
     }
 
@@ -584,7 +579,7 @@ at: http://peteroupc.github.io/
               // would overflow, convert to large
              boolean apos = this.smallValue > 0L;
              boolean bpos = val > 0L;
-              if (apos && bpos) {
+             if (apos && bpos) {
                 // if both operands are nonnegative
                 // convert to mutable big integer
                 this.integerMode = 1;
@@ -737,15 +732,15 @@ at: http://peteroupc.github.io/
             return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.ToInt32Checked()) :
             this.Add(FastInteger.FromBig(bigintVal));
           }
-        case 1:
+          case 1:
           this.integerMode = 2;
           this.largeValue = this.mnum.ToEInteger();
           this.largeValue = largeValue.Add(bigintVal);
           break;
-        case 2:
+          case 2:
           this.largeValue = largeValue.Add(bigintVal);
           break;
-        default:
+          default:
           throw new IllegalStateException();
       }
       return this;
@@ -952,7 +947,7 @@ at: http://peteroupc.github.io/
 
     FastInteger AddInt(int val) {
       this.CheckFrozen();
-     EInteger valValue;
+      EInteger valValue;
       switch (this.integerMode) {
         case 0:
           if ((this.smallValue < 0 && (int)val < Integer.MIN_VALUE -
@@ -1097,9 +1092,9 @@ at: http://peteroupc.github.io/
           return (this.smallValue == 0) ? 0 : ((this.smallValue < 0) ? -1 :
               1);
           case 1:
-            return this.mnum.signum();
+          return this.mnum.signum();
           case 2:
-            return this.largeValue.signum();
+          return this.largeValue.signum();
           default: return 0;
         }
       }

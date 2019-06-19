@@ -470,11 +470,11 @@ private EDecimals() {
       }
       EInteger mant = ed.getUnsignedMantissa();
       EInteger mantprec = ed.Precision();
-if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision()) >
+      if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision()) >
         0) {
      mant =
   mant.Remainder(EInteger.FromInt32(DecimalRadix).Pow(ec.getPrecision()));
-        mantprec = ec.getPrecision();
+  mantprec = ec.getPrecision();
       }
       if (mant.isZero()) {
         return ed.RoundToPrecision(ec);

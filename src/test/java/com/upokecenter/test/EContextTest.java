@@ -63,14 +63,14 @@ import com.upokecenter.numbers.*;
 
   if (!(EContext.Unlimited.ExponentWithinRange(EInteger.FromString(
   "9999999"))))Assert.fail();
-      try {
+  try {
  EContext.Unlimited.ExponentWithinRange(null);
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
     }
     @Test

@@ -786,9 +786,15 @@ Performs a logical NOT operation on a binary number in the form of a <i>
 
 **Parameters:**
 
-* <code>ed1</code> - The parameter <code>ed1</code> is not documented yet.
+* <code>ed1</code> - The operand to the logical NOT operation.
 
-* <code>ec</code> - The parameter <code>ec</code> is not documented yet.
+* <code>ec</code> - An arithmetic context to control the maximum precision of
+ arbitrary-precision numbers. If a logical operand passed to this
+ method has more bits than the maximum precision specified in this
+ context, the operand's most significant bits that exceed that
+ precision are discarded. This parameter cannot be null and must
+ specify a maximum precision (unlimited precision contexts are not
+ allowed).
 
 **Returns:**
 

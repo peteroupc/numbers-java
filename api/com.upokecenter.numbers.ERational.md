@@ -174,14 +174,14 @@ Renamed to FromEFloat.
 * `double ToDouble()`<br>
  Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
- Converts this rational number to a decimal number.
+ Converts this rational number to an arbitrary-precision decimal number.
 * `EDecimal ToEDecimal​(EContext ctx)`<br>
- Converts this rational number to a decimal number and rounds the result to
- the given precision.
+ Converts this rational number to an arbitrary-precision decimal number and
+ rounds the result to the given precision.
 * `EDecimal ToEDecimalExactIfPossible​(EContext ctx)`<br>
- Converts this rational number to a decimal number, but if the result would
- have a nonterminating decimal expansion, rounds that result to the
- given precision.
+ Converts this rational number to an arbitrary-precision decimal number, but
+ if the result would have a nonterminating decimal expansion, rounds
+ that result to the given precision.
 * `EFloat ToEFloat()`<br>
  Converts this rational number to a binary float.
 * `EFloat ToEFloat​(EContext ctx)`<br>
@@ -481,7 +481,8 @@ Renamed to FromEFloat.
 
 **Parameters:**
 
-* <code>ef</code> - The number to convert as an arbitrary-precision binary float.
+* <code>ef</code> - The number to convert as an arbitrary-precision binary
+ floating-point number.
 
 **Returns:**
 
@@ -509,7 +510,8 @@ Converts an arbitrary-precision binary float to a rational number.
 
 **Parameters:**
 
-* <code>ef</code> - The number to convert as an arbitrary-precision binary float.
+* <code>ef</code> - The number to convert as an arbitrary-precision binary
+ floating-point number.
 
 **Returns:**
 
@@ -706,7 +708,7 @@ Compares an arbitrary-precision binary float with this instance.
 
 **Parameters:**
 
-* <code>other</code> - An arbitrary-precision binary float.
+* <code>other</code> - An arbitrary-precision binary floating-point number.
 
 **Returns:**
 
@@ -988,7 +990,7 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 ### ToEDecimal
     public EDecimal ToEDecimal()
-Converts this rational number to a decimal number.
+Converts this rational number to an arbitrary-precision decimal number.
 
 **Returns:**
 
@@ -998,8 +1000,8 @@ Converts this rational number to a decimal number.
 
 ### ToEDecimal
     public EDecimal ToEDecimal​(EContext ctx)
-Converts this rational number to a decimal number and rounds the result to
- the given precision.
+Converts this rational number to an arbitrary-precision decimal number and
+ rounds the result to the given precision.
 
 **Parameters:**
 
@@ -1017,9 +1019,9 @@ Converts this rational number to a decimal number and rounds the result to
 
 ### ToEDecimalExactIfPossible
     public EDecimal ToEDecimalExactIfPossible​(EContext ctx)
-Converts this rational number to a decimal number, but if the result would
- have a nonterminating decimal expansion, rounds that result to the
- given precision.
+Converts this rational number to an arbitrary-precision decimal number, but
+ if the result would have a nonterminating decimal expansion, rounds
+ that result to the given precision.
 
 **Parameters:**
 

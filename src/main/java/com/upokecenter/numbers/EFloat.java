@@ -557,7 +557,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * Gets the greater value between two binary floats.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -588,7 +588,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * absolute values are equal, has the same effect as Max.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -619,7 +619,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * Gets the lesser value between two binary floats.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -650,7 +650,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * absolute values are equal, has the same effect as Min.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -679,7 +679,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
 
     /**
      * Finds the constant π, the circumference of a circle divided by its diameter.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i> This parameter
@@ -715,7 +715,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     /**
      * Finds the absolute value of this object (if it's negative, it becomes
      * positive).
-     * @param context An arithmetic context to control precision, rounding, and
+     * @param context An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -733,7 +733,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      */
-public EFloat Add(int intValue) {
+    public EFloat Add(int intValue) {
  return this.Add(EFloat.FromInt32(intValue));
 }
 
@@ -743,7 +743,7 @@ public EFloat Add(int intValue) {
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The difference of the two objects.
      */
-public EFloat Subtract(int intValue) {
+    public EFloat Subtract(int intValue) {
  return (intValue == Integer.MIN_VALUE) ?
    this.Subtract(EFloat.FromInt32(intValue)) : this.Add(-intValue);
 }
@@ -755,7 +755,7 @@ public EFloat Subtract(int intValue) {
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
-public EFloat Multiply(int intValue) {
+    public EFloat Multiply(int intValue) {
  return this.Multiply(EFloat.FromInt32(intValue));
 }
 
@@ -769,7 +769,7 @@ public EFloat Multiply(int intValue) {
      * @return The quotient of the two objects.
      * @throws ArithmeticException Attempted to divide by zero.
      */
-public EFloat Divide(int intValue) {
+    public EFloat Divide(int intValue) {
  return this.Divide(EFloat.FromInt32(intValue));
 }
 
@@ -786,7 +786,7 @@ public EFloat Divide(int intValue) {
      * Finds the sum of this object and another object. The result's exponent is
      * set to the lower of the exponents of the two operands.
      * @param otherValue The number to add to.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1096,7 +1096,7 @@ public EFloat Divide(int intValue) {
      * binary floating-point number. The preferred exponent for the result
      * is this object's exponent minus the divisor's exponent.
      * @param divisor The number to divide by.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1444,7 +1444,7 @@ public EFloat Divide(int intValue) {
     /**
      * Finds e (the base of natural logarithms) raised to the power of this
      * object's value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i> This parameter
@@ -1539,7 +1539,7 @@ public EFloat Divide(int intValue) {
      * Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to
      * equal this object's value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i> This parameter
@@ -1563,7 +1563,7 @@ public EFloat Divide(int intValue) {
      * Finds the base-10 logarithm of this object, that is, the power (exponent)
      * that the number 10 must be raised to in order to equal this object's
      * value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i> This parameter
@@ -1598,7 +1598,7 @@ public EFloat Divide(int intValue) {
      * @param places The number of binary digit places to move the radix point to
      * the left. If this number is negative, instead moves the radix point
      * to the right by this number's absolute value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1629,7 +1629,7 @@ public EFloat Divide(int intValue) {
      * @param bigPlaces The number of binary digit places to move the radix point
      * to the left. If this number is negative, instead moves the radix
      * point to the right by this number's absolute value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1663,7 +1663,7 @@ public EFloat Divide(int intValue) {
      * @param places The number of binary digit places to move the radix point to
      * the right. If this number is negative, instead moves the radix point
      * to the left by this number's absolute value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1694,7 +1694,7 @@ public EFloat Divide(int intValue) {
      * @param bigPlaces The number of binary digit places to move the radix point
      * to the right. If this number is negative, instead moves the radix
      * point to the left by this number's absolute value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1754,7 +1754,7 @@ public EFloat Divide(int intValue) {
      * both operands have the same sign, and negative if they have different
      * signs.
      * @param op Another binary float.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1783,7 +1783,7 @@ public EFloat Divide(int intValue) {
      * Multiplies by one value, and then adds another value.
      * @param op The value to multiply.
      * @param augend The value to add.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1804,7 +1804,7 @@ public EFloat Divide(int intValue) {
      * Multiplies by one value, and then subtracts another value.
      * @param op The value to multiply.
      * @param subtrahend The value to subtract.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1856,7 +1856,7 @@ public EFloat Divide(int intValue) {
     /**
      * Returns a binary float with the same value as this object but with the sign
      * reversed.
-     * @param context An arithmetic context to control precision, rounding, and
+     * @param context An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1942,7 +1942,7 @@ public EFloat Divide(int intValue) {
      * Raises this object's value to the given exponent.
      * @param exponent An arbitrary-precision binary float expressing the exponent
      * to raise this object's value to.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -1961,7 +1961,7 @@ public EFloat Divide(int intValue) {
     /**
      * Raises this object's value to the given exponent.
      * @param exponentSmall The exponent to raise this object's value to.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2125,7 +2125,7 @@ public EFloat Divide(int intValue) {
      * trailing zeros removed from its mantissa (significand). For example,
      * 1.00 becomes 1. <p>If this object's value is 0, changes the exponent
      * to 0. </p>
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2254,7 +2254,7 @@ public EFloat Divide(int intValue) {
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2284,7 +2284,7 @@ public EFloat Divide(int intValue) {
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2315,7 +2315,7 @@ public EFloat Divide(int intValue) {
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2370,7 +2370,7 @@ public EFloat Divide(int intValue) {
      * places from the number. For example, -3 means round to the thousandth
      * (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2394,7 +2394,7 @@ public EFloat Divide(int intValue) {
      * integer, and signals an inexact flag if the result would be inexact.
      * The resulting number's Exponent property will not necessarily be 0;
      * use the Quantize method instead to give the result an exponent of 0.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2438,7 +2438,7 @@ public EFloat Divide(int intValue) {
     /**
      * Returns a binary float with the same value as this object but rounded to an
      * integer, and signals an inexact flag if the result would be inexact.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2484,7 +2484,7 @@ public EFloat Divide(int intValue) {
     /**
      * Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -2509,7 +2509,7 @@ public EFloat Divide(int intValue) {
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param places The parameter {@code places} is a 32-bit signed integer.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null.
@@ -2531,7 +2531,7 @@ public EFloat Divide(int intValue) {
     /**
      * Returns a number similar to this number but with its scale adjusted.
      * @param bigPlaces An arbitrary-precision integer.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null.
@@ -2556,7 +2556,7 @@ public EFloat Divide(int intValue) {
 
     /**
      * Finds the square root of this object's value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i> This parameter
@@ -2575,7 +2575,7 @@ public EFloat Divide(int intValue) {
 
     /**
      * Finds the square root of this object's value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i> This parameter
@@ -2607,7 +2607,7 @@ public EFloat Divide(int intValue) {
     /**
      * Subtracts an arbitrary-precision binary float from this instance.
      * @param otherValue The number to subtract from this instance's value.
-     * @param ctx An arithmetic context to control precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
@@ -3154,7 +3154,8 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
           return null;
         }
         EInteger valueELowBit = den.GetLowBitAsEInteger();
-      return den.GetUnsignedBitLengthAsEInteger().equals(valueELowBit.Add(1)) ?
+      return
+          den.GetUnsignedBitLengthAsEInteger().equals(valueELowBit.Add(1)) ?
           FastInteger.FromBig(valueELowBit) : null;
       }
 
@@ -3239,7 +3240,7 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
      * the truncated integer is less than 0 or greater than 255.
      */
-public byte ToByteChecked() {
+    public byte ToByteChecked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3253,7 +3254,7 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
      * value is infinity or not-a-number.
      */
-public byte ToByteUnchecked() {
+    public byte ToByteUnchecked() {
  return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
 }
 
@@ -3264,7 +3265,7 @@ public byte ToByteUnchecked() {
      * @throws ArithmeticException This value is infinity or not-a-number, is not
      * an exact integer, or is less than 0 or greater than 255.
      */
-public byte ToByteIfExact() {
+    public byte ToByteIfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3278,7 +3279,7 @@ public byte ToByteIfExact() {
      * @return This number's value as an arbitrary-precision binary floating-point
      * number.
      */
-public static EFloat FromByte(byte inputByte) {
+    public static EFloat FromByte(byte inputByte) {
  int val = ((int)inputByte) & 0xff;
  return FromInt32(val);
 }
@@ -3290,7 +3291,7 @@ public static EFloat FromByte(byte inputByte) {
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
      * the truncated integer is less than -32768 or greater than 32767.
      */
-public short ToInt16Checked() {
+    public short ToInt16Checked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3304,7 +3305,7 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
      * @return This number, converted to a 16-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
-public short ToInt16Unchecked() {
+    public short ToInt16Unchecked() {
  return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
 }
 
@@ -3316,7 +3317,7 @@ public short ToInt16Unchecked() {
      * @throws ArithmeticException This value is infinity or not-a-number, is not
      * an exact integer, or is less than -32768 or greater than 32767.
      */
-public short ToInt16IfExact() {
+    public short ToInt16IfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3331,7 +3332,7 @@ public short ToInt16IfExact() {
      * @return This number's value as an arbitrary-precision binary floating-point
      * number.
      */
-public static EFloat FromInt16(short inputInt16) {
+    public static EFloat FromInt16(short inputInt16) {
  int val = (int)inputInt16;
  return FromInt32(val);
 }
@@ -3344,7 +3345,7 @@ public static EFloat FromInt16(short inputInt16) {
      * the truncated integer is less than -2147483648 or greater than
      * 2147483647.
      */
-public int ToInt32Checked() {
+    public int ToInt32Checked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3358,7 +3359,7 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * @return This number, converted to a 32-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
-public int ToInt32Unchecked() {
+    public int ToInt32Unchecked() {
  return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
 }
 
@@ -3371,7 +3372,7 @@ public int ToInt32Unchecked() {
      * an exact integer, or is less than -2147483648 or greater than
      * 2147483647.
      */
-public int ToInt32IfExact() {
+    public int ToInt32IfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3384,7 +3385,7 @@ public int ToInt32IfExact() {
      * @param boolValue Either true or false.
      * @return The number 1 if {@code boolValue} is true, otherwise, 0.
      */
-   public static EFloat FromBoolean(boolean boolValue) {
+    public static EFloat FromBoolean(boolean boolValue) {
     return boolValue ? EFloat.One : EFloat.Zero;
    }
 
@@ -3395,7 +3396,7 @@ public int ToInt32IfExact() {
      * @return This number's value as an arbitrary-precision binary floating-point
      * number.
      */
-public static EFloat FromInt32(int inputInt32) {
+    public static EFloat FromInt32(int inputInt32) {
  return FromEInteger(EInteger.FromInt32(inputInt32));
 }
 
@@ -3407,7 +3408,7 @@ public static EFloat FromInt32(int inputInt32) {
      * the truncated integer is less than -9223372036854775808 or greater
      * than 9223372036854775807.
      */
-public long ToInt64Checked() {
+    public long ToInt64Checked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3421,7 +3422,7 @@ return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
      * @return This number, converted to a 64-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
-public long ToInt64Unchecked() {
+    public long ToInt64Unchecked() {
  return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : (long)0;
 }
 
@@ -3434,7 +3435,7 @@ public long ToInt64Unchecked() {
      * an exact integer, or is less than -9223372036854775808 or greater
      * than 9223372036854775807.
      */
-public long ToInt64IfExact() {
+    public long ToInt64IfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -3448,7 +3449,7 @@ public long ToInt64IfExact() {
      * @return This number's value as an arbitrary-precision binary floating-point
      * number.
      */
-public static EFloat FromInt64(long inputInt64) {
+    public static EFloat FromInt64(long inputInt64) {
  return FromEInteger(EInteger.FromInt64(inputInt64));
 }
 

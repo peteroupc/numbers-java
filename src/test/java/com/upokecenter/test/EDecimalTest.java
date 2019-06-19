@@ -22,13 +22,13 @@ import com.upokecenter.numbers.*;
       "0.0000000000000000000000000000000", "0.0000e-1", "0.00000",
       "0.00000", "0.00000", "0.00000000000e-11", "0E-22", "0.0E-21",
       "0.0000000000000000000000", "0.00000000000e-17", "0E-28", "0.0E-27",
-  "0.0000000000000000000000000000", "0.00000000000000e+9", "0.00000",
-  "0.00000", "0.00000", "0.0000000000e-18", "0E-28", "0.0E-27",
+      "0.0000000000000000000000000000", "0.00000000000000e+9", "0.00000",
+      "0.00000", "0.00000", "0.0000000000e-18", "0E-28", "0.0E-27",
       "0.0000000000000000000000000000", "0.0e-13", "0E-14", "0.00E-12",
       "0.00000000000000", "0.000000000000000000e+10", "0E-8", "0.00E-6",
       "0.00000000", "0.0000e+19", "0E+15", "0E+15", "0", "0.00000e-8",
       "0E-13", "0.0E-12", "0.0000000000000", "0.00000000000e+14", "0E+3",
-  "0E+3", "0", "0.000e-14", "0E-17", "0.00E-15",
+      "0E+3", "0", "0.000e-14", "0E-17", "0.00E-15",
       "0.00000000000000000", "0.000000e-19", "0E-25", "0.0E-24",
       "0.0000000000000000000000000", "0.000000000000e+19", "0E+7",
       "0.00E+9", "0", "0.0000000000000e+18", "0E+5", "0.0E+6", "0",
@@ -39,25 +39,25 @@ import com.upokecenter.numbers.*;
       "0.00000000000000000e+0", "0E-17", "0.00E-15",
       "0.00000000000000000", "0.0000000000000e+0", "0E-13", "0.0E-12",
       "0.0000000000000", "0.0000000000000000000e-12", "0E-31", "0.0E-30",
-  "0.0000000000000000000000000000000", "0.0000000000000000000e+10",
+      "0.0000000000000000000000000000000", "0.0000000000000000000e+10",
       "0E-9", "0E-9", "0.000000000", "0.00000e-2", "0E-7", "0.0E-6",
       "0.0000000", "0.000000e+15", "0E+9", "0E+9", "0",
       "0.000000000e-10", "0E-19", "0.0E-18", "0.0000000000000000000",
       "0.00000000000000e+6", "0E-8", "0.00E-6", "0.00000000",
       "0.00000e+17", "0E+12", "0E+12", "0", "0.000000000000000000e-0",
       "0E-18", "0E-18", "0.000000000000000000", "0.0000000000000000e+11",
-  "0.00000", "0.00000", "0.00000", "0.000000000000e+15", "0E+3",
+      "0.00000", "0.00000", "0.00000", "0.000000000000e+15", "0E+3",
       "0E+3", "0", "0.00000000e-19", "0E-27", "0E-27",
       "0.000000000000000000000000000", "0.00000e-6", "0E-11", "0.00E-9",
       "0.00000000000", "0e-14", "0E-14", "0.00E-12", "0.00000000000000",
-  "0.000000000e+9", "0", "0", "0", "0.00000e+13", "0E+8",
+      "0.000000000e+9", "0", "0", "0", "0.00000e+13", "0E+8",
       "0.0E+9", "0", "0.000e-0", "0.000", "0.000", "0.000",
       "0.000000000000000e+6", "0E-9", "0E-9", "0.000000000",
       "0.000000000e+17", "0E+8", "0.0E+9", "0", "0.00000000000e+6",
       "0.00000", "0.00000", "0.00000", "0.00000000000000e+3", "0E-11",
       "0.00E-9", "0.00000000000", "0e+0", "0", "0", "0", "0.000e+12",
       "0E+9", "0E+9", "0", "0.00000000000e+9", "0.00", "0.00", "0.00",
-  "0.00000000000000e-9", "0E-23", "0.00E-21",
+      "0.00000000000000e-9", "0E-23", "0.00E-21",
       "0.00000000000000000000000", "0e-1", "0.0", "0.0", "0.0",
       "0.0000e-13", "0E-17", "0.00E-15", "0.00000000000000000",
       "0.00000000000e-7", "0E-18", "0E-18", "0.000000000000000000",
@@ -66,9 +66,9 @@ import com.upokecenter.numbers.*;
       "0.00e-6", "0E-8", "0.00E-6", "0.00000000", "0.0e-1", "0.00",
       "0.00", "0.00", "0.0000000000000000e-10", "0E-26", "0.00E-24",
       "0.00000000000000000000000000", "0.00e+14", "0E+12", "0E+12", "0",
-  "0.000000000000000000e+5", "0E-13", "0.0E-12", "0.0000000000000",
-  "0.0e+7", "0E+6", "0E+6", "0", "0.00000000e+8", "0", "0", "0",
-  "0.000000000e+0", "0E-9", "0E-9", "0.000000000", "0.000e+13",
+      "0.000000000000000000e+5", "0E-13", "0.0E-12", "0.0000000000000",
+      "0.0e+7", "0E+6", "0E+6", "0", "0.00000000e+8", "0", "0", "0",
+      "0.000000000e+0", "0E-9", "0E-9", "0.000000000", "0.000e+13",
       "0E+10", "0.00E+12", "0", "0.0000000000000000e+16", "0", "0",
       "0", "0.00000000e-1", "0E-9", "0E-9", "0.000000000",
       "0.00000000000e-15", "0E-26", "0.00E-24",
@@ -77,7 +77,7 @@ import com.upokecenter.numbers.*;
       "0.0000000000000000000e-19", "0E-38", "0.00E-36",
       "0.00000000000000000000000000000000000000", "0.0000000000e-6",
       "0E-16", "0.0E-15", "0.0000000000000000", "0.00000000000000000e-15",
-  "0E-32", "0.00E-30", "0.00000000000000000000000000000000",
+      "0E-32", "0.00E-30", "0.00000000000000000000000000000000",
       "0.000000000000000e+2", "0E-13", "0.0E-12", "0.0000000000000",
       "0.0e-18", "0E-19", "0.0E-18", "0.0000000000000000000",
       "0.00000000000000e-6", "0E-20", "0.00E-18",
@@ -85,7 +85,7 @@ import com.upokecenter.numbers.*;
       "0.00000000000000000000", "0.00000000000000e-7", "0E-21", "0E-21",
       "0.000000000000000000000", "0.000000e-9", "0E-15", "0E-15",
       "0.000000000000000", "0e-11", "0E-11", "0.00E-9", "0.00000000000",
-  "0.000000000e+11", "0E+2", "0.0E+3", "0",
+      "0.000000000e+11", "0E+2", "0.0E+3", "0",
       "0.0000000000000000e+15", "0.0", "0.0", "0.0",
       "0.0000000000000000e+10", "0.000000", "0.000000", "0.000000",
       "0.000000000e+4", "0.00000", "0.00000", "0.00000",
@@ -121,7 +121,6 @@ import com.upokecenter.numbers.*;
         TestCommon.CompareTestEqual(decD, decA);
       }
     }
-
 @Test
 public void TestFromBoolean() {
 Assert.assertEquals(EDecimal.Zero, EDecimal.FromBoolean(false));
@@ -267,7 +266,6 @@ Assert.assertEquals(EDecimal.One, EDecimal.FromBoolean(true));
         Assert.assertEquals(0, cmp);
       }
     }
-
 @Test(timeout = 1000)
 public void TestSlowCompareTo() {
 EInteger ei = EInteger.FromString(
@@ -278,7 +276,6 @@ EFloat ef = EFloat.Create(
 EDecimal ed = EDecimal.FromString("-0.00007");
 Assert.assertEquals(-1, ed.CompareToBinary(ef));
 }
-
 @Test(timeout = 1000)
 public void TestSlowCompareTo2() {
 EFloat ef = EFloat.Create(
@@ -288,7 +285,6 @@ EDecimal ed = EDecimal.FromString(
   "5.46812681195752988681792163205092489269012868995370381431608431437654836803981061017608940175753472E-373278497416");
 Assert.assertEquals(-1, ed.CompareToBinary(ef));
 }
-
 @Test(timeout = 1000)
 public void TestSlowCompareTo3() {
 EDecimal ed;
@@ -805,30 +801,30 @@ Assert.assertEquals(-1, ed.CompareToBinary(ef));
     public void TestCreateNaN() {
       try {
  EDecimal.CreateNaN(null);
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
       try {
  EDecimal.CreateNaN(EInteger.FromString("-1"));
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (IllegalArgumentException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
       try {
  EDecimal.CreateNaN(null, false, false, null);
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
       EDecimal ef = EDecimal.CreateNaN(EInteger.FromInt32(0), false, true, null);
       if (!(ef.isNegative())) {
@@ -3243,46 +3239,46 @@ EFloat.Create(
     }
 
     @Test
-public void TestToByteChecked() {
+    public void TestToByteChecked() {
 Assert.assertEquals((byte)0, EDecimal.FromString("-0.1").ToByteChecked());
 Assert.assertEquals((byte)0, EDecimal.FromString("-0.4").ToByteChecked());
 Assert.assertEquals((byte)0, EDecimal.FromString("-0.5").ToByteChecked());
 Assert.assertEquals((byte)0, EDecimal.FromString("-0.6").ToByteChecked());
 try {
  EDecimal.FromString("-1.0").ToByteChecked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 try {
  EDecimal.FromString("-1.4").ToByteChecked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 try {
  EDecimal.FromString("-1.5").ToByteChecked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 try {
  EDecimal.FromString("-1.6").ToByteChecked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 }
 
@@ -3333,7 +3329,7 @@ throw new IllegalStateException("", ex);
             if (!(edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(
+            TestCommon.CompareTestGreaterEqual(
   edec.Abs(),
   DoubleOverflowToInfinity,
   edecstr);
@@ -3341,7 +3337,7 @@ throw new IllegalStateException("", ex);
             if (!(!edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(
+            TestCommon.CompareTestGreaterEqual(
   edec.Abs(),
   DoubleOverflowToInfinity,
   edecstr);
@@ -3350,7 +3346,7 @@ throw new IllegalStateException("", ex);
   edec.Abs(),
   DoubleUnderflowToZero,
   edecstr);
-Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
+  Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
           } else {
             if (!(!Double.isNaN(dbl))) {
  Assert.fail();
@@ -4869,7 +4865,7 @@ Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromDouble(dbl).isNegat
             if (!(edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(
+            TestCommon.CompareTestGreaterEqual(
   edec.Abs(),
   SingleOverflowToInfinity,
   edecstr);
@@ -4877,7 +4873,7 @@ Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromDouble(dbl).isNegat
             if (!(!edec.isNegative())) {
  Assert.fail();
  }
-  TestCommon.CompareTestGreaterEqual(
+            TestCommon.CompareTestGreaterEqual(
   edec.Abs(),
   SingleOverflowToInfinity,
   edecstr);
@@ -4902,14 +4898,12 @@ Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegat
         }
       }
     }
-
 private static String Repeat(String s, int count) {
  StringBuilder sb = new StringBuilder();
  for (int i = 0; i < count; ++i) { sb.append(s);
 }
  return sb.toString();
 }
-
 @Test
 public void TestOnePlusOne() {
 EContext ec = EContext.ForRounding(ERounding.Up).WithPrecision(4);

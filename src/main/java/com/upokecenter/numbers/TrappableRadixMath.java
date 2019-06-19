@@ -121,7 +121,7 @@ at: http://peteroupc.github.io/
   EContext ctx,
   boolean roundAfterDivide) {
       EContext tctx = GetTrappableContext(ctx);
-    T result = this.math.Remainder(
+      T result = this.math.Remainder(
   thisValue,
   divisor,
   tctx,

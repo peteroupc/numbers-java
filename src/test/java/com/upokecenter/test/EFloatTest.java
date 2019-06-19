@@ -59,7 +59,6 @@ import com.upokecenter.numbers.*;
       }
       return EFloat.Create(ret, EInteger.FromInt32(smallExponent));
     }
-
 @Test
 public void TestFromBoolean() {
 Assert.assertEquals(EFloat.Zero, EFloat.FromBoolean(false));
@@ -99,7 +98,7 @@ Assert.assertEquals(EFloat.One, EFloat.FromBoolean(true));
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       TestCommon.CompareTestLess(EFloat.Zero, EFloat.NaN);
-String str2561 =
+      String str2561 =
   "7.00468923842476447758037175245551511770928808756622205663208" +
   "4784688080253355047487262563521426272927783429622650146484375";
 
@@ -124,30 +123,30 @@ String str2561 =
     public void TestCreateNaN() {
       try {
  EFloat.CreateNaN(null);
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
       try {
  EFloat.CreateNaN(EInteger.FromString("-1"));
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (IllegalArgumentException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
       try {
  EFloat.CreateNaN(null, false, false, null);
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (NullPointerException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
       EFloat ef = EFloat.CreateNaN(EInteger.FromInt32(0), false, true, null);
       if (!(ef.isNegative())) {
@@ -303,7 +302,7 @@ Assert.assertEquals(
     }
 
     @Test
-public void TestPrecisionOneHalfEven() {
+    public void TestPrecisionOneHalfEven() {
   EFloat enumber = EFloat.Create(0x03, -1);
   EContext ectx = EContext.ForPrecisionAndRounding(1, ERounding.HalfEven);
   enumber = enumber.RoundToPrecision(ectx);
@@ -329,7 +328,7 @@ public void TestPrecisionOneHalfEven() {
       for (int i = 0; i < 5000; ++i) {
         EFloat ef = RandomObjects.RandomEFloat(r);
         EDecimal ed = ef.ToEDecimal();
-          EFloat ef2 = ed.ToEFloat();
+        EFloat ef2 = ed.ToEFloat();
           // Tests that values converted from float to decimal and
           // back have the same numerical value
           TestCommon.CompareTestEqual(ef, ef2);
@@ -1274,9 +1273,9 @@ public void TestPrecisionOneHalfEven() {
       EFloat efprevgap = efa.Subtract(efprev);
       EFloat efprev1q = efprev.Add(
      efprevgap.Multiply(quarter));
-   EFloat efprev2q = efprev.Add(
+     EFloat efprev2q = efprev.Add(
      efprevgap.Multiply(half));
-   EFloat efprev3q = efprev.Add(
+     EFloat efprev3q = efprev.Add(
      efprevgap.Multiply(threequarter));
       EFloat efnext1q = efa.Add(efnextgap.Multiply(quarter));
       EFloat efnext2q = efa.Add(efnextgap.Multiply(half));
@@ -1317,9 +1316,9 @@ public void TestPrecisionOneHalfEven() {
     EContext ec = EContext.ForPrecisionAndRounding(
   digits,
   ERounding.HalfEven);
-      String str = EFloat.FromString(input, EContext.Binary64)
+  String str = EFloat.FromString(input, EContext.Binary64)
           .ToEDecimal().RoundToPrecision(ec).toString();
-      TestCommon.CompareTestEqual(
+          TestCommon.CompareTestEqual(
        EDecimal.FromString(expected),
        EDecimal.FromString(str),
        msg);
@@ -1338,13 +1337,12 @@ TestBinaryToDecimal(
     public void TestToShortestString() {
       {
         EFloat ef = EFloat.FromDouble(64.1);
-String stringTemp = ef.ToShortestString(EContext.Binary64);
-Assert.assertEquals(
+        String stringTemp = ef.ToShortestString(EContext.Binary64);
+        Assert.assertEquals(
   "64.1",
   stringTemp);
-stringTemp =
-          EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
-Assert.assertEquals(
+  stringTemp = EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
+          Assert.assertEquals(
   "0.1",
   stringTemp);
 }
@@ -1439,87 +1437,87 @@ Assert.assertEquals(
         if (!enumber.isFinite()) {
           try {
  enumber.ToByteChecked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
-  Assert.assertEquals(
+Assert.assertEquals(
   EInteger.FromInt32(0),
   EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
  enumber.ToByteIfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToInt16Checked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
   EInteger.FromInt32(0),
   EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
  enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToInt32Checked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
   EInteger.FromInt32(0),
   EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
  enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToInt64Checked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
 Assert.assertEquals(
   EInteger.FromInt32(0),
   EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
  enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           continue;
         }
@@ -1536,49 +1534,49 @@ throw new IllegalStateException("", ex);
      TestCommon.AssertEquals(
   eint,
   EInteger.FromByte(enumber.ToByteChecked()));
-   TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromByte(enumber.ToByteUnchecked()));
-          if (isInteger) {
+  if (isInteger) {
      TestCommon.AssertEquals(
   eint,
   EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
             try {
  enumber.ToByteIfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         } else if (isTruncated) {
      TestCommon.AssertEquals(
   eint,
   EInteger.FromByte(enumber.ToByteChecked()));
-   TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromByte(enumber.ToByteUnchecked()));
-          try {
+  try {
  enumber.ToByteIfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
         } else {
           try {
  enumber.ToByteChecked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToByteUnchecked();
@@ -1589,22 +1587,22 @@ throw new IllegalStateException("", ex);
           if (isInteger) {
             try {
  enumber.ToByteIfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           } else {
             try {
  enumber.ToByteIfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         }
@@ -1618,49 +1616,49 @@ throw new IllegalStateException("", ex);
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt16(enumber.ToInt16Checked()));
- TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromInt16(enumber.ToInt16Unchecked()));
-          if (isInteger) {
+  if (isInteger) {
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
             try {
  enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt16(enumber.ToInt16Checked()));
- TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromInt16(enumber.ToInt16Unchecked()));
-          try {
+  try {
  enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
         } else {
           try {
  enumber.ToInt16Checked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToInt16Unchecked();
@@ -1671,22 +1669,22 @@ throw new IllegalStateException("", ex);
           if (isInteger) {
             try {
  enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           } else {
             try {
  enumber.ToInt16IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         }
@@ -1701,49 +1699,49 @@ throw new IllegalStateException("", ex);
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt32(enumber.ToInt32Checked()));
- TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromInt32(enumber.ToInt32Unchecked()));
-          if (isInteger) {
+  if (isInteger) {
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
             try {
  enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt32(enumber.ToInt32Checked()));
- TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromInt32(enumber.ToInt32Unchecked()));
-          try {
+  try {
  enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
         } else {
           try {
  enumber.ToInt32Checked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToInt32Unchecked();
@@ -1754,22 +1752,22 @@ throw new IllegalStateException("", ex);
           if (isInteger) {
             try {
  enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           } else {
             try {
  enumber.ToInt32IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         }
@@ -1784,49 +1782,49 @@ throw new IllegalStateException("", ex);
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt64(enumber.ToInt64Checked()));
- TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromInt64(enumber.ToInt64Unchecked()));
-          if (isInteger) {
+  if (isInteger) {
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt64(enumber.ToInt64IfExact()));
           } else {
             try {
  enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         } else if (isTruncated) {
    TestCommon.AssertEquals(
   eint,
   EInteger.FromInt64(enumber.ToInt64Checked()));
- TestCommon.AssertEquals(
+  TestCommon.AssertEquals(
   eint,
   EInteger.FromInt64(enumber.ToInt64Unchecked()));
-          try {
+  try {
  enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
         } else {
           try {
  enumber.ToInt64Checked();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           try {
  enumber.ToInt64Unchecked();
@@ -1837,22 +1835,22 @@ throw new IllegalStateException("", ex);
           if (isInteger) {
             try {
  enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           } else {
             try {
  enumber.ToInt64IfExact();
-Assert.fail("Should have failed");
+ Assert.fail("Should have failed");
 } catch (ArithmeticException ex) {
 // NOTE: Intentionally empty
 } catch (Exception ex) {
  Assert.fail(ex.toString());
-throw new IllegalStateException("", ex);
+ throw new IllegalStateException("", ex);
 }
           }
         }

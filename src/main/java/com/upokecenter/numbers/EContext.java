@@ -207,7 +207,7 @@ if (exponentMin == null) {
 if (exponentMax == null) {
  throw new NullPointerException("exponentMax");
 }
-      if (bigintPrecision.signum() < 0) {
+if (bigintPrecision.signum() < 0) {
         throw new IllegalArgumentException("precision (" + bigintPrecision +
           ") is less than 0");
       }
@@ -348,15 +348,15 @@ this.traps = traps;
 
     /**
      * Gets the highest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the radix point. For
-     * example, with a precision of 3 and an EMax of 100, the maximum value
-     * possible is 9.99E + 100. (This is not the same as the highest
+     * scientific notation with one nonzero digit before the radix point.
+     * For example, with a precision of 3 and an EMax of 100, the maximum
+     * value possible is 9.99E + 100. (This is not the same as the highest
      * possible Exponent property.) If HasExponentRange is false, this value
      * will be 0.
      * @return The highest exponent possible when a converted number is expressed
-     * in scientific notation with one digit before the radix point. For
-     * example, with a precision of 3 and an EMax of 100, the maximum value
-     * possible is 9.99E + 100. (This is not the same as the highest
+     * in scientific notation with one nonzero digit before the radix point.
+     * For example, with a precision of 3 and an EMax of 100, the maximum
+     * value possible is 9.99E + 100. (This is not the same as the highest
      * possible Exponent property.) If HasExponentRange is false, this value
      * will be 0.
      */
@@ -366,17 +366,17 @@ this.traps = traps;
 
     /**
      * Gets the lowest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the radix point. For
-     * example, with a precision of 3 and an EMin of -100, the next value
-     * that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
-     * property specifies the lowest possible Exponent property instead.) If
-     * HasExponentRange is false, this value will be 0.
+     * scientific notation with one nonzero digit before the radix point.
+     * For example, with a precision of 3 and an EMin of -100, the next
+     * value that comes after 0 is 0.001E-100. (If AdjustExponent is false,
+     * this property specifies the lowest possible Exponent property
+     * instead.) If HasExponentRange is false, this value will be 0.
      * @return The lowest exponent possible when a converted number is expressed in
-     * scientific notation with one digit before the radix point. For
-     * example, with a precision of 3 and an EMin of -100, the next value
-     * that comes after 0 is 0.001E-100. (If AdjustExponent is false, this
-     * property specifies the lowest possible Exponent property instead.) If
-     * HasExponentRange is false, this value will be 0.
+     * scientific notation with one nonzero digit before the radix point.
+     * For example, with a precision of 3 and an EMin of -100, the next
+     * value that comes after 0 is 0.001E-100. (If AdjustExponent is false,
+     * this property specifies the lowest possible Exponent property
+     * instead.) If HasExponentRange is false, this value will be 0.
      */
     public final EInteger getEMin() {
         return this.hasExponentRange ? this.exponentMin : EInteger.FromInt32(0);

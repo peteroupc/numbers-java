@@ -281,7 +281,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
       }
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
-   return new ERational(diag, EInteger.FromInt32(1), flags);
+        return new ERational(diag, EInteger.FromInt32(1), flags);
     }
 
     /**
@@ -309,7 +309,8 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
 
     /**
      * Converts an arbitrary-precision binary float to a rational number.
-     * @param ef The number to convert as an arbitrary-precision binary float.
+     * @param ef The number to convert as an arbitrary-precision binary
+     * floating-point number.
      * @return An arbitrary-precision rational number.
      * @deprecated Renamed to FromEFloat.
  */
@@ -367,7 +368,8 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
 
     /**
      * Converts an arbitrary-precision binary float to a rational number.
-     * @param ef The number to convert as an arbitrary-precision binary float.
+     * @param ef The number to convert as an arbitrary-precision binary
+     * floating-point number.
      * @return An arbitrary-precision rational number.
      * @throws java.lang.NullPointerException The parameter "ef" is null.
      */
@@ -651,8 +653,8 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
                 // multiply numerBufferMult and numerBuffer each by 10
              numerBufferMult = (numerBufferMult << 3) + (numerBufferMult <<
                   1);
-                numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
-                numerBuffer += thisdigit;
+                  numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
+                  numerBuffer += thisdigit;
               }
             }
           } else {
@@ -700,8 +702,8 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
                   // multiply denomBufferMult and denomBuffer each by 10
              denomBufferMult = (denomBufferMult << 3) + (denomBufferMult <<
                     1);
-                  denomBuffer = (denomBuffer << 3) + (denomBuffer << 1);
-                  denomBuffer += thisdigit;
+                    denomBuffer = (denomBuffer << 3) + (denomBuffer << 1);
+                    denomBuffer += thisdigit;
                 }
               }
             } else {
@@ -985,7 +987,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
 
     /**
      * Compares an arbitrary-precision binary float with this instance.
-     * @param other An arbitrary-precision binary float.
+     * @param other An arbitrary-precision binary floating-point number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
      * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't
@@ -1077,7 +1079,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
           // 0 instead of 1, but the possibility of 0 was already excluded
  EInteger bigDigitCount = this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
              .Subtract(1);
-          if (bigDigitCount.compareTo(other.getExponent()) < 0) {
+             if (bigDigitCount.compareTo(other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other' s
             // exponent,
             // and other's exponent is positive, so this value's absolute
@@ -1192,7 +1194,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
       EInteger bigDigitCount =
             this.getUnsignedNumerator().GetDigitCountAsEInteger()
              .Subtract(1);
-          if (bigDigitCount.compareTo(other.getExponent()) < 0) {
+             if (bigDigitCount.compareTo(other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other' s
             // exponent,
             // and other's exponent is positive, so this value's absolute
@@ -1613,7 +1615,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
-     * Converts this rational number to a decimal number.
+     * Converts this rational number to an arbitrary-precision decimal number.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating decimal
      * expansion.
@@ -1623,8 +1625,8 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
-     * Converts this rational number to a decimal number and rounds the result to
-     * the given precision.
+     * Converts this rational number to an arbitrary-precision decimal number and
+     * rounds the result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is true,
      * will also store the flags resulting from the operation (the flags are
@@ -1654,9 +1656,9 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
-     * Converts this rational number to a decimal number, but if the result would
-     * have a nonterminating decimal expansion, rounds that result to the
-     * given precision.
+     * Converts this rational number to an arbitrary-precision decimal number, but
+     * if the result would have a nonterminating decimal expansion, rounds
+     * that result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating decimal expansion. If
@@ -1702,7 +1704,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
-     * Converts this rational number to a decimal number.
+     * Converts this rational number to an arbitrary-precision decimal number.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating decimal
      * expansion.
@@ -1714,8 +1716,8 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
-     * Converts this rational number to a decimal number and rounds the result to
-     * the given precision.
+     * Converts this rational number to an arbitrary-precision decimal number and
+     * rounds the result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is true,
      * will also store the flags resulting from the operation (the flags are
@@ -1732,9 +1734,9 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
     }
 
     /**
-     * Converts this rational number to a decimal number, but if the result would
-     * have a nonterminating decimal expansion, rounds that result to the
-     * given precision.
+     * Converts this rational number to an arbitrary-precision decimal number, but
+     * if the result would have a nonterminating decimal expansion, rounds
+     * that result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating decimal expansion. If
@@ -1953,7 +1955,7 @@ return new ERational(this.unsignedNumerator, this.denominator, this.flags);
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
      * the truncated integer is less than 0 or greater than 255.
      */
-public byte ToByteChecked() {
+    public byte ToByteChecked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -1967,7 +1969,7 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
      * value is infinity or not-a-number.
      */
-public byte ToByteUnchecked() {
+    public byte ToByteUnchecked() {
  return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
 }
 
@@ -1978,7 +1980,7 @@ public byte ToByteUnchecked() {
      * @throws ArithmeticException This value is infinity or not-a-number, is not
      * an exact integer, or is less than 0 or greater than 255.
      */
-public byte ToByteIfExact() {
+    public byte ToByteIfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -1990,7 +1992,7 @@ public byte ToByteIfExact() {
      * @param inputByte The number to convert as a byte (from 0 to 255).
      * @return This number's value as an arbitrary-precision rational number.
      */
-public static ERational FromByte(byte inputByte) {
+    public static ERational FromByte(byte inputByte) {
  int val = ((int)inputByte) & 0xff;
  return FromInt32(val);
 }
@@ -2002,7 +2004,7 @@ public static ERational FromByte(byte inputByte) {
      * @throws java.lang.ArithmeticException This value is infinity or not-a-number, or
      * the truncated integer is less than -32768 or greater than 32767.
      */
-public short ToInt16Checked() {
+    public short ToInt16Checked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -2016,7 +2018,7 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
      * @return This number, converted to a 16-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
-public short ToInt16Unchecked() {
+    public short ToInt16Unchecked() {
  return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
 }
 
@@ -2028,7 +2030,7 @@ public short ToInt16Unchecked() {
      * @throws ArithmeticException This value is infinity or not-a-number, is not
      * an exact integer, or is less than -32768 or greater than 32767.
      */
-public short ToInt16IfExact() {
+    public short ToInt16IfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -2041,7 +2043,7 @@ public short ToInt16IfExact() {
      * @param inputInt16 The number to convert as a 16-bit signed integer.
      * @return This number's value as an arbitrary-precision rational number.
      */
-public static ERational FromInt16(short inputInt16) {
+    public static ERational FromInt16(short inputInt16) {
  int val = (int)inputInt16;
  return FromInt32(val);
 }
@@ -2054,7 +2056,7 @@ public static ERational FromInt16(short inputInt16) {
      * the truncated integer is less than -2147483648 or greater than
      * 2147483647.
      */
-public int ToInt32Checked() {
+    public int ToInt32Checked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -2068,7 +2070,7 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * @return This number, converted to a 32-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
-public int ToInt32Unchecked() {
+    public int ToInt32Unchecked() {
  return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
 }
 
@@ -2081,7 +2083,7 @@ public int ToInt32Unchecked() {
      * an exact integer, or is less than -2147483648 or greater than
      * 2147483647.
      */
-public int ToInt32IfExact() {
+    public int ToInt32IfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -2103,7 +2105,7 @@ public int ToInt32IfExact() {
      * @param inputInt32 The number to convert as a 32-bit signed integer.
      * @return This number's value as an arbitrary-precision rational number.
      */
-public static ERational FromInt32(int inputInt32) {
+    public static ERational FromInt32(int inputInt32) {
  return FromEInteger(EInteger.FromInt32(inputInt32));
 }
 
@@ -2115,7 +2117,7 @@ public static ERational FromInt32(int inputInt32) {
      * the truncated integer is less than -9223372036854775808 or greater
      * than 9223372036854775807.
      */
-public long ToInt64Checked() {
+    public long ToInt64Checked() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -2129,7 +2131,7 @@ return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
      * @return This number, converted to a 64-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
-public long ToInt64Unchecked() {
+    public long ToInt64Unchecked() {
  return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : (long)0;
 }
 
@@ -2142,7 +2144,7 @@ public long ToInt64Unchecked() {
      * an exact integer, or is less than -9223372036854775808 or greater
      * than 9223372036854775807.
      */
-public long ToInt64IfExact() {
+    public long ToInt64IfExact() {
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
@@ -2154,7 +2156,7 @@ public long ToInt64IfExact() {
      * @param inputInt64 The number to convert as a 64-bit signed integer.
      * @return This number's value as an arbitrary-precision rational number.
      */
-public static ERational FromInt64(long inputInt64) {
+    public static ERational FromInt64(long inputInt64) {
  return FromEInteger(EInteger.FromInt64(inputInt64));
 }
 
