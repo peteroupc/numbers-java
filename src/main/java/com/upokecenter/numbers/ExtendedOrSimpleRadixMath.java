@@ -130,7 +130,7 @@ at: http://peteroupc.github.io/
       this.ext.DivideToExponent(thisValue, divisor, desiredExponent, ctx) :
         this.simp.DivideToExponent(thisValue, divisor, desiredExponent, ctx);
     }
-   public T Divide(T thisValue, T divisor, EContext ctx) {
+    public T Divide(T thisValue, T divisor, EContext ctx) {
       return (
   ctx == null || !ctx.isSimplified()) ? this.ext.Divide(
   thisValue,

@@ -246,7 +246,7 @@ public static final EDecimal SignalingNaN =
 
     private static final IRadixMath<EDecimal> ExtendedMathValue = new
       RadixMath<EDecimal>(new DecimalMathHelper());
-private static final FastIntegerFixed FastIntZero = new
+      private static final FastIntegerFixed FastIntZero = new
       FastIntegerFixed(0);
     //----------------------------------------------------------------
     private static final IRadixMath<EDecimal> MathValue = new
@@ -1203,7 +1203,7 @@ newScale.Decrement();
         if (exp != null && (expBufferMult != 1 || expBuffer != 0)) {
           exp.Multiply(expBufferMult).AddInt(expBuffer);
         }
-   if (tmpoffset >= 0 && newScaleInt == 0 && newScale == null && exp ==
+        if (tmpoffset >= 0 && newScaleInt == 0 && newScale == null && exp ==
           null) {
           newScaleInt = expInt;
         } else if (exp == null) {
@@ -1517,7 +1517,7 @@ if (tmpoffset < 0) {
     public int CompareToBinary(EFloat other) {
   return CompareEDecimalToEFloat(this, other);
     }
-private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
+    private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
       if (ef == null) {
         return 1;
       }
@@ -3828,15 +3828,15 @@ if (absexp.compareTo(bitCount) > 0) {
 
     private static final double[] ExactDoublePowersOfTen = {
 1, 10, 100, 1000, 10000,
-  1e5, 1e6, 1e7, 1e8, 1e9,
-  1e10, 1e11, 1e12, 1e13, 1e14,
-  1e15, 1e16, 1e17, 1e18, 1e19,
-  1e20, 1e21, 1e22
+1e5, 1e6, 1e7, 1e8, 1e9,
+1e10, 1e11, 1e12, 1e13, 1e14,
+1e15, 1e16, 1e17, 1e18, 1e19,
+1e20, 1e21, 1e22
     };
 
     private static final float[] ExactSinglePowersOfTen = {
 1f, 10f, 100f, 1000f, 10000f,
-  1e5f, 1e6f, 1e7f, 1e8f, 1e9f, 1e10f
+1e5f, 1e6f, 1e7f, 1e8f, 1e9f, 1e10f
     };
 
     /**
@@ -4879,7 +4879,7 @@ return new DigitShiftAccumulator(
   olderDigits);
         }
       }
-    public FastInteger DivisionShift(
+      public FastInteger DivisionShift(
         EInteger num,
         EInteger den) {
         if (den.isZero()) {

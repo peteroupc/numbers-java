@@ -1627,7 +1627,7 @@ while (blocksB < countB) {
       System.arraycopy(a, pos, words, 0, len);
       return "\"" + new EInteger(len, words, false).ToUnoptString() + "\"";
     }
-        private static String WordsToStringHex(short[] a, int pos, int len) {
+    private static String WordsToStringHex(short[] a, int pos, int len) {
             while (len != 0 && a[pos + len - 1] == 0) {
                 --len;
             }
@@ -1839,7 +1839,7 @@ while (blocksB < countB) {
         }
         int q1 = quorem0 & 0xffff;
 
-  c = LinearMultiplySubtractMinuend1Bigger(
+c = LinearMultiplySubtractMinuend1Bigger(
   workA,
   wpoffset,
   workA,
@@ -2363,7 +2363,7 @@ WordsShiftRightOne(bu, buc);
                 if (minDigits > 1) {
                  int maxDigitEstimate = maxDigits + 4;
                  int minDigitEstimate = minDigits + 4;
-    return
+                 return
   this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigitEstimate))
                 >= 0 ? retval + maxDigitEstimate : retval + minDigitEstimate;
                 }
@@ -6908,8 +6908,7 @@ EInteger[] srem = e3.SqrtRemInternal(true);
    EInteger[] qrem = srem[1].ShiftLeft(valueEBitsPerPart).Add(e2).DivRem(
            srem[0].ShiftLeft(1));
            EInteger sqroot = srem[0].ShiftLeft(valueEBitsPerPart).Add(qrem[0]);
-        EInteger sqrem =
-             qrem[1].ShiftLeft(valueEBitsPerPart).Add(e1).Subtract(
+           EInteger sqrem = qrem[1].ShiftLeft(valueEBitsPerPart).Add(e1).Subtract(
            qrem[0].Multiply(qrem[0]));
         // DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
         if (sqrem.signum() < 0) {

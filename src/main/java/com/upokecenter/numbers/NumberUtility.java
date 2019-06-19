@@ -266,7 +266,7 @@ private NumberUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-      this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
+            this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
               -1;
             this.outputs[0] = output;
             ++this.size;
@@ -278,7 +278,7 @@ private NumberUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-      this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
+            this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
               -1;
             this.outputs[0] = output;
           }

@@ -29,7 +29,7 @@ at: http://peteroupc.github.io/
       this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
       return FastInteger.CopyFrozen(this.knownBitLength);
     }
-        private void VerifyKnownLength() {
+    private void VerifyKnownLength() {
     }
 
     public void ShiftToDigits(
@@ -372,7 +372,7 @@ at: http://peteroupc.github.io/
       }
       this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
     }
-      public void ShiftToDigitsInt(int bits) {
+    public void ShiftToDigitsInt(int bits) {
       if (bits < 0) {
         throw new IllegalArgumentException("bits (" + bits + ") is less than 0");
       }

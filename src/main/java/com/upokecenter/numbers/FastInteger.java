@@ -104,7 +104,7 @@ at: http://peteroupc.github.io/
       int ToInt32() {
         return this.wordCount == 0 ? 0 : this.data[0];
       }
-    public static MutableNumber FromLong(long longVal) {
+      public static MutableNumber FromLong(long longVal) {
       if (longVal < 0) {
         throw new IllegalArgumentException();
       }
@@ -128,7 +128,7 @@ at: http://peteroupc.github.io/
         mbi.wordCount = this.wordCount;
         return mbi;
       }
-        MutableNumber Multiply(int multiplicand) {
+      MutableNumber Multiply(int multiplicand) {
         if (multiplicand < 0) {
           throw new IllegalArgumentException("multiplicand (" + multiplicand +
             ") is less than " + "0 ");
@@ -265,7 +265,7 @@ at: http://peteroupc.github.io/
       final int signum() {
           return this.wordCount == 0 ? 0 : 1;
         }
-     final boolean isEvenNumber() {
+      final boolean isEvenNumber() {
           return this.wordCount == 0 || (this.data[0] & 1) == 0;
         }
 
@@ -391,7 +391,7 @@ at: http://peteroupc.github.io/
         }
         return 0;
       }
-       MutableNumber Add(int augend) {
+      MutableNumber Add(int augend) {
         if (augend < 0) {
    throw new IllegalArgumentException("augend (" + augend + ") is less than " +
             "0 ");
@@ -508,7 +508,7 @@ at: http://peteroupc.github.io/
 
     private void CheckFrozen() {
     }
-     public int compareTo(FastInteger val) {
+    public int compareTo(FastInteger val) {
       switch ((this.integerMode << 2) | val.integerMode) {
           case (0 << 2) | 0: {
             int vsv = val.smallValue;

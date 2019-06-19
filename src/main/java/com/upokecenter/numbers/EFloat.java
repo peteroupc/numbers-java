@@ -3154,8 +3154,7 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
           return null;
         }
         EInteger valueELowBit = den.GetLowBitAsEInteger();
-      return
-          den.GetUnsignedBitLengthAsEInteger().equals(valueELowBit.Add(1)) ?
+        return den.GetUnsignedBitLengthAsEInteger().equals(valueELowBit.Add(1)) ?
           FastInteger.FromBig(valueELowBit) : null;
       }
 

@@ -66,12 +66,12 @@ at: http://peteroupc.github.io/
 
     private static final long[] OverflowMaxes64 = {
 9223372036854775807L, 922337203685477580L,
-  92233720368547758L, 9223372036854775L,
-  922337203685477L, 92233720368547L,
-  9223372036854L, 922337203685L,
-  92233720368L, 9223372036L,
-  922337203L, 92233720, 9223372,
-  922337, 92233, 9223, 922, 92, 9 };
+92233720368547758L, 9223372036854775L,
+922337203685477L, 92233720368547L,
+9223372036854L, 922337203685L,
+92233720368L, 9223372036L,
+922337203L, 92233720, 9223372,
+922337, 92233, 9223, 922, 92, 9 };
 
     private static final long[] ValueTenPowers64 = {
       1, 10, 100, 1000,
@@ -123,7 +123,7 @@ at: http://peteroupc.github.io/
       }
       return this.AddEx(thisValue, other, ctx, false);
     }
-private FastInteger MaxDigitLengthForBitLength(FastInteger prec) {
+    private FastInteger MaxDigitLengthForBitLength(FastInteger prec) {
   FastInteger result;
   if (this.thisRadix == 2) {
     result = prec;
@@ -1023,7 +1023,7 @@ ctx.getPrecision()).WithBlankFlags();
           thisValue,
           one,
           EContext.ForRounding(ERounding.Down));
-        if (!this.GetHelper().GetExponent(intpart).isZero()) {
+          if (!this.GetHelper().GetExponent(intpart).isZero()) {
           throw new IllegalArgumentException("integer part not zero, as expected");
         }
           haveIntPart = true;
@@ -3027,7 +3027,7 @@ if ((ctxCopy.getFlags() & EContext.FlagOverflow) != 0) {
         return this.helper.GetDigitLength(ei);
       }
     }
-  private static final FastInteger ValueFastIntegerTwo = new
+    private static final FastInteger ValueFastIntegerTwo = new
       FastInteger(2);
 
     private T AddExDiffExp(
@@ -3083,8 +3083,7 @@ if ((ctxCopy.getFlags() & EContext.FlagOverflow) != 0) {
                   boolean sameSign = this.helper.GetSign(thisValue) ==
                   this.helper.GetSign(other);
                   boolean oneOpIsZero = op1MantAbs.isZero();
-             FastInteger digitLength2 =
-                    this.helper.GetDigitLength(op2MantAbs);
+                  FastInteger digitLength2 = this.helper.GetDigitLength(op2MantAbs);
                   if (digitLength2.compareTo(fastPrecision) < 0) {
                     // Second operand's precision too short, extend
                     // it to the full precision
@@ -4712,8 +4711,7 @@ if (guessCmp == 0) {
 // compareFast++;
                 return thisValue;
               }
-           FastIntegerFixed bigexp =
-                this.helper.GetExponentFastInt(thisValue);
+              FastIntegerFixed bigexp = this.helper.GetExponentFastInt(thisValue);
               if (ctx == null || ctx.getAdjustExponent()) {
                 fastAdjustedExp = bigexp.ToFastInteger()
                   .Add(fastPrecision).Decrement();
@@ -4762,8 +4760,7 @@ if (guessCmp == 0) {
                     this.helper.GetExponentFastInt(thisValue),
                     thisFlags);
                 }
-           FastIntegerFixed bigexp =
-                  this.helper.GetExponentFastInt(thisValue);
+                FastIntegerFixed bigexp = this.helper.GetExponentFastInt(thisValue);
                 if (ctx == null || ctx.getAdjustExponent()) {
                   fastAdjustedExp = bigexp.ToFastInteger()
                     .Add(fastPrecision).Decrement();
@@ -4885,8 +4882,7 @@ accum = this.helper.CreateShiftAccumulatorWithDigitsFastInt(
             FastInteger newAdjExponent = adjExponent;
             if (this.RoundGivenAccum(accum, rounding, neg)) {
               EInteger earlyRounded = accum.getShiftedInt().Add(EInteger.FromInt32(1));
-          if (!unlimitedPrec && (earlyRounded.isEven() || (this.thisRadix & 1)
-                !=
+              if (!unlimitedPrec && (earlyRounded.isEven() || (this.thisRadix & 1)!=
                 0)) {
            FastInteger newDigitLength =
                   this.helper.GetDigitLength(earlyRounded);

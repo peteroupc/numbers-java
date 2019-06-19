@@ -11,8 +11,8 @@ public void TestFromBoolean() {
 Assert.assertEquals(ERational.Zero, ERational.FromBoolean(false));
 Assert.assertEquals(ERational.One, ERational.FromBoolean(true));
 }
-    @Test
-    public void TestAbs() {
+@Test
+public void TestAbs() {
       // not implemented yet
     }
     @Test

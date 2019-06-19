@@ -121,8 +121,8 @@ import com.upokecenter.numbers.*;
         TestCommon.CompareTestEqual(decD, decA);
       }
     }
-@Test
-public void TestFromBoolean() {
+    @Test
+    public void TestFromBoolean() {
 Assert.assertEquals(EDecimal.Zero, EDecimal.FromBoolean(false));
 Assert.assertEquals(EDecimal.One, EDecimal.FromBoolean(true));
 }
@@ -266,8 +266,8 @@ Assert.assertEquals(EDecimal.One, EDecimal.FromBoolean(true));
         Assert.assertEquals(0, cmp);
       }
     }
-@Test(timeout = 1000)
-public void TestSlowCompareTo() {
+    @Test(timeout = 1000)
+    public void TestSlowCompareTo() {
 EInteger ei = EInteger.FromString(
   "-108854259699738613336073386912819333959164543792902007057925129910904321192623590227704182838777516070192327852552376209933022606");
 EFloat ef = EFloat.Create(
@@ -4882,7 +4882,7 @@ try {
   edec.Abs(),
   SingleUnderflowToZero,
   edecstr);
-Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
+  Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
           } else {
             if (!(!Float.isNaN(sng))) {
  Assert.fail();
@@ -4898,7 +4898,7 @@ Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegat
         }
       }
     }
-private static String Repeat(String s, int count) {
+    private static String Repeat(String s, int count) {
  StringBuilder sb = new StringBuilder();
  for (int i = 0; i < count; ++i) { sb.append(s);
 }
