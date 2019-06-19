@@ -627,7 +627,7 @@ at: http://peteroupc.github.io/
             this.mnum =
             MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
           } else {
-            this.smallValue = -smallValue;
+            this.smallValue = -this.smallValue;
           }
           break;
         case 1:
@@ -667,7 +667,7 @@ at: http://peteroupc.github.io/
             }
           } else {
             this.integerMode = 2;
-            this.largeValue = EInteger.FromInt32(smallValue);
+            this.largeValue = EInteger.FromInt32(this.smallValue);
             valValue = val.AsEInteger();
             this.largeValue = this.largeValue.Subtract(valValue);
           }
@@ -681,7 +681,7 @@ at: http://peteroupc.github.io/
             this.mnum.SubtractInt(val.smallValue);
           } else {
             this.integerMode = 2;
-            this.largeValue = mnum.ToEInteger();
+            this.largeValue = this.mnum.ToEInteger();
             valValue = val.AsEInteger();
             this.largeValue = this.largeValue.Subtract(valValue);
           }
@@ -799,7 +799,7 @@ at: http://peteroupc.github.io/
             }
           } else {
             this.integerMode = 2;
-            this.largeValue = EInteger.FromInt32(smallValue);
+            this.largeValue = EInteger.FromInt32(this.smallValue);
             valValue = val.AsEInteger();
             this.largeValue = this.largeValue.Add(valValue);
           }
@@ -809,7 +809,7 @@ at: http://peteroupc.github.io/
             this.mnum.Add(val.smallValue);
           } else {
             this.integerMode = 2;
-            this.largeValue = mnum.ToEInteger();
+            this.largeValue = this.mnum.ToEInteger();
             valValue = val.AsEInteger();
             this.largeValue = this.largeValue.Add(valValue);
           }
@@ -972,7 +972,7 @@ at: http://peteroupc.github.io/
             this.mnum.Add(val);
           } else {
             this.integerMode = 2;
-            this.largeValue = mnum.ToEInteger();
+            this.largeValue = this.mnum.ToEInteger();
             valValue = EInteger.FromInt32(val);
             this.largeValue = this.largeValue.Add(valValue);
           }

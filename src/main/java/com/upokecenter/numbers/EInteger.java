@@ -39,7 +39,6 @@ at: http://peteroupc.github.io/
      * algorithms. </p>
      */
   public final class EInteger implements Comparable<EInteger> {
-    // TODO: Investigate using 32-bit words instead of 16-bit
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private static final int RecursiveDivisionLimit = 40;

@@ -81,9 +81,17 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(
         ERational.NegativeInfinity,
         ERational.FromEFloat(EFloat.NegativeInfinity));
-        if (!(((ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail();
-        if (!(((ERational.NegativeInfinity.ToDouble()) == Double.NEGATIVE_INFINITY)))Assert.fail();
-        if (!(((ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
-        if (!(((ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
+        if (!(
+        ((
+          ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail();
+          if (!(
+        ((
+          ERational.NegativeInfinity.ToDouble()) == Double.NEGATIVE_INFINITY)))Assert.fail();
+          if (!(
+        ((
+          ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
+          if (!(
+        ((
+          ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
     }
   }
