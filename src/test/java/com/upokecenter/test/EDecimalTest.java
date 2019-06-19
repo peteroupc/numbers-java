@@ -99,7 +99,7 @@ import com.upokecenter.numbers.*;
       "0.0E-15", "0.0000000000000000", "0.000000000000000e+13", "0.00",
       "0.00", "0.00", "0.00000000000e-13", "0E-24", "0E-24",
       "0.000000000000000000000000", "0.000e-10", "0E-13", "0.0E-12",
-      "0.0000000000000" };
+      "0.0000000000000", };
     @Test
     public void TestAbs() {
       // not implemented yet
@@ -225,7 +225,6 @@ Assert.assertEquals(EDecimal.One, EDecimal.FromBoolean(true));
       Assert.assertEquals(1, EDecimal.SignalingNaN.CompareToBinary(null));
       Assert.assertEquals(1, EDecimal.Zero.CompareToBinary(null));
       Assert.assertEquals(1, EDecimal.One.CompareToBinary(null));
-
       {
         long numberTemp = EDecimal.NaN.CompareToBinary(EFloat.NaN);
         Assert.assertEquals(0, numberTemp);

@@ -60,7 +60,7 @@ at: http://peteroupc.github.io/
       36, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
       25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36,
       36, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-      25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36 };
+      25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36, };
 
     private static final int[] ValueMaxSafeInts = { 1073741823, 715827881,
       536870911, 429496728, 357913940, 306783377, 268435455, 238609293,
@@ -68,7 +68,7 @@ at: http://peteroupc.github.io/
       134217727, 126322566, 119304646, 113025454, 107374181, 102261125,
       97612892, 93368853, 89478484, 85899344, 82595523, 79536430, 76695843,
       74051159, 71582787, 69273665, 67108863, 65075261, 63161282, 61356674,
-      59652322 };
+      59652322, };
 
     private static final EInteger ValueOne = new EInteger(
       1, new short[] { 1 }, false);
@@ -1956,7 +1956,7 @@ c = LinearMultiplySubtractMinuend1Bigger(
           long quotientSmall = dividendSmall / divisorSmall;
           long remainderSmall = dividendSmall - (quotientSmall * divisorSmall);
           return new EInteger[] { EInteger.FromInt64(quotientSmall),
-            EInteger.FromInt64(remainderSmall) };
+            EInteger.FromInt64(remainderSmall), };
         }
       } else if (this.CanFitInInt64() && divisor.CanFitInInt64()) {
         long dividendLong = this.ToInt64Checked();
@@ -1965,7 +1965,7 @@ c = LinearMultiplySubtractMinuend1Bigger(
           long quotientLong = dividendLong / divisorLong;
           long remainderLong = dividendLong - (quotientLong * divisorLong);
           return new EInteger[] { EInteger.FromInt64(quotientLong),
-            EInteger.FromInt64(remainderLong) };
+            EInteger.FromInt64(remainderLong), };
         }
         // DebugUtility.Log("int64divrem {0}/{1}"
         // , this.ToInt64Checked(), divisor.ToInt64Checked());
@@ -3540,7 +3540,7 @@ if (this.wordCount == 0) {
       // NOTE: Assumes the number is nonnegative
       int c = (int)wordCount;
       if (c == 0) {
-        return (long)0;
+        return 0L;
       }
       long ivv = 0;
       int intRetValue = ((int)words[0]) & 0xffff;
@@ -3915,7 +3915,7 @@ if (this.wordCount == 0) {
     public long ToInt64Checked() {
       int count = this.wordCount;
       if (count == 0) {
-        return (long)0;
+        return 0L;
       }
       if (count > 4) {
         throw new ArithmeticException();
@@ -3942,7 +3942,7 @@ if (this.wordCount == 0) {
     public long ToInt64Unchecked() {
       int c = (int)this.wordCount;
       if (c == 0) {
-        return (long)0;
+        return 0L;
       }
       long ivv = 0;
       int intRetValue = ((int)this.words[0]) & 0xffff;
@@ -6864,7 +6864,7 @@ if (this.wordCount == 0) {
         }
         smallintY = smallintX * smallintX;
         smallintY = smallValue - smallintY;
-        return new EInteger[] { EInteger.FromInt32(smallintX), EInteger.FromInt32(smallintY) };
+        return new EInteger[] { EInteger.FromInt32(smallintX), EInteger.FromInt32(smallintY), };
       }
       EInteger valueEPowerBits =
         thisValue.GetUnsignedBitLengthAsEInteger().Add(1).Divide(2);
@@ -6953,7 +6953,7 @@ EInteger[] srem = e3.SqrtRemInternal(true);
       }
       bigintY = bigintX.Multiply(bigintX);
       bigintY = thisValue.Subtract(bigintY);
-      return new EInteger[] { bigintX, bigintY };
+      return new EInteger[] { bigintX, bigintY, };
     }
     // Begin integer conversions
 

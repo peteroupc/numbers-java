@@ -601,7 +601,7 @@ at: http://peteroupc.github.io/
               this.largeValue = this.mnum.ToEInteger();
               this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
             } else {
-              mnum.Multiply(val);
+              this.mnum.Multiply(val);
             }
             break;
           case 2:
@@ -627,7 +627,7 @@ at: http://peteroupc.github.io/
             this.mnum =
             MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
           } else {
-            smallValue = -smallValue;
+            this.smallValue = -smallValue;
           }
           break;
         case 1:
@@ -666,10 +666,10 @@ at: http://peteroupc.github.io/
               this.smallValue -= vsv;
             }
           } else {
-            integerMode = 2;
-            largeValue = EInteger.FromInt32(smallValue);
+            this.integerMode = 2;
+            this.largeValue = EInteger.FromInt32(smallValue);
             valValue = val.AsEInteger();
-            largeValue = largeValue.Subtract(valValue);
+            this.largeValue = this.largeValue.Subtract(valValue);
           }
           break;
         case 1:
@@ -678,12 +678,12 @@ at: http://peteroupc.github.io/
             // currently always zero or positive
             this.mnum.Subtract(val.mnum);
           } else if (val.integerMode == 0 && val.smallValue >= 0) {
-            mnum.SubtractInt(val.smallValue);
+            this.mnum.SubtractInt(val.smallValue);
           } else {
-            integerMode = 2;
-            largeValue = mnum.ToEInteger();
+            this.integerMode = 2;
+            this.largeValue = mnum.ToEInteger();
             valValue = val.AsEInteger();
-            largeValue = largeValue.Subtract(valValue);
+            this.largeValue = this.largeValue.Subtract(valValue);
           }
           break;
         case 2:
@@ -798,20 +798,20 @@ at: http://peteroupc.github.io/
               this.smallValue += val.smallValue;
             }
           } else {
-            integerMode = 2;
-            largeValue = EInteger.FromInt32(smallValue);
+            this.integerMode = 2;
+            this.largeValue = EInteger.FromInt32(smallValue);
             valValue = val.AsEInteger();
-            largeValue = largeValue.Add(valValue);
+            this.largeValue = this.largeValue.Add(valValue);
           }
           break;
         case 1:
           if (val.integerMode == 0 && val.smallValue >= 0) {
             this.mnum.Add(val.smallValue);
           } else {
-            integerMode = 2;
-            largeValue = mnum.ToEInteger();
+            this.integerMode = 2;
+            this.largeValue = mnum.ToEInteger();
             valValue = val.AsEInteger();
-            largeValue = largeValue.Add(valValue);
+            this.largeValue = this.largeValue.Add(valValue);
           }
           break;
         case 2:
@@ -892,7 +892,7 @@ at: http://peteroupc.github.io/
               this.mnum =
               MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
             } else {
-              smallValue /= divisor;
+              this.smallValue /= divisor;
             }
             break;
           case 1:
@@ -964,17 +964,17 @@ at: http://peteroupc.github.io/
               this.largeValue = this.largeValue.Add(EInteger.FromInt32(val));
             }
           } else {
-            smallValue += val;
+            this.smallValue += val;
           }
           break;
         case 1:
           if (val >= 0) {
             this.mnum.Add(val);
           } else {
-            integerMode = 2;
-            largeValue = mnum.ToEInteger();
+            this.integerMode = 2;
+            this.largeValue = mnum.ToEInteger();
             valValue = EInteger.FromInt32(val);
-            largeValue = largeValue.Add(valValue);
+            this.largeValue = this.largeValue.Add(valValue);
           }
           break;
         case 2:

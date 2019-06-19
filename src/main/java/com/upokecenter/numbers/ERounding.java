@@ -90,5 +90,5 @@ at: http://peteroupc.github.io/
      * slightly higher precision (at least 2 bits more for binary) than the
      * final precision.
      */
-    OddOrZeroFiveUp
+    OddOrZeroFiveUp,
   }

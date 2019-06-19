@@ -194,7 +194,7 @@ if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
           if (this.smallValue == Integer.MIN_VALUE) {
             return FastIntegerFixed.FromBig(ValueNegativeInt32MinValue);
           } else {
-            return new FastIntegerFixed(-smallValue);
+            return new FastIntegerFixed(-this.smallValue);
           }
         case 2:
           return FastIntegerFixed.FromBig((this.largeValue).Negate());

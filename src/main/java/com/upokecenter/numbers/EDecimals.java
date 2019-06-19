@@ -158,7 +158,7 @@ private EDecimals() {
  "+Subnormal", "-Subnormal",
  "+Zero", "-Zero",
  "+Infinity", "-Infinity",
- "NaN", "sNaN"
+ "NaN", "sNaN",
 };
 
     /**

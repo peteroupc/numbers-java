@@ -63,7 +63,7 @@ import com.upokecenter.numbers.*;
       28L, 268435455L, 28L, 268435456L, 29L, 268435457L, 29L, 536870911L, 29L,
       536870912L, 30L, 536870913L, 30L, 1073741823L, 30L, 1073741824L, 31L,
       1073741825L, 31L, 2147483647L, 31L, 2147483648L, 32L, 2147483649L, 32L,
-      4294967295L, 32L, 4294967296L, 33L, 4294967297L, 33 };
+      4294967295L, 32L, 4294967296L, 33L, 4294967297L, 33, };
 
     private static long[] valueLowBits = { 0L, -1L, 1L, 0L, 2L, 1L, 3L, 0L, 4L,
       2L, 5L, 0L,
@@ -94,7 +94,7 @@ import com.upokecenter.numbers.*;
       536870911L, 0L,
       536870912L, 29L, 536870913L, 0L, 1073741823L, 0L, 1073741824L, 30L,
       1073741825L, 0L, 2147483647L, 0L, 2147483648L, 31L, 2147483649L, 0L,
-      4294967295L, 0L, 4294967296L, 32L, 4294967297L, 0 };
+      4294967295L, 0L, 4294967296L, 32L, 4294967297L, 0, };
 
     public static void AssertAdd(EInteger bi, EInteger bi2, String s) {
       EIntegerTest.AssertBigIntegersEqual(s, bi.Add(bi2));

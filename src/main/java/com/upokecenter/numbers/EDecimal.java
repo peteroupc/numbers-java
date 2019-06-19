@@ -257,7 +257,7 @@ public static final EDecimal SignalingNaN =
     private static final int[] ValueTenPowers = {
       1, 10, 100, 1000, 10000, 100000,
       1000000, 10000000, 100000000,
-      1000000000
+      1000000000,
     };
 
     private final FastIntegerFixed exponent;
@@ -3831,12 +3831,12 @@ if (absexp.compareTo(bitCount) > 0) {
 1e5, 1e6, 1e7, 1e8, 1e9,
 1e10, 1e11, 1e12, 1e13, 1e14,
 1e15, 1e16, 1e17, 1e18, 1e19,
-1e20, 1e21, 1e22
+1e20, 1e21, 1e22,
     };
 
     private static final float[] ExactSinglePowersOfTen = {
 1f, 10f, 100f, 1000f, 10000f,
-1e5f, 1e6f, 1e7f, 1e8f, 1e9f, 1e10f
+1e5f, 1e6f, 1e7f, 1e8f, 1e9f, 1e10f,
     };
 
     /**
@@ -3898,7 +3898,7 @@ if (absexp.compareTo(bitCount) > 0) {
        if (adjExp.compareTo(EInteger.FromInt64(-326)) < 0) {
           // Very low exponent, treat as 0
         return this.isNegative() ? Extras.IntegersToDouble(new int[] { 0,
-            ((int)(1 << 31)) }) : 0.0;
+            ((int)(1 << 31)), }) : 0.0;
        }
        if (adjExp.compareTo(EInteger.FromInt64(309)) > 0) {
         // Very high exponent, treat as infinity
@@ -5201,7 +5201,7 @@ throw new ArithmeticException("Value out of range");
  throw new ArithmeticException("Value is infinity or NaN");
 }
 if (this.IsIntegerPartZero()) {
- return (long)0;
+ return 0L;
 }
 if (this.exponent.CompareToInt(19) >= 0) {
 throw new ArithmeticException("Value out of range: ");
@@ -5217,7 +5217,7 @@ throw new ArithmeticException("Value out of range: ");
      * value is infinity or not-a-number.
      */
     public long ToInt64Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : (long)0;
+ return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
 }
 
     /**
@@ -5234,7 +5234,7 @@ throw new ArithmeticException("Value out of range: ");
  throw new ArithmeticException("Value is infinity or NaN");
 }
  if (this.isZero()) {
- return (long)0;
+ return 0L;
 }
 if (this.exponent.CompareToInt(19) >= 0) {
 throw new ArithmeticException("Value out of range");

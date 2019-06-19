@@ -3411,7 +3411,7 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
-return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
+return this.isZero() ? 0L : this.ToEInteger().ToInt64Checked();
 }
 
     /**
@@ -3422,7 +3422,7 @@ return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
      * value is infinity or not-a-number.
      */
     public long ToInt64Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : (long)0;
+ return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
 }
 
     /**
@@ -3438,7 +3438,7 @@ return this.isZero() ? ((long)0) : this.ToEInteger().ToInt64Checked();
  if (!this.isFinite()) {
  throw new ArithmeticException("Value is infinity or NaN");
 }
- return this.isZero() ? ((long)0) : this.ToEIntegerIfExact().ToInt64Checked();
+ return this.isZero() ? 0L : this.ToEIntegerIfExact().ToInt64Checked();
 }
 
     /**

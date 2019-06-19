@@ -18,7 +18,7 @@ private NumberUtility() {
       EInteger.FromInt64(1000000000000L), EInteger.FromInt64(10000000000000L),
       EInteger.FromInt64(100000000000000L), EInteger.FromInt64(1000000000000000L),
       EInteger.FromInt64(10000000000000000L),
-      EInteger.FromInt64(100000000000000000L), EInteger.FromInt64(1000000000000000000L)
+      EInteger.FromInt64(100000000000000000L), EInteger.FromInt64(1000000000000000000L),
     };
 
     private static final EInteger[] ValueBigIntPowersOfFive = {
@@ -34,7 +34,7 @@ private NumberUtility() {
       EInteger.FromInt64(476837158203125L), EInteger.FromInt64(2384185791015625L),
       EInteger.FromInt64(11920928955078125L),
       EInteger.FromInt64(59604644775390625L), EInteger.FromInt64(298023223876953125L),
-      EInteger.FromInt64(1490116119384765625L), EInteger.FromInt64(7450580596923828125L)
+      EInteger.FromInt64(1490116119384765625L), EInteger.FromInt64(7450580596923828125L),
     };
 
     static int ShiftLeftOne(int[] arr) {

@@ -27,7 +27,7 @@ at: http://peteroupc.github.io/
       0xffff, 0x7fff, 0x3fff, 0x1fff,
       0xfff, 0x7ff, 0x3ff, 0x1ff,
       0xff, 0x7f, 0x3f, 0x1f,
-      0xf, 0x7, 0x3, 0x1
+      0xf, 0x7, 0x3, 0x1,
     };
 
     private static final long[] BitMasks64 = {
@@ -48,12 +48,12 @@ at: http://peteroupc.github.io/
       0xffff, 0x7fff, 0x3fff, 0x1fff,
       0xfff, 0x7ff, 0x3ff, 0x1ff,
       0xff, 0x7f, 0x3f, 0x1f,
-      0xf, 0x7, 0x3, 0x1
+      0xf, 0x7, 0x3, 0x1,
     };
 
     private static final int[] OverflowMaxes = {
      2147483647, 214748364, 21474836,
-     2147483, 214748, 21474, 2147, 214, 21, 2
+     2147483, 214748, 21474, 2147, 214, 21, 2,
     };
 
     private static final EInteger ValueMinusOne = EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1));
@@ -61,7 +61,7 @@ at: http://peteroupc.github.io/
     private static final int[] ValueTenPowers = {
       1, 10, 100, 1000, 10000, 100000,
       1000000, 10000000, 100000000,
-      1000000000
+      1000000000,
     };
 
     private static final long[] OverflowMaxes64 = {
@@ -71,7 +71,7 @@ at: http://peteroupc.github.io/
 9223372036854L, 922337203685L,
 92233720368L, 9223372036L,
 922337203L, 92233720, 9223372,
-922337, 92233, 9223, 922, 92, 9 };
+922337, 92233, 9223, 922, 92, 9, };
 
     private static final long[] ValueTenPowers64 = {
       1, 10, 100, 1000,
@@ -81,7 +81,7 @@ at: http://peteroupc.github.io/
       1000000000000L, 10000000000000L,
       100000000000000L, 1000000000000000L,
       10000000000000000L, 100000000000000000L,
-      1000000000000000000L
+      1000000000000000000L,
     };
 
     private final IRadixMathHelper<T> helper;
