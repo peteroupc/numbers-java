@@ -74,14 +74,14 @@ at: http://peteroupc.github.io/
   int smallint,
   int lastDiscarded,
   int olderDiscarded) {
-        this.shiftedSmall = smallint;
-        if (this.shiftedSmall < 0) {
-          throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
-            ") is less than 0");
-        }
-        this.isSmall = true;
-        this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
-        this.bitLeftmost = lastDiscarded;
+      this.shiftedSmall = smallint;
+      if (this.shiftedSmall < 0) {
+        throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
+          ") is less than 0");
+      }
+      this.isSmall = true;
+      this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
+      this.bitLeftmost = lastDiscarded;
     }
 
     public final FastInteger getDiscardedDigitCount() {
@@ -108,8 +108,8 @@ at: http://peteroupc.github.io/
       }
 
     public FastInteger GetDigitLength() {
-  this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
-        return this.knownDigitLength;
+      this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
+      return this.knownDigitLength;
     }
 
     public void ShiftRight(FastInteger fastint) {
@@ -158,7 +158,7 @@ at: http://peteroupc.github.io/
   FastInteger bits,
   FastInteger preShift,
   boolean truncate) {
-if (preShift != null && preShift.signum() > 0) {
+      if (preShift != null && preShift.signum() > 0) {
         FastInteger kdl = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
         this.knownDigitLength = kdl;
         // DebugUtility.Log("bits=" + bits + " pre=" + preShift + " known=" +
@@ -175,13 +175,13 @@ if (preShift != null && preShift.signum() > 0) {
           if (cmp <= 0) {
             // Difference between desired digit length and current
             // length is smaller than the shift, make it the shift
-           this.TruncateOrShiftRight(preShift, truncate);
-           this.VerifyKnownLength();
-           return;
+            this.TruncateOrShiftRight(preShift, truncate);
+            this.VerifyKnownLength();
+            return;
           } else {
-           this.TruncateOrShiftRight(bitDiff, truncate);
-           this.VerifyKnownLength();
-           return;
+            this.TruncateOrShiftRight(bitDiff, truncate);
+            this.VerifyKnownLength();
+            return;
           }
         }
       }
@@ -255,7 +255,7 @@ if (preShift != null && preShift.signum() > 0) {
     }
 
     private static int LongDigitLength(long value) {
-if (value >= 1000000000L) {
+      if (value >= 1000000000L) {
         return (value >= 1000000000000000000L) ? 19 : ((value >=
                  100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
                   17 : ((value >= 1000000000000000L) ? 16 :
@@ -290,9 +290,9 @@ if (value >= 1000000000L) {
     }
 
     private void VerifyKnownLength() {
-/*
+      /*
 
-*/
+      */
     }
 
     private void UpdateKnownLengthInt(int digits) {
@@ -332,12 +332,12 @@ if (value >= 1000000000L) {
         if (digits > 50) {
           // To avoid having to calculate a very big power of 10,
           // check the digit count to see if doing so can be avoided
-   EInteger bigBitLength = this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
+          EInteger bigBitLength = this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
           // NOTE: Overflowing bigBitLength will be MaxValue, which is OK
           // for the use of this variable
           int bitLength = bigBitLength.CanFitInInt32() ?
              bigBitLength.ToInt32Checked() : Integer.MAX_VALUE;
-             boolean bigPower = false;
+          boolean bigPower = false;
           // 10^48 has 160 bits; 10^98 has 326; bit length is cheaper
           // to calculate than base-10 digit length
           if (bitLength < 160 || (digits > 100 && bitLength < 326)) {
@@ -353,16 +353,16 @@ if (value >= 1000000000L) {
           }
           if (bigPower) {
             // Power of 10 to be divided would be much bigger
-       this.discardedBitCount = (this.discardedBitCount == null) ? ((new
-              FastInteger(0))) : this.discardedBitCount;
-              this.discardedBitCount.AddInt(digits);
-              this.bitsAfterLeftmost |= this.bitLeftmost;
-              this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
-              this.bitLeftmost = 0;
-              this.knownDigitLength = new FastInteger(1);
-              this.isSmall = true;
-              this.shiftedSmall = 0;
-              return;
+            this.discardedBitCount = (this.discardedBitCount == null) ? ((new
+                   FastInteger(0))) : this.discardedBitCount;
+            this.discardedBitCount.AddInt(digits);
+            this.bitsAfterLeftmost |= this.bitLeftmost;
+            this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
+            this.bitLeftmost = 0;
+            this.knownDigitLength = new FastInteger(1);
+            this.isSmall = true;
+            this.shiftedSmall = 0;
+            return;
           }
         }
         if (this.shiftedBigInt.isEven() && this.bitLeftmost == 0) {
@@ -581,14 +581,14 @@ if (value >= 1000000000L) {
           this.bitLeftmost = 0;
           break;
         } else {
-        long newShift = (shiftedLong < 43698) ? ((shiftedLong * 26215) >>
-            18) : (shiftedLong / 10);
-            int digit = (int)(shiftedLong - (newShift * 10));
-            this.bitsAfterLeftmost |= this.bitLeftmost;
-            this.bitLeftmost = digit;
-            --digits;
-            ++digitsShifted;
-            shiftedLong = newShift;
+          long newShift = (shiftedLong < 43698) ? ((shiftedLong * 26215) >>
+              18) : (shiftedLong / 10);
+          int digit = (int)(shiftedLong - (newShift * 10));
+          this.bitsAfterLeftmost |= this.bitLeftmost;
+          this.bitLeftmost = digit;
+          --digits;
+          ++digitsShifted;
+          shiftedLong = newShift;
         }
       }
       this.isSmall = shiftedLong <= Integer.MAX_VALUE;

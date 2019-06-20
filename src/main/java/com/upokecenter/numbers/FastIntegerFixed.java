@@ -22,33 +22,33 @@ at: http://peteroupc.github.io/
 
     FastIntegerFixed(int smallValue) {
  this(0, smallValue, null);
-}
+    }
 
     FastIntegerFixed(
   int integerMode,
   int smallValue,
   EInteger largeValue) {
-   this.integerMode = integerMode;
-   this.smallValue = smallValue;
-   this.largeValue = largeValue;
+      this.integerMode = integerMode;
+      this.smallValue = smallValue;
+      this.largeValue = largeValue;
     }
 
     @Override public boolean equals(Object obj) {
       FastIntegerFixed fi = ((obj instanceof FastIntegerFixed) ? (FastIntegerFixed)obj : null);
       if (fi == null) {
- return false;
-}
+        return false;
+      }
       if (this.integerMode != fi.integerMode) {
         return false;
       }
       if (this.integerMode == 0) {
         if (this.smallValue != fi.smallValue) {
- return false;
-}
+          return false;
+        }
       } else if (this.integerMode == 1) {
         if (!this.largeValue.equals(fi.largeValue)) {
- return false;
-}
+          return false;
+        }
       }
       return true;
     }
@@ -56,9 +56,9 @@ at: http://peteroupc.github.io/
     @Override public int hashCode() {
       int hash = (31 + this.integerMode);
       if (this.integerMode == 0) {
-       hash = ((hash * 31) + this.smallValue);
+        hash = ((hash * 31) + this.smallValue);
       } else if (this.integerMode == 1) {
-       hash = ((hash * 31) + this.largeValue.hashCode());
+        hash = ((hash * 31) + this.largeValue.hashCode());
       }
       return hash;
     }
@@ -94,10 +94,10 @@ at: http://peteroupc.github.io/
 
     public FastInteger ToFastInteger() {
       if (this.integerMode == 0) {
- return new FastInteger(this.smallValue);
-} else {
- return FastInteger.FromBig(this.largeValue);
-}
+        return new FastInteger(this.smallValue);
+      } else {
+        return FastInteger.FromBig(this.largeValue);
+      }
     }
 
     public FastIntegerFixed Increment() {
@@ -115,25 +115,25 @@ at: http://peteroupc.github.io/
       if (this.integerMode == 0 && this.smallValue >= 0) {
         return this.smallValue % value;
       } else {
-      EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
-      return retval.ToInt32Checked();
+        EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
+        return retval.ToInt32Checked();
       }
     }
 
     public static FastIntegerFixed Add(FastIntegerFixed a, FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (a.smallValue == 0) {
- return b;
-}
+          return b;
+        }
         if (b.smallValue == 0) {
- return a;
-}
+          return a;
+        }
         if ((a.smallValue < 0 && b.smallValue >= Integer.MIN_VALUE -
             a.smallValue) || (a.smallValue > 0 && b.smallValue <=
             Integer.MAX_VALUE - a.smallValue)) {
-        return new FastIntegerFixed(a.smallValue + b.smallValue);
+          return new FastIntegerFixed(a.smallValue + b.smallValue);
+        }
       }
-    }
       EInteger bigA = a.ToEInteger();
       EInteger bigB = b.ToEInteger();
       return FastIntegerFixed.FromBig(bigA.Add(bigB));
@@ -144,14 +144,14 @@ at: http://peteroupc.github.io/
   FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (b.smallValue == 0) {
- return a;
-}
-if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
-          (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
-                  a.smallValue)) {
-        return new FastIntegerFixed(a.smallValue - b.smallValue);
+          return a;
+        }
+        if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
+                  (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
+                          a.smallValue)) {
+          return new FastIntegerFixed(a.smallValue - b.smallValue);
+        }
       }
-    }
       EInteger bigA = a.ToEInteger();
       EInteger bigB = b.ToEInteger();
       return FastIntegerFixed.FromBig(bigA.Subtract(bigB));
@@ -159,8 +159,7 @@ if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
 
     public int compareTo(FastIntegerFixed val) {
       switch ((this.integerMode << 2) | val.integerMode) {
-        case (0 << 2) | 0:
-          {
+        case (0 << 2) | 0: {
             int vsv = val.smallValue;
             return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
                   1);
@@ -257,9 +256,9 @@ if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
       switch (this.integerMode) {
         case 0:
           return true;
-          case 2: {
-            return this.largeValue.CanFitInInt64();
-          }
+        case 2:
+        return this.largeValue.CanFitInInt64();
+
         default:
           throw new IllegalStateException();
       }
@@ -269,9 +268,9 @@ if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
       switch (this.integerMode) {
         case 0:
           return (long)this.smallValue;
-          case 2: {
-            return this.largeValue.ToInt64Unchecked();
-          }
+        case 2:
+        return this.largeValue.ToInt64Unchecked();
+
         default:
           throw new IllegalStateException();
       }
