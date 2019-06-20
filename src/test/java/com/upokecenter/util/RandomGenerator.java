@@ -165,8 +165,8 @@ package com.upokecenter.util;
           x = this.Normal();
           v = Math.pow((c * x) + 1, 3);
         } while (v <= 0);
-        u = 1.0 - this.Uniform();
-        x2 = x * x;
+         u = 1.0 - this.Uniform();
+         x2 = x * x;
   } while (u >= 1 - (0.0331 * x2 * x2) &&
                Math.log(u) >= (0.5 * x2) + (d * (1 - v + Math.log(v))));
       if (a < 1) {
@@ -429,7 +429,7 @@ package com.upokecenter.util;
      * number.
      * @return A 32-bit signed integer.
      */
-    public int UniformInt(int minInclusive, int maxExclusive) {
+        public int UniformInt(int minInclusive, int maxExclusive) {
       if (minInclusive > maxExclusive) {
   throw new IllegalArgumentException("minInclusive (" + minInclusive +
     ") is more than " + maxExclusive);
@@ -558,7 +558,7 @@ if (minInclusive == maxExclusive) {
      * number.
      * @return A 64-bit signed integer.
      */
-    public long UniformLong(long maxExclusive) {
+        public long UniformLong(long maxExclusive) {
       if (maxExclusive < 0) {
   throw new IllegalArgumentException("maxExclusive (" + maxExclusive +
     ") is less than 0");

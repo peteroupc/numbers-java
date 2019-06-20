@@ -394,9 +394,9 @@ public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2,
         }
         while (intlongValue > 43698) {
           int intdivValue = intlongValue / 10;
-          char digit = ValueDigits.charAt((int)(intlongValue - (intdivValue * 10)));
-          chars[count--] = digit;
-          intlongValue = intdivValue;
+        char digit = ValueDigits.charAt((int)(intlongValue - (intdivValue * 10)));
+        chars[count--] = digit;
+        intlongValue = intdivValue;
       }
       while (intlongValue > 9) {
         int intdivValue = (intlongValue * 26215) >> 18;
@@ -421,9 +421,9 @@ public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2,
         }
         while (longValue > 43698) {
           long divValue = longValue / 10;
-          char digit = ValueDigits.charAt((int)(longValue - (divValue * 10)));
-          chars[count--] = digit;
-          longValue = divValue;
+        char digit = ValueDigits.charAt((int)(longValue - (divValue * 10)));
+        chars[count--] = digit;
+        longValue = divValue;
       }
       while (longValue > 9) {
         long divValue = (longValue * 26215) >> 18;
