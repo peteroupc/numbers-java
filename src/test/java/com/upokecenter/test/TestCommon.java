@@ -111,11 +111,11 @@ private TestCommon() {
           Assert.fail(
   "" + o + " equals " + o2 + " but not vice versa");
         }
-        // Test for the guarantee that equal objects
-        // must have equal hash codes
+       // Test for the guarantee that equal objects
+       // must have equal hash codes
         if (o2.hashCode() != o.hashCode()) {
-          // Don't use Assert.assertEquals directly because it has
-          // quite a lot of overhead
+         // Don't use Assert.assertEquals directly because it has
+         // quite a lot of overhead
           Assert.fail(
   "" + o + " and " + o2 + " don't have equal hash codes");
         }
@@ -124,7 +124,7 @@ private TestCommon() {
           Assert.fail("" + o + " does not equal " + o2 +
             " but not vice versa");
         }
-        // At least check that hashCode doesn't throw
+       // At least check that hashCode doesn't throw
         try {
           o.hashCode();
         } catch (Exception ex) {
@@ -310,13 +310,13 @@ public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2,
       int cmp12 = CompareTestReciprocal(o1, o2);
       int cmp23 = CompareTestReciprocal(o2, o3);
       int cmp13 = CompareTestReciprocal(o1, o3);
-      // CompareTestReciprocal tests compareTo both
-      // ways, so shortcutting by negating the values
-      // is allowed here
+     // CompareTestReciprocal tests compareTo both
+     // ways, so shortcutting by negating the values
+     // is allowed here
       int cmp21 = -cmp12;
       int cmp32 = -cmp23;
       int cmp31 = -cmp13;
-      // Transitivity checks
+     // Transitivity checks
       for (int i = -1; i <= 1; ++i) {
         if (cmp12 == i) {
           if (cmp23 == i && cmp13 != i) {
@@ -394,9 +394,9 @@ public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2,
         }
         while (intlongValue > 43698) {
           int intdivValue = intlongValue / 10;
-        char digit = ValueDigits.charAt((int)(intlongValue - (intdivValue * 10)));
-        chars[count--] = digit;
-        intlongValue = intdivValue;
+          char digit = ValueDigits.charAt((int)(intlongValue - (intdivValue * 10)));
+          chars[count--] = digit;
+          intlongValue = intdivValue;
       }
       while (intlongValue > 9) {
         int intdivValue = (intlongValue * 26215) >> 18;
@@ -421,9 +421,9 @@ public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2,
         }
         while (longValue > 43698) {
           long divValue = longValue / 10;
-        char digit = ValueDigits.charAt((int)(longValue - (divValue * 10)));
-        chars[count--] = digit;
-        longValue = divValue;
+          char digit = ValueDigits.charAt((int)(longValue - (divValue * 10)));
+          chars[count--] = digit;
+          longValue = divValue;
       }
       while (longValue > 9) {
         long divValue = (longValue * 26215) >> 18;
