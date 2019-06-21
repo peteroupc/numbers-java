@@ -35,8 +35,7 @@ Represents an arbitrary-precision rational number. This class can't be
 
 * `ERational​(EInteger numerator,
          EInteger denominator) ERational`<br>
- Initializes a new instance of the ERational
- class.
+ Initializes a new instance of the ERational class.
 
 ## Methods
 

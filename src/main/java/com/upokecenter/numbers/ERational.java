@@ -97,8 +97,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
-     * class.
+     * Initializes a new instance of the {@link ERational} class.
      * @param numerator The numerator.
      * @param denominator The denominator.
      * @throws IllegalArgumentException The denominator is zero.
