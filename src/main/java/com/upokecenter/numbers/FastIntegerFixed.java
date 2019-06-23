@@ -8,8 +8,8 @@ at: http://peteroupc.github.io/
  */
 
   final class FastIntegerFixed implements Comparable<FastIntegerFixed> {
-    private final int smallValue;  // if integerMode is 0
-    private final EInteger largeValue;  // if integerMode is 2
+    private final int smallValue; // if integerMode is 0
+    private final EInteger largeValue; // if integerMode is 2
     private final int integerMode;
 
     public static final FastIntegerFixed Zero = new FastIntegerFixed(0);
@@ -64,13 +64,12 @@ at: http://peteroupc.github.io/
     }
 
     static FastIntegerFixed FromLong(long longVal) {
-      return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? (new
-        FastIntegerFixed((
-  int)longVal)) : (
-  new FastIntegerFixed(
-  2,
-  0,
-  EInteger.FromInt64(longVal)));
+      return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
+        FastIntegerFixed((int)longVal) :
+        new FastIntegerFixed(
+         2,
+         0,
+         EInteger.FromInt64(longVal));
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {
@@ -257,7 +256,8 @@ at: http://peteroupc.github.io/
         case 0:
           return true;
         case 2:
-        return this.largeValue.CanFitInInt64();
+          return this.largeValue
+                     .CanFitInInt64();
 
         default:
           throw new IllegalStateException();
@@ -269,7 +269,8 @@ at: http://peteroupc.github.io/
         case 0:
           return (long)this.smallValue;
         case 2:
-        return this.largeValue.ToInt64Unchecked();
+          return this.largeValue
+                     .ToInt64Unchecked();
 
         default:
           throw new IllegalStateException();

@@ -7,166 +7,162 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-    /**
-     * Represents an arbitrary-precision decimal floating-point number. (The "E"
-     * stands for "extended", meaning that instances of this class can be
-     * values other than numbers proper, such as infinity and not-a-number.)
-     * <p><b>About decimal arithmetic</b> </p> <p>Decimal (base-10)
-     * arithmetic, such as that provided by this class, is appropriate for
-     * calculations involving such real-world data as prices and other sums
-     * of money, tax rates, and measurements. These calculations often
-     * involve multiplying or dividing one decimal with another decimal, or
-     * performing other operations on decimal numbers. Many of these
-     * calculations also rely on rounding behavior in which the result after
-     * rounding is an arbitrary-precision decimal number (for example,
-     * multiplying a price by a premium rate, then rounding, should result
-     * in a decimal amount of money). </p> <p>On the other hand, most
-     * implementations of <code>float</code> and <code>double</code> , including in C#
-     * and Java, store numbers in a binary (base-2) floating-point format
-     * and use binary floating-point arithmetic. Many decimal numbers can't
-     * be represented exactly in binary floating-point format (regardless of
-     * its length). Applying binary arithmetic to numbers intended to be
-     * decimals can sometimes lead to unintuitive results, as is shown in
-     * the description for the FromDouble() method of this class. </p>
-     * <p><b>About EDecimal instances</b> </p> <p>Each instance of this
-     * class consists of an integer mantissa (significand) and an integer
-     * exponent, both arbitrary-precision. The value of the number equals
-     * mantissa (significand) * 10^exponent. </p> <p>The mantissa
-     * (significand) is the value of the digits that make up a number,
-     * ignoring the decimal point and exponent. For example, in the number
-     * 2356.78, the mantissa (significand) is 235678. The exponent is where
-     * the "floating" decimal point of the number is located. A positive
-     * exponent means "move it to the right", and a negative exponent means
-     * "move it to the left." In the example 2, 356.78, the exponent is -2,
-     * since it has 2 decimal places and the decimal point is "moved to the
-     * left by 2." Therefore, in the arbitrary-precision decimal
-     * representation, this number would be stored as 235678 * 10^-2. </p>
-     * <p>The mantissa (significand) and exponent format preserves trailing
-     * zeros in the number's value. This may give rise to multiple ways to
-     * store the same value. For example, 1.00 and 1 would be stored
-     * differently, even though they have the same value. In the first case,
-     * 100 * 10^-2 (100 with decimal point moved left by 2), and in the
-     * second case, 1 * 10^0 (1 with decimal point moved 0). </p> <p>This
-     * class also supports values for negative zero, not-a-number (NaN)
-     * values, and infinity. <b>Negative zero</b> is generally used when a
-     * negative number is rounded to 0; it has the same mathematical value
-     * as positive zero. <b>Infinity</b> is generally used when a non-zero
-     * number is divided by zero, or when a very high or very low number
-     * can't be represented in a given exponent range. <b>Not-a-number</b>
-     * is generally used to signal errors. </p> <p>This class implements the
-     * General Decimal Arithmetic Specification version 1.70 (except part of
-     * chapter 6): <code>http://speleotrove.com/decimal/decarith.html</code> </p>
-     * <p><b>Errors and Exceptions</b> </p> <p>Passing a signaling NaN to
-     * any arithmetic operation shown here will signal the flag FlagInvalid
-     * and return a quiet NaN, even if another operand to that operation is
-     * a quiet NaN, unless noted otherwise. </p> <p>Passing a quiet NaN to
-     * any arithmetic operation shown here will return a quiet NaN, unless
-     * noted otherwise. Invalid operations will also return a quiet NaN, as
-     * stated in the individual methods. </p> <p>Unless noted otherwise,
-     * passing a null arbitrary-precision decimal argument to any method
-     * here will throw an exception. </p> <p>When an arithmetic operation
-     * signals the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it
-     * will not throw an exception too, unless the flag's trap is enabled in
-     * the arithmetic context (see EContext's Traps property). </p> <p>If an
-     * operation requires creating an intermediate value that might be too
-     * big to fit in memory (or might require more than 2 gigabytes of
-     * memory to store -- due to the current use of a 32-bit integer
-     * internally as a length), the operation may signal an
-     * invalid-operation flag and return not-a-number (NaN). In certain rare
-     * cases, the compareTo method may throw OutOfMemoryError (called
-     * OutOfMemoryError in Java) in the same circumstances. </p>
-     * <p><b>Serialization</b> </p> <p>An arbitrary-precision decimal value
-     * can be serialized (converted to a stable format) in one of the
-     * following ways: </p> <ul> <li>By calling the toString() method, which
-     * will always return distinct strings for distinct arbitrary-precision
-     * decimal values. </li> <li>By calling the UnsignedMantissa, Exponent,
-     * and IsNegative properties, and calling the IsInfinity, IsQuietNaN,
-     * and IsSignalingNaN methods. The return values combined will uniquely
-     * identify a particular arbitrary-precision decimal value. </li> </ul>
-     * <p><b>Thread safety</b> </p> <p>Instances of this class are
-     * immutable, so they are inherently safe for use by multiple threads.
-     * Multiple instances of this object with the same properties are
-     * interchangeable, so they should not be compared using the "=="
-     * operator (which might only check if each side of the operator is the
-     * same instance). </p> <p><b>Comparison considerations</b> </p> <p>This
-     * class's natural ordering (under the compareTo method) is not
-     * consistent with the Equals method. This means that two values that
-     * compare as equal under the compareTo method might not be equal under
-     * the Equals method. The compareTo method compares the mathematical
-     * values of the two instances passed to it (and considers two different
-     * NaN values as equal), while two instances with the same mathematical
-     * value, but different exponents, will be considered unequal under the
-     * Equals method. </p> <p><b>Security note</b> </p> <p>It is not
-     * recommended to implement security-sensitive algorithms using the
-     * methods in this class, for several reasons: </p> <ul>
-     * <li><code>EDecimal</code> objects are immutable, so they can't be modified,
-     * and the memory they occupy is not guaranteed to be cleared in a
-     * timely fashion due to garbage collection. This is relevant for
-     * applications that use many-digit-long numbers as secret parameters.
-     * </li> <li>The methods in this class (especially those that involve
-     * arithmetic) are not guaranteed to run in constant time for all
-     * relevant inputs. Certain attacks that involve encrypted
-     * communications have exploited the timing and other aspects of such
-     * communications to derive keying material or cleartext indirectly.
-     * </li> </ul> <p>Applications should instead use dedicated security
-     * libraries to handle big numbers in security-sensitive algorithms.
-     * </p> <p><b>Forms of numbers</b> </p> <p>There are several other types
-     * of numbers that are mentioned in this class and elsewhere in this
-     * documentation. For reference, they are specified here. </p>
-     * <p><b>Unsigned integer</b> : An integer that's always 0 or greater,
-     * with the following maximum values: </p> <ul> <li>8-bit unsigned
-     * integer, or <i> byte </i> : 255. </li> <li>16-bit unsigned integer:
-     * 65535. </li> <li>32-bit unsigned integer: (2 <sup> 32 </sup> -1).
-     * </li> <li>64-bit unsigned integer: (2 <sup> 64 </sup> -1). </li>
-     * </ul> <p><b>Signed integer</b> : An integer in <i> two's-complement
-     * form </i> , with the following ranges: </p> <ul> <li>8-bit signed
-     * integer: -128 to 127. </li> <li>16-bit signed integer: -32768 to
-     * 32767. </li> <li>32-bit signed integer: -2 <sup> 31 </sup> to (2
-     * <sup> 31 </sup> - 1). </li> <li>64-bit signed integer: -2 <sup> 63
-     * </sup> to (2 <sup> 63 </sup> - 1). </li> </ul> <p><b>Two's complement
-     * form</b> : In <i> two' s-complement form </i> , nonnegative numbers
-     * have the highest (most significant) bit set to zero, and negative
-     * numbers have that bit (and all bits beyond) set to one, and a
-     * negative number is stored in such form by decreasing its absolute
-     * value by 1 and swapping the bits of the resulting number. </p>
-     * <p><b>64-bit floating-point number</b> : A 64-bit binary
-     * floating-point number, in the form <i> significand </i> * 2 <sup> <i>
-     * exponent </i> </sup> . The significand is 53 bits long (Precision)
-     * and the exponent ranges from -1074 (EMin) to 971 (EMax). The number
-     * is stored in the following format (commonly called the IEEE 754
-     * format): </p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre> <ul> <li>A.
-     * Low 52 bits (Precision minus 1 bits): Lowest bits of the significand.
-     * </li> <li>B. Next 11 bits: Exponent area: <ul> <li>If all bits are
-     * ones, this value is infinity (positive or negative depending on the C
-     * bit) if all bits in area A are zeros, or not-a-number (NaN)
-     * otherwise. </li> <li>If all bits are zeros, this is a subnormal
-     * number. The exponent is EMin and the highest bit of the significand
-     * is zero. </li> <li>If any other number, the exponent is this value
-     * reduced by 1, then raised by EMin, and the highest bit of the
-     * significand is one. </li> </ul> </li> <li>C. Highest bit: If one,
-     * this is a negative number. </li> </ul> <p>The elements described
-     * above are in the same order as the order of each bit of each element,
-     * that is, either most significant first or least significant first.
-     * </p> <p><b>32-bit binary floating-point number</b> : A 32-bit binary
-     * number which is stored similarly to a <i> 64-bit floating-point
-     * number </i> , except that: </p> <ul> <li>Precision is 24 bits. </li>
-     * <li>EMin is -149. </li> <li>EMax is 104. </li> <li>A. The low 23 bits
-     * (Precision minus 1 bits) are the lowest bits of the significand.
-     * </li> <li>B. The next 8 bits are the exponent area. </li> <li>C. If
-     * the highest bit is one, this is a negative number. </li> </ul>
-     * <p><b>.NET Framework decimal</b> : A 128-bit decimal floating-point
-     * number, in the form <i> significand </i> * 10 <sup> - <i> scale </i>
-     * </sup> , where the scale ranges from 0 to 28. The number is stored in
-     * the following format: </p> <ul> <li>Low 96 bits are the significand,
-     * as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2
-     * <sup> 96 </sup> -1)). </li> <li>Next 16 bits are unused. </li>
-     * <li>Next 8 bits are the scale, stored as an 8-bit unsigned integer.
-     * </li> <li>Next 7 bits are unused. </li> <li>If the highest bit is
-     * one, it's a negative number. </li> </ul> <p>The elements described
-     * above are in the same order as the order of each bit of each element,
-     * that is, either most significant first or least significant first.
-     * </p>
-     */
+  /**
+   * Represents an arbitrary-precision decimal floating-point number. (The "E"
+   * stands for "extended", meaning that instances of this class can be
+   * values other than numbers proper, such as infinity and not-a-number.)
+   * <p><b>About decimal arithmetic</b> </p> <p>Decimal (base-10)
+   * arithmetic, such as that provided by this class, is appropriate for
+   * calculations involving such real-world data as prices and other sums of
+   * money, tax rates, and measurements. These calculations often involve
+   * multiplying or dividing one decimal with another decimal, or performing
+   * other operations on decimal numbers. Many of these calculations also
+   * rely on rounding behavior in which the result after rounding is an
+   * arbitrary-precision decimal number (for example, multiplying a price by
+   * a premium rate, then rounding, should result in a decimal amount of
+   * money). </p> <p>On the other hand, most implementations of <code>float</code>
+   * and <code>double</code> , including in C# and Java, store numbers in a binary
+   * (base-2) floating-point format and use binary floating-point
+   * arithmetic. Many decimal numbers can't be represented exactly in binary
+   * floating-point format (regardless of its length). Applying binary
+   * arithmetic to numbers intended to be decimals can sometimes lead to
+   * unintuitive results, as is shown in the description for the
+   * FromDouble() method of this class. </p> <p><b>About EDecimal
+   * instances</b> </p> <p>Each instance of this class consists of an
+   * integer mantissa (significand) and an integer exponent, both
+   * arbitrary-precision. The value of the number equals mantissa
+   * (significand) * 10^exponent. </p> <p>The mantissa (significand) is the
+   * value of the digits that make up a number, ignoring the decimal point
+   * and exponent. For example, in the number 2356.78, the mantissa
+   * (significand) is 235678. The exponent is where the "floating" decimal
+   * point of the number is located. A positive exponent means "move it to
+   * the right", and a negative exponent means "move it to the left." In the
+   * example 2, 356.78, the exponent is -2, since it has 2 decimal places
+   * and the decimal point is "moved to the left by 2." Therefore, in the
+   * arbitrary-precision decimal representation, this number would be stored
+   * as 235678 * 10^-2. </p> <p>The mantissa (significand) and exponent
+   * format preserves trailing zeros in the number's value. This may give
+   * rise to multiple ways to store the same value. For example, 1.00 and 1
+   * would be stored differently, even though they have the same value. In
+   * the first case, 100 * 10^-2 (100 with decimal point moved left by 2),
+   * and in the second case, 1 * 10^0 (1 with decimal point moved 0). </p>
+   * <p>This class also supports values for negative zero, not-a-number
+   * (NaN) values, and infinity. <b>Negative zero</b> is generally used when
+   * a negative number is rounded to 0; it has the same mathematical value
+   * as positive zero. <b>Infinity</b> is generally used when a non-zero
+   * number is divided by zero, or when a very high or very low number can't
+   * be represented in a given exponent range. <b>Not-a-number</b> is
+   * generally used to signal errors. </p> <p>This class implements the
+   * General Decimal Arithmetic Specification version 1.70 (except part of
+   * chapter 6): <code>http://speleotrove.com/decimal/decarith.html</code> </p>
+   * <p><b>Errors and Exceptions</b> </p> <p>Passing a signaling NaN to any
+   * arithmetic operation shown here will signal the flag FlagInvalid and
+   * return a quiet NaN, even if another operand to that operation is a
+   * quiet NaN, unless noted otherwise. </p> <p>Passing a quiet NaN to any
+   * arithmetic operation shown here will return a quiet NaN, unless noted
+   * otherwise. Invalid operations will also return a quiet NaN, as stated
+   * in the individual methods. </p> <p>Unless noted otherwise, passing a
+   * null arbitrary-precision decimal argument to any method here will throw
+   * an exception. </p> <p>When an arithmetic operation signals the flag
+   * FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an
+   * exception too, unless the flag's trap is enabled in the arithmetic
+   * context (see EContext's Traps property). </p> <p>If an operation
+   * requires creating an intermediate value that might be too big to fit in
+   * memory (or might require more than 2 gigabytes of memory to store --
+   * due to the current use of a 32-bit integer internally as a length), the
+   * operation may signal an invalid-operation flag and return not-a-number
+   * (NaN). In certain rare cases, the compareTo method may throw
+   * OutOfMemoryError (called OutOfMemoryError in Java) in the same
+   * circumstances. </p> <p><b>Serialization</b> </p> <p>An
+   * arbitrary-precision decimal value can be serialized (converted to a
+   * stable format) in one of the following ways: </p> <ul> <li>By calling
+   * the toString() method, which will always return distinct strings for
+   * distinct arbitrary-precision decimal values. </li> <li>By calling the
+   * UnsignedMantissa, Exponent, and IsNegative properties, and calling the
+   * IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values
+   * combined will uniquely identify a particular arbitrary-precision
+   * decimal value. </li> </ul> <p><b>Thread safety</b> </p> <p>Instances of
+   * this class are immutable, so they are inherently safe for use by
+   * multiple threads. Multiple instances of this object with the same
+   * properties are interchangeable, so they should not be compared using
+   * the "==" operator (which might only check if each side of the operator
+   * is the same instance). </p> <p><b>Comparison considerations</b> </p>
+   * <p>This class's natural ordering (under the compareTo method) is not
+   * consistent with the Equals method. This means that two values that
+   * compare as equal under the compareTo method might not be equal under
+   * the Equals method. The compareTo method compares the mathematical
+   * values of the two instances passed to it (and considers two different
+   * NaN values as equal), while two instances with the same mathematical
+   * value, but different exponents, will be considered unequal under the
+   * Equals method. </p> <p><b>Security note</b> </p> <p>It is not
+   * recommended to implement security-sensitive algorithms using the
+   * methods in this class, for several reasons: </p> <ul>
+   * <li><code>EDecimal</code> objects are immutable, so they can't be modified,
+   * and the memory they occupy is not guaranteed to be cleared in a timely
+   * fashion due to garbage collection. This is relevant for applications
+   * that use many-digit-long numbers as secret parameters. </li> <li>The
+   * methods in this class (especially those that involve arithmetic) are
+   * not guaranteed to run in constant time for all relevant inputs. Certain
+   * attacks that involve encrypted communications have exploited the timing
+   * and other aspects of such communications to derive keying material or
+   * cleartext indirectly. </li> </ul> <p>Applications should instead use
+   * dedicated security libraries to handle big numbers in
+   * security-sensitive algorithms. </p> <p><b>Forms of numbers</b> </p>
+   * <p>There are several other types of numbers that are mentioned in this
+   * class and elsewhere in this documentation. For reference, they are
+   * specified here. </p> <p><b>Unsigned integer</b> : An integer that's
+   * always 0 or greater, with the following maximum values: </p> <ul>
+   * <li>8-bit unsigned integer, or <i> byte </i> : 255. </li> <li>16-bit
+   * unsigned integer: 65535. </li> <li>32-bit unsigned integer: (2 <sup> 32
+   * </sup> -1). </li> <li>64-bit unsigned integer: (2 <sup> 64 </sup> -1).
+   * </li> </ul> <p><b>Signed integer</b> : An integer in <i>
+   * two's-complement form </i> , with the following ranges: </p> <ul>
+   * <li>8-bit signed integer: -128 to 127. </li> <li>16-bit signed integer:
+   * -32768 to 32767. </li> <li>32-bit signed integer: -2 <sup> 31 </sup> to
+   * (2 <sup> 31 </sup> - 1). </li> <li>64-bit signed integer: -2 <sup> 63
+   * </sup> to (2 <sup> 63 </sup> - 1). </li> </ul> <p><b>Two's complement
+   * form</b> : In <i> two' s-complement form </i> , nonnegative numbers
+   * have the highest (most significant) bit set to zero, and negative
+   * numbers have that bit (and all bits beyond) set to one, and a negative
+   * number is stored in such form by decreasing its absolute value by 1 and
+   * swapping the bits of the resulting number. </p> <p><b>64-bit
+   * floating-point number</b> : A 64-bit binary floating-point number, in
+   * the form <i> significand </i> * 2 <sup> <i> exponent </i> </sup> . The
+   * significand is 53 bits long (Precision) and the exponent ranges from
+   * -1074 (EMin) to 971 (EMax). The number is stored in the following
+   * format (commonly called the IEEE 754 format): </p>
+   * <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre> <ul> <li>A. Low 52 bits
+   * (Precision minus 1 bits): Lowest bits of the significand. </li> <li>B.
+   * Next 11 bits: Exponent area: <ul> <li>If all bits are ones, this value
+   * is infinity (positive or negative depending on the C bit) if all bits
+   * in area A are zeros, or not-a-number (NaN) otherwise. </li> <li>If all
+   * bits are zeros, this is a subnormal number. The exponent is EMin and
+   * the highest bit of the significand is zero. </li> <li>If any other
+   * number, the exponent is this value reduced by 1, then raised by EMin,
+   * and the highest bit of the significand is one. </li> </ul> </li> <li>C.
+   * Highest bit: If one, this is a negative number. </li> </ul> <p>The
+   * elements described above are in the same order as the order of each bit
+   * of each element, that is, either most significant first or least
+   * significant first. </p> <p><b>32-bit binary floating-point number</b> :
+   * A 32-bit binary number which is stored similarly to a <i> 64-bit
+   * floating-point number </i> , except that: </p> <ul> <li>Precision is 24
+   * bits. </li> <li>EMin is -149. </li> <li>EMax is 104. </li> <li>A. The
+   * low 23 bits (Precision minus 1 bits) are the lowest bits of the
+   * significand. </li> <li>B. The next 8 bits are the exponent area. </li>
+   * <li>C. If the highest bit is one, this is a negative number. </li>
+   * </ul> <p><b>.NET Framework decimal</b> : A 128-bit decimal
+   * floating-point number, in the form <i> significand </i> * 10 <sup> -
+   * <i> scale </i> </sup> , where the scale ranges from 0 to 28. The number
+   * is stored in the following format: </p> <ul> <li>Low 96 bits are the
+   * significand, as a 96-bit unsigned integer (all 96-bit values are
+   * allowed, up to (2 <sup> 96 </sup> -1)). </li> <li>Next 16 bits are
+   * unused. </li> <li>Next 8 bits are the scale, stored as an 8-bit
+   * unsigned integer. </li> <li>Next 7 bits are unused. </li> <li>If the
+   * highest bit is one, it's a negative number. </li> </ul> <p>The elements
+   * described above are in the same order as the order of each bit of each
+   * element, that is, either most significant first or least significant
+   * first. </p>
+   */
   public final class EDecimal implements Comparable<EDecimal> {
     //----------------------------------------------------------------
 
@@ -222,11 +218,11 @@ at: http://peteroupc.github.io/
      * decimal.
      */
 
-public static final EDecimal SignalingNaN =
-      CreateWithFlags(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        BigNumberFlags.FlagSignalingNaN);
+    public static final EDecimal SignalingNaN =
+          CreateWithFlags(
+            EInteger.FromInt32(0),
+            EInteger.FromInt32(0),
+            BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Represents the number 10.
@@ -246,8 +242,8 @@ public static final EDecimal SignalingNaN =
 
     private static final IRadixMath<EDecimal> ExtendedMathValue = new
       RadixMath<EDecimal>(new DecimalMathHelper());
-      private static final FastIntegerFixed FastIntZero = new
-      FastIntegerFixed(0);
+    private static final FastIntegerFixed FastIntZero = new
+    FastIntegerFixed(0);
     //----------------------------------------------------------------
     private static final IRadixMath<EDecimal> MathValue = new
       TrappableRadixMath<EDecimal>(
@@ -373,10 +369,10 @@ public static final EDecimal SignalingNaN =
   new FastIntegerFixed(exponentSmall),
   BigNumberFlags.FlagNegative);
       } else if (mantissaSmall == 0) {
-   return new EDecimal(
-  FastIntZero,
-  new FastIntegerFixed(exponentSmall),
-  0);
+        return new EDecimal(
+       FastIntZero,
+       new FastIntegerFixed(exponentSmall),
+       0);
       } else {
         return new EDecimal(
   new FastIntegerFixed(mantissaSmall),
@@ -987,15 +983,15 @@ public static final EDecimal SignalingNaN =
                     mantBufferMult = 10;
                   } else {
                     // multiply by 10
-   mantBufferMult = (mantBufferMult << 3) + (mantBufferMult << 1);
-   mantBuffer = (mantBuffer << 3) + (mantBuffer << 1);
-   mantBuffer += thisdigit;
+                    mantBufferMult = (mantBufferMult << 3) + (mantBufferMult << 1);
+                    mantBuffer = (mantBuffer << 3) + (mantBuffer << 1);
+                    mantBuffer += thisdigit;
                   }
                 }
               } else {
                 // multiply by 10
-   mantInt = (mantInt << 3) + (mantInt << 1);
-   mantInt += thisdigit;
+                mantInt = (mantInt << 3) + (mantInt << 1);
+                mantInt += thisdigit;
               }
               if (haveDigits && maxDigits != null) {
                 digitCount.Increment();
@@ -1064,15 +1060,15 @@ public static final EDecimal SignalingNaN =
                     mantBufferMult = 10;
                   } else {
                     // multiply by 10
-   mantBufferMult = (mantBufferMult << 3) + (mantBufferMult << 1);
-   mantBuffer = (mantBuffer << 3) + (mantBuffer << 1);
-   mantBuffer += thisdigit;
+                    mantBufferMult = (mantBufferMult << 3) + (mantBufferMult << 1);
+                    mantBuffer = (mantBuffer << 3) + (mantBuffer << 1);
+                    mantBuffer += thisdigit;
                   }
                 }
               } else {
                 // multiply by 10
-   mantInt = (mantInt << 3) + (mantInt << 1);
-   mantInt += thisdigit;
+                mantInt = (mantInt << 3) + (mantInt << 1);
+                mantInt += thisdigit;
               }
               if (haveDigits && maxDigits != null) {
                 digitCount.Increment();
@@ -1122,14 +1118,14 @@ public static final EDecimal SignalingNaN =
             }
           } else {
             // multiply by 10
-   mantInt = (mantInt << 3) + (mantInt << 1);
-   mantInt += thisdigit;
+            mantInt = (mantInt << 3) + (mantInt << 1);
+            mantInt += thisdigit;
           }
           haveDigits = true;
           if (haveDecimalPoint) {
             if (newScaleInt == Integer.MIN_VALUE) {
-newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
-newScale.Decrement();
+              newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
+              newScale.Decrement();
             } else {
               --newScaleInt;
             }
@@ -1207,15 +1203,15 @@ newScale.Decrement();
           null) {
           newScaleInt = expInt;
         } else if (exp == null) {
-newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
-if (tmpoffset < 0) {
+          newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
+          if (tmpoffset < 0) {
             newScale.SubtractInt(expInt);
           } else if (expInt != 0) {
             newScale.AddInt(expInt);
           }
         } else {
-newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
-if (tmpoffset < 0) {
+          newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
+          if (tmpoffset < 0) {
             newScale.Subtract(exp);
           } else {
             newScale.Add(exp);
@@ -1233,14 +1229,14 @@ if (tmpoffset < 0) {
       if (mant == null) {
         fastIntMant = new FastIntegerFixed(mantInt);
         if (mantInt == 0) {
- sign = 0;
-}
+          sign = 0;
+        }
       } else if (mant.CanFitInInt32()) {
         mantInt = mant.AsInt32();
         fastIntMant = new FastIntegerFixed(mantInt);
         if (mantInt == 0) {
- sign = 0;
-}
+          sign = 0;
+        }
       } else {
         fastIntMant = FastIntegerFixed.FromFastInteger(mant);
       }
@@ -1515,7 +1511,7 @@ if (tmpoffset < 0) {
      * satisfy other.isFinite().
      */
     public int CompareToBinary(EFloat other) {
-  return CompareEDecimalToEFloat(this, other);
+      return CompareEDecimalToEFloat(this, other);
     }
     private static int CompareEDecimalToEFloat(EDecimal ed, EFloat ef) {
       if (ef == null) {
@@ -1558,46 +1554,46 @@ if (tmpoffset < 0) {
             return (signA > 0) ? 1 : -1;
           }
         }
-// DebugUtility.Log("edexp=" + ed.getExponent() + ", efexp=" + (ef.getExponent()));
-EInteger bitCount = ef.getMantissa().GetUnsignedBitLengthAsEInteger();
-EInteger absexp = ef.getExponent().Abs();
-if (absexp.compareTo(bitCount) > 0) {
-     // Float's absolute value is less than 1, so do a trial comparison
-     // using exponent closer to 0
-     EFloat trial = EFloat.Create(ef.getMantissa(), EInteger.FromInt32(-1000));
-     int trialcmp = CompareEDecimalToEFloat(ed, trial);
-     if (ef.signum() < 0 && trialcmp < 0) {
-       // if float and decimal are negative and
-       // decimal is less than trial float (which in turn is
-       // less than the actual float), then the decimal is
-       // less than the actual float
-       return -1;
-     }
-     if (ef.signum() > 0 && trialcmp > 0) {
-       // if float and decimal are positive and
-       // decimal is greater than trial float (which in turn is
-       // greater than the actual float), then the decimal is
-       // greater than the actual float
-       return 1;
-     }
-   }
+        // DebugUtility.Log("edexp=" + ed.getExponent() + ", efexp=" + (ef.getExponent()));
+        EInteger bitCount = ef.getMantissa().GetUnsignedBitLengthAsEInteger();
+        EInteger absexp = ef.getExponent().Abs();
+        if (absexp.compareTo(bitCount) > 0) {
+          // Float's absolute value is less than 1, so do a trial comparison
+          // using exponent closer to 0
+          EFloat trial = EFloat.Create(ef.getMantissa(), EInteger.FromInt32(-1000));
+          int trialcmp = CompareEDecimalToEFloat(ed, trial);
+          if (ef.signum() < 0 && trialcmp < 0) {
+            // if float and decimal are negative and
+            // decimal is less than trial float (which in turn is
+            // less than the actual float), then the decimal is
+            // less than the actual float
+            return -1;
+          }
+          if (ef.signum() > 0 && trialcmp > 0) {
+            // if float and decimal are positive and
+            // decimal is greater than trial float (which in turn is
+            // greater than the actual float), then the decimal is
+            // greater than the actual float
+            return 1;
+          }
+        }
         EInteger thisAdjExp = GetAdjustedExponent(ed);
         EInteger otherAdjExp = GetAdjustedExponentBinary(ef);
- // DebugUtility.Log("taexp=" + thisAdjExp + ", oaexp=" + otherAdjExp);
- // DebugUtility.Log("td=" + ed.ToDouble() + ", tf=" + ef.ToDouble());
- if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) >= 0 &&
-        otherAdjExp.compareTo(EInteger.FromInt64(-4000)) < 0) {
-        // With these exponent combinations, the binary's absolute
-        // value is less than the decimal's
-        return (signA > 0) ? 1 : -1;
-      }
-      if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0 &&
-          otherAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0) {
+        // DebugUtility.Log("taexp=" + thisAdjExp + ", oaexp=" + otherAdjExp);
+        // DebugUtility.Log("td=" + ed.ToDouble() + ", tf=" + ef.ToDouble());
+        if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) >= 0 &&
+               otherAdjExp.compareTo(EInteger.FromInt64(-4000)) < 0) {
+          // With these exponent combinations, the binary's absolute
+          // value is less than the decimal's
+          return (signA > 0) ? 1 : -1;
+        }
+        if (thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0 &&
+            otherAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0) {
           thisAdjExp = thisAdjExp.Add(EInteger.FromInt32(1)).Abs();
           otherAdjExp = otherAdjExp.Add(EInteger.FromInt32(1)).Abs();
           EInteger ratio = otherAdjExp.Multiply(1000).Divide(thisAdjExp);
-// DebugUtility.Log("taexp={0}, oaexp={1} ratio={2}"
-// , thisAdjExp, otherAdjExp, ratio);
+          // DebugUtility.Log("taexp={0}, oaexp={1} ratio={2}"
+          // , thisAdjExp, otherAdjExp, ratio);
           // Check the ratio of the negative binary exponent to
           // negative the decimal exponent.
           // If the ratio times 1000, rounded down, is less than 3321, the
@@ -1638,10 +1634,10 @@ if (absexp.compareTo(bitCount) > 0) {
         }
         if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) < 0 &&
         otherAdjExp.compareTo(EInteger.FromInt64(4000)) >= 0) {
-        // With these exponent combinations, the binary's absolute
-        // value is greater than the decimal's
-        return (signA > 0) ? -1 : 1;
-      }
+          // With these exponent combinations, the binary's absolute
+          // value is greater than the decimal's
+          return (signA > 0) ? -1 : 1;
+        }
 
         if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0 &&
                 otherAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0) {
@@ -1669,7 +1665,7 @@ if (absexp.compareTo(bitCount) > 0) {
       }
       EDecimal otherDec = EDecimal.FromEFloat(ef);
       return ed.compareTo(otherDec);
-}
+    }
 
     /**
      * Compares the mathematical values of this object and another object, treating
@@ -2254,10 +2250,10 @@ if (absexp.compareTo(bitCount) > 0) {
     public EDecimal DivideToExponent(
       EDecimal divisor,
       int desiredExponentInt) {
- return this.DivideToExponent(
-  divisor,
-  desiredExponentInt,
-  ERounding.HalfEven);
+      return this.DivideToExponent(
+       divisor,
+       desiredExponentInt,
+       ERounding.HalfEven);
     }
 
     /**
@@ -2739,8 +2735,8 @@ if (absexp.compareTo(bitCount) > 0) {
      * @return The sum of the two objects.
      */
     public EDecimal Add(int intValue) {
- return this.Add(EDecimal.FromInt32(intValue));
-}
+      return this.Add(EDecimal.FromInt32(intValue));
+    }
 
     /**
      * Subtracts a 32-bit signed integer from this object and returns the result.
@@ -2748,9 +2744,9 @@ if (absexp.compareTo(bitCount) > 0) {
      * @return The difference of the two objects.
      */
     public EDecimal Subtract(int intValue) {
- return (intValue == Integer.MIN_VALUE) ?
-   this.Subtract(EDecimal.FromInt32(intValue)) : this.Add(-intValue);
-}
+      return (intValue == Integer.MIN_VALUE) ?
+        this.Subtract(EDecimal.FromInt32(intValue)) : this.Add(-intValue);
+    }
 
     /**
      * Multiplies this object by the given 32-bit signed integer. The resulting
@@ -2759,8 +2755,8 @@ if (absexp.compareTo(bitCount) > 0) {
      * @return The product of the two numbers.
      */
     public EDecimal Multiply(int intValue) {
- return this.Multiply(EDecimal.FromInt32(intValue));
-}
+      return this.Multiply(EDecimal.FromInt32(intValue));
+    }
 
     /**
      * Divides this object by an 32-bit signed integer and returns the result. When
@@ -2773,8 +2769,8 @@ if (absexp.compareTo(bitCount) > 0) {
      * exact because it would have a nonterminating decimal expansion.
      */
     public EDecimal Divide(int intValue) {
- return this.Divide(EDecimal.FromInt32(intValue));
-}
+      return this.Divide(EDecimal.FromInt32(intValue));
+    }
 
     /**
      * Multiplies by one decimal number, and then adds another decimal number.
@@ -3022,10 +3018,10 @@ if (absexp.compareTo(bitCount) > 0) {
      * each decimal number has a fixed number of digits after the decimal
      * point. The following code example returns a fixed-point number with
      * up to 20 digits before and exactly 5 digits after the decimal point:
-     * </p> <pre>  // After performing arithmetic operations, adjust  // the
-     * number to 5  // digits after the decimal point number =
-     * number.Quantize(EInteger.FromInt32(-5),  // five digits after the
-     * decimal point EContext.ForPrecision(25)  // 25-digit
+     * </p> <pre> // After performing arithmetic operations, adjust // the
+     * number to 5 // digits after the decimal point number =
+     * number.Quantize(EInteger.FromInt32(-5), // five digits after the
+     * decimal point EContext.ForPrecision(25) // 25-digit
      * precision);</pre> <p>A fixed-point decimal arithmetic in which no
      * digits come after the decimal point (a desired exponent of 0) is
      * considered an "integer arithmetic". </p>
@@ -3570,9 +3566,9 @@ if (absexp.compareTo(bitCount) > 0) {
     public EDecimal RoundToExponentExact(
       int exponentSmall,
       ERounding rounding) {
- return this.RoundToExponentExact(
-  EInteger.FromInt32(exponentSmall),
-  EContext.Unlimited.WithRounding(rounding));
+      return this.RoundToExponentExact(
+       EInteger.FromInt32(exponentSmall),
+       EContext.Unlimited.WithRounding(rounding));
     }
 
     /**
@@ -3868,43 +3864,43 @@ if (absexp.compareTo(bitCount) > 0) {
         return 0.0;
       }
       if (this.isFinite()) {
-       if (this.exponent.CompareToInt(309) > 0) {
-        // Very high exponent, treat as infinity
-        return this.isNegative() ? Double.NEGATIVE_INFINITY :
-          Double.POSITIVE_INFINITY;
-       }
-       if (this.exponent.CompareToInt(-22) >= 0 &&
-          this.exponent.CompareToInt(44) <= 0 &&
-          this.unsignedMantissa.CanFitInInt64()) {
-         // Fast-path optimization (explained on exploringbinary.com)
-         long ml = this.unsignedMantissa.AsInt64();
-         int iexp = this.exponent.AsInt32();
-         while (ml <= 900719925474099L && iexp > 22) {
-           ml *= 10;
-           --iexp;
-         }
-         int iabsexp = Math.abs(iexp);
-         if (ml < 9007199254740992L && iabsexp <= 22) {
-          double d = ExactDoublePowersOfTen[iabsexp];
-          double dml = this.isNegative() ? (double)(-ml) : (double)ml;
-          if (iexp < 0) {
-             return dml / d;
-          } else {
-             return dml * d;
+        if (this.exponent.CompareToInt(309) > 0) {
+          // Very high exponent, treat as infinity
+          return this.isNegative() ? Double.NEGATIVE_INFINITY :
+            Double.POSITIVE_INFINITY;
+        }
+        if (this.exponent.CompareToInt(-22) >= 0 &&
+           this.exponent.CompareToInt(44) <= 0 &&
+           this.unsignedMantissa.CanFitInInt64()) {
+          // Fast-path optimization (explained on exploringbinary.com)
+          long ml = this.unsignedMantissa.AsInt64();
+          int iexp = this.exponent.AsInt32();
+          while (ml <= 900719925474099L && iexp > 22) {
+            ml *= 10;
+            --iexp;
           }
-         }
-       }
-       EInteger adjExp = GetAdjustedExponent(this);
-       if (adjExp.compareTo(EInteger.FromInt64(-326)) < 0) {
+          int iabsexp = Math.abs(iexp);
+          if (ml < 9007199254740992L && iabsexp <= 22) {
+            double d = ExactDoublePowersOfTen[iabsexp];
+            double dml = this.isNegative() ? (double)(-ml) : (double)ml;
+            if (iexp < 0) {
+              return dml / d;
+            } else {
+              return dml * d;
+            }
+          }
+        }
+        EInteger adjExp = GetAdjustedExponent(this);
+        if (adjExp.compareTo(EInteger.FromInt64(-326)) < 0) {
           // Very low exponent, treat as 0
-        return this.isNegative() ? Extras.IntegersToDouble(new int[] { 0,
+          return this.isNegative() ? Extras.IntegersToDouble(new int[] { 0,
             ((int)(1 << 31)), }) : 0.0;
-       }
-       if (adjExp.compareTo(EInteger.FromInt64(309)) > 0) {
-        // Very high exponent, treat as infinity
-        return this.isNegative() ? Double.NEGATIVE_INFINITY :
-          Double.POSITIVE_INFINITY;
-       }
+        }
+        if (adjExp.compareTo(EInteger.FromInt64(309)) > 0) {
+          // Very high exponent, treat as infinity
+          return this.isNegative() ? Double.NEGATIVE_INFINITY :
+            Double.POSITIVE_INFINITY;
+        }
       }
       return this.ToEFloat(EContext.Binary64).ToDouble();
     }
@@ -4015,48 +4011,48 @@ if (absexp.compareTo(bitCount) > 0) {
         return 0.0f;
       }
       if (this.isFinite()) {
-       if (this.exponent.CompareToInt(-10) >= 0 &&
-          this.exponent.CompareToInt(20) <= 0 &&
-          this.unsignedMantissa.CanFitInInt32()) {
-         // Fast-path optimization (version for 'double's explained
-         // on exploringbinary.com)
-         int iml = this.unsignedMantissa.AsInt32();
-         int iexp = this.exponent.AsInt32();
-         // DebugUtility.Log("this=" + (this.toString()));
-         // DebugUtility.Log("iml=" + iml + " iexp=" + iexp + " neg=" +
-         // (this.isNegative()));
-         while (iml <= 1677721 && iexp > 10) {
-           iml *= 10;
-           --iexp;
-         }
-         int iabsexp = Math.abs(iexp);
-         // DebugUtility.Log("--> iml=" + iml + " absexp=" + iabsexp);
-         if (iml < 16777216 && iabsexp <= 10) {
-          float fd = ExactSinglePowersOfTen[iabsexp];
-          float fml = this.isNegative() ? (float)(-iml) : (float)iml;
-          if (iexp < 0) {
-             // DebugUtility.Log("--> ret=" + (fml/fd) + " [fml=" + fml +
-             // ", fd=" + fd + "]");
-             return fml / fd;
-          } else {
-             // DebugUtility.Log("--> ret=" + (fml*fd) + " [fml=" + fml +
-             // ", fd=" + fd + "]");
-             return fml * fd;
+        if (this.exponent.CompareToInt(-10) >= 0 &&
+           this.exponent.CompareToInt(20) <= 0 &&
+           this.unsignedMantissa.CanFitInInt32()) {
+          // Fast-path optimization (version for 'double's explained
+          // on exploringbinary.com)
+          int iml = this.unsignedMantissa.AsInt32();
+          int iexp = this.exponent.AsInt32();
+          // DebugUtility.Log("this=" + (this.toString()));
+          // DebugUtility.Log("iml=" + iml + " iexp=" + iexp + " neg=" +
+          // (this.isNegative()));
+          while (iml <= 1677721 && iexp > 10) {
+            iml *= 10;
+            --iexp;
           }
-         }
-       }
-       EInteger adjExp = GetAdjustedExponent(this);
-       if (adjExp.compareTo(-47) < 0) {
-        // Very low exponent, treat as 0
-        return this.isNegative() ?
-          Float.intBitsToFloat(1 << 31) :
-          0.0f;
-       }
-       if (adjExp.compareTo(39) > 0) {
-        // Very high exponent, treat as infinity
-        return this.isNegative() ? Float.NEGATIVE_INFINITY :
-          Float.POSITIVE_INFINITY;
-       }
+          int iabsexp = Math.abs(iexp);
+          // DebugUtility.Log("--> iml=" + iml + " absexp=" + iabsexp);
+          if (iml < 16777216 && iabsexp <= 10) {
+            float fd = ExactSinglePowersOfTen[iabsexp];
+            float fml = this.isNegative() ? (float)(-iml) : (float)iml;
+            if (iexp < 0) {
+              // DebugUtility.Log("--> ret=" + (fml/fd) + " [fml=" + fml +
+              // ", fd=" + fd + "]");
+              return fml / fd;
+            } else {
+              // DebugUtility.Log("--> ret=" + (fml*fd) + " [fml=" + fml +
+              // ", fd=" + fd + "]");
+              return fml * fd;
+            }
+          }
+        }
+        EInteger adjExp = GetAdjustedExponent(this);
+        if (adjExp.compareTo(-47) < 0) {
+          // Very low exponent, treat as 0
+          return this.isNegative() ?
+            Float.intBitsToFloat(1 << 31) :
+            0.0f;
+        }
+        if (adjExp.compareTo(39) > 0) {
+          // Very high exponent, treat as infinity
+          return this.isNegative() ? Float.NEGATIVE_INFINITY :
+            Float.POSITIVE_INFINITY;
+        }
       }
       return this.ToEFloat(EContext.Binary32).ToSingle();
     }
@@ -4329,24 +4325,24 @@ if (absexp.compareTo(bitCount) > 0) {
       if (bigintExp.isZero()) {
         // Integer
         // DebugUtility.Log("Integer");
-     return this.WithThisSign(EFloat.FromEInteger(bigintMant))
-  .RoundToPrecision(ec);
+        return this.WithThisSign(EFloat.FromEInteger(bigintMant))
+     .RoundToPrecision(ec);
       }
       if (bigintExp.signum() > 0) {
         // Scaled integer
-// --- Optimizations for Binary32 and Binary64
-if (ec == EContext.Binary32) {
-  if (bigintExp.compareTo(39) > 0) {
-        return this.isNegative() ? EFloat.NegativeInfinity :
-          EFloat.PositiveInfinity;
-  }
-} else if (ec == EContext.Binary64) {
-  if (bigintExp.compareTo(309) > 0) {
-        return this.isNegative() ? EFloat.NegativeInfinity :
-          EFloat.PositiveInfinity;
-  }
-}
-// --- End optimizations for Binary32 and Binary64
+        // --- Optimizations for Binary32 and Binary64
+        if (ec == EContext.Binary32) {
+          if (bigintExp.compareTo(39) > 0) {
+            return this.isNegative() ? EFloat.NegativeInfinity :
+              EFloat.PositiveInfinity;
+          }
+        } else if (ec == EContext.Binary64) {
+          if (bigintExp.compareTo(309) > 0) {
+            return this.isNegative() ? EFloat.NegativeInfinity :
+              EFloat.PositiveInfinity;
+          }
+        }
+        // --- End optimizations for Binary32 and Binary64
         // DebugUtility.Log("Scaled integer");
         EInteger bigmantissa = bigintMant;
         bigintExp = NumberUtility.FindPowerOfTenFromBig(bigintExp);
@@ -4410,22 +4406,22 @@ if (ec == EContext.Binary32) {
           do {
             boolean optimized = false;
             if (ec.getClampNormalExponents() && valueEcPrec.signum() > 0) {
-           EInteger valueBmBits = bigmantissa.GetUnsignedBitLengthAsEInteger();
-           EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
-           if (divisor.compareTo(bigmantissa) < 0) {
-               if (divBits.compareTo(valueBmBits) < 0) {
-                EInteger bitdiff = valueBmBits.Subtract(divBits);
-                if (bitdiff.compareTo(valueEcPrec.Add(1)) > 0) {
-                  bitdiff = bitdiff.Subtract(valueEcPrec).Subtract(1);
-                  divisor = divisor.ShiftLeft(bitdiff);
-                  adjust.AddBig(bitdiff);
-                  optimized = true;
+              EInteger valueBmBits = bigmantissa.GetUnsignedBitLengthAsEInteger();
+              EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
+              if (divisor.compareTo(bigmantissa) < 0) {
+                if (divBits.compareTo(valueBmBits) < 0) {
+                  EInteger bitdiff = valueBmBits.Subtract(divBits);
+                  if (bitdiff.compareTo(valueEcPrec.Add(1)) > 0) {
+                    bitdiff = bitdiff.Subtract(valueEcPrec).Subtract(1);
+                    divisor = divisor.ShiftLeft(bitdiff);
+                    adjust.AddBig(bitdiff);
+                    optimized = true;
+                  }
                 }
-               }
-            } else {
-              if (valueBmBits.compareTo(divBits) >= 0 &&
-                 valueEcPrec.compareTo(
-                   EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <= 0) {
+              } else {
+                if (valueBmBits.compareTo(divBits) >= 0 &&
+                   valueEcPrec.compareTo(
+                     EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <= 0) {
                   EInteger vbb = divBits.Add(valueEcPrec);
                   if (valueBmBits.compareTo(vbb) < 0) {
                     valueBmBits = vbb.Subtract(valueBmBits);
@@ -4440,12 +4436,12 @@ if (ec == EContext.Binary32) {
               divisor = divisor.ShiftLeft(1);
               adjust.Increment();
             }
-// DebugUtility.Log("deshigh\n==>" + (//
-// bigmantissa) + "\n-->" + (//
-// divisor));
-// DebugUtility.Log("deshigh " + (//
-// bigmantissa.GetUnsignedBitLengthAsEInteger()) + "/" + (//
-// divisor.GetUnsignedBitLengthAsEInteger()));
+            // DebugUtility.Log("deshigh\n==>" + (//
+            // bigmantissa) + "\n-->" + (//
+            // divisor));
+            // DebugUtility.Log("deshigh " + (//
+            // bigmantissa.GetUnsignedBitLengthAsEInteger()) + "/" + (//
+            // divisor.GetUnsignedBitLengthAsEInteger()));
             quorem = bigmantissa.DivRem(divisor);
             if (quorem[1].isZero()) {
               EInteger valueBmBits = quorem[0].GetUnsignedBitLengthAsEInteger();
@@ -4456,18 +4452,18 @@ if (ec == EContext.Binary32) {
                 adjust.AddBig(valueBmBits);
               }
             }
-  // DebugUtility.Log("quorem[0]="+quorem[0]);
-     // DebugUtility.Log("quorem[1]="+quorem[1]);
-        // DebugUtility.Log("desiredLow="+desiredLow);
-           // DebugUtility.Log("desiredHigh="+desiredHigh);
+            // DebugUtility.Log("quorem[0]="+quorem[0]);
+            // DebugUtility.Log("quorem[1]="+quorem[1]);
+            // DebugUtility.Log("desiredLow="+desiredLow);
+            // DebugUtility.Log("desiredHigh="+desiredHigh);
           } while (quorem[0].compareTo(desiredHigh) >= 0);
         } else if (quorem[0].compareTo(desiredLow) < 0) {
           do {
             boolean optimized = false;
             if (bigmantissa.compareTo(divisor) < 0) {
-           EInteger valueBmBits = bigmantissa.GetUnsignedBitLengthAsEInteger();
-           EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
-           if (valueBmBits.compareTo(divBits) < 0) {
+              EInteger valueBmBits = bigmantissa.GetUnsignedBitLengthAsEInteger();
+              EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
+              if (valueBmBits.compareTo(divBits) < 0) {
                 valueBmBits = divBits.Subtract(valueBmBits);
                 bigmantissa = bigmantissa.ShiftLeft(valueBmBits);
                 adjust.SubtractBig(valueBmBits);
@@ -4475,11 +4471,11 @@ if (ec == EContext.Binary32) {
               }
             } else {
               if (ec.getClampNormalExponents() && valueEcPrec.signum() > 0) {
-           EInteger valueBmBits = bigmantissa.GetUnsignedBitLengthAsEInteger();
-           EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
-           if (valueBmBits.compareTo(divBits) >= 0 &&
-                 valueEcPrec.compareTo(
-                  EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <= 0) {
+                EInteger valueBmBits = bigmantissa.GetUnsignedBitLengthAsEInteger();
+                EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
+                if (valueBmBits.compareTo(divBits) >= 0 &&
+                      valueEcPrec.compareTo(
+                       EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <= 0) {
                   EInteger vbb = divBits.Add(valueEcPrec);
                   if (valueBmBits.compareTo(vbb) < 0) {
                     valueBmBits = vbb.Subtract(valueBmBits);
@@ -4809,37 +4805,37 @@ if (ec == EContext.Binary32) {
     }
 
     private static final class DecimalMathHelper implements IRadixMathHelper<EDecimal> {
-    /**
-     * This is an internal method.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @return A 32-bit signed integer.
+       */
       public int GetRadix() {
         return 10;
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision decimal number.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision decimal number.
+       * @return A 32-bit signed integer.
+       */
       public int GetSign(EDecimal value) {
         return value.signum();
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision decimal number.
-     * @return An arbitrary-precision integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision decimal number.
+       * @return An arbitrary-precision integer.
+       */
       public EInteger GetMantissa(EDecimal value) {
         return value.unsignedMantissa.ToEInteger();
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision decimal number.
-     * @return An arbitrary-precision integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision decimal number.
+       * @return An arbitrary-precision integer.
+       */
       public EInteger GetExponent(EDecimal value) {
         return value.exponent.ToEInteger();
       }
@@ -4853,7 +4849,7 @@ if (ec == EContext.Binary32) {
       }
 
       public FastInteger GetDigitLength(EInteger ei) {
-return FastInteger.FromBig(ei.GetDigitCountAsEInteger());
+        return FastInteger.FromBig(ei.GetDigitCountAsEInteger());
       }
 
       public IShiftAccumulator CreateShiftAccumulatorWithDigits(
@@ -4868,15 +4864,15 @@ return FastInteger.FromBig(ei.GetDigitCountAsEInteger());
         int lastDigit,
         int olderDigits) {
         if (fastInt.CanFitInInt32()) {
-   return new DigitShiftAccumulator(
-  fastInt.AsInt32(),
-  lastDigit,
-  olderDigits);
+          return new DigitShiftAccumulator(
+         fastInt.AsInt32(),
+         lastDigit,
+         olderDigits);
         } else {
-return new DigitShiftAccumulator(
-  fastInt.ToEInteger(),
-  lastDigit,
-  olderDigits);
+          return new DigitShiftAccumulator(
+            fastInt.ToEInteger(),
+            lastDigit,
+            olderDigits);
         }
       }
       public FastInteger DivisionShift(
@@ -4955,22 +4951,22 @@ return new DigitShiftAccumulator(
           NumberUtility.FindPowerOfTenFromBig(power.AsEInteger());
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision decimal number.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision decimal number.
+       * @return A 32-bit signed integer.
+       */
       public int GetFlags(EDecimal value) {
         return value.flags;
       }
 
-    /**
-     * This is an internal method.
-     * @param mantissa The parameter {@code mantissa} is an internal parameter.
-     * @param exponent The parameter {@code exponent} is an internal parameter.
-     * @param flags The parameter {@code flags} is an internal parameter.
-     * @return An arbitrary-precision decimal number.
-     */
+      /**
+       * This is an internal method.
+       * @param mantissa The parameter {@code mantissa} is an internal parameter.
+       * @param exponent The parameter {@code exponent} is an internal parameter.
+       * @param flags The parameter {@code flags} is an internal parameter.
+       * @return An arbitrary-precision decimal number.
+       */
       public EDecimal CreateNewWithFlags(
         EInteger mantissa,
         EInteger exponent,
@@ -4988,19 +4984,19 @@ return new DigitShiftAccumulator(
         return CreateWithFlags(fmantissa, fexponent, flags);
       }
 
-    /**
-     * This is an internal method.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @return A 32-bit signed integer.
+       */
       public int GetArithmeticSupport() {
         return BigNumberFlags.FiniteAndNonFinite;
       }
 
-    /**
-     * This is an internal method.
-     * @param val The parameter {@code val} is a 32-bit signed integer.
-     * @return An arbitrary-precision decimal number.
-     */
+      /**
+       * This is an internal method.
+       * @param val The parameter {@code val} is a 32-bit signed integer.
+       * @return An arbitrary-precision decimal number.
+       */
       public EDecimal ValueOf(int val) {
         return (val == 0) ? Zero : ((val == 1) ? One : FromInt64(val));
       }
@@ -5016,17 +5012,17 @@ return new DigitShiftAccumulator(
      * the truncated integer is less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-if (this.IsIntegerPartZero()) {
- return (byte)0;
-}
-if (this.exponent.CompareToInt(3) >= 0) {
-throw new ArithmeticException("Value out of range");
-}
- return this.ToEInteger().ToByteChecked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.IsIntegerPartZero()) {
+        return (byte)0;
+      }
+      if (this.exponent.CompareToInt(3) >= 0) {
+        throw new ArithmeticException("Value out of range");
+      }
+      return this.ToEInteger().ToByteChecked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -5036,8 +5032,8 @@ throw new ArithmeticException("Value out of range");
      * value is infinity or not-a-number.
      */
     public byte ToByteUnchecked() {
- return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
-}
+      return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
+    }
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
@@ -5047,20 +5043,20 @@ throw new ArithmeticException("Value out of range");
      * an exact integer, or is less than 0 or greater than 255.
      */
     public byte ToByteIfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- if (this.isZero()) {
- return (byte)0;
-}
- if (this.isNegative()) {
-throw new ArithmeticException("Value out of range");
-}
-if (this.exponent.CompareToInt(3) >= 0) {
-throw new ArithmeticException("Value out of range");
-}
- return this.ToEIntegerIfExact().ToByteChecked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.isZero()) {
+        return (byte)0;
+      }
+      if (this.isNegative()) {
+        throw new ArithmeticException("Value out of range");
+      }
+      if (this.exponent.CompareToInt(3) >= 0) {
+        throw new ArithmeticException("Value out of range");
+      }
+      return this.ToEIntegerIfExact().ToByteChecked();
+    }
 
     /**
      * Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
@@ -5068,9 +5064,9 @@ throw new ArithmeticException("Value out of range");
      * @return This number's value as an arbitrary-precision decimal number.
      */
     public static EDecimal FromByte(byte inputByte) {
- int val = ((int)inputByte) & 0xff;
- return FromInt32(val);
-}
+      int val = ((int)inputByte) & 0xff;
+      return FromInt32(val);
+    }
 
     /**
      * Converts this number's value to a 16-bit signed integer if it can fit in a
@@ -5080,17 +5076,17 @@ throw new ArithmeticException("Value out of range");
      * the truncated integer is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-if (this.IsIntegerPartZero()) {
- return (short)0;
-}
-if (this.exponent.CompareToInt(5) >= 0) {
-throw new ArithmeticException("Value out of range: ");
-}
- return this.ToEInteger().ToInt16Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.IsIntegerPartZero()) {
+        return (short)0;
+      }
+      if (this.exponent.CompareToInt(5) >= 0) {
+        throw new ArithmeticException("Value out of range: ");
+      }
+      return this.ToEInteger().ToInt16Checked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -5100,8 +5096,8 @@ throw new ArithmeticException("Value out of range: ");
      * value is infinity or not-a-number.
      */
     public short ToInt16Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
-}
+      return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
+    }
 
     /**
      * Converts this number's value to a 16-bit signed integer if it can fit in a
@@ -5112,17 +5108,17 @@ throw new ArithmeticException("Value out of range: ");
      * an exact integer, or is less than -32768 or greater than 32767.
      */
     public short ToInt16IfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- if (this.isZero()) {
- return (short)0;
-}
-if (this.exponent.CompareToInt(5) >= 0) {
-throw new ArithmeticException("Value out of range");
-}
- return this.ToEIntegerIfExact().ToInt16Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.isZero()) {
+        return (short)0;
+      }
+      if (this.exponent.CompareToInt(5) >= 0) {
+        throw new ArithmeticException("Value out of range");
+      }
+      return this.ToEIntegerIfExact().ToInt16Checked();
+    }
 
     /**
      * Converts a 16-bit signed integer to an arbitrary-precision decimal number.
@@ -5130,9 +5126,9 @@ throw new ArithmeticException("Value out of range");
      * @return This number's value as an arbitrary-precision decimal number.
      */
     public static EDecimal FromInt16(short inputInt16) {
- int val = (int)inputInt16;
- return FromInt32(val);
-}
+      int val = (int)inputInt16;
+      return FromInt32(val);
+    }
 
     /**
      * Converts this number's value to a 32-bit signed integer if it can fit in a
@@ -5143,17 +5139,17 @@ throw new ArithmeticException("Value out of range");
      * 2147483647.
      */
     public int ToInt32Checked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-if (this.IsIntegerPartZero()) {
- return (int)0;
-}
-if (this.exponent.CompareToInt(10) >= 0) {
-throw new ArithmeticException("Value out of range: ");
-}
- return this.ToEInteger().ToInt32Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.IsIntegerPartZero()) {
+        return (int)0;
+      }
+      if (this.exponent.CompareToInt(10) >= 0) {
+        throw new ArithmeticException("Value out of range: ");
+      }
+      return this.ToEInteger().ToInt32Checked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -5163,8 +5159,8 @@ throw new ArithmeticException("Value out of range: ");
      * value is infinity or not-a-number.
      */
     public int ToInt32Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
-}
+      return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
+    }
 
     /**
      * Converts this number's value to a 32-bit signed integer if it can fit in a
@@ -5176,17 +5172,17 @@ throw new ArithmeticException("Value out of range: ");
      * 2147483647.
      */
     public int ToInt32IfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- if (this.isZero()) {
- return (int)0;
-}
-if (this.exponent.CompareToInt(10) >= 0) {
-throw new ArithmeticException("Value out of range");
-}
- return this.ToEIntegerIfExact().ToInt32Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.isZero()) {
+        return (int)0;
+      }
+      if (this.exponent.CompareToInt(10) >= 0) {
+        throw new ArithmeticException("Value out of range");
+      }
+      return this.ToEIntegerIfExact().ToInt32Checked();
+    }
 
     /**
      * Converts this number's value to a 64-bit signed integer if it can fit in a
@@ -5197,17 +5193,17 @@ throw new ArithmeticException("Value out of range");
      * than 9223372036854775807.
      */
     public long ToInt64Checked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-if (this.IsIntegerPartZero()) {
- return 0L;
-}
-if (this.exponent.CompareToInt(19) >= 0) {
-throw new ArithmeticException("Value out of range: ");
-}
- return this.ToEInteger().ToInt64Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.IsIntegerPartZero()) {
+        return 0L;
+      }
+      if (this.exponent.CompareToInt(19) >= 0) {
+        throw new ArithmeticException("Value out of range: ");
+      }
+      return this.ToEInteger().ToInt64Checked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -5217,8 +5213,8 @@ throw new ArithmeticException("Value out of range: ");
      * value is infinity or not-a-number.
      */
     public long ToInt64Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
-}
+      return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
+    }
 
     /**
      * Converts this number's value to a 64-bit signed integer if it can fit in a
@@ -5230,17 +5226,17 @@ throw new ArithmeticException("Value out of range: ");
      * than 9223372036854775807.
      */
     public long ToInt64IfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- if (this.isZero()) {
- return 0L;
-}
-if (this.exponent.CompareToInt(19) >= 0) {
-throw new ArithmeticException("Value out of range");
-}
- return this.ToEIntegerIfExact().ToInt64Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      if (this.isZero()) {
+        return 0L;
+      }
+      if (this.exponent.CompareToInt(19) >= 0) {
+        throw new ArithmeticException("Value out of range");
+      }
+      return this.ToEIntegerIfExact().ToInt64Checked();
+    }
 
-// End integer conversions
+    // End integer conversions
   }
