@@ -252,8 +252,7 @@ this.traps = traps;
     private final int traps;
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
-     * class.
+     * Initializes a new instance of the {@link EContext} class.
      * @param precision Maximum precision, in decimal digits, of a number's
      * significand.
      * @param rounding The rounding mode for this context.
@@ -284,9 +283,9 @@ this.traps = traps;
 }
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
-     * class, using arbitrary-precision integers to hold the precision and
-     * exponent range.
+     * Initializes a new instance of the {@link EContext} class, using
+     * arbitrary-precision integers to hold the precision and exponent
+     * range.
      * @param bigintPrecision Maximum precision, in decimal digits, of a number's
      * significand.
      * @param rounding The rounding mode for this context.

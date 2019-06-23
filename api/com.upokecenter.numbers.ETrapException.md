@@ -74,7 +74,7 @@ Gets the defined result of the operation that caused the trap.
 ### getError
     public final int getError()
 Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
- only be one flag, such as <code>FlagInexact </code> or FlagSubnormal.
+ only be one flag, such as <code>FlagInexact</code> or FlagSubnormal.
 
 **Returns:**
 
