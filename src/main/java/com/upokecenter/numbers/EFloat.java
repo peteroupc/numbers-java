@@ -375,7 +375,7 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
           EInteger.FromInt32(0),
           value[0]);
       }
-      value[1] &= 0xfffff;  // Mask out the exponent and sign
+      value[1] &= 0xfffff; // Mask out the exponent and sign
       if (floatExponent == 0) {
         ++floatExponent;
       } else {
@@ -2009,10 +2009,10 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * binary float has a fixed number of digits after the radix point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the radix point: </p>
-     * <pre>  // After performing arithmetic operations, adjust  // the number
-     * to 5  // digits after the radix point number = number.Quantize(
-     * EInteger.FromInt32(-5),  // five digits after the radix point
-     * EContext.ForPrecision(25)  // 25-digit precision);</pre> <p>A
+     * <pre> // After performing arithmetic operations, adjust // the number
+     * to 5 // digits after the radix point number = number.Quantize(
+     * EInteger.FromInt32(-5), // five digits after the radix point
+     * EContext.ForPrecision(25) // 25-digit precision);</pre> <p>A
      * fixed-point binary arithmetic in which no digits come after the radix
      * point (a desired exponent of 0) is considered an "integer
      * arithmetic". </p>
@@ -2053,9 +2053,9 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * binary float has a fixed number of digits after the radix point. The
      * following code example returns a fixed-point number with up to 20
      * digits before and exactly 5 digits after the radix point: </p>
-     * <pre>  // After performing arithmetic operations, adjust  // the number
+     * <pre> // After performing arithmetic operations, adjust // the number
      * to 5 digits after the radix point number = number.Quantize(-5, //
-     * five digits after the radix point EContext.ForPrecision(25)  // * 25-digit precision);</pre> <p>A fixed-point binary arithmetic in
+     * five digits after the radix point EContext.ForPrecision(25) // * 25-digit precision);</pre> <p>A fixed-point binary arithmetic in
      * which no digits come after the radix point (a desired exponent of 0)
      * is considered an "integer arithmetic". </p>
      * @param desiredExponentInt The desired exponent for the result. The exponent

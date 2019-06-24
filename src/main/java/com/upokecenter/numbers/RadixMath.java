@@ -3484,9 +3484,6 @@ ctx.getPrecision()).WithBlankFlags();
    op2Mantissa,
    helper.GetRadix());
           if (c <= 1) {
-            /**
-             *
-             */
             return c;
           }
         } else if (op1Mantissa.CanFitInInt64() && op2Mantissa.CanFitInInt64()) {
@@ -3501,17 +3498,10 @@ ctx.getPrecision()).WithBlankFlags();
     op2Mantissa,
     helper.GetRadix());
           if (c <= 1) {
-            /**
-             *
-             */
             return c;
           }
         }
       }
-
-      /**
-       *
-       */
       return CompareToSlow(
         op1Exponent.ToEInteger(),
         op2Exponent.ToEInteger(),
