@@ -3883,6 +3883,9 @@ at: http://peteroupc.github.io/
           if (ml < 9007199254740992L && iabsexp <= 22) {
             double d = ExactDoublePowersOfTen[iabsexp];
             double dml = this.isNegative() ? (double)(-ml) : (double)ml;
+            // NOTE: This method assumes the division given below
+            // is rounded as necessary by the round-to-nearest
+            // (ties to even) mode by the runtime
             if (iexp < 0) {
               return dml / d;
             } else {
@@ -4030,13 +4033,12 @@ at: http://peteroupc.github.io/
           if (iml < 16777216 && iabsexp <= 10) {
             float fd = ExactSinglePowersOfTen[iabsexp];
             float fml = this.isNegative() ? (float)(-iml) : (float)iml;
+            // NOTE: This method assumes the division given below
+            // is rounded as necessary by the round-to-nearest
+            // (ties to even) mode by the runtime
             if (iexp < 0) {
-              // DebugUtility.Log("--> ret=" + (fml/fd) + " [fml=" + fml +
-              // ", fd=" + fd + "]");
               return fml / fd;
             } else {
-              // DebugUtility.Log("--> ret=" + (fml*fd) + " [fml=" + fml +
-              // ", fd=" + fd + "]");
               return fml * fd;
             }
           }
