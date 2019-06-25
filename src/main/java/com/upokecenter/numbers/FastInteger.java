@@ -105,19 +105,19 @@ at: http://peteroupc.github.io/
         return this.wordCount == 0 ? 0 : this.data[0];
       }
       public static MutableNumber FromLong(long longVal) {
-      if (longVal < 0) {
-        throw new IllegalArgumentException();
+        if (longVal < 0) {
+          throw new IllegalArgumentException();
+        }
+        if (longVal == 0) {
+          return new MutableNumber(0);
+        }
+        MutableNumber mbi = new MutableNumber(0);
+        mbi.data[0] = ((int)longVal);
+        int mbd = ((int)(longVal >> 32));
+        mbi.data[1] = mbd;
+        mbi.wordCount = (mbd == 0) ? 1 : 2;
+        return mbi;
       }
-      if (longVal == 0) {
- return new MutableNumber(0);
-}
-      MutableNumber mbi = new MutableNumber(0);
-      mbi.data[0] = ((int)longVal);
-      int mbd = ((int)(longVal >> 32));
-      mbi.data[1] = mbd;
-      mbi.wordCount = (mbd == 0) ? 1 : 2;
-      return mbi;
-    }
 
       MutableNumber Copy() {
         MutableNumber mbi = new MutableNumber(0);
@@ -159,35 +159,35 @@ at: http://peteroupc.github.io/
               this.data[0] = ((int)longV);
               carry = ((int)(longV >> 32));
             } else {
-            for (int i = 0; i < this.wordCount; ++i) {
-              int x0 = this.data[i];
-              int x1 = x0;
-              int y0 = multiplicand;
-              x0 &= 65535;
-              x1 = (x1 >> 16) & 65535;
-              int temp = (x0 * y0);  // a * c
-              result1 = (temp >> 16) & 65535;
-              result0 = temp & 65535;
-              result2 = 0;
-              temp = (x1 * y0);  // b * c
-              result2 += (temp >> 16) & 65535;
-              result1 += temp & 65535;
-              result2 += (result1 >> 16) & 65535;
-              result1 &= 65535;
-              result3 = (result2 >> 16) & 65535;
-              result2 &= 65535;
-              // Add carry
-              x0 = ((int)(result0 | (result1 << 16)));
-              x1 = ((int)(result2 | (result3 << 16)));
-              int x2 = (x0 + carry);
-              if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
-              Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
-                // Carry in addition
-                x1 = (x1 + 1);
+              for (int i = 0; i < this.wordCount; ++i) {
+                int x0 = this.data[i];
+                int x1 = x0;
+                int y0 = multiplicand;
+                x0 &= 65535;
+                x1 = (x1 >> 16) & 65535;
+                int temp = (x0 * y0); // a * c
+                result1 = (temp >> 16) & 65535;
+                result0 = temp & 65535;
+                result2 = 0;
+                temp = (x1 * y0); // b * c
+                result2 += (temp >> 16) & 65535;
+                result1 += temp & 65535;
+                result2 += (result1 >> 16) & 65535;
+                result1 &= 65535;
+                result3 = (result2 >> 16) & 65535;
+                result2 &= 65535;
+                // Add carry
+                x0 = ((int)(result0 | (result1 << 16)));
+                x1 = ((int)(result2 | (result3 << 16)));
+                int x2 = (x0 + carry);
+                if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
+                Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
+                  // Carry in addition
+                  x1 = (x1 + 1);
+                }
+                this.data[i] = x2;
+                carry = x1;
               }
-              this.data[i] = x2;
-              carry = x1;
-            }
             }
           } else {
             if (this.wordCount == 1) {
@@ -197,47 +197,47 @@ at: http://peteroupc.github.io/
               this.data[0] = ((int)longV);
               carry = ((int)(longV >> 32));
             } else {
-            for (int i = 0; i < this.wordCount; ++i) {
-              int x0 = this.data[i];
-              int x1 = x0;
-              int y0 = multiplicand;
-              int y1 = y0;
-              x0 &= 65535;
-              y0 &= 65535;
-              x1 = (x1 >> 16) & 65535;
-              y1 = (y1 >> 16) & 65535;
-              int temp = (x0 * y0);  // a * c
-              result1 = (temp >> 16) & 65535;
-              result0 = temp & 65535;
-              temp = (x0 * y1);  // a * d
-              result2 = (temp >> 16) & 65535;
-              result1 += temp & 65535;
-              result2 += (result1 >> 16) & 65535;
-              result1 &= 65535;
-              temp = (x1 * y0);  // b * c
-              result2 += (temp >> 16) & 65535;
-              result1 += temp & 65535;
-              result2 += (result1 >> 16) & 65535;
-              result1 &= 65535;
-              result3 = (result2 >> 16) & 65535;
-              result2 &= 65535;
-              temp = (x1 * y1);  // b * d
-              result3 += (temp >> 16) & 65535;
-              result2 += temp & 65535;
-              result3 += (result2 >> 16) & 65535;
-              result2 &= 65535;
-              // Add carry
-              x0 = ((int)(result0 | (result1 << 16)));
-              x1 = ((int)(result2 | (result3 << 16)));
-              int x2 = (x0 + carry);
-              if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
-              Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
-                // Carry in addition
-                x1 = (x1 + 1);
+              for (int i = 0; i < this.wordCount; ++i) {
+                int x0 = this.data[i];
+                int x1 = x0;
+                int y0 = multiplicand;
+                int y1 = y0;
+                x0 &= 65535;
+                y0 &= 65535;
+                x1 = (x1 >> 16) & 65535;
+                y1 = (y1 >> 16) & 65535;
+                int temp = (x0 * y0); // a * c
+                result1 = (temp >> 16) & 65535;
+                result0 = temp & 65535;
+                temp = (x0 * y1); // a * d
+                result2 = (temp >> 16) & 65535;
+                result1 += temp & 65535;
+                result2 += (result1 >> 16) & 65535;
+                result1 &= 65535;
+                temp = (x1 * y0); // b * c
+                result2 += (temp >> 16) & 65535;
+                result1 += temp & 65535;
+                result2 += (result1 >> 16) & 65535;
+                result1 &= 65535;
+                result3 = (result2 >> 16) & 65535;
+                result2 &= 65535;
+                temp = (x1 * y1); // b * d
+                result3 += (temp >> 16) & 65535;
+                result2 += temp & 65535;
+                result3 += (result2 >> 16) & 65535;
+                result2 &= 65535;
+                // Add carry
+                x0 = ((int)(result0 | (result1 << 16)));
+                x1 = ((int)(result2 | (result3 << 16)));
+                int x2 = (x0 + carry);
+                if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
+                Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
+                  // Carry in addition
+                  x1 = (x1 + 1);
+                }
+                this.data[i] = x2;
+                carry = x1;
               }
-              this.data[i] = x2;
-              carry = x1;
-            }
             }
           }
           if (carry != 0) {
@@ -287,8 +287,8 @@ at: http://peteroupc.github.io/
 
       MutableNumber SubtractInt(int other) {
         if (other < 0) {
-     throw new IllegalArgumentException("other (" + other + ") is less than " +
-            "0 ");
+          throw new IllegalArgumentException("other (" + other + ") is less than " +
+                 "0 ");
         }
         if (other != 0) {
           {
@@ -329,8 +329,8 @@ at: http://peteroupc.github.io/
       MutableNumber Subtract(MutableNumber other) {
         {
           {
-       // System.out.println("" + this.data.length + " " +
-             // (other.data.length));
+            // System.out.println("" + this.data.length + " " +
+            // (other.data.length));
             int neededSize = (this.wordCount > other.wordCount) ?
             this.wordCount : other.wordCount;
             if (this.data.length < neededSize) {
@@ -393,55 +393,55 @@ at: http://peteroupc.github.io/
       }
       MutableNumber Add(int augend) {
         if (augend < 0) {
-   throw new IllegalArgumentException("augend (" + augend + ") is less than " +
-            "0 ");
+          throw new IllegalArgumentException("augend (" + augend + ") is less than " +
+                   "0 ");
         }
         {
-        if (augend != 0) {
-          int carry = 0;
-          // Ensure a length of at least 1
-          if (this.wordCount == 0) {
-            if (this.data.length == 0) {
-              this.data = new int[4];
+          if (augend != 0) {
+            int carry = 0;
+            // Ensure a length of at least 1
+            if (this.wordCount == 0) {
+              if (this.data.length == 0) {
+                this.data = new int[4];
+              }
+              this.data[0] = 0;
+              this.wordCount = 1;
             }
-            this.data[0] = 0;
-            this.wordCount = 1;
-          }
-          for (int i = 0; i < this.wordCount; ++i) {
-            int u;
-            int a = this.data[i];
-            u = (a + augend) + carry;
-            carry = ((((u >> 31) == (a >> 31)) ? ((u & Integer.MAX_VALUE) < (a &
-            Integer.MAX_VALUE)) :
-                    ((u >> 31) == 0)) || (u == a && augend != 0)) ? 1 : 0;
-            this.data[i] = u;
-            if (carry == 0) {
-              return this;
+            for (int i = 0; i < this.wordCount; ++i) {
+              int u;
+              int a = this.data[i];
+              u = (a + augend) + carry;
+              carry = ((((u >> 31) == (a >> 31)) ? ((u & Integer.MAX_VALUE) < (a &
+              Integer.MAX_VALUE)) :
+                      ((u >> 31) == 0)) || (u == a && augend != 0)) ? 1 : 0;
+              this.data[i] = u;
+              if (carry == 0) {
+                return this;
+              }
+              augend = 0;
             }
-            augend = 0;
-          }
-          if (carry != 0) {
-            if (this.wordCount >= this.data.length) {
-              int[] newdata = new int[this.wordCount + 20];
-              System.arraycopy(this.data, 0, newdata, 0, this.data.length);
-              this.data = newdata;
+            if (carry != 0) {
+              if (this.wordCount >= this.data.length) {
+                int[] newdata = new int[this.wordCount + 20];
+                System.arraycopy(this.data, 0, newdata, 0, this.data.length);
+                this.data = newdata;
+              }
+              this.data[this.wordCount] = carry;
+              ++this.wordCount;
             }
-            this.data[this.wordCount] = carry;
-            ++this.wordCount;
           }
+          // Calculate the correct data length
+          while (this.wordCount != 0 && this.data[this.wordCount - 1] == 0) {
+            --this.wordCount;
+          }
+          return this;
         }
-        // Calculate the correct data length
-        while (this.wordCount != 0 && this.data[this.wordCount - 1] == 0) {
-          --this.wordCount;
-        }
-        return this;
       }
     }
-    }
 
-    private int smallValue;  // if integerMode is 0
-    private MutableNumber mnum;  // if integerMode is 1
-    private EInteger largeValue;  // if integerMode is 2
+    private int smallValue; // if integerMode is 0
+    private MutableNumber mnum; // if integerMode is 1
+    private EInteger largeValue; // if integerMode is 2
     private int integerMode;
 
     private boolean frozen;
@@ -510,33 +510,33 @@ at: http://peteroupc.github.io/
     }
     public int compareTo(FastInteger val) {
       switch ((this.integerMode << 2) | val.integerMode) {
-          case (0 << 2) | 0: {
+        case (0 << 2) | 0: {
             int vsv = val.smallValue;
             return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
               1);
           }
-          case (0 << 2) | 1:
+        case (0 << 2) | 1:
           return -val.mnum.CompareToInt(this.smallValue);
-          case (0 << 2) | 2:
+        case (0 << 2) | 2:
           return this.AsEInteger().compareTo(val.largeValue);
-          case (1 << 2) | 0:
+        case (1 << 2) | 0:
           return this.mnum.CompareToInt(val.smallValue);
-          case (1 << 2) | 1:
+        case (1 << 2) | 1:
           return this.mnum.compareTo(val.mnum);
-          case (1 << 2) | 2:
+        case (1 << 2) | 2:
           return this.AsEInteger().compareTo(val.largeValue);
-          case (2 << 2) | 0:
-          case (2 << 2) | 1:
-          case (2 << 2) | 2:
+        case (2 << 2) | 0:
+        case (2 << 2) | 1:
+        case (2 << 2) | 2:
           return this.largeValue.compareTo(val.AsEInteger());
-          default: throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
     FastInteger Abs() {
       if (this.frozen) {
- throw new IllegalStateException();
-}
+        throw new IllegalStateException();
+      }
       switch (this.integerMode) {
         case 0:
           if (this.smallValue == Integer.MIN_VALUE) {
@@ -574,27 +574,27 @@ at: http://peteroupc.github.io/
       } else {
         switch (this.integerMode) {
           case 0: {
-            long amult = ((long)val) * ((long)this.smallValue);
-            if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
-              // would overflow, convert to large
-             boolean apos = this.smallValue > 0L;
-             boolean bpos = val > 0L;
-             if (apos && bpos) {
-                // if both operands are nonnegative
-                // convert to mutable big integer
-                this.integerMode = 1;
-                this.mnum = MutableNumber.FromLong(amult);
+              long amult = ((long)val) * ((long)this.smallValue);
+              if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
+                // would overflow, convert to large
+                boolean apos = this.smallValue > 0L;
+                boolean bpos = val > 0L;
+                if (apos && bpos) {
+                  // if both operands are nonnegative
+                  // convert to mutable big integer
+                  this.integerMode = 1;
+                  this.mnum = MutableNumber.FromLong(amult);
+                } else {
+                  // if either operand is negative
+                  // convert to big integer
+                  this.integerMode = 2;
+                  this.largeValue = EInteger.FromInt64(amult);
+                }
               } else {
-                // if either operand is negative
-                // convert to big integer
-                this.integerMode = 2;
-                this.largeValue = EInteger.FromInt64(amult);
+                this.smallValue = ((int)amult);
               }
-            } else {
-              this.smallValue = ((int)amult);
+              break;
             }
-            break;
-          }
           case 1:
             if (val < 0) {
               this.integerMode = 2;
@@ -728,19 +728,19 @@ at: http://peteroupc.github.io/
     FastInteger AddBig(EInteger bigintVal) {
       this.CheckFrozen();
       switch (this.integerMode) {
-          case 0: {
+        case 0: {
             return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.ToInt32Checked()) :
             this.Add(FastInteger.FromBig(bigintVal));
           }
-          case 1:
+        case 1:
           this.integerMode = 2;
           this.largeValue = this.mnum.ToEInteger();
           this.largeValue = largeValue.Add(bigintVal);
           break;
-          case 2:
+        case 2:
           this.largeValue = largeValue.Add(bigintVal);
           break;
-          default:
+        default:
           throw new IllegalStateException();
       }
       return this;
@@ -921,15 +921,15 @@ at: http://peteroupc.github.io/
     }
 
     EInteger ShiftEIntegerLeftByThis(EInteger ei) {
-        switch (this.integerMode) {
-          case 0:
-            return ei.ShiftLeft(this.smallValue);
-          case 1:
-            return ei.ShiftLeft(this.mnum.ToEInteger());
-          case 2:
-            return ei.ShiftLeft(this.largeValue);
-          default: throw new IllegalStateException();
-        }
+      switch (this.integerMode) {
+        case 0:
+          return ei.ShiftLeft(this.smallValue);
+        case 1:
+          return ei.ShiftLeft(this.mnum.ToEInteger());
+        case 2:
+          return ei.ShiftLeft(this.largeValue);
+        default: throw new IllegalStateException();
+      }
     }
 
     final boolean isEvenNumber() {
@@ -992,9 +992,8 @@ at: http://peteroupc.github.io/
           return true;
         case 1:
           return this.mnum.CanFitInInt32();
-          case 2: {
-            return this.largeValue.CanFitInInt32();
-          }
+        case 2:
+          return this.largeValue.CanFitInInt32();
         default:
           throw new IllegalStateException();
       }
@@ -1006,9 +1005,9 @@ at: http://peteroupc.github.io/
           return true;
         case 1:
           return this.AsEInteger().CanFitInInt64();
-          case 2: {
-            return this.largeValue.CanFitInInt64();
-          }
+        case 2:
+          return this.largeValue.CanFitInInt64();
+
         default:
           throw new IllegalStateException();
       }
@@ -1020,9 +1019,9 @@ at: http://peteroupc.github.io/
           return (long)this.smallValue;
         case 1:
           return this.AsEInteger().ToInt64Unchecked();
-          case 2: {
-            return this.largeValue.ToInt64Unchecked();
-          }
+        case 2:
+          return this.largeValue.ToInt64Unchecked();
+
         default:
           throw new IllegalStateException();
       }
@@ -1050,13 +1049,13 @@ at: http://peteroupc.github.io/
         value = intdivvalue;
       }
       while (value > 9) {
-          int intdivvalue = (value * 26215) >> 18;
-          char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
-          chars[count--] = digit;
-          value = intdivvalue;
+        int intdivvalue = (value * 26215) >> 18;
+        char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+        chars[count--] = digit;
+        value = intdivvalue;
       }
       if (value != 0) {
-          chars[count--] = HexAlphabet.charAt((int)value);
+        chars[count--] = HexAlphabet.charAt((int)value);
       }
       if (neg) {
         chars[count] = '-';
@@ -1089,12 +1088,12 @@ at: http://peteroupc.github.io/
     final int signum() {
         switch (this.integerMode) {
           case 0:
-          return (this.smallValue == 0) ? 0 : ((this.smallValue < 0) ? -1 :
-              1);
+            return (this.smallValue == 0) ? 0 : ((this.smallValue < 0) ? -1 :
+                1);
           case 1:
-          return this.mnum.signum();
+            return this.mnum.signum();
           case 2:
-          return this.largeValue.signum();
+            return this.largeValue.signum();
           default: return 0;
         }
       }

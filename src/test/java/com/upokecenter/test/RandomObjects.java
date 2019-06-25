@@ -10,9 +10,9 @@ at: http://peteroupc.github.io/
 import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
-    /**
-     * Description of RandomObjects.
-     */
+  /**
+   * Description of RandomObjects.
+   */
   public final class RandomObjects {
 private RandomObjects() {
 }
@@ -94,8 +94,8 @@ private RandomObjects() {
           r |= ((long)rand.UniformInt(0x10000)) << 48;
         }
       }
-      r &= ~0x7ff0000000000000L;  // clear exponent
-      r |= ((long)exponent) << 52;  // set exponent
+      r &= ~0x7ff0000000000000L; // clear exponent
+      r |= ((long)exponent) << 52; // set exponent
       return Double.longBitsToDouble(r);
     }
 
@@ -107,8 +107,8 @@ private RandomObjects() {
       if (rand.UniformInt(2) == 0) {
         r |= ((int)rand.UniformInt(0x10000)) << 16;
       }
-      r &= ~0x7f800000;  // clear exponent
-      r |= ((int)exponent) << 23;  // set exponent
+      r &= ~0x7f800000; // clear exponent
+      r |= ((int)exponent) << 23; // set exponent
       return Float.intBitsToFloat(r);
     }
 
@@ -138,10 +138,10 @@ private RandomObjects() {
         return sabi.getBigIntValue();
       }
       if (selection < 50) {
-      StringAndBigInt sabi = StringAndBigInt.Generate(
-  r,
-  2 + r.UniformInt(35));
-  return sabi.getBigIntValue();
+        StringAndBigInt sabi = StringAndBigInt.Generate(
+          r,
+          2 + r.UniformInt(35));
+        return sabi.getBigIntValue();
       } else {
         int count = r.UniformInt(400) + 1;
         byte[] bytes = new byte[count];

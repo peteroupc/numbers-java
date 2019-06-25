@@ -1,10 +1,10 @@
 package com.upokecenter.numbers;
 
-    /**
-     * A class that implements additional operations on arbitrary-precision decimal
-     * numbers. Many of them are listed as miscellaneous operations in the
-     * General Decimal Arithmetic Specification version 1.70.
-     */
+  /**
+   * A class that implements additional operations on arbitrary-precision decimal
+   * numbers. Many of them are listed as miscellaneous operations in the
+   * General Decimal Arithmetic Specification version 1.70.
+   */
   public final class EDecimals {
 private EDecimals() {
 }
@@ -175,12 +175,12 @@ private EDecimals() {
      */
     public static String NumberClassString(int nc) {
       if (nc < 0) {
-   throw new IllegalArgumentException("nc (" + nc +
-          ") is not greater or equal to 0");
+        throw new IllegalArgumentException("nc (" + nc +
+               ") is not greater or equal to 0");
       }
       if (nc > 9) {
-      throw new IllegalArgumentException("nc (" + nc +
-          ") is not less or equal to 9");
+        throw new IllegalArgumentException("nc (" + nc +
+            ") is not less or equal to 9");
       }
       return NumberClasses[nc];
     }
@@ -281,8 +281,8 @@ private EDecimals() {
      */
     public static EDecimal LogB(EDecimal ed, EContext ec) {
       if (ed == null) {
-  throw new NullPointerException("ed");
-}
+        throw new NullPointerException("ed");
+      }
       if (ed.IsNaN()) {
         return ed.RoundToPrecision(ec);
       }
@@ -470,11 +470,11 @@ private EDecimals() {
       }
       EInteger mant = ed.getUnsignedMantissa();
       EInteger mantprec = ed.Precision();
-      if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(ec.getPrecision()) >
-        0) {
-     mant =
-  mant.Remainder(EInteger.FromInt32(DecimalRadix).Pow(ec.getPrecision()));
-  mantprec = ec.getPrecision();
+      if (ec != null && ec.getHasMaxPrecision() &&
+          mantprec.compareTo(ec.getPrecision()) > 0) {
+        mant = mant.Remainder(
+               EInteger.FromInt32(DecimalRadix).Pow(ec.getPrecision()));
+        mantprec = ec.getPrecision();
       }
       if (mant.isZero()) {
         return ed.RoundToPrecision(ec);
@@ -649,8 +649,8 @@ private EDecimals() {
       if (ed1.isFinite() && ed2.isFinite()) {
         return ed1.getExponent().equals(ed2.getExponent());
       } else {
- return (ed1.IsNaN() && ed2.IsNaN()) || (ed1.IsInfinity() &&
-          ed2.IsInfinity());
+        return (ed1.IsNaN() && ed2.IsNaN()) || (ed1.IsInfinity() &&
+                 ed2.IsInfinity());
       }
     }
 
@@ -946,18 +946,18 @@ private EDecimals() {
 
     static byte[] FromLogical(EInteger um, EContext ec, int iradix) {
       if (um == null || um.signum() < 0) {
- return null;
-}
+        return null;
+      }
       if (um.signum() == 0) {
- return new byte[] { 0 };
-}
+        return new byte[] { 0 };
+      }
       EInteger ret = EInteger.FromInt32(0);
       EInteger prec = um.GetDigitCountAsEInteger();
       EInteger maxprec = (ec != null && ec.getHasMaxPrecision()) ? ec.getPrecision() :
            null;
       EInteger bytecount = prec.ShiftRight(3).Add(1);
       if (bytecount.compareTo(0x7fffffff) > 0) {
-        return null;  // Out of memory
+        return null; // Out of memory
       }
       int bitindex = 0;
       byte[] bytes = new byte[bytecount.ToInt32Checked()];
@@ -983,12 +983,12 @@ private EDecimals() {
 
     static byte[] FromLogical(EDecimal ed, EContext ec, int iradix) {
       if (ed == null) {
- return null;
-}
+        return null;
+      }
       if (ec != null && ec.isPrecisionInBits() && iradix != 2) {
-  // Round to bit precision if necessary and if the radix isn't binary
- ed = ed.RoundToPrecision(ec);
-}
+        // Round to bit precision if necessary and if the radix isn't binary
+        ed = ed.RoundToPrecision(ec);
+      }
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
     ed.getMantissa().signum() < 0) ? null : FromLogical(
   ed.getUnsignedMantissa(),
@@ -998,8 +998,8 @@ private EDecimals() {
 
     static byte[] FromLogical(EFloat ed, EContext ec, int iradix) {
       if (ed == null) {
- return null;
-}
+        return null;
+      }
       // NOTE: Precision of EFloat is already in bits, so no need to check for
       // IsPrecisionInBits here
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||

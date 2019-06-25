@@ -21,13 +21,13 @@ import com.upokecenter.numbers.*;
     }
 
     public static void TestStringEqualRoundTrip(ERational obj) {
-            String str = obj.toString();
-            ERational newobj = ERational.FromString(str);
-            String str2 = newobj.toString();
-            TestCommon.AssertEqualsHashCode(obj, newobj);
-            TestCommon.AssertEqualsHashCode(str, str2);
-        }
-        public static void TestStringEqualRoundTrip(EInteger obj) {
+      String str = obj.toString();
+      ERational newobj = ERational.FromString(str);
+      String str2 = newobj.toString();
+      TestCommon.AssertEqualsHashCode(obj, newobj);
+      TestCommon.AssertEqualsHashCode(str, str2);
+    }
+    public static void TestStringEqualRoundTrip(EInteger obj) {
       String str = obj.toString();
       EInteger newobj = EInteger.FromString(str);
       String str2 = newobj.toString();
@@ -81,17 +81,17 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(
         ERational.NegativeInfinity,
         ERational.FromEFloat(EFloat.NegativeInfinity));
-        if (!(
+      if (!(
         ((
           ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail();
-          if (!(
+      if (!(
         ((
           ERational.NegativeInfinity.ToDouble()) == Double.NEGATIVE_INFINITY)))Assert.fail();
-          if (!(
-        ((
-          ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
-          if (!(
-        ((
-          ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
+      if (!(
+    ((
+      ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
+      if (!(
+    ((
+      ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
     }
   }

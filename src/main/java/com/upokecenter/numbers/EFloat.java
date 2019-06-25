@@ -7,69 +7,66 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-    /**
-     * Represents an arbitrary-precision binary floating-point number. (The "E"
-     * stands for "extended", meaning that instances of this class can be
-     * values other than numbers proper, such as infinity and not-a-number.)
-     * Each number consists of an integer mantissa (significand) and an
-     * integer exponent, both arbitrary-precision. The value of the number
-     * equals mantissa (significand) * 2^exponent. This class also supports
-     * values for negative zero, not-a-number (NaN) values, and infinity.
-     * <p>Passing a signaling NaN to any arithmetic operation shown here
-     * will signal the flag FlagInvalid and return a quiet NaN, even if
-     * another operand to that operation is a quiet NaN, unless noted
-     * otherwise. </p> <p>Passing a quiet NaN to any arithmetic operation
-     * shown here will return a quiet NaN, unless noted otherwise. </p>
-     * <p>Unless noted otherwise, passing a null arbitrary-precision binary
-     * float argument to any method here will throw an exception. </p>
-     * <p>When an arithmetic operation signals the flag FlagInvalid,
-     * FlagOverflow, or FlagDivideByZero, it will not throw an exception
-     * too, unless the operation's trap is enabled in the arithmetic context
-     * (see EContext's Traps property). </p> <p>An arbitrary-precision
-     * binary float value can be serialized in one of the following ways:
-     * </p> <ul> <li>By calling the toString() method. However, not all
-     * strings can be converted back to an arbitrary-precision binary float
-     * without loss, especially if the string has a fractional part. </li>
-     * <li>By calling the UnsignedMantissa, Exponent, and IsNegative
-     * properties, and calling the IsInfinity, IsQuietNaN, and
-     * IsSignalingNaN methods. The return values combined will uniquely
-     * identify a particular arbitrary-precision binary float value. </li>
-     * </ul> <p>If an operation requires creating an intermediate value that
-     * might be too big to fit in memory (or might require more than 2
-     * gigabytes of memory to store -- due to the current use of a 32-bit
-     * integer internally as a length), the operation may signal an
-     * invalid-operation flag and return not-a-number (NaN). In certain rare
-     * cases, the compareTo method may throw OutOfMemoryError (called
-     * OutOfMemoryError in Java) in the same circumstances. </p>
-     * <p><b>Thread safety</b> </p> <p>Instances of this class are
-     * immutable, so they are inherently safe for use by multiple threads.
-     * Multiple instances of this object with the same properties are
-     * interchangeable, so they should not be compared using the "=="
-     * operator (which might only check if each side of the operator is the
-     * same instance). </p> <p><b>Comparison considerations</b> </p> <p>This
-     * class's natural ordering (under the compareTo method) is not
-     * consistent with the Equals method. This means that two values that
-     * compare as equal under the compareTo method might not be equal under
-     * the Equals method. The compareTo method compares the mathematical
-     * values of the two instances passed to it (and considers two different
-     * NaN values as equal), while two instances with the same mathematical
-     * value, but different exponents, will be considered unequal under the
-     * Equals method. </p> <p><b>Security note</b> </p> <p>It is not
-     * recommended to implement security-sensitive algorithms using the
-     * methods in this class, for several reasons: </p> <ul>
-     * <li><code>EFloat</code> objects are immutable, so they can't be modified,
-     * and the memory they occupy is not guaranteed to be cleared in a
-     * timely fashion due to garbage collection. This is relevant for
-     * applications that use many-bit-long numbers as secret parameters.
-     * </li> <li>The methods in this class (especially those that involve
-     * arithmetic) are not guaranteed to run in constant time for all
-     * relevant inputs. Certain attacks that involve encrypted
-     * communications have exploited the timing and other aspects of such
-     * communications to derive keying material or cleartext indirectly.
-     * </li> </ul> <p>Applications should instead use dedicated security
-     * libraries to handle big numbers in security-sensitive algorithms.
-     * </p>
-     */
+  /**
+   * Represents an arbitrary-precision binary floating-point number. (The "E"
+   * stands for "extended", meaning that instances of this class can be
+   * values other than numbers proper, such as infinity and not-a-number.)
+   * Each number consists of an integer mantissa (significand) and an
+   * integer exponent, both arbitrary-precision. The value of the number
+   * equals mantissa (significand) * 2^exponent. This class also supports
+   * values for negative zero, not-a-number (NaN) values, and infinity.
+   * <p>Passing a signaling NaN to any arithmetic operation shown here will
+   * signal the flag FlagInvalid and return a quiet NaN, even if another
+   * operand to that operation is a quiet NaN, unless noted otherwise. </p>
+   * <p>Passing a quiet NaN to any arithmetic operation shown here will
+   * return a quiet NaN, unless noted otherwise. </p> <p>Unless noted
+   * otherwise, passing a null arbitrary-precision binary float argument to
+   * any method here will throw an exception. </p> <p>When an arithmetic
+   * operation signals the flag FlagInvalid, FlagOverflow, or
+   * FlagDivideByZero, it will not throw an exception too, unless the
+   * operation's trap is enabled in the arithmetic context (see EContext's
+   * Traps property). </p> <p>An arbitrary-precision binary float value can
+   * be serialized in one of the following ways: </p> <ul> <li>By calling
+   * the toString() method. However, not all strings can be converted back
+   * to an arbitrary-precision binary float without loss, especially if the
+   * string has a fractional part. </li> <li>By calling the
+   * UnsignedMantissa, Exponent, and IsNegative properties, and calling the
+   * IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values
+   * combined will uniquely identify a particular arbitrary-precision binary
+   * float value. </li> </ul> <p>If an operation requires creating an
+   * intermediate value that might be too big to fit in memory (or might
+   * require more than 2 gigabytes of memory to store -- due to the current
+   * use of a 32-bit integer internally as a length), the operation may
+   * signal an invalid-operation flag and return not-a-number (NaN). In
+   * certain rare cases, the compareTo method may throw OutOfMemoryError
+   * (called OutOfMemoryError in Java) in the same circumstances. </p>
+   * <p><b>Thread safety</b> </p> <p>Instances of this class are immutable,
+   * so they are inherently safe for use by multiple threads. Multiple
+   * instances of this object with the same properties are interchangeable,
+   * so they should not be compared using the "==" operator (which might
+   * only check if each side of the operator is the same instance). </p>
+   * <p><b>Comparison considerations</b> </p> <p>This class's natural
+   * ordering (under the compareTo method) is not consistent with the Equals
+   * method. This means that two values that compare as equal under the
+   * compareTo method might not be equal under the Equals method. The
+   * compareTo method compares the mathematical values of the two instances
+   * passed to it (and considers two different NaN values as equal), while
+   * two instances with the same mathematical value, but different
+   * exponents, will be considered unequal under the Equals method. </p>
+   * <p><b>Security note</b> </p> <p>It is not recommended to implement
+   * security-sensitive algorithms using the methods in this class, for
+   * several reasons: </p> <ul> <li><code>EFloat</code> objects are immutable, so
+   * they can't be modified, and the memory they occupy is not guaranteed to
+   * be cleared in a timely fashion due to garbage collection. This is
+   * relevant for applications that use many-bit-long numbers as secret
+   * parameters. </li> <li>The methods in this class (especially those that
+   * involve arithmetic) are not guaranteed to run in constant time for all
+   * relevant inputs. Certain attacks that involve encrypted communications
+   * have exploited the timing and other aspects of such communications to
+   * derive keying material or cleartext indirectly. </li> </ul>
+   * <p>Applications should instead use dedicated security libraries to
+   * handle big numbers in security-sensitive algorithms. </p>
+   */
   public final class EFloat implements Comparable<EFloat> {
     //----------------------------------------------------------------
 
@@ -237,7 +234,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Copy() {
-return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
+      return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     }
 
     /**
@@ -734,8 +731,8 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * @return The sum of the two objects.
      */
     public EFloat Add(int intValue) {
- return this.Add(EFloat.FromInt32(intValue));
-}
+      return this.Add(EFloat.FromInt32(intValue));
+    }
 
     /**
      * Subtracts an arbitrary-precision integer from this arbitrary-precision
@@ -744,9 +741,9 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * @return The difference of the two objects.
      */
     public EFloat Subtract(int intValue) {
- return (intValue == Integer.MIN_VALUE) ?
-   this.Subtract(EFloat.FromInt32(intValue)) : this.Add(-intValue);
-}
+      return (intValue == Integer.MIN_VALUE) ?
+        this.Subtract(EFloat.FromInt32(intValue)) : this.Add(-intValue);
+    }
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
@@ -756,8 +753,8 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * @return The product of the two numbers.
      */
     public EFloat Multiply(int intValue) {
- return this.Multiply(EFloat.FromInt32(intValue));
-}
+      return this.Multiply(EFloat.FromInt32(intValue));
+    }
 
     /**
      * Divides this instance by the value of an arbitrary-precision integer. The
@@ -770,8 +767,8 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(int intValue) {
- return this.Divide(EFloat.FromInt32(intValue));
-}
+      return this.Divide(EFloat.FromInt32(intValue));
+    }
 
     /**
      * Adds this object and another binary float and returns the result.
@@ -2352,10 +2349,10 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     public EFloat RoundToExponentExact(
       EInteger exponent,
       ERounding rounding) {
-       return MathValue.RoundToExponentExact(
-  this,
-  exponent,
-  EContext.Unlimited.WithRounding(rounding));
+      return MathValue.RoundToExponentExact(
+ this,
+ exponent,
+ EContext.Unlimited.WithRounding(rounding));
     }
 
     /**
@@ -2849,14 +2846,14 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
         dmant = dsa.getShiftedInt();
         dexp = dexp.Add(dsa.getDiscardedDigitCount().AsEInteger());
         if (dsa.getLastDiscardedDigit() != 0 || dsa.getOlderDiscardedDigits() != 0) {
-           if (dmant.Remainder(10).ToInt32Checked() != 9) {
-              dmant = dmant.Add(1);
-           }
+          if (dmant.Remainder(10).ToInt32Checked() != 9) {
+            dmant = dmant.Add(1);
+          }
         }
         dec = EDecimal.Create(dmant, dexp);
         if (dneg) {
- dec = dec.Negate();
-}
+          dec = dec.Negate();
+        }
       }
       boolean mantissaIsPowerOfTwo = this.unsignedMantissa.isPowerOfTwo();
       EInteger eprecision = EInteger.FromInt32(0);
@@ -2961,10 +2958,10 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
       // DebugUtility.Log("2->" + (mant.ToRadixString(2)) + ", " + expo);
       int smallmantissa = ((int)mant.ToInt32Checked()) & 0x7fffff;
       if (!subnormal) {
-          smallmantissa |= (expo + 150) << 23;
+        smallmantissa |= (expo + 150) << 23;
       }
       if (this.isNegative()) {
-          smallmantissa |= 1 << 31;
+        smallmantissa |= 1 << 31;
       }
       return Float.intBitsToFloat(smallmantissa);
     }
@@ -3061,43 +3058,43 @@ return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     }
 
     private static final class BinaryMathHelper implements IRadixMathHelper<EFloat> {
-    /**
-     * This is an internal method.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @return A 32-bit signed integer.
+       */
       public int GetRadix() {
         return 2;
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision binary floating-point number.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return A 32-bit signed integer.
+       */
       public int GetSign(EFloat value) {
         return value.signum();
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision binary floating-point number.
-     * @return An arbitrary-precision integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return An arbitrary-precision integer.
+       */
       public EInteger GetMantissa(EFloat value) {
         return value.unsignedMantissa;
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision binary floating-point number.
-     * @return An arbitrary-precision integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return An arbitrary-precision integer.
+       */
       public EInteger GetExponent(EFloat value) {
         return value.exponent;
       }
 
       public FastInteger GetDigitLength(EInteger ei) {
-return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
+        return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
       }
 
       public FastIntegerFixed GetMantissaFastInt(EFloat value) {
@@ -3108,14 +3105,14 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
         return FastIntegerFixed.FromBig(value.exponent);
       }
 
-    /**
-     * This is an internal method.
-     * @param bigint An arbitrary-precision integer.
-     * @param lastDigit The parameter {@code lastDigit} is a 32-bit signed integer.
-     * @param olderDigits The parameter {@code olderDigits} is a 32-bit signed
-     * integer.
-     * @return An IShiftAccumulator object.
-     */
+      /**
+       * This is an internal method.
+       * @param bigint An arbitrary-precision integer.
+       * @param lastDigit The parameter {@code lastDigit} is a 32-bit signed integer.
+       * @param olderDigits The parameter {@code olderDigits} is a 32-bit signed
+       * integer.
+       * @return An IShiftAccumulator object.
+       */
       public IShiftAccumulator CreateShiftAccumulatorWithDigits(
         EInteger bigint,
         int lastDigit,
@@ -3128,24 +3125,24 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
         int lastDigit,
         int olderDigits) {
         if (fastInt.CanFitInInt32()) {
-     return new BitShiftAccumulator(
-  fastInt.AsInt32(),
-  lastDigit,
-  olderDigits);
+          return new BitShiftAccumulator(
+       fastInt.AsInt32(),
+       lastDigit,
+       olderDigits);
         } else {
-  return new BitShiftAccumulator(
-  fastInt.ToEInteger(),
-  lastDigit,
-  olderDigits);
+          return new BitShiftAccumulator(
+          fastInt.ToEInteger(),
+          lastDigit,
+          olderDigits);
         }
       }
 
-    /**
-     * This is an internal method.
-     * @param num An arbitrary-precision integer.
-     * @param den Another arbitrary-precision integer.
-     * @return A FastInteger object.
-     */
+      /**
+       * This is an internal method.
+       * @param num An arbitrary-precision integer.
+       * @param den Another arbitrary-precision integer.
+       * @return A FastInteger object.
+       */
       public FastInteger DivisionShift(EInteger num, EInteger den) {
         if (den.isZero()) {
           return null;
@@ -3158,12 +3155,12 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
           FastInteger.FromBig(valueELowBit) : null;
       }
 
-    /**
-     * This is an internal method.
-     * @param bigint Another arbitrary-precision integer.
-     * @param power A fast integer.
-     * @return An arbitrary-precision integer.
-     */
+      /**
+       * This is an internal method.
+       * @param bigint Another arbitrary-precision integer.
+       * @param power A fast integer.
+       * @return An arbitrary-precision integer.
+       */
       public EInteger MultiplyByRadixPower(
         EInteger bigint,
         FastInteger power) {
@@ -3180,22 +3177,22 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
         return power.ShiftEIntegerLeftByThis(tmpbigint);
       }
 
-    /**
-     * This is an internal method.
-     * @param value An arbitrary-precision binary floating-point number.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return A 32-bit signed integer.
+       */
       public int GetFlags(EFloat value) {
         return value.flags;
       }
 
-    /**
-     * This is an internal method.
-     * @param mantissa The parameter {@code mantissa} is an internal parameter.
-     * @param exponent The parameter {@code exponent} is an internal parameter.
-     * @param flags The parameter {@code flags} is an internal parameter.
-     * @return An arbitrary-precision binary floating-point number.
-     */
+      /**
+       * This is an internal method.
+       * @param mantissa The parameter {@code mantissa} is an internal parameter.
+       * @param exponent The parameter {@code exponent} is an internal parameter.
+       * @param flags The parameter {@code flags} is an internal parameter.
+       * @return An arbitrary-precision binary floating-point number.
+       */
       public EFloat CreateNewWithFlags(
         EInteger mantissa,
         EInteger exponent,
@@ -3213,24 +3210,24 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
   flags);
       }
 
-    /**
-     * This is an internal method.
-     * @return A 32-bit signed integer.
-     */
+      /**
+       * This is an internal method.
+       * @return A 32-bit signed integer.
+       */
       public int GetArithmeticSupport() {
         return BigNumberFlags.FiniteAndNonFinite;
       }
 
-    /**
-     * This is an internal method.
-     * @param val The parameter {@code val} is a 32-bit signed integer.
-     * @return An arbitrary-precision binary floating-point number.
-     */
+      /**
+       * This is an internal method.
+       * @param val The parameter {@code val} is a 32-bit signed integer.
+       * @return An arbitrary-precision binary floating-point number.
+       */
       public EFloat ValueOf(int val) {
         return FromInt64(val);
       }
     }
-        // Begin integer conversions
+    // Begin integer conversions
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
@@ -3240,11 +3237,12 @@ return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
      * the truncated integer is less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? ((byte)0) :
+                 this.ToEInteger().ToByteChecked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -3254,8 +3252,8 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * value is infinity or not-a-number.
      */
     public byte ToByteUnchecked() {
- return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
-}
+      return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
+    }
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
@@ -3265,11 +3263,11 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * an exact integer, or is less than 0 or greater than 255.
      */
     public byte ToByteIfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- return this.isZero() ? ((byte)0) : this.ToEIntegerIfExact().ToByteChecked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? ((byte)0) : this.ToEIntegerIfExact().ToByteChecked();
+    }
 
     /**
      * Converts a byte (from 0 to 255) to an arbitrary-precision binary
@@ -3279,9 +3277,9 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * number.
      */
     public static EFloat FromByte(byte inputByte) {
- int val = ((int)inputByte) & 0xff;
- return FromInt32(val);
-}
+      int val = ((int)inputByte) & 0xff;
+      return FromInt32(val);
+    }
 
     /**
      * Converts this number's value to a 16-bit signed integer if it can fit in a
@@ -3291,11 +3289,12 @@ return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
      * the truncated integer is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? ((short)0) :
+                 this.ToEInteger().ToInt16Checked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -3305,8 +3304,8 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
      * value is infinity or not-a-number.
      */
     public short ToInt16Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
-}
+      return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
+    }
 
     /**
      * Converts this number's value to a 16-bit signed integer if it can fit in a
@@ -3317,12 +3316,12 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
      * an exact integer, or is less than -32768 or greater than 32767.
      */
     public short ToInt16IfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- return this.isZero() ? ((short)0) :
-   this.ToEIntegerIfExact().ToInt16Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? ((short)0) :
+        this.ToEIntegerIfExact().ToInt16Checked();
+    }
 
     /**
      * Converts a 16-bit signed integer to an arbitrary-precision binary
@@ -3332,9 +3331,9 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
      * number.
      */
     public static EFloat FromInt16(short inputInt16) {
- int val = (int)inputInt16;
- return FromInt32(val);
-}
+      int val = (int)inputInt16;
+      return FromInt32(val);
+    }
 
     /**
      * Converts this number's value to a 32-bit signed integer if it can fit in a
@@ -3345,11 +3344,12 @@ return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
      * 2147483647.
      */
     public int ToInt32Checked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? ((int)0) :
+                 this.ToEInteger().ToInt32Checked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -3359,8 +3359,8 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * value is infinity or not-a-number.
      */
     public int ToInt32Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
-}
+      return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
+    }
 
     /**
      * Converts this number's value to a 32-bit signed integer if it can fit in a
@@ -3372,11 +3372,11 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * 2147483647.
      */
     public int ToInt32IfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
+    }
 
     /**
      * Converts a boolean value (either true or false) to an arbitrary-precision
@@ -3385,8 +3385,8 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * @return The number 1 if {@code boolValue} is true, otherwise, 0.
      */
     public static EFloat FromBoolean(boolean boolValue) {
-    return boolValue ? EFloat.One : EFloat.Zero;
-   }
+      return boolValue ? EFloat.One : EFloat.Zero;
+    }
 
     /**
      * Converts a 32-bit signed integer to an arbitrary-precision binary
@@ -3396,8 +3396,8 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * number.
      */
     public static EFloat FromInt32(int inputInt32) {
- return FromEInteger(EInteger.FromInt32(inputInt32));
-}
+      return FromEInteger(EInteger.FromInt32(inputInt32));
+    }
 
     /**
      * Converts this number's value to a 64-bit signed integer if it can fit in a
@@ -3408,11 +3408,12 @@ return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
      * than 9223372036854775807.
      */
     public long ToInt64Checked() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
-return this.isZero() ? 0L : this.ToEInteger().ToInt64Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? 0L :
+                 this.ToEInteger().ToInt64Checked();
+    }
 
     /**
      * Truncates this number's value to an integer and returns the
@@ -3422,8 +3423,8 @@ return this.isZero() ? 0L : this.ToEInteger().ToInt64Checked();
      * value is infinity or not-a-number.
      */
     public long ToInt64Unchecked() {
- return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
-}
+      return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
+    }
 
     /**
      * Converts this number's value to a 64-bit signed integer if it can fit in a
@@ -3435,11 +3436,11 @@ return this.isZero() ? 0L : this.ToEInteger().ToInt64Checked();
      * than 9223372036854775807.
      */
     public long ToInt64IfExact() {
- if (!this.isFinite()) {
- throw new ArithmeticException("Value is infinity or NaN");
-}
- return this.isZero() ? 0L : this.ToEIntegerIfExact().ToInt64Checked();
-}
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      return this.isZero() ? 0L : this.ToEIntegerIfExact().ToInt64Checked();
+    }
 
     /**
      * Converts a 64-bit signed integer to an arbitrary-precision binary
@@ -3449,8 +3450,8 @@ return this.isZero() ? 0L : this.ToEInteger().ToInt64Checked();
      * number.
      */
     public static EFloat FromInt64(long inputInt64) {
- return FromEInteger(EInteger.FromInt64(inputInt64));
-}
+      return FromEInteger(EInteger.FromInt64(inputInt64));
+    }
 
-// End integer conversions
+    // End integer conversions
   }
