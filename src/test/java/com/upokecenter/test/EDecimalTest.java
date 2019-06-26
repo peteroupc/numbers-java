@@ -4878,9 +4878,9 @@ EFloat.Create(
   edecstr);
           } else if (sng == 0.0f) {
             TestCommon.CompareTestLessEqual(
-          edec.Abs(),
-          SingleUnderflowToZero,
-          edecstr);
+              edec.Abs(),
+              SingleUnderflowToZero,
+              edecstr);
             Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
           } else {
             if (!(!Float.isNaN(sng))) {
