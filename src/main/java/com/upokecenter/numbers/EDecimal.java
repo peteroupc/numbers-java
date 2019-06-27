@@ -339,8 +339,7 @@ at: http://peteroupc.github.io/
      * @return This value's sign: -1 if negative; 1 if positive; 0 if zero.
      */
     public final int signum() {
-        return (((this.flags & (BigNumberFlags.FlagSpecial)) == 0) && this.unsignedMantissa.isValueZero()) ? 0 : (((this.flags &
-                    BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
+        return (((this.flags & BigNumberFlags.FlagSpecial) == 0) && this.unsignedMantissa.isValueZero()) ? 0 : (((this.flags & BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
       }
 
     /**
@@ -1631,12 +1630,11 @@ at: http://peteroupc.github.io/
           // have a greater value in decimal than in binary
           return (signA > 0) ? 1 : -1;
         }
-        if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) < 0 && otherAdjExp.compareTo(EInteger.FromInt64(4000)) >= 0) {
+        if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(1000) < 0 && otherAdjExp.compareTo(4000) >= 0) {
           // With these exponent combinations, the binary's absolute
           // value is greater than the decimal's
           return (signA > 0) ? -1 : 1;
         }
-
         if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0 &&
                 otherAdjExp.compareTo(EInteger.FromInt64(1000)) >= 0) {
           thisAdjExp = thisAdjExp.Add(EInteger.FromInt32(1));

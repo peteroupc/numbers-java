@@ -353,7 +353,7 @@ at: http://peteroupc.github.io/
           }
           if (bigPower) {
             // Power of 10 to be divided would be much bigger
-            this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+            this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
             this.discardedBitCount.AddInt(digits);
             this.bitsAfterLeftmost |= this.bitLeftmost;
             this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
@@ -518,7 +518,7 @@ at: http://peteroupc.github.io/
         if (shiftedLong >= ValueTenPowers[digits]) {
           long bigPower = ValueTenPowers[digits];
           long smallPower = ValueTenPowers[digits - 1];
-          this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+          this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           long div = shiftedLong / bigPower;
           long rem = shiftedLong - (div * bigPower);
@@ -826,7 +826,7 @@ at: http://peteroupc.github.io/
         if (this.shiftedSmall >= ValueTenPowers[digits]) {
           int bigPower = ValueTenPowers[digits];
           int smallPower = ValueTenPowers[digits - 1];
-          this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+          this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           int div = this.shiftedSmall / bigPower;
           int rem = this.shiftedSmall - (div * bigPower);

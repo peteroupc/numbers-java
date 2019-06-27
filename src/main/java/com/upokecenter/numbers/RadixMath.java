@@ -294,10 +294,16 @@ at: http://peteroupc.github.io/
       if ((thisFlags & BigNumberFlags.FlagNegative) != 0 &&
           (otherFlags & BigNumberFlags.FlagNegative) == 0) {
         FastIntegerFixed fftmp;
-        fftmp = op1Exponent; op1Exponent = op2Exponent; op2Exponent = fftmp;
-        fftmp = op1Mantissa; op1Mantissa = op2Mantissa; op2Mantissa = fftmp;
+        fftmp = op1Exponent;
+        op1Exponent = op2Exponent;
+        op2Exponent = fftmp;
+        fftmp = op1Mantissa;
+        op1Mantissa = op2Mantissa;
+        op2Mantissa = fftmp;
         int tmp;
-        tmp = thisFlags; thisFlags = otherFlags; otherFlags = tmp;
+        tmp = thisFlags;
+        thisFlags = otherFlags;
+        otherFlags = tmp;
         expcmp = -expcmp;
         resultExponent = expcmp < 0 ? op1Exponent : op2Exponent;
       }
@@ -527,10 +533,16 @@ at: http://peteroupc.github.io/
       if ((thisFlags & BigNumberFlags.FlagNegative) != 0 &&
           (otherFlags & BigNumberFlags.FlagNegative) == 0) {
         FastIntegerFixed fftmp;
-        fftmp = op1Exponent; op1Exponent = op2Exponent; op2Exponent = fftmp;
-        fftmp = op1Mantissa; op1Mantissa = op2Mantissa; op2Mantissa = fftmp;
+        fftmp = op1Exponent;
+        op1Exponent = op2Exponent;
+        op2Exponent = fftmp;
+        fftmp = op1Mantissa;
+        op1Mantissa = op2Mantissa;
+        op2Mantissa = fftmp;
         int tmp;
-        tmp = thisFlags; thisFlags = otherFlags; otherFlags = tmp;
+        tmp = thisFlags;
+        thisFlags = otherFlags;
+        otherFlags = tmp;
         expcmp = -expcmp;
         resultExponent = expcmp < 0 ? op1Exponent : op2Exponent;
       }
