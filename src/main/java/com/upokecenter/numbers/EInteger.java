@@ -159,8 +159,7 @@ at: http://peteroupc.github.io/
       while (newwordCount != 0 && words[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new
-                    EInteger(
+      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(
                     newwordCount,
                     words,
                     false));
@@ -257,8 +256,7 @@ at: http://peteroupc.github.io/
       while (newwordCount != 0 && newreg[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new
-                    EInteger(
+      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(
                     newwordCount,
                     newreg,
                     newnegative));
@@ -1279,14 +1277,13 @@ at: http://peteroupc.github.io/
           --quotwordCount;
         }
         return (
-          quotwordCount != 0) ? (
-          new EInteger(
+          quotwordCount != 0) ? (new EInteger(
             quotwordCount,
             quotReg,
             this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
       }
       // ---- General case
-      quotReg = new short[((int)(words1Size - words2Size + 1))];
+      quotReg = new short[(int)(words1Size - words2Size + 1)];
       GeneralDivide(
   this.words,
   0,
@@ -1301,8 +1298,7 @@ at: http://peteroupc.github.io/
       quotwordCount = CountWords(quotReg);
       quotReg = ShortenArray(quotReg, quotwordCount);
       return (
-        quotwordCount != 0) ? (
-        new EInteger(
+        quotwordCount != 0) ? (new EInteger(
           quotwordCount,
           quotReg,
           this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
@@ -1967,8 +1963,8 @@ int len2) {
         // , this.ToInt64Checked(), divisor.ToInt64Checked());
       }
       // --- General case
-      short[] bigRemainderreg = new short[((int)words2Size)];
-      short[] quotientreg = new short[((int)(words1Size - words2Size + 1))];
+      short[] bigRemainderreg = new short[(int)words2Size];
+      short[] quotientreg = new short[(int)(words1Size - words2Size + 1)];
       GeneralDivide(
   this.words,
   0,
@@ -2655,7 +2651,7 @@ WordsShiftRightOne(bu, buc);
         throw new IllegalArgumentException("index (" + index + ") is less than 0");
       }
       return ((index >> 4) < this.words.length) &&
-        ((boolean)(((this.words[(index >> 4)] >> (int)(index & 15)) & 1) != 0));
+        ((boolean)(((this.words[index >> 4] >> (int)(index & 15)) & 1) != 0));
     }
 
     /**
@@ -2890,7 +2886,7 @@ WordsShiftRightOne(bu, buc);
       } else {
         int words1Size = this.wordCount;
         int words2Size = bigintMult.wordCount;
-        productreg = new short[(words1Size + words2Size)];
+        productreg = new short[words1Size + words2Size];
         short[] workspace = new short[words1Size + words2Size];
         productwordCount = productreg.length;
         AsymmetricMultiply(
@@ -3096,7 +3092,7 @@ WordsShiftRightOne(bu, buc);
       if (this.PositiveCompare(divisor) < 0) {
         return this;
       }
-      short[] remainderReg = new short[((int)words2Size)];
+      short[] remainderReg = new short[(int)words2Size];
       GeneralDivide(
   this.words,
   0,
@@ -3193,7 +3189,7 @@ WordsShiftRightOne(bu, buc);
       int shiftWords = (int)(numberBits >> 4);
       int shiftBits = (int)(numberBits & 15);
       if (!this.negative) {
-        short[] ret = new short[(numWords + BitsToWords((int)numberBits))];
+        short[] ret = new short[numWords + BitsToWords((int)numberBits)];
         System.arraycopy(this.words, 0, ret, shiftWords, numWords);
         ShiftWordsLeftByBits(
           ret,
@@ -3202,8 +3198,7 @@ WordsShiftRightOne(bu, buc);
           shiftBits);
         return new EInteger(CountWords(ret), ret, false);
       } else {
-        short[] ret = new short[(numWords +
-                    BitsToWords((int)numberBits))];
+        short[] ret = new short[(numWords + BitsToWords((int)numberBits))];
         System.arraycopy(this.words, 0, ret, 0, numWords);
         TwosComplement(ret, 0, (int)ret.length);
         ShiftWordsLeftByWords(ret, 0, numWords + shiftWords, shiftWords);
@@ -3262,8 +3257,7 @@ WordsShiftRightOne(bu, buc);
       }
       valueXaNegative = !this.negative;
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
     }
 
     /**
@@ -3272,7 +3266,9 @@ WordsShiftRightOne(bu, buc);
      * form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
      * }) for the purposes of this operator. </p>
      * @param other An arbitrary-precision integer.
-     * @return An arbitrary-precision integer.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bits of this integer and the other integer are both
+     * set.
      * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EInteger And(EInteger other) {
@@ -3293,8 +3289,7 @@ WordsShiftRightOne(bu, buc);
           result[i] = ((short)(smaller[i] & bigger[i]));
         }
         smallerCount = CountWords(result);
-        return (smallerCount == 0) ? EInteger.FromInt32(0) : (new
-          EInteger(smallerCount, result, false));
+        return (smallerCount == 0) ? EInteger.FromInt32(0) : (new EInteger(smallerCount, result, false));
       }
       boolean valueXaNegative = false;
       int valueXaWordCount = 0;
@@ -3324,8 +3319,7 @@ WordsShiftRightOne(bu, buc);
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
     }
 
     /**
@@ -3396,8 +3390,7 @@ WordsShiftRightOne(bu, buc);
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
     }
 
     /**
@@ -3406,10 +3399,8 @@ WordsShiftRightOne(bu, buc);
      * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
      * for the purposes of this operator. </p>
      * @param other An arbitrary-precision integer.
-     * @return An arbitrary-precision integer in which each bit is set if it's set
-     * in one input integer but not the other.
-     * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
-     * CountWords(result).
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit is set in one input integer but not in the other.
      * @throws java.lang.NullPointerException The parameter {@code other} is null.
      */
     public EInteger Xor(EInteger other) {
@@ -3476,8 +3467,7 @@ WordsShiftRightOne(bu, buc);
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(valueXaWordCount, valueXaReg, valueXaNegative));
     }
 
     private short[] Copy() {

@@ -339,8 +339,7 @@ at: http://peteroupc.github.io/
      * @return This value's sign: -1 if negative; 1 if positive; 0 if zero.
      */
     public final int signum() {
-        return (((this.flags & (BigNumberFlags.FlagSpecial)) == 0) &&
-          this.unsignedMantissa.isValueZero()) ? 0 : (((this.flags &
+        return (((this.flags & (BigNumberFlags.FlagSpecial)) == 0) && this.unsignedMantissa.isValueZero()) ? 0 : (((this.flags &
                     BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
       }
 
@@ -1124,7 +1123,7 @@ at: http://peteroupc.github.io/
           haveDigits = true;
           if (haveDecimalPoint) {
             if (newScaleInt == Integer.MIN_VALUE) {
-              newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
+              newScale = (newScale == null) ? (new FastInteger(newScaleInt)) : newScale;
               newScale.Decrement();
             } else {
               --newScaleInt;
@@ -1203,14 +1202,14 @@ at: http://peteroupc.github.io/
           null) {
           newScaleInt = expInt;
         } else if (exp == null) {
-          newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
+          newScale = (newScale == null) ? (new FastInteger(newScaleInt)) : newScale;
           if (tmpoffset < 0) {
             newScale.SubtractInt(expInt);
           } else if (expInt != 0) {
             newScale.AddInt(expInt);
           }
         } else {
-          newScale = (newScale == null) ? ((new FastInteger(newScaleInt))) : newScale;
+          newScale = (newScale == null) ? (new FastInteger(newScaleInt)) : newScale;
           if (tmpoffset < 0) {
             newScale.Subtract(exp);
           } else {
@@ -1223,7 +1222,7 @@ at: http://peteroupc.github.io/
       }
       FastIntegerFixed fastIntScale;
       FastIntegerFixed fastIntMant;
-      fastIntScale = (newScale == null) ? (new FastIntegerFixed(newScaleInt)) :
+      fastIntScale = (newScale == null) ? new FastIntegerFixed(newScaleInt) :
         FastIntegerFixed.FromFastInteger(newScale);
       int sign = negative ? -1 : 1;
       if (mant == null) {
@@ -1632,8 +1631,7 @@ at: http://peteroupc.github.io/
           // have a greater value in decimal than in binary
           return (signA > 0) ? 1 : -1;
         }
-        if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) < 0 &&
-        otherAdjExp.compareTo(EInteger.FromInt64(4000)) >= 0) {
+        if (thisAdjExp.signum() > 0 && thisAdjExp.compareTo(EInteger.FromInt64(1000)) < 0 && otherAdjExp.compareTo(EInteger.FromInt64(4000)) >= 0) {
           // With these exponent combinations, the binary's absolute
           // value is greater than the decimal's
           return (signA > 0) ? -1 : 1;

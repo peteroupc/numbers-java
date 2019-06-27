@@ -73,8 +73,7 @@ at: http://peteroupc.github.io/
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {
-      return (bigintVal.CanFitInInt32()) ? (new
-        FastIntegerFixed(bigintVal.ToInt32Unchecked())) : (new
+      return (bigintVal.CanFitInInt32()) ? new FastIntegerFixed(bigintVal.ToInt32Unchecked()) : (new
         FastIntegerFixed(2, 0, bigintVal));
     }
 

@@ -85,7 +85,7 @@ at: http://peteroupc.github.io/
     }
 
     public final FastInteger getDiscardedDigitCount() {
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         return this.discardedBitCount;
       }
 
@@ -103,7 +103,7 @@ at: http://peteroupc.github.io/
       }
 
     public final FastInteger getShiftedIntFast() {
-        return this.isSmall ? (new FastInteger(this.shiftedSmall)) :
+        return this.isSmall ? new FastInteger(this.shiftedSmall) :
         FastInteger.FromBig(this.shiftedBigInt);
       }
 
@@ -320,7 +320,7 @@ at: http://peteroupc.github.io/
         return;
       }
       if (this.shiftedBigInt.isZero()) {
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = 0;
@@ -353,8 +353,7 @@ at: http://peteroupc.github.io/
           }
           if (bigPower) {
             // Power of 10 to be divided would be much bigger
-            this.discardedBitCount = (this.discardedBitCount == null) ? ((new
-                   FastInteger(0))) : this.discardedBitCount;
+            this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
             this.discardedBitCount.AddInt(digits);
             this.bitsAfterLeftmost |= this.bitLeftmost;
             this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
@@ -405,7 +404,7 @@ at: http://peteroupc.github.io/
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = bigrem.ToInt32Checked();
         this.shiftedBigInt = bigquo;
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.UpdateKnownLengthInt(digits);
         return;
@@ -425,7 +424,7 @@ at: http://peteroupc.github.io/
         this.bitLeftmost = leftBit;
         this.shiftedBigInt = bigquo;
         this.discardedBitCount = (this.discardedBitCount != null) ?
-          this.discardedBitCount.AddInt(digits) : (new FastInteger(digits));
+          this.discardedBitCount.AddInt(digits) : new FastInteger(digits);
         this.UpdateKnownLengthInt(digits);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
         if (this.shiftedBigInt.CanFitInInt32()) {
@@ -443,7 +442,7 @@ at: http://peteroupc.github.io/
         this.isSmall = true;
         this.shiftedSmall = 0;
         this.knownDigitLength = new FastInteger(1);
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = 0;
@@ -466,7 +465,7 @@ at: http://peteroupc.github.io/
       if (digits > digitLength) {
         bitDiff = digits - digitLength;
       }
-      this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+      this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
       this.discardedBitCount.AddInt(digits);
       this.bitsAfterLeftmost |= this.bitLeftmost;
       int digitShift = Math.min(digitLength, digits);
@@ -508,7 +507,7 @@ at: http://peteroupc.github.io/
       if (shiftedLong == 0) {
         this.shiftedSmall = 0;
         this.isSmall = true;
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = 0;
@@ -519,8 +518,7 @@ at: http://peteroupc.github.io/
         if (shiftedLong >= ValueTenPowers[digits]) {
           long bigPower = ValueTenPowers[digits];
           long smallPower = ValueTenPowers[digits - 1];
-          this.discardedBitCount = (this.discardedBitCount == null) ? ((new
-              FastInteger(0))) : this.discardedBitCount;
+          this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           long div = shiftedLong / bigPower;
           long rem = shiftedLong - (div * bigPower);
@@ -530,11 +528,11 @@ at: http://peteroupc.github.io/
           this.isSmall = div <= Integer.MAX_VALUE;
           if (this.isSmall) {
             this.shiftedSmall = (int)div;
-            this.knownDigitLength = (div < 10) ? (new FastInteger(1)) :
+            this.knownDigitLength = (div < 10) ? new FastInteger(1) :
               new FastInteger(LongDigitLength(div));
           } else {
             this.shiftedBigInt = EInteger.FromInt64(div);
-            this.knownDigitLength = (div < 10) ? (new FastInteger(1)) :
+            this.knownDigitLength = (div < 10) ? new FastInteger(1) :
               this.CalcKnownDigitLength();
           }
           return;
@@ -632,7 +630,7 @@ at: http://peteroupc.github.io/
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = bigrem.ToInt32Checked();
         this.shiftedBigInt = bigquo;
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
         this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
@@ -658,7 +656,7 @@ at: http://peteroupc.github.io/
           }
         }
         this.shiftedBigInt = bigquo;
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
         this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
@@ -690,7 +688,7 @@ at: http://peteroupc.github.io/
         bigrem = divrem[1];
         this.bitLeftmost = bigrem.ToInt32Checked();
         this.shiftedBigInt = bigquo2;
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
         this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
@@ -707,7 +705,7 @@ at: http://peteroupc.github.io/
         int newLength = (int)(digitLength - digitShift);
         // System.out.println("dlen= " + digitLength + " dshift=" +
         // digitShift + " newlen= " + newLength);
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         if (digitShift <= Integer.MAX_VALUE) {
           this.discardedBitCount.AddInt((int)digitShift);
         } else {
@@ -744,7 +742,7 @@ at: http://peteroupc.github.io/
         this.UpdateKnownLengthInt(digitShift);
         this.discardedBitCount = this.discardedBitCount != null ?
           this.discardedBitCount.AddInt(digitShift) :
-          (new FastInteger(digitShift));
+          new FastInteger(digitShift);
         for (int i = 0; i < digitShift; ++i) {
           int digit = (int)(this.shiftedSmall % 10);
           this.shiftedSmall /= 10;
@@ -760,7 +758,7 @@ at: http://peteroupc.github.io/
         return;
       }
       if (shiftedLong == 0 || digits >= 21) {
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = shiftedLong == 0 ? 0 : 1;
@@ -817,7 +815,7 @@ at: http://peteroupc.github.io/
         return;
       }
       if (this.shiftedSmall == 0) {
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = 0;
@@ -828,8 +826,7 @@ at: http://peteroupc.github.io/
         if (this.shiftedSmall >= ValueTenPowers[digits]) {
           int bigPower = ValueTenPowers[digits];
           int smallPower = ValueTenPowers[digits - 1];
-          this.discardedBitCount = (this.discardedBitCount == null) ? ((new
-              FastInteger(0))) : this.discardedBitCount;
+          this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           int div = this.shiftedSmall / bigPower;
           int rem = this.shiftedSmall - (div * bigPower);
@@ -837,7 +834,7 @@ at: http://peteroupc.github.io/
           this.bitLeftmost = rem2;
           this.bitsAfterLeftmost |= rem - (rem2 * smallPower);
           this.shiftedSmall = div;
-          this.knownDigitLength = (div < 10) ? (new FastInteger(1)) :
+          this.knownDigitLength = (div < 10) ? new FastInteger(1) :
             this.CalcKnownDigitLength();
           return;
         } else if (this.shiftedSmall >= ValueTenPowers[digits - 1]) {
@@ -904,7 +901,7 @@ at: http://peteroupc.github.io/
         return;
       }
       if (this.shiftedSmall == 0 || digits >= 11) {
-        this.discardedBitCount = (this.discardedBitCount == null) ? ((new FastInteger(0))) : this.discardedBitCount;
+        this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = (this.shiftedSmall == 0) ? 0 : 1;

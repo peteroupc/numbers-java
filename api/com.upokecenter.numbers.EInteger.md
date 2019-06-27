@@ -1175,7 +1175,9 @@ Does an AND operation between two arbitrary-precision integer values.<p>
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bits of this integer and the other integer are both
+ set.
 
 **Throws:**
 
@@ -1216,13 +1218,10 @@ Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
 
 **Returns:**
 
-* An arbitrary-precision integer in which each bit is set if it's set
- in one input integer but not the other.
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bit is set in one input integer but not in the other.
 
 **Throws:**
-
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy smallerCount ==
- CountWords(result).
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
 
