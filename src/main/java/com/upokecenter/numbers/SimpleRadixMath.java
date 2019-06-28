@@ -377,7 +377,7 @@ at: http://peteroupc.github.io/
       return this.wrapper.Pi(ctx);
     }
 
-@SuppressWarnings("deprecation")  // certain ERounding values are obsolete
+@SuppressWarnings("deprecation") // certain ERounding values are obsolete
     private T SignalOverflow2(EContext pc, boolean neg) {
       if (pc != null) {
         ERounding roundingOnOverflow = pc.getRounding();

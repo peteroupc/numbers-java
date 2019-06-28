@@ -159,27 +159,27 @@ Renamed to DivRemNaturalScale.
 * `EFloat DivideToExponent​(EFloat divisor,
                 long desiredExponentSmall,
                 EContext ctx)`<br>
- Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+ Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 * `EFloat DivideToExponent​(EFloat divisor,
                 long desiredExponentSmall,
                 ERounding rounding)`<br>
- Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+ Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 * `EFloat DivideToExponent​(EFloat divisor,
                 EInteger exponent,
                 EContext ctx)`<br>
- Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+ Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 * `EFloat DivideToExponent​(EFloat divisor,
                 EInteger desiredExponent,
                 ERounding rounding)`<br>
- Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+ Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 * `EFloat DivideToIntegerNaturalScale​(EFloat divisor)`<br>
- Divides two arbitrary-precision binary floats, and returns the integer part
- of the result, rounded down, with the preferred exponent set to this
- value's exponent minus the divisor's exponent.
+ Divides two arbitrary-precision binary floating-point numbers, and returns
+ the integer part of the result, rounded down, with the preferred
+ exponent set to this value's exponent minus the divisor's exponent.
 * `EFloat DivideToIntegerNaturalScale​(EFloat divisor,
                            EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
@@ -289,11 +289,11 @@ Renamed to DivRemNaturalScale.
  value.
 * `static EFloat Max​(EFloat first,
    EFloat second)`<br>
- Gets the greater value between two binary floats.
+ Gets the greater value between two binary floating-point numbers.
 * `static EFloat Max​(EFloat first,
    EFloat second,
    EContext ctx)`<br>
- Gets the greater value between two binary floats.
+ Gets the greater value between two binary floating-point numbers.
 * `static EFloat MaxMagnitude​(EFloat first,
             EFloat second)`<br>
  Gets the greater value between two values, ignoring their signs.
@@ -303,11 +303,11 @@ Renamed to DivRemNaturalScale.
  Gets the greater value between two values, ignoring their signs.
 * `static EFloat Min​(EFloat first,
    EFloat second)`<br>
- Gets the lesser value between two binary floats.
+ Gets the lesser value between two binary floating-point numbers.
 * `static EFloat Min​(EFloat first,
    EFloat second,
    EContext ctx)`<br>
- Gets the lesser value between two binary floats.
+ Gets the lesser value between two binary floating-point numbers.
 * `static EFloat MinMagnitude​(EFloat first,
             EFloat second)`<br>
  Gets the lesser value between two values, ignoring their signs.
@@ -347,10 +347,10 @@ Renamed to DivRemNaturalScale.
  Multiplies this instance by the value of an arbitrary-precision integer
  object.
 * `EFloat Multiply​(EFloat otherValue)`<br>
- Multiplies two binary floats.
+ Multiplies two binary floating-point numbers.
 * `EFloat Multiply​(EFloat op,
         EContext ctx)`<br>
- Multiplies two binary floats.
+ Multiplies two binary floating-point numbers.
 * `EFloat MultiplyAndAdd​(EFloat multiplicand,
               EFloat augend)`<br>
  Multiplies by one binary float, and then adds another binary float.
@@ -407,7 +407,7 @@ Renamed to DivRemNaturalScale.
 * `EFloat Remainder​(EFloat divisor,
          EContext ctx)`<br>
  Finds the remainder that results when dividing two arbitrary-precision
- binary floats.
+ binary floating-point numbers.
 * `EFloat RemainderNaturalScale​(EFloat divisor) "this" - (("this" /
  "divisor") * "divisor")`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
@@ -423,7 +423,7 @@ Renamed to DivRemNaturalScale.
 * `EFloat RemainderNoRoundAfterDivide​(EFloat divisor,
                            EContext ctx)`<br>
  Finds the remainder that results when dividing two arbitrary-precision
- binary floats.
+ binary floating-point numbers.
 * `EFloat RoundToExponent​(int exponentSmall,
                EContext ctx)`<br>
  Returns a binary float with the same value as this object but rounded to a
@@ -915,7 +915,7 @@ Creates a binary float from a text string that represents a number. For more
 
 ### Max
     public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
-Gets the greater value between two binary floats.
+Gets the greater value between two binary floating-point numbers.
 
 **Parameters:**
 
@@ -935,7 +935,7 @@ Gets the greater value between two binary floats.
 
 ### Max
     public static EFloat Max​(EFloat first, EFloat second)
-Gets the greater value between two binary floats.
+Gets the greater value between two binary floating-point numbers.
 
 **Parameters:**
 
@@ -945,7 +945,7 @@ Gets the greater value between two binary floats.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The greater of the two arbitrary-precision numbers.
 
 ### MaxMagnitude
     public static EFloat MaxMagnitude​(EFloat first, EFloat second, EContext ctx)
@@ -985,7 +985,7 @@ Gets the greater value between two values, ignoring their signs. If the
 
 ### Min
     public static EFloat Min​(EFloat first, EFloat second, EContext ctx)
-Gets the lesser value between two binary floats.
+Gets the lesser value between two binary floating-point numbers.
 
 **Parameters:**
 
@@ -1005,7 +1005,7 @@ Gets the lesser value between two binary floats.
 
 ### Min
     public static EFloat Min​(EFloat first, EFloat second)
-Gets the lesser value between two binary floats.
+Gets the lesser value between two binary floating-point numbers.
 
 **Parameters:**
 
@@ -1472,8 +1472,8 @@ Renamed to DivRemNaturalScale.
 
 ### DivideToExponent
     public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, EContext ctx)
-Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 
 **Parameters:**
 
@@ -1508,8 +1508,8 @@ Divides two arbitrary-precision binary floats, and gives a particular
 
 ### DivideToExponent
     public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, ERounding rounding)
-Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 
 **Parameters:**
 
@@ -1535,8 +1535,8 @@ Divides two arbitrary-precision binary floats, and gives a particular
 
 ### DivideToExponent
     public EFloat DivideToExponent​(EFloat divisor, EInteger exponent, EContext ctx)
-Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 
 **Parameters:**
 
@@ -1570,8 +1570,8 @@ Divides two arbitrary-precision binary floats, and gives a particular
 
 ### DivideToExponent
     public EFloat DivideToExponent​(EFloat divisor, EInteger desiredExponent, ERounding rounding)
-Divides two arbitrary-precision binary floats, and gives a particular
- exponent to the result.
+Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.
 
 **Parameters:**
 
@@ -1596,9 +1596,9 @@ Divides two arbitrary-precision binary floats, and gives a particular
 
 ### DivideToIntegerNaturalScale
     public EFloat DivideToIntegerNaturalScale​(EFloat divisor)
-Divides two arbitrary-precision binary floats, and returns the integer part
- of the result, rounded down, with the preferred exponent set to this
- value's exponent minus the divisor's exponent.
+Divides two arbitrary-precision binary floating-point numbers, and returns
+ the integer part of the result, rounded down, with the preferred
+ exponent set to this value's exponent minus the divisor's exponent.
 
 **Parameters:**
 
@@ -2061,8 +2061,8 @@ Returns a number similar to this number but with the radix point moved to
 
 ### Multiply
     public EFloat Multiply​(EFloat otherValue)
-Multiplies two binary floats. The resulting exponent will be the sum of the
- exponents of the two binary floats.
+Multiplies two binary floating-point numbers. The resulting exponent will be
+ the sum of the exponents of the two binary floating-point numbers.
 
 **Parameters:**
 
@@ -2070,14 +2070,14 @@ Multiplies two binary floats. The resulting exponent will be the sum of the
 
 **Returns:**
 
-* The product of the two binary floats.
+* The product of the two binary floating-point numbers.
 
 ### Multiply
     public EFloat Multiply​(EFloat op, EContext ctx)
-Multiplies two binary floats. The resulting scale will be the sum of the
- scales of the two binary floats. The result's sign is positive if
- both operands have the same sign, and negative if they have different
- signs.
+Multiplies two binary floating-point numbers. The resulting scale will be
+ the sum of the scales of the two binary floating-point numbers. The
+ result's sign is positive if both operands have the same sign, and
+ negative if they have different signs.
 
 **Parameters:**
 
@@ -2485,10 +2485,10 @@ Returns an object with the same numerical value as this one but with
 ### Remainder
     public EFloat Remainder​(EFloat divisor, EContext ctx)
 Finds the remainder that results when dividing two arbitrary-precision
- binary floats. The remainder is the value that remains when the
- absolute value of this object is divided by the absolute value of the
- other object; the remainder has the same sign (positive or negative)
- as this object's value.
+ binary floating-point numbers. The remainder is the value that
+ remains when the absolute value of this object is divided by the
+ absolute value of the other object; the remainder has the same sign
+ (positive or negative) as this object's value.
 
 **Parameters:**
 
@@ -2505,10 +2505,10 @@ Finds the remainder that results when dividing two arbitrary-precision
 ### RemainderNoRoundAfterDivide
     public EFloat RemainderNoRoundAfterDivide​(EFloat divisor, EContext ctx)
 Finds the remainder that results when dividing two arbitrary-precision
- binary floats. The remainder is the value that remains when the
- absolute value of this object is divided by the absolute value of the
- other object; the remainder has the same sign (positive or negative)
- as this object's value.
+ binary floating-point numbers. The remainder is the value that
+ remains when the absolute value of this object is divided by the
+ absolute value of the other object; the remainder has the same sign
+ (positive or negative) as this object's value.
 
 **Parameters:**
 

@@ -551,7 +551,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Gets the greater value between two binary floats.
+     * Gets the greater value between two binary floating-point numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
      * @param ctx An arithmetic context to control the precision, rounding, and
@@ -569,10 +569,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Gets the greater value between two binary floats.
+     * Gets the greater value between two binary floating-point numbers.
      * @param first An arbitrary-precision binary floating-point number.
      * @param second Another arbitrary-precision binary floating-point number.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The greater of the two arbitrary-precision numbers.
      */
     public static EFloat Max(
       EFloat first,
@@ -613,7 +613,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Gets the lesser value between two binary floats.
+     * Gets the lesser value between two binary floating-point numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
      * @param ctx An arithmetic context to control the precision, rounding, and
@@ -631,7 +631,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Gets the lesser value between two binary floats.
+     * Gets the lesser value between two binary floating-point numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
      * @return An arbitrary-precision binary floating-point number.
@@ -1152,8 +1152,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides two arbitrary-precision binary floats, and gives a particular
-     * exponent to the result.
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
      * @param divisor The number to divide by.
      * @param desiredExponentSmall The desired exponent. A negative number places
      * the cutoff point to the right of the usual radix point (so a negative
@@ -1189,8 +1189,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides two arbitrary-precision binary floats, and gives a particular
-     * exponent to the result.
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
      * @param divisor The number to divide by.
      * @param desiredExponentSmall The desired exponent. A negative number places
      * the cutoff point to the right of the usual radix point (so a negative
@@ -1217,8 +1217,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides two arbitrary-precision binary floats, and gives a particular
-     * exponent to the result.
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
      * @param divisor The number to divide by.
      * @param exponent The desired exponent. A negative number places the cutoff
      * point to the right of the usual radix point (so a negative number
@@ -1250,8 +1250,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides two arbitrary-precision binary floats, and gives a particular
-     * exponent to the result.
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
      * @param divisor The number to divide by.
      * @param desiredExponent The desired exponent. A negative number places the
      * cutoff point to the right of the usual radix point (so a negative
@@ -1277,9 +1277,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides two arbitrary-precision binary floats, and returns the integer part
-     * of the result, rounded down, with the preferred exponent set to this
-     * value's exponent minus the divisor's exponent.
+     * Divides two arbitrary-precision binary floating-point numbers, and returns
+     * the integer part of the result, rounded down, with the preferred
+     * exponent set to this value's exponent minus the divisor's exponent.
      * @param divisor The number to divide by.
      * @return The integer part of the quotient of the two objects. Signals
      * FlagDivideByZero and returns infinity if the divisor is 0 and the
@@ -1721,10 +1721,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies two binary floats. The resulting exponent will be the sum of the
-     * exponents of the two binary floats.
+     * Multiplies two binary floating-point numbers. The resulting exponent will be
+     * the sum of the exponents of the two binary floating-point numbers.
      * @param otherValue Another binary float.
-     * @return The product of the two binary floats.
+     * @return The product of the two binary floating-point numbers.
      */
     public EFloat Multiply(EFloat otherValue) {
       if (this.isFinite() && otherValue.isFinite()) {
@@ -1746,10 +1746,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies two binary floats. The resulting scale will be the sum of the
-     * scales of the two binary floats. The result's sign is positive if
-     * both operands have the same sign, and negative if they have different
-     * signs.
+     * Multiplies two binary floating-point numbers. The resulting scale will be
+     * the sum of the scales of the two binary floating-point numbers. The
+     * result's sign is positive if both operands have the same sign, and
+     * negative if they have different signs.
      * @param op Another binary float.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -2137,10 +2137,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the remainder that results when dividing two arbitrary-precision
-     * binary floats. The remainder is the value that remains when the
-     * absolute value of this object is divided by the absolute value of the
-     * other object; the remainder has the same sign (positive or negative)
-     * as this object's value.
+     * binary floating-point numbers. The remainder is the value that
+     * remains when the absolute value of this object is divided by the
+     * absolute value of the other object; the remainder has the same sign
+     * (positive or negative) as this object's value.
      * @param divisor An arbitrary-precision binary floating-point number.
      * @param ctx The parameter {@code ctx} is an EContext object.
      * @return The remainder of the two numbers. Signals FlagInvalid and returns
@@ -2155,10 +2155,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the remainder that results when dividing two arbitrary-precision
-     * binary floats. The remainder is the value that remains when the
-     * absolute value of this object is divided by the absolute value of the
-     * other object; the remainder has the same sign (positive or negative)
-     * as this object's value.
+     * binary floating-point numbers. The remainder is the value that
+     * remains when the absolute value of this object is divided by the
+     * absolute value of the other object; the remainder has the same sign
+     * (positive or negative) as this object's value.
      * @param divisor An arbitrary-precision binary floating-point number.
      * @param ctx The parameter {@code ctx} is an EContext object.
      * @return The remainder of the two numbers. Signals FlagInvalid and returns
