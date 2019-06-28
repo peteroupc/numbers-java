@@ -202,7 +202,8 @@ import com.upokecenter.numbers.*;
       EInteger bigintB = BigFromString(divisor);
       if (bigintB.isZero()) {
         try {
-          bigintA.Remainder(bigintB); Assert.fail("Expected divide by 0 error");
+          bigintA.Remainder(bigintB);
+          Assert.fail("Expected divide by 0 error");
         } catch (ArithmeticException ex) {
           System.out.println(ex.getMessage());
         }
@@ -1736,7 +1737,7 @@ import com.upokecenter.numbers.*;
       // not implemented yet
     }
 
-@SuppressWarnings("deprecation")  // We're testing an obsolete method here
+@SuppressWarnings("deprecation") // We're testing an obsolete method here
     @Test
     public void TestGetDigitCount() {
       RandomGenerator r = new RandomGenerator();
@@ -1823,7 +1824,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
-@SuppressWarnings("deprecation")  // We're testing an obsolete method here
+@SuppressWarnings("deprecation") // We're testing an obsolete method here
     @Test
     public void TestGetSignedBitLength() {
       for (int i = 0; i < valueBitLengths.length; i += 2) {
@@ -2011,7 +2012,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
-@SuppressWarnings("deprecation")  // We're testing an obsolete method here
+@SuppressWarnings("deprecation") // We're testing an obsolete method here
     @Test
     public void TestGetUnsignedBitLength() {
       for (int i = 0; i < valueBitLengths.length; i += 2) {
@@ -2023,7 +2024,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
-@SuppressWarnings("deprecation")  // We're testing an obsolete method here
+@SuppressWarnings("deprecation") // We're testing an obsolete method here
     @Test
     public void TestGetLowBit() {
       for (int i = 0; i < valueLowBits.length; i += 2) {

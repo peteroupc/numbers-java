@@ -159,7 +159,9 @@ at: http://peteroupc.github.io/
       while (newwordCount != 0 && words[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(newwordCount, words, false));
+      return (newwordCount == 0) ?
+              EInteger.FromInt32(0) :
+              new EInteger(newwordCount, words, false);
     }
 
     /**
@@ -253,7 +255,9 @@ at: http://peteroupc.github.io/
       while (newwordCount != 0 && newreg[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ? EInteger.FromInt32(0) : (new EInteger(newwordCount, newreg, newnegative));
+      return (newwordCount == 0) ?
+        EInteger.FromInt32(0) :
+        new EInteger(newwordCount, newreg, newnegative);
     }
 
     /**
@@ -1270,8 +1274,9 @@ at: http://peteroupc.github.io/
         while (quotwordCount != 0 && quotReg[quotwordCount - 1] == 0) {
           --quotwordCount;
         }
-        return (
-          quotwordCount != 0) ? (new EInteger(quotwordCount, quotReg, this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
+        return (quotwordCount != 0) ?
+          new EInteger(quotwordCount, quotReg, this.negative ^ bigintDivisor.negative) :
+          EInteger.FromInt32(0);
       }
       // ---- General case
       quotReg = new short[(int)(words1Size - words2Size + 1)];
@@ -1288,8 +1293,9 @@ at: http://peteroupc.github.io/
   0);
       quotwordCount = CountWords(quotReg);
       quotReg = ShortenArray(quotReg, quotwordCount);
-      return (
-        quotwordCount != 0) ? (new EInteger(quotwordCount, quotReg, this.negative ^ bigintDivisor.negative)) : EInteger.FromInt32(0);
+      return (quotwordCount != 0) ?
+        new EInteger(quotwordCount, quotReg, this.negative ^ bigintDivisor.negative) :
+        EInteger.FromInt32(0);
     }
 
     private static short LinearMultiplySubtractMinuend1Bigger(
@@ -4279,11 +4285,12 @@ WordsShiftRightOne(bu, buc);
       short resultHigh = 0;
       {
         int p;
-      short c;
+        short c;
         int d;
         p = bitlenLow * 0x84fb;
         d = ((int)p >> 16) & 0xffff;
-        c = (short)d; d
+        c = (short)d;
+        d
           = ((int)d >> 16) & 0xffff;
         p = bitlenLow * 0x209a;
         p += ((int)c) & 0xffff;
@@ -4304,7 +4311,9 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         p = ((int)c) & 0xffff;
         c = (short)p;
-        resultLow = c; c = (short)d; d
+        resultLow = c;
+        c = (short)d;
+        d
           = ((int)d >> 16) & 0xffff;
         p = bitlenHigh * 0x9a;
         p += ((int)c) & 0xffff;
@@ -4776,7 +4785,7 @@ WordsShiftRightOne(bu, buc);
       int bstart) {
       {
         int p;
-      short c;
+        short c;
         int d;
         int a0 = ((int)words1[astart]) & 0xffff;
         int a1 = ((int)words1[astart + 1]) & 0xffff;
@@ -4911,7 +4920,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
                     3]) & SMask);
         p += d;
-                    result[rstart + 6] = (short)p;
+        result[rstart + 6] = (short)p;
         result[rstart + 7] = (short)(p >>
                     16);
       }
@@ -4926,16 +4935,16 @@ WordsShiftRightOne(bu, buc);
       int bstart) {
       {
         int p;
-      short c;
+        short c;
         int d;
         int SMask = ShortMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart]) &
                     SMask);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           SMask;
         result[rstart] = c;
-          c = (short)d;
+        c = (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 1]) &
                     SMask);
@@ -5299,7 +5308,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
                     7]) & SMask);
         p += d;
-                    result[rstart + 14] = (short)p;
+        result[rstart + 14] = (short)p;
         result[rstart + 15] =
           (short)(p >> 16);
       }
@@ -5314,30 +5323,31 @@ WordsShiftRightOne(bu, buc);
       int astart) {
       {
         int p;
-      short c;
-        int d; int e;
+        short c;
+        int d;
+        int e;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
                     0xffff);
         result[rstart] = (short)p;
-                    e = ((int)p >>
+        e = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<=
           1;
         e += ((int)c) & 0xffff;
-          c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     1]) & 0xffff);
         p += e;
-                    result[rstart + 2] = (short)p;
+        result[rstart + 2] = (short)p;
         result[rstart + 3] = (short)(p >>
                     16);
       }
@@ -5350,30 +5360,31 @@ WordsShiftRightOne(bu, buc);
       int astart) {
       {
         int p;
-      short c;
-        int d; int e;
+        short c;
+        int d;
+        int e;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
                     0xffff);
         result[rstart] = (short)p;
-                    e = ((int)p >>
+        e = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<=
           1;
         e += ((int)c) & 0xffff;
-          c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 2]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<=
@@ -5391,7 +5402,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 3]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     2]) & 0xffff);
@@ -5402,14 +5413,14 @@ WordsShiftRightOne(bu, buc);
                     1));
         c <<= 1;
         e += ((int)c) & 0xffff;
-                    c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 3] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
@@ -5426,7 +5437,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
@@ -5438,7 +5449,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
         p += e;
-                    result[rstart + 6] = (short)p;
+        result[rstart + 6] = (short)p;
         result[rstart + 7] = (short)(p >>
                     16);
       }
@@ -5451,30 +5462,31 @@ WordsShiftRightOne(bu, buc);
       int astart) {
       {
         int p;
-      short c;
-        int d; int e;
+        short c;
+        int d;
+        int e;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
                     0xffff);
         result[rstart] = (short)p;
-                    e = ((int)p >>
+        e = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<=
           1;
         e += ((int)c) & 0xffff;
-          c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 2]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<=
@@ -5492,7 +5504,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 3]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     2]) & 0xffff);
@@ -5503,14 +5515,14 @@ WordsShiftRightOne(bu, buc);
                     1));
         c <<= 1;
         e += ((int)c) & 0xffff;
-                    c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 3] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 4]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
@@ -5533,7 +5545,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 5]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     4]) & 0xffff);
@@ -5549,14 +5561,14 @@ WordsShiftRightOne(bu, buc);
                     1));
         c <<= 1;
         e += ((int)c) & 0xffff;
-                    c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 5] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 6]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     5]) & 0xffff);
@@ -5584,7 +5596,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 7]) &
                     0xffff);
         c = (short)p;
-                    d = ((int)p >> 16) &
+        d = ((int)p >> 16) &
           0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
@@ -5605,14 +5617,14 @@ WordsShiftRightOne(bu, buc);
                     1));
         c <<= 1;
         e += ((int)c) & 0xffff;
-                    c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 7] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
@@ -5640,7 +5652,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
@@ -5656,14 +5668,14 @@ WordsShiftRightOne(bu, buc);
                     1));
         c <<= 1;
         e += ((int)c) & 0xffff;
-                    c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 9] = c;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
@@ -5686,7 +5698,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
@@ -5697,14 +5709,14 @@ WordsShiftRightOne(bu, buc);
                     1));
         c <<= 1;
         e += ((int)c) & 0xffff;
-                    c = (short)e;
+        c = (short)e;
         e = d + (((int)e >> 16) &
                     0xffff);
         result[rstart + 11] = c;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
@@ -5721,7 +5733,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 6]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-                    d = ((int)p >>
+        d = ((int)p >>
                     16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
@@ -5733,7 +5745,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 7]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         p += e;
-                    result[rstart + 14] = (short)p;
+        result[rstart + 14] = (short)p;
         result[rstart + 15] =
           (short)(p >> 16);
       }

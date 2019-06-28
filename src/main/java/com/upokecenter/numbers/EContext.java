@@ -238,8 +238,6 @@ at: http://peteroupc.github.io/
 
     private final EInteger exponentMin;
 
-    private int flags;
-
     private final boolean hasExponentRange;
     private final boolean hasFlags;
 
@@ -250,6 +248,8 @@ at: http://peteroupc.github.io/
     private final boolean simplified;
 
     private final int traps;
+
+    private int flags;
 
     /**
      * Initializes a new instance of the {@link EContext} class.
