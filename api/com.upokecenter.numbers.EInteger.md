@@ -16,12 +16,12 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  fashion due to garbage collection. This is relevant for applications
  that use many-bit-long numbers as secret parameters. </li> <li>The
  methods in this class (especially those that involve arithmetic) are
- not guaranteed to run in constant time for all relevant inputs. Certain
- attacks that involve encrypted communications have exploited the timing
- and other aspects of such communications to derive keying material or
- cleartext indirectly. </li> </ul> <p>Applications should instead use
- dedicated security libraries to handle big numbers in
- security-sensitive algorithms. </p>
+ not guaranteed to be "constant-time" (non-data-dependent) for all
+ relevant inputs. Certain attacks that involve encrypted communications
+ have exploited the timing and other aspects of such communications to
+ derive keying material or cleartext indirectly. </li> </ul>
+ <p>Applications should instead use dedicated security libraries to
+ handle big numbers in security-sensitive algorithms. </p>
 
 ## Methods
 
@@ -590,7 +590,7 @@ Compares an arbitrary-precision integer with this instance.
 ### Add
     public EInteger Add​(int intValue)
 Adds this object and another object.<p/><pre>EInteger result =
- EInteger.FromString("5").Add(200);</pre>
+ EInteger.FromString("5").Add(200);</pre> .
 
 **Parameters:**
 
@@ -617,7 +617,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
     public EInteger Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision integer
  object.<p/><pre>EInteger result =
- EInteger.FromString("5").Multiply(200);</pre>
+ EInteger.FromString("5").Multiply(200);</pre> .
 
 **Parameters:**
 

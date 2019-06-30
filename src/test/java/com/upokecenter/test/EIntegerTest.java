@@ -812,6 +812,91 @@ import com.upokecenter.numbers.*;
               bigintA.GetSignedBitLengthAsEInteger().compareTo(63) <= 0);
       }
     }
+
+    @Test
+    public void TestCanFitInInt64() {
+      EInteger ei;
+      ei = EInteger.FromString("9223372036854775807");
+      if (!(ei.CanFitInInt64())) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        63,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      ei = EInteger.FromString("9223372036854775808");
+      if (ei.CanFitInInt64()) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        64,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      ei = EInteger.FromString("-9223372036854775807");
+      if (!(ei.CanFitInInt64())) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        63,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      ei = EInteger.FromString("-9223372036854775808");
+      if (!(ei.CanFitInInt64())) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        63,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      ei = EInteger.FromString("-9223372036854775809");
+      if (ei.CanFitInInt64()) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        64,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      ei = EInteger.FromString("-9223373136366403584");
+      if (ei.CanFitInInt64()) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        64,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      ei = EInteger.FromString("9223373136366403584");
+      if (ei.CanFitInInt64()) {
+ Assert.fail(ei.toString());
+ }
+      Assert.assertEquals(
+        64,
+        ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      String[] strings = new String[] {
+   "8000FFFFFFFF0000",
+   "8000AAAAAAAA0000",
+   "8000800080000000",
+   "8000000100010000",
+   "8000FFFF00000000",
+   "80000000FFFF0000",
+   "8000800000000000",
+   "8000000080000000",
+   "8000AAAA00000000",
+   "80000000AAAA0000",
+   "8000000100000000",
+   "8000000000010000",
+ };
+      for (Object str : strings) {
+        ei = EInteger.FromRadixString(str, 16);
+        if (ei.CanFitInInt64()) {
+ Assert.fail();
+ }
+        Assert.assertEquals(
+         64,
+         ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+        ei = ei.Negate();
+        if (ei.CanFitInInt64()) {
+ Assert.fail();
+ }
+        Assert.assertEquals(
+         64,
+         ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
+      }
+    }
+
     @Test
     public void TestCompareTo() {
       RandomGenerator r = new RandomGenerator();
