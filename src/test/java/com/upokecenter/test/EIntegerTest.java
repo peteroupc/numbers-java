@@ -879,7 +879,7 @@ import com.upokecenter.numbers.*;
    "8000000100000000",
    "8000000000010000",
  };
-      for (Object str : strings) {
+      for (String str : strings) {
         ei = EInteger.FromRadixString(str, 16);
         if (ei.CanFitInInt64()) {
  Assert.fail();
