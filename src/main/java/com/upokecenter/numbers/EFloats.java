@@ -251,7 +251,7 @@ private EFloats() {
      * Returns the base-2 exponent of an arbitrary-precision binary number (when
      * that number is expressed in scientific notation with one nonzero
      * digit before the radix point). For example, returns 3 for the numbers
-     * <code>1.11b * 2^3</code> and <code>111 * 2^1</code>
+     * <code>1.11b * 2^3</code> and <code>111 * 2^1</code> .
      * @param ed An arbitrary-precision binary number.
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.
@@ -771,7 +771,7 @@ private EFloats() {
      * base-2 numbers <code>01001</code> and <code>111001</code>). The logical AND
      * operation sets each bit of the result to 1 if the corresponding bits
      * of each logical operand are both 1, and to 0 otherwise. For example,
-     * <code>01001 AND 111010 = 01000</code>
+     * <code>01001 AND 111010 = 01000</code> .
      * @param ed1 The first logical operand to the logical AND operation.
      * @param ed2 The second logical operand to the logical AND operation.
      * @param ec An arithmetic context to control the maximum precision of
@@ -811,7 +811,7 @@ private EFloats() {
      * bit of the result to 1 if the corresponding bit is 0, and to 0
      * otherwise; it can set no more bits than the maximum precision,
      * however. For example, if the maximum precision is 8 bits, then <code>NOT
-     * 111010 = 11000101</code>
+     * 111010 = 11000101</code> .
      * @param ed1 The operand to the logical NOT operation.
      * @param ec An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this
@@ -852,6 +852,7 @@ private EFloats() {
      * logical exclusive-OR operation sets each digit of the result to 1 if
      * either corresponding digit of the logical operands, but not both, is
      * 1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
+     * .
      * @param ed1 The first logical operand to the logical exclusive-OR operation.
      * @param ed2 The second logical operand to the logical exclusive-OR operation.
      * @param ec An arithmetic context to control the maximum precision of
@@ -890,7 +891,7 @@ private EFloats() {
      * base-2 numbers <code>01001</code> and <code>111001</code>). The logical OR
      * operation sets each bit of the result to 1 if either or both of the
      * corresponding bits of each logical operand are 1, and to 0 otherwise.
-     * For example, <code>01001 OR 111010 = 111011</code>
+     * For example, <code>01001 OR 111010 = 111011</code> .
      * @param ed1 The first logical operand to the logical OR operation.
      * @param ed2 The second logical operand to the logical OR operation.
      * @param ec An arithmetic context to control the maximum precision of

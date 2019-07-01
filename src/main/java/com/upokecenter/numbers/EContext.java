@@ -455,9 +455,9 @@ public final void setFlags(int value) {
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
      * href='http://speleotrove.com/decimal/dax3274.html'>
-     * <code>http://speleotrove.com/decimal/dax3274.html</code> </a>
+     * <code>http://speleotrove.com/decimal/dax3274.html</code> </a> .
      * @return {@code true} if to use a "simplified" arithmetic; otherwise, {@code
-     * false} .. In the simplified arithmetic, infinity, not-a-number, and
+     * false} In the simplified arithmetic, infinity, not-a-number, and
      * subnormal numbers are not allowed, and negative zero is treated the
      * same as positive zero. For further details, see . {@code true} if a
      * "simplified" arithmetic will be used; otherwise, {@code false} .

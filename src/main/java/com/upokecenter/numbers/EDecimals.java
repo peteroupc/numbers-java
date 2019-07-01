@@ -268,7 +268,7 @@ private EDecimals() {
      * Returns the base-10 exponent of an arbitrary-precision decimal number (when
      * that number is expressed in scientific notation with one digit before
      * the radix point). For example, returns 3 for the numbers <code>6.66E +
-     * 3</code> and <code>666E + 1</code>
+     * 3</code> and <code>666E + 1</code> .
      * @param ed An arbitrary-precision decimal number.
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.
@@ -788,7 +788,7 @@ private EDecimals() {
      * but not <code>02001</code> or <code>99999</code>). The logical AND operation
      * sets each digit of the result to 1 if the corresponding digits of
      * each logical operand are both 1, and to 0 otherwise. For example,
-     * <code>01001 AND 111010 = 01000</code>
+     * <code>01001 AND 111010 = 01000</code> .
      * @param ed1 The first logical operand to the logical AND operation.
      * @param ed2 The second logical operand to the logical AND operation.
      * @param ec An arithmetic context to control the maximum precision of
@@ -826,7 +826,7 @@ private EDecimals() {
      * NOT operation sets each digit of the result to 1 if the corresponding
      * digit is 0, and to 0 otherwise; it can set no more digits than the
      * maximum precision, however. For example, if the maximum precision is
-     * 8 digits, then <code>NOT 111010 = 11000101</code>
+     * 8 digits, then <code>NOT 111010 = 11000101</code> .
      * @param ed1 The logical operand to the logical NOT operation.
      * @param ec An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this
@@ -864,7 +864,7 @@ private EDecimals() {
      * <code>111001</code> , but not <code>02001</code> or <code>99999</code>). The logical
      * exclusive-OR operation sets each digit of the result to 1 if either
      * corresponding digit of the logical operands, but not both, is 1, and
-     * to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
+     * to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code> .
      * @param ed1 The first logical operand to the logical exclusive-OR operation.
      * @param ed2 The second logical operand to the logical exclusive-OR operation.
      * @param ec An arithmetic context to control the maximum precision of
@@ -899,7 +899,7 @@ private EDecimals() {
      * but not <code>02001</code> or <code>99999</code>). The logical OR operation sets
      * each digit of the result to 1 if either or both of the corresponding
      * digits of the logical operands are 1, and to 0 otherwise. For
-     * example, <code>01001 OR 111010 = 111011</code>
+     * example, <code>01001 OR 111010 = 111011</code> .
      * @param ed1 The first logical operand to the logical OR operation.
      * @param ed2 The second logical operand to the logical OR operation.
      * @param ec An arithmetic context to control the maximum precision of

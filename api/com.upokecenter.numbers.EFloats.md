@@ -404,7 +404,7 @@ Returns whether the given arbitrary-precision number object is zero
 Returns the base-2 exponent of an arbitrary-precision binary number (when
  that number is expressed in scientific notation with one nonzero
  digit before the radix point). For example, returns 3 for the numbers
- <code>1.11b * 2^3</code> and <code>111 * 2^1</code>
+ <code>1.11b * 2^3</code> and <code>111 * 2^1</code> .
 
 **Parameters:**
 
@@ -753,7 +753,7 @@ Performs a logical AND operation on two binary numbers in the form of <i>
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical AND
  operation sets each bit of the result to 1 if the corresponding bits
  of each logical operand are both 1, and to 0 otherwise. For example,
- <code>01001 AND 111010 = 01000</code>
+ <code>01001 AND 111010 = 01000</code> .
 
 **Parameters:**
 
@@ -782,7 +782,7 @@ Performs a logical NOT operation on a binary number in the form of a <i>
  bit of the result to 1 if the corresponding bit is 0, and to 0
  otherwise; it can set no more bits than the maximum precision,
  however. For example, if the maximum precision is 8 bits, then <code>NOT
- 111010 = 11000101</code>
+ 111010 = 11000101</code> .
 
 **Parameters:**
 
@@ -811,6 +811,7 @@ Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
  logical exclusive-OR operation sets each digit of the result to 1 if
  either corresponding digit of the logical operands, but not both, is
  1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
+ .
 
 **Parameters:**
 
@@ -838,7 +839,7 @@ Performs a logical OR operation on two binary numbers in the form of <i>
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical OR
  operation sets each bit of the result to 1 if either or both of the
  corresponding bits of each logical operand are 1, and to 0 otherwise.
- For example, <code>01001 OR 111010 = 111011</code>
+ For example, <code>01001 OR 111010 = 111011</code> .
 
 **Parameters:**
 

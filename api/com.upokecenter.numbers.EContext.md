@@ -414,12 +414,12 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
  zero. For further details, see
- <code>http://speleotrove.com/decimal/dax3274.html</code>
+ <code>http://speleotrove.com/decimal/dax3274.html</code>  .
 
 **Returns:**
 
 * <code>true</code> if to use a "simplified" arithmetic; otherwise, <code>
- false</code> .. In the simplified arithmetic, infinity, not-a-number, and
+ false</code> In the simplified arithmetic, infinity, not-a-number, and
  subnormal numbers are not allowed, and negative zero is treated the
  same as positive zero. For further details, see . <code>true</code> if a
  "simplified" arithmetic will be used; otherwise, <code>false</code> .

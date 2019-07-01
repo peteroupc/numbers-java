@@ -60,12 +60,13 @@ at: http://peteroupc.github.io/
    * be cleared in a timely fashion due to garbage collection. This is
    * relevant for applications that use many-bit-long numbers as secret
    * parameters. </li> <li>The methods in this class (especially those that
-   * involve arithmetic) are not guaranteed to run in constant time for all
-   * relevant inputs. Certain attacks that involve encrypted communications
-   * have exploited the timing and other aspects of such communications to
-   * derive keying material or cleartext indirectly. </li> </ul>
-   * <p>Applications should instead use dedicated security libraries to
-   * handle big numbers in security-sensitive algorithms. </p>
+   * involve arithmetic) are not guaranteed to be "constant-time"
+   * (non-data-dependent) for all relevant inputs. Certain attacks that
+   * involve encrypted communications have exploited the timing and other
+   * aspects of such communications to derive keying material or cleartext
+   * indirectly. </li> </ul> <p>Applications should instead use dedicated
+   * security libraries to handle big numbers in security-sensitive
+   * algorithms. </p>
    */
   public final class EFloat implements Comparable<EFloat> {
     //----------------------------------------------------------------
@@ -726,7 +727,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Adds this object and another object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Add(200);</pre> </p>
+     * EInteger.FromString("5").Add(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      */
@@ -748,7 +749,7 @@ at: http://peteroupc.github.io/
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
      * object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Multiply(200);</pre> </p>
+     * EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -2173,7 +2174,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Calculates the remainder of a number by the formula <code>"this" - (("this" /
-     * "divisor") * "divisor")</code>
+     * "divisor") * "divisor")</code> .
      * @param divisor The number to divide by.
      * @return An arbitrary-precision binary floating-point number.
      */

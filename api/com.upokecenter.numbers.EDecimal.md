@@ -96,30 +96,30 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  fashion due to garbage collection. This is relevant for applications
  that use many-digit-long numbers as secret parameters. </li> <li>The
  methods in this class (especially those that involve arithmetic) are
- not guaranteed to run in constant time for all relevant inputs. Certain
- attacks that involve encrypted communications have exploited the timing
- and other aspects of such communications to derive keying material or
- cleartext indirectly. </li> </ul> <p>Applications should instead use
- dedicated security libraries to handle big numbers in
- security-sensitive algorithms. </p> <p><b>Forms of numbers</b> </p>
- <p>There are several other types of numbers that are mentioned in this
- class and elsewhere in this documentation. For reference, they are
- specified here. </p> <p><b>Unsigned integer</b> : An integer that's
- always 0 or greater, with the following maximum values: </p> <ul>
- <li>8-bit unsigned integer, or <i> byte </i> : 255. </li> <li>16-bit
- unsigned integer: 65535. </li> <li>32-bit unsigned integer: (2 <sup> 32
- </sup> -1). </li> <li>64-bit unsigned integer: (2 <sup> 64 </sup> -1).
- </li> </ul> <p><b>Signed integer</b> : An integer in <i>
- two's-complement form </i> , with the following ranges: </p> <ul>
- <li>8-bit signed integer: -128 to 127. </li> <li>16-bit signed integer:
- -32768 to 32767. </li> <li>32-bit signed integer: -2 <sup> 31 </sup> to
- (2 <sup> 31 </sup> - 1). </li> <li>64-bit signed integer: -2 <sup> 63
- </sup> to (2 <sup> 63 </sup> - 1). </li> </ul> <p><b>Two's complement
- form</b> : In <i> two' s-complement form </i> , nonnegative numbers
- have the highest (most significant) bit set to zero, and negative
- numbers have that bit (and all bits beyond) set to one, and a negative
- number is stored in such form by decreasing its absolute value by 1 and
- swapping the bits of the resulting number. </p> <p><b>64-bit
+ not guaranteed to be "constant-time" (non-data-dependent) for all
+ relevant inputs. Certain attacks that involve encrypted communications
+ have exploited the timing and other aspects of such communications to
+ derive keying material or cleartext indirectly. </li> </ul>
+ <p>Applications should instead use dedicated security libraries to
+ handle big numbers in security-sensitive algorithms. </p> <p><b>Forms
+ of numbers</b> </p> <p>There are several other types of numbers that
+ are mentioned in this class and elsewhere in this documentation. For
+ reference, they are specified here. </p> <p><b>Unsigned integer</b> :
+ An integer that's always 0 or greater, with the following maximum
+ values: </p> <ul> <li>8-bit unsigned integer, or <i> byte </i> : 255.
+ </li> <li>16-bit unsigned integer: 65535. </li> <li>32-bit unsigned
+ integer: (2 <sup> 32 </sup> -1). </li> <li>64-bit unsigned integer: (2
+ <sup> 64 </sup> -1). </li> </ul> <p><b>Signed integer</b> : An integer
+ in <i> two's-complement form </i> , with the following ranges: </p>
+ <ul> <li>8-bit signed integer: -128 to 127. </li> <li>16-bit signed
+ integer: -32768 to 32767. </li> <li>32-bit signed integer: -2 <sup> 31
+ </sup> to (2 <sup> 31 </sup> - 1). </li> <li>64-bit signed integer: -2
+ <sup> 63 </sup> to (2 <sup> 63 </sup> - 1). </li> </ul> <p><b>Two's
+ complement form</b> : In <i> two' s-complement form </i> , nonnegative
+ numbers have the highest (most significant) bit set to zero, and
+ negative numbers have that bit (and all bits beyond) set to one, and a
+ negative number is stored in such form by decreasing its absolute value
+ by 1 and swapping the bits of the resulting number. </p> <p><b>64-bit
  floating-point number</b> : A 64-bit binary floating-point number, in
  the form <i> significand </i> * 2 <sup> <i> exponent </i> </sup> . The
  significand is 53 bits long (Precision) and the exponent ranges from
@@ -226,10 +226,10 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  (positive or negative) of another number.
 * `static EDecimal Create​(int mantissaSmall,
       int exponentSmall) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa
+ Creates a number with the value exponent*10^mantissa .
 * `static EDecimal Create​(EInteger mantissa,
       EInteger exponent) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa
+ Creates a number with the value exponent*10^mantissa .
 * `static EDecimal CreateNaN​(EInteger diag)`<br>
  Creates a not-a-number arbitrary-precision decimal number.
 * `static EDecimal CreateNaN​(EInteger diag,
@@ -545,7 +545,7 @@ Renamed to FromEFloat.
 * `EDecimal RemainderNaturalScale​(EDecimal divisor) "this" - (("this" /
  "divisor") * "divisor")`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
- "divisor") * "divisor")
+ "divisor") * "divisor") .
 * `EDecimal RemainderNaturalScale​(EDecimal divisor,
                      EContext ctx)`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
@@ -832,7 +832,7 @@ Gets the absolute value of this object's unscaled value, or mantissa. If
 
 ### Create
     public static EDecimal Create​(int mantissaSmall, int exponentSmall)
-Creates a number with the value <code>exponent*10^mantissa</code>
+Creates a number with the value <code>exponent*10^mantissa</code> .
 
 **Parameters:**
 
@@ -846,7 +846,7 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 ### Create
     public static EDecimal Create​(EInteger mantissa, EInteger exponent)
-Creates a number with the value <code>exponent*10^mantissa</code>
+Creates a number with the value <code>exponent*10^mantissa</code> .
 
 **Parameters:**
 
@@ -2950,7 +2950,7 @@ Finds the remainder that results when dividing two arbitrary-precision
 ### RemainderNaturalScale
     public EDecimal RemainderNaturalScale​(EDecimal divisor)
 Calculates the remainder of a number by the formula <code>"this" - (("this" /
- "divisor") * "divisor")</code>
+ "divisor") * "divisor")</code> .
 
 **Parameters:**
 
