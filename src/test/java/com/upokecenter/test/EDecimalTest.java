@@ -6194,21 +6194,22 @@ EFloat.Create(
     public static EDecimal Ulps(EDecimal expected, EDecimal actual, int
       precision) {
       if (expected == null) {
-  throw new NullPointerException("expected");
-}
+        throw new NullPointerException("expected");
+      }
       if (actual == null) {
-  throw new NullPointerException("actual");
-}
-if (precision <= 0) {
+        throw new NullPointerException("actual");
+      }
+      if (precision <= 0) {
         throw new java.lang.IllegalArgumentException("precision");
       }
       EInteger k = EInteger.FromInt32(0);
       while (true) {
-        EDecimal pk = EDecimal.Create(1, k.Negate()).Multiply(expected).Abs();
+        EDecimal pk = EDecimal.Create(1, k.Negate())
+          .Multiply(expected).Abs();
         if (pk.compareTo(1) >= 0 && pk.compareTo(10) < 0) {
           break;
         }
-        k = (pk.compareTo(1) < 0) ? k.Subtract(1) : (kAdd(1);
+        k = k.Add((pk.compareTo(1) < 0) ? -1 : 1);
       }
       return expected.Subtract(actual).Divide(EDecimal.Create(1,
         k.Subtract(precision - 1)),
