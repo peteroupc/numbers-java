@@ -6200,18 +6200,20 @@ EFloat.Create(
         throw new NullPointerException("actual");
       }
       if (precision <= 0) {
-        throw new java.lang.IllegalArgumentException("precision");
+        throw new IllegalArgumentException("precision");
       }
       EInteger k = EInteger.FromInt32(0);
       while (true) {
-        EDecimal pk = EDecimal.Create(1, k.Negate())
+        EDecimal pk = EDecimal.Create(EInteger.FromInt32(1), k.Negate())
           .Multiply(expected).Abs();
-        if (pk.compareTo(1) >= 0 && pk.compareTo(10) < 0) {
+        if (pk.compareTo(EDecimal.FromInt32(1)) >= 0 &&
+            pk.compareTo(EDecimal.FromInt32(10)) < 0) {
           break;
         }
-        k = k.Add((pk.compareTo(1) < 0) ? -1 : 1);
+        k = k.Add((pk.compareTo(EDecimal.FromInt32(1)) < 0) ? -1 : 1);
       }
-      return expected.Subtract(actual).Divide(EDecimal.Create(1,
+      return expected.Subtract(actual).Divide(EDecimal.Create(
+        EInteger.FromInt32(1),
         k.Subtract(precision - 1)),
           EContext.ForPrecisionAndRounding(5, ERounding.Up)).Abs();
     }
