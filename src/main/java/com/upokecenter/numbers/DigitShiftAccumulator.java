@@ -52,9 +52,9 @@ at: http://peteroupc.github.io/
     }
 
     public DigitShiftAccumulator(
-  EInteger bigint,
-  int lastDiscarded,
-  int olderDiscarded) {
+      EInteger bigint,
+      int lastDiscarded,
+      int olderDiscarded) {
       if (bigint.CanFitInInt32()) {
         this.shiftedSmall = bigint.ToInt32Checked();
         if (this.shiftedSmall < 0) {
@@ -71,9 +71,9 @@ at: http://peteroupc.github.io/
     }
 
     public DigitShiftAccumulator(
-  int smallint,
-  int lastDiscarded,
-  int olderDiscarded) {
+      int smallint,
+      int lastDiscarded,
+      int olderDiscarded) {
       this.shiftedSmall = smallint;
       if (this.shiftedSmall < 0) {
         throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
@@ -155,9 +155,9 @@ at: http://peteroupc.github.io/
     }
 
     public void ShiftToDigits(
-  FastInteger bits,
-  FastInteger preShift,
-  boolean truncate) {
+      FastInteger bits,
+      FastInteger preShift,
+      boolean truncate) {
       if (preShift != null && preShift.signum() > 0) {
         FastInteger kdl = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
         this.knownDigitLength = kdl;
@@ -332,7 +332,8 @@ at: http://peteroupc.github.io/
         if (digits > 50) {
           // To avoid having to calculate a very big power of 10,
           // check the digit count to see if doing so can be avoided
-          EInteger bigBitLength = this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
+          EInteger bigBitLength =
+this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
           // NOTE: Overflowing bigBitLength will be MaxValue, which is OK
           // for the use of this variable
           int bitLength = bigBitLength.CanFitInInt32() ?

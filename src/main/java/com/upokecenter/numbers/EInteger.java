@@ -15,28 +15,29 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-  /**
-   * Represents an arbitrary-precision integer. (The "E" stands for "extended",
-   * and has this prefix to group it with the other classes common to this
-   * library, particularly EDecimal, EFloat, and ERational.) <p>Instances of
-   * this class are immutable, so they are inherently safe for use by
-   * multiple threads. Multiple instances of this object with the same value
-   * are interchangeable, but they should be compared using the "Equals"
-   * method rather than the "==" operator. </p> <p><b>Security note</b> </p>
-   * <p>It is not recommended to implement security-sensitive algorithms
-   * using the methods in this class, for several reasons: </p> <ul>
-   * <li><code>EInteger</code> objects are immutable, so they can't be modified,
-   * and the memory they occupy is not guaranteed to be cleared in a timely
-   * fashion due to garbage collection. This is relevant for applications
-   * that use many-bit-long numbers as secret parameters. </li> <li>The
-   * methods in this class (especially those that involve arithmetic) are
-   * not guaranteed to be "constant-time" (non-data-dependent) for all
-   * relevant inputs. Certain attacks that involve encrypted communications
-   * have exploited the timing and other aspects of such communications to
-   * derive keying material or cleartext indirectly. </li> </ul>
-   * <p>Applications should instead use dedicated security libraries to
-   * handle big numbers in security-sensitive algorithms. </p>
-   */
+    /**
+     * Represents an arbitrary-precision integer. (The "E" stands for "extended",
+     * and has this prefix to group it with the other classes common to
+     * this library, particularly EDecimal, EFloat, and ERational.)
+     * <p>Instances of this class are immutable, so they are inherently
+     * safe for use by multiple threads. Multiple instances of this object
+     * with the same value are interchangeable, but they should be compared
+     *  using the "Equals" method rather than the "==" operator. </p>
+     * <p><b>Security note</b> </p> <p>It is not recommended to implement
+     * security-sensitive algorithms using the methods in this class, for
+     * several reasons: </p> <ul> <li><code>EInteger</code> objects are
+     * immutable, so they can't be modified, and the memory they occupy is
+     * not guaranteed to be cleared in a timely fashion due to garbage
+     * collection. This is relevant for applications that use many-bit-long
+     * numbers as secret parameters. </li> <li>The methods in this class
+     * (especially those that involve arithmetic) are not guaranteed to be
+     *  "constant-time" (non-data-dependent) for all relevant inputs.
+     * Certain attacks that involve encrypted communications have exploited
+     * the timing and other aspects of such communications to derive keying
+     * material or cleartext indirectly. </li> </ul> <p>Applications should
+     * instead use dedicated security libraries to handle big numbers in
+     * security-sensitive algorithms. </p>
+     */
   public final class EInteger implements Comparable<EInteger> {
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -46,7 +47,8 @@ at: http://peteroupc.github.io/
 
     private static final int ShortMask = 0xffff;
 
-    private static final int[] ValueCharToDigit = { 36, 36, 36, 36, 36, 36,
+    private static final int[] ValueCharToDigit = {
+      36, 36, 36, 36, 36, 36,
       36,
       36,
       36, 36, 36, 36, 36, 36, 36, 36,
@@ -58,15 +60,18 @@ at: http://peteroupc.github.io/
       36, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
       25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36,
       36, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-      25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36, };
+      25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36,
+    };
 
-    private static final int[] ValueMaxSafeInts = { 1073741823, 715827881,
+    private static final int[] ValueMaxSafeInts = {
+      1073741823, 715827881,
       536870911, 429496728, 357913940, 306783377, 268435455, 238609293,
       214748363, 195225785, 178956969, 165191048, 153391688, 143165575,
       134217727, 126322566, 119304646, 113025454, 107374181, 102261125,
       97612892, 93368853, 89478484, 85899344, 82595523, 79536430, 76695843,
       74051159, 71582787, 69273665, 67108863, 65075261, 63161282, 61356674,
-      59652322, };
+      59652322,
+    };
 
     private static final EInteger ValueOne = new EInteger(
       1, new short[] { 1 }, false);
@@ -113,7 +118,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return {@code true} if this value is even; otherwise, {@code false} .
+     * @return {@code true} if this value is even; otherwise,
+      {@code false} .
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -123,7 +129,7 @@ at: http://peteroupc.github.io/
      * Gets a value indicating whether this object's value is a power of two, and
      * greater than 0.
      * @return {@code true} if this object' s value is a power of two, and greater
-     * than 0; otherwise, {@code false} .
+     * than 0; otherwise, {@code false}.
      */
     public final boolean isPowerOfTwo() {
         return !this.negative && this.wordCount > 0 &&
@@ -133,7 +139,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return {@code true} if this value is 0; otherwise, {@code false} .
+     * @return {@code true} if this value is 0; otherwise,
+      {@code false} .
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -159,16 +166,15 @@ at: http://peteroupc.github.io/
       while (newwordCount != 0 && words[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ?
-              EInteger.FromInt32(0) :
+      return (newwordCount == 0) ? EInteger.FromInt32(0) :
               new EInteger(newwordCount, words, false);
     }
 
     /**
      * Initializes an arbitrary-precision integer from an array of bytes.
      * @param bytes A byte array consisting of the two's-complement form (see
-     * {@link com.upokecenter.numbers.EDecimal "Forms of numbers" }) of the
-     * arbitrary-precision integer to create. The byte array is encoded
+     *  {@link com.upokecenter.numbers.EDecimal "Forms of numbers" }) of
+     * the arbitrary-precision integer to create. The byte array is encoded
      * using the following rules: <ul> <li>Positive numbers have the first
      * byte's highest bit cleared, and negative numbers have the bit set.
      * </li> <li>The last byte contains the lowest 8-bits, the next-to-last
@@ -178,20 +184,20 @@ at: http://peteroupc.github.io/
      * {@code 0xc8} , so an additional 0 is added at the start to ensure
      * it's interpreted as positive.) </li> <li>To encode negative numbers,
      * take the absolute value of the number, subtract by 1, encode the
-     * number into bytes, and toggle each bit of each byte. Any further bits
-     * that appear beyond the most significant bit of the number will be all
-     * ones. For example, the number -450 can be encoded as {@code 0xfe,
-     * 0x70} and -52869 as {@code 0xff, 0x31, 0x7b} . (Note that the second
-     * example contains a cleared high bit in {@code 0x31, 0x7b} , so an
-     * additional 0xff is added at the start to ensure it's interpreted as
-     * negative.) </li> </ul> <p>For little-endian, the byte order is
-     * reversed from the byte order just discussed. </p> .
+     * number into bytes, and toggle each bit of each byte. Any further
+     * bits that appear beyond the most significant bit of the number will
+     * be all ones. For example, the number -450 can be encoded as {@code
+     * 0xfe, 0x70} and -52869 as {@code 0xff, 0x31, 0x7b} . (Note that the
+     * second example contains a cleared high bit in {@code 0x31, 0x7b} ,
+     * so an additional 0xff is added at the start to ensure it's
+     * interpreted as negative.) </li> </ul> <p>For little-endian, the byte
+     * order is reversed from the byte order just discussed. </p> .
      * @param littleEndian If true, the byte order is little-endian, or
-     * least-significant-byte first. If false, the byte order is big-endian,
-     * or most-significant-byte first.
+     * least-significant-byte first. If false, the byte order is
+     * big-endian, or most-significant-byte first.
      * @return An arbitrary-precision integer. Returns 0 if the byte array's length
      * is 0.
-     * @throws java.lang.NullPointerException The parameter {@code bytes} is null.
+     * @throws NullPointerException The parameter {@code bytes} is null.
      */
     public static EInteger FromBytes(byte[] bytes, boolean littleEndian) {
       if (bytes == null) {
@@ -255,8 +261,7 @@ at: http://peteroupc.github.io/
       while (newwordCount != 0 && newreg[newwordCount - 1] == 0) {
         --newwordCount;
       }
-      return (newwordCount == 0) ?
-        EInteger.FromInt32(0) :
+      return (newwordCount == 0) ? EInteger.FromInt32(0) :
         new EInteger(newwordCount, newreg, newnegative);
     }
 
@@ -391,12 +396,12 @@ at: http://peteroupc.github.io/
      * Converts a string to an arbitrary-precision integer in a given radix.
      * @param str A string described by the FromRadixSubstring method.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-     * A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16.
+     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
+     * letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+     * 0-9, then A-F in radix 16.
      * @return An arbitrary-precision integer with the same value as the given
      * string.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromRadixString(String str, int radix) {
       if (str == null) {
@@ -410,23 +415,23 @@ at: http://peteroupc.github.io/
      * radix.
      * @param str A text string. The desired portion of the string must contain
      * only characters allowed by the given radix, except that it may start
-     * with a minus sign ("-", U+002D) to indicate a negative number. The
+     *  with a minus sign ("-", U+002D) to indicate a negative number. The
      * desired portion is not allowed to contain white space characters,
      * including spaces.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
-     * A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16.
+     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
+     * letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+     * 0-9, then A-F in radix 16.
      * @param index The index of the string that starts the string portion.
      * @param endIndex The index of the string that ends the string portion. The
      * length will be index + endIndex - 1.
      * @return An arbitrary-precision integer with the same value as given in the
      * string portion.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws NullPointerException The parameter {@code str} is null.
      * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
      * format.
      * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 ==
-     * 0".
+     *  0".
      */
     public static EInteger FromRadixSubstring(
       String str,
@@ -649,14 +654,14 @@ at: http://peteroupc.github.io/
     /**
      * Converts a string to an arbitrary-precision integer.
      * @param str A text string. The string must contain only basic digits 0 to 9
-     * (U+0030 to U+0039), except that it may start with a minus sign ("-",
+     *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
      * U + 002D) to indicate a negative number. The string is not allowed to
      * contain white space characters, including spaces.
      * @return An arbitrary-precision integer with the same value as given in the
      * string.
      * @throws java.lang.NumberFormatException The parameter {@code str} is in an invalid
      * format.
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromString(String str) {
       if (str == null) {
@@ -668,10 +673,10 @@ at: http://peteroupc.github.io/
     /**
      * Converts a portion of a string to an arbitrary-precision integer.
      * @param str A text string. The desired portion of the string must contain
-     * only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may start
-     * with a minus sign ("-", U+002D) to indicate a negative number. The
-     * desired portion is not allowed to contain white space characters,
-     * including spaces.
+     * only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may
+     *  start with a minus sign ("-", U+002D) to indicate a negative number.
+     * The desired portion is not allowed to contain white space
+     * characters, including spaces.
      * @param index The index of the string that starts the string portion.
      * @param endIndex The index of the string that ends the string portion. The
      * length will be index + endIndex - 1.
@@ -679,8 +684,8 @@ at: http://peteroupc.github.io/
      * string portion.
      * @throws IllegalArgumentException The parameter {@code index} is less than 0,
      * {@code endIndex} is less than 0, or either is greater than the
-     * string's length, or {@code endIndex} is less than {@code index} .
-     * @throws java.lang.NullPointerException The parameter {@code str} is null.
+     * string's length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromSubstring(
       String str,
@@ -705,7 +710,7 @@ at: http://peteroupc.github.io/
      * Adds this object and another object.
      * @param bigintAugend Another arbitrary-precision integer.
      * @return The sum of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code bigintAugend} is
+     * @throws NullPointerException The parameter {@code bigintAugend} is
      * null.
      */
     public EInteger Add(EInteger bigintAugend) {
@@ -792,8 +797,8 @@ at: http://peteroupc.github.io/
         }
         // DebugUtility.Log("" + this + " + " + bigintAugend);
         int wordLength2 = (int)Math.max(
-                    this.words.length,
-                    bigintAugend.words.length);
+          this.words.length,
+          bigintAugend.words.length);
         sumreg = new short[wordLength2];
         int carry;
         int desiredLength = Math.max(addendCount, augendCount);
@@ -884,8 +889,8 @@ at: http://peteroupc.github.io/
 
       short borrow;
       int wordLength = (int)Math.max(
-                    minuend.words.length,
-                    subtrahend.words.length);
+        minuend.words.length,
+        subtrahend.words.length);
       short[] diffReg = new short[wordLength];
       if (words1Size == words2Size) {
         if (Compare(minuend.words, 0, subtrahend.words, 0, (int)words1Size) >=
@@ -959,7 +964,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object' s value is too big to fit a
      * 32-bit signed integer.
      * @deprecated Renamed to ToInt32Checked.
  */
@@ -972,7 +977,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers" }) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
      * @deprecated Renamed to ToInt32Unchecked.
@@ -986,7 +991,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object' s value is too big to fit a
      * 64-bit signed integer.
      * @deprecated Renamed to ToInt64Checked.
  */
@@ -999,7 +1004,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers" }) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
      * @deprecated Renamed to ToInt64Unchecked.
@@ -1012,7 +1017,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns whether this object's value can fit in a 32-bit signed integer.
      * @return {@code true} if this object's value is from -2147483648 through
-     * 2147483647; otherwise, {@code false} .
+     * 2147483647; otherwise, {@code false}.
      */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
@@ -1029,7 +1034,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns whether this object's value can fit in a 64-bit signed integer.
      * @return {@code true} if this object's value is from -9223372036854775808
-     * through 9223372036854775807; otherwise, {@code false} .
+     * through 9223372036854775807; otherwise, {@code false}.
      */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
@@ -1038,8 +1043,7 @@ at: http://peteroupc.github.io/
       }
       if (c == 4 && (this.words[3] & 0x8000) != 0) {
         return this.negative && this.words[3] == ((short)0x8000) &&
-          this.words[2] == 0 &&
-          this.words[1] == 0 &&
+          this.words[2] == 0 && this.words[1] == 0 &&
           this.words[0] == 0;
       }
       return true;
@@ -1091,7 +1095,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Adds this object and another object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Add(200);</pre> . </p>
+     *  EInteger.FromString("5").Add(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      */
@@ -1158,7 +1162,7 @@ at: http://peteroupc.github.io/
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
      * object.<p><pre>EInteger result =
-     * EInteger.FromString("5").Multiply(200);</pre> . </p>
+     *  EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -1189,7 +1193,7 @@ at: http://peteroupc.github.io/
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The remainder of the two numbers.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws java.lang.NullPointerException The parameter {@code intValue} is null.
+     * @throws NullPointerException The parameter {@code intValue} is null.
      */
     public EInteger Remainder(int intValue) {
       return this.Remainder(EInteger.FromInt32(intValue));
@@ -1227,7 +1231,7 @@ at: http://peteroupc.github.io/
      * are positive or both are negative.
      * @param bigintDivisor The divisor.
      * @return The quotient of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code bigintDivisor} is
+     * @throws NullPointerException The parameter {@code bigintDivisor} is
      * null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
@@ -1277,27 +1281,27 @@ at: http://peteroupc.github.io/
           --quotwordCount;
         }
         return (quotwordCount != 0) ?
-          new EInteger(quotwordCount, quotReg, this.negative ^ bigintDivisor.negative) :
-          EInteger.FromInt32(0);
+ new EInteger(quotwordCount, quotReg, this.negative ^
+            bigintDivisor.negative) : EInteger.FromInt32(0);
       }
       // ---- General case
       quotReg = new short[(int)(words1Size - words2Size + 1)];
       GeneralDivide(
-  this.words,
-  0,
-  this.wordCount,
-  bigintDivisor.words,
-  0,
-  bigintDivisor.wordCount,
-  quotReg,
-  0,
-  null,
-  0);
+        this.words,
+        0,
+        this.wordCount,
+        bigintDivisor.words,
+        0,
+        bigintDivisor.wordCount,
+        quotReg,
+        0,
+        null,
+        0);
       quotwordCount = CountWords(quotReg);
       quotReg = ShortenArray(quotReg, quotwordCount);
       return (quotwordCount != 0) ?
-        new EInteger(quotwordCount, quotReg, this.negative ^ bigintDivisor.negative) :
-        EInteger.FromInt32(0);
+ new EInteger(quotwordCount, quotReg, this.negative ^
+          bigintDivisor.negative) : EInteger.FromInt32(0);
     }
 
     private static short LinearMultiplySubtractMinuend1Bigger(
@@ -1350,23 +1354,23 @@ at: http://peteroupc.github.io/
       // If AHigh is less than BHigh
       if (
   WordsCompare(
-  valueAMidHigh,
-  posAMidHigh + blockCount,
-  blockCount,
-  b,
-  posB + blockCount,
-  blockCount) < 0) {
+    valueAMidHigh,
+    posAMidHigh + blockCount,
+    blockCount,
+    b,
+    posB + blockCount,
+    blockCount) < 0) {
         // Divide AMidHigh by BHigh
         RecursiveDivideInner(
- valueAMidHigh,
- posAMidHigh,
- b,
- posB + blockCount,
- quot,
- posQuot,
- rem,
- posRem,
- blockCount);
+          valueAMidHigh,
+          posAMidHigh,
+          b,
+          posB + blockCount,
+          quot,
+          posQuot,
+          rem,
+          posRem,
+          blockCount);
         // Copy remainder to temp at block position 4
         System.arraycopy(rem, posRem, tmp, blockCount * 4, blockCount);
         java.util.Arrays.fill(tmp, blockCount * 5, (blockCount * 5)+(blockCount), (short)0);
@@ -1379,42 +1383,42 @@ at: http://peteroupc.github.io/
         java.util.Arrays.fill(quot, posQuot + blockCount, (posQuot + blockCount)+(blockCount), (short)0);
         // copy AMidHigh to temp
         System.arraycopy(
-       valueAMidHigh,
-       posAMidHigh,
-       tmp,
-       blockCount * 4,
-       blockCount * 2);
+          valueAMidHigh,
+          posAMidHigh,
+          tmp,
+          blockCount * 4,
+          blockCount * 2);
         // subtract BHigh from temp's high block
         SubtractInternal(
-  tmp,
-  blockCount * 5,
-  tmp,
-  blockCount * 5,
-  b,
-  posB + blockCount,
-  blockCount);
+          tmp,
+          blockCount * 5,
+          tmp,
+          blockCount * 5,
+          b,
+          posB + blockCount,
+          blockCount);
         // add BHigh to temp
         c = AddInternal(
-  tmp,
-  blockCount * 4,
-  tmp,
-  blockCount * 4,
-  b,
-  posB + blockCount,
-  blockCount);
+          tmp,
+          blockCount * 4,
+          tmp,
+          blockCount * 4,
+          b,
+          posB + blockCount,
+          blockCount);
         Increment(tmp, blockCount * 5, blockCount, (short)c);
       }
       AsymmetricMultiply(
-  tmp,
-  0,
-  tmp,
-  blockCount * 2,
-  quot,
-  posQuot,
-  blockCount,
-  b,
-  posB,
-  blockCount);
+        tmp,
+        0,
+        tmp,
+        blockCount * 2,
+        quot,
+        posQuot,
+        blockCount,
+        b,
+        posB,
+        blockCount);
       int bc3 = blockCount * 3;
       System.arraycopy(valueALow, posALow, tmp, bc3, blockCount);
       java.util.Arrays.fill(tmp, blockCount * 2, (blockCount * 2)+(blockCount), (short)0);
@@ -1448,62 +1452,62 @@ at: http://peteroupc.github.io/
       // Implements Algorithm 1 of Burnikel & Ziegler 1998
       if (blockSize < RecursiveDivisionLimit || (blockSize & 1) == 1) {
         GeneralDivide(
-  a,
-  posA,
-  blockSize * 2,
-  b,
-  posB,
-  blockSize,
-  quot,
-  posQuot,
-  rem,
-  posRem);
+          a,
+          posA,
+          blockSize * 2,
+          b,
+          posB,
+          blockSize,
+          quot,
+          posQuot,
+          rem,
+          posRem);
       } else {
         int halfBlock = blockSize >> 1;
         short[] tmp = new short[halfBlock * 10];
         java.util.Arrays.fill(quot, posQuot, (posQuot)+(blockSize * 2), (short)0);
         java.util.Arrays.fill(rem, posRem, (posRem)+(blockSize), (short)0);
         DivideThreeBlocksByTwo(
-a,
-posA + halfBlock,
-a,
-posA + blockSize,
-b,
-posB,
-halfBlock,
-tmp,
-halfBlock * 6,
-tmp,
-halfBlock * 8,
-tmp);
+          a,
+          posA + halfBlock,
+          a,
+          posA + blockSize,
+          b,
+          posB,
+          halfBlock,
+          tmp,
+          halfBlock * 6,
+          tmp,
+          halfBlock * 8,
+          tmp);
         DivideThreeBlocksByTwo(
-        a,
-        posA,
-        tmp,
-        halfBlock * 8,
-        b,
-        posB,
-        halfBlock,
-        quot,
-        posQuot,
-        rem,
-        posRem,
-        tmp);
+          a,
+          posA,
+          tmp,
+          halfBlock * 8,
+          b,
+          posB,
+          halfBlock,
+          quot,
+          posQuot,
+          rem,
+          posRem,
+          tmp);
         System.arraycopy(tmp, halfBlock * 6, quot, posQuot + halfBlock, halfBlock);
       }
     }
 
     private static void RecursiveDivide(
-     short[] a,
-     int posA,
-     int countA,
-     short[] b,
-     int posB,
-     int countB,
-     short[] quot,
-     int posQuot,
-     short[] rem,
-     int posRem) {
+      short[] a,
+      int posA,
+      int countA,
+      short[] b,
+      int posB,
+      int countB,
+      short[] quot,
+      int posQuot,
+      short[] rem,
+      int posRem) {
       int workPosA, workPosB, i;
       short[] workA = a;
       short[] workB = b;
@@ -1538,10 +1542,10 @@ tmp);
           ++extraWord;
         }
         ShiftWordsLeftByBits(
-  workB,
-  workPosB + blocksB - countB,
-  countB,
-  shiftB);
+          workB,
+          workPosB + blocksB - countB,
+          countB,
+          shiftB);
       }
       int blocksA = (wordsA + extraWord + (blocksB - 1)) / blocksB;
       int totalWordsA = blocksA * blocksB;
@@ -1573,15 +1577,15 @@ tmp);
         // Clear the quotient
         java.util.Arrays.fill(tmprem, blocksB * 3, (blocksB * 3)+(blocksB << 1), (short)0);
         RecursiveDivideInner(
-  tmprem,
-  blocksB,
-  workB,
-  workPosB,
-  tmprem,
-  blocksB * 3,
-  tmprem,
-  0,
-  blocksB);
+          tmprem,
+          blocksB,
+          workB,
+          workPosB,
+          tmprem,
+          blocksB * 3,
+          tmprem,
+          0,
+          blocksB);
         if (quot != null) {
           size = Math.min(blocksB, quot.length - (i * blocksB));
           // DebugUtility.Log("quot len=" + quot.length + ",bb=" + blocksB +
@@ -1628,12 +1632,12 @@ tmp);
         "\"";
     }
     private static String WordsToString2(
-short[] a,
-int pos,
-int len,
-short[] b,
-int pos2,
-int len2) {
+      short[] a,
+      int pos,
+      int len,
+      short[] b,
+      int pos2,
+      int len2) {
       short[] words = new short[len + len2];
       System.arraycopy(a, pos, words, 0, len);
       System.arraycopy(b, pos2, words, len, len2);
@@ -1643,22 +1647,22 @@ int len2) {
       }
       return (len == 0) ?
   "\"0\"" : ("\"" + new EInteger(
-      len,
-      words,
-      false).ToUnoptString() + "\"");
+    len,
+    words,
+    false).ToUnoptString() + "\"");
     }
 
     private static void GeneralDivide(
-     short[] a,
-     int posA,
-     int countA,
-     short[] b,
-     int posB,
-     int countB,
-     short[] quot,
-     int posQuot,
-     short[] rem,
-     int posRem) {
+      short[] a,
+      int posA,
+      int countA,
+      short[] b,
+      int posB,
+      int countB,
+      short[] quot,
+      int posQuot,
+      short[] rem,
+      int posRem) {
       int origQuotSize = countA - countB + 1;
       int origCountA = countA;
       int origCountB = countB;
@@ -1715,12 +1719,12 @@ int len2) {
       if (countB == 1) {
         // Divisor is a single word
         short shortRemainder = FastDivideAndRemainder(
-              quot,
-              posQuot,
-              a,
-              posA,
-              countA,
-              b[posB]);
+          quot,
+          posQuot,
+          a,
+          posA,
+          countA,
+          b[posB]);
         if (rem != null) {
           rem[posRem] = shortRemainder;
         }
@@ -1734,16 +1738,16 @@ int len2) {
       workPosB = posB;
       if (countB > RecursiveDivisionLimit) {
         RecursiveDivide(
-  a,
-  posA,
-  countA,
-  b,
-  posB,
-  countB,
-  quot,
-  posQuot,
-  rem,
-  posRem);
+          a,
+          posA,
+          countA,
+          b,
+          posB,
+          countB,
+          quot,
+          posQuot,
+          rem,
+          posRem);
         return;
       }
       int sh = 0;
@@ -1839,13 +1843,13 @@ int len2) {
         if (c != 0) {
           // T(workA,workPosA,countA+1,"workA X");
           c = AddInternal(
-  workA,
-  wpoffset,
-  workA,
-  wpoffset,
-  workB,
-  workPosB,
-  countB);
+            workA,
+            wpoffset,
+            workA,
+            wpoffset,
+            workB,
+            workPosB,
+            countB);
           c = Increment(workA, wpoffset + countB, 1, (short)c);
           // T(workA,workPosA,countA+1,"workA "+c);
           --quorem0;
@@ -1869,7 +1873,7 @@ int len2) {
      * @return An array with two arbitrary-precision integers: the first is the
      * quotient, and the second is the remainder.
      * @throws ArithmeticException The parameter divisor is 0.
-     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     * @throws NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger[] DivRem(EInteger divisor) {
       if (divisor == null) {
@@ -1894,19 +1898,19 @@ int len2) {
         switch (divisor.words[0]) {
           case 2:
             smallRemainder = (int)FastDivideAndRemainderTwo(
-             quotient,
-             0,
-             this.words,
-             0,
-             words1Size);
+              quotient,
+              0,
+              this.words,
+              0,
+              words1Size);
             break;
           case 10:
             smallRemainder = (int)FastDivideAndRemainderTen(
-             quotient,
-             0,
-             this.words,
-             0,
-             words1Size);
+              quotient,
+              0,
+              this.words,
+              0,
+              words1Size);
             break;
           default:
             // DebugUtility.Log("smalldiv=" + (divisor.words[0]));
@@ -1944,7 +1948,8 @@ int len2) {
           long quotientSmall = dividendSmall / divisorSmall;
           long remainderSmall = dividendSmall - (quotientSmall * divisorSmall);
           return new EInteger[] { EInteger.FromInt64(quotientSmall),
-            EInteger.FromInt64(remainderSmall), };
+            EInteger.FromInt64(remainderSmall),
+          };
         }
       } else if (this.CanFitInInt64() && divisor.CanFitInInt64()) {
         long dividendLong = this.ToInt64Checked();
@@ -1953,7 +1958,8 @@ int len2) {
           long quotientLong = dividendLong / divisorLong;
           long remainderLong = dividendLong - (quotientLong * divisorLong);
           return new EInteger[] { EInteger.FromInt64(quotientLong),
-            EInteger.FromInt64(remainderLong), };
+            EInteger.FromInt64(remainderLong),
+          };
         }
         // DebugUtility.Log("int64divrem {0}/{1}"
         // , this.ToInt64Checked(), divisor.ToInt64Checked());
@@ -1962,16 +1968,16 @@ int len2) {
       short[] bigRemainderreg = new short[(int)words2Size];
       short[] quotientreg = new short[(int)(words1Size - words2Size + 1)];
       GeneralDivide(
-  this.words,
-  0,
-  this.wordCount,
-  divisor.words,
-  0,
-  divisor.wordCount,
-  quotientreg,
-  0,
-  bigRemainderreg,
-  0);
+        this.words,
+        0,
+        this.wordCount,
+        divisor.words,
+        0,
+        divisor.wordCount,
+        quotientreg,
+        0,
+        bigRemainderreg,
+        0);
       int remCount = CountWords(bigRemainderreg);
       int quoCount = CountWords(quotientreg);
       bigRemainderreg = ShortenArray(bigRemainderreg, remCount);
@@ -1986,9 +1992,11 @@ int len2) {
     /**
      * Determines whether this object and another object are equal and have the
      * same type.
-     * @param obj The parameter {@code obj} is an arbitrary object.
+     * @param obj The parameter
+      {@code obj}
+       is an arbitrary object.
      * @return {@code true} if this object and another object are equal; otherwise,
-     * {@code false} .
+     * {@code false}.
      */
     @Override public boolean equals(Object obj) {
       EInteger other = ((obj instanceof EInteger) ? (EInteger)obj : null);
@@ -2059,7 +2067,7 @@ int len2) {
      * common factor (GCF).
      * @param bigintSecond Another arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code bigintSecond} is
+     * @throws NullPointerException The parameter {@code bigintSecond} is
      * null.
      */
     public EInteger Gcd(EInteger bigintSecond) {
@@ -2165,8 +2173,8 @@ WordsShiftRightOne(bu, buc);
         } else {
           valueBuVar = valueBuVar.isZero() ?
   LeftShiftBigIntVar(
- valueBvVar,
- ebshl) : LeftShiftBigIntVar(
+    valueBvVar,
+    ebshl) : LeftShiftBigIntVar(
  valueBuVar,
  ebshl);
         }
@@ -2190,7 +2198,7 @@ WordsShiftRightOne(bu, buc);
      * Returns the number of decimal digits used by this integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
      * if this number is 0.
-     * @throws java.lang.ArithmeticException The return value would exceed the range of
+     * @throws ArithmeticException The return value would exceed the range of
      * a 32-bit signed integer.
      * @deprecated This method may overflow. Use GetDigitCountAsEInteger instead.
  */
@@ -2262,8 +2270,8 @@ WordsShiftRightOne(bu, buc);
           return 1 + minDigits;
         }
         if (bitlen < 50000) {
-          return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigits + 1))
-                 >= 0 ? maxDigits + 1 : minDigits + 1;
+       return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigits +
+            1)) >= 0 ? maxDigits + 1 : minDigits + 1;
         }
       }
       short[] tempReg = null;
@@ -2413,7 +2421,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
      * the lowest set bit in the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0.
      * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
@@ -2425,9 +2433,9 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Gets the lowest set bit in this number's absolute value, in the form of an
-     * arbitrary-precision integer. (This will also be the lowest set bit in
-     * the number's two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
+     * arbitrary-precision integer. (This will also be the lowest set bit
+     * in the number's two's-complement form (see {@link
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -2459,20 +2467,20 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
      * object' s value.
      * @param bigIndex An arbitrary-precision integer.
      * @return {@code true} if a bit is set in the two' s-complement form (see
      * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
-     * otherwise, {@code false} .
-     * @throws java.lang.NullPointerException The parameter {@code bigIndex} is null.
+     * otherwise, {@code false}.
+     * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
     public boolean GetSignedBit(EInteger bigIndex) {
       if (bigIndex == null) {
         throw new NullPointerException("bigIndex");
       }
       if (bigIndex.signum() < 0) {
-        throw new java.lang.IllegalArgumentException("bigIndex");
+        throw new IllegalArgumentException("bigIndex");
       }
       if (this.negative) {
         if (bigIndex.CanFitInInt32()) {
@@ -2506,16 +2514,16 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
      * object' s value.
      * @param index The parameter {@code index} is a 32-bit signed integer.
      * @return {@code true} if a bit is set in the two' s-complement form (see
      * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
-     * otherwise, {@code false} .
+     * otherwise, {@code false}.
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
-        throw new java.lang.IllegalArgumentException("index");
+        throw new IllegalArgumentException("index");
       }
       if (this.wordCount == 0) {
         return false;
@@ -2545,8 +2553,8 @@ WordsShiftRightOne(bu, buc);
     /**
      * Finds the minimum number of bits needed to represent this object's value,
      * except for its sign, in the form of an arbitrary-precision integer.
-     * If the value is negative, finds the number of bits in the value equal
-     * to this object's absolute value minus 1.
+     * If the value is negative, finds the number of bits in the value
+     * equal to this object's absolute value minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      */
@@ -2581,8 +2589,7 @@ WordsShiftRightOne(bu, buc);
               numberValue <<= 2;
               wcextra -= 2;
             }
-            wcextra = ((numberValue >> 15) == 0) ?
-     wcextra - 1 : wcextra;
+            wcextra = ((numberValue >> 15) == 0) ? wcextra - 1 : wcextra;
           }
         }
         if (wc < 0xffffff0) {
@@ -2602,7 +2609,7 @@ WordsShiftRightOne(bu, buc);
      * bits in the value equal to this object's absolute value minus 1.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
-     * @throws java.lang.ArithmeticException The return value would exceed the range of
+     * @throws ArithmeticException The return value would exceed the range of
      * a 32-bit signed integer.
      * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
  */
@@ -2615,7 +2622,7 @@ WordsShiftRightOne(bu, buc);
      * Returns whether a bit is set in this number's absolute value.
      * @param bigIndex An arbitrary-precision integer.
      * @return {@code true} if a bit is set in this number's absolute value.
-     * @throws java.lang.NullPointerException The parameter {@code bigIndex} is null.
+     * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
     public boolean GetUnsignedBit(EInteger bigIndex) {
       if (bigIndex == null) {
@@ -2692,7 +2699,7 @@ WordsShiftRightOne(bu, buc);
      * value.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
-     * @throws java.lang.ArithmeticException The return value would exceed the range of
+     * @throws ArithmeticException The return value would exceed the range of
      * a 32-bit signed integer.
      * @deprecated This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
  */
@@ -2703,15 +2710,15 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Finds the modulus remainder that results when this instance is divided by
-     * the value of an arbitrary-precision integer. The modulus remainder is
-     * the same as the normal remainder if the normal remainder is positive,
-     * and equals divisor plus normal remainder if the normal remainder is
-     * negative.
+     * the value of an arbitrary-precision integer. The modulus remainder
+     * is the same as the normal remainder if the normal remainder is
+     * positive, and equals divisor plus normal remainder if the normal
+     * remainder is negative.
      * @param divisor The number to divide by.
      * @return An arbitrary-precision integer.
      * @throws IllegalArgumentException The parameter {@code divisor} is less than
      * 0.
-     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     * @throws NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger Mod(EInteger divisor) {
       if (divisor == null) {
@@ -2754,7 +2761,7 @@ WordsShiftRightOne(bu, buc);
      * @param pow The power to raise this integer by.
      * @param mod The integer to divide the raised number by.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code pow} or {@code
+     * @throws NullPointerException The parameter {@code pow} or {@code
      * mod} is null.
      */
     public EInteger ModPow(EInteger pow, EInteger mod) {
@@ -2789,7 +2796,7 @@ WordsShiftRightOne(bu, buc);
      * object.
      * @param bigintMult Another arbitrary-precision integer.
      * @return The product of the two numbers.
-     * @throws java.lang.NullPointerException The parameter {@code bigintMult} is
+     * @throws NullPointerException The parameter {@code bigintMult} is
      * null.
      */
     public EInteger Multiply(EInteger bigintMult) {
@@ -2823,9 +2830,9 @@ WordsShiftRightOne(bu, buc);
           short preg = productreg[1];
           wc = (preg == 0) ? 1 : 2;
           return new EInteger(
-  wc,
-  productreg,
-  this.negative ^ bigintMult.negative);
+            wc,
+            productreg,
+            this.negative ^ bigintMult.negative);
         }
         wc = bigintMult.wordCount;
         int regLength = wc + 1;
@@ -2924,8 +2931,10 @@ WordsShiftRightOne(bu, buc);
     /**
      * Raises an arbitrary-precision integer to a power.
      * @param bigPower The exponent to raise this integer to.
-     * @return The result. Returns 1 if {@code bigPower} is 0.
-     * @throws java.lang.NullPointerException The parameter {@code bigPower} is null.
+     * @return The result. Returns 1 if
+      {@code bigPower}
+       is 0.
+     * @throws NullPointerException The parameter {@code bigPower} is null.
      * @throws IllegalArgumentException BigPower is negative.
      */
     public EInteger Pow(EInteger bigPower) {
@@ -3013,7 +3022,7 @@ WordsShiftRightOne(bu, buc);
      * @param power The exponent to raise to.
      * @return The result. Returns 1 if "power" is 0.
      * @throws IllegalArgumentException The parameter {@code power} is less than 0.
-     * @throws java.lang.NullPointerException The parameter {@code power} is null.
+     * @throws NullPointerException The parameter {@code power} is null.
      */
     public EInteger PowBigIntVar(EInteger power) {
       if (power == null) {
@@ -3059,7 +3068,7 @@ WordsShiftRightOne(bu, buc);
      * @param divisor The number to divide by.
      * @return The remainder of the two numbers.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws java.lang.NullPointerException The parameter {@code divisor} is null.
+     * @throws NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger Remainder(EInteger divisor) {
       if (divisor == null) {
@@ -3090,16 +3099,16 @@ WordsShiftRightOne(bu, buc);
       }
       short[] remainderReg = new short[(int)words2Size];
       GeneralDivide(
-  this.words,
-  0,
-  this.wordCount,
-  divisor.words,
-  0,
-  divisor.wordCount,
-  null,
-  0,
-  remainderReg,
-  0);
+        this.words,
+        0,
+        this.wordCount,
+        divisor.words,
+        0,
+        divisor.wordCount,
+        null,
+        0,
+        remainderReg,
+        0);
       int count = CountWords(remainderReg);
       if (count == 0) {
         return EInteger.FromInt32(0);
@@ -3112,13 +3121,13 @@ WordsShiftRightOne(bu, buc);
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
      * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers" }). Thus, for negative values, the
+     *  "Forms of numbers" }). Thus, for negative values, the
      * arbitrary-precision integer is sign-extended.
      * @param eshift The number of bits to shift. Can be negative, in which case
      * this is the same as shiftLeft with the absolute value of this
      * parameter.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code eshift} is null.
+     * @throws NullPointerException The parameter {@code eshift} is null.
      */
     public EInteger ShiftRight(EInteger eshift) {
       if (eshift == null) {
@@ -3145,7 +3154,7 @@ WordsShiftRightOne(bu, buc);
      * this is the same as shiftRight with the absolute value of this
      * parameter.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code eshift} is null.
+     * @throws NullPointerException The parameter {@code eshift} is null.
      */
     public EInteger ShiftLeft(EInteger eshift) {
       if (eshift == null) {
@@ -3166,7 +3175,8 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the left by
      * a number of bits. A value of 1 doubles this value, a value of 2
-     * multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.
+     * multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so
+     * on.
      * @param numberBits The number of bits to shift. Can be negative, in which
      * case this is the same as shiftRight with the absolute value of this
      * parameter.
@@ -3254,19 +3264,20 @@ WordsShiftRightOne(bu, buc);
       }
       valueXaNegative = !this.negative;
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     /**
      * Does an AND operation between two arbitrary-precision integer values.<p>
      * Each arbitrary-precision integer is treated as a two's-complement
-     * form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
+     *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
      * }) for the purposes of this operator. </p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bits of this integer and the other integer are both
      * set.
-     * @throws java.lang.NullPointerException The parameter {@code other} is null.
+     * @throws NullPointerException The parameter {@code other} is null.
      */
     public EInteger And(EInteger other) {
       if (other == null) {
@@ -3286,7 +3297,8 @@ WordsShiftRightOne(bu, buc);
           result[i] = ((short)(smaller[i] & bigger[i]));
         }
         smallerCount = CountWords(result);
-        return (smallerCount == 0) ? EInteger.FromInt32(0) : new EInteger(smallerCount, result, false);
+        return (smallerCount == 0) ? EInteger.FromInt32(0) : new
+          EInteger(smallerCount, result, false);
       }
       boolean valueXaNegative = false;
       int valueXaWordCount = 0;
@@ -3316,17 +3328,18 @@ WordsShiftRightOne(bu, buc);
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     /**
      * Does an OR operation between two arbitrary-precision integer instances.<p>
      * Each arbitrary-precision integer is treated as a two's-complement
-     * form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
+     *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
      * }) for the purposes of this operator. </p>
      * @param second The second operand.
      * @return An arbitrary-precision integer.
-     * @throws java.lang.NullPointerException The parameter {@code second} is null.
+     * @throws NullPointerException The parameter {@code second} is null.
      * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't
      * satisfy biggerCount == CountWords(result).
      */
@@ -3352,11 +3365,11 @@ WordsShiftRightOne(bu, buc);
           result[i] = ((short)(smaller[i] | bigger[i]));
         }
         System.arraycopy(
-  bigger,
-  smallerCount,
-  result,
-  smallerCount,
-  biggerCount - smallerCount);
+          bigger,
+          smallerCount,
+          result,
+          smallerCount,
+          biggerCount - smallerCount);
 
         return new EInteger(biggerCount, result, false);
       }
@@ -3388,18 +3401,21 @@ WordsShiftRightOne(bu, buc);
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     /**
      * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
      * arbitrary-precision integer is treated as a two's-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
      * for the purposes of this operator. </p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bit is set in one input integer but not in the other.
-     * @throws java.lang.NullPointerException The parameter {@code other} is null.
+     * @throws NullPointerException The parameter {@code other} is null.
+     * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
+     * CountWords(result).
      */
     public EInteger Xor(EInteger other) {
       if (other == null) {
@@ -3426,11 +3442,11 @@ WordsShiftRightOne(bu, buc);
           result[i] = ((short)(smaller[i] ^ bigger[i]));
         }
         System.arraycopy(
-  bigger,
-  smallerCount,
-  result,
-  smallerCount,
-  biggerCount - smallerCount);
+          bigger,
+          smallerCount,
+          result,
+          smallerCount,
+          biggerCount - smallerCount);
         smallerCount = (smallerCount == biggerCount) ?
             CountWords(result) : biggerCount;
 
@@ -3465,7 +3481,8 @@ WordsShiftRightOne(bu, buc);
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
       valueXaWordCount = CountWords(valueXaReg);
-      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+      return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
+        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     private short[] Copy() {
@@ -3475,20 +3492,20 @@ WordsShiftRightOne(bu, buc);
     }
 
     private static int WordsCompare(
-       short[] words,
-       int wordCount,
-       short[] words2,
-       int wordCount2) {
+      short[] words,
+      int wordCount,
+      short[] words2,
+      int wordCount2) {
       return WordsCompare(words, 0, wordCount, words2, 0, wordCount2);
     }
 
     private static int WordsCompare(
-       short[] words,
-       int pos1,
-       int wordCount,
-       short[] words2,
-       int pos2,
-       int wordCount2) {
+      short[] words,
+      int pos1,
+      int wordCount,
+      short[] words2,
+      int pos2,
+      int wordCount2) {
       // NOTE: Assumes the number is nonnegative
       int size = wordCount;
       if (size == 0) {
@@ -3545,10 +3562,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     private static boolean WordsEqual(
-       short[] words,
-       int wordCount,
-       short[] words2,
-       int wordCount2) {
+      short[] words,
+      int wordCount,
+      short[] words2,
+      int wordCount2) {
       // NOTE: Assumes the number is nonnegative
       if (wordCount == wordCount2) {
         for (int i = 0; i < wordCount; ++i) {
@@ -3638,20 +3655,20 @@ WordsShiftRightOne(bu, buc);
     }
 
     private static int WordsSubtract(
-  short[] words,
-  int wordCount,
-  short[] subtrahendWords,
-  int subtrahendCount) {
+      short[] words,
+      int wordCount,
+      short[] subtrahendWords,
+      int subtrahendCount) {
       // NOTE: Assumes this value is at least as high as the subtrahend
       // and both numbers are nonnegative
       short borrow = (short)SubtractInternal(
-           words,
-           0,
-           words,
-           0,
-           subtrahendWords,
-           0,
-           subtrahendCount);
+        words,
+        0,
+        words,
+        0,
+        subtrahendWords,
+        0,
+        subtrahendCount);
       if (borrow != 0) {
         Decrement(
  words,
@@ -3669,7 +3686,7 @@ WordsShiftRightOne(bu, buc);
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
      * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers" }). Thus, for negative values, the
+     *  "Forms of numbers" }). Thus, for negative values, the
      * arbitrary-precision integer is sign-extended.
      * @param numberBits The number of bits to shift. Can be negative, in which
      * case this is the same as shiftLeft with the absolute value of this
@@ -3754,7 +3771,7 @@ WordsShiftRightOne(bu, buc);
      * integer.
      * @param subtrahend Another arbitrary-precision integer.
      * @return The difference of the two objects.
-     * @throws java.lang.NullPointerException The parameter {@code subtrahend} is
+     * @throws NullPointerException The parameter {@code subtrahend} is
      * null.
      */
     public EInteger Subtract(EInteger subtrahend) {
@@ -3768,13 +3785,15 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns a byte array of this integer's value. The byte array will take the
      * number's two' s-complement form (see {@link
-     * com.upokecenter.numbers.EDecimal "Forms of numbers" }), using the
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
-     * passed to the <code>FromBytes()</code> method (with the same byte order) to
-     * reconstruct this integer's value.
-     * @param littleEndian Either {@code true} or {@code false} .
+     * passed to the <code>FromBytes()</code> method (with the same byte order)
+     * to reconstruct this integer's value.
+     * @param littleEndian Either
+      {@code true} or
+      {@code false} .
      * @return A byte array. If this value is 0, returns a byte array with the
      * single element 0.
      */
@@ -3844,7 +3863,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object' s value is too big to fit a
      * 32-bit signed integer.
      */
     public int ToInt32Checked() {
@@ -3869,7 +3888,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers" }) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
      */
@@ -3893,7 +3912,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws T:java.lang.ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object' s value is too big to fit a
      * 64-bit signed integer.
      */
     public long ToInt64Checked() {
@@ -3919,7 +3938,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     * "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers" }) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
      */
@@ -3960,8 +3979,8 @@ WordsShiftRightOne(bu, buc);
     }
 
     private void ToRadixStringDecimal(
-  StringBuilder outputSB,
-  boolean optimize) {
+      StringBuilder outputSB,
+      boolean optimize) {
       int i = 0;
       if (this.wordCount >= 100 && optimize) {
         StringBuilder rightBuilder = new StringBuilder();
@@ -4068,8 +4087,8 @@ WordsShiftRightOne(bu, buc);
      * hexadecimal (base-16) string, specify 16. To generate a decimal
      * (base-10) string, specify 10.
      * @return A string representing the value of this object. If this value is 0,
-     * returns "0". If negative, the string will begin with a minus sign
-     * ("-", U+002D). Depending on the radix, the string will use the basic
+     *  returns "0". If negative, the string will begin with a minus sign
+     *  ("-", U+002D). Depending on the radix, the string will use the basic
      * digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
      * (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
      * in radix 16.
@@ -4211,7 +4230,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Converts this object to a text string in base 10.
      * @return A string representation of this object. If negative, the string will
-     * begin with a minus sign ("-", U+002D). The string will use the basic
+     *  begin with a minus sign ("-", U+002D). The string will use the basic
      * digits 0 to 9 (U + 0030 to U + 0039).
      */
     @Override public String toString() {
@@ -4315,8 +4334,7 @@ WordsShiftRightOne(bu, buc);
         c = (short)p;
         resultLow = c;
         c = (short)d;
-        d
-          = ((int)d >> 16) & 0xffff;
+        d = ((int)d >> 16) & 0xffff;
         p = bitlenHigh * 0x9a;
         p += ((int)c) & 0xffff;
         resultHigh = (short)p;
@@ -4811,8 +4829,7 @@ WordsShiftRightOne(bu, buc);
         p = a1 * b1;
         p += d;
         result[rstart + 2] = (short)p;
-        result[rstart + 3] = (short)(p >>
-                    16);
+        result[rstart + 3] = (short)(p >> 16);
       }
     }
 
@@ -4845,8 +4862,7 @@ WordsShiftRightOne(bu, buc);
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         result[rstart + 1] = c;
-        c =
-          (short)d;
+        c = (short)d;
         d = ((int)d >> 16) & SMask;
         p = a0 * (((int)words2[bstart + 2]) & SMask);
 
@@ -4863,8 +4879,7 @@ WordsShiftRightOne(bu, buc);
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         result[rstart + 2] = c;
-        c =
-          (short)d;
+        c = (short)d;
         d = ((int)d >> 16) & SMask;
         p = a0 * (((int)words2[bstart + 3]) & SMask);
         p += ((int)c) & SMask;
@@ -4886,8 +4901,7 @@ WordsShiftRightOne(bu, buc);
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         result[rstart + 3] = c;
-        c =
-          (short)d;
+        c = (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
                     3]) & SMask);
@@ -4943,8 +4957,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart]) &
                     SMask);
         c = (short)p;
-        d = ((int)p >> 16) &
-          SMask;
+        d = ((int)p >> 16) & SMask;
         result[rstart] = c;
         c = (short)d;
         d = ((int)d >> 16) & SMask;
@@ -5331,20 +5344,16 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
                     0xffff);
         result[rstart] = (short)p;
-        e = ((int)p >>
-                    16) & 0xffff;
+        e = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
-        c <<=
-          1;
+        c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     1]) & 0xffff);
@@ -5368,29 +5377,23 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
                     0xffff);
         result[rstart] = (short)p;
-        e = ((int)p >>
-                    16) & 0xffff;
+        e = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
-        c <<=
-          1;
+        c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 2]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
-        c <<=
-          1;
+        c <<= 1;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     1]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5398,21 +5401,18 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 2] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 3]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     2]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
@@ -5422,8 +5422,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
@@ -5433,14 +5432,12 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 4] = c;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
@@ -5470,29 +5467,23 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
                     0xffff);
         result[rstart] = (short)p;
-        e = ((int)p >>
-                    16) & 0xffff;
+        e = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
-        c <<=
-          1;
+        c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 2]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
-        c <<=
-          1;
+        c <<= 1;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     1]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5500,21 +5491,18 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 2] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 3]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     2]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
@@ -5524,15 +5512,13 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 4]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     2]) & 0xffff);
@@ -5541,14 +5527,12 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 4] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 5]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     4]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5559,8 +5543,7 @@ WordsShiftRightOne(bu, buc);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
@@ -5570,8 +5553,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 6]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     5]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5582,8 +5564,7 @@ WordsShiftRightOne(bu, buc);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
                     3]) & 0xffff);
@@ -5592,14 +5573,12 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 6] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 7]) &
                     0xffff);
         c = (short)p;
-        d = ((int)p >> 16) &
-          0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5615,8 +5594,7 @@ WordsShiftRightOne(bu, buc);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
@@ -5626,8 +5604,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5638,8 +5615,7 @@ WordsShiftRightOne(bu, buc);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
                     4]) & 0xffff);
@@ -5648,14 +5624,12 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 8] = c;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
         p += ((int)c) & 0xffff;
@@ -5666,8 +5640,7 @@ WordsShiftRightOne(bu, buc);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
@@ -5677,15 +5650,13 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
                     5]) & 0xffff);
@@ -5694,21 +5665,18 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 10] = c;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
                     6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
-        d = (int)((d << 1) + (((int)c >> 15) &
-                    1));
+        d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
         c = (short)e;
@@ -5718,8 +5686,7 @@ WordsShiftRightOne(bu, buc);
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 6]) & 0xffff) * (((int)words1[astart +
@@ -5729,14 +5696,12 @@ WordsShiftRightOne(bu, buc);
         d += ((int)p >> 16) & 0xffff;
         e += ((int)c) & 0xffff;
         c = (short)e;
-        e = d + (((int)e >> 16) &
-                    0xffff);
+        e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 12] = c;
         p = (((int)words1[astart + 6]) & 0xffff) * (((int)words1[astart +
                     7]) & 0xffff);
         c = (short)p;
-        d = ((int)p >>
-                    16) & 0xffff;
+        d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         e += ((int)c) & 0xffff;
@@ -5957,9 +5922,9 @@ WordsShiftRightOne(bu, buc);
     }
 
     private static short Divide32By16(
-       int dividendLow,
-       short divisorShort,
-       boolean returnRemainder) {
+      int dividendLow,
+      short divisorShort,
+      boolean returnRemainder) {
       int tmpInt;
       int dividendHigh = 0;
       int intDivisor = ((int)divisorShort) & 0xffff;
@@ -6009,12 +5974,12 @@ WordsShiftRightOne(bu, buc);
           break;
         default:
           FastDivideAndRemainder(
-       quotientReg,
-       0,
-       dividendReg,
-       0,
-       count,
-       divisorSmall);
+            quotientReg,
+            0,
+            dividendReg,
+            0,
+            count,
+            divisorSmall);
           break;
       }
     }
@@ -6089,8 +6054,8 @@ WordsShiftRightOne(bu, buc);
             rem = currentDividend - (idivisor * quo);
           } else {
             quo = ((int)DivideUnsigned(
-             currentDividend,
-             divisorSmall)) & 0xffff;
+              currentDividend,
+              divisorSmall)) & 0xffff;
             quotientReg[qs] = ((short)quo);
             rem = (currentDividend - (idivisor * quo));
           }
@@ -6257,11 +6222,11 @@ WordsShiftRightOne(bu, buc);
             break;
           default:
             SchoolbookSquare(
-  resultArr,
-  resultStart,
-  words1,
-  words1Start,
-  count);
+              resultArr,
+              resultStart,
+              words1,
+              words1Start,
+              count);
             break;
         }
       } else if ((count & 1) == 0) {
@@ -6366,41 +6331,40 @@ WordsShiftRightOne(bu, buc);
         switch (count) {
           case 2:
             BaselineMultiply2(
-  resultArr,
-  resultStart,
-  words1,
-  words1Start,
-  words2,
-  words2Start);
+              resultArr,
+              resultStart,
+              words1,
+              words1Start,
+              words2,
+              words2Start);
             break;
           case 4:
             BaselineMultiply4(
-  resultArr,
-  resultStart,
-  words1,
-  words1Start,
-  words2,
-  words2Start);
+              resultArr,
+              resultStart,
+              words1,
+              words1Start,
+              words2,
+              words2Start);
             break;
           case 8:
             BaselineMultiply8(
-  resultArr,
-  resultStart,
-  words1,
-  words1Start,
-  words2,
-  words2Start);
+              resultArr,
+              resultStart,
+              words1,
+              words1Start,
+              words2,
+              words2Start);
             break;
-          default:
-            SchoolbookMultiply(
-resultArr,
-resultStart,
-words1,
-words1Start,
-count,
-words2,
-words2Start,
-count);
+          default: SchoolbookMultiply(
+            resultArr,
+            resultStart,
+            words1,
+            words1Start,
+            count,
+            words2,
+            words2Start,
+            count);
             break;
         }
       } else {
@@ -7185,21 +7149,23 @@ count);
         }
         smallintY = smallintX * smallintX;
         smallintY = smallValue - smallintY;
-        return new EInteger[] { EInteger.FromInt32(smallintX), EInteger.FromInt32(smallintY), };
+        return new EInteger[] { EInteger.FromInt32(smallintX), EInteger.FromInt32(smallintY),
+        };
       }
       EInteger valueEPowerBits =
         thisValue.GetUnsignedBitLengthAsEInteger().Add(1).Divide(2);
       if (this.wordCount >= 4) {
-        int wordsPerPart = (this.wordCount >> 2) + ((this.wordCount & 3) > 0 ? 1 :
-             0);
-        long bitsPerPart = wordsPerPart * 16;
-        EInteger valueEBitsPerPart = EInteger.FromInt64(bitsPerPart);
-        long totalBits = bitsPerPart * 4;
-        EInteger valueEBitLength = this.GetUnsignedBitLengthAsEInteger();
-        boolean bitLengthEven = valueEBitLength.isEven();
-        bigintX = this;
-        EInteger eshift = EInteger.FromInt32(0);
-        if (valueEBitLength.compareTo(EInteger.FromInt64(totalBits).Subtract(1)) <
+     int wordsPerPart = (this.wordCount >> 2) + ((this.wordCount & 3) > 0 ?
+          1 : 0);
+          long bitsPerPart = wordsPerPart * 16;
+          EInteger valueEBitsPerPart = EInteger.FromInt64(bitsPerPart);
+          long totalBits = bitsPerPart * 4;
+          EInteger valueEBitLength = this.GetUnsignedBitLengthAsEInteger();
+          boolean bitLengthEven = valueEBitLength.isEven();
+          bigintX = this;
+          EInteger eshift = EInteger.FromInt32(0);
+     if
+  (valueEBitLength.compareTo(EInteger.FromInt64(totalBits).Subtract(1)) <
              0) {
           long targetLength = bitLengthEven ? totalBits : (totalBits - 1);
           eshift = EInteger.FromInt64(targetLength).Subtract(valueEBitLength);
@@ -7226,11 +7192,14 @@ count);
         // if (!srem[0].equals(srem2.get(0)) || !srem[1].equals(srem2.get(1))) {
         // throw new IllegalStateException(this.toString());
         // }
-        EInteger[] qrem = srem[1].ShiftLeft(valueEBitsPerPart).Add(e2).DivRem(
+        EInteger[] qrem = srem[1].ShiftLeft(
+          valueEBitsPerPart).Add(e2).DivRem(
                 srem[0].ShiftLeft(1));
-        EInteger sqroot = srem[0].ShiftLeft(valueEBitsPerPart).Add(qrem[0]);
-        EInteger sqrem = qrem[1].ShiftLeft(valueEBitsPerPart).Add(e1).Subtract(
-        qrem[0].Multiply(qrem[0]));
+                EInteger sqroot =
+                  srem[0].ShiftLeft(valueEBitsPerPart).Add(qrem[0]);
+                  EInteger sqrem = qrem[1].ShiftLeft(
+                    valueEBitsPerPart).Add(e1).Subtract(
+                 qrem[0].Multiply(qrem[0]));
         // DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
         if (sqrem.signum() < 0) {
           if (useRem) {
@@ -7238,17 +7207,6 @@ count);
           }
           sqroot = sqroot.Subtract(EInteger.FromInt32(1));
         }
-        /*
-
-  DebugUtility.Log("sqrt({0}) = {1},{2},\n---shift={3},words={4},wpp={5},bxwords={6}",
-
-  this, sqroot, sqrem, shift, this.wordCount, wordsPerPart,
-   bigintX.wordCount);
-        if (useRem) {
-         DebugUtility.Log("srshHalf=" + (sqrem.ShiftRight(shift>>1)));
-         DebugUtility.Log("srshFull=" + (sqrem.ShiftRight(shift)));
-        }
-        */
         EInteger[] retarr = new EInteger[2];
         retarr[0] = sqroot.ShiftRight(eshift.ShiftRight(1));
         if (useRem) {
@@ -7274,7 +7232,8 @@ count);
       }
       bigintY = bigintX.Multiply(bigintX);
       bigintY = thisValue.Subtract(bigintY);
-      return new EInteger[] { bigintX, bigintY, };
+      return new EInteger[] { bigintX, bigintY,
+      };
     }
     // Begin integer conversions
 
@@ -7282,7 +7241,7 @@ count);
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255).
      * @return This number's value as a byte (from 0 to 255).
-     * @throws java.lang.ArithmeticException This value is less than 0 or greater than
+     * @throws ArithmeticException This value is less than 0 or greater than
      * 255.
      */
     public byte ToByteChecked() {
@@ -7317,7 +7276,7 @@ count);
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer.
      * @return This number's value as a 16-bit signed integer.
-     * @throws java.lang.ArithmeticException This value is less than -32768 or greater
+     * @throws ArithmeticException This value is less than -32768 or greater
      * than 32767.
      */
     public short ToInt16Checked() {

@@ -563,7 +563,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
+     * @param val The parameter
+      {@code val}
+       is an internal value.
      * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
@@ -646,7 +648,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
+     * @param val The parameter
+      {@code val}
+       is an internal value.
      * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
@@ -697,7 +701,9 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
+     * @param val The parameter
+      {@code val}
+       is an internal value.
      * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {
@@ -994,8 +1000,7 @@ at: http://peteroupc.github.io/
           return this.mnum.CanFitInInt32();
         case 2:
           return this.largeValue.CanFitInInt32();
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1008,8 +1013,7 @@ at: http://peteroupc.github.io/
         case 2:
           return this.largeValue.CanFitInInt64();
 
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1022,8 +1026,7 @@ at: http://peteroupc.github.io/
         case 2:
           return this.largeValue.ToInt64Unchecked();
 
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 

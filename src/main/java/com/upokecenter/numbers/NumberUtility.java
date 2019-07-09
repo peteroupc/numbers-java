@@ -207,8 +207,7 @@ private NumberUtility() {
                 this.inputs[i] = this.inputs[0];
                 this.inputs[0] = tmp;
                 int tmpi = this.inputsInts[i];
-                this.inputsInts[i] =
-                this.inputsInts[0];
+                this.inputsInts[i] = this.inputsInts[0];
                 this.inputsInts[0] = tmpi;
                 tmp = this.outputs[i];
                 this.outputs[i] = this.outputs[0];
@@ -245,8 +244,7 @@ private NumberUtility() {
                 this.inputs[i] = this.inputs[0];
                 this.inputs[0] = tmp;
                 int tmpi = this.inputsInts[i];
-                this.inputsInts[i] =
-                this.inputsInts[0];
+                this.inputsInts[i] = this.inputsInts[0];
                 this.inputsInts[0] = tmpi;
                 tmp = this.outputs[i];
                 this.outputs[i] = this.outputs[0];
@@ -282,8 +280,8 @@ private NumberUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-            this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
-              -1;
+            this.inputsInts[0] = input.CanFitInInt32() ?
+              input.ToInt32Checked() : -1;
             this.outputs[0] = output;
             ++this.size;
           } else {
@@ -294,8 +292,8 @@ private NumberUtility() {
               this.outputs[i] = this.outputs[i - 1];
             }
             this.inputs[0] = input;
-            this.inputsInts[0] = input.CanFitInInt32() ? input.ToInt32Checked() :
-              -1;
+            this.inputsInts[0] = input.CanFitInInt32() ?
+              input.ToInt32Checked() : -1;
             this.outputs[0] = output;
           }
         }

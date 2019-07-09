@@ -13,9 +13,9 @@ at: http://peteroupc.github.io/
   // radix.</typeparam>
   class TrappableRadixMath<T> implements IRadixMath<T> {
     private static void ThrowTrapException(
-    int flag,
-    EContext ctx,
-    Object result) {
+      int flag,
+      EContext ctx,
+      Object result) {
       throw new ETrapException(flag, ctx, result);
     }
 
@@ -25,9 +25,9 @@ at: http://peteroupc.github.io/
     }
 
     private T TriggerTraps(
-  T result,
-  EContext src,
-  EContext dst) {
+      T result,
+      EContext src,
+      EContext dst) {
       if (src == null || src.getFlags() == 0) {
         return result;
       }
@@ -40,7 +40,8 @@ at: http://peteroupc.github.io/
         return result;
       }
       int mutexConditions = traps & (~(
-        EContext.FlagClamped | EContext.FlagInexact | EContext.FlagRounded | EContext.FlagSubnormal));
+        EContext.FlagClamped | EContext.FlagInexact | EContext.FlagRounded |
+          EContext.FlagSubnormal));
       if (mutexConditions != 0) {
         for (int i = 0; i < 32; ++i) {
           int flag = mutexConditions & (i << 1);
@@ -51,27 +52,27 @@ at: http://peteroupc.github.io/
       }
       if ((traps & EContext.FlagSubnormal) != 0) {
         ThrowTrapException(
-  traps & EContext.FlagSubnormal,
-  dst,
-  result);
+          traps & EContext.FlagSubnormal,
+          dst,
+          result);
       }
       if ((traps & EContext.FlagInexact) != 0) {
         ThrowTrapException(
-  traps & EContext.FlagInexact,
-  dst,
-  result);
+          traps & EContext.FlagInexact,
+          dst,
+          result);
       }
       if ((traps & EContext.FlagRounded) != 0) {
         ThrowTrapException(
-  traps & EContext.FlagRounded,
-  dst,
-  result);
+          traps & EContext.FlagRounded,
+          dst,
+          result);
       }
       if ((traps & EContext.FlagClamped) != 0) {
         ThrowTrapException(
-  traps & EContext.FlagClamped,
-  dst,
-  result);
+          traps & EContext.FlagClamped,
+          dst,
+          result);
       }
       return result;
     }
@@ -83,21 +84,21 @@ at: http://peteroupc.github.io/
     }
 
     public T DivideToIntegerNaturalScale(
-  T thisValue,
-  T divisor,
-  EContext ctx) {
+      T thisValue,
+      T divisor,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.DivideToIntegerNaturalScale(
-  thisValue,
-  divisor,
-  tctx);
+        thisValue,
+        divisor,
+        tctx);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
     public T DivideToIntegerZeroScale(
-  T thisValue,
-  T divisor,
-  EContext ctx) {
+      T thisValue,
+      T divisor,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.DivideToIntegerZeroScale(thisValue, divisor, tctx);
       return this.TriggerTraps(result, tctx, ctx);
@@ -116,16 +117,16 @@ at: http://peteroupc.github.io/
     }
 
     public T Remainder(
-  T thisValue,
-  T divisor,
-  EContext ctx,
-  boolean roundAfterDivide) {
+      T thisValue,
+      T divisor,
+      EContext ctx,
+      boolean roundAfterDivide) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.Remainder(
-  thisValue,
-  divisor,
-  tctx,
-  roundAfterDivide);
+        thisValue,
+        divisor,
+        tctx,
+        roundAfterDivide);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
@@ -194,16 +195,16 @@ at: http://peteroupc.github.io/
     }
 
     public T DivideToExponent(
-  T thisValue,
-  T divisor,
-  EInteger desiredExponent,
-  EContext ctx) {
+      T thisValue,
+      T divisor,
+      EInteger desiredExponent,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.DivideToExponent(
-  thisValue,
-  divisor,
-  desiredExponent,
-  tctx);
+        thisValue,
+        divisor,
+        desiredExponent,
+        tctx);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
@@ -244,16 +245,16 @@ at: http://peteroupc.github.io/
     }
 
     public T MultiplyAndAdd(
-  T thisValue,
-  T multiplicand,
-  T augend,
-  EContext ctx) {
+      T thisValue,
+      T multiplicand,
+      T augend,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.MultiplyAndAdd(
-  thisValue,
-  multiplicand,
-  augend,
-  tctx);
+        thisValue,
+        multiplicand,
+        augend,
+        tctx);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
@@ -276,32 +277,32 @@ at: http://peteroupc.github.io/
     }
 
     public T RoundToExponentExact(
-  T thisValue,
-  EInteger expOther,
-  EContext ctx) {
+      T thisValue,
+      EInteger expOther,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.RoundToExponentExact(thisValue, expOther, tctx);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
     public T RoundToExponentSimple(
-  T thisValue,
-  EInteger expOther,
-  EContext ctx) {
+      T thisValue,
+      EInteger expOther,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.RoundToExponentSimple(thisValue, expOther, ctx);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
     public T RoundToExponentNoRoundedFlag(
-  T thisValue,
-  EInteger exponent,
-  EContext ctx) {
+      T thisValue,
+      EInteger exponent,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.RoundToExponentNoRoundedFlag(
-  thisValue,
-  exponent,
-  ctx);
+        thisValue,
+        exponent,
+        ctx);
       return this.TriggerTraps(result, tctx, ctx);
     }
 
@@ -318,10 +319,10 @@ at: http://peteroupc.github.io/
     }
 
     public T CompareToWithContext(
-  T thisValue,
-  T otherValue,
-  boolean treatQuietNansAsSignaling,
-  EContext ctx) {
+      T thisValue,
+      T otherValue,
+      boolean treatQuietNansAsSignaling,
+      EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.CompareToWithContext(
         thisValue,
@@ -347,16 +348,16 @@ at: http://peteroupc.github.io/
     }
 
     public T AddEx(
-    T thisValue,
-    T other,
-    EContext ctx,
-    boolean roundToOperandPrecision) {
+      T thisValue,
+      T other,
+      EContext ctx,
+      boolean roundToOperandPrecision) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.AddEx(
-  thisValue,
-  other,
-  ctx,
-  roundToOperandPrecision);
+        thisValue,
+        other,
+        ctx,
+        roundToOperandPrecision);
       return this.TriggerTraps(result, tctx, ctx);
     }
   }

@@ -4,8 +4,8 @@
 
 Specifies the mode to use when "shortening" numbers that otherwise can't fit
  a given number of digits, so that the shortened number has about the
- same value. This "shortening" is known as rounding. (The "E" stands
- for "extended", and has this prefix to group it with the other
+  same value. This "shortening" is known as rounding. (The "E" stands
+  for "extended", and has this prefix to group it with the other
  classes common to this library, particularly EDecimal, EFloat, and
  ERational.).
 
@@ -27,7 +27,8 @@ Specifies the mode to use when "shortening" numbers that otherwise can't fit
  number is rounded to the closest representable number that is even.
 * `HalfUp`<br>
  Rounded to the nearest number; if the fractional part is exactly half, the
- number is rounded to the closest representable number away from zero.
+ number is rounded to the closest representable number away from
+ zero.
 * `None`<br>
  Indicates that rounding will not be used.
 * `Odd`<br>
@@ -96,8 +97,8 @@ The fractional part is discarded (the number is truncated).
 ### HalfUp
     public static final ERounding HalfUp
 Rounded to the nearest number; if the fractional part is exactly half, the
- number is rounded to the closest representable number away from zero.
- This is the most familiar rounding mode for many people.
+ number is rounded to the closest representable number away from
+ zero. This is the most familiar rounding mode for many people.
 ### HalfDown
     public static final ERounding HalfDown
 Rounded to the nearest number; if the fractional part is exactly half, it is
@@ -106,7 +107,7 @@ Rounded to the nearest number; if the fractional part is exactly half, it is
     public static final ERounding HalfEven
 Rounded to the nearest number; if the fractional part is exactly half, the
  number is rounded to the closest representable number that is even.
- This is sometimes also known as "banker's rounding".
+  This is sometimes also known as "banker's rounding".
 ### Ceiling
     public static final ERounding Ceiling
 If there is a fractional part, the number is rounded to the highest

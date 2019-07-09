@@ -892,7 +892,8 @@ import com.upokecenter.numbers.*;
       // not implemented yet
     }
 
-    private static final String[] ValueFPIntegers = { "1", "2", "4", "8",
+    private static final String[] ValueFPIntegers = {
+      "1", "2", "4", "8",
       "281474976710656", "562949953421312", "1125899906842624",
       "2251799813685248", "4503599627370496", "9007199254740992",
       "18014398509481984", "36028797018963968", "72057594037927936",
@@ -903,9 +904,11 @@ import com.upokecenter.numbers.*;
       "89884656743115795386465259539451236680898848947115328636715040578866337902750481566354238661203768010560056939935696678829394884407208311246423715319737062188883946712432742638151109800623047059726541476042502884419075341171231440736956555270413618581675255342293149119973622969239858152417678164812112068608",
     };
 
-    private static final int[] ValueFPIntegersExp = { 0, 1, 2, 3, 48, 49,
+    private static final int[] ValueFPIntegersExp = {
+      0, 1, 2, 3, 48, 49,
       50, 51, 52,
-      53, 54, 55, 56, 57, 58, 1020, 1021, 1022, 1023, };
+      53, 54, 55, 56, 57, 58, 1020, 1021, 1022, 1023,
+    };
 
     @Test
     public void TestFPDoubles() {
@@ -1195,9 +1198,9 @@ import com.upokecenter.numbers.*;
     }
 
     public static void TestDoubleRounding(
-  EFloat expected,
-  EFloat input,
-  EFloat src) {
+      EFloat expected,
+      EFloat input,
+      EFloat src) {
       if (!input.isFinite() || !expected.isFinite()) {
         return;
       }
@@ -1207,27 +1210,26 @@ import com.upokecenter.numbers.*;
       }
       String str = input.toString();
       if (input.ToDouble() != expectedDouble) {
-        String msg =
-        "\nexpectedDbl " + OutputDouble(expectedDouble) +
+        String msg = "\nexpectedDbl " + OutputDouble(expectedDouble) +
         ",\ngot----- " + OutputDouble(input.ToDouble()) +
-              "\nsrc-----=" + OutputEF(src) + "\nexpected=" + OutputEF(expected) +
-              "\ninput---=" + OutputEF(input);
+           "\nsrc-----=" + OutputEF(src) + "\nexpected=" +
+                OutputEF(expected) + "\ninput---=" + OutputEF(input);
         Assert.fail(msg);
       }
       double inputDouble = EDecimal.FromString(str).ToDouble();
       if (inputDouble != expectedDouble) {
         String msg = "\nexpectedDbl " + OutputDouble(expectedDouble) +
                 ",\ngot----- " + OutputDouble(inputDouble) +
-              "\nsrc-----=" + OutputEF(src) + "\nexpected=" + OutputEF(expected) +
-              "\ninput---=" + OutputEF(input);
+           "\nsrc-----=" + OutputEF(src) + "\nexpected=" +
+                OutputEF(expected) + "\ninput---=" + OutputEF(input);
         Assert.fail(msg);
       }
     }
 
     public static void TestSingleRounding(
-  EFloat expected,
-  EFloat input,
-  EFloat src) {
+      EFloat expected,
+      EFloat input,
+      EFloat src) {
       if (!input.isFinite() || !expected.isFinite()) {
         return;
       }
@@ -1305,13 +1307,13 @@ import com.upokecenter.numbers.*;
     }
 
     private static void TestBinaryToDecimal(
-  String input,
-  int digits,
-  String expected,
-  String msg) {
+      String input,
+      int digits,
+      String expected,
+      String msg) {
       EContext ec = EContext.ForPrecisionAndRounding(
-    digits,
-    ERounding.HalfEven);
+        digits,
+        ERounding.HalfEven);
       String str = EFloat.FromString(input, EContext.Binary64)
               .ToEDecimal().RoundToPrecision(ec).toString();
       TestCommon.CompareTestEqual(
@@ -1335,24 +1337,26 @@ import com.upokecenter.numbers.*;
         EFloat ef = EFloat.FromDouble(64.1);
         String stringTemp = ef.ToShortestString(EContext.Binary64);
         Assert.assertEquals(
-  "64.1",
-  stringTemp);
-        stringTemp = EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
-        Assert.assertEquals(
-        "0.1",
-        stringTemp);
-      }
-      {
-        String stringTemp = EFloat.NegativeZero.ToShortestString(EContext.Binary32);
-        Assert.assertEquals(
-          "-0",
+          "64.1",
           stringTemp);
-      }
-      {
-        String stringTemp = EFloat.FromDouble(0.1).ToShortestString(EContext.Binary64);
+          stringTemp =
+          EFloat.FromSingle(0.1f).ToShortestString(EContext.Binary32);
         Assert.assertEquals(
           "0.1",
           stringTemp);
+      }
+      {
+   String stringTemp = EFloat.NegativeZero.ToShortestString(EContext.Binary32);
+   Assert.assertEquals(
+     "-0",
+     stringTemp);
+      }
+      {
+String stringTemp =
+          EFloat.FromDouble(0.1).ToShortestString(EContext.Binary64);
+          Assert.assertEquals(
+            "0.1",
+            stringTemp);
       }
       {
         String stringTemp = EFloat.FromString(
@@ -1870,8 +1874,8 @@ import com.upokecenter.numbers.*;
       }
       {
         EFloat objectTemp = EFloat.Create(
-          EInteger.FromRadixString("-10000000000000000000000000000000000000000000000000000", 2),
-          EInteger.FromInt32(-1074));
+  EInteger.FromRadixString("-10000000000000000000000000000000000000000000000000000", 2),
+  EInteger.FromInt32(-1074));
         TestToFloatRoundingOne(objectTemp, true);
       }
     }

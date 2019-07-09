@@ -3,15 +3,15 @@
     public final class ETrapException extends java.lang.ArithmeticException
 
 Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.).
+ and has this prefix to group it with the other classes common to
+ this library, particularly EDecimal, EFloat, and ERational.).
 
 ## Methods
 
 * `ETrapException​(int flag,
               EContext ctx,
               java.lang.Object result) ETrapException`<br>
- Initializes a new instance of the ETrapException class.
+ Initializes a new instance of the ETrapException.
 * `EContext getContext()`<br>
  Gets the arithmetic context used during the operation that triggered the
  trap.
@@ -25,33 +25,33 @@ Exception thrown for arithmetic trap errors. (The "E" stands for "extended",
 * `ETrapException​(int flag,
               EContext ctx,
               java.lang.Object result) ETrapException`<br>
- Initializes a new instance of the ETrapException class.
+ Initializes a new instance of the ETrapException.
 
 ## Method Details
 
 ### ETrapException
     public ETrapException​(int flag, EContext ctx, java.lang.Object result)
-Initializes a new instance of the <code>ETrapException</code> class.
+Initializes a new instance of the <code>ETrapException</code>.
 
 **Parameters:**
 
-* <code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.
+* <code>flag</code> - A 32-bit signed integer.
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - An EContext object.
 
-* <code>result</code> - The parameter <code>result</code> is an arbitrary object.
+* <code>result</code> - An arbitrary object.
 
 ### ETrapException
     public ETrapException​(int flag, EContext ctx, java.lang.Object result)
-Initializes a new instance of the <code>ETrapException</code> class.
+Initializes a new instance of the <code>ETrapException</code>.
 
 **Parameters:**
 
-* <code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.
+* <code>flag</code> - A 32-bit signed integer.
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - An EContext object.
 
-* <code>result</code> - The parameter <code>result</code> is an arbitrary object.
+* <code>result</code> - An arbitrary object.
 
 ### getContext
     public final EContext getContext()
@@ -79,4 +79,5 @@ Gets the flag that specifies the kind of error (EContext.FlagXXX). This will
 **Returns:**
 
 * The flag that specifies the kind of error (EContext.FlagXXX). This
- will only be one flag, such as. <code>FlagInexact</code> or FlagSubnormal.
+ will only be one flag, such as. <code>FlagInexact</code> or
+ FlagSubnormal.

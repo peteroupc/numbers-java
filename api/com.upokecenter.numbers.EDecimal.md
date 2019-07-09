@@ -3,53 +3,55 @@
     public final class EDecimal extends java.lang.Object implements java.lang.Comparable<EDecimal>
 
 Represents an arbitrary-precision decimal floating-point number. (The "E"
- stands for "extended", meaning that instances of this class can be
- values other than numbers proper, such as infinity and not-a-number.)
- <p><b>About decimal arithmetic</b> </p> <p>Decimal (base-10)
- arithmetic, such as that provided by this class, is appropriate for
- calculations involving such real-world data as prices and other sums
- of money, tax rates, and measurements. These calculations often
- involve multiplying or dividing one decimal with another decimal, or
- performing other operations on decimal numbers. Many of these
- calculations also rely on rounding behavior in which the result after
- rounding is an arbitrary-precision decimal number (for example,
- multiplying a price by a premium rate, then rounding, should result
- in a decimal amount of money). </p> <p>On the other hand, most
- implementations of <code>float</code> and <code>double</code> , including in C#
- and Java, store numbers in a binary (base-2) floating-point format
- and use binary floating-point arithmetic. Many decimal numbers can't
- be represented exactly in binary floating-point format (regardless of
- its length). Applying binary arithmetic to numbers intended to be
- decimals can sometimes lead to unintuitive results, as is shown in
- the description for the FromDouble() method of this class. </p>
- <p><b>About EDecimal instances</b> </p> <p>Each instance of this
- class consists of an integer mantissa (significand) and an integer
- exponent, both arbitrary-precision. The value of the number equals
- mantissa (significand) * 10^exponent. </p> <p>The mantissa
- (significand) is the value of the digits that make up a number,
- ignoring the decimal point and exponent. For example, in the number
- 2356.78, the mantissa (significand) is 235678. The exponent is where
- the "floating" decimal point of the number is located. A positive
- exponent means "move it to the right", and a negative exponent means
- "move it to the left." In the example 2, 356.78, the exponent is -2,
- since it has 2 decimal places and the decimal point is "moved to the
- left by 2." Therefore, in the arbitrary-precision decimal
- representation, this number would be stored as 235678 * 10^-2. </p>
- <p>The mantissa (significand) and exponent format preserves trailing
- zeros in the number's value. This may give rise to multiple ways to
- store the same value. For example, 1.00 and 1 would be stored
- differently, even though they have the same value. In the first case,
- 100 * 10^-2 (100 with decimal point moved left by 2), and in the
- second case, 1 * 10^0 (1 with decimal point moved 0). </p> <p>This
- class also supports values for negative zero, not-a-number (NaN)
- values, and infinity. <b>Negative zero</b> is generally used when a
- negative number is rounded to 0; it has the same mathematical value
- as positive zero. <b>Infinity</b> is generally used when a non-zero
+  stands for "extended", meaning that instances of this class can be
+ values other than numbers proper, such as infinity and
+ not-a-number.) <p><b>About decimal arithmetic</b> </p> <p>Decimal
+ (base-10) arithmetic, such as that provided by this class, is
+ appropriate for calculations involving such real-world data as
+ prices and other sums of money, tax rates, and measurements. These
+ calculations often involve multiplying or dividing one decimal with
+ another decimal, or performing other operations on decimal numbers.
+ Many of these calculations also rely on rounding behavior in which
+ the result after rounding is an arbitrary-precision decimal number
+ (for example, multiplying a price by a premium rate, then rounding,
+ should result in a decimal amount of money). </p> <p>On the other
+ hand, most implementations of <code>float</code> and <code>double</code> ,
+ including in C# and Java, store numbers in a binary (base-2)
+ floating-point format and use binary floating-point arithmetic. Many
+ decimal numbers can't be represented exactly in binary
+ floating-point format (regardless of its length). Applying binary
+ arithmetic to numbers intended to be decimals can sometimes lead to
+ unintuitive results, as is shown in the description for the
+ FromDouble() method of this class. </p> <p><b>About EDecimal
+ instances</b> </p> <p>Each instance of this class consists of an
+ integer mantissa (significand) and an integer exponent, both
+ arbitrary-precision. The value of the number equals mantissa
+ (significand) * 10^exponent. </p> <p>The mantissa (significand) is
+ the value of the digits that make up a number, ignoring the decimal
+ point and exponent. For example, in the number 2356.78, the mantissa
+  (significand) is 235678. The exponent is where the "floating"
+ decimal point of the number is located. A positive exponent means
+  "move it to the right", and a negative exponent means "move it to
+  the left." In the example 2, 356.78, the exponent is -2, since it
+  has 2 decimal places and the decimal point is "moved to the left by
+  2." Therefore, in the arbitrary-precision decimal representation,
+ this number would be stored as 235678 * 10^-2. </p> <p>The mantissa
+ (significand) and exponent format preserves trailing zeros in the
+ number's value. This may give rise to multiple ways to store the
+ same value. For example, 1.00 and 1 would be stored differently,
+ even though they have the same value. In the first case, 100 * 10^-2
+ (100 with decimal point moved left by 2), and in the second case, 1
+ * 10^0 (1 with decimal point moved 0). </p> <p>This class also
+ supports values for negative zero, not-a-number (NaN) values, and
+ infinity. <b>Negative zero</b> is generally used when a negative
+ number is rounded to 0; it has the same mathematical value as
+ positive zero. <b>Infinity</b> is generally used when a non-zero
  number is divided by zero, or when a very high or very low number
  can't be represented in a given exponent range. <b>Not-a-number</b>
- is generally used to signal errors. </p> <p>This class implements the
- General Decimal Arithmetic Specification version 1.70 (except part of
- chapter 6): <code>http://speleotrove.com/decimal/decarith.html</code> </p>
+ is generally used to signal errors. </p> <p>This class implements
+ the General Decimal Arithmetic Specification version 1.70 (except
+ part of chapter 6):
+ <code>http://speleotrove.com/decimal/decarith.html</code> </p>
  <p><b>Errors and Exceptions</b> </p> <p>Passing a signaling NaN to
  any arithmetic operation shown here will signal the flag FlagInvalid
  and return a quiet NaN, even if another operand to that operation is
@@ -60,53 +62,54 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  passing a null arbitrary-precision decimal argument to any method
  here will throw an exception. </p> <p>When an arithmetic operation
  signals the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it
- will not throw an exception too, unless the flag's trap is enabled in
- the arithmetic context (see EContext's Traps property). </p> <p>If an
- operation requires creating an intermediate value that might be too
- big to fit in memory (or might require more than 2 gigabytes of
- memory to store -- due to the current use of a 32-bit integer
- internally as a length), the operation may signal an
- invalid-operation flag and return not-a-number (NaN). In certain rare
- cases, the compareTo method may throw OutOfMemoryError (called
- OutOfMemoryError in Java) in the same circumstances. </p>
+ will not throw an exception too, unless the flag's trap is enabled
+ in the arithmetic context (see EContext's Traps property). </p>
+ <p>If an operation requires creating an intermediate value that
+ might be too big to fit in memory (or might require more than 2
+ gigabytes of memory to store -- due to the current use of a 32-bit
+ integer internally as a length), the operation may signal an
+ invalid-operation flag and return not-a-number (NaN). In certain
+ rare cases, the compareTo method may throw OutOfMemoryError
+ (called OutOfMemoryError in Java) in the same circumstances. </p>
  <p><b>Serialization</b> </p> <p>An arbitrary-precision decimal value
  can be serialized (converted to a stable format) in one of the
- following ways: </p> <ul> <li>By calling the toString() method, which
- will always return distinct strings for distinct arbitrary-precision
- decimal values. </li> <li>By calling the UnsignedMantissa, Exponent,
- and IsNegative properties, and calling the IsInfinity, IsQuietNaN,
- and IsSignalingNaN methods. The return values combined will uniquely
- identify a particular arbitrary-precision decimal value. </li> </ul>
- <p><b>Thread safety</b> </p> <p>Instances of this class are
- immutable, so they are inherently safe for use by multiple threads.
- Multiple instances of this object with the same properties are
- interchangeable, so they should not be compared using the "=="
- operator (which might only check if each side of the operator is the
- same instance). </p> <p><b>Comparison considerations</b> </p> <p>This
- class's natural ordering (under the compareTo method) is not
- consistent with the Equals method. This means that two values that
- compare as equal under the compareTo method might not be equal under
- the Equals method. The compareTo method compares the mathematical
- values of the two instances passed to it (and considers two different
- NaN values as equal), while two instances with the same mathematical
- value, but different exponents, will be considered unequal under the
- Equals method. </p> <p><b>Security note</b> </p> <p>It is not
- recommended to implement security-sensitive algorithms using the
- methods in this class, for several reasons: </p> <ul>
- <li><code>EDecimal</code> objects are immutable, so they can't be modified,
- and the memory they occupy is not guaranteed to be cleared in a
- timely fashion due to garbage collection. This is relevant for
- applications that use many-digit-long numbers as secret parameters.
- </li> <li>The methods in this class (especially those that involve
- arithmetic) are not guaranteed to be "constant-time"
- (non-data-dependent) for all relevant inputs. Certain attacks that
- involve encrypted communications have exploited the timing and other
- aspects of such communications to derive keying material or cleartext
- indirectly. </li> </ul> <p>Applications should instead use dedicated
- security libraries to handle big numbers in security-sensitive
- algorithms. </p> <p><b>Forms of numbers</b> </p> <p>There are several
- other types of numbers that are mentioned in this class and elsewhere
- in this documentation. For reference, they are specified here. </p>
+ following ways: </p> <ul> <li>By calling the toString() method,
+ which will always return distinct strings for distinct
+ arbitrary-precision decimal values. </li> <li>By calling the
+ UnsignedMantissa, Exponent, and IsNegative properties, and calling
+ the IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return
+ values combined will uniquely identify a particular
+ arbitrary-precision decimal value. </li> </ul> <p><b>Thread
+ safety</b> </p> <p>Instances of this class are immutable, so they
+ are inherently safe for use by multiple threads. Multiple instances
+ of this object with the same properties are interchangeable, so they
+  should not be compared using the "==" operator (which might only
+ check if each side of the operator is the same instance). </p>
+ <p><b>Comparison considerations</b> </p> <p>This class's natural
+ ordering (under the compareTo method) is not consistent with the
+ Equals method. This means that two values that compare as equal
+ under the compareTo method might not be equal under the Equals
+ method. The compareTo method compares the mathematical values of the
+ two instances passed to it (and considers two different NaN values
+ as equal), while two instances with the same mathematical value, but
+ different exponents, will be considered unequal under the Equals
+ method. </p> <p><b>Security note</b> </p> <p>It is not recommended
+ to implement security-sensitive algorithms using the methods in this
+ class, for several reasons: </p> <ul> <li><code>EDecimal</code> objects
+ are immutable, so they can't be modified, and the memory they occupy
+ is not guaranteed to be cleared in a timely fashion due to garbage
+ collection. This is relevant for applications that use
+ many-digit-long numbers as secret parameters. </li> <li>The methods
+ in this class (especially those that involve arithmetic) are not
+  guaranteed to be "constant-time" (non-data-dependent) for all
+ relevant inputs. Certain attacks that involve encrypted
+ communications have exploited the timing and other aspects of such
+ communications to derive keying material or cleartext indirectly.
+ </li> </ul> <p>Applications should instead use dedicated security
+ libraries to handle big numbers in security-sensitive algorithms.
+ </p> <p><b>Forms of numbers</b> </p> <p>There are several other
+ types of numbers that are mentioned in this class and elsewhere in
+ this documentation. For reference, they are specified here. </p>
  <p><b>Unsigned integer</b> : An integer that's always 0 or greater,
  with the following maximum values: </p> <ul> <li>8-bit unsigned
  integer, or <i> byte </i> : 255. </li> <li>16-bit unsigned integer:
@@ -117,49 +120,49 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  integer: -128 to 127. </li> <li>16-bit signed integer: -32768 to
  32767. </li> <li>32-bit signed integer: -2 <sup> 31 </sup> to (2
  <sup> 31 </sup> - 1). </li> <li>64-bit signed integer: -2 <sup> 63
- </sup> to (2 <sup> 63 </sup> - 1). </li> </ul> <p><b>Two's complement
- form</b> : In <i> two' s-complement form </i> , nonnegative numbers
- have the highest (most significant) bit set to zero, and negative
- numbers have that bit (and all bits beyond) set to one, and a
- negative number is stored in such form by decreasing its absolute
- value by 1 and swapping the bits of the resulting number. </p>
- <p><b>64-bit floating-point number</b> : A 64-bit binary
- floating-point number, in the form <i> significand </i> * 2 <sup> <i>
- exponent </i> </sup> . The significand is 53 bits long (Precision)
- and the exponent ranges from -1074 (EMin) to 971 (EMax). The number
- is stored in the following format (commonly called the IEEE 754
- format): </p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre> <ul> <li>A.
- Low 52 bits (Precision minus 1 bits): Lowest bits of the significand.
- </li> <li>B. Next 11 bits: Exponent area: <ul> <li>If all bits are
- ones, this value is infinity (positive or negative depending on the C
- bit) if all bits in area A are zeros, or not-a-number (NaN)
- otherwise. </li> <li>If all bits are zeros, this is a subnormal
- number. The exponent is EMin and the highest bit of the significand
- is zero. </li> <li>If any other number, the exponent is this value
- reduced by 1, then raised by EMin, and the highest bit of the
- significand is one. </li> </ul> </li> <li>C. Highest bit: If one,
- this is a negative number. </li> </ul> <p>The elements described
- above are in the same order as the order of each bit of each element,
- that is, either most significant first or least significant first.
- </p> <p><b>32-bit binary floating-point number</b> : A 32-bit binary
- number which is stored similarly to a <i> 64-bit floating-point
- number </i> , except that: </p> <ul> <li>Precision is 24 bits. </li>
- <li>EMin is -149. </li> <li>EMax is 104. </li> <li>A. The low 23 bits
- (Precision minus 1 bits) are the lowest bits of the significand.
- </li> <li>B. The next 8 bits are the exponent area. </li> <li>C. If
- the highest bit is one, this is a negative number. </li> </ul>
- <p><b>.NET Framework decimal</b> : A 128-bit decimal floating-point
- number, in the form <i> significand </i> * 10 <sup> - <i> scale </i>
- </sup> , where the scale ranges from 0 to 28. The number is stored in
- the following format: </p> <ul> <li>Low 96 bits are the significand,
- as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2
- <sup> 96 </sup> -1)). </li> <li>Next 16 bits are unused. </li>
- <li>Next 8 bits are the scale, stored as an 8-bit unsigned integer.
- </li> <li>Next 7 bits are unused. </li> <li>If the highest bit is
- one, it's a negative number. </li> </ul> <p>The elements described
- above are in the same order as the order of each bit of each element,
- that is, either most significant first or least significant first.
- </p>
+ </sup> to (2 <sup> 63 </sup> - 1). </li> </ul> <p><b>Two's
+ complement form</b> : In <i> two' s-complement form </i> ,
+ nonnegative numbers have the highest (most significant) bit set to
+ zero, and negative numbers have that bit (and all bits beyond) set
+ to one, and a negative number is stored in such form by decreasing
+ its absolute value by 1 and swapping the bits of the resulting
+ number. </p> <p><b>64-bit floating-point number</b> : A 64-bit
+ binary floating-point number, in the form <i> significand </i> * 2
+ <sup> <i> exponent </i> </sup> . The significand is 53 bits long
+ (Precision) and the exponent ranges from -1074 (EMin) to 971 (EMax).
+ The number is stored in the following format (commonly called the
+ IEEE 754 format): </p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre>
+ <ul> <li>A. Low 52 bits (Precision minus 1 bits): Lowest bits of the
+ significand. </li> <li>B. Next 11 bits: Exponent area: <ul> <li>If
+ all bits are ones, this value is infinity (positive or negative
+ depending on the C bit) if all bits in area A are zeros, or
+ not-a-number (NaN) otherwise. </li> <li>If all bits are zeros, this
+ is a subnormal number. The exponent is EMin and the highest bit of
+ the significand is zero. </li> <li>If any other number, the exponent
+ is this value reduced by 1, then raised by EMin, and the highest bit
+ of the significand is one. </li> </ul> </li> <li>C. Highest bit: If
+ one, this is a negative number. </li> </ul> <p>The elements
+ described above are in the same order as the order of each bit of
+ each element, that is, either most significant first or least
+ significant first. </p> <p><b>32-bit binary floating-point
+ number</b> : A 32-bit binary number which is stored similarly to a
+ <i> 64-bit floating-point number </i> , except that: </p> <ul>
+ <li>Precision is 24 bits. </li> <li>EMin is -149. </li> <li>EMax is
+ 104. </li> <li>A. The low 23 bits (Precision minus 1 bits) are the
+ lowest bits of the significand. </li> <li>B. The next 8 bits are the
+ exponent area. </li> <li>C. If the highest bit is one, this is a
+ negative number. </li> </ul> <p><b>.NET Framework decimal</b> : A
+ 128-bit decimal floating-point number, in the form <i> significand
+ </i> * 10 <sup> - <i> scale </i> </sup> , where the scale ranges
+ from 0 to 28. The number is stored in the following format: </p>
+ <ul> <li>Low 96 bits are the significand, as a 96-bit unsigned
+ integer (all 96-bit values are allowed, up to (2 <sup> 96 </sup>
+ -1)). </li> <li>Next 16 bits are unused. </li> <li>Next 8 bits are
+ the scale, stored as an 8-bit unsigned integer. </li> <li>Next 7
+ bits are unused. </li> <li>If the highest bit is one, it's a
+ negative number. </li> </ul> <p>The elements described above are in
+ the same order as the order of each bit of each element, that is,
+ either most significant first or least significant first. </p>
 
 ## Fields
 
@@ -230,10 +233,12 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  (positive or negative) of another number.
 * `static EDecimal Create​(int mantissaSmall,
       int exponentSmall) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa
+ Creates a number with the value
+      exponent*10^mantissa .
 * `static EDecimal Create​(EInteger mantissa,
       EInteger exponent) exponent*10^mantissa`<br>
- Creates a number with the value exponent*10^mantissa
+ Creates a number with the value
+      exponent*10^mantissa .
 * `static EDecimal CreateNaN​(EInteger diag)`<br>
  Creates a not-a-number arbitrary-precision decimal number.
 * `static EDecimal CreateNaN​(EInteger diag,
@@ -311,8 +316,8 @@ Renamed to DivRemNaturalScale.
 * `EDecimal DivideToIntegerNaturalScale​(EDecimal divisor,
                            EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
- result (which is initially rounded down), with the preferred exponent
- set to this value's exponent minus the divisor's exponent.
+ result (which is initially rounded down), with the preferred
+ exponent set to this value's exponent minus the divisor's exponent.
 * `EDecimal DivideToIntegerZeroScale​(EDecimal divisor,
                         EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
@@ -333,8 +338,8 @@ Renamed to DivRemNaturalScale.
  properties are equal to those of another object.
 * `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object's mantissa (significand), exponent, and
- properties are equal to those of another object and that other object
- is an arbitrary-precision decimal number.
+ properties are equal to those of another object and that other
+ object is an arbitrary-precision decimal number.
 * `EDecimal Exp​(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
@@ -414,8 +419,8 @@ Renamed to FromEFloat.
  Gets a value indicating whether this object's value equals 0.
 * `EDecimal Log​(EContext ctx)`<br>
  Finds the natural logarithm of this object, that is, the power (exponent)
- that e (the base of natural logarithms) must be raised to in order to
- equal this object's value.
+ that e (the base of natural logarithms) must be raised to in order
+ to equal this object's value.
 * `EDecimal Log10​(EContext ctx)`<br>
  Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
@@ -547,17 +552,18 @@ Renamed to FromEFloat.
  Finds the remainder that results when dividing two arbitrary-precision
  decimal numbers.
 * `EDecimal RemainderNaturalScale​(EDecimal divisor) "this" - (("this" /
- "divisor") * "divisor")`<br>
+  "divisor") * "divisor")`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
- "divisor") * "divisor")
+  "divisor") * "divisor") .
 * `EDecimal RemainderNaturalScale​(EDecimal divisor,
                      EContext ctx)`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
- "divisor") * "divisor").
+  "divisor") * "divisor").
 * `EDecimal RemainderNear​(EDecimal divisor,
              EContext ctx)`<br>
  Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object's value by another object's value.
+ the result of dividing this object's value by another object's
+ value.
 * `EDecimal RemainderNoRoundAfterDivide​(EDecimal divisor,
                            EContext ctx)`<br>
  Finds the remainder that results when dividing two arbitrary-precision
@@ -565,8 +571,8 @@ Renamed to FromEFloat.
  fit the precision of the given arithmetic context.
 * `EDecimal RoundToExponent​(int exponentSmall)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to a new exponent if necessary, using the HalfEven
- rounding mode.
+ object but rounded to a new exponent if necessary, using the
+ HalfEven rounding mode.
 * `EDecimal RoundToExponent​(int exponentSmall,
                EContext ctx)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
@@ -577,8 +583,8 @@ Renamed to FromEFloat.
  object but rounded to a new exponent if necessary.
 * `EDecimal RoundToExponent​(EInteger exponent)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to a new exponent if necessary, using the HalfEven
- rounding mode.
+ object but rounded to a new exponent if necessary, using the
+ HalfEven rounding mode.
 * `EDecimal RoundToExponent​(EInteger exponent,
                EContext ctx)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
@@ -656,11 +662,12 @@ Renamed to Sqrt.
  byte (from 0 to 255) after truncating to an integer.
 * `byte ToByteIfExact()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) without rounding to a different numerical value.
+ byte (from 0 to 255) without rounding to a different numerical
+ value.
 * `byte ToByteUnchecked()`<br>
  Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a byte (from 0
- to 255).
+ least-significant bits of its two's-complement form as a byte (from
+ 0 to 255).
 * `double ToDouble()`<br>
  Converts this value to its closest equivalent as a 64-bit floating-point
  number.
@@ -782,7 +789,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 **Returns:**
 
 * <code>true</code> if this object is finite (not infinity or NaN);
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### isNegative
     public final boolean isNegative()
@@ -792,7 +799,7 @@ Gets a value indicating whether this object is negative, including negative
 **Returns:**
 
 * <code>true</code> if this object is negative, including negative zero;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -801,14 +808,14 @@ Gets a value indicating whether this object's value equals 0.
 **Returns:**
 
 * <code>true</code> if this object's value equals 0; otherwise, <code>
- false</code> . <code>true</code> if this object' s value equals 0; otherwise, .
- <code>false</code> .
+ false</code>. <code>true</code> if this object' s value equals 0; otherwise,.
+ <code>false</code>.
 
 ### getMantissa
     public final EInteger getMantissa()
 Gets this object's unscaled value, or mantissa, and makes it negative if
  this obejct is negative. If this value is not-a-number (NaN), that
- value's absolute value is the NaN's "payload" (diagnostic
+  value's absolute value is the NaN's "payload" (diagnostic
  information).
 
 **Returns:**
@@ -827,7 +834,7 @@ Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
 ### getUnsignedMantissa
     public final EInteger getUnsignedMantissa()
 Gets the absolute value of this object's unscaled value, or mantissa. If
- this value is not-a-number (NaN), that value is the NaN's "payload"
+  this value is not-a-number (NaN), that value is the NaN's "payload"
  (diagnostic information).
 
 **Returns:**
@@ -836,7 +843,8 @@ Gets the absolute value of this object's unscaled value, or mantissa. If
 
 ### Create
     public static EDecimal Create​(int mantissaSmall, int exponentSmall)
-Creates a number with the value <code>exponent*10^mantissa</code>
+Creates a number with the value
+      <code>exponent*10^mantissa</code> .
 
 **Parameters:**
 
@@ -850,7 +858,8 @@ Creates a number with the value <code>exponent*10^mantissa</code>
 
 ### Create
     public static EDecimal Create​(EInteger mantissa, EInteger exponent)
-Creates a number with the value <code>exponent*10^mantissa</code>
+Creates a number with the value
+      <code>exponent*10^mantissa</code> .
 
 **Parameters:**
 
@@ -875,8 +884,8 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 * <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
  associated with this object. If none is needed, should be zero. To
- get the diagnostic information from another EDecimal object, use that
- object's <code>UnsignedMantissa</code> property.
+ get the diagnostic information from another EDecimal object, use
+ that object's <code>UnsignedMantissa</code> property.
 
 **Returns:**
 
@@ -890,8 +899,8 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 * <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
  associated with this object. If none is needed, should be zero. To
- get the diagnostic information from another EDecimal object, use that
- object's <code>UnsignedMantissa</code> property.
+ get the diagnostic information from another EDecimal object, use
+ that object's <code>UnsignedMantissa</code> property.
 
 * <code>signaling</code> - Whether the return value will be signaling (true) or quiet
  (false).
@@ -901,9 +910,9 @@ Creates a not-a-number arbitrary-precision decimal number.
 * <code>ctx</code> - An arithmetic context to control the precision (in decimal
  digits) of the diagnostic information. The rounding and exponent
  range of this context will be ignored. Can be null. The only flag
- that can be signaled in this context is FlagInvalid, which happens if
- diagnostic information needs to be truncated and too much memory is
- required to do so.
+ that can be signaled in this context is FlagInvalid, which happens
+ if diagnostic information needs to be truncated and too much memory
+ is required to do so.
 
 **Returns:**
 
@@ -920,15 +929,16 @@ Creates an arbitrary-precision decimal number from a 64-bit binary
  floating-point number. This method computes the exact value of the
  floating point number, not an approximation, as is often the case by
  converting the floating point number to a string first. Remember,
- though, that the exact value of a 64-bit binary floating-point number
- is not always the value that results when passing a literal decimal
- number (for example, calling <code>ExtendedDecimal.FromDouble(0.1f)</code>
-), since not all decimal numbers can be converted to exact binary
- numbers (in the example given, the resulting arbitrary-precision
- decimal will be the value of the closest "double" to 0.1, not 0.1
- exactly). To create an arbitrary-precision decimal number from an
- arbitrary-precision decimal number, use FromString instead in most
- cases (for example: <code>ExtendedDecimal.FromString("0.1")</code>).
+ though, that the exact value of a 64-bit binary floating-point
+ number is not always the value that results when passing a literal
+ decimal number (for example, calling
+ <code>ExtendedDecimal.FromDouble(0.1f)</code>), since not all decimal
+ numbers can be converted to exact binary numbers (in the example
+ given, the resulting arbitrary-precision decimal will be the value
+  of the closest "double" to 0.1, not 0.1 exactly). To create an
+ arbitrary-precision decimal number from an arbitrary-precision
+ decimal number, use FromString instead in most cases (for example:
+  <code>ExtendedDecimal.FromString("0.1")</code>).
 
 **Parameters:**
 
@@ -1025,15 +1035,16 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
  floating-point number. This method computes the exact value of the
  floating point number, not an approximation, as is often the case by
  converting the floating point number to a string first. Remember,
- though, that the exact value of a 32-bit binary floating-point number
- is not always the value that results when passing a literal decimal
- number (for example, calling <code>ExtendedDecimal.FromSingle(0.1f)</code>
-), since not all decimal numbers can be converted to exact binary
- numbers (in the example given, the resulting arbitrary-precision
- decimal will be the the value of the closest "float" to 0.1, not 0.1
- exactly). To create an arbitrary-precision decimal number from an
- arbitrary-precision decimal number, use FromString instead in most
- cases (for example: <code>ExtendedDecimal.FromString("0.1")</code>).
+ though, that the exact value of a 32-bit binary floating-point
+ number is not always the value that results when passing a literal
+ decimal number (for example, calling
+ <code>ExtendedDecimal.FromSingle(0.1f)</code>), since not all decimal
+ numbers can be converted to exact binary numbers (in the example
+ given, the resulting arbitrary-precision decimal will be the the
+  value of the closest "float" to 0.1, not 0.1 exactly). To create an
+ arbitrary-precision decimal number from an arbitrary-precision
+ decimal number, use FromString instead in most cases (for example:
+  <code>ExtendedDecimal.FromString("0.1")</code>).
 
 **Parameters:**
 
@@ -1121,21 +1132,21 @@ Creates an arbitrary-precision decimal number from a text string that
     public static EDecimal FromString​(java.lang.String str, int offset, int length, EContext ctx)
 <p>Creates an arbitrary-precision decimal number from a text string that
  represents a number. </p> <p>The format of the string generally
- consists of: </p> <ul> <li>An optional plus sign ("+" , U+002B) or
- minus sign ("-", U+002D) (if the minus sign, the value is negative.)
+  consists of: </p> <ul> <li>An optional plus sign ("+" , U+002B) or
+  minus sign ("-", U+002D) (if the minus sign, the value is negative.)
  </li> <li>One or more digits, with a single optional decimal point
  after the first digit and before the last digit. </li>
- <li>Optionally, "E"/"e" followed by an optional (positive exponent)
- or "-" (negative exponent) and followed by one or more digits
+  <li>Optionally, "E"/"e" followed by an optional (positive exponent)
+  or "-" (negative exponent) and followed by one or more digits
  specifying the exponent. </li> </ul> <p>The string can also be
- "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
- followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
- followed by any number of digits, all in any combination of upper and
- lower case. </p> <p>All characters mentioned above are the
- corresponding characters in the Basic Latin range. In particular, the
- digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
- is not allowed to contain white space characters, including spaces.
- </p>
+  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+ followed by any number of digits, all in any combination of upper
+ and lower case. </p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ string is not allowed to contain white space characters, including
+ spaces. </p>
 
 **Parameters:**
 
@@ -1163,8 +1174,8 @@ Creates an arbitrary-precision decimal number from a text string that
 * <code>java.lang.NullPointerException</code> - The parameter "str" is null.
 
 * <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0
- or greater than "str" 's length, or "str" 's length minus "offset" is
- less than "length".
+  or greater than "str" 's length, or "str" 's length minus "offset"
+  is less than "length".
 
 ### Max
     public static EDecimal Max​(EDecimal first, EDecimal second, EContext ctx)
@@ -1316,12 +1327,12 @@ Finds the constant π, the circumference of a circle divided by its diameter.
  exponent range of the result. If <code>HasFlags</code> of the context is
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). <i> This parameter
- can't be null, as π can never be represented exactly. </i> .
+ can't be null, as π can never be represented exactly. </i>.
 
 **Returns:**
 
 * The constant π rounded to the given precision. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter "ctx" is null or the
+  and returns not-a-number (NaN) if the parameter "ctx" is null or the
  precision is unlimited (the context's Precision property is 0).
 
 ### Abs
@@ -1332,16 +1343,16 @@ Finds the absolute value of this object (if it's negative, it becomes
 **Returns:**
 
 * An arbitrary-precision decimal number. Returns signaling NaN if this
- value is signaling NaN. (In this sense, this method is similar to the
- "copy-abs" operation in the General Decimal Arithmetic Specification,
- except this method does not necessarily return a copy of this
- object.).
+ value is signaling NaN. (In this sense, this method is similar to
+  the "copy-abs" operation in the General Decimal Arithmetic
+ Specification, except this method does not necessarily return a copy
+ of this object.).
 
 ### CopySign
     public EDecimal CopySign​(EDecimal other)
 Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number. (This method is similar to
- the "copy-sign" operation in the General Decimal Arithmetic
+  the "copy-sign" operation in the General Decimal Arithmetic
  Specification, except this method does not necessarily return a copy
  of this object.).
 
@@ -1429,8 +1440,8 @@ Compares the mathematical values of this object and another object,
 **Returns:**
 
 * Less than 0 if this object's value is less than the other value, or
- greater than 0 if this object's value is greater than the other value
- or if "other" is null, or 0 if both values are equal.
+ greater than 0 if this object's value is greater than the other
+  value or if "other" is null, or 0 if both values are equal.
 
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
@@ -1456,10 +1467,10 @@ Compares an arbitrary-precision binary float with this instance.
 ### CompareToSignal
     public EDecimal CompareToSignal​(EDecimal other, EContext ctx)
 Compares the mathematical values of this object and another object, treating
- quiet NaN as signaling. <p>In this method, negative zero and positive
- zero are considered equal. </p> <p>If this object or the other object
- is a quiet NaN or signaling NaN, this method will return a quiet NaN
- and will signal a FlagInvalid flag. </p>
+ quiet NaN as signaling. <p>In this method, negative zero and
+ positive zero are considered equal. </p> <p>If this object or the
+ other object is a quiet NaN or signaling NaN, this method will
+ return a quiet NaN and will signal a FlagInvalid flag. </p>
 
 **Parameters:**
 
@@ -1479,15 +1490,16 @@ Compares the mathematical values of this object and another object, treating
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(EDecimal other)
 Compares the absolute values of this object and another object, imposing a
- total ordering on all possible values (ignoring their signs). In this
- method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater "absolute value". </li> <li>Negative
- zero and positive zero are considered equal. </li> <li>Quiet NaN has
- a higher "absolute value" than signaling NaN. If both objects are
- quiet NaN or both are signaling NaN, the one with the higher
- diagnostic information has a greater "absolute value". </li> <li>NaN
- has a higher "absolute value" than infinity. </li> <li>Infinity has a
- higher "absolute value" than any finite number. </li> </ul>
+ total ordering on all possible values (ignoring their signs). In
+ this method: <ul> <li>For objects with the same value, the one with
+  the higher exponent has a greater "absolute value". </li>
+ <li>Negative zero and positive zero are considered equal. </li>
+  <li>Quiet NaN has a higher "absolute value" than signaling NaN. If
+ both objects are quiet NaN or both are signaling NaN, the one with
+  the higher diagnostic information has a greater "absolute value".
+  </li> <li>NaN has a higher "absolute value" than infinity. </li>
+  <li>Infinity has a higher "absolute value" than any finite number.
+ </li> </ul>
 
 **Parameters:**
 
@@ -1502,24 +1514,24 @@ Compares the absolute values of this object and another object, imposing a
 ### CompareToTotal
     public int CompareToTotal​(EDecimal other, EContext ctx)
 Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher exponent has a greater
- "absolute value". </li> <li>Negative zero is less than positive zero.
- </li> <li>Quiet NaN has a higher "absolute value" than signaling NaN.
- If both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater "absolute value".
- </li> <li>NaN has a higher "absolute value" than infinity. </li>
- <li>Infinity has a higher "absolute value" than any finite number.
- </li> <li>Negative numbers are less than positive numbers. </li>
- </ul>
+ ordering on all possible values. In this method: <ul> <li>For
+ objects with the same value, the one with the higher exponent has a
+  greater "absolute value". </li> <li>Negative zero is less than
+  positive zero. </li> <li>Quiet NaN has a higher "absolute value"
+ than signaling NaN. If both objects are quiet NaN or both are
+ signaling NaN, the one with the higher diagnostic information has a
+  greater "absolute value". </li> <li>NaN has a higher "absolute
+  value" than infinity. </li> <li>Infinity has a higher "absolute
+  value" than any finite number. </li> <li>Negative numbers are less
+ than positive numbers. </li> </ul>
 
 **Parameters:**
 
 * <code>other</code> - An arbitrary-precision decimal number to compare with this one.
 
 * <code>ctx</code> - An arithmetic context. Flags will be set in this context only if
- <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
- only if an operand needed to be rounded before carrying out the
+ <code>HasFlags</code> and <code>IsSimplified</code> of the context are true
+ and only if an operand needed to be rounded before carrying out the
  operation. Can be null.
 
 **Returns:**
@@ -1533,13 +1545,13 @@ Compares the values of this object and another object, imposing a total
 Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs). In this
  method: <ul> <li>For objects with the same value, the one with the
- higher exponent has a greater "absolute value". </li> <li>Negative
+  higher exponent has a greater "absolute value". </li> <li>Negative
  zero is less than positive zero. </li> <li>Quiet NaN has a higher
- "absolute value" than signaling NaN. If both objects are quiet NaN or
- both are signaling NaN, the one with the higher diagnostic
- information has a greater "absolute value". </li> <li>NaN has a
- higher "absolute value" than infinity. </li> <li>Infinity has a
- higher "absolute value" than any finite number. </li> <li>Negative
+  "absolute value" than signaling NaN. If both objects are quiet NaN
+ or both are signaling NaN, the one with the higher diagnostic
+  information has a greater "absolute value". </li> <li>NaN has a
+  higher "absolute value" than infinity. </li> <li>Infinity has a
+  higher "absolute value" than any finite number. </li> <li>Negative
  numbers are less than positive numbers. </li> </ul>
 
 **Parameters:**
@@ -1547,8 +1559,8 @@ Compares the values of this object and another object, imposing a total
 * <code>other</code> - An arbitrary-precision decimal number to compare with this one.
 
 * <code>ctx</code> - An arithmetic context. Flags will be set in this context only if
- <code>HasFlags</code> and <code>IsSimplified</code> of the context are true and
- only if an operand needed to be rounded before carrying out the
+ <code>HasFlags</code> and <code>IsSimplified</code> of the context are true
+ and only if an operand needed to be rounded before carrying out the
  operation. Can be null.
 
 **Returns:**
@@ -1561,16 +1573,16 @@ Compares the values of this object and another object, imposing a total
 ### CompareToTotal
     public int CompareToTotal​(EDecimal other)
 Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher exponent has a greater
- "absolute value". </li> <li>Negative zero is less than positive zero.
- </li> <li>Quiet NaN has a higher "absolute value" than signaling NaN.
- If both objects are quiet NaN or both are signaling NaN, the one with
- the higher diagnostic information has a greater "absolute value".
- </li> <li>NaN has a higher "absolute value" than infinity. </li>
- <li>Infinity has a higher "absolute value" than any finite number.
- </li> <li>Negative numbers are less than positive numbers. </li>
- </ul>
+ ordering on all possible values. In this method: <ul> <li>For
+ objects with the same value, the one with the higher exponent has a
+  greater "absolute value". </li> <li>Negative zero is less than
+  positive zero. </li> <li>Quiet NaN has a higher "absolute value"
+ than signaling NaN. If both objects are quiet NaN or both are
+ signaling NaN, the one with the higher diagnostic information has a
+  greater "absolute value". </li> <li>NaN has a higher "absolute
+  value" than infinity. </li> <li>Infinity has a higher "absolute
+  value" than any finite number. </li> <li>Negative numbers are less
+ than positive numbers. </li> </ul>
 
 **Parameters:**
 
@@ -1640,11 +1652,11 @@ Divides this arbitrary-precision decimal number by another
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0; or, either <code>ctx</code> is null or <code>ctx</code> 's
- precision is 0, and the result would have a nonterminating decimal
- expansion; or, the rounding mode is ERounding.None and the result is
- not exact.
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0; or, either <code>ctx</code> is null or <code>
+ ctx</code> 's precision is 0, and the result would have a nonterminating
+ decimal expansion; or, the rounding mode is ERounding.None and the
+ result is not exact.
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
@@ -1677,8 +1689,8 @@ Renamed to DivRemNaturalScale.
  context's <code>HasFlags</code> is true and the integer part of the
  division result doesn't fit the precision and exponent range without
  rounding. Can be null, in which the precision is unlimited and no
- additional rounding, other than the rounding down to an integer after
- division, is needed.
+ additional rounding, other than the rounding down to an integer
+ after division, is needed.
 
 **Returns:**
 
@@ -1716,8 +1728,8 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  context's <code>HasFlags</code> is true and the integer part of the
  division result doesn't fit the precision and exponent range without
  rounding. Can be null, in which the precision is unlimited and no
- additional rounding, other than the rounding down to an integer after
- division, is needed.
+ additional rounding, other than the rounding down to an integer
+ after division, is needed.
 
 **Returns:**
 
@@ -1753,8 +1765,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0. Signals FlagInvalid and returns not-a-number
  (NaN) if the context defines an exponent range and the desired
  exponent is outside that range. Signals FlagInvalid and returns
  not-a-number (NaN) if the rounding mode is ERounding.None and the
@@ -1790,8 +1802,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0. Signals FlagInvalid and returns not-a-number
  (NaN) if the context defines an exponent range and the desired
  exponent is outside that range. Signals FlagInvalid and returns
  not-a-number (NaN) if the rounding mode is ERounding.None and the
@@ -1819,8 +1831,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0. Signals FlagInvalid and returns not-a-number
  (NaN) if the rounding mode is ERounding.None and the result is not
  exact.
 
@@ -1847,8 +1859,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0. Signals FlagInvalid and returns not-a-number
  (NaN) if the rounding mode is ERounding.None and the result is not
  exact.
 
@@ -1880,8 +1892,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0. Signals FlagInvalid and returns not-a-number
  (NaN) if the context defines an exponent range and the desired
  exponent is outside that range. Signals FlagInvalid and returns
  not-a-number (NaN) if the rounding mode is ERounding.None and the
@@ -1905,8 +1917,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0.
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0.
 
 ### DivideToExponent
     public EDecimal DivideToExponent​(EDecimal divisor, long desiredExponentSmall)
@@ -1928,8 +1940,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0.
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0.
 
 ### DivideToExponent
     public EDecimal DivideToExponent​(EDecimal divisor, int desiredExponentInt)
@@ -1951,8 +1963,8 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
 
 * The quotient of the two objects. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0.
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0.
 
 ### DivideToExponent
     public EDecimal DivideToExponent​(EDecimal divisor, EInteger desiredExponent, ERounding rounding)
@@ -2000,14 +2012,16 @@ Divides two arbitrary-precision decimal numbers, and returns the integer
 ### DivideToIntegerNaturalScale
     public EDecimal DivideToIntegerNaturalScale​(EDecimal divisor, EContext ctx)
 Divides this object by another object, and returns the integer part of the
- result (which is initially rounded down), with the preferred exponent
- set to this value's exponent minus the divisor's exponent.
+ result (which is initially rounded down), with the preferred
+ exponent set to this value's exponent minus the divisor's exponent.
 
 **Parameters:**
 
 * <code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - The parameter
+      <code>ctx</code>
+       is an EContext object.
 
 **Returns:**
 
@@ -2016,8 +2030,8 @@ Divides this object by another object, and returns the integer part of the
  overflow the exponent range. Signals FlagDivideByZero and returns
  infinity if the divisor is 0 and the dividend is nonzero. Signals
  FlagInvalid and returns not-a-number (NaN) if the divisor and the
- dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if
- the rounding mode is ERounding.None and the result is not exact.
+ dividend are 0. Signals FlagInvalid and returns not-a-number (NaN)
+ if the rounding mode is ERounding.None and the result is not exact.
 
 ### DivideToIntegerZeroScale
     public EDecimal DivideToIntegerZeroScale​(EDecimal divisor, EContext ctx)
@@ -2039,9 +2053,9 @@ Divides this object by another object, and returns the integer part of the
 
 * The integer part of the quotient of the two objects. The exponent
  will be set to 0. Signals FlagDivideByZero and returns infinity if
- the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
- returns not-a-number (NaN) if the divisor and the dividend are 0, or
- if the result doesn't fit the given precision.
+ the divisor is 0 and the dividend is nonzero. Signals FlagInvalid
+ and returns not-a-number (NaN) if the divisor and the dividend are
+ 0, or if the result doesn't fit the given precision.
 
 ### DivideToSameExponent
     public EDecimal DivideToSameExponent​(EDecimal divisor, ERounding rounding)
@@ -2059,8 +2073,8 @@ Divides this object by another decimal number and returns a result with the
 
 * The quotient of the two numbers. Signals FlagDivideByZero and
  returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor and
- the dividend are 0. Signals FlagInvalid and returns not-a-number
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0. Signals FlagInvalid and returns not-a-number
  (NaN) if the rounding mode is ERounding.None and the result is not
  exact.
 
@@ -2077,14 +2091,14 @@ Determines whether this object's mantissa (significand), exponent, and
 **Returns:**
 
 * <code>true</code> if this object's mantissa (significand) and exponent
- are equal to those of another object; otherwise, <code>false</code> .
+ are equal to those of another object; otherwise, <code>false</code>.
 
 ### equals
     public boolean equals​(java.lang.Object obj)
 Determines whether this object's mantissa (significand), exponent, and
- properties are equal to those of another object and that other object
- is an arbitrary-precision decimal number. Not-a-number values are
- considered equal if the rest of their properties are equal.
+ properties are equal to those of another object and that other
+ object is an arbitrary-precision decimal number. Not-a-number values
+ are considered equal if the rest of their properties are equal.
 
 **Overrides:**
 
@@ -2092,11 +2106,13 @@ Determines whether this object's mantissa (significand), exponent, and
 
 **Parameters:**
 
-* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
+* <code>obj</code> - The parameter
+      <code>obj</code>
+       is an arbitrary object.
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, <code>false</code> .
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
 
 ### Exp
     public EDecimal Exp​(EContext ctx)
@@ -2116,9 +2132,10 @@ Finds e (the base of natural logarithms) raised to the power of this
 **Returns:**
 
 * Exponential of this object. If this object's value is 1, returns an
- approximation to " e" within the given precision. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter "ctx" is null or the
- precision is unlimited (the context's Precision property is 0).
+  approximation to " e" within the given precision. Signals
+  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
+ null or the precision is unlimited (the context's Precision property
+ is 0).
 
 ### hashCode
     public int hashCode()
@@ -2141,7 +2158,7 @@ Gets a value indicating whether this object is positive or negative
 **Returns:**
 
 * <code>true</code> if this object is positive or negative infinity;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -2150,7 +2167,7 @@ Gets a value indicating whether this object is not a number (NaN).
 **Returns:**
 
 * <code>true</code> if this object is not a number (NaN); otherwise, <code>
- false</code> .
+ false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -2159,7 +2176,7 @@ Returns whether this object is negative infinity.
 **Returns:**
 
 * <code>true</code> if this object is negative infinity; otherwise, <code>
- false</code> .
+ false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -2168,7 +2185,7 @@ Returns whether this object is positive infinity.
 **Returns:**
 
 * <code>true</code> if this object is positive infinity; otherwise, <code>
- false</code> .
+ false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -2177,7 +2194,7 @@ Gets a value indicating whether this object is a quiet not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a quiet not-a-number value;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -2187,13 +2204,13 @@ Gets a value indicating whether this object is a signaling not-a-number
 **Returns:**
 
 * <code>true</code> if this object is a signaling not-a-number value;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### Log
     public EDecimal Log​(EContext ctx)
 Finds the natural logarithm of this object, that is, the power (exponent)
- that e (the base of natural logarithms) must be raised to in order to
- equal this object's value.
+ that e (the base of natural logarithms) must be raised to in order
+ to equal this object's value.
 
 **Parameters:**
 
@@ -2208,11 +2225,11 @@ Finds the natural logarithm of this object, that is, the power (exponent)
 **Returns:**
 
 * Ln(this object). Signals the flag FlagInvalid and returns NaN if
- this object is less than 0 (the result would be a complex number with
- a real part equal to Ln of this object's absolute value and an
+ this object is less than 0 (the result would be a complex number
+ with a real part equal to Ln of this object's absolute value and an
  imaginary part equal to pi, but the return value is still NaN.).
  Signals FlagInvalid and returns not-a-number (NaN) if the parameter
- "ctx" is null or the precision is unlimited (the context's Precision
+  "ctx" is null or the precision is unlimited (the context's Precision
  property is 0). Signals no flags and returns negative infinity if
  this object's value is 0.
 
@@ -2235,9 +2252,10 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
 **Returns:**
 
 * Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
- not-a-number (NaN) if this object is less than 0. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter "ctx" is null or the
- precision is unlimited (the context's Precision property is 0).
+ not-a-number (NaN) if this object is less than 0. Signals
+  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
+ null or the precision is unlimited (the context's Precision property
+ is 0).
 
 ### MovePointLeft
     public EDecimal MovePointLeft​(int places)
@@ -2285,8 +2303,8 @@ Returns a number similar to this number but with the decimal point moved to
 **Parameters:**
 
 * <code>bigPlaces</code> - The number of decimal places to move the decimal point to
- the left. If this number is negative, instead moves the decimal point
- to the right by this number's absolute value.
+ the left. If this number is negative, instead moves the decimal
+ point to the right by this number's absolute value.
 
 **Returns:**
 
@@ -2301,8 +2319,8 @@ Returns a number similar to this number but with the decimal point moved to
 **Parameters:**
 
 * <code>bigPlaces</code> - The number of decimal places to move the decimal point to
- the left. If this number is negative, instead moves the decimal point
- to the right by this number's absolute value.
+ the left. If this number is negative, instead moves the decimal
+ point to the right by this number's absolute value.
 
 * <code>ctx</code> - An arithmetic context to control the precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -2323,8 +2341,8 @@ Returns a number similar to this number but with the decimal point moved to
 **Parameters:**
 
 * <code>places</code> - The number of decimal places to move the decimal point to the
- right. If this number is negative, instead moves the decimal point to
- the left by this number's absolute value.
+ right. If this number is negative, instead moves the decimal point
+ to the left by this number's absolute value.
 
 **Returns:**
 
@@ -2339,8 +2357,8 @@ Returns a number similar to this number but with the decimal point moved to
 **Parameters:**
 
 * <code>places</code> - The number of decimal places to move the decimal point to the
- right. If this number is negative, instead moves the decimal point to
- the left by this number's absolute value.
+ right. If this number is negative, instead moves the decimal point
+ to the left by this number's absolute value.
 
 * <code>ctx</code> - An arithmetic context to control the precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -2408,8 +2426,8 @@ Multiplies two decimal numbers. The resulting exponent will be the sum of
     public EDecimal Multiply​(EDecimal op, EContext ctx)
 Multiplies two decimal numbers. The resulting scale will be the sum of the
  scales of the two decimal numbers. The result's sign is positive if
- both operands have the same sign, and negative if they have different
- signs.
+ both operands have the same sign, and negative if they have
+ different signs.
 
 **Parameters:**
 
@@ -2553,7 +2571,7 @@ Gets an object with the same value as this one, but with the sign reversed.
 * An arbitrary-precision decimal number. If this value is positive
  zero, returns negative zero. Returns signaling NaN if this value is
  signaling NaN. (In this sense, this method is similar to the
- "copy-negate" operation in the General Decimal Arithmetic
+  "copy-negate" operation in the General Decimal Arithmetic
  Specification, except this method does not necessarily return a copy
  of this object.).
 
@@ -2592,8 +2610,8 @@ Finds the largest value that's smaller than the given value.
 
 * Returns the largest value that's less than the given value. Returns
  negative infinity if the result is negative infinity. Signals
- FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
- null, the precision is 0, or "ctx" has an unlimited exponent range.
+  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
+  null, the precision is 0, or "ctx" has an unlimited exponent range.
 
 ### NextPlus
     public EDecimal NextPlus​(EContext ctx)
@@ -2611,7 +2629,7 @@ Finds the smallest value that's greater than the given value.
 
 * Returns the smallest value that's greater than the given
  value.Signals FlagInvalid and returns not-a-number (NaN) if the
- parameter "ctx" is null, the precision is 0, or "ctx" has an
+  parameter "ctx" is null, the precision is 0, or "ctx" has an
  unlimited exponent range.
 
 ### NextToward
@@ -2635,8 +2653,8 @@ Finds the next value that is closer to the other object's value than this
 
 * Returns the next value that is closer to the other object' s value
  than this object's value. Signals FlagInvalid and returns NaN if the
- parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code> has
- an unlimited exponent range.
+ parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code>
+ has an unlimited exponent range.
 
 ### Plus
     public EDecimal Plus​(EContext ctx)
@@ -2647,13 +2665,13 @@ Rounds this object's value to a given precision, using the given rounding
 **Parameters:**
 
 * <code>ctx</code> - A context for controlling the precision, rounding mode, and
- exponent range. Can be null, in which case the precision is unlimited
- and rounding isn't needed.
+ exponent range. Can be null, in which case the precision is
+ unlimited and rounding isn't needed.
 
 **Returns:**
 
 * The closest value to this object's value, rounded to the specified
- precision. Returns the same value as this object if "ctx" is null or
+  precision. Returns the same value as this object if "ctx" is null or
  the precision and exponent range are unlimited.
 
 ### Pow
@@ -2715,8 +2733,8 @@ Raises this object's value to the given exponent.
 ### Precision
     public EInteger Precision()
 Finds the number of digits in this number's mantissa (significand). Returns
- 1 if this value is 0, and 0 if this value is infinity or not-a-number
- (NaN).
+ 1 if this value is 0, and 0 if this value is infinity or
+ not-a-number (NaN).
 
 **Returns:**
 
@@ -2729,28 +2747,28 @@ Returns an arbitrary-precision decimal number with the same value but a new
  given number of decimal places, since it can fail if the difference
  between this value's exponent and the desired exponent is too big,
  depending on the maximum precision. If rounding to a number of
- decimal places is desired, it's better to use the RoundToExponent and
- RoundToIntegral methods instead. </p> <p><b>Remark:</b> This method
- can be used to implement fixed-point decimal arithmetic, in which
- each decimal number has a fixed number of digits after the decimal
- point. The following code example returns a fixed-point number with
- up to 20 digits before and exactly 5 digits after the decimal point:
- </p> <pre> // After performing arithmetic operations, adjust // the
- number to 5 // digits after the decimal point number =
+ decimal places is desired, it's better to use the RoundToExponent
+ and RoundToIntegral methods instead. </p> <p><b>Remark:</b> This
+ method can be used to implement fixed-point decimal arithmetic, in
+ which each decimal number has a fixed number of digits after the
+ decimal point. The following code example returns a fixed-point
+ number with up to 20 digits before and exactly 5 digits after the
+ decimal point: </p> <pre> // After performing arithmetic operations,
+ adjust // the number to 5 // digits after the decimal point number =
  number.Quantize(EInteger.FromInt32(-5), // five digits after the
  decimal point EContext.ForPrecision(25) // 25-digit
  precision);</pre> <p>A fixed-point decimal arithmetic in which no
  digits come after the decimal point (a desired exponent of 0) is
- considered an "integer arithmetic". </p>
+  considered an "integer arithmetic". </p>
 
 **Parameters:**
 
 * <code>desiredExponent</code> - The desired exponent for the result. The exponent is
  the number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
@@ -2761,28 +2779,29 @@ Returns an arbitrary-precision decimal number with the same value but a new
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as this
- object but with the exponent changed. Signals FlagInvalid and returns
- not-a-number (NaN) if this object is infinity, if the rounded result
- can't fit the given precision, or if the context defines an exponent
- range and the given exponent is outside that range.
+ object but with the exponent changed. Signals FlagInvalid and
+ returns not-a-number (NaN) if this object is infinity, if the
+ rounded result can't fit the given precision, or if the context
+ defines an exponent range and the given exponent is outside that
+ range.
 
 ### Quantize
     public EDecimal Quantize​(int desiredExponentInt, ERounding rounding)
 Returns an arbitrary-precision decimal number with the same value as this
  one but a new exponent. <p><b>Remark:</b> This method can be used to
  implement fixed-point decimal arithmetic, in which a fixed number of
- digits come after the decimal point. A fixed-point decimal arithmetic
- in which no digits come after the decimal point (a desired exponent
- of 0) is considered an "integer arithmetic" . </p>
+ digits come after the decimal point. A fixed-point decimal
+ arithmetic in which no digits come after the decimal point (a
+  desired exponent of 0) is considered an "integer arithmetic" . </p>
 
 **Parameters:**
 
 * <code>desiredExponentInt</code> - The desired exponent for the result. The exponent
  is the number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>rounding</code> - A rounding mode to use in case the result needs to be
  rounded to fit the given exponent.
@@ -2801,28 +2820,28 @@ Returns an arbitrary-precision decimal number with the same value but a new
  given number of decimal places, since it can fail if the difference
  between this value's exponent and the desired exponent is too big,
  depending on the maximum precision. If rounding to a number of
- decimal places is desired, it's better to use the RoundToExponent and
- RoundToIntegral methods instead. </p> <p><b>Remark:</b> This method
- can be used to implement fixed-point decimal arithmetic, in which
- each decimal number has a fixed number of digits after the decimal
- point. The following code example returns a fixed-point number with
- up to 20 digits before and exactly 5 digits after the decimal point:
- </p> <pre>/* After performing arithmetic operations, adjust the
- number to 5 digits after the decimal point */ number =
+ decimal places is desired, it's better to use the RoundToExponent
+ and RoundToIntegral methods instead. </p> <p><b>Remark:</b> This
+ method can be used to implement fixed-point decimal arithmetic, in
+ which each decimal number has a fixed number of digits after the
+ decimal point. The following code example returns a fixed-point
+ number with up to 20 digits before and exactly 5 digits after the
+ decimal point: </p> <pre>/* After performing arithmetic operations,
+ adjust the number to 5 digits after the decimal point */ number =
  number.Quantize(-5, /* five digits after the decimal point
  */EContext.ForPrecision(25) /* 25-digit precision*/);</pre> <p>A
  fixed-point decimal arithmetic in which no digits come after the
- decimal point (a desired exponent of 0) is considered an "integer
- arithmetic". </p>
+  decimal point (a desired exponent of 0) is considered an "integer
+  arithmetic". </p>
 
 **Parameters:**
 
 * <code>desiredExponentInt</code> - The desired exponent for the result. The exponent
  is the number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
@@ -2833,10 +2852,11 @@ Returns an arbitrary-precision decimal number with the same value but a new
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as this
- object but with the exponent changed. Signals FlagInvalid and returns
- not-a-number (NaN) if this object is infinity, if the rounded result
- can't fit the given precision, or if the context defines an exponent
- range and the given exponent is outside that range.
+ object but with the exponent changed. Signals FlagInvalid and
+ returns not-a-number (NaN) if this object is infinity, if the
+ rounded result can't fit the given precision, or if the context
+ defines an exponent range and the given exponent is outside that
+ range.
 
 ### Quantize
     public EDecimal Quantize​(EDecimal otherValue, EContext ctx)
@@ -2849,9 +2869,9 @@ Returns an arbitrary-precision decimal number with the same value as this
  desired, it's better to use the RoundToExponent and RoundToIntegral
  methods instead. </p> <p><b>Remark:</b> This method can be used to
  implement fixed-point decimal arithmetic, in which a fixed number of
- digits come after the decimal point. A fixed-point decimal arithmetic
- in which no digits come after the decimal point (a desired exponent
- of 0) is considered an "integer arithmetic" . </p>
+ digits come after the decimal point. A fixed-point decimal
+ arithmetic in which no digits come after the decimal point (a
+  desired exponent of 0) is considered an "integer arithmetic" . </p>
 
 **Parameters:**
 
@@ -2863,7 +2883,7 @@ Returns an arbitrary-precision decimal number with the same value as this
  round to the thousandth (10^-3, 0.0001), and 3 means round to the
  thousands-place (10^3, 1000). A value of 0 rounds the number to an
  integer. The following examples for this parameter express a desired
- exponent of 3: <code>10e3</code> , <code>8888e3</code> , <code>4.56e5</code> .
+ exponent of 3: <code>10e3</code> , <code>8888e3</code> , <code>4.56e5</code>.
 
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
@@ -2874,10 +2894,10 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as this
- object but with the exponent changed. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision
- without rounding, or if the arithmetic context defines an exponent
- range and the given exponent is outside that range.
+ object but with the exponent changed. Signals FlagInvalid and
+ returns not-a-number (NaN) if the result can't fit the given
+ precision without rounding, or if the arithmetic context defines an
+ exponent range and the given exponent is outside that range.
 
 ### Reduce
     public EDecimal Reduce​(EContext ctx)
@@ -2898,15 +2918,16 @@ Returns an object with the same numerical value as this one but with
 
 * This value with trailing zeros removed. Note that if the result has
  a very high exponent and the context says to clamp high exponents,
- there may still be some trailing zeros in the mantissa (significand).
+ there may still be some trailing zeros in the mantissa
+ (significand).
 
 ### Remainder
     public EDecimal Remainder​(EDecimal divisor, EContext ctx)
 Finds the remainder that results when dividing two arbitrary-precision
  decimal numbers. The remainder is the value that remains when the
- absolute value of this object is divided by the absolute value of the
- other object; the remainder has the same sign (positive or negative)
- as this object's value.
+ absolute value of this object is divided by the absolute value of
+ the other object; the remainder has the same sign (positive or
+ negative) as this object's value.
 
 **Parameters:**
 
@@ -2914,10 +2935,10 @@ Finds the remainder that results when dividing two arbitrary-precision
 
 * <code>ctx</code> - An arithmetic context object to control the precision, rounding,
  and exponent range of the result, and of the intermediate integer
- division. If <code>HasFlags</code> of the context is true, will also store
- the flags resulting from the operation (the flags are in addition to
- the pre-existing flags). Can be null, in which the precision is
- unlimited.
+ division. If <code>HasFlags</code> of the context is true, will also
+ store the flags resulting from the operation (the flags are in
+ addition to the pre-existing flags). Can be null, in which the
+ precision is unlimited.
 
 **Returns:**
 
@@ -2954,7 +2975,7 @@ Finds the remainder that results when dividing two arbitrary-precision
 ### RemainderNaturalScale
     public EDecimal RemainderNaturalScale​(EDecimal divisor)
 Calculates the remainder of a number by the formula <code>"this" - (("this" /
- "divisor") * "divisor")</code>
+  "divisor") * "divisor")</code> .
 
 **Parameters:**
 
@@ -2967,7 +2988,7 @@ Calculates the remainder of a number by the formula <code>"this" - (("this" /
 ### RemainderNaturalScale
     public EDecimal RemainderNaturalScale​(EDecimal divisor, EContext ctx)
 Calculates the remainder of a number by the formula "this" - (("this" /
- "divisor") * "divisor").
+  "divisor") * "divisor").
 
 **Parameters:**
 
@@ -2981,8 +3002,8 @@ Calculates the remainder of a number by the formula "this" - (("this" /
  context's <code>HasFlags</code> is true and the integer part of the
  division result doesn't fit the precision and exponent range without
  rounding. Can be null, in which the precision is unlimited and no
- additional rounding, other than the rounding down to an integer after
- division, is needed.
+ additional rounding, other than the rounding down to an integer
+ after division, is needed.
 
 **Returns:**
 
@@ -2991,31 +3012,33 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 ### RemainderNear
     public EDecimal RemainderNear​(EDecimal divisor, EContext ctx)
 Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object's value by another object's value.
- <ul> <li>If this and the other object divide evenly, the result is 0.
- </li> <li>If the remainder's absolute value is less than half of the
- divisor's absolute value, the result has the same sign as this object
- and will be the distance to the closest multiple. </li> <li>If the
- remainder's absolute value is more than half of the divisor' s
- absolute value, the result has the opposite sign of this object and
- will be the distance to the closest multiple. </li> <li>If the
- remainder's absolute value is exactly half of the divisor's absolute
- value, the result has the opposite sign of this object if the
- quotient, rounded down, is odd, and has the same sign as this object
- if the quotient, rounded down, is even, and the result's absolute
- value is half of the divisor's absolute value. </li> </ul> This
- function is also known as the "IEEE Remainder" function.
+ the result of dividing this object's value by another object's
+ value. <ul> <li>If this and the other object divide evenly, the
+ result is 0. </li> <li>If the remainder's absolute value is less
+ than half of the divisor's absolute value, the result has the same
+ sign as this object and will be the distance to the closest
+ multiple. </li> <li>If the remainder's absolute value is more than
+ half of the divisor' s absolute value, the result has the opposite
+ sign of this object and will be the distance to the closest
+ multiple. </li> <li>If the remainder's absolute value is exactly
+ half of the divisor's absolute value, the result has the opposite
+ sign of this object if the quotient, rounded down, is odd, and has
+ the same sign as this object if the quotient, rounded down, is even,
+ and the result's absolute value is half of the divisor's absolute
+  value. </li> </ul> This function is also known as the "IEEE
+  Remainder" function.
 
 **Parameters:**
 
 * <code>divisor</code> - The number to divide by.
 
 * <code>ctx</code> - An arithmetic context object to control the precision. The
- rounding and exponent range settings of this context are ignored (the
- rounding mode is always treated as HalfEven). If <code>HasFlags</code> of
- the context is true, will also store the flags resulting from the
- operation (the flags are in addition to the pre-existing flags). Can
- be null, in which the precision is unlimited.
+ rounding and exponent range settings of this context are ignored
+ (the rounding mode is always treated as HalfEven). If <code>
+ HasFlags</code> of the context is true, will also store the flags
+ resulting from the operation (the flags are in addition to the
+ pre-existing flags). Can be null, in which the precision is
+ unlimited.
 
 **Returns:**
 
@@ -3037,9 +3060,9 @@ Returns an arbitrary-precision decimal number with the same value as this
 * <code>exponent</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control the precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -3060,19 +3083,19 @@ Returns an arbitrary-precision decimal number with the same value as this
 ### RoundToExponent
     public EDecimal RoundToExponent​(EInteger exponent)
 Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to a new exponent if necessary, using the HalfEven
- rounding mode. The resulting number's Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.
+ object but rounded to a new exponent if necessary, using the
+ HalfEven rounding mode. The resulting number's Exponent property
+ will not necessarily be the given exponent; use the Quantize method
+ instead to give the result a particular exponent.
 
 **Parameters:**
 
 * <code>exponent</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 **Returns:**
 
@@ -3084,17 +3107,17 @@ Returns an arbitrary-precision decimal number with the same value as this
 Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to a new exponent if necessary, using the given
  rounding mode. The resulting number's Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.
+ necessarily be the given exponent; use the Quantize method instead
+ to give the result a particular exponent.
 
 **Parameters:**
 
 * <code>exponent</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>rounding</code> - Desired mode for rounding this number's value.
 
@@ -3106,19 +3129,19 @@ Returns an arbitrary-precision decimal number with the same value as this
 ### RoundToExponent
     public EDecimal RoundToExponent​(int exponentSmall)
 Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to a new exponent if necessary, using the HalfEven
- rounding mode. The resulting number's Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.
+ object but rounded to a new exponent if necessary, using the
+ HalfEven rounding mode. The resulting number's Exponent property
+ will not necessarily be the given exponent; use the Quantize method
+ instead to give the result a particular exponent.
 
 **Parameters:**
 
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 **Returns:**
 
@@ -3138,9 +3161,9 @@ Returns an arbitrary-precision decimal number with the same value as this
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control the precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -3171,9 +3194,9 @@ Returns an arbitrary-precision decimal number with the same value as this
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>rounding</code> - The desired mode to use to round the given number to the
  given exponent.
@@ -3197,9 +3220,9 @@ Returns an arbitrary-precision decimal number with the same value as this
 * <code>exponent</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control the precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -3210,12 +3233,13 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision
- without rounding. Signals FlagInvalid and returns not-a-number (NaN)
- if the arithmetic context defines an exponent range, the new exponent
- must be changed to the given exponent when rounding, and the given
- exponent is outside of the valid range of the arithmetic context.
+ representable in the given precision. Signals FlagInvalid and
+ returns not-a-number (NaN) if the result can't fit the given
+ precision without rounding. Signals FlagInvalid and returns
+ not-a-number (NaN) if the arithmetic context defines an exponent
+ range, the new exponent must be changed to the given exponent when
+ rounding, and the given exponent is outside of the valid range of
+ the arithmetic context.
 
 ### RoundToExponentExact
     public EDecimal RoundToExponentExact​(int exponentSmall, EContext ctx)
@@ -3223,17 +3247,17 @@ Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to the given exponent represented as a 32-bit
  signed integer, and signals an inexact flag if the result would be
  inexact. The resulting number's Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.
+ necessarily be the given exponent; use the Quantize method instead
+ to give the result a particular exponent.
 
 **Parameters:**
 
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>ctx</code> - An arithmetic context to control the precision, rounding, and
  exponent range of the result. If <code>HasFlags</code> of the context is
@@ -3244,12 +3268,13 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision
- without rounding. Signals FlagInvalid and returns not-a-number (NaN)
- if the arithmetic context defines an exponent range, the new exponent
- must be changed to the given exponent when rounding, and the given
- exponent is outside of the valid range of the arithmetic context.
+ representable in the given precision. Signals FlagInvalid and
+ returns not-a-number (NaN) if the result can't fit the given
+ precision without rounding. Signals FlagInvalid and returns
+ not-a-number (NaN) if the arithmetic context defines an exponent
+ range, the new exponent must be changed to the given exponent when
+ rounding, and the given exponent is outside of the valid range of
+ the arithmetic context.
 
 ### RoundToExponentExact
     public EDecimal RoundToExponentExact​(int exponentSmall, ERounding rounding)
@@ -3257,17 +3282,17 @@ Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to the given exponent represented as a 32-bit
  signed integer, and signals an inexact flag if the result would be
  inexact. The resulting number's Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to
- give the result a particular exponent.
+ necessarily be the given exponent; use the Quantize method instead
+ to give the result a particular exponent.
 
 **Parameters:**
 
 * <code>exponentSmall</code> - The minimum exponent the result can have. This is the
  maximum number of fractional digits in the result, expressed as a
  negative number. Can also be positive, which eliminates lower-order
- places from the number. For example, -3 means round to the thousandth
- (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
- value of 0 rounds the number to an integer.
+ places from the number. For example, -3 means round to the
+ thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
+ 1000). A value of 0 rounds the number to an integer.
 
 * <code>rounding</code> - Desired mode for rounding this object's value.
 
@@ -3295,12 +3320,12 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest integer
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision
- without rounding. Signals FlagInvalid and returns not-a-number (NaN)
- if the arithmetic context defines an exponent range, the new exponent
- must be changed to 0 when rounding, and 0 is outside of the valid
- range of the arithmetic context.
+ representable in the given precision. Signals FlagInvalid and
+ returns not-a-number (NaN) if the result can't fit the given
+ precision without rounding. Signals FlagInvalid and returns
+ not-a-number (NaN) if the arithmetic context defines an exponent
+ range, the new exponent must be changed to 0 when rounding, and 0 is
+ outside of the valid range of the arithmetic context.
 
 ### RoundToIntegerNoRoundedFlag
     public EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx)
@@ -3315,8 +3340,8 @@ Returns an arbitrary-precision decimal number with the same value as this
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
  the flags resulting from the operation (the flags are in addition to
- the pre-existing flags), except that this function will never add the
- <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+ the pre-existing flags), except that this function will never add
+ the <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
  difference between this and RoundToExponentExact). Can be null, in
  which case the default rounding mode is HalfEven.
 
@@ -3326,8 +3351,8 @@ Returns an arbitrary-precision decimal number with the same value as this
  representable in the given precision. If the result can't fit the
  precision, additional digits are discarded to make it fit. Signals
  FlagInvalid and returns not-a-number (NaN) if the arithmetic context
- defines an exponent range, the new exponent must be changed to 0 when
- rounding, and 0 is outside of the valid range of the arithmetic
+ defines an exponent range, the new exponent must be changed to 0
+ when rounding, and 0 is outside of the valid range of the arithmetic
  context.
 
 ### RoundToIntegralExact
@@ -3346,12 +3371,12 @@ Renamed to RoundToIntegerExact.
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest integer
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision
- without rounding. Signals FlagInvalid and returns not-a-number (NaN)
- if the arithmetic context defines an exponent range, the new exponent
- must be changed to 0 when rounding, and 0 is outside of the valid
- range of the arithmetic context.
+ representable in the given precision. Signals FlagInvalid and
+ returns not-a-number (NaN) if the result can't fit the given
+ precision without rounding. Signals FlagInvalid and returns
+ not-a-number (NaN) if the arithmetic context defines an exponent
+ range, the new exponent must be changed to 0 when rounding, and 0 is
+ outside of the valid range of the arithmetic context.
 
 ### RoundToIntegralNoRoundedFlag
     @Deprecated public EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)
@@ -3363,8 +3388,8 @@ Renamed to RoundToIntegerNoRoundedFlag.
 * <code>ctx</code> - An arithmetic context to control precision and rounding of the
  result. If <code>HasFlags</code> of the context is true, will also store
  the flags resulting from the operation (the flags are in addition to
- the pre-existing flags), except that this function will never add the
- <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
+ the pre-existing flags), except that this function will never add
+ the <code>FlagRounded</code> and <code>FlagInexact</code> flags (the only
  difference between this and RoundToExponentExact). Can be null, in
  which case the default rounding mode is HalfEven.
 
@@ -3374,8 +3399,8 @@ Renamed to RoundToIntegerNoRoundedFlag.
  representable in the given precision. If the result can't fit the
  precision, additional digits are discarded to make it fit. Signals
  FlagInvalid and returns not-a-number (NaN) if the arithmetic context
- defines an exponent range, the new exponent must be changed to 0 when
- rounding, and 0 is outside of the valid range of the arithmetic
+ defines an exponent range, the new exponent must be changed to 0
+ when rounding, and 0 is outside of the valid range of the arithmetic
  context.
 
 ### RoundToPrecision
@@ -3394,7 +3419,7 @@ Rounds this object's value to a given precision, using the given rounding
 **Returns:**
 
 * The closest value to this object's value, rounded to the specified
- precision. Returns the same value as this object if "ctx" is null or
+  precision. Returns the same value as this object if "ctx" is null or
  the precision and exponent range are unlimited.
 
 ### ScaleByPowerOfTen
@@ -3455,7 +3480,7 @@ Returns a number similar to this number but with its scale adjusted.
 
 **Returns:**
 
-* A number whose exponent is increased by <code>bigPlaces</code> .
+* A number whose exponent is increased by <code>bigPlaces</code>.
 
 ### Sqrt
     public EDecimal Sqrt​(EContext ctx)
@@ -3476,7 +3501,7 @@ Finds the square root of this object's value.
 * The square root. Signals the flag FlagInvalid and returns NaN if
  this object is less than 0 (the square root would be a complex
  number, but the return value is still NaN). Signals FlagInvalid and
- returns not-a-number (NaN) if the parameter "ctx" is null or the
+  returns not-a-number (NaN) if the parameter "ctx" is null or the
  precision is unlimited (the context's Precision property is 0).
 
 ### SquareRoot
@@ -3499,7 +3524,7 @@ Renamed to Sqrt.
 * The square root. Signals the flag FlagInvalid and returns NaN if
  this object is less than 0 (the square root would be a complex
  number, but the return value is still NaN). Signals FlagInvalid and
- returns not-a-number (NaN) if the parameter "ctx" is null or the
+  returns not-a-number (NaN) if the parameter "ctx" is null or the
  precision is unlimited (the context's Precision property is 0).
 
 ### Subtract
@@ -3545,8 +3570,8 @@ Converts this value to its closest equivalent as a 64-bit floating-point
  significand area for a quiet NaN, and clears it for a signaling NaN.
  Then the other bits of the significand area are set to the lowest
  bits of this object's unsigned mantissa (significand), and the
- next-highest bit of the significand area is set if those bits are all
- zeros and this is a signaling NaN. Unfortunately, in the .NET
+ next-highest bit of the significand area is set if those bits are
+ all zeros and this is a signaling NaN. Unfortunately, in the.getNET()
  implementation, the return value of this method may be a quiet NaN
  even if a signaling NaN would otherwise be generated. </p>
 
@@ -3620,9 +3645,10 @@ Renamed to ToEFloat.
 ### ToEFloat
     public EFloat ToEFloat()
 Creates a binary floating-point number from this object's value. Note that
- if the binary floating-point number contains a negative exponent, the
- resulting value might not be exact, in which case the resulting
- binary float will be an approximation of this decimal number's value.
+ if the binary floating-point number contains a negative exponent,
+ the resulting value might not be exact, in which case the resulting
+ binary float will be an approximation of this decimal number's
+ value.
 
 **Returns:**
 
@@ -3644,8 +3670,8 @@ Converts this value to its closest equivalent as a 32-bit floating-point
  significand area for a quiet NaN, and clears it for a signaling NaN.
  Then the other bits of the significand area are set to the lowest
  bits of this object's unsigned mantissa (significand), and the
- next-highest bit of the significand area is set if those bits are all
- zeros and this is a signaling NaN. Unfortunately, in the .NET
+ next-highest bit of the significand area is set if those bits are
+ all zeros and this is a signaling NaN. Unfortunately, in the.getNET()
  implementation, the return value of this method may be a quiet NaN
  even if a signaling NaN would otherwise be generated. </p>
 
@@ -3684,13 +3710,16 @@ Returns the unit in the last place. The mantissa (significand) will be 1 and
 ### ToEFloat
     public EFloat ToEFloat​(EContext ec)
 Creates a binary floating-point number from this object's value. Note that
- if the binary floating-point number contains a negative exponent, the
- resulting value might not be exact, in which case the resulting
- binary float will be an approximation of this decimal number's value.
+ if the binary floating-point number contains a negative exponent,
+ the resulting value might not be exact, in which case the resulting
+ binary float will be an approximation of this decimal number's
+ value.
 
 **Parameters:**
 
-* <code>ec</code> - The parameter <code>ec</code> is an EContext object.
+* <code>ec</code> - The parameter
+      <code>ec</code>
+       is an EContext object.
 
 **Returns:**
 
@@ -3713,8 +3742,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 ### ToByteUnchecked
     public byte ToByteUnchecked()
 Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a byte (from 0
- to 255).
+ least-significant bits of its two's-complement form as a byte (from
+ 0 to 255).
 
 **Returns:**
 
@@ -3724,7 +3753,8 @@ Truncates this number's value to an integer and returns the
 ### ToByteIfExact
     public byte ToByteIfExact()
 Converts this number's value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) without rounding to a different numerical value.
+ byte (from 0 to 255) without rounding to a different numerical
+ value.
 
 **Returns:**
 

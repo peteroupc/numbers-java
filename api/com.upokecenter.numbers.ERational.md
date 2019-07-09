@@ -3,14 +3,14 @@
     public final class ERational extends java.lang.Object implements java.lang.Comparable<ERational>
 
 Represents an arbitrary-precision rational number. This class can't be
- inherited. (The "E" stands for "extended", meaning that instances of
+  inherited. (The "E" stands for "extended", meaning that instances of
  this class can be values other than numbers proper, such as infinity
- and not-a-number.) <p><b>Thread safety:</b> Instances of this class are
- immutable, so they are inherently safe for use by multiple threads.
- Multiple instances of this object with the same properties are
- interchangeable, so they should not be compared using the "==" operator
- (which might only check if each side of the operator is the same
- instance). </p>
+ and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+ are immutable, so they are inherently safe for use by multiple
+ threads. Multiple instances of this object with the same properties
+  are interchangeable, so they should not be compared using the "=="
+ operator (which might only check if each side of the operator is the
+ same instance). </p>
 
 ## Fields
 
@@ -35,7 +35,7 @@ Represents an arbitrary-precision rational number. This class can't be
 
 * `ERational​(EInteger numerator,
          EInteger denominator) ERational`<br>
- Initializes a new instance of the ERational class.
+ Initializes a new instance of the ERational.
 
 ## Methods
 
@@ -165,11 +165,12 @@ Renamed to FromEFloat.
  byte (from 0 to 255) after truncating to an integer.
 * `byte ToByteIfExact()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) without rounding to a different numerical value.
+ byte (from 0 to 255) without rounding to a different numerical
+ value.
 * `byte ToByteUnchecked()`<br>
  Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a byte (from 0
- to 255).
+ least-significant bits of its two's-complement form as a byte (from
+ 0 to 255).
 * `double ToDouble()`<br>
  Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
@@ -312,7 +313,7 @@ Gets a value indicating whether this object is finite (not infinity or NaN).
 **Returns:**
 
 * <code>true</code> if this object is finite (not infinity or NaN);
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### isNegative
     public final boolean isNegative()
@@ -322,8 +323,8 @@ Gets a value indicating whether this object's value is negative (including
 **Returns:**
 
 * <code>true</code> if this object's value is negative (including negative
- zero); otherwise, <code>false</code> . <code>true</code> if this object's value
- is negative; otherwise, <code>false</code> .
+ zero); otherwise, <code>false</code>. <code>true</code> if this object's
+ value is negative; otherwise, <code>false</code>.
 
 ### isZero
     public final boolean isZero()
@@ -332,8 +333,8 @@ Gets a value indicating whether this object's value equals 0.
 **Returns:**
 
 * <code>true</code> if this object's value equals 0; otherwise, <code>
- false</code> . <code>true</code> if this object' s value equals 0; otherwise, .
- <code>false</code> .
+ false</code>. <code>true</code> if this object' s value equals 0; otherwise,.
+ <code>false</code>.
 
 ### getNumerator
     public final EInteger getNumerator()
@@ -571,19 +572,19 @@ Creates a rational number from a text string that represents a number. See
     public static ERational FromString​(java.lang.String str, int offset, int length)
 <p>Creates a rational number from a text string that represents a number.
  </p> <p>The format of the string generally consists of: </p> <ul>
- <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
- (if '-' , the value is negative.) </li> <li>The numerator in the form
- of one or more digits. </li> <li>Optionally, "/" followed by the
- denominator in the form of one or more digits. If a denominator is
- not given, it's equal to 1. </li> </ul> <p>The string can also be
- "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
- followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
- followed by any number of digits, all in any combination of upper and
- lower case. </p> <p>All characters mentioned above are the
- corresponding characters in the Basic Latin range. In particular, the
- digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string
- is not allowed to contain white space characters, including spaces.
- </p>
+  <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
+ (if '-' , the value is negative.) </li> <li>The numerator in the
+  form of one or more digits. </li> <li>Optionally, "/" followed by
+ the denominator in the form of one or more digits. If a denominator
+ is not given, it's equal to 1. </li> </ul> <p>The string can also be
+  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+ followed by any number of digits, all in any combination of upper
+ and lower case. </p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ string is not allowed to contain white space characters, including
+ spaces. </p>
 
 **Parameters:**
 
@@ -609,15 +610,16 @@ Creates a rational number from a text string that represents a number. See
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(ERational other)
 Compares the absolute values of this object and another object, imposing a
- total ordering on all possible values (ignoring their signs). In this
- method: <ul> <li>For objects with the same value, the one with the
- higher denominator has a greater "absolute value". </li> <li>Negative
- zero and positive zero are considered equal. </li> <li>Quiet NaN has
- a higher "absolute value" than signaling NaN. If both objects are
- quiet NaN or both are signaling NaN, the one with the higher
- diagnostic information has a greater "absolute value". </li> <li>NaN
- has a higher "absolute value" than infinity. </li> <li>Infinity has a
- higher "absolute value" than any finite number. </li> </ul>
+ total ordering on all possible values (ignoring their signs). In
+ this method: <ul> <li>For objects with the same value, the one with
+  the higher denominator has a greater "absolute value". </li>
+ <li>Negative zero and positive zero are considered equal. </li>
+  <li>Quiet NaN has a higher "absolute value" than signaling NaN. If
+ both objects are quiet NaN or both are signaling NaN, the one with
+  the higher diagnostic information has a greater "absolute value".
+  </li> <li>NaN has a higher "absolute value" than infinity. </li>
+  <li>Infinity has a higher "absolute value" than any finite number.
+ </li> </ul>
 
 **Parameters:**
 
@@ -632,16 +634,16 @@ Compares the absolute values of this object and another object, imposing a
 ### CompareToTotal
     public int CompareToTotal​(ERational other)
 Compares the values of this object and another object, imposing a total
- ordering on all possible values. In this method: <ul> <li>For objects
- with the same value, the one with the higher denominator has a
- greater "absolute value". </li> <li>Negative zero is less than
- positive zero. </li> <li>Quiet NaN has a higher "absolute value" than
- signaling NaN. If both objects are quiet NaN or both are signaling
- NaN, the one with the higher diagnostic information has a greater
- "absolute value". </li> <li>NaN has a higher "absolute value" than
- infinity. </li> <li>Infinity has a higher "absolute value" than any
- finite number. </li> <li>Negative numbers are less than positive
- numbers. </li> </ul>
+ ordering on all possible values. In this method: <ul> <li>For
+ objects with the same value, the one with the higher denominator has
+  a greater "absolute value". </li> <li>Negative zero is less than
+  positive zero. </li> <li>Quiet NaN has a higher "absolute value"
+ than signaling NaN. If both objects are quiet NaN or both are
+ signaling NaN, the one with the higher diagnostic information has a
+  greater "absolute value". </li> <li>NaN has a higher "absolute
+  value" than infinity. </li> <li>Infinity has a higher "absolute
+  value" than any finite number. </li> <li>Negative numbers are less
+ than positive numbers. </li> </ul>
 
 **Parameters:**
 
@@ -784,11 +786,13 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Parameters:**
 
-* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
+* <code>obj</code> - The parameter
+      <code>obj</code>
+       is an arbitrary object.
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, <code>false</code> .
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
 
 ### equals
     public boolean equals​(ERational other)
@@ -802,7 +806,9 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Returns:**
 
-* Either <code>true</code> or <code>false</code> .
+* Either
+      <code>true</code> or
+      <code>false</code> .
 
 ### hashCode
     public int hashCode()
@@ -824,7 +830,7 @@ Gets a value indicating whether this object's value is infinity.
 **Returns:**
 
 * <code>true</code> if this object's value is infinity; otherwise, <code>
- false</code> .
+ false</code>.
 
 ### IsNaN
     public boolean IsNaN()
@@ -833,7 +839,7 @@ Returns whether this object is a not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a not-a-number value; otherwise,
- <code>false</code> .
+ <code>false</code>.
 
 ### IsNegativeInfinity
     public boolean IsNegativeInfinity()
@@ -842,7 +848,7 @@ Returns whether this object is negative infinity.
 **Returns:**
 
 * <code>true</code> if this object is negative infinity; otherwise, <code>
- false</code> .
+ false</code>.
 
 ### IsPositiveInfinity
     public boolean IsPositiveInfinity()
@@ -851,7 +857,7 @@ Returns whether this object is positive infinity.
 **Returns:**
 
 * <code>true</code> if this object is positive infinity; otherwise, <code>
- false</code> .
+ false</code>.
 
 ### IsQuietNaN
     public boolean IsQuietNaN()
@@ -860,7 +866,7 @@ Returns whether this object is a quiet not-a-number value.
 **Returns:**
 
 * <code>true</code> if this object is a quiet not-a-number value;
- otherwise, <code>false</code> .
+ otherwise, <code>false</code>.
 
 ### IsSignalingNaN
     public boolean IsSignalingNaN()
@@ -871,8 +877,8 @@ Returns whether this object is a signaling not-a-number value (which causes
 **Returns:**
 
 * <code>true</code> if this object is a signaling not-a-number value (which
- causes an error if the value is passed to any arithmetic operation in
- this class); otherwise, <code>false</code> .
+ causes an error if the value is passed to any arithmetic operation
+ in this class); otherwise, <code>false</code>.
 
 ### Multiply
     public ERational Multiply​(ERational otherValue)
@@ -1005,10 +1011,10 @@ Converts this rational number to an arbitrary-precision decimal number and
 **Parameters:**
 
 * <code>ctx</code> - An arithmetic context object to control the precision, rounding,
- and exponent range of the result. If HasFlags of the context is true,
- will also store the flags resulting from the operation (the flags are
- in addition to the pre-existing flags). Can be null, in which case
- the precision is unlimited and no rounding is needed.
+ and exponent range of the result. If HasFlags of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1058,10 +1064,10 @@ Renamed to ToEDecimal.
 **Parameters:**
 
 * <code>ctx</code> - An arithmetic context object to control the precision, rounding,
- and exponent range of the result. If HasFlags of the context is true,
- will also store the flags resulting from the operation (the flags are
- in addition to the pre-existing flags). Can be null, in which case
- the precision is unlimited and no rounding is needed.
+ and exponent range of the result. If HasFlags of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1109,10 +1115,10 @@ Converts this rational number to a binary float and rounds that result to
 **Parameters:**
 
 * <code>ctx</code> - An arithmetic context object to control the precision, rounding,
- and exponent range of the result. If HasFlags of the context is true,
- will also store the flags resulting from the operation (the flags are
- in addition to the pre-existing flags). Can be null, in which case
- the precision is unlimited and no rounding is needed.
+ and exponent range of the result. If HasFlags of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1162,10 +1168,10 @@ Renamed to ToEFloat.
 **Parameters:**
 
 * <code>ctx</code> - An arithmetic context object to control the precision, rounding,
- and exponent range of the result. If HasFlags of the context is true,
- will also store the flags resulting from the operation (the flags are
- in addition to the pre-existing flags). Can be null, in which case
- the precision is unlimited and no rounding is needed.
+ and exponent range of the result. If HasFlags of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and no rounding is needed.
 
 **Returns:**
 
@@ -1217,9 +1223,9 @@ Converts this object to a text string.
 **Returns:**
 
 * A string representation of this object. If this object's value is
- infinity or not-a-number, the result is the analogous return value of
- the <code>EDecimal.toString</code> method. Otherwise, the return value has
- the following form: <code>[-]numerator/denominator</code> .
+ infinity or not-a-number, the result is the analogous return value
+ of the <code>EDecimal.toString</code> method. Otherwise, the return value
+ has the following form: <code>[-]numerator/denominator</code>.
 
 ### ToByteChecked
     public byte ToByteChecked()
@@ -1238,8 +1244,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 ### ToByteUnchecked
     public byte ToByteUnchecked()
 Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a byte (from 0
- to 255).
+ least-significant bits of its two's-complement form as a byte (from
+ 0 to 255).
 
 **Returns:**
 
@@ -1249,7 +1255,8 @@ Truncates this number's value to an integer and returns the
 ### ToByteIfExact
     public byte ToByteIfExact()
 Converts this number's value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) without rounding to a different numerical value.
+ byte (from 0 to 255) without rounding to a different numerical
+ value.
 
 **Returns:**
 

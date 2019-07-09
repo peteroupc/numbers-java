@@ -6,7 +6,8 @@ import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
   public class EIntegerTest {
-    private static long[] valueBitLengths = { -4294967297L, 33L, -4294967296L,
+    private static long[] valueBitLengths = {
+      -4294967297L, 33L, -4294967296L,
       32L,
       -4294967295L, 32L, -2147483649L, 32L, -2147483648L, 31L, -2147483647L,
       31L,
@@ -63,9 +64,11 @@ import com.upokecenter.numbers.*;
       28L, 268435455L, 28L, 268435456L, 29L, 268435457L, 29L, 536870911L, 29L,
       536870912L, 30L, 536870913L, 30L, 1073741823L, 30L, 1073741824L, 31L,
       1073741825L, 31L, 2147483647L, 31L, 2147483648L, 32L, 2147483649L, 32L,
-      4294967295L, 32L, 4294967296L, 33L, 4294967297L, 33, };
+      4294967295L, 32L, 4294967296L, 33L, 4294967297L, 33,
+    };
 
-    private static long[] valueLowBits = { 0L, -1L, 1L, 0L, 2L, 1L, 3L, 0L, 4L,
+    private static long[] valueLowBits = {
+      0L, -1L, 1L, 0L, 2L, 1L, 3L, 0L, 4L,
       2L, 5L, 0L,
       7L, 0L, 8L, 3L, 9L, 0L, 15L, 0L, 16L, 4L, 17L, 0L, 31L, 0L, 32L, 5L,
       33L, 0L, 63L, 0L, 64L,
@@ -94,7 +97,8 @@ import com.upokecenter.numbers.*;
       536870911L, 0L,
       536870912L, 29L, 536870913L, 0L, 1073741823L, 0L, 1073741824L, 30L,
       1073741825L, 0L, 2147483647L, 0L, 2147483648L, 31L, 2147483649L, 0L,
-      4294967295L, 0L, 4294967296L, 32L, 4294967297L, 0, };
+      4294967295L, 0L, 4294967296L, 32L, 4294967297L, 0,
+    };
 
     public static void AssertAdd(EInteger bi, EInteger bi2, String s) {
       EIntegerTest.AssertBigIntegersEqual(s, bi.Add(bi2));
@@ -107,17 +111,17 @@ import com.upokecenter.numbers.*;
 
     public static void AssertBigIntegersEqual(String a, EInteger b) {
       Assert.assertEquals(a, b.toString());
-      EInteger a2 = BigFromString(a);
+      EInteger a2 = EInteger.FromString(a);
       TestCommon.CompareTestEqualAndConsistent(a2, b);
       TestCommon.AssertEqualsHashCode(a2, b);
     }
 
     public static void DoTestDivide(
-  String dividend,
-  String divisor,
-  String result) {
-      EInteger bigintA = BigFromString(dividend);
-      EInteger bigintB = BigFromString(divisor);
+      String dividend,
+      String divisor,
+      String result) {
+      EInteger bigintA = EInteger.FromString(dividend);
+      EInteger bigintB = EInteger.FromString(divisor);
       EInteger bigintTemp;
       if (bigintB.isZero()) {
         try {
@@ -144,12 +148,12 @@ import com.upokecenter.numbers.*;
     }
 
     public static void DoTestDivRem(
-  String dividend,
-  String divisor,
-  String result,
-  String rem) {
-      EInteger bigintA = BigFromString(dividend);
-      EInteger bigintB = BigFromString(divisor);
+      String dividend,
+      String divisor,
+      String result,
+      String rem) {
+      EInteger bigintA = EInteger.FromString(dividend);
+      EInteger bigintB = EInteger.FromString(divisor);
       EInteger rembi;
       if (bigintB.isZero()) {
         try {
@@ -179,8 +183,8 @@ import com.upokecenter.numbers.*;
     }
 
     public static void DoTestMultiply(String m1, String m2, String result) {
-      EInteger bigintA = BigFromString(m1);
-      EInteger bigintB = BigFromString(m2);
+      EInteger bigintA = EInteger.FromString(m1);
+      EInteger bigintB = EInteger.FromString(m2);
       EInteger bigintC = bigintA.Multiply(bigintB);
       if (result != null) {
         AssertBigIntegersEqual(result, bigintC);
@@ -189,17 +193,17 @@ import com.upokecenter.numbers.*;
     }
 
     public static void DoTestPow(String m1, int m2, String result) {
-      EInteger bigintA = BigFromString(m1);
+      EInteger bigintA = EInteger.FromString(m1);
       AssertBigIntegersEqual(result, bigintA.Pow(m2));
       AssertBigIntegersEqual(result, bigintA.PowBigIntVar(EInteger.FromInt32(m2)));
     }
 
     public static void DoTestRemainder(
-  String dividend,
-  String divisor,
-  String result) {
-      EInteger bigintA = BigFromString(dividend);
-      EInteger bigintB = BigFromString(divisor);
+      String dividend,
+      String divisor,
+      String result) {
+      EInteger bigintA = EInteger.FromString(dividend);
+      EInteger bigintB = EInteger.FromString(divisor);
       if (bigintB.isZero()) {
         try {
           bigintA.Remainder(bigintB);
@@ -223,21 +227,21 @@ import com.upokecenter.numbers.*;
     }
 
     public static void DoTestShiftLeft(String m1, int m2, String result) {
-      EInteger bigintA = BigFromString(m1);
+      EInteger bigintA = EInteger.FromString(m1);
       AssertBigIntegersEqual(result, bigintA.ShiftLeft(m2));
       m2 = -m2;
       AssertBigIntegersEqual(result, bigintA.ShiftRight(m2));
     }
 
     public static void DoTestShiftRight(String m1, int m2, String result) {
-      EInteger bigintA = BigFromString(m1);
+      EInteger bigintA = EInteger.FromString(m1);
       AssertBigIntegersEqual(result, bigintA.ShiftRight(m2));
       m2 = -m2;
       AssertBigIntegersEqual(result, bigintA.ShiftLeft(m2));
     }
 
     public static void DoTestShiftRight2(String m1, int m2, EInteger result) {
-      EInteger bigintA = BigFromString(m1);
+      EInteger bigintA = EInteger.FromString(m1);
       TestCommon.CompareTestEqualAndConsistent(result, bigintA.ShiftRight(m2));
       m2 = -m2;
       TestCommon.CompareTestEqualAndConsistent(result, bigintA.ShiftLeft(m2));
@@ -530,12 +534,12 @@ import com.upokecenter.numbers.*;
     public void TestAsInt32Checked() {
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).ToInt32Checked());
+        EInteger.FromInt64(Integer.MIN_VALUE).ToInt32Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).ToInt32Checked());
+        EInteger.FromInt64(Integer.MAX_VALUE).ToInt32Checked());
       try {
-        BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
+        EInteger.FromInt64(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         // NOTE: Intentionally empty
@@ -544,7 +548,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
+        EInteger.FromInt64(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         // NOTE: Intentionally empty
@@ -553,8 +557,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString("999999999999999999999999999999999").ToInt32Checked();
-        Assert.fail("Should have failed");
+  EInteger.FromString("999999999999999999999999999999999").ToInt32Checked();
+  Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         // NOTE: Intentionally empty
       } catch (Exception ex) {
@@ -563,12 +567,12 @@ import com.upokecenter.numbers.*;
       }
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).ToInt32Checked());
+        EInteger.FromInt64(Integer.MIN_VALUE).ToInt32Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).ToInt32Checked());
+        EInteger.FromInt64(Integer.MAX_VALUE).ToInt32Checked());
       try {
-        BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Checked();
+        EInteger.FromInt64(Integer.MIN_VALUE - 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         // NOTE: Intentionally empty
@@ -577,7 +581,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Checked();
+        EInteger.FromInt64(Integer.MAX_VALUE + 1L).ToInt32Checked();
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         // NOTE: Intentionally empty
@@ -591,12 +595,12 @@ import com.upokecenter.numbers.*;
     public void TestAsInt64Checked() {
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MIN_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Long.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Long.MAX_VALUE,
-        BigValueOf(Long.MAX_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Long.MAX_VALUE).ToInt64Checked());
       try {
-        EInteger bigintTemp = BigValueOf(Long.MIN_VALUE);
+        EInteger bigintTemp = EInteger.FromInt64(Long.MIN_VALUE);
         bigintTemp = bigintTemp.Subtract(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
@@ -607,7 +611,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger bigintTemp = BigValueOf(Long.MAX_VALUE);
+        EInteger bigintTemp = EInteger.FromInt64(Long.MAX_VALUE);
         bigintTemp = bigintTemp.Add(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
@@ -619,39 +623,47 @@ import com.upokecenter.numbers.*;
       }
       Assert.assertEquals(
         ((long)0xfffffff200000000L),
-        BigValueOf(((long)0xfffffff200000000L)).ToInt64Checked());
+
+        EInteger.FromInt64(
+          ((long)0xfffffff200000000L)).ToInt64Checked());
       Assert.assertEquals(
         ((long)0xfffffff280000000L),
-        BigValueOf(((long)0xfffffff280000000L)).ToInt64Checked());
+
+        EInteger.FromInt64(
+          ((long)0xfffffff280000000L)).ToInt64Checked());
       Assert.assertEquals(
         ((long)0xfffffff280000001L),
-        BigValueOf(((long)0xfffffff280000001L)).ToInt64Checked());
+
+        EInteger.FromInt64(
+          ((long)0xfffffff280000001L)).ToInt64Checked());
       Assert.assertEquals(
         ((long)0xfffffff27fffffffL),
-        BigValueOf(((long)0xfffffff27fffffffL)).ToInt64Checked());
+
+        EInteger.FromInt64(
+          ((long)0xfffffff27fffffffL)).ToInt64Checked());
       Assert.assertEquals(
         0x0000000380000001L,
-        BigValueOf(0x0000000380000001L).ToInt64Checked());
+        EInteger.FromInt64(0x0000000380000001L).ToInt64Checked());
       Assert.assertEquals(
         0x0000000382222222L,
-        BigValueOf(0x0000000382222222L).ToInt64Checked());
-      Assert.assertEquals(-8L, BigValueOf(-8L).ToInt64Checked());
-      Assert.assertEquals(-32768L, BigValueOf(-32768L).ToInt64Checked());
+        EInteger.FromInt64(0x0000000382222222L).ToInt64Checked());
+      Assert.assertEquals(-8L, EInteger.FromInt64(-8L).ToInt64Checked());
+      Assert.assertEquals(-32768L, EInteger.FromInt64(-32768L).ToInt64Checked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Integer.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Integer.MAX_VALUE).ToInt64Checked());
       Assert.assertEquals(
         0x80000000L,
-        BigValueOf(0x80000000L).ToInt64Checked());
+        EInteger.FromInt64(0x80000000L).ToInt64Checked());
       Assert.assertEquals(
         0x90000000L,
-        BigValueOf(0x90000000L).ToInt64Checked());
+        EInteger.FromInt64(0x90000000L).ToInt64Checked());
       try {
-        BigFromString("999999999999999999999999999999999").ToInt64Checked();
-        Assert.fail("Should have failed");
+  EInteger.FromString("999999999999999999999999999999999").ToInt64Checked();
+  Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
         // NOTE: Intentionally empty
       } catch (Exception ex) {
@@ -660,12 +672,12 @@ import com.upokecenter.numbers.*;
       }
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MIN_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Long.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Long.MAX_VALUE,
-        BigValueOf(Long.MAX_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Long.MAX_VALUE).ToInt64Checked());
       try {
-        EInteger bigintTemp = BigValueOf(Long.MIN_VALUE);
+        EInteger bigintTemp = EInteger.FromInt64(Long.MIN_VALUE);
         bigintTemp = bigintTemp.Subtract(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
@@ -676,7 +688,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger bigintTemp = BigValueOf(Long.MAX_VALUE);
+        EInteger bigintTemp = EInteger.FromInt64(Long.MAX_VALUE);
         bigintTemp = bigintTemp.Add(EInteger.FromInt32(1));
         bigintTemp.ToInt64Checked();
         Assert.fail("Should have failed");
@@ -689,39 +701,39 @@ import com.upokecenter.numbers.*;
       long longV = ((long)0xfffffff200000000L);
       Assert.assertEquals(
   longV,
-  BigValueOf(longV).ToInt64Checked());
+  EInteger.FromInt64(longV).ToInt64Checked());
       longV = ((long)0xfffffff280000000L);
       Assert.assertEquals(
   longV,
-  BigValueOf(longV).ToInt64Checked());
+  EInteger.FromInt64(longV).ToInt64Checked());
       longV = ((long)0xfffffff280000001L);
       Assert.assertEquals(
   longV,
-  BigValueOf(longV).ToInt64Checked());
+  EInteger.FromInt64(longV).ToInt64Checked());
       longV = ((long)0xfffffff27fffffffL);
       Assert.assertEquals(
   longV,
-  BigValueOf(longV).ToInt64Checked());
+  EInteger.FromInt64(longV).ToInt64Checked());
       Assert.assertEquals(
         0x0000000380000001L,
-        BigValueOf(0x0000000380000001L).ToInt64Checked());
+        EInteger.FromInt64(0x0000000380000001L).ToInt64Checked());
       Assert.assertEquals(
         0x0000000382222222L,
-        BigValueOf(0x0000000382222222L).ToInt64Checked());
-      Assert.assertEquals(-8L, BigValueOf(-8L).ToInt64Checked());
-      Assert.assertEquals(-32768L, BigValueOf(-32768L).ToInt64Checked());
+        EInteger.FromInt64(0x0000000382222222L).ToInt64Checked());
+      Assert.assertEquals(-8L, EInteger.FromInt64(-8L).ToInt64Checked());
+      Assert.assertEquals(-32768L, EInteger.FromInt64(-32768L).ToInt64Checked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Integer.MIN_VALUE).ToInt64Checked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).ToInt64Checked());
+        EInteger.FromInt64(Integer.MAX_VALUE).ToInt64Checked());
       Assert.assertEquals(
         0x80000000L,
-        BigValueOf(0x80000000L).ToInt64Checked());
+        EInteger.FromInt64(0x80000000L).ToInt64Checked());
       Assert.assertEquals(
         0x90000000L,
-        BigValueOf(0x90000000L).ToInt64Checked());
+        EInteger.FromInt64(0x90000000L).ToInt64Checked());
     }
     @Test
     public void TestBigIntegerModPow() {
@@ -753,7 +765,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt32(1).ModPow(BigFromString("-1"), BigFromString("1"));
+        EInteger.FromInt32(1).ModPow(EInteger.FromString("-1"),
+  EInteger.FromString("1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -762,7 +775,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("0"));
+        EInteger.FromInt32(1).ModPow(EInteger.FromString("0"), EInteger.FromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -771,7 +784,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt32(1).ModPow(BigFromString("0"), BigFromString("-1"));
+        EInteger.FromInt32(1).ModPow(EInteger.FromString("0"),
+  EInteger.FromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -780,7 +794,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("0"));
+        EInteger.FromInt32(1).ModPow(EInteger.FromString("1"), EInteger.FromString("0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -789,7 +803,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt32(1).ModPow(BigFromString("1"), BigFromString("-1"));
+        EInteger.FromInt32(1).ModPow(EInteger.FromString("1"),
+  EInteger.FromString("-1"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -866,19 +881,19 @@ import com.upokecenter.numbers.*;
         64,
         ei.GetSignedBitLengthAsEInteger().ToInt32Checked());
       String[] strings = new String[] {
-   "8000FFFFFFFF0000",
-   "8000AAAAAAAA0000",
-   "8000800080000000",
-   "8000000100010000",
-   "8000FFFF00000000",
-   "80000000FFFF0000",
-   "8000800000000000",
-   "8000000080000000",
-   "8000AAAA00000000",
-   "80000000AAAA0000",
-   "8000000100000000",
-   "8000000000010000",
- };
+        "8000FFFFFFFF0000",
+        "8000AAAAAAAA0000",
+        "8000800080000000",
+        "8000000100010000",
+        "8000FFFF00000000",
+        "80000000FFFF0000",
+        "8000800000000000",
+        "8000000080000000",
+        "8000AAAA00000000",
+        "80000000AAAA0000",
+        "8000000100000000",
+        "8000000000010000",
+      };
       for (String str : strings) {
         ei = EInteger.FromRadixString(str, 16);
         if (ei.CanFitInInt64()) {
@@ -912,30 +927,30 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestDivideA() {
       DoTestDivide(
-  "39401404978667143593022554770633078187236345017741021112301638514137074723630749875836463116600753265992771999563776",
-  "6277005955876855982708123588802319701019026907066160578560",
-  "6277101735386680763835789423207589043669308487479442014208");
+        "39401404978667143593022554770633078187236345017741021112301638514137074723630749875836463116600753265992771999563776",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "6277101735386680763835789423207589043669308487479442014208");
     }
 
     @Test
     public void TestDivide() {
       int intA, intB;
       DoTestDivide(
-  "39401404978667143593022554770633078187236345017741021112301638514137074723630749875836463116600753265992771999563776",
-  "6277005955876855982708123588802319701019026907066160578560",
-  "6277101735386680763835789423207589043669308487479442014208");
+        "39401404978667143593022554770633078187236345017741021112301638514137074723630749875836463116600753265992771999563776",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "6277101735386680763835789423207589043669308487479442014208");
       DoTestDivide(
-  "340277174703306882242637262502835978240",
-  "79226953606891185567396986880",
-  "4294967296");
+        "340277174703306882242637262502835978240",
+        "79226953606891185567396986880",
+        "4294967296");
       DoTestDivide(
-  "44461738044811866704570272160729755524383493147516085922742403681586307620758054502667856562873477505768158700319760453047044081412393321568753479912147358343844563186048273758088945022589574729044743021988362306225753942249201773678443992606696524197361479929661991788310321409367753462284203449631729626517511224343015354155975783754763572354740724506742793459644155837703671449155713000260325445046273385372701820583016334341594713806706345456633635125343104401883366671083569152",
-  "6667912688606651657935168942074070387623462798286393292334546164025938697493268465740399785103348978411106010660409247384863031649363973174034406552719188394559243700794785023362300512913065060420313203793021880700852215978918600154969735168",
-  "6668014432879854274079851790721257797144739185760979705624542990230371779898108261760364709743735387156366994446448705720136517621612785459920009307944044809722559761949909348022458684413967432579072465854783948147327367860791365121685323776");
+        "44461738044811866704570272160729755524383493147516085922742403681586307620758054502667856562873477505768158700319760453047044081412393321568753479912147358343844563186048273758088945022589574729044743021988362306225753942249201773678443992606696524197361479929661991788310321409367753462284203449631729626517511224343015354155975783754763572354740724506742793459644155837703671449155713000260325445046273385372701820583016334341594713806706345456633635125343104401883366671083569152",
+        "6667912688606651657935168942074070387623462798286393292334546164025938697493268465740399785103348978411106010660409247384863031649363973174034406552719188394559243700794785023362300512913065060420313203793021880700852215978918600154969735168",
+        "6668014432879854274079851790721257797144739185760979705624542990230371779898108261760364709743735387156366994446448705720136517621612785459920009307944044809722559761949909348022458684413967432579072465854783948147327367860791365121685323776");
       DoTestDivide(
-    "9999999999999999999999",
-    "281474976710655",
-    "35527136");
+        "9999999999999999999999",
+        "281474976710655",
+        "35527136");
       DoTestDivide("2472320648", "2831812081", "0");
       DoTestDivide("-2472320648", "2831812081", "0");
       RandomGenerator fr = new RandomGenerator();
@@ -955,73 +970,73 @@ import com.upokecenter.numbers.*;
       DoTestDivide("281470681808895", "281470681808895", "1");
       DoTestDivide("281195803901951", "281470681808895", "0");
       DoTestDivide(
-  "281470681808895",
-  "79226953606891185567396986880",
-  "0");
+        "281470681808895",
+        "79226953606891185567396986880",
+        "0");
       DoTestDivide(
-      "1208907373151751269056511",
-      "281470681808895",
-      "4294967295");
+        "1208907373151751269056511",
+        "281470681808895",
+        "4294967295");
       DoTestDivide(
-      "1208907373151751269056511",
-      "79226953606891185567396986880",
-      "0");
+        "1208907373151751269056511",
+        "79226953606891185567396986880",
+        "0");
       DoTestDivide(
-      "79226953606891185567396986880",
-      "79226953606891185567396986880",
-      "1");
+        "79226953606891185567396986880",
+        "79226953606891185567396986880",
+        "1");
       DoTestDivide(
-      "79226953606891185567396986880",
-      "79226953606891185567396986880",
-      "1");
+        "79226953606891185567396986880",
+        "79226953606891185567396986880",
+        "1");
       DoTestDivide(
-      "79149582354435849300215791616",
-      "281470681808895",
-      "281200094609408");
+        "79149582354435849300215791616",
+        "281470681808895",
+        "281200094609408");
       DoTestDivide(
-      "79149582354435849304510693376",
-      "79226953606891185567396986880",
-      "0");
+        "79149582354435849304510693376",
+        "79226953606891185567396986880",
+        "0");
       DoTestDivide(
-      "340277174703229510990181926235654782976",
-      "79226953606891185567396986880",
-      "4294967295");
+        "340277174703229510990181926235654782976",
+        "79226953606891185567396986880",
+        "4294967295");
       DoTestDivide(
-      "340277174703229510990181926235654782976",
-      "79226953606891185567396986880",
-      "4294967295");
+        "340277174703229510990181926235654782976",
+        "79226953606891185567396986880",
+        "4294967295");
       DoTestDivide(
-      "79226953606891185567396986880",
-      "6277005955876855982708123588802319701019026907066160578560",
-      "0");
+        "79226953606891185567396986880",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "0");
       DoTestDivide(
-      "22278626849872979772991819660510225504468991",
-      "79226953606891185567396986880",
-      "281200094609408");
+        "22278626849872979772991819660510225504468991",
+        "79226953606891185567396986880",
+        "281200094609408");
       DoTestDivide(
-      "6270875973713392427274690200693718464284551950581721071616",
-      "79226953606891185567396986880",
-      "79150790081217380608951451648");
+        "6270875973713392427274690200693718464284551950581721071616",
+        "79226953606891185567396986880",
+        "79150790081217380608951451648");
       DoTestDivide(
-      "6277005955876855982708123588802242329766571570798979383296",
-      "6277005955876855982708123588802319701019026907066160578560",
-      "0");
+        "6277005955876855982708123588802242329766571570798979383296",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "0");
       DoTestDivide(
-      "6277005955876855982708123588802242329766571570798979383296",
-      "6277005955876855982708123588802319701019026907066160578560",
-      "0");
+        "6277005955876855982708123588802242329766571570798979383296",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "0");
       DoTestDivide(
-      "26959535297282185466869868771998681536704617202858716036715199266816",
-      "6277005955876855982708123588802319701019026907066160578560",
-      "4294967295");
+        "26959535297282185466869868771998681536704617202858716036715199266816",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "4294967295");
       DoTestDivide(
-      "496829980752160275550680055858571148163286974448396184421327120687227627818219200249856",
-      "6277005955876855982708123588802319701019026907066160578560",
-      "79150790081217380608951451648");
+        "496829980752160275550680055858571148163286974448396184421327120687227627818219200249856",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "79150790081217380608951451648");
       DoTestDivide(
-      "2135954443842118711369801686589217620410698847025641089415087336821733096438436218376946913837056",
-      "6277005955876855982708123588802319701019026907066160578560",
-      "340282366920861091030327650447175712768");
+        "2135954443842118711369801686589217620410698847025641089415087336821733096438436218376946913837056",
+        "6277005955876855982708123588802319701019026907066160578560",
+        "340282366920861091030327650447175712768");
     }
 
     @Test
@@ -1079,7 +1094,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestExceptions() {
       try {
-        BigFromString(null);
+        EInteger.FromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -1098,7 +1113,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString("x11");
+        EInteger.FromString("x11");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         // NOTE: Intentionally empty
@@ -1107,7 +1122,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString(".");
+        EInteger.FromString(".");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         // NOTE: Intentionally empty
@@ -1116,7 +1131,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString("..");
+        EInteger.FromString("..");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         // NOTE: Intentionally empty
@@ -1125,7 +1140,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString("e200");
+        EInteger.FromString("e200");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         // NOTE: Intentionally empty
@@ -1475,7 +1490,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestFromString() {
       try {
-        BigFromString("xyz");
+        EInteger.FromString("xyz");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         // NOTE: Intentionally empty
@@ -1484,7 +1499,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString("");
+        EInteger.FromString("");
         Assert.fail("Should have failed");
       } catch (NumberFormatException ex) {
         // NOTE: Intentionally empty
@@ -1493,7 +1508,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        BigFromString(null);
+        EInteger.FromString(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -1609,8 +1624,8 @@ import com.upokecenter.numbers.*;
     @Test(timeout = 10000)
     public void TestGcdHang() {
       {
-        String stringTemp = BigFromString("781631509928000000").Gcd(
-                  BigFromString("1000000")).toString();
+        String stringTemp = EInteger.FromString("781631509928000000").Gcd(
+                  EInteger.FromString("1000000")).toString();
         Assert.assertEquals(
           "1000000",
           stringTemp);
@@ -1629,86 +1644,88 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       {
-        String stringTemp = EInteger.FromInt32(0).Gcd(BigFromString(
+        String stringTemp = EInteger.FromInt32(0).Gcd(EInteger.FromString(
         "244")).toString();
         Assert.assertEquals(
-        "244",
-        stringTemp);
+          "244",
+          stringTemp);
       }
       {
-        String stringTemp = EInteger.FromInt32(0).Gcd(BigFromString(
+        String stringTemp = EInteger.FromInt32(0).Gcd(EInteger.FromString(
         "-244")).toString();
         Assert.assertEquals(
-        "244",
-        stringTemp);
+          "244",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString(
+        String stringTemp = EInteger.FromString(
         "244").Gcd(EInteger.FromInt32(0)).toString();
         Assert.assertEquals(
-        "244",
-        stringTemp);
+          "244",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString(
+        String stringTemp = EInteger.FromString(
         "-244").Gcd(EInteger.FromInt32(0)).toString();
         Assert.assertEquals(
-        "244",
-        stringTemp);
+          "244",
+          stringTemp);
       }
       {
-        String stringTemp = EInteger.FromInt32(1).Gcd(BigFromString("244")).toString();
+        String stringTemp =
+EInteger.FromInt32(1).Gcd(EInteger.FromString("244")).toString();
         Assert.assertEquals(
-        "1",
-        stringTemp);
+          "1",
+          stringTemp);
       }
       {
-        String stringTemp = EInteger.FromInt32(1).Gcd(BigFromString(
+        String stringTemp = EInteger.FromInt32(1).Gcd(EInteger.FromString(
         "-244")).toString();
         Assert.assertEquals(
-        "1",
-        stringTemp);
+          "1",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString("244").Gcd(EInteger.FromInt32(1)).toString();
+        String stringTemp =
+EInteger.FromString("244").Gcd(EInteger.FromInt32(1)).toString();
         Assert.assertEquals(
-        "1",
-        stringTemp);
+          "1",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString(
+        String stringTemp = EInteger.FromString(
         "-244").Gcd(EInteger.FromInt32(1)).toString();
         Assert.assertEquals(
-        "1",
-        stringTemp);
+          "1",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString("15").Gcd(BigFromString(
+        String stringTemp = EInteger.FromString("15").Gcd(EInteger.FromString(
         "15")).toString();
         Assert.assertEquals(
-        "15",
-        stringTemp);
+          "15",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString("-15").Gcd(
-                BigFromString("15")).toString();
+        String stringTemp = EInteger.FromString("-15").Gcd(
+                EInteger.FromString("15")).toString();
         Assert.assertEquals(
-        "15",
-        stringTemp);
+          "15",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString("15").Gcd(
-                BigFromString("-15")).toString();
+        String stringTemp = EInteger.FromString("15").Gcd(
+                EInteger.FromString("-15")).toString();
         Assert.assertEquals(
-        "15",
-        stringTemp);
+          "15",
+          stringTemp);
       }
       {
-        String stringTemp = BigFromString(
-        "-15").Gcd(BigFromString("-15")).toString();
+        String stringTemp = EInteger.FromString(
+        "-15").Gcd(EInteger.FromString("-15")).toString();
         Assert.assertEquals(
-        "15",
-        stringTemp);
+          "15",
+          stringTemp);
       }
       int prime = 0;
       RandomGenerator rand = new RandomGenerator();
@@ -1854,7 +1871,7 @@ import com.upokecenter.numbers.*;
  Assert.fail();
  }
       for (int i = 0; i < 32; ++i) {
-        if (!(BigValueOf(-1).GetSignedBit(i))) {
+        if (!(EInteger.FromInt64(-1).GetSignedBit(i))) {
  Assert.fail();
  }
       }
@@ -1869,7 +1886,8 @@ import com.upokecenter.numbers.*;
  Assert.fail();
  }
       for (int i = 0; i < 32; ++i) {
-        if (!(BigValueOf(-1).GetSignedBit(EInteger.FromInt32(i))))Assert.fail();
+        if (!(
+          EInteger.FromInt64(-1).GetSignedBit(EInteger.FromInt32(i))))Assert.fail();
       }
       try {
         EInteger.FromInt32(0).GetSignedBit(null);
@@ -1913,34 +1931,40 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestGetSignedBitLength() {
       for (int i = 0; i < valueBitLengths.length; i += 2) {
-        Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(valueBitLengths[i]).GetSignedBitLength());
+        Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], EInteger.FromInt64(valueBitLengths[i]).GetSignedBitLength());
       }
-      Assert.assertEquals(31, BigValueOf(-2147483647L).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(-2147483648L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(-2147483649L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(-2147483650L).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(2147483647L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(2147483648L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(2147483649L).GetSignedBitLength());
-      Assert.assertEquals(32, BigValueOf(2147483650L).GetSignedBitLength());
-      Assert.assertEquals(0, BigValueOf(0).GetSignedBitLength());
-      Assert.assertEquals(1, BigValueOf(1).GetSignedBitLength());
-      Assert.assertEquals(2, BigValueOf(2).GetSignedBitLength());
-      Assert.assertEquals(2, BigValueOf(2).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(Integer.MAX_VALUE).GetSignedBitLength());
-      Assert.assertEquals(31, BigValueOf(Integer.MIN_VALUE).GetSignedBitLength());
-      Assert.assertEquals(16, BigValueOf(65535).GetSignedBitLength());
-      Assert.assertEquals(16, BigValueOf(-65535).GetSignedBitLength());
-      Assert.assertEquals(17, BigValueOf(65536).GetSignedBitLength());
-      Assert.assertEquals(16, BigValueOf(-65536).GetSignedBitLength());
+      Assert.assertEquals(31,
+  EInteger.FromInt64(-2147483647L).GetSignedBitLength());
+      Assert.assertEquals(31,
+  EInteger.FromInt64(-2147483648L).GetSignedBitLength());
+      Assert.assertEquals(32,
+  EInteger.FromInt64(-2147483649L).GetSignedBitLength());
+      Assert.assertEquals(32,
+  EInteger.FromInt64(-2147483650L).GetSignedBitLength());
+      Assert.assertEquals(31, EInteger.FromInt64(2147483647L).GetSignedBitLength());
+      Assert.assertEquals(32, EInteger.FromInt64(2147483648L).GetSignedBitLength());
+      Assert.assertEquals(32, EInteger.FromInt64(2147483649L).GetSignedBitLength());
+      Assert.assertEquals(32, EInteger.FromInt64(2147483650L).GetSignedBitLength());
+      Assert.assertEquals(0, EInteger.FromInt64(0).GetSignedBitLength());
+      Assert.assertEquals(1, EInteger.FromInt64(1).GetSignedBitLength());
+      Assert.assertEquals(2, EInteger.FromInt64(2).GetSignedBitLength());
+      Assert.assertEquals(2, EInteger.FromInt64(2).GetSignedBitLength());
+      Assert.assertEquals(31,
+  EInteger.FromInt64(Integer.MAX_VALUE).GetSignedBitLength());
+      Assert.assertEquals(31,
+  EInteger.FromInt64(Integer.MIN_VALUE).GetSignedBitLength());
+      Assert.assertEquals(16, EInteger.FromInt64(65535).GetSignedBitLength());
+      Assert.assertEquals(16, EInteger.FromInt64(-65535).GetSignedBitLength());
+      Assert.assertEquals(17, EInteger.FromInt64(65536).GetSignedBitLength());
+      Assert.assertEquals(16, EInteger.FromInt64(-65536).GetSignedBitLength());
       Assert.assertEquals(
         65,
-        BigFromString("19084941898444092059").GetSignedBitLength());
+        EInteger.FromString("19084941898444092059").GetSignedBitLength());
       Assert.assertEquals(
         65,
-        BigFromString("-19084941898444092059").GetSignedBitLength());
-      Assert.assertEquals(0, BigValueOf(-1).GetSignedBitLength());
-      Assert.assertEquals(1, BigValueOf(-2).GetSignedBitLength());
+        EInteger.FromString("-19084941898444092059").GetSignedBitLength());
+      Assert.assertEquals(0, EInteger.FromInt64(-1).GetSignedBitLength());
+      Assert.assertEquals(1, EInteger.FromInt64(-2).GetSignedBitLength());
     }
 
     @Test
@@ -1949,90 +1973,130 @@ import com.upokecenter.numbers.*;
         {
           Object objectTemp = (int)valueBitLengths[i + 1];
           Object objectTemp2 =
-            BigValueOf(valueBitLengths[i]).GetSignedBitLengthAsEInteger()
+
+            EInteger.FromInt64(
+              valueBitLengths[i]).GetSignedBitLengthAsEInteger()
                       .ToInt32Checked();
           String messageTemp = TestCommon.LongToString(valueBitLengths[i]);
           Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
         }
       }
-      Assert.assertEquals(
-  31,
-  BigValueOf(-2147483647L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  31,
-  BigValueOf(-2147483648L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  32,
-  BigValueOf(-2147483649L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  32,
-  BigValueOf(-2147483650L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  31,
-  BigValueOf(2147483647L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  32,
-  BigValueOf(2147483648L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  32,
-  BigValueOf(2147483649L).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  32,
-  BigValueOf(2147483650L).GetSignedBitLengthAsEInteger().ToInt32Checked());
       {
-        long numberTemp = BigValueOf(0).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Object objectTemp = 31;
+Object objectTemp2 = EInteger.FromInt64(
+    -2147483647L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 31;
+Object objectTemp2 = EInteger.FromInt64(
+    -2147483648L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 32;
+Object objectTemp2 = EInteger.FromInt64(
+    -2147483649L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 32;
+Object objectTemp2 = EInteger.FromInt64(
+    -2147483650L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 31;
+Object objectTemp2 = EInteger.FromInt64(
+    2147483647L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 32;
+Object objectTemp2 = EInteger.FromInt64(
+    2147483648L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 32;
+Object objectTemp2 = EInteger.FromInt64(
+    2147483649L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 32;
+Object objectTemp2 = EInteger.FromInt64(
+    2147483650L).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+        long numberTemp =
+          EInteger.FromInt64(0).GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(0, numberTemp);
       }
       {
-        long numberTemp = BigValueOf(1).GetSignedBitLengthAsEInteger().ToInt32Checked();
+        long numberTemp =
+          EInteger.FromInt64(1).GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(1, numberTemp);
       }
       {
-        long numberTemp = BigValueOf(2).GetSignedBitLengthAsEInteger().ToInt32Checked();
+        long numberTemp =
+          EInteger.FromInt64(2).GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(2, numberTemp);
       }
       {
-        long numberTemp = BigValueOf(2).GetSignedBitLengthAsEInteger().ToInt32Checked();
+        long numberTemp =
+          EInteger.FromInt64(2).GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(2, numberTemp);
       }
-      Assert.assertEquals(
-  31,
-  BigValueOf(Integer.MAX_VALUE).GetSignedBitLengthAsEInteger().ToInt32Checked());
-      Assert.assertEquals(
-  31,
-  BigValueOf(Integer.MIN_VALUE).GetSignedBitLengthAsEInteger().ToInt32Checked());
+      {
+Object objectTemp = 31;
+Object objectTemp2 = EInteger.FromInt64(
+    Integer.MAX_VALUE).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
+      {
+Object objectTemp = 31;
+Object objectTemp2 = EInteger.FromInt64(
+    Integer.MIN_VALUE).GetSignedBitLengthAsEInteger().ToInt32Checked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
       Assert.assertEquals(
   16,
-  BigValueOf(65535).GetSignedBitLengthAsEInteger().ToInt32Checked());
+  EInteger.FromInt64(65535).GetSignedBitLengthAsEInteger().ToInt32Checked());
       Assert.assertEquals(
   16,
-  BigValueOf(-65535).GetSignedBitLengthAsEInteger().ToInt32Checked());
+  EInteger.FromInt64(-65535).GetSignedBitLengthAsEInteger().ToInt32Checked());
       Assert.assertEquals(
   17,
-  BigValueOf(65536).GetSignedBitLengthAsEInteger().ToInt32Checked());
+  EInteger.FromInt64(65536).GetSignedBitLengthAsEInteger().ToInt32Checked());
       Assert.assertEquals(
   16,
-  BigValueOf(-65536).GetSignedBitLengthAsEInteger().ToInt32Checked());
+  EInteger.FromInt64(-65536).GetSignedBitLengthAsEInteger().ToInt32Checked());
       {
         Object objectTemp = 65;
-        Object objectTemp2 = BigFromString("19084941898444092059")
+        Object objectTemp2 = EInteger.FromString("19084941898444092059")
         .GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       {
         Object objectTemp = 65;
-        Object objectTemp2 = BigFromString("-19084941898444092059")
+        Object objectTemp2 = EInteger.FromString("-19084941898444092059")
         .GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       {
         long numberTemp =
-          BigValueOf(-1).GetSignedBitLengthAsEInteger().ToInt32Checked();
+
+          EInteger.FromInt64(
+            -1).GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(0, numberTemp);
       }
       {
         long numberTemp =
-          BigValueOf(-2).GetSignedBitLengthAsEInteger().ToInt32Checked();
+
+          EInteger.FromInt64(
+            -2).GetSignedBitLengthAsEInteger().ToInt32Checked();
         Assert.assertEquals(1, numberTemp);
       }
     }
@@ -2041,8 +2105,8 @@ import com.upokecenter.numbers.*;
     public void TestGetUnsignedBit() {
       for (int i = 0; i < valueLowBits.length; i += 2) {
         int lowbit = (int)valueLowBits[i + 1];
-        EInteger posint = BigValueOf(valueLowBits[i]);
-        EInteger negint = BigValueOf(-valueLowBits[i]);
+        EInteger posint = EInteger.FromInt64(valueLowBits[i]);
+        EInteger negint = EInteger.FromInt64(-valueLowBits[i]);
         for (int j = 0; j < lowbit; ++j) {
           if (posint.GetUnsignedBit(j)) {
  Assert.fail();
@@ -2104,8 +2168,8 @@ import com.upokecenter.numbers.*;
         if (valueBitLengths[i] < 0) {
           continue;
         }
-        Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(valueBitLengths[i]).GetUnsignedBitLength());
-        Assert.assertEquals(TestCommon.LongToString(-valueBitLengths[i]), (int)valueBitLengths[i + 1], BigValueOf(-valueBitLengths[i]).GetUnsignedBitLength());
+        Assert.assertEquals(TestCommon.LongToString(valueBitLengths[i]), (int)valueBitLengths[i + 1], EInteger.FromInt64(valueBitLengths[i]).GetUnsignedBitLength());
+        Assert.assertEquals(TestCommon.LongToString(-valueBitLengths[i]), (int)valueBitLengths[i + 1], EInteger.FromInt64(-valueBitLengths[i]).GetUnsignedBitLength());
       }
     }
 
@@ -2115,22 +2179,28 @@ import com.upokecenter.numbers.*;
       for (int i = 0; i < valueLowBits.length; i += 2) {
         Assert.assertEquals(
           (int)valueLowBits[i + 1],
-          BigValueOf(valueLowBits[i]).GetLowBit());
+          EInteger.FromInt64(valueLowBits[i]).GetLowBit());
         Assert.assertEquals(
           (int)valueLowBits[i + 1],
-          BigValueOf(-valueLowBits[i]).GetLowBit());
+          EInteger.FromInt64(-valueLowBits[i]).GetLowBit());
       }
     }
 
     @Test
     public void TestGetLowBitAsEInteger() {
       for (int i = 0; i < valueLowBits.length; i += 2) {
-        Assert.assertEquals(
-          (int)valueLowBits[i + 1],
-          BigValueOf(valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked());
-        Assert.assertEquals(
-          (int)valueLowBits[i + 1],
-          BigValueOf(-valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked());
+        {
+int varintTemp = valueLowBits[i + 1];
+int varintTemp2 = EInteger.FromInt64(
+            valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked();
+Assert.assertEquals(varintTemp, varintTemp2);
+}
+        {
+int varintTemp = valueLowBits[i + 1];
+int varintTemp2 = EInteger.FromInt64(
+            -valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked();
+Assert.assertEquals(varintTemp, varintTemp2);
+}
       }
     }
 
@@ -2139,16 +2209,16 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(0L, EInteger.FromInt32(0).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).ToInt32Unchecked());
+        EInteger.FromInt64(Integer.MIN_VALUE).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).ToInt32Unchecked());
+        EInteger.FromInt64(Integer.MAX_VALUE).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MIN_VALUE - 1L).ToInt32Unchecked());
+        EInteger.FromInt64(Integer.MIN_VALUE - 1L).ToInt32Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MAX_VALUE + 1L).ToInt32Unchecked());
+        EInteger.FromInt64(Integer.MAX_VALUE + 1L).ToInt32Unchecked());
     }
 
     @Test
@@ -2156,7 +2226,7 @@ import com.upokecenter.numbers.*;
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomBigInteger(r);
-        EInteger mod = bigintA.Remainder(BigValueOf(2));
+        EInteger mod = bigintA.Remainder(EInteger.FromInt64(2));
         Assert.assertEquals(mod.isZero(), bigintA.isEven());
         if (bigintA.isEven()) {
           bigintA = bigintA.Add(EInteger.FromInt32(1));
@@ -2173,61 +2243,61 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestIsPowerOfTwo() {
-      if (!(BigValueOf(1).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(1).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(2).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(2).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(4).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(4).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(8).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(8).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(16).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(16).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(32).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(32).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(64).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(64).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (BigValueOf(65535).isPowerOfTwo()) {
+      if (EInteger.FromInt64(65535).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (!(BigValueOf(65536).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(65536).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (BigValueOf(65537).isPowerOfTwo()) {
+      if (EInteger.FromInt64(65537).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (!(BigValueOf(0x100000).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(0x100000).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (!(BigValueOf(0x10000000).isPowerOfTwo())) {
+      if (!(EInteger.FromInt64(0x10000000).isPowerOfTwo())) {
  Assert.fail();
  }
-      if (BigValueOf(0).isPowerOfTwo()) {
+      if (EInteger.FromInt64(0).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (BigValueOf(-1).isPowerOfTwo()) {
+      if (EInteger.FromInt64(-1).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (BigValueOf(-2).isPowerOfTwo()) {
+      if (EInteger.FromInt64(-2).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (BigValueOf(-3).isPowerOfTwo()) {
+      if (EInteger.FromInt64(-3).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (BigValueOf(-4).isPowerOfTwo()) {
+      if (EInteger.FromInt64(-4).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (BigValueOf(-5).isPowerOfTwo()) {
+      if (EInteger.FromInt64(-5).isPowerOfTwo()) {
  Assert.fail();
  }
-      if (BigValueOf(-65536).isPowerOfTwo()) {
+      if (EInteger.FromInt64(-65536).isPowerOfTwo()) {
  Assert.fail();
  }
     }
@@ -2240,57 +2310,60 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(0L, EInteger.FromInt32(0).ToInt64Unchecked());
       Assert.assertEquals(
         Long.MIN_VALUE,
-        BigValueOf(Long.MIN_VALUE).ToInt64Unchecked());
+        EInteger.FromInt64(Long.MIN_VALUE).ToInt64Unchecked());
       Assert.assertEquals(
         Long.MAX_VALUE,
-        BigValueOf(Long.MAX_VALUE).ToInt64Unchecked());
+        EInteger.FromInt64(Long.MAX_VALUE).ToInt64Unchecked());
       {
         Object objectTemp = Long.MAX_VALUE;
-        Object objectTemp2 = BigValueOf(Long.MIN_VALUE)
+        Object objectTemp2 = EInteger.FromInt64(Long.MIN_VALUE)
                 .Subtract(EInteger.FromInt32(1)).ToInt64Unchecked();
         Assert.assertEquals(objectTemp, objectTemp2);
       }
-      Assert.assertEquals(
-        Long.MIN_VALUE,
-        BigValueOf(Long.MAX_VALUE).Add(EInteger.FromInt32(1)).ToInt64Unchecked());
+      {
+Object objectTemp = Long.MIN_VALUE;
+Object objectTemp2 = EInteger.FromInt64(
+          Long.MAX_VALUE).Add(EInteger.FromInt32(1)).ToInt64Unchecked();
+Assert.assertEquals(objectTemp, objectTemp2);
+}
       long aa = ((long)0xfffffff200000000L);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).ToInt64Unchecked());
+              EInteger.FromInt64(aa).ToInt64Unchecked());
       aa = ((long)0xfffffff280000000L);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).ToInt64Unchecked());
+              EInteger.FromInt64(aa).ToInt64Unchecked());
       aa = ((long)0xfffffff200000001L);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).ToInt64Unchecked());
+              EInteger.FromInt64(aa).ToInt64Unchecked());
       aa = ((long)0xfffffff27fffffffL);
       Assert.assertEquals(
               aa,
-              BigValueOf(aa).ToInt64Unchecked());
+              EInteger.FromInt64(aa).ToInt64Unchecked());
       Assert.assertEquals(
         0x0000000380000001L,
-        BigValueOf(0x0000000380000001L).ToInt64Unchecked());
+        EInteger.FromInt64(0x0000000380000001L).ToInt64Unchecked());
       Assert.assertEquals(
         0x0000000382222222L,
-        BigValueOf(0x0000000382222222L).ToInt64Unchecked());
-      Assert.assertEquals(-8L, BigValueOf(-8L).ToInt64Unchecked());
+        EInteger.FromInt64(0x0000000382222222L).ToInt64Unchecked());
+      Assert.assertEquals(-8L, EInteger.FromInt64(-8L).ToInt64Unchecked());
       Assert.assertEquals(
         -32768L,
-        BigValueOf(-32768L).ToInt64Unchecked());
+        EInteger.FromInt64(-32768L).ToInt64Unchecked());
       Assert.assertEquals(
         Integer.MIN_VALUE,
-        BigValueOf(Integer.MIN_VALUE).ToInt64Unchecked());
+        EInteger.FromInt64(Integer.MIN_VALUE).ToInt64Unchecked());
       Assert.assertEquals(
         Integer.MAX_VALUE,
-        BigValueOf(Integer.MAX_VALUE).ToInt64Unchecked());
+        EInteger.FromInt64(Integer.MAX_VALUE).ToInt64Unchecked());
       Assert.assertEquals(
         0x80000000L,
-        BigValueOf(0x80000000L).ToInt64Unchecked());
+        EInteger.FromInt64(0x80000000L).ToInt64Unchecked());
       Assert.assertEquals(
         0x90000000L,
-        BigValueOf(0x90000000L).ToInt64Unchecked());
+        EInteger.FromInt64(0x90000000L).ToInt64Unchecked());
     }
 
     @Test
@@ -2445,13 +2518,13 @@ import com.upokecenter.numbers.*;
         }
       }
       DoTestMultiply(
-  "39258416159456516340113264558732499166970244380745050",
-  "39258416159456516340113264558732499166970244380745051",
-  "1541223239349076530208308657654362309553698742116222355477449713742236585667505604058123112521437480247550");
+        "39258416159456516340113264558732499166970244380745050",
+        "39258416159456516340113264558732499166970244380745051",
+        "1541223239349076530208308657654362309553698742116222355477449713742236585667505604058123112521437480247550");
       DoTestMultiply(
-  "5786426269322750882632312999752639738983363095641642905722171221986067189342123124290107105663618428969517616421742429671402859775667602123564",
-  "331378991485809774307751183645559883724387697397707434271522313077548174328632968616330900320595966360728317363190772921",
-  "1917500101435169880779183578665955372346028226046021044867189027856189131730889958057717187493786883422516390996639766012958050987359732634213213442579444095928862861132583117668061032227577386757036981448703231972963300147061503108512300577364845823910107210444");
+        "5786426269322750882632312999752639738983363095641642905722171221986067189342123124290107105663618428969517616421742429671402859775667602123564",
+        "331378991485809774307751183645559883724387697397707434271522313077548174328632968616330900320595966360728317363190772921",
+        "1917500101435169880779183578665955372346028226046021044867189027856189131730889958057717187493786883422516390996639766012958050987359732634213213442579444095928862861132583117668061032227577386757036981448703231972963300147061503108512300577364845823910107210444");
     }
 
     private static EInteger WordAlignedInteger(RandomGenerator r) {
@@ -2465,9 +2538,9 @@ import com.upokecenter.numbers.*;
     }
 
     private static EInteger FuzzInteger(
-  EInteger ei,
-  int fuzzes,
-  RandomGenerator r) {
+      EInteger ei,
+      int fuzzes,
+      RandomGenerator r) {
       byte[] bytes = ei.ToBytes(true);
       EInteger ebits = ei.GetUnsignedBitLengthAsEInteger();
       int bits = ebits.CanFitInInt32() ? ebits.ToInt32Checked() :
@@ -2502,18 +2575,17 @@ import com.upokecenter.numbers.*;
 
         strParam =
 
-        "D28E831580A0A69BD2259283B7E894A5B766C1FC9C93E776AB78E226A66983788A36C8458A1EAB8DA505CBFBCD41F7A4953CF426CCB884CCFF85B189D2759102C0CCF7A3DE909AE486B38A6DEC0B86FBE95DA041D8FEC163D24D95CEECCDBC7DE2FD88A99CF9A25AB3078E4BBFE3A2BBAD61C53CEA68E40BA3D7D66296C6CE66A6E4DC32E1A0F020DAD8820C9A698282EB5ADDC9CFF8F42ED565";
+  "D28E831580A0A69BD2259283B7E894A5B766C1FC9C93E776AB78E226A66983788A36C8458A1EAB8DA505CBFBCD41F7A4953CF426CCB884CCFF85B189D2759102C0CCF7A3DE909AE486B38A6DEC0B86FBE95DA041D8FEC163D24D95CEECCDBC7DE2FD88A99CF9A25AB3078E4BBFE3A2BBAD61C53CEA68E40BA3D7D66296C6CE66A6E4DC32E1A0F020DAD8820C9A698282EB5ADDC9CFF8F42ED565";
       {
         EInteger valueEObjectTemp = EInteger.FromRadixString(
           strParam,
           16);
         strParam =
 
-          "E29BE968D480A9FEE535E95FD35DD081868CDF4ED961B2148530A98AD961D4249920AE57AF49E6E1BB50940FD710E5C598249829FA8886C6A63D853BC52CE8D1D2E8B6EF927DC5AF9D14F3AFA2669EC4DAB7FD88F15BACB79149";
-        EInteger valueEObjectTemp2 =
-        EInteger.FromRadixString(
-        strParam,
-        16);
+  "E29BE968D480A9FEE535E95FD35DD081868CDF4ED961B2148530A98AD961D4249920AE57AF49E6E1BB50940FD710E5C598249829FA8886C6A63D853BC52CE8D1D2E8B6EF927DC5AF9D14F3AFA2669EC4DAB7FD88F15BACB79149";
+        EInteger valueEObjectTemp2 = EInteger.FromRadixString(
+          strParam,
+          16);
         TestMultiplyDivideOne(valueEObjectTemp, valueEObjectTemp2);
       }
       TestMultiplyDivideOne(
@@ -2523,14 +2595,14 @@ import com.upokecenter.numbers.*;
         EInteger.FromRadixString("AE0CFFFFFFFFFFFFFFFF", 16),
         EInteger.FromRadixString("AE0CFFFFFFFFFFFF", 16));
       TestMultiplyDivideOne(
-        EInteger.FromRadixString("E6E8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16),
-        EInteger.FromRadixString("FFFFFFFFFFFFFFFFFFFFFFFF", 16));
+  EInteger.FromRadixString("E6E8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16),
+  EInteger.FromRadixString("FFFFFFFFFFFFFFFFFFFFFFFF", 16));
       TestMultiplyDivideOne(
         EInteger.FromRadixString("83E7FFFFFFFFFFFFFFFF", 16),
         EInteger.FromRadixString("83E7FFFFFFFFFFFF", 16));
       TestMultiplyDivideOne(
-      EInteger.FromRadixString("C57DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16),
-      EInteger.FromRadixString("C57DFFFFFFFFFFFFFFFFFFFF", 16));
+  EInteger.FromRadixString("C57DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16),
+  EInteger.FromRadixString("C57DFFFFFFFFFFFFFFFFFFFF", 16));
       EInteger eia = EInteger.FromRadixString(
         "C66BE66EC212C77883DAFEB9F73C914BF88E9DEB897CB817EBA7DBC7D0ABEB55A164EAFB9C9A856A8532D901FADC85E7EEC28A329670968AE45AEECDC050F12AA34CBF75B0DC81C588CEE8CDE6138704D73E958DF5FEED5E80C4D86BD0C2D60C8DFCFF72B43BBBF2A3B68760DF35E3F1B1588584971CE9EF983D8678D7C8BB84D196C37585FC8B4FC8F88CDCA65B843F8DBAA4F0F324D003B0AAD4EACA04961EBF63936FFF29F459B0A197D79B38B5B8E31C9E88FA67BD97C2F9DBE8B926D06FF80E8D7AB0D5E7D1C0B2E4DED8FA8EA4E96C9597ABB9F801B9CA8F98F4088990AFB58427A57BBDC983B1",
         16);
@@ -2541,11 +2613,11 @@ import com.upokecenter.numbers.*;
       {
         String str1 =
 
-          "10101000100010101010101000100000101000001010000000000000001000001000001010001010100010100010100000000000101010001000101010000000001000100000101000000000100010100000000010100010000000101010001000101000001000101010100000000010001010001010100010000000101010100000000010100000000010100000100010101010001010100000100000100010100000001010001010101000000000001010000010000010100010100010001010001010001010101000101000001000000000000000000000000010000000101000001000001000000010000010001000101010101000100010100010100000100000101000100010101010100000000000100000101000000000001010101000100000100000001000000000001010101000000010100000100000000010000000001000101010001010001";
+  "10101000100010101010101000100000101000001010000000000000001000001000001010001010100010100010100000000000101010001000101010000000001000100000101000000000100010100000000010100010000000101010001000101000001000101010100000000010001010001010100010000000101010100000000010100000000010100000100010101010001010100000100000100010100000001010001010101000000000001010000010000010100010100010001010001010001010101000101000001000000000000000000000000010000000101000001000001000000010000010001000101010101000100010100010100000100000101000100010101010100000000000100000101000000000001010101000100000100000001000000000001010101000000010100000100000000010000000001000101010001010001";
 
         String str2 =
 
-          "101010101000101010100000000010100000101000001010001000000000101000101010000000100010001000100010000000001010101010100010101010000010000000100000100000100010001010001010100000000000100010001000000000001010000000100000000000100010001000101000001010101000000010000010100010100000100010000000001000101010001000001000101000101000000000001010001010001000000000101010100000001000001010000010100010101000001000101000001000000000000010100010100010001010001000001010000010100000000";
+  "101010101000101010100000000010100000101000001010001000000000101000101010000000100010001000100010000000001010101010100010101010000010000000100000100000100010001010001010100000000000100010001000000000001010000000100000000000100010001000101000001010101000000010000010100010100000100010000000001000101010001000001000101000101000000000001010001010001000000000101010100000001000001010000010100010101000001000101000001000000000000010100010100010001010001000001010000010100000000";
 
         EInteger objectTemp = EInteger.FromRadixString(
           str1,
@@ -2560,7 +2632,7 @@ import com.upokecenter.numbers.*;
         ei1 = EInteger.FromString(
   "44461738044811866704570272160729755524383493147516085922742403681586307620758054502667856562873477505768158700319760453047044081412393321568753479912147358343844563186048273758088945022589574729044743021988362306225753942249201773678443992606696524197361479929661991788310321409367753462284203449631729626517511224343015354155975783754763572354740724506742793459644155837703671449155713000260325445046273385372701820583016334341594713806706345456633635125343104401883366671083569152");
         ei2 = EInteger.FromString(
-        "6667912688606651657935168942074070387623462798286393292334546164025938697493268465740399785103348978411106010660409247384863031649363973174034406552719188394559243700794785023362300512913065060420313203793021880700852215978918600154969735168");
+  "6667912688606651657935168942074070387623462798286393292334546164025938697493268465740399785103348978411106010660409247384863031649363973174034406552719188394559243700794785023362300512913065060420313203793021880700852215978918600154969735168");
         TestMultiplyDivideOne(ei1, ei2);
       }
     }
@@ -2826,8 +2898,8 @@ import com.upokecenter.numbers.*;
       {
         String stringTemp = ei1.Subtract(ei2).toString();
         Assert.assertEquals(
-  "5903310052234442839693218602919688229566475001774961128830909729003906250",
-  stringTemp);
+          "5903310052234442839693218602919688229566475001774961128830909729003906250",
+          stringTemp);
       }
     }
     @Test
@@ -2976,14 +3048,6 @@ import com.upokecenter.numbers.*;
       return EInteger.FromBytes(bytes, true);
     }
 
-    static EInteger BigFromString(String str) {
-      return EInteger.FromString(str);
-    }
-
-    static EInteger BigValueOf(long value) {
-      return EInteger.FromInt64(value);
-    }
-
     private static void TestGcdPair(
       EInteger biga,
       EInteger bigb,
@@ -3024,8 +3088,8 @@ import com.upokecenter.numbers.*;
     }
 
     public static void TestMultiplyDivideOne(
-     EInteger bigintA,
-     EInteger bigintB) {
+      EInteger bigintA,
+      EInteger bigintB) {
       // Test that A*B/A = B and A*B/B = A
       try {
         EInteger bigintRem;
@@ -3151,11 +3215,12 @@ import com.upokecenter.numbers.*;
           TestCommon.CompareTestEqualAndConsistent(efloatA, efloatD);
         }
       } catch (Exception ex) {
-        String testLine = "TestMultiplyDivideOne (\nEInteger.FromRadixString (\"" +
-              bigintA.ToRadixString(16) + "\",16),\nEInteger.FromRadixString(\"" +
+    String testLine = "TestMultiplyDivideOne (\nEInteger.FromRadixString (\"" +
+           bigintA.ToRadixString(16) + "\",16),\nEInteger.FromRadixString(\"" +
                     bigintB.ToRadixString(16) + "\",16));";
-        System.out.println(testLine);
-        throw new IllegalStateException(ex.getMessage() + "\n" + testLine,
+                    System.out.println(testLine);
+                    throw new IllegalStateException(ex.getMessage() + "\n" +
+                      testLine,
           ex);
       }
     }

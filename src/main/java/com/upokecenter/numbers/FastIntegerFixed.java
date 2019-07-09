@@ -25,9 +25,9 @@ at: http://peteroupc.github.io/
     }
 
     FastIntegerFixed(
-  int integerMode,
-  int smallValue,
-  EInteger largeValue) {
+      int integerMode,
+      int smallValue,
+      EInteger largeValue) {
       this.integerMode = integerMode;
       this.smallValue = smallValue;
       this.largeValue = largeValue;
@@ -65,15 +65,16 @@ at: http://peteroupc.github.io/
 
     static FastIntegerFixed FromLong(long longVal) {
       return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
-        FastIntegerFixed((int)longVal) :
-        new FastIntegerFixed(
+        FastIntegerFixed((int)longVal) : new FastIntegerFixed(
          2,
          0,
          EInteger.FromInt64(longVal));
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {
-      return bigintVal.CanFitInInt32() ? new FastIntegerFixed(bigintVal.ToInt32Unchecked()) : new FastIntegerFixed(2, 0, bigintVal);
+      return bigintVal.CanFitInInt32() ? new
+        FastIntegerFixed(bigintVal.ToInt32Unchecked()) : new
+        FastIntegerFixed(2, 0, bigintVal);
     }
 
     int AsInt32() {
@@ -112,8 +113,8 @@ at: http://peteroupc.github.io/
       if (this.integerMode == 0 && this.smallValue >= 0) {
         return this.smallValue % value;
       } else {
-        EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
-        return retval.ToInt32Checked();
+      EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
+      return retval.ToInt32Checked();
       }
     }
 
@@ -137,14 +138,15 @@ at: http://peteroupc.github.io/
     }
 
     public static FastIntegerFixed Subtract(
-  FastIntegerFixed a,
-  FastIntegerFixed b) {
+      FastIntegerFixed a,
+      FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (b.smallValue == 0) {
           return a;
         }
-        if ((b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
-                  (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
+        if (
+          (b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
+          (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
                           a.smallValue)) {
           return new FastIntegerFixed(a.smallValue - b.smallValue);
         }
@@ -257,8 +259,7 @@ at: http://peteroupc.github.io/
           return this.largeValue
                      .CanFitInInt64();
 
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -270,8 +271,7 @@ at: http://peteroupc.github.io/
           return this.largeValue
                      .ToInt64Unchecked();
 
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 

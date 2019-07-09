@@ -33,9 +33,9 @@ at: http://peteroupc.github.io/
     }
 
     public void ShiftToDigits(
-  FastInteger bits,
-  FastInteger preShift,
-  boolean truncate) {
+      FastInteger bits,
+      FastInteger preShift,
+      boolean truncate) {
       if (bits.signum() < 0) {
         throw new IllegalArgumentException("bits's sign (" + bits.signum() +
           ") is less than 0");
@@ -108,9 +108,9 @@ at: http://peteroupc.github.io/
       }
 
     public BitShiftAccumulator(
-  EInteger bigint,
-  int lastDiscarded,
-  int olderDiscarded) {
+      EInteger bigint,
+      int lastDiscarded,
+      int olderDiscarded) {
       if (bigint.signum() < 0) {
         throw new IllegalArgumentException("bigint's sign (" + bigint.signum() +
           ") is less than 0");
@@ -127,9 +127,9 @@ at: http://peteroupc.github.io/
     }
 
     public BitShiftAccumulator(
-  int smallint,
-  int lastDiscarded,
-  int olderDiscarded) {
+      int smallint,
+      int lastDiscarded,
+      int olderDiscarded) {
         this.shiftedSmall = smallint;
         if (this.shiftedSmall < 0) {
           throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +

@@ -24,18 +24,18 @@ at: http://peteroupc.github.io/
     }
 
     public T DivideToIntegerNaturalScale(
-  T thisValue,
-  T divisor,
-  EContext ctx) {
+      T thisValue,
+      T divisor,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.DivideToIntegerNaturalScale(thisValue, divisor, ctx) :
         this.simp.DivideToIntegerNaturalScale(thisValue, divisor, ctx);
     }
 
     public T DivideToIntegerZeroScale(
-  T thisValue,
-  T divisor,
-  EContext ctx) {
+      T thisValue,
+      T divisor,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.DivideToIntegerZeroScale(thisValue, divisor, ctx) :
         this.simp.DivideToIntegerZeroScale(thisValue, divisor, ctx);
@@ -52,10 +52,10 @@ at: http://peteroupc.github.io/
     }
 
     public T Remainder(
-  T thisValue,
-  T divisor,
-  EContext ctx,
-  boolean roundAfterDivide) {
+      T thisValue,
+      T divisor,
+      EContext ctx,
+      boolean roundAfterDivide) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.Remainder(thisValue, divisor, ctx, roundAfterDivide) :
         this.simp.Remainder(thisValue, divisor, ctx, roundAfterDivide);
@@ -99,8 +99,8 @@ at: http://peteroupc.github.io/
     public T SquareRoot(T thisValue, EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
     this.ext.SquareRoot(
-  thisValue,
-  ctx) : this.simp.SquareRoot(
+      thisValue,
+      ctx) : this.simp.SquareRoot(
   thisValue,
   ctx);
     }
@@ -122,10 +122,10 @@ at: http://peteroupc.github.io/
     }
 
     public T DivideToExponent(
-  T thisValue,
-  T divisor,
-  EInteger desiredExponent,
-  EContext ctx) {
+      T thisValue,
+      T divisor,
+      EInteger desiredExponent,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.DivideToExponent(thisValue, divisor, desiredExponent, ctx) :
         this.simp.DivideToExponent(thisValue, divisor, desiredExponent, ctx);
@@ -171,10 +171,10 @@ at: http://peteroupc.github.io/
     }
 
     public T MultiplyAndAdd(
-  T thisValue,
-  T multiplicand,
-  T augend,
-  EContext ctx) {
+      T thisValue,
+      T multiplicand,
+      T augend,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.MultiplyAndAdd(thisValue, multiplicand, augend, ctx) :
         this.simp.MultiplyAndAdd(thisValue, multiplicand, augend, ctx);
@@ -206,27 +206,27 @@ at: http://peteroupc.github.io/
     }
 
     public T RoundToExponentExact(
-  T thisValue,
-  EInteger expOther,
-  EContext ctx) {
+      T thisValue,
+      EInteger expOther,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.RoundToExponentExact(thisValue, expOther, ctx) :
         this.simp.RoundToExponentExact(thisValue, expOther, ctx);
     }
 
     public T RoundToExponentSimple(
-  T thisValue,
-  EInteger expOther,
-  EContext ctx) {
+      T thisValue,
+      EInteger expOther,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.RoundToExponentSimple(thisValue, expOther, ctx) :
         this.simp.RoundToExponentSimple(thisValue, expOther, ctx);
     }
 
     public T RoundToExponentNoRoundedFlag(
-  T thisValue,
-  EInteger exponent,
-  EContext ctx) {
+      T thisValue,
+      EInteger exponent,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.RoundToExponentNoRoundedFlag(thisValue, exponent, ctx) :
         this.simp.RoundToExponentNoRoundedFlag(thisValue, exponent, ctx);
@@ -248,10 +248,10 @@ at: http://peteroupc.github.io/
     }
 
     public T AddEx(
-  T thisValue,
-  T other,
-  EContext ctx,
-  boolean roundToOperandPrecision) {
+      T thisValue,
+      T other,
+      EContext ctx,
+      boolean roundToOperandPrecision) {
       return (
   ctx == null || !ctx.isSimplified()) ? this.ext.AddEx(
   thisValue,
@@ -262,16 +262,16 @@ at: http://peteroupc.github.io/
     }
 
     public T CompareToWithContext(
-  T thisValue,
-  T otherValue,
-  boolean treatQuietNansAsSignaling,
-  EContext ctx) {
+      T thisValue,
+      T otherValue,
+      boolean treatQuietNansAsSignaling,
+      EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
       this.ext.CompareToWithContext(
-  thisValue,
-  otherValue,
-  treatQuietNansAsSignaling,
-  ctx) : this.simp.CompareToWithContext(
+        thisValue,
+        otherValue,
+        treatQuietNansAsSignaling,
+        ctx) : this.simp.CompareToWithContext(
   thisValue,
   otherValue,
   treatQuietNansAsSignaling,
