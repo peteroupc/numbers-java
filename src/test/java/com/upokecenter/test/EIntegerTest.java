@@ -2190,16 +2190,16 @@ Assert.assertEquals(objectTemp, objectTemp2);
     public void TestGetLowBitAsEInteger() {
       for (int i = 0; i < valueLowBits.length; i += 2) {
         {
-int varintTemp = valueLowBits[i + 1];
-int varintTemp2 = EInteger.FromInt64(
-            valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked();
-Assert.assertEquals(varintTemp, varintTemp2);
+long longTemp = valueLowBits[i + 1];
+long longTemp2 = EInteger.FromInt64(
+            valueLowBits[i]).GetLowBitAsEInteger().ToInt64Checked();
+Assert.assertEquals(longTemp, longTemp2);
 }
         {
-int varintTemp = valueLowBits[i + 1];
-int varintTemp2 = EInteger.FromInt64(
-            -valueLowBits[i]).GetLowBitAsEInteger().ToInt32Checked();
-Assert.assertEquals(varintTemp, varintTemp2);
+long longTemp = valueLowBits[i + 1];
+long longTemp2 = EInteger.FromInt64(
+            -valueLowBits[i]).GetLowBitAsEInteger().ToInt64Checked();
+Assert.assertEquals(longTemp, longTemp2);
 }
       }
     }

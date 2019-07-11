@@ -1281,8 +1281,10 @@ at: http://peteroupc.github.io/
           --quotwordCount;
         }
         return (quotwordCount != 0) ?
- new EInteger(quotwordCount, quotReg, this.negative ^
-            bigintDivisor.negative) : EInteger.FromInt32(0);
+ new EInteger(
+   quotwordCount,
+   quotReg,
+   this.negative ^ bigintDivisor.negative) : EInteger.FromInt32(0);
       }
       // ---- General case
       quotReg = new short[(int)(words1Size - words2Size + 1)];
