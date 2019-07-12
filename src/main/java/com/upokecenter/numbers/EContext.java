@@ -16,14 +16,14 @@ at: http://peteroupc.github.io/
      * of this class are immutable and are safe to use among multiple
      * threads. The one exception involves the <code>Flags</code> property. If
      * the context's <code>HasFlags</code> property (a read-only property) is
-     * <code>true</code> , the <code>Flags</code> property is mutable, thus making the
+     * <code>true</code>, the <code>Flags</code> property is mutable, thus making the
      * context mutable. This class doesn't synchronize access to such
      * mutable contexts, so applications should provide their own
      * synchronization if a context with the <code>HasFlags</code> property set
      * to <code>true</code> will be shared among multiple threads and at least
      * one of those threads needs to write the <code>Flags</code> property (which
      * can happen, for example, by passing the context to most methods of
-     * <code>EDecimal</code> such as <code>Add</code>). </p>
+     * <code>EDecimal</code> such as <code>Add</code>).</p>
      */
   public final class EContext {
     /**
@@ -135,8 +135,8 @@ at: http://peteroupc.github.io/
       .WithExponentClamp(true).WithExponentRange(-1022, 1023);
 
     /**
-     * An arithmetic context for the.NET Framework decimal format (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}), 96 bits
+     * An arithmetic context for the.NET Framework decimal format (see <see
+     *  cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), 96 bits
      * precision, and a valid exponent range of -28 to 0. The default
      *  rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
      *  Language Infrastructure", which defined this format as the .NET
@@ -381,14 +381,14 @@ at: http://peteroupc.github.io/
      * arithmetic context. If <code>HasFlags</code> is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
-     * 0</code> returns <code>true</code> if the Inexact flag is set.
+     * method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+     * != 0</code> returns <code>true</code> if the Inexact flag is set.
      * @return The flags that are set from converting numbers according to this
      * arithmetic context. If {@code HasFlags} is false, this value will be
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
-     * method. For example: {@code (this.getFlags() & EContext.FlagInexact) !=
-     * 0} returns {@code true} if the Inexact flag is set.
+     * method. For example: {@code (this.getFlags() & EContext.FlagInexact)
+     * != 0} returns {@code true} if the Inexact flag is set.
      */
     public final int getFlags() {
         return this.flags;
@@ -436,9 +436,9 @@ public final void setFlags(int value) {
      * Gets a value indicating whether this context's Precision property is in
      * bits, rather than digits. The default is false.
      * @return {@code true} if this context's Precision property is in bits, rather
-     * than digits; otherwise, {@code false}.. The default is false.
-     * {@code true} if this context's Precision property is in bits, rather
-     * than digits; otherwise, {@code false}. The default is false.
+     * than digits; otherwise, {@code false}.. The default is false. {@code
+     * true} if this context's Precision property is in bits, rather than
+     * digits; otherwise, {@code false}. The default is false.
      */
     public final boolean isPrecisionInBits() {
         return this.precisionInBits;
@@ -449,13 +449,8 @@ public final void setFlags(int value) {
      * simplified arithmetic, infinity, not-a-number, and subnormal numbers
      * are not allowed, and negative zero is treated the same as positive
      * zero. For further details, see <a
-     * href='http://speleotrove.com/decimal/dax3274.html'>
-     * <code>http://speleotrove.com/decimal/dax3274.html</code> </a> .
-     * @return {@code true} if to use a "simplified" arithmetic; otherwise, {@code
-     * false} In the simplified arithmetic, infinity, not-a-number, and
-     * subnormal numbers are not allowed, and negative zero is treated the
-     * same as positive zero. For further details, see . {@code true} if a
-     *  "simplified" arithmetic will be used; otherwise, {@code false} .
+  * href='http://speleotrove.com/decimal/dax3274.html'><code>http://speleotrove.com/decimal/dax3274.html</code></a>
+     *.
      */
     public final boolean isSimplified() {
         return this.simplified;
@@ -470,7 +465,7 @@ public final void setFlags(int value) {
      *  payload, that serves as its "diagnostic information", In general, if
      * an operation requires copying an NaN's payload, only up to as many
      * digits of that payload as the precision given in this context,
-     * namely the least significant digits, are copied. </p>
+     * namely the least significant digits, are copied.</p>
      * @return The maximum length of a converted number in digits, ignoring the
      * radix point and exponent. For example, if precision is 3, a
      * converted number's mantissa (significand) can range from 0 to 999
@@ -498,7 +493,7 @@ public final void setFlags(int value) {
      * if Traps equals <code>FlagInexact</code> and FlagSubnormal, a
      * TrapException will be thrown if an operation's return value is not
      * the same as the exact result (FlagInexact) or if the return value's
-     * exponent is lower than the lowest allowed (FlagSubnormal). </p>
+     * exponent is lower than the lowest allowed (FlagSubnormal).</p>
      * @return The traps that are set for each flag in the context. Whenever a flag
      * is signaled, even if {@code HasFlags} is false, and the flag's trap
      * is enabled, the operation will throw a TrapException. For example,
@@ -682,8 +677,7 @@ public final void setFlags(int value) {
      * @param exponentMin Desired minimum exponent (EMin).
      * @param exponentMax Desired maximum exponent (EMax).
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws NullPointerException The parameter {@code exponentMin} is
-     * null.
+     * @throws NullPointerException The parameter {@code exponentMin} is null.
      * @throws IllegalArgumentException ExponentMin greater than exponentMax".
      */
     public EContext WithBigExponentRange(
@@ -729,8 +723,7 @@ public final void setFlags(int value) {
      * Copies this EContext and gives it a particular precision value.
      * @param bigintPrecision Desired precision. 0 means unlimited precision.
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws NullPointerException The parameter {@code bigintPrecision}
-     * is null.
+     * @throws NullPointerException The parameter {@code bigintPrecision} is null.
      */
     public EContext WithBigPrecision(EInteger bigintPrecision) {
       return new EContext(
@@ -903,7 +896,7 @@ public final void setFlags(int value) {
 
     /**
      * Copies this EContext with Traps set to the given value. (Also sets HasFlags
-     * on the copy to <code>True</code> , but this may change in version 2.0 of
+     * on the copy to <code>True</code>, but this may change in version 2.0 of
      * this library.).
      * @param traps Flags representing the traps to enable. See the property
      *  "Traps".

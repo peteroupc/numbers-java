@@ -10,14 +10,14 @@ Contains parameters for controlling the precision, rounding, and exponent
  of this class are immutable and are safe to use among multiple
  threads. The one exception involves the <code>Flags</code> property. If
  the context's <code>HasFlags</code> property (a read-only property) is
- <code>true</code> , the <code>Flags</code> property is mutable, thus making the
+ <code>true</code>, the <code>Flags</code> property is mutable, thus making the
  context mutable. This class doesn't synchronize access to such
  mutable contexts, so applications should provide their own
  synchronization if a context with the <code>HasFlags</code> property set
  to <code>true</code> will be shared among multiple threads and at least
  one of those threads needs to write the <code>Flags</code> property (which
  can happen, for example, by passing the context to most methods of
- <code>EDecimal</code> such as <code>Add</code>). </p>
+ <code>EDecimal</code> such as <code>Add</code>).</p>
 
 ## Fields
 
@@ -38,7 +38,7 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `static EContext Binary64`<br>
  An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision.
-* `static EContext CliDecimal "Forms of numbers"`<br>
+* `static EContext CliDecimal`<br>
  An arithmetic context for the.NET Framework decimal format (see "Forms of numbers"), 96 bits
  precision, and a valid exponent range of -28 to 0.
 * `static EContext Decimal128`<br>
@@ -251,7 +251,7 @@ An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision. The default rounding mode is HalfEven.
 ### CliDecimal
     public static final EContext CliDecimal
-An arithmetic context for the.NET Framework decimal format (see <code>"Forms of numbers"</code>), 96 bits
+An arithmetic context for the.NET Framework decimal format (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
   rounding mode is HalfEven. (The <code>"Cli"</code> stands for "Common
   Language Infrastructure", which defined this format as the .NET
@@ -349,8 +349,8 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
- 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+ != 0</code> returns <code>true</code> if the Inexact flag is set.
 
 **Returns:**
 
@@ -358,8 +358,8 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
- 0</code> returns <code>true</code> if the Inexact flag is set.
+ method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+ != 0</code> returns <code>true</code> if the Inexact flag is set.
 
 ### setFlags
     public final void setFlags​(int value)
@@ -403,26 +403,17 @@ Gets a value indicating whether this context's Precision property is in
 **Returns:**
 
 * <code>true</code> if this context's Precision property is in bits, rather
- than digits; otherwise, <code>false</code>.. The default is false.
- <code>true</code> if this context's Precision property is in bits, rather
- than digits; otherwise, <code>false</code>. The default is false.
+ than digits; otherwise, <code>false</code>.. The default is false. <code>
+ true</code> if this context's Precision property is in bits, rather than
+ digits; otherwise, <code>false</code>. The default is false.
 
 ### isSimplified
     public final boolean isSimplified()
 Gets a value indicating whether to use a "simplified" arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
  are not allowed, and negative zero is treated the same as positive
- zero. For further details, see
- <code>http://speleotrove.com/decimal/dax3274.html</code>  .
-
-**Returns:**
-
-* <code>true</code> if to use a "simplified" arithmetic; otherwise, <code>
- false</code> In the simplified arithmetic, infinity, not-a-number, and
- subnormal numbers are not allowed, and negative zero is treated the
- same as positive zero. For further details, see . <code>true</code> if a
-  "simplified" arithmetic will be used; otherwise, <code>false</code> .
-
+ zero. For further details, see <code>http://speleotrove.com/decimal/dax3274.html</code>
+.
 ### getPrecision
     public final EInteger getPrecision()
 Gets the maximum length of a converted number in digits, ignoring the radix
@@ -433,7 +424,7 @@ Gets the maximum length of a converted number in digits, ignoring the radix
   payload, that serves as its "diagnostic information", In general, if
  an operation requires copying an NaN's payload, only up to as many
  digits of that payload as the precision given in this context,
- namely the least significant digits, are copied. </p>
+ namely the least significant digits, are copied.</p>
 
 **Returns:**
 
@@ -461,7 +452,7 @@ Gets the traps that are set for each flag in the context. Whenever a flag is
  if Traps equals <code>FlagInexact</code> and FlagSubnormal, a
  TrapException will be thrown if an operation's return value is not
  the same as the exact result (FlagInexact) or if the return value's
- exponent is lower than the lowest allowed (FlagSubnormal). </p>
+ exponent is lower than the lowest allowed (FlagSubnormal).</p>
 
 **Returns:**
 
@@ -593,8 +584,7 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>exponentMin</code> is
- null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>exponentMin</code> is null.
 
 * <code>java.lang.IllegalArgumentException</code> - ExponentMin greater than exponentMax".
 
@@ -621,8 +611,7 @@ Copies this EContext and gives it a particular precision value.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>bigintPrecision</code>
- is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintPrecision</code> is null.
 
 ### WithBlankFlags
     public EContext WithBlankFlags()
@@ -723,7 +712,7 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 ### WithTraps
     public EContext WithTraps​(int traps)
 Copies this EContext with Traps set to the given value. (Also sets HasFlags
- on the copy to <code>True</code> , but this may change in version 2.0 of
+ on the copy to <code>True</code>, but this may change in version 2.0 of
  this library.).
 
 **Parameters:**

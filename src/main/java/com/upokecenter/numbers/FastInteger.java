@@ -106,7 +106,7 @@ at: http://peteroupc.github.io/
       }
       public static MutableNumber FromLong(long longVal) {
         if (longVal < 0) {
-          throw new IllegalArgumentException();
+          throw new IllegalArgumentException("longVal");
         }
         if (longVal == 0) {
           return new MutableNumber(0);
@@ -563,9 +563,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter
-      {@code val}
-       is an internal value.
+     * @param val The parameter {@code val} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
@@ -648,9 +646,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter
-      {@code val}
-       is an internal value.
+     * @param val The parameter {@code val} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
@@ -701,9 +697,7 @@ at: http://peteroupc.github.io/
 
     /**
      * This is an internal API.
-     * @param val The parameter
-      {@code val}
-       is an internal value.
+     * @param val The parameter {@code val} is an internal value.
      * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {

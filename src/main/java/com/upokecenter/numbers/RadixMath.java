@@ -150,11 +150,6 @@ at: http://peteroupc.github.io/
       return bthis.Subtract(EInteger.FromInt32(1));
     }
 
-    private boolean IsHigherThanBitLength(EInteger ei, FastInteger prec) {
-      return prec.compareTo(FastInteger.FromBig(
-        ei.GetUnsignedBitLengthAsEInteger())) < 0;
-    }
-
     private T AddEx32Bit(
       int expcmp,
       FastIntegerFixed op1Exponent,
@@ -722,8 +717,6 @@ at: http://peteroupc.github.io/
       int otherFlags = this.helper.GetFlags(otherValue);
       if (((thisFlags | otherFlags) & BigNumberFlags.FlagSpecial) != 0) {
         return CompareToHandleSpecial2(
-          thisValue,
-          otherValue,
           thisFlags,
           otherFlags);
       }
@@ -3414,9 +3407,7 @@ ctx.getPrecision()).WithBlankFlags();
       return null;
     }
 
-    private static <TMath> int CompareToHandleSpecial2(
-      TMath thisValue,
-      TMath other,
+    private static int CompareToHandleSpecial2(
       int thisFlags,
       int otherFlags) {
       // Assumes either value is NaN and/or infinity
@@ -4841,7 +4832,9 @@ ctx.getPrecision()).WithBlankFlags();
         fastPrecision = accum.GetDigitLength();
       }
       if (binaryPrec) {
-        while (this.IsHigherThanBitLength(accum.getShiftedInt(), bitLength)) {
+        // TODO: Make FastIntegerCompareTo(FastInteger)
+        while (bitLength.compareTo(FastInteger.FromBig(
+            accum.getShiftedInt().GetUnsignedBitLengthAsEInteger())) < 0) {
           accum.ShiftRightInt(1);
         }
       }
@@ -4863,7 +4856,10 @@ ctx.getPrecision()).WithBlankFlags();
               ctx,
               "Result requires too much memory");
           }
-          if (this.IsHigherThanBitLength(currMantissa, bitLength)) {
+          // TODO: Avoid creating fast integer and make
+          // a FastInteger.compareTo(EInteger)
+          if (bitLength.compareTo(FastInteger.FromBig(
+             currMantissa.GetUnsignedBitLengthAsEInteger())) < 0) {
             // Mantissa too high, treat as overflow
             adjExponent.Increment();
           }
@@ -5050,10 +5046,9 @@ ctx.getPrecision()).WithBlankFlags();
                 newDigitLength.Copy().Subtract(fastPrecision);
               accum.TruncateOrShiftRight(neededShift, nonHalfRounding);
               if (binaryPrec) {
-                while (
-    this.IsHigherThanBitLength(
-      accum.getShiftedInt(),
-      bitLength)) {
+                // TODO: Make FastInteger.compareTo(FastInteger)
+                while (bitLength.compareTo(FastInteger.FromBig(
+                  accum.getShiftedInt().GetUnsignedBitLengthAsEInteger())) < 0) {
                   accum.ShiftRightInt(1);
                 }
               }
@@ -5090,7 +5085,10 @@ ctx.getPrecision()).WithBlankFlags();
               ctx,
               "Result requires too much memory");
           }
-          if (this.IsHigherThanBitLength(currMantissa, bitLength)) {
+          // TODO: Avoid creating fast integer and make
+          // a FastInteger.compareTo(EInteger)
+          if (bitLength.compareTo(FastInteger.FromBig(
+             currMantissa.GetUnsignedBitLengthAsEInteger())) < 0) {
             // Mantissa too high, treat as overflow
             adjExponent.Increment();
           }

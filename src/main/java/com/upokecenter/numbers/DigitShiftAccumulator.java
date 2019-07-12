@@ -166,7 +166,6 @@ at: http://peteroupc.github.io/
         if (kdl.compareTo(bits) <= 0) {
           // Known digit length is already small enough
           this.TruncateOrShiftRight(preShift, truncate);
-          this.VerifyKnownLength();
           return;
         } else {
           FastInteger bitDiff = kdl.Copy().Subtract(bits);
@@ -176,11 +175,9 @@ at: http://peteroupc.github.io/
             // Difference between desired digit length and current
             // length is smaller than the shift, make it the shift
             this.TruncateOrShiftRight(preShift, truncate);
-            this.VerifyKnownLength();
             return;
           } else {
             this.TruncateOrShiftRight(bitDiff, truncate);
-            this.VerifyKnownLength();
             return;
           }
         }
@@ -196,11 +193,9 @@ at: http://peteroupc.github.io/
         } else {
           this.ShiftToDigitsBig(intval, truncate);
         }
-        this.VerifyKnownLength();
       } else {
         FastInteger kdl = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
         this.knownDigitLength = kdl;
-        this.VerifyKnownLength();
         EInteger bigintDiff = kdl.AsEInteger();
         EInteger bitsBig = bits.AsEInteger();
         bigintDiff = bigintDiff.Subtract(bitsBig);
@@ -209,7 +204,6 @@ at: http://peteroupc.github.io/
           // desired bit length
           this.ShiftRight(FastInteger.FromBig(bigintDiff));
         }
-        this.VerifyKnownLength();
       }
     }
 
@@ -289,19 +283,12 @@ at: http://peteroupc.github.io/
       return FastInteger.FromBig(this.shiftedBigInt.GetDigitCountAsEInteger());
     }
 
-    private void VerifyKnownLength() {
-      /*
-
-      */
-    }
-
     private void UpdateKnownLengthInt(int digits) {
       if (this.knownDigitLength != null) {
         this.knownDigitLength.SubtractInt(digits);
         if (this.knownDigitLength.CompareToInt(1) < 0) {
           this.knownDigitLength.SetInt(1);
         }
-        this.VerifyKnownLength();
       }
     }
 
@@ -311,7 +298,6 @@ at: http://peteroupc.github.io/
         if (this.knownDigitLength.CompareToInt(1) < 0) {
           this.knownDigitLength.SetInt(1);
         }
-        this.VerifyKnownLength();
       }
     }
 

@@ -11,7 +11,7 @@ A class that implements additional operations on arbitrary-precision binary
    EFloat ed2,
    EContext ec)`<br>
  Performs a logical AND operation on two binary numbers in the form of
- logical operands .
+ logical operands.
 * `static EFloat BooleanToEFloat​(boolean b,
                EContext ec)`<br>
  Converts a boolean value (either true or false) to an arbitrary-precision
@@ -49,7 +49,7 @@ A class that implements additional operations on arbitrary-precision binary
 * `static EFloat Invert​(EFloat ed1,
       EContext ec)`<br>
  Performs a logical NOT operation on a binary number in the form of a
- logical operand .
+ logical operand.
 * `static boolean IsCanonical​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is in a
  canonical form.
@@ -64,7 +64,7 @@ A class that implements additional operations on arbitrary-precision binary
  not-a-number (NaN).
 * `static boolean IsNormal​(EFloat ed,
         EContext ec)`<br>
- Returns whether the given number is a  normal  number.
+ Returns whether the given number is a normal number.
 * `static boolean IsQuietNaN​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is a quiet
  not-a-number (NaN).
@@ -73,11 +73,11 @@ A class that implements additional operations on arbitrary-precision binary
  not-a-number (NaN).
 * `static boolean IsSigned​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is negative
- (including negative infinity, negative not-a-number [NaN], or
+ (including negative infinity, negative not-a-number.get(NaN), or
  negative zero).
 * `static boolean IsSubnormal​(EFloat ed,
            EContext ec)`<br>
- Returns whether the given number is a  subnormal  number.
+ Returns whether the given number is a subnormal number.
 * `static boolean IsZero​(EFloat ed)`<br>
  Returns whether the given arbitrary-precision number object is zero
  (positive zero or negative zero).
@@ -95,7 +95,7 @@ A class that implements additional operations on arbitrary-precision binary
   EFloat ed2,
   EContext ec)`<br>
  Performs a logical OR operation on two binary numbers in the form of
- logical operands .
+ logical operands.
 * `static EFloat Radix​(EContext ec)`<br>
  Returns the number 2, the binary radix.
 * `static EFloat Rescale​(EFloat ed,
@@ -131,7 +131,7 @@ A class that implements additional operations on arbitrary-precision binary
    EFloat ed2,
    EContext ec)`<br>
  Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
- form of  logical operands .
+ form of logical operands.
 
 ## Method Details
 
@@ -193,8 +193,7 @@ Returns whether the given arbitrary-precision number object is in a
 
 **Returns:**
 
-* Always
-      <code>true</code> .
+* Always <code>true</code>.
 
 ### IsFinite
     public static boolean IsFinite​(EFloat ed)
@@ -236,18 +235,16 @@ Returns whether the given arbitrary-precision number object is a
 
 **Returns:**
 
-* Either
-      <code>true</code> or
-      <code>false</code> .
+* Either <code>true</code> or <code>false</code>.
 
 ### IsNormal
     public static boolean IsNormal​(EFloat ed, EContext ec)
-Returns whether the given number is a <i> normal </i> number. A <i>
- subnormal number </i> is a nonzero finite number whose Exponent
- property (or the number's exponent when that number is expressed in
- scientific notation with one digit before the radix point) is less
- than the minimum possible exponent for that number. A <i> normal
- number </i> is nonzero and finite, but not subnormal.
+Returns whether the given number is a <i>normal</i> number. A <i>subnormal
+ number</i> is a nonzero finite number whose Exponent property (or
+ the number's exponent when that number is expressed in scientific
+ notation with one digit before the radix point) is less than the
+ minimum possible exponent for that number. A <i>normal number</i> is
+ nonzero and finite, but not subnormal.
 
 **Parameters:**
 
@@ -255,16 +252,15 @@ Returns whether the given number is a <i> normal </i> number. A <i>
 
 * <code>ec</code> - A context specifying the exponent range of arbitrary-precision
  numbers. Can be null. If AdjustExponent of the given context is
- <code>true</code> , a nonzero number is normal if the number's exponent
+ <code>true</code>, a nonzero number is normal if the number's exponent
  (when that number is expressed in scientific notation with one
  nonzero digit before the radix point) is at least the given
- context's EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
- -99 </sup> is normal, but 2.3456 * 10 <sup> -102 </sup> is not). If
- AdjustExponent of the given context is <code>false</code> , a nonzero
+ context's EMax property (e.g., if EMax is -100, 2.3456 * 10
+ <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is not).
+ If AdjustExponent of the given context is <code>false</code>, a nonzero
  number is subnormal if the number's Exponent property is at least
  given context's EMax property (e.g., if EMax is -100, 23456 * 10
- <sup> -99 </sup> is normal, but 23456 * 10 <sup> -102 </sup> is
- not).
+ <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).
 
 **Returns:**
 
@@ -283,14 +279,12 @@ Returns whether the given arbitrary-precision number object is a quiet
 
 **Returns:**
 
-* Either
-      <code>true</code> or
-      <code>false</code> .
+* Either <code>true</code> or <code>false</code>.
 
 ### IsSigned
     public static boolean IsSigned​(EFloat ed)
 Returns whether the given arbitrary-precision number object is negative
- (including negative infinity, negative not-a-number [NaN], or
+ (including negative infinity, negative not-a-number.get(NaN), or
  negative zero).
 
 **Parameters:**
@@ -299,9 +293,7 @@ Returns whether the given arbitrary-precision number object is negative
 
 **Returns:**
 
-* Either
-      <code>true</code> or
-      <code>false</code> .
+* Either <code>true</code> or <code>false</code>.
 
 ### IsSignalingNaN
     public static boolean IsSignalingNaN​(EFloat ed)
@@ -314,9 +306,7 @@ Returns whether the given arbitrary-precision number object is a signaling
 
 **Returns:**
 
-* Either
-      <code>true</code> or
-      <code>false</code> .
+* Either <code>true</code> or <code>false</code>.
 
 ### NumberClassString
     public static java.lang.String NumberClassString​(int nc)
@@ -337,8 +327,8 @@ Converts a number class identifier (ranging from 1 to 9) to a text string.
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter <code>nc</code> is less than 0 or
- greater than 9.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>nc</code> is less than 0 or greater
+ than 9.
 
 ### NumberClass
     public static int NumberClass​(EFloat ed, EContext ec)
@@ -366,8 +356,8 @@ Finds the number class for an arbitrary-precision decimal number object.
 
 ### IsSubnormal
     public static boolean IsSubnormal​(EFloat ed, EContext ec)
-Returns whether the given number is a <i> subnormal </i> number. A <i>
- subnormal number </i> is a nonzero finite number whose Exponent
+Returns whether the given number is a <i>subnormal</i> number. A
+ <i>subnormal number</i> is a nonzero finite number whose Exponent
  property (or the number's exponent when that number is expressed in
  scientific notation with one digit before the radix point) is less
  than the minimum possible exponent for that number.
@@ -378,16 +368,16 @@ Returns whether the given number is a <i> subnormal </i> number. A <i>
 
 * <code>ec</code> - A context specifying the exponent range of arbitrary-precision
  numbers. Can be null. If AdjustExponent of the given context is
- <code>true</code> , a nonzero number is subnormal if the number's
- exponent (when that number is expressed in scientific notation with
- one nonzero digit before the radix point) is less than the given
- context's EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
- -102 </sup> is subnormal, but 2.3456 * 10 <sup> -99 </sup> is not).
- If AdjustExponent of the given context is <code>false</code> , a nonzero
- number is subnormal if the number's Exponent property is less than
- the given context's EMax property (e.g., if EMax is -100, 23456 * 10
- <sup> -102 </sup> is subnormal, but 23456 * 10 <sup> -99 </sup> is
- not).
+ <code>true</code>, a nonzero number is subnormal if the number's exponent
+ (when that number is expressed in scientific notation with one
+ nonzero digit before the radix point) is less than the given
+ context's EMax property (e.g., if EMax is -100, 2.3456 * 10
+ <sup>-102</sup> is subnormal, but 2.3456 * 10 <sup>-99</sup> is
+ not). If AdjustExponent of the given context is <code>false</code>, a
+ nonzero number is subnormal if the number's Exponent property is
+ less than the given context's EMax property (e.g., if EMax is -100,
+ 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10
+ <sup>-99</sup> is not).
 
 **Returns:**
 
@@ -463,8 +453,8 @@ Finds an arbitrary-precision binary number whose binary point is moved a
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>ed2</code>
- is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>ed2</code> is
+ null.
 
 ### Shift
     public static EFloat Shift​(EFloat ed, EFloat ed2, EContext ec)
@@ -497,8 +487,8 @@ Shifts the bits of an arbitrary-precision binary floating point number's
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>ed2</code>
- is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>ed2</code> is
+ null.
 
 ### Rotate
     public static EFloat Rotate​(EFloat ed, EFloat ed2, EContext ec)
@@ -539,14 +529,14 @@ Rotates the bits of an arbitrary-precision binary number's mantissa.
 Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this
  method: <ul> <li>For objects with the same value, the one with the
-  higher exponent has a greater "absolute value". </li> <li>Negative
- zero is less than positive zero. </li> <li>Quiet NaN has a higher
+  higher exponent has a greater "absolute value".</li> <li>Negative
+ zero is less than positive zero.</li> <li>Quiet NaN has a higher
   "absolute value" than signaling NaN. If both objects are quiet NaN
  or both are signaling NaN, the one with the higher diagnostic
-  information has a greater "absolute value". </li> <li>NaN has a
-  higher "absolute value" than infinity. </li> <li>Infinity has a
-  higher "absolute value" than any finite number. </li> <li>Negative
- numbers are less than positive numbers. </li> </ul>
+  information has a greater "absolute value".</li> <li>NaN has a
+  higher "absolute value" than infinity.</li> <li>Infinity has a
+  higher "absolute value" than any finite number.</li> <li>Negative
+ numbers are less than positive numbers.</li></ul>
 
 **Parameters:**
 
@@ -570,14 +560,14 @@ Compares the values of one arbitrary-precision number object and another
 Compares the absolute values of two arbitrary-precision number objects,
  imposing a total ordering on all possible values (ignoring their
  signs). In this method: <ul> <li>For objects with the same value,
-  the one with the higher exponent has a greater "absolute value".
- </li> <li>Negative zero and positive zero are considered equal.
-  </li> <li>Quiet NaN has a higher "absolute value" than signaling
- NaN. If both objects are quiet NaN or both are signaling NaN, the
-  one with the higher diagnostic information has a greater "absolute
-  value". </li> <li>NaN has a higher "absolute value" than infinity.
-  </li> <li>Infinity has a higher "absolute value" than any finite
- number. </li> </ul>
+  the one with the higher exponent has a greater "absolute
+  value".</li> <li>Negative zero and positive zero are considered
+  equal.</li> <li>Quiet NaN has a higher "absolute value" than
+ signaling NaN. If both objects are quiet NaN or both are signaling
+ NaN, the one with the higher diagnostic information has a greater
+  "absolute value".</li> <li>NaN has a higher "absolute value" than
+  infinity.</li> <li>Infinity has a higher "absolute value" than any
+ finite number.</li></ul>
 
 **Parameters:**
 
@@ -621,9 +611,7 @@ Returns a canonical version of the given arbitrary-precision number object.
 
 **Returns:**
 
-* A copy of the parameter
-      <code>ed</code>
-       .
+* A copy of the parameter <code>ed</code>.
 
 ### CopyAbs
     public static EFloat CopyAbs​(EFloat ed)
@@ -665,9 +653,7 @@ Returns an arbitrary-precision number object with the same value as the
 * <code>ed</code> - An arbitrary-precision number object with the value the result
  will have.
 
-* <code>other</code> - The parameter
-      <code>other</code>
-       is an EDecimal object.
+* <code>other</code> - The parameter <code>other</code> is an EDecimal object.
 
 **Returns:**
 
@@ -727,12 +713,12 @@ Returns an arbitrary-precision binary number with the same value as this
  can fail if the difference between this value's exponent and the
  desired exponent is too big, depending on the maximum precision. If
  rounding to a number of binary places is desired, it's better to use
- the RoundToExponent and RoundToIntegral methods instead. </p>
+ the RoundToExponent and RoundToIntegral methods instead.</p>
  <p><b>Remark:</b> This method can be used to implement fixed-point
  binary arithmetic, in which a fixed number of digits come after the
  binary point. A fixed-point binary arithmetic in which no digits
  come after the binary point (a desired exponent of 0) is considered
-  an "integer arithmetic" . </p>
+  an "integer arithmetic" .</p>
 
 **Parameters:**
 
@@ -763,8 +749,8 @@ Returns an arbitrary-precision binary number with the same value as this
 
 ### And
     public static EFloat And​(EFloat ed1, EFloat ed2, EContext ec)
-Performs a logical AND operation on two binary numbers in the form of <i>
- logical operands </i>. A <code>logical operand</code> is a non-negative
+Performs a logical AND operation on two binary numbers in the form of
+ <i>logical operands</i>. A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include the
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical AND
  operation sets each bit of the result to 1 if the corresponding bits
@@ -787,12 +773,12 @@ Performs a logical AND operation on two binary numbers in the form of <i>
 
 * The result of the logical AND operation as a logical operand.
  Signals an invalid operation and returns not-a-number (NaN) if
- <code>ed1</code> , <code>ed2</code> , or both are not logical operands.
+ <code>ed1</code>, <code>ed2</code>, or both are not logical operands.
 
 ### Invert
     public static EFloat Invert​(EFloat ed1, EContext ec)
-Performs a logical NOT operation on a binary number in the form of a <i>
- logical operand </i>. A <code>logical operand</code> is a non-negative
+Performs a logical NOT operation on a binary number in the form of a
+ <i>logical operand</i>. A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include
  <code>01001</code> and <code>111001</code>). The logical NOT operation sets
  each bit of the result to 1 if the corresponding bit is 0, and to 0
@@ -821,13 +807,13 @@ Performs a logical NOT operation on a binary number in the form of a <i>
 ### Xor
     public static EFloat Xor​(EFloat ed1, EFloat ed2, EContext ec)
 Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
- form of <i> logical operands </i>. A <code>logical operand</code> is a
+ form of <i>logical operands</i>. A <code>logical operand</code> is a
  non-negative base-2 number with an Exponent property of 0 (examples
  include the base-2 numbers <code>01001</code> and <code>111001</code>). The
  logical exclusive-OR operation sets each digit of the result to 1 if
  either corresponding digit of the logical operands, but not both, is
- 1, and to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>
-.
+ 1, and to 0 otherwise. For example, <code>01001 XOR 111010 =
+ 101010</code>.
 
 **Parameters:**
 
@@ -845,12 +831,12 @@ Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
 
 * The result of the logical exclusive-OR operation as a logical
  operand. Signals an invalid operation and returns not-a-number (NaN)
- if <code>ed1</code> , <code>ed2</code> , or both are not logical operands.
+ if <code>ed1</code>, <code>ed2</code>, or both are not logical operands.
 
 ### Or
     public static EFloat Or​(EFloat ed1, EFloat ed2, EContext ec)
-Performs a logical OR operation on two binary numbers in the form of <i>
- logical operands </i>. A <code>logical operand</code> is a non-negative
+Performs a logical OR operation on two binary numbers in the form of
+ <i>logical operands</i>. A <code>logical operand</code> is a non-negative
  base-2 number with an Exponent property of 0 (examples include the
  base-2 numbers <code>01001</code> and <code>111001</code>). The logical OR
  operation sets each bit of the result to 1 if either or both of the
@@ -872,5 +858,5 @@ Performs a logical OR operation on two binary numbers in the form of <i>
 **Returns:**
 
 * The result of the logical OR operation as a logical operand. Signals
- an invalid operation and returns not-a-number (NaN) if <code>ed1</code> ,
- <code>ed2</code> , or both are not logical operands.
+ an invalid operation and returns not-a-number (NaN) if <code>ed1</code>,
+ <code>ed2</code>, or both are not logical operands.
