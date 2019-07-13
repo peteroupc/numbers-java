@@ -1298,8 +1298,10 @@ at: http://peteroupc.github.io/
       quotwordCount = CountWords(quotReg);
       quotReg = ShortenArray(quotReg, quotwordCount);
       return (quotwordCount != 0) ?
- new EInteger(quotwordCount, quotReg, this.negative ^
-          bigintDivisor.negative) : EInteger.FromInt32(0);
+ new EInteger(quotwordCount,
+              quotReg,
+              this.negative ^ bigintDivisor.negative) :
+        EInteger.FromInt32(0);
     }
 
     private static short LinearMultiplySubtractMinuend1Bigger(

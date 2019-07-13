@@ -76,18 +76,6 @@ at: http://peteroupc.github.io/
           return EInteger.FromInt64(longV);
         }
         return EInteger.FromInts(this.data, this.wordCount);
-        /* byte[] bytes = new byte[(this.wordCount >> 2) + 1];
-        int i = 0;
-        int j = 0;
-        for (i = 0, j = 0; i < this.wordCount; ++i) {
-          int d = this.data[i];
-          bytes[j++] = ((byte)(d));
-          bytes[j++] = ((byte)(d >> 8));
-          bytes[j++] = ((byte)(d >> 16));
-          bytes[j++] = ((byte)(d >> 24));
-        }
-        bytes[bytes.length - 1] = (byte)0;
-        return EInteger.FromBytes(bytes, true);*/
       }
 
       int[] GetLastWordsInternal(int numWords32Bit) {
@@ -439,11 +427,11 @@ at: http://peteroupc.github.io/
       }
     }
 
+    private static final String HexAlphabet = "0123456789ABCDEF";
     private int smallValue; // if integerMode is 0
     private MutableNumber mnum; // if integerMode is 1
     private EInteger largeValue; // if integerMode is 2
     private int integerMode;
-
     private boolean frozen;
 
     private static final EInteger ValueInt32MinValue =
@@ -1023,8 +1011,6 @@ at: http://peteroupc.github.io/
         default: throw new IllegalStateException();
       }
     }
-
-    private static final String HexAlphabet = "0123456789ABCDEF";
 
     static String IntToString(int value) {
       if (value == Integer.MIN_VALUE) {
