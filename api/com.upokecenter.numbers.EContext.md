@@ -584,7 +584,8 @@ Copies this arithmetic context and sets the copy's exponent range.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>exponentMin</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>exponentMin</code> is
+ null.
 
 * <code>java.lang.IllegalArgumentException</code> - ExponentMin greater than exponentMax".
 
@@ -611,7 +612,8 @@ Copies this EContext and gives it a particular precision value.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>bigintPrecision</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintPrecision</code>
+ is null.
 
 ### WithBlankFlags
     public EContext WithBlankFlags()

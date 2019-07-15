@@ -11,9 +11,9 @@ at: http://peteroupc.github.io/
 // next minor/major version
 
     /**
-     * Represents an arbitrary-precision decimal floating-point number. (The "E"
-     *  stands for "extended", meaning that instances of this class can be
-     * values other than numbers proper, such as infinity and
+     * Represents an arbitrary-precision decimal floating-point number. // / (The
+     *  "E" stands for "extended", meaning that instances of this class can
+     * be values other than numbers proper, such as infinity and
      * not-a-number.) <p><b>About decimal arithmetic</b> </p> <p>Decimal
      * (base-10) arithmetic, such as that provided by this class, is
      * appropriate for calculations involving such real-world data as
@@ -25,7 +25,7 @@ at: http://peteroupc.github.io/
      * (for example, multiplying a price by a premium rate, then rounding,
      * should result in a decimal amount of money).</p> <p>On the other
      * hand, most implementations of <code>float</code> and <code>double</code> ,
-     * including in C# and Java, store numbers in a binary (base-2)
+     * including in C# and Java, store numbers in a binary // / (base-2)
      * floating-point format and use binary floating-point arithmetic. Many
      * decimal numbers can't be represented exactly in binary
      * floating-point format (regardless of its length). Applying binary
@@ -45,8 +45,8 @@ at: http://peteroupc.github.io/
      *  has 2 decimal places and the decimal point is "moved to the left by
      *  2." Therefore, in the arbitrary-precision decimal representation,
      * this number would be stored as 235678 * 10^-2.</p> <p>The mantissa
-     * (significand) and exponent format preserves trailing zeros in the
-     * number's value. This may give rise to multiple ways to store the
+     * (significand) and exponent format preserves trailing // / zeros in
+     * the number's value. This may give rise to multiple ways to store the
      * same value. For example, 1.00 and 1 would be stored differently,
      * even though they have the same value. In the first case, 100 * 10^-2
      * (100 with decimal point moved left by 2), and in the second case, 1
@@ -70,7 +70,7 @@ at: http://peteroupc.github.io/
      * NaN, as stated in the individual methods.</p> <p>Unless noted
      * otherwise, passing a null arbitrary-precision decimal argument to
      * any method here will throw an exception.</p> <p>When an arithmetic
-     * operation signals the flag FlagInvalid, FlagOverflow, or
+     * operation signals the flag FlagInvalid, // / FlagOverflow, or
      * FlagDivideByZero, it will not throw an exception too, unless the
      * flag's trap is enabled in the arithmetic context (see EContext's
      * Traps property).</p> <p>If an operation requires creating an
@@ -324,7 +324,7 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value equals 0.
      * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object' s value equals 0; otherwise,.
+     * false}. {@code true} if this object' s value equals 0; otherwise,
      * {@code false}.
      */
     public final boolean isZero() {
@@ -840,6 +840,10 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
      *  greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EDecimal FromString(
       String str,
@@ -881,6 +885,10 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
      *  greater than "str" 's length, or "str" 's length minus "offset" is
      *  less than "length".
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EDecimal FromString(
       String str,
@@ -3039,25 +3047,25 @@ at: http://peteroupc.github.io/
      * decimal point. The following code example returns a fixed-point
      * number with up to 20 digits before and exactly 5 digits after the
      * decimal point:</p> <pre> // After performing arithmetic operations,
-     * adjust // the number to 5 // digits after the decimal point number =
-     * number.Quantize(EInteger.FromInt32(-5), // five digits after the
-     * decimal point EContext.ForPrecision(25) // 25-digit
+     * adjust // the number to 5 // / // digits after the decimal point
+     * number = number.Quantize(EInteger.FromInt32(-5), // five digits
+     * after the decimal point EContext.ForPrecision(25) // 25-digit
      * precision);</pre> <p>A // /fixed-point decimal arithmetic in which
      * no digits come after the decimal point (a desired exponent of 0) is
      *  considered an "integer arithmetic".</p>
-     * @param desiredExponent The desired exponent for the result. The exponent is
-     * the number of fractional digits in the result, expressed as a
+     * @param desiredExponent The desired exponent for the // / result. The exponent
+     * is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
      * places from the number. For example, -3 means round to the
      * thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
      * 1000). A value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision and rounding of the
-     * result. If {@code HasFlags} of the context is true, will also store
-     * the flags resulting // /from the operation (the flags are in
+     * @param ctx An arithmetic context to control precision and // / rounding of
+     * the result. If {@code HasFlags} of the context is true, will also
+     * store the flags resulting // /from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * default rounding mode is HalfEven.
-     * @return An arbitrary-precision decimal number with the same value as this
-     * object but with the exponent changed. Signals FlagInvalid and
+     * @return An arbitrary-precision decimal number with the same value // / as
+     * this object but with the exponent changed. Signals FlagInvalid and
      * returns not-a-number (NaN) if this object is infinity, if the
      * rounded result can't fit the given precision, or if the context
      * defines an exponent range and the given exponent is outside that
@@ -3118,25 +3126,25 @@ at: http://peteroupc.github.io/
      * decimal point. The following code example returns a fixed-point
      * number with up to 20 digits before and exactly 5 digits after the
      * decimal point:</p> <pre>/* After performing arithmetic operations,
-     * adjust the number to 5 digits after the decimal point &#x2a;&#x2f; number =
-     * number.Quantize(-5, /* five digits after the decimal point
+     * adjust the number to 5 // / digits after the decimal point &#x2a;&#x2f; number
+     * = number.Quantize(-5, /* five digits after the decimal point
      * &#x2a;&#x2f;EContext.ForPrecision(25) /* 25-digit precision&#x2a;&#x2f;);</pre> <p>A
      * fixed-point decimal arithmetic in which no // /digits come after the
      *  decimal point (a desired exponent of 0) is considered an "integer
      *  arithmetic".</p>
-     * @param desiredExponentInt The desired exponent for the result. The exponent
-     * is the number of fractional digits in the result, expressed as a
-     * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the
-     * thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
-     * 1000). A value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision and rounding of the
-     * result. If {@code HasFlags} of the context is true, will also store
-     * the flags resulting // /from the operation (the flags are in
+     * @param desiredExponentInt The desired exponent for // / the result. The
+     * exponent is the number of fractional digits in the result, expressed
+     * as a negative number. Can also be positive, which eliminates
+     * lower-order places from the number. For example, -3 means round to
+     * the thousandth (10^-3, 0.0001), and 3 means round to the thousand
+     * (10^3, 1000). A value of 0 rounds the number to an integer.
+     * @param ctx An arithmetic context to control precision and // / rounding of
+     * the result. If {@code HasFlags} of the context is true, will also
+     * store the flags resulting // /from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * default rounding mode is HalfEven.
-     * @return An arbitrary-precision decimal number with the same value as this
-     * object but with the exponent changed. Signals FlagInvalid and
+     * @return An arbitrary-precision decimal number with the same value // / as
+     * this object but with the exponent changed. Signals FlagInvalid and
      * returns not-a-number (NaN) if this object is infinity, if the
      * rounded result can't fit the given precision, or if the context
      * defines an exponent range and the given exponent is outside that

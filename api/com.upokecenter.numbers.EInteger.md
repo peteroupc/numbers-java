@@ -590,11 +590,11 @@ Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>intValue</code> - Not documented yet.
+* <code>intValue</code> - The parameter <code>intValue</code> is not documented yet.
 
 **Returns:**
 
-* An EInteger object.
+* An arbitrary-precision integer.
 
 ### Subtract
     public EInteger Subtract​(int intValue)
@@ -612,7 +612,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### Multiply
     public EInteger Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision // /integer
- object.<p> </p><pre>EInteger result =
+ object.<p> </p><pre>EInteger result = // /
   EInteger.FromString("5").Multiply(200);</pre> .
 
 **Parameters:**

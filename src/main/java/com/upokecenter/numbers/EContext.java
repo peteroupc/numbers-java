@@ -677,7 +677,8 @@ public final void setFlags(int value) {
      * @param exponentMin Desired minimum exponent (EMin).
      * @param exponentMax Desired maximum exponent (EMax).
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws NullPointerException The parameter {@code exponentMin} is null.
+     * @throws NullPointerException The parameter {@code exponentMin} is
+     * null.
      * @throws IllegalArgumentException ExponentMin greater than exponentMax".
      */
     public EContext WithBigExponentRange(
@@ -723,7 +724,8 @@ public final void setFlags(int value) {
      * Copies this EContext and gives it a particular precision value.
      * @param bigintPrecision Desired precision. 0 means unlimited precision.
      * @return A context object for arbitrary-precision arithmetic settings.
-     * @throws NullPointerException The parameter {@code bigintPrecision} is null.
+     * @throws NullPointerException The parameter {@code bigintPrecision}
+     * is null.
      */
     public EContext WithBigPrecision(EInteger bigintPrecision) {
       return new EContext(

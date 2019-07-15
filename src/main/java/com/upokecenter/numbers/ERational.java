@@ -170,7 +170,7 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value equals 0.
      * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object' s value equals 0; otherwise,.
+     * false}. {@code true} if this object' s value equals 0; otherwise,
      * {@code false}.
      */
     public final boolean isZero() {
@@ -478,6 +478,10 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
      *  greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static ERational FromString(
       String str,

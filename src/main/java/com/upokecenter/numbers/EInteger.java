@@ -1093,8 +1093,8 @@ at: http://peteroupc.github.io/
 
     /**
      *
-     * @param intValue Not documented yet.
-     * @return An EInteger object.
+     * @param intValue The parameter {@code intValue} is not documented yet.
+     * @return An arbitrary-precision integer.
      */
     public EInteger Add(int intValue) {
       if (intValue == 0) {
@@ -1158,7 +1158,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision // /integer
-     * object.<p> <pre>EInteger result =
+     * object.<p> <pre>EInteger result = // /
      *  EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.

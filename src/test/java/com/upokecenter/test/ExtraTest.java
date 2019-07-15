@@ -11,7 +11,9 @@ import org.junit.Assert;
 
 import com.upokecenter.numbers.*;
 
-  public class ExtraTest {
+  public final class ExtraTest {
+private ExtraTest() {
+}
     public static void TestStringEqualRoundTrip(EDecimal obj) {
       String str = obj.toString();
       EDecimal newobj = EDecimal.FromString(str);
@@ -35,6 +37,10 @@ import com.upokecenter.numbers.*;
       TestCommon.AssertEqualsHashCode(str, str2);
     }
 
+/**
+ * @deprecated
+ */
+@Deprecated
     public static void TestStringEqualRoundTrip(EFloat obj) {
       Assert.assertEquals(
         EDecimal.PositiveInfinity,

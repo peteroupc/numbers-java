@@ -191,7 +191,7 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value equals 0.
      * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object' s value equals 0; otherwise,.
+     * false}. {@code true} if this object' s value equals 0; otherwise,
      * {@code false}.
      */
     public final boolean isZero() {
@@ -487,6 +487,10 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code str} 's length, or {@code str} ' s
      * length minus {@code offset} is less than {@code length}.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(
       String str,
@@ -548,6 +552,10 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
      *  greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -729,8 +737,8 @@ at: http://peteroupc.github.io/
 
     /**
      *
-     * @param intValue Not documented yet.
-     * @return An EFloat object.
+     * @param intValue The parameter {@code intValue} is not documented yet.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Add(int intValue) {
       return this.Add(EFloat.FromInt32(intValue));
@@ -749,7 +757,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision // /integer
-     * object.<p> <pre>EInteger result =
+     * object.<p> <pre>EInteger result = // /
      *  EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
@@ -2012,24 +2020,24 @@ at: http://peteroupc.github.io/
      * point. The following code example returns a fixed-point number with
      * up to 20 digits before and exactly 5 digits after the radix
      * point:</p> <pre> // After performing arithmetic operations, adjust
-     * // the number to 5 // digits after the radix point number =
+     * // the number to 5 // / // digits after the radix point number =
      * number.Quantize(EInteger.FromInt32(-5), // five digits after the
      * radix point EContext.ForPrecision(25) // 25-digit precision);</pre>
      * <p>A // /fixed-point binary arithmetic in which no digits come after
      *  the radix point (a desired exponent of 0) is considered an "integer
      *  arithmetic".</p>
-     * @param desiredExponent The desired exponent for the result. The exponent is
-     * the number of fractional digits in the result, expressed as a
+     * @param desiredExponent The desired exponent for the // / result. The exponent
+     * is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order
      * places from the number. For example, -3 means round to the
      * thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
      * 1000). A value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision and rounding of the
-     * result. If {@code HasFlags} of the context is true, will also store
-     * the flags resulting // /from the operation (the flags are in
+     * @param ctx An arithmetic context to control precision and // / rounding of
+     * the result. If {@code HasFlags} of the context is true, will also
+     * store the flags resulting // /from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * default rounding mode is HalfEven.
-     * @return A binary float with the same value as this object but with the
+     * @return A binary float with the same value as this object but with // / the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if this object is infinity, if the rounded result can't fit the
      * given precision, or if the context defines an exponent range and the
@@ -2058,22 +2066,22 @@ at: http://peteroupc.github.io/
      * point:</p> <pre> // After performing arithmetic operations, adjust
      * // the number to 5 digits after the radix point number =
      * number.Quantize(-5, // five digits after the radix point
-     * EContext.ForPrecision(25) // 25-digit precision);</pre> <p>A
+     * EContext.ForPrecision(25) // 25-digit // / precision);</pre> <p>A
      * fixed-point binary arithmetic in which no digits // /come after the
      *  radix point (a desired exponent of 0) is considered an "integer
      *  arithmetic".</p>
-     * @param desiredExponentInt The desired exponent for the result. The exponent
-     * is the number of fractional digits in the result, expressed as a
-     * negative number. Can also be positive, which eliminates lower-order
-     * places from the number. For example, -3 means round to the
-     * thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3,
-     * 1000). A value of 0 rounds the number to an integer.
-     * @param ctx An arithmetic context to control precision and rounding of the
-     * result. If {@code HasFlags} of the context is true, will also store
-     * the flags resulting // /from the operation (the flags are in
+     * @param desiredExponentInt The desired exponent for // / the result. The
+     * exponent is the number of fractional digits in the result, expressed
+     * as a negative number. Can also be positive, which eliminates
+     * lower-order places from the number. For example, -3 means round to
+     * the thousandth (10^-3, 0.0001), and 3 means round to the thousand
+     * (10^3, 1000). A value of 0 rounds the number to an integer.
+     * @param ctx An arithmetic context to control precision and // / rounding of
+     * the result. If {@code HasFlags} of the context is true, will also
+     * store the flags resulting // /from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * default rounding mode is HalfEven.
-     * @return A binary float with the same value as this object but with the
+     * @return A binary float with the same value as this object but with // / the
      * exponent changed. Signals FlagInvalid and returns not-a-number (NaN)
      * if this object is infinity, if the rounded result can't fit the
      * given precision, or if the context defines an exponent range and the

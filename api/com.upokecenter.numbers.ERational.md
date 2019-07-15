@@ -334,7 +334,7 @@ Gets a value indicating whether this object's value equals 0.
 **Returns:**
 
 * <code>true</code> if this object's value equals 0; otherwise, <code>
- false</code>. <code>true</code> if this object' s value equals 0; otherwise,.
+ false</code>. <code>true</code> if this object' s value equals 0; otherwise,
  <code>false</code>.
 
 ### getNumerator
@@ -611,6 +611,12 @@ Creates a rational number from a text string that represents a number. See
 * <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
   greater than "str"'s length, or "str"'s length minus "offset" is
   less than "length".
+
+* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
+  greater than "str"'s length, or "str"'s length minus "offset" is
+  less than "length".
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(ERational other)
