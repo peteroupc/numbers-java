@@ -8,21 +8,21 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  <p>Instances of this class are immutable, so they are inherently
  safe for use by multiple threads. Multiple instances of this object
  with the same value are interchangeable, but they should be compared
-  using the "Equals" method rather than the "==" operator.</p>
- <p><b>Security note</b></p> <p>It is not recommended to implement
+  using the "Equals" method rather than the "==" operator. </p>
+ <p><b>Security note</b> </p> <p>It is not recommended to implement
  security-sensitive algorithms using the methods in this class, for
- several reasons:</p> <ul> <li><code>EInteger</code> objects are immutable,
- so they can't be modified, and the memory they occupy is not
- guaranteed to be cleared in a timely fashion due to garbage
+ several reasons: </p> <ul> <li><code>EInteger</code> objects are
+ immutable, so they can't be modified, and the memory they occupy is
+ not guaranteed to be cleared in a timely fashion due to garbage
  collection. This is relevant for applications that use many-bit-long
- numbers as secret parameters.</li> <li>The methods in this class
+ numbers as secret parameters. </li> <li>The methods in this class
  (especially those that involve arithmetic) are not guaranteed to be
   "constant-time" (non-data-dependent) for all relevant inputs.
  Certain attacks that involve encrypted communications have exploited
  the timing and other aspects of such communications to derive keying
- material or cleartext indirectly.</li></ul> <p>Applications should
+ material or cleartext indirectly. </li> </ul> <p>Applications should
  instead use dedicated security libraries to handle big numbers in
- security-sensitive algorithms.</p>
+ security-sensitive algorithms. </p>
 
 ## Methods
 
@@ -113,11 +113,11 @@ This method may overflow.
  arbitrary-precision integer.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
-* `boolean GetSignedBit​(int index)`<br>
- Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
+* `boolean GetSignedBit​(int index) "Forms of numbers" `<br>
+ Returns whether a bit is set in the two's-complement form (see "Forms of numbers" ) of this
  object' s value.
-* `boolean GetSignedBit​(EInteger bigIndex)`<br>
- Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
+* `boolean GetSignedBit​(EInteger bigIndex) "Forms of numbers" `<br>
+ Returns whether a bit is set in the two's-complement form (see "Forms of numbers" ) of this
  object' s value.
 * `int GetSignedBitLength()`<br>
  Deprecated.
@@ -161,7 +161,7 @@ This method may overflow.
  Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
 * `EInteger Multiply​(int intValue)`<br>
- Multiplies this instance by the value of an arbitrary-precision // /integer
+ Multiplies this instance by the value of an arbitrary-precision integer
  object.
 * `EInteger Multiply​(EInteger bigintMult)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
@@ -171,8 +171,7 @@ This method may overflow.
 * `EInteger Not()`<br>
  Returns an arbitrary-precision integer with every bit flipped from this one.
 * `EInteger Or​(EInteger second)`<br>
- Does an OR operation between two arbitrary-precision integer
- instances.
+ Does an OR operation between two arbitrary-precision integer instances.
 * `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
 * `EInteger Pow​(EInteger bigPower)`<br>
@@ -272,7 +271,8 @@ Gets a value indicating whether this value is even.
 
 **Returns:**
 
-* <code>true</code> if this value is even; otherwise, <code>false</code>.
+* <code>true</code> if this value is even; otherwise,
+      <code>false</code> .
 
 ### isPowerOfTwo
     public final boolean isPowerOfTwo()
@@ -290,7 +290,8 @@ Gets a value indicating whether this value is 0.
 
 **Returns:**
 
-* <code>true</code> if this value is 0; otherwise, <code>false</code>.
+* <code>true</code> if this value is 0; otherwise,
+      <code>false</code> .
 
 ### signum
     public final int signum()
@@ -306,25 +307,26 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 **Parameters:**
 
-* <code>bytes</code> - A byte array consisting of the two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of the
- arbitrary-precision integer to create. The byte array is encoded
+* <code>bytes</code> - A byte array consisting of the two's-complement form (see
+  <code>"Forms of numbers" </code>) of
+ the arbitrary-precision integer to create. The byte array is encoded
  using the following rules: <ul> <li>Positive numbers have the first
- byte's highest bit cleared, and negative numbers have the bit
- set.</li> <li>The last byte contains the lowest 8-bits, the
- next-to-last contains the next lowest 8 bits, and so on. For
- example, the number 300 can be encoded as <code>0x01, 0x2c</code> and 200
- as <code>0x00, 0xc8</code>. (Note that the second example contains a set
- high bit in <code>0xc8</code>, so an additional 0 is added at the start
- to ensure it's interpreted as positive.)</li> <li>To encode negative
- numbers, take the absolute value of the number, subtract by 1,
- encode the number into bytes, and toggle each bit of each byte. Any
- further bits that appear beyond the most significant bit of the
- number will be all ones. For example, the number -450 can be encoded
- as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code>. (Note
- that the second example contains a cleared high bit in <code>0x31,
- 0x7B</code>, so an additional 0xff is added at the start to ensure it's
- interpreted as negative.)</li></ul> <p>For little-endian, the byte
- order is reversed from the byte order just discussed.</p>.
+ byte's highest bit cleared, and negative numbers have the bit set.
+ </li> <li>The last byte contains the lowest 8-bits, the next-to-last
+ contains the next lowest 8 bits, and so on. For example, the number
+ 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00,
+ 0xc8</code> . (Note that the second example contains a set high bit in
+ <code>0xc8</code> , so an additional 0 is added at the start to ensure
+ it's interpreted as positive.) </li> <li>To encode negative numbers,
+ take the absolute value of the number, subtract by 1, encode the
+ number into bytes, and toggle each bit of each byte. Any further
+ bits that appear beyond the most significant bit of the number will
+ be all ones. For example, the number -450 can be encoded as <code>
+ 0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code> . (Note that the
+ second example contains a cleared high bit in <code>0x31, 0x7b</code> ,
+ so an additional 0xff is added at the start to ensure it's
+ interpreted as negative.) </li> </ul> <p>For little-endian, the byte
+ order is reversed from the byte order just discussed. </p> .
 
 * <code>littleEndian</code> - If true, the byte order is little-endian, or
  least-significant-byte first. If false, the byte order is
@@ -435,7 +437,8 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 * <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid
  format.
 
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy (endIndex - index) % 4 == 0".
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy (endIndex - index) % 4 ==
+  0".
 
 ### FromString
     public static EInteger FromString​(java.lang.String str)
@@ -484,9 +487,9 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
- endIndex</code> is less than 0, or either is greater than the string's
- length, or <code>endIndex</code> is less than <code>index</code>.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+ <code>endIndex</code> is less than 0, or either is greater than the
+ string's length, or <code>endIndex</code> is less than <code>index</code>.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
@@ -512,7 +515,8 @@ Adds this object and another object.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>bigintAugend</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintAugend</code> is
+ null.
 
 ### AsInt32Checked
     @Deprecated public int AsInt32Checked()
@@ -611,8 +615,8 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 ### Multiply
     public EInteger Multiply​(int intValue)
-Multiplies this instance by the value of an arbitrary-precision // /integer
- object.<p> </p><pre>EInteger result = // /
+Multiplies this instance by the value of an arbitrary-precision integer
+ object.<p/><pre>EInteger result =
   EInteger.FromString("5").Multiply(200);</pre> .
 
 **Parameters:**
@@ -696,7 +700,8 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>bigintDivisor</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+ null.
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
@@ -731,7 +736,9 @@ Determines whether this object and another object are equal and have the
 
 **Parameters:**
 
-* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
+* <code>obj</code> - The parameter
+      <code>obj</code>
+       is an arbitrary object.
 
 **Returns:**
 
@@ -754,7 +761,8 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is
+ null.
 
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()
@@ -808,7 +816,7 @@ This method may overflow. Use GetLowBitAsEInteger instead.
     public EInteger GetLowBitAsEInteger()
 Gets the lowest set bit in this number's absolute value, in the form of an
  arbitrary-precision integer. (This will also be the lowest set bit
- in the number's two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>).).
+ in the number's two's-complement form (see <code>"Forms of numbers" </code>).).
 
 **Returns:**
 
@@ -817,7 +825,7 @@ Gets the lowest set bit in this number's absolute value, in the form of an
 
 ### GetSignedBit
     public boolean GetSignedBit​(EInteger bigIndex)
-Returns whether a bit is set in the two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of this
+Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers" </code>) of this
  object' s value.
 
 **Parameters:**
@@ -836,7 +844,7 @@ Returns whether a bit is set in the two's-complement form (see <see cref='PeterO
 
 ### GetSignedBit
     public boolean GetSignedBit​(int index)
-Returns whether a bit is set in the two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) of this
+Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers" </code>) of this
  object' s value.
 
 **Parameters:**
@@ -948,7 +956,8 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>divisor</code> is less than
+ 0.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 
@@ -969,7 +978,8 @@ Finds the modulus remainder that results when this instance is divided by
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less
+ than 0.
 
 ### ModPow
     public EInteger ModPow​(EInteger pow, EInteger mod)
@@ -988,8 +998,8 @@ Calculates the remainder when this arbitrary-precision integer raised to a
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>pow</code> or <code>mod</code> is
- null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>pow</code> or <code>
+ mod</code> is null.
 
 ### Multiply
     public EInteger Multiply​(EInteger bigintMult)
@@ -1006,7 +1016,8 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>bigintMult</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigintMult</code> is
+ null.
 
 ### Negate
     public EInteger Negate()
@@ -1026,7 +1037,9 @@ Raises an arbitrary-precision integer to a power.
 
 **Returns:**
 
-* The result. Returns 1 if <code>bigPower</code> is 0.
+* The result. Returns 1 if
+      <code>bigPower</code>
+       is 0.
 
 **Throws:**
 
@@ -1091,8 +1104,8 @@ Finds the remainder that results when this instance is divided by the value
     public EInteger ShiftRight​(EInteger eshift)
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>). Thus, for
- negative values, the arbitrary-precision integer is sign-extended.
+ two's-complement form (see <code>"Forms of numbers" </code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.
 
 **Parameters:**
 
@@ -1156,10 +1169,10 @@ Returns an arbitrary-precision integer with every bit flipped from this one.
 
 ### And
     public EInteger And​(EInteger other)
-Does an AND operation between two arbitrary-precision integer values.<p>Each
- arbitrary-precision integer is treated as a two's-complement form
-  (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>)
- for the purposes of this operator.</p>
+Does an AND operation between two arbitrary-precision integer values.<p>
+ Each arbitrary-precision integer is treated as a two's-complement
+  form (see <code>"Forms of numbers"
+ </code>) for the purposes of this operator. </p>
 
 **Parameters:**
 
@@ -1177,10 +1190,10 @@ Does an AND operation between two arbitrary-precision integer values.<p>Each
 
 ### Or
     public EInteger Or​(EInteger second)
-Does an OR operation between two arbitrary-precision integer
- instances.<p>Each arbitrary-precision integer is treated as a
- two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) for the
- purposes of this operator.</p>
+Does an OR operation between two arbitrary-precision integer instances.<p>
+ Each arbitrary-precision integer is treated as a two's-complement
+  form (see <code>"Forms of numbers"
+ </code>) for the purposes of this operator. </p>
 
 **Parameters:**
 
@@ -1194,15 +1207,15 @@ Does an OR operation between two arbitrary-precision integer
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't satisfy
- biggerCount == CountWords(result).
+* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't
+ satisfy biggerCount == CountWords(result).
 
 ### Xor
     public EInteger Xor​(EInteger other)
 Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
  arbitrary-precision integer is treated as a two's-complement form
-  (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>)
- for the purposes of this operator.</p>
+  (see <code>"Forms of numbers" </code>)
+ for the purposes of this operator. </p>
 
 **Parameters:**
 
@@ -1224,8 +1237,8 @@ Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
     public EInteger ShiftRight​(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
- two's-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>). Thus, for
- negative values, the arbitrary-precision integer is sign-extended.
+ two's-complement form (see <code>"Forms of numbers" </code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.
 
 **Parameters:**
 
@@ -1272,12 +1285,13 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>subtrahend</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>subtrahend</code> is
+ null.
 
 ### ToBytes
     public byte[] ToBytes​(boolean littleEndian)
 Returns a byte array of this integer's value. The byte array will take the
- number's two' s-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>), using the
+ number's two' s-complement form (see <code>"Forms of numbers" </code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -1286,7 +1300,9 @@ Returns a byte array of this integer's value. The byte array will take the
 
 **Parameters:**
 
-* <code>littleEndian</code> - Either <code>true</code> or <code>false</code>.
+* <code>littleEndian</code> - Either
+      <code>true</code> or
+      <code>false</code> .
 
 **Returns:**
 
@@ -1306,9 +1322,8 @@ Converts this object's value to a 32-bit signed integer, throwing an
     public int ToInt32Unchecked()
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
- two' s-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
- case the return value might have a different sign than this object's
- value).
+ two' s-complement form (see <code>"Forms of numbers" </code>) (in which case the return value might have a
+ different sign than this object's value).
 
 **Returns:**
 
@@ -1327,9 +1342,8 @@ Converts this object's value to a 64-bit signed integer, throwing an
     public long ToInt64Unchecked()
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
- two' s-complement form (see <see cref='PeterO.Numbers.EDecimal'>"Forms of numbers"</see>) (in which
- case the return value might have a different sign than this object's
- value).
+ two' s-complement form (see <code>"Forms of numbers" </code>) (in which case the return value might have a
+ different sign than this object's value).
 
 **Returns:**
 

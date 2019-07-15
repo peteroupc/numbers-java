@@ -16,7 +16,7 @@ at: http://peteroupc.github.io/
      * threads. Multiple instances of this object with the same properties
      *  are interchangeable, so they should not be compared using the "=="
      * operator (which might only check if each side of the operator is the
-     * same instance).</p>
+     * same instance). </p>
      */
   public final class ERational implements Comparable<ERational> {
     private static final int MaxSafeInt = 214748363;
@@ -160,8 +160,8 @@ at: http://peteroupc.github.io/
      * Gets a value indicating whether this object's value is negative (including
      * negative zero).
      * @return {@code true} if this object's value is negative (including negative
-     * zero); otherwise, {@code false}. {@code true} if this object's value
-     * is negative; otherwise, {@code false}.
+     * zero); otherwise, {@code false}. {@code true} if this object's
+     * value is negative; otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
@@ -439,7 +439,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a rational number from a text string that represents a number. See
-     * <code>FromString(string, int, int)</code> for more information.
+     * <code>FromString(String, int, int)</code> for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
      * given string.
@@ -451,21 +451,21 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * <p>Creates a rational number from a text string that represents a
-     * number.</p> <p>The format of the string generally consists of:</p>
-     *  <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
-     * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
-     *  the form of one or more digits.</li> <li>Optionally, "/" followed by
+     * <p>Creates a rational number from a text string that represents a number.
+     * </p> <p>The format of the string generally consists of: </p> <ul>
+     *  <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
+     * (if '-' , the value is negative.) </li> <li>The numerator in the
+     *  form of one or more digits. </li> <li>Optionally, "/" followed by
      * the denominator in the form of one or more digits. If a denominator
-     * is not given, it's equal to 1.</li></ul> <p>The string can also be
+     * is not given, it's equal to 1. </li> </ul> <p>The string can also be
      *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
      *  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
      * followed by any number of digits, all in any combination of upper
-     * and lower case.</p> <p>All characters mentioned above are the
+     * and lower case. </p> <p>All characters mentioned above are the
      * corresponding characters in the Basic Latin range. In particular,
      * the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
      * string is not allowed to contain white space characters, including
-     * spaces.</p>
+     * spaces. </p>
      * @param str A text string, a portion of which represents a number.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
@@ -475,11 +475,8 @@ at: http://peteroupc.github.io/
      * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
      * formatted number string.
      * @throws NullPointerException The parameter "str" is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
-     *  less than "length".
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
+     *  or greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
      * @throws NullPointerException The parameter {@code str} is null.
      */
@@ -753,14 +750,14 @@ at: http://peteroupc.github.io/
      * Compares the absolute values of this object and another object, imposing a
      * total ordering on all possible values (ignoring their signs). In
      * this method: <ul> <li>For objects with the same value, the one with
-     *  the higher denominator has a greater "absolute value".</li>
-     * <li>Negative zero and positive zero are considered equal.</li>
+     *  the higher denominator has a greater "absolute value". </li>
+     * <li>Negative zero and positive zero are considered equal. </li>
      *  <li>Quiet NaN has a higher "absolute value" than signaling NaN. If
      * both objects are quiet NaN or both are signaling NaN, the one with
-     *  the higher diagnostic information has a greater "absolute
-     *  value".</li> <li>NaN has a higher "absolute value" than
-     *  infinity.</li> <li>Infinity has a higher "absolute value" than any
-     * finite number.</li></ul>
+     *  the higher diagnostic information has a greater "absolute value".
+     *  </li> <li>NaN has a higher "absolute value" than infinity. </li>
+     *  <li>Infinity has a higher "absolute value" than any finite number.
+     * </li> </ul>
      * @param other An arbitrary-precision rational number to compare with this
      * one.
      * @return The number 0 if both objects have the same value, or -1 if this
@@ -813,14 +810,14 @@ at: http://peteroupc.github.io/
      * Compares the values of this object and another object, imposing a total
      * ordering on all possible values. In this method: <ul> <li>For
      * objects with the same value, the one with the higher denominator has
-     *  a greater "absolute value".</li> <li>Negative zero is less than
-     *  positive zero.</li> <li>Quiet NaN has a higher "absolute value" than
-     * signaling NaN. If both objects are quiet NaN or both are signaling
-     * NaN, the one with the higher diagnostic information has a greater
-     *  "absolute value".</li> <li>NaN has a higher "absolute value" than
-     *  infinity.</li> <li>Infinity has a higher "absolute value" than any
-     * finite number.</li> <li>Negative numbers are less than positive
-     * numbers.</li></ul>
+     *  a greater "absolute value". </li> <li>Negative zero is less than
+     *  positive zero. </li> <li>Quiet NaN has a higher "absolute value"
+     * than signaling NaN. If both objects are quiet NaN or both are
+     * signaling NaN, the one with the higher diagnostic information has a
+     *  greater "absolute value". </li> <li>NaN has a higher "absolute
+     *  value" than infinity. </li> <li>Infinity has a higher "absolute
+     *  value" than any finite number. </li> <li>Negative numbers are less
+     * than positive numbers. </li> </ul>
      * @param other An arbitrary-precision rational number to compare with this
      * one.
      * @return The number 0 if both objects have the same value, or -1 if this
@@ -934,8 +931,8 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision rational number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't
+     * satisfy other.isFinite().
      */
     public int compareTo(ERational other) {
       if (other == null) {
@@ -1000,8 +997,8 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision binary floating-point number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't
+     * satisfy other.isFinite().
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
@@ -1115,8 +1112,8 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * @param other An arbitrary-precision decimal number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't
+     * satisfy other.isFinite().
      */
     public int CompareToDecimal(EDecimal other) {
       if (other == null) {
@@ -1297,7 +1294,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * equal to those of another object and that other object is an
      * arbitrary-precision rational number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
-     * @param obj The parameter {@code obj} is an arbitrary object.
+     * @param obj The parameter
+      {@code obj}
+       is an arbitrary object.
      * @return {@code true} if the objects are equal; otherwise, {@code false}.
      */
     @Override public boolean equals(Object obj) {
@@ -1316,7 +1315,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * equal to those of another object. Not-a-number values are considered
      * equal if the rest of their properties are equal.
      * @param other An arbitrary-precision rational number to compare to.
-     * @return Either {@code true} or {@code false}.
+     * @return Either
+      {@code true} or
+      {@code false} .
      */
     public boolean equals(ERational other) {
       return this.equals((Object)other);
@@ -1931,7 +1932,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * @return A string representation of this object. If this object's value is
      * infinity or not-a-number, the result is the analogous return value
      * of the {@code EDecimal.toString} method. Otherwise, the return value
-     * has the following form: {@code [-]numerator.Divide(denominator)}.
+     * has the following form: {@code [-]numerator/denominator}.
      */
     @Override public String toString() {
       if (!this.isFinite()) {
