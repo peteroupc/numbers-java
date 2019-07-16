@@ -462,39 +462,39 @@ at: http://peteroupc.github.io/
      * that if the string contains a negative exponent, the resulting value
      * might not be exact, in which case the resulting binary float will be
      * an approximation of this decimal number's value. <p>The format of
-     * the string generally consists of: </p> <ul> <li>An optional plus
-     *  sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value
-     * is negative.) </li> <li>One or more digits, with a single optional
-     * decimal point after the first digit and before the last digit. </li>
+     * the string generally consists of:</p> <ul> <li>An optional plus sign
+     *  ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value is
+     * negative.)</li> <li>One or more digits, with a single optional
+     * decimal point after the first digit and before the last digit.</li>
      *  <li>Optionally, "E+"/"e+" (positive exponent) or "E-"/"e-" (negative
-     * exponent) plus one or more digits specifying the exponent. </li>
-     *  </ul> <p>The string can also be "-INF", "-Infinity", "Infinity",
-     *  "INF", quiet NaN ("NaN") followed by any number of digits, or
-     *  signaling NaN ("sNaN") followed by any number of digits, all in any
-     * combination of upper and lower case. </p> <p>All characters
-     * mentioned above are the corresponding characters in the Basic Latin
-     * range. In particular, the digits must be the basic digits 0 to 9
-     * (U + 0030 to U + 0039). The string is not allowed to contain white space
-     * characters, including spaces. </p>
-     * @param str The parameter
-      {@code str}
-       is a text string.
+     * exponent) plus one or more digits specifying the exponent.</li></ul>
+     *  <p>The string can also be "-INF", "-Infinity", "Infinity", "INF",
+     *  quiet NaN ("NaN") followed by any number of digits, or signaling NaN
+     *  ("sNaN") followed by any number of digits, all in any combination of
+     * upper and lower case.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular,
+     * the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+     * string is not allowed to contain white space characters, including
+     * spaces.</p>
+     * @param str The parameter {@code str} is a text string.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
-     * @param ctx The parameter
-      {@code ctx}
-       is an EContext object.
+     * @param ctx The parameter {@code ctx} is an EContext object.
      * @return The parsed number, converted to arbitrary-precision binary
      * floating-point number.
      * @throws NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
-     * less than 0 or greater than {@code str} 's length, or {@code str} '
-     * s length minus {@code offset} is less than {@code length}.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
-     *  or greater than "str"'s length, or "str"'s length minus "offset" is
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} ' s
+     * length minus {@code offset} is less than {@code length}.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(
       String str,
@@ -541,11 +541,9 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a binary float from a text string that represents a number. For more
-     * information, see the <code>FromString(String, int, int, EContext)</code>
+     * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
-     * @param str The parameter
-      {@code str}
-       is a text string.
+     * @param str The parameter {@code str} is a text string.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
      * @param length The length, in code units, of the desired portion of {@code
@@ -555,9 +553,13 @@ at: http://peteroupc.github.io/
      * is less than 0 or greater than {@code str} 's length, or {@code str}
      * ' s length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
-     *  or greater than "str"'s length, or "str"'s length minus "offset" is
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);

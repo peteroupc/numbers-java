@@ -451,21 +451,21 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * <p>Creates a rational number from a text string that represents a number.
-     * </p> <p>The format of the string generally consists of: </p> <ul>
-     *  <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D)
-     * (if '-' , the value is negative.) </li> <li>The numerator in the
-     *  form of one or more digits. </li> <li>Optionally, "/" followed by
+     * <p>Creates a rational number from a text string that represents a
+     * number.</p> <p>The format of the string generally consists of:</p>
+     *  <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
+     * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
+     *  the form of one or more digits.</li> <li>Optionally, "/" followed by
      * the denominator in the form of one or more digits. If a denominator
-     * is not given, it's equal to 1. </li> </ul> <p>The string can also be
+     * is not given, it's equal to 1.</li></ul> <p>The string can also be
      *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
      *  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
      * followed by any number of digits, all in any combination of upper
-     * and lower case. </p> <p>All characters mentioned above are the
+     * and lower case.</p> <p>All characters mentioned above are the
      * corresponding characters in the Basic Latin range. In particular,
      * the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
      * string is not allowed to contain white space characters, including
-     * spaces. </p>
+     * spaces.</p>
      * @param str A text string, a portion of which represents a number.
      * @param offset A zero-based index showing where the desired portion of {@code
      * str} begins.
@@ -475,8 +475,12 @@ at: http://peteroupc.github.io/
      * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
      * formatted number string.
      * @throws NullPointerException The parameter "str" is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0
-     *  or greater than "str"'s length, or "str"'s length minus "offset" is
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
+     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
+     *  greater than "str"'s length, or "str"'s length minus "offset" is
      *  less than "length".
      * @throws NullPointerException The parameter {@code str} is null.
      */

@@ -90,7 +90,8 @@ Contains parameters for controlling the precision, rounding, and exponent
         EInteger exponentMin,
         EInteger exponentMax,
         boolean clampNormalExponents) EContext`<br>
- Initializes a new instance of the EContext class, .
+ Initializes a new instance of the EContext
+ class, .
 
 ## Methods
 

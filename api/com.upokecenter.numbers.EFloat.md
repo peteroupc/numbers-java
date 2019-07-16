@@ -813,26 +813,24 @@ Creates a binary float from a text string that represents a number. Note
  that if the string contains a negative exponent, the resulting value
  might not be exact, in which case the resulting binary float will be
  an approximation of this decimal number's value. <p>The format of
- the string generally consists of: </p> <ul> <li>An optional plus
-  sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value
- is negative.) </li> <li>One or more digits, with a single optional
- decimal point after the first digit and before the last digit. </li>
+ the string generally consists of:</p> <ul> <li>An optional plus sign
+  ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value is
+ negative.)</li> <li>One or more digits, with a single optional
+ decimal point after the first digit and before the last digit.</li>
   <li>Optionally, "E+"/"e+" (positive exponent) or "E-"/"e-" (negative
- exponent) plus one or more digits specifying the exponent. </li>
-  </ul> <p>The string can also be "-INF", "-Infinity", "Infinity",
-  "INF", quiet NaN ("NaN") followed by any number of digits, or
-  signaling NaN ("sNaN") followed by any number of digits, all in any
- combination of upper and lower case. </p> <p>All characters
- mentioned above are the corresponding characters in the Basic Latin
- range. In particular, the digits must be the basic digits 0 to 9
- (U + 0030 to U + 0039). The string is not allowed to contain white space
- characters, including spaces. </p>
+ exponent) plus one or more digits specifying the exponent.</li></ul>
+  <p>The string can also be "-INF", "-Infinity", "Infinity", "INF",
+  quiet NaN ("NaN") followed by any number of digits, or signaling NaN
+  ("sNaN") followed by any number of digits, all in any combination of
+ upper and lower case.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ string is not allowed to contain white space characters, including
+ spaces.</p>
 
 **Parameters:**
 
-* <code>str</code> - The parameter
-      <code>str</code>
-       is a text string.
+* <code>str</code> - The parameter <code>str</code> is a text string.
 
 * <code>offset</code> - A zero-based index showing where the desired portion of <code>
  str</code> begins.
@@ -840,9 +838,7 @@ Creates a binary float from a text string that represents a number. Note
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
 
-* <code>ctx</code> - The parameter
-      <code>ctx</code>
-       is an EContext object.
+* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
 
 **Returns:**
 
@@ -853,13 +849,19 @@ Creates a binary float from a text string that represents a number. Note
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
- less than 0 or greater than <code>str</code> 's length, or <code>str</code> '
- s length minus <code>offset</code> is less than <code>length</code>.
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>str</code> 's length, or <code>str</code> ' s
+ length minus <code>offset</code> is less than <code>length</code>.
 
-* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0
-  or greater than "str"'s length, or "str"'s length minus "offset" is
+* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
+  greater than "str"'s length, or "str"'s length minus "offset" is
   less than "length".
+
+* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
+  greater than "str"'s length, or "str"'s length minus "offset" is
+  less than "length".
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str)
@@ -901,14 +903,12 @@ Creates a binary float from a text string that represents a number. For more
 ### FromString
     public static EFloat FromString​(java.lang.String str, int offset, int length)
 Creates a binary float from a text string that represents a number. For more
- information, see the <code>FromString(String, int, int, EContext)</code>
+ information, see the <code>FromString(string, int, int, EContext)</code>
  method.
 
 **Parameters:**
 
-* <code>str</code> - The parameter
-      <code>str</code>
-       is a text string.
+* <code>str</code> - The parameter <code>str</code> is a text string.
 
 * <code>offset</code> - A zero-based index showing where the desired portion of <code>
  str</code> begins.
@@ -924,9 +924,15 @@ Creates a binary float from a text string that represents a number. For more
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0
-  or greater than "str"'s length, or "str"'s length minus "offset" is
+* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
+  greater than "str"'s length, or "str"'s length minus "offset" is
   less than "length".
+
+* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
+  greater than "str"'s length, or "str"'s length minus "offset" is
+  less than "length".
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### Max
     public static EFloat Max​(EFloat first, EFloat second, EContext ctx)

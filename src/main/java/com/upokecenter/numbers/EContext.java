@@ -282,7 +282,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Initializes a new instance of the {@link EContext} class, .
+     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
+     * class, .
      * @param bigintPrecision An EInteger object.
      * @param rounding An ERounding object.
      * @param exponentMin An EInteger object.
