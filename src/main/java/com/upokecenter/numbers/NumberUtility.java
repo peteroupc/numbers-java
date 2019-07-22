@@ -647,7 +647,7 @@ private NumberUtility() {
           EInteger bigrem;
           EInteger bigquo;
           {
-EInteger[] divrem = bigmant.DivRem(bigradix);
+            EInteger[] divrem = bigmant.DivRem(bigradix);
 bigquo = divrem[0];
 bigrem = divrem[1]; }
           if (!bigrem.isZero()) {

@@ -1352,7 +1352,7 @@ import com.upokecenter.numbers.*;
      stringTemp);
       }
       {
-String stringTemp =
+        String stringTemp =
           EFloat.FromDouble(0.1).ToShortestString(EContext.Binary64);
           Assert.assertEquals(
             "0.1",

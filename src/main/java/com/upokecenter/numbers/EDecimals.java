@@ -56,8 +56,7 @@ private EDecimals() {
      * canonical form. For the current version of EDecimal, all EDecimal
      * objects are in a canonical form.
      * @param ed An arbitrary-precision number object.
-     * @return Always
-      {@code true} .
+     * @return Always {@code true}.
      */
     public static boolean IsCanonical(EDecimal ed) {
       return true;
@@ -90,34 +89,31 @@ private EDecimals() {
      * Returns whether the given arbitrary-precision number object is a
      * not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
-     * @return Either
-      {@code true} or
-      {@code false} .
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsNaN(EDecimal ed) {
       return ed != null && ed.IsNaN();
     }
 
     /**
-     * Returns whether the given number is a <i> normal </i> number. A <i>
-     * subnormal number </i> is a nonzero finite number whose Exponent
-     * property (or the number's exponent when that number is expressed in
-     * scientific notation with one digit before the radix point) is less
-     * than the minimum possible exponent for that number. A <i> normal
-     * number </i> is nonzero and finite, but not subnormal.
+     * Returns whether the given number is a <i>normal</i> number. A <i>subnormal
+     * number</i> is a nonzero finite number whose Exponent property (or
+     * the number's exponent when that number is expressed in scientific
+     * notation with one digit before the radix point) is less than the
+     * minimum possible exponent for that number. A <i>normal number</i> is
+     * nonzero and finite, but not subnormal.
      * @param ed An arbitrary-precision number object.
      * @param ec A context specifying the exponent range of arbitrary-precision
      * numbers. Can be null. If AdjustExponent of the given context is
-     * {@code true} , a nonzero number is normal if the number's exponent
+     * {@code true}, a nonzero number is normal if the number's exponent
      * (when that number is expressed in scientific notation with one
      * nonzero digit before the radix point) is at least the given
-     * context's EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
-     * -99 </sup> is normal, but 2.3456 * 10 <sup> -102 </sup> is not). If
-     * AdjustExponent of the given context is {@code false} , a nonzero
+     * context's EMax property (e.g., if EMax is -100, 2.3456 * 10
+     * <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is not).
+     * If AdjustExponent of the given context is {@code false}, a nonzero
      * number is subnormal if the number's Exponent property is at least
      * given context's EMax property (e.g., if EMax is -100, 23456 * 10
-     * <sup> -99 </sup> is normal, but 23456 * 10 <sup> -102 </sup> is
-     * not).
+     * <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code true} if the given context is null
      * or HasExponentRange of the given context is {@code false}.
@@ -130,9 +126,7 @@ private EDecimals() {
      * Returns whether the given arbitrary-precision number object is a quiet
      * not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
-     * @return Either
-      {@code true} or
-      {@code false} .
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsQuietNaN(EDecimal ed) {
       return ed != null && ed.IsQuietNaN();
@@ -140,12 +134,10 @@ private EDecimals() {
 
     /**
      * Returns whether the given arbitrary-precision number object is negative
-     * (including negative infinity, negative not-a-number [NaN], or
+     * (including negative infinity, negative not-a-number.get(NaN), or
      * negative zero).
      * @param ed An arbitrary-precision number object.
-     * @return Either
-      {@code true} or
-      {@code false} .
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsSigned(EDecimal ed) {
       return ed != null && ed.isNegative();
@@ -155,9 +147,7 @@ private EDecimals() {
      * Returns whether the given arbitrary-precision number object is a signaling
      * not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
-     * @return Either
-      {@code true} or
-      {@code false} .
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsSignalingNaN(EDecimal ed) {
       return ed != null && ed.IsSignalingNaN();
@@ -180,8 +170,8 @@ private EDecimals() {
      *  "+Normal"; 1 = "-Normal", 2 = "+Subnormal", 3 = "-Subnormal", 4 =
      *  "+Zero", 5 = "-Zero", 6 = "+Infinity", 7 = "-Infinity", 8 = "NaN", 9
      *  = "sNaN".
-     * @throws IllegalArgumentException The parameter {@code nc} is less than 0 or
-     * greater than 9.
+     * @throws IllegalArgumentException The parameter {@code nc} is less than 0 or greater
+     * than 9.
      */
     public static String NumberClassString(int nc) {
       if (nc < 0) {
@@ -229,24 +219,24 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given number is a <i> subnormal </i> number. A <i>
-     * subnormal number </i> is a nonzero finite number whose Exponent
+     * Returns whether the given number is a <i>subnormal</i> number. A
+     * <i>subnormal number</i> is a nonzero finite number whose Exponent
      * property (or the number's exponent when that number is expressed in
      * scientific notation with one digit before the radix point) is less
      * than the minimum possible exponent for that number.
      * @param ed An arbitrary-precision number object.
      * @param ec A context specifying the exponent range of arbitrary-precision
      * numbers. Can be null. If AdjustExponent of the given context is
-     * {@code true} , a nonzero number is subnormal if the number's
-     * exponent (when that number is expressed in scientific notation with
-     * one nonzero digit before the radix point) is less than the given
-     * context's EMax property (e.g., if EMax is -100, 2.3456 * 10 <sup>
-     * -102 </sup> is subnormal, but 2.3456 * 10 <sup> -99 </sup> is not).
-     * If AdjustExponent of the given context is {@code false} , a nonzero
-     * number is subnormal if the number's Exponent property is less than
-     * the given context's EMax property (e.g., if EMax is -100, 23456 * 10
-     * <sup> -102 </sup> is subnormal, but 23456 * 10 <sup> -99 </sup> is
-     * not).
+     * {@code true}, a nonzero number is subnormal if the number's exponent
+     * (when that number is expressed in scientific notation with one
+     * nonzero digit before the radix point) is less than the given
+     * context's EMax property (e.g., if EMax is -100, 2.3456 * 10
+     * <sup>-102</sup> is subnormal, but 2.3456 * 10 <sup>-99</sup> is
+     * not). If AdjustExponent of the given context is {@code false}, a
+     * nonzero number is subnormal if the number's Exponent property is
+     * less than the given context's EMax property (e.g., if EMax is -100,
+     * 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10
+     * <sup>-99</sup> is not).
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code false} if the given context is null
      * or HasExponentRange of the given context is {@code false}.
@@ -322,8 +312,8 @@ private EDecimals() {
      * and exponent range and if {@code ed2} 's absolute value is greater
      * than twice the sum of the context's EMax property and its Precision
      * property.
-     * @throws NullPointerException The parameter {@code ed} or {@code ed2}
-     * is null.
+     * @throws NullPointerException The parameter {@code ed} or {@code ed2} is
+     * null.
      */
     public static EDecimal ScaleB(EDecimal ed, EDecimal ed2, EContext ec) {
       if (ed == null) {
@@ -377,8 +367,8 @@ private EDecimals() {
      * is not an integer, is negative, has an exponent other than 0, or has
      * an absolute value that exceeds the maximum precision specified in
      * the context.
-     * @throws NullPointerException The parameter {@code ed} or {@code ed2}
-     * is null.
+     * @throws NullPointerException The parameter {@code ed} or {@code ed2} is
+     * null.
      */
     public static EDecimal Shift(EDecimal ed, EDecimal ed2, EContext ec) {
       if (ed == null) {
@@ -521,14 +511,14 @@ private EDecimals() {
      * Compares the values of one arbitrary-precision number object and another
      * object, imposing a total ordering on all possible values. In this
      * method: <ul> <li>For objects with the same value, the one with the
-     *  higher exponent has a greater "absolute value". </li> <li>Negative
-     * zero is less than positive zero. </li> <li>Quiet NaN has a higher
+     *  higher exponent has a greater "absolute value".</li> <li>Negative
+     * zero is less than positive zero.</li> <li>Quiet NaN has a higher
      *  "absolute value" than signaling NaN. If both objects are quiet NaN
      * or both are signaling NaN, the one with the higher diagnostic
-     *  information has a greater "absolute value". </li> <li>NaN has a
-     *  higher "absolute value" than infinity. </li> <li>Infinity has a
-     *  higher "absolute value" than any finite number. </li> <li>Negative
-     * numbers are less than positive numbers. </li> </ul>
+     *  information has a greater "absolute value".</li> <li>NaN has a
+     *  higher "absolute value" than infinity.</li> <li>Infinity has a
+     *  higher "absolute value" than any finite number.</li> <li>Negative
+     * numbers are less than positive numbers.</li></ul>
      * @param ed The first arbitrary-precision number to compare.
      * @param other The second arbitrary-precision number to compare.
      * @param ec An arithmetic context. Flags will be set in this context only if
@@ -547,14 +537,14 @@ private EDecimals() {
      * Compares the absolute values of two arbitrary-precision number objects,
      * imposing a total ordering on all possible values (ignoring their
      * signs). In this method: <ul> <li>For objects with the same value,
-     *  the one with the higher exponent has a greater "absolute value".
-     * </li> <li>Negative zero and positive zero are considered equal.
-     *  </li> <li>Quiet NaN has a higher "absolute value" than signaling
-     * NaN. If both objects are quiet NaN or both are signaling NaN, the
-     *  one with the higher diagnostic information has a greater "absolute
-     *  value". </li> <li>NaN has a higher "absolute value" than infinity.
-     *  </li> <li>Infinity has a higher "absolute value" than any finite
-     * number. </li> </ul>
+     *  the one with the higher exponent has a greater "absolute
+     *  value".</li> <li>Negative zero and positive zero are considered
+     *  equal.</li> <li>Quiet NaN has a higher "absolute value" than
+     * signaling NaN. If both objects are quiet NaN or both are signaling
+     * NaN, the one with the higher diagnostic information has a greater
+     *  "absolute value".</li> <li>NaN has a higher "absolute value" than
+     *  infinity.</li> <li>Infinity has a higher "absolute value" than any
+     * finite number.</li></ul>
      * @param ed The first arbitrary-precision number to compare.
      * @param other The second arbitrary-precision number to compare.
      * @param ec An arithmetic context. Flags will be set in this context only if
@@ -587,9 +577,7 @@ private EDecimals() {
      * Returns a canonical version of the given arbitrary-precision number object.
      * In this method, this method behaves like the Copy method.
      * @param ed An arbitrary-precision number object.
-     * @return A copy of the parameter
-      {@code ed}
-      .
+     * @return A copy of the parameter {@code ed}.
      */
     public static EDecimal Canonical(EDecimal ed) {
       return Copy(ed);
@@ -624,9 +612,7 @@ private EDecimals() {
      * negative) as the second given number object.
      * @param ed An arbitrary-precision number object with the value the result
      * will have.
-     * @param other The parameter
-      {@code other}
-       is an EDecimal object.
+     * @param other The parameter {@code other} is an EDecimal object.
      * @return An arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or
      * negative) as the second given number object.
@@ -744,12 +730,12 @@ private EDecimals() {
      * can fail if the difference between this value's exponent and the
      * desired exponent is too big, depending on the maximum precision. If
      * rounding to a number of decimal places is desired, it's better to
-     * use the RoundToExponent and RoundToIntegral methods instead. </p>
+     * use the RoundToExponent and RoundToIntegral methods instead.</p>
      * <p><b>Remark:</b> This method can be used to implement fixed-point
      * decimal arithmetic, in which a fixed number of digits come after the
      * decimal point. A fixed-point decimal arithmetic in which no digits
      * come after the decimal point (a desired exponent of 0) is considered
-     *  an "integer arithmetic" . </p>
+     *  an "integer arithmetic" .</p>
      * @param ed An arbitrary-precision decimal number whose exponent is to be
      * changed.
      * @param scale The desired exponent of the result, expressed as an
@@ -759,9 +745,7 @@ private EDecimals() {
      * number. For example, -3 means round to the thousandth (10^-3,
      * 0.0001), and 3 means round to the thousands-place (10^3, 1000). A
      * value of 0 rounds the number to an integer.
-     * @param ec The parameter
-      {@code ec}
-       is an EContext object.
+     * @param ec The parameter {@code ec} is an EContext object.
      * @return An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and
      * returns not-a-number (NaN) if the result can't fit the given
@@ -798,11 +782,11 @@ private EDecimals() {
     // Logical Operations
 
     /**
-     * Performs a logical AND operation on two decimal numbers in the form of <i>
-     * logical operands </i>. A <code>logical operand</code> is a non-negative
+     * Performs a logical AND operation on two decimal numbers in the form of
+     * <i>logical operands</i>. A <code>logical operand</code> is a non-negative
      * base-10 number with an Exponent property of 0 and no other base-10
-     * digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>
-     * , but not <code>02001</code> or <code>99999</code>). The logical AND operation
+     * digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+     * but not <code>02001</code> or <code>99999</code>). The logical AND operation
      * sets each digit of the result to 1 if the corresponding digits of
      * each logical operand are both 1, and to 0 otherwise. For example,
      * <code>01001 AND 111010 = 01000</code>.
@@ -815,7 +799,7 @@ private EDecimals() {
      * precision are discarded. This parameter can be null.
      * @return The result of the logical AND operation as a logical operand.
      * Signals an invalid operation and returns not-a-number (NaN) if
-     * {@code ed1} , {@code ed2} , or both are not logical operands.
+     * {@code ed1}, {@code ed2}, or both are not logical operands.
      */
     public static EDecimal And(EDecimal ed1, EDecimal ed2, EContext ec) {
       byte[] logi1 = FromLogical(ed1, ec, 10);
@@ -836,8 +820,8 @@ private EDecimals() {
 
     /**
      * Performs a logical NOT operation on an arbitrary-precision decimal number in
-     * the form of a <i> logical operand </i>. A <code>logical operand</code> is
-     * a non-negative base-10 number with an Exponent property of 0 and no
+     * the form of a <i>logical operand</i>. A <code>logical operand</code> is a
+     * non-negative base-10 number with an Exponent property of 0 and no
      * other base-10 digits than 0 or 1 (examples include <code>01001</code> and
      * <code>111001</code> , but not <code>02001</code> or <code>99999</code>). The logical
      * NOT operation sets each digit of the result to 1 if the
@@ -875,10 +859,10 @@ private EDecimals() {
 
     /**
      * Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
-     * the form of <i> logical operands </i>. A <code>logical operand</code> is
-     * a non-negative base-10 number with an exponent of 0 and no other
+     * the form of <i>logical operands</i>. A <code>logical operand</code> is a
+     * non-negative base-10 number with an exponent of 0 and no other
      * base-10 digits than 0 or 1 (examples include <code>01001</code> and
-     * <code>111001</code> , but not <code>02001</code> or <code>99999</code>). The logical
+     * <code>111001</code>, but not <code>02001</code> or <code>99999</code>). The logical
      * exclusive-OR operation sets each digit of the result to 1 if either
      * corresponding digit of the logical operands, but not both, is 1, and
      * to 0 otherwise. For example, <code>01001 XOR 111010 = 101010</code>.
@@ -909,11 +893,11 @@ private EDecimals() {
     }
 
     /**
-     * Performs a logical OR operation on two decimal numbers in the form of <i>
-     * logical operands </i>. A <code>logical operand</code> is a non-negative
+     * Performs a logical OR operation on two decimal numbers in the form of
+     * <i>logical operands</i>. A <code>logical operand</code> is a non-negative
      * base-10 number with an Exponent property of 0 and no other base-10
-     * digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>
-     * , but not <code>02001</code> or <code>99999</code>). The logical OR operation
+     * digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
+     * but not <code>02001</code> or <code>99999</code>). The logical OR operation
      * sets each digit of the result to 1 if either or both of the
      * corresponding digits of the logical operands are 1, and to 0
      * otherwise. For example, <code>01001 OR 111010 = 111011</code>.
@@ -925,8 +909,8 @@ private EDecimals() {
      * context, the operand's most significant digits that exceed that
      * precision are discarded. This parameter can be null.
      * @return The result of the logical OR operation as a logical operand. Signals
-     * an invalid operation and returns not-a-number (NaN) if {@code ed1} ,
-     * {@code ed2} , or both are not logical operands.
+     * an invalid operation and returns not-a-number (NaN) if {@code ed1},
+     * {@code ed2}, or both are not logical operands.
      */
     public static EDecimal Or(EDecimal ed1, EDecimal ed2, EContext ec) {
       byte[] logi1 = FromLogical(ed1, ec, 10);

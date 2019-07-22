@@ -22,21 +22,21 @@ at: http://peteroupc.github.io/
      * <p>Instances of this class are immutable, so they are inherently
      * safe for use by multiple threads. Multiple instances of this object
      * with the same value are interchangeable, but they should be compared
-     *  using the "Equals" method rather than the "==" operator. </p>
-     * <p><b>Security note</b> </p> <p>It is not recommended to implement
+     *  using the "Equals" method rather than the "==" operator.</p>
+     * <p><b>Security note</b></p> <p>It is not recommended to implement
      * security-sensitive algorithms using the methods in this class, for
-     * several reasons: </p> <ul> <li><code>EInteger</code> objects are
-     * immutable, so they can't be modified, and the memory they occupy is
-     * not guaranteed to be cleared in a timely fashion due to garbage
+     * several reasons:</p> <ul> <li><code>EInteger</code> objects are immutable,
+     * so they can't be modified, and the memory they occupy is not
+     * guaranteed to be cleared in a timely fashion due to garbage
      * collection. This is relevant for applications that use many-bit-long
-     * numbers as secret parameters. </li> <li>The methods in this class
+     * numbers as secret parameters.</li> <li>The methods in this class
      * (especially those that involve arithmetic) are not guaranteed to be
      *  "constant-time" (non-data-dependent) for all relevant inputs.
      * Certain attacks that involve encrypted communications have exploited
      * the timing and other aspects of such communications to derive keying
-     * material or cleartext indirectly. </li> </ul> <p>Applications should
+     * material or cleartext indirectly.</li></ul> <p>Applications should
      * instead use dedicated security libraries to handle big numbers in
-     * security-sensitive algorithms. </p>
+     * security-sensitive algorithms.</p>
      */
   public final class EInteger implements Comparable<EInteger> {
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -118,8 +118,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this value is even.
-     * @return {@code true} if this value is even; otherwise,
-      {@code false} .
+     * @return {@code true} if this value is even; otherwise, {@code false}.
      */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
@@ -139,8 +138,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets a value indicating whether this value is 0.
-     * @return {@code true} if this value is 0; otherwise,
-      {@code false} .
+     * @return {@code true} if this value is 0; otherwise, {@code false}.
      */
     public final boolean isZero() {
         return this.wordCount == 0;
@@ -173,25 +171,25 @@ at: http://peteroupc.github.io/
     /**
      * Initializes an arbitrary-precision integer from an array of bytes.
      * @param bytes A byte array consisting of the two's-complement form (see
-     *  {@link com.upokecenter.numbers.EDecimal "Forms of numbers" }) of
-     * the arbitrary-precision integer to create. The byte array is encoded
+     *  {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}) of the
+     * arbitrary-precision integer to create. The byte array is encoded
      * using the following rules: <ul> <li>Positive numbers have the first
-     * byte's highest bit cleared, and negative numbers have the bit set.
-     * </li> <li>The last byte contains the lowest 8-bits, the next-to-last
-     * contains the next lowest 8 bits, and so on. For example, the number
-     * 300 can be encoded as {@code 0x01, 0x2c} and 200 as {@code 0x00,
-     * 0xc8} . (Note that the second example contains a set high bit in
-     * {@code 0xc8} , so an additional 0 is added at the start to ensure
-     * it's interpreted as positive.) </li> <li>To encode negative numbers,
-     * take the absolute value of the number, subtract by 1, encode the
-     * number into bytes, and toggle each bit of each byte. Any further
-     * bits that appear beyond the most significant bit of the number will
-     * be all ones. For example, the number -450 can be encoded as {@code
-     * 0xfe, 0x70} and -52869 as {@code 0xff, 0x31, 0x7b} . (Note that the
-     * second example contains a cleared high bit in {@code 0x31, 0x7b} ,
-     * so an additional 0xff is added at the start to ensure it's
-     * interpreted as negative.) </li> </ul> <p>For little-endian, the byte
-     * order is reversed from the byte order just discussed. </p> .
+     * byte's highest bit cleared, and negative numbers have the bit
+     * set.</li> <li>The last byte contains the lowest 8-bits, the
+     * next-to-last contains the next lowest 8 bits, and so on. For
+     * example, the number 300 can be encoded as {@code 0x01, 0x2c} and 200
+     * as {@code 0x00, 0xc8}. (Note that the second example contains a set
+     * high bit in {@code 0xc8}, so an additional 0 is added at the start
+     * to ensure it's interpreted as positive.)</li> <li>To encode negative
+     * numbers, take the absolute value of the number, subtract by 1,
+     * encode the number into bytes, and toggle each bit of each byte. Any
+     * further bits that appear beyond the most significant bit of the
+     * number will be all ones. For example, the number -450 can be encoded
+     * as {@code 0xfe, 0x70} and -52869 as {@code 0xff, 0x31, 0x7b}. (Note
+     * that the second example contains a cleared high bit in {@code 0x31,
+     * 0x7B}, so an additional 0xff is added at the start to ensure it's
+     * interpreted as negative.)</li></ul> <p>For little-endian, the byte
+     * order is reversed from the byte order just discussed.</p>.
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is
      * big-endian, or most-significant-byte first.
@@ -430,8 +428,7 @@ at: http://peteroupc.github.io/
      * @throws NullPointerException The parameter {@code str} is null.
      * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
      * format.
-     * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 ==
-     *  0".
+     * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 == 0".
      */
     public static EInteger FromRadixSubstring(
       String str,
@@ -682,9 +679,9 @@ at: http://peteroupc.github.io/
      * length will be index + endIndex - 1.
      * @return An arbitrary-precision integer with the same value as given in the
      * string portion.
-     * @throws IllegalArgumentException The parameter {@code index} is less than 0,
-     * {@code endIndex} is less than 0, or either is greater than the
-     * string's length, or {@code endIndex} is less than {@code index}.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the string's
+     * length, or {@code endIndex} is less than {@code index}.
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromSubstring(
@@ -710,8 +707,7 @@ at: http://peteroupc.github.io/
      * Adds this object and another object.
      * @param bigintAugend Another arbitrary-precision integer.
      * @return The sum of the two objects.
-     * @throws NullPointerException The parameter {@code bigintAugend} is
-     * null.
+     * @throws NullPointerException The parameter {@code bigintAugend} is null.
      */
     public EInteger Add(EInteger bigintAugend) {
       if (bigintAugend == null) {
@@ -977,7 +973,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     *  "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
      * @deprecated Renamed to ToInt32Unchecked.
@@ -1004,7 +1000,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     *  "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
      * @deprecated Renamed to ToInt64Unchecked.
@@ -1160,7 +1156,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.<p><pre>EInteger result =
+     * object.<p> <pre>EInteger result =
      *  EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
@@ -1230,8 +1226,7 @@ at: http://peteroupc.github.io/
      * are positive or both are negative.
      * @param bigintDivisor The divisor.
      * @return The quotient of the two objects.
-     * @throws NullPointerException The parameter {@code bigintDivisor} is
-     * null.
+     * @throws NullPointerException The parameter {@code bigintDivisor} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Divide(EInteger bigintDivisor) {
@@ -1995,9 +1990,7 @@ at: http://peteroupc.github.io/
     /**
      * Determines whether this object and another object are equal and have the
      * same type.
-     * @param obj The parameter
-      {@code obj}
-       is an arbitrary object.
+     * @param obj The parameter {@code obj} is an arbitrary object.
      * @return {@code true} if this object and another object are equal; otherwise,
      * {@code false}.
      */
@@ -2070,8 +2063,7 @@ at: http://peteroupc.github.io/
      * common factor (GCF).
      * @param bigintSecond Another arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws NullPointerException The parameter {@code bigintSecond} is
-     * null.
+     * @throws NullPointerException The parameter {@code bigintSecond} is null.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -2424,7 +2416,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Gets the lowest set bit in this number's absolute value. (This will also be
      * the lowest set bit in the number's two's-complement form (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0.
      * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
@@ -2438,7 +2430,7 @@ WordsShiftRightOne(bu, buc);
      * Gets the lowest set bit in this number's absolute value, in the form of an
      * arbitrary-precision integer. (This will also be the lowest set bit
      * in the number's two's-complement form (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }).).
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
      * @return The lowest bit set in the number, starting at 0. Returns -1 if this
      * value is 0 or odd.
      */
@@ -2470,7 +2462,7 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
      * object' s value.
      * @param bigIndex An arbitrary-precision integer.
      * @return {@code true} if a bit is set in the two' s-complement form (see
@@ -2517,7 +2509,7 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }) of this
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
      * object' s value.
      * @param index The parameter {@code index} is a 32-bit signed integer.
      * @return {@code true} if a bit is set in the two' s-complement form (see
@@ -2719,8 +2711,7 @@ WordsShiftRightOne(bu, buc);
      * remainder is negative.
      * @param divisor The number to divide by.
      * @return An arbitrary-precision integer.
-     * @throws IllegalArgumentException The parameter {@code divisor} is less than
-     * 0.
+     * @throws IllegalArgumentException The parameter {@code divisor} is less than 0.
      * @throws NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger Mod(EInteger divisor) {
@@ -2744,8 +2735,7 @@ WordsShiftRightOne(bu, buc);
      * divisor plus normal remainder if the normal remainder is negative.
      * @param smallDivisor The divisor of the modulus.
      * @return The modulus remainder.
-     * @throws IllegalArgumentException The parameter {@code smallDivisor} is less
-     * than 0.
+     * @throws IllegalArgumentException The parameter {@code smallDivisor} is less than 0.
      */
     public EInteger Mod(int smallDivisor) {
       if (smallDivisor < 0) {
@@ -2764,8 +2754,8 @@ WordsShiftRightOne(bu, buc);
      * @param pow The power to raise this integer by.
      * @param mod The integer to divide the raised number by.
      * @return An arbitrary-precision integer.
-     * @throws NullPointerException The parameter {@code pow} or {@code
-     * mod} is null.
+     * @throws NullPointerException The parameter {@code pow} or {@code mod} is
+     * null.
      */
     public EInteger ModPow(EInteger pow, EInteger mod) {
       if (pow == null) {
@@ -2799,8 +2789,7 @@ WordsShiftRightOne(bu, buc);
      * object.
      * @param bigintMult Another arbitrary-precision integer.
      * @return The product of the two numbers.
-     * @throws NullPointerException The parameter {@code bigintMult} is
-     * null.
+     * @throws NullPointerException The parameter {@code bigintMult} is null.
      */
     public EInteger Multiply(EInteger bigintMult) {
       if (bigintMult == null) {
@@ -2934,9 +2923,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Raises an arbitrary-precision integer to a power.
      * @param bigPower The exponent to raise this integer to.
-     * @return The result. Returns 1 if
-      {@code bigPower}
-       is 0.
+     * @return The result. Returns 1 if {@code bigPower} is 0.
      * @throws NullPointerException The parameter {@code bigPower} is null.
      * @throws IllegalArgumentException BigPower is negative.
      */
@@ -3124,7 +3111,7 @@ WordsShiftRightOne(bu, buc);
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
      * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
-     *  "Forms of numbers" }). Thus, for negative values, the
+     *  "Forms of numbers"}). Thus, for negative values, the
      * arbitrary-precision integer is sign-extended.
      * @param eshift The number of bits to shift. Can be negative, in which case
      * this is the same as shiftLeft with the absolute value of this
@@ -3272,10 +3259,10 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Does an AND operation between two arbitrary-precision integer values.<p>
-     * Each arbitrary-precision integer is treated as a two's-complement
-     *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
-     * }) for the purposes of this operator. </p>
+     * Does an AND operation between two arbitrary-precision integer values.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bits of this integer and the other integer are both
@@ -3336,15 +3323,15 @@ WordsShiftRightOne(bu, buc);
     }
 
     /**
-     * Does an OR operation between two arbitrary-precision integer instances.<p>
-     * Each arbitrary-precision integer is treated as a two's-complement
-     *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"
-     * }) for the purposes of this operator. </p>
+     * Does an OR operation between two arbitrary-precision integer
+     * instances.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
      * @param second The second operand.
      * @return An arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code second} is null.
-     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't
-     * satisfy biggerCount == CountWords(result).
+     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't satisfy
+     * biggerCount == CountWords(result).
      */
     public EInteger Or(EInteger second) {
       if (second == null) {
@@ -3411,8 +3398,8 @@ WordsShiftRightOne(bu, buc);
     /**
      * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
      * arbitrary-precision integer is treated as a two's-complement form
-     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers" })
-     * for the purposes of this operator. </p>
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
      * @param other An arbitrary-precision integer.
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bit is set in one input integer but not in the other.
@@ -3689,7 +3676,7 @@ WordsShiftRightOne(bu, buc);
      * Returns an arbitrary-precision integer with the bits shifted to the right.
      * For this operation, the arbitrary-precision integer is treated as a
      * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
-     *  "Forms of numbers" }). Thus, for negative values, the
+     *  "Forms of numbers"}). Thus, for negative values, the
      * arbitrary-precision integer is sign-extended.
      * @param numberBits The number of bits to shift. Can be negative, in which
      * case this is the same as shiftLeft with the absolute value of this
@@ -3774,8 +3761,7 @@ WordsShiftRightOne(bu, buc);
      * integer.
      * @param subtrahend Another arbitrary-precision integer.
      * @return The difference of the two objects.
-     * @throws NullPointerException The parameter {@code subtrahend} is
-     * null.
+     * @throws NullPointerException The parameter {@code subtrahend} is null.
      */
     public EInteger Subtract(EInteger subtrahend) {
       if (subtrahend == null) {
@@ -3788,15 +3774,13 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns a byte array of this integer's value. The byte array will take the
      * number's two' s-complement form (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers" }), using the
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
      * bit of the number will be all ones. The resulting byte array can be
      * passed to the <code>FromBytes()</code> method (with the same byte order)
      * to reconstruct this integer's value.
-     * @param littleEndian Either
-      {@code true} or
-      {@code false} .
+     * @param littleEndian Either {@code true} or {@code false}.
      * @return A byte array. If this value is 0, returns a byte array with the
      * single element 0.
      */
@@ -3891,7 +3875,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     *  "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
      */
@@ -3941,7 +3925,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
      * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
-     *  "Forms of numbers" }) (in which case the return value might have a
+     *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
      */

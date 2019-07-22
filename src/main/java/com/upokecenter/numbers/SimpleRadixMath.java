@@ -412,8 +412,8 @@ at: http://peteroupc.github.io/
         BigNumberFlags.FiniteOnly ?
         null : this.GetHelper().CreateNewWithFlags(
           EInteger.FromInt32(0),
-          EInteger.FromInt32(0),
-          (neg ? BigNumberFlags.FlagNegative : 0) | BigNumberFlags.FlagInfinity);
+  EInteger.FromInt32(0),
+  (neg ? BigNumberFlags.FlagNegative : 0) | BigNumberFlags.FlagInfinity);
     }
 
     public T Power(T thisValue, T pow, EContext ctx) {
