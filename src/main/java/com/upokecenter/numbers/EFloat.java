@@ -946,16 +946,16 @@ at: http://peteroupc.github.io/
         valueIThis = 2;
       } else if (this.IsNaN()) {
         valueIThis = 3;
-      } else if (this.IsInfinity()) {
-        valueIThis = 1;
-      }
+ } else if (this.IsInfinity()) {
+   valueIThis = 1;
+ }
       if (other.IsSignalingNaN()) {
         valueIOther = 2;
       } else if (other.IsNaN()) {
         valueIOther = 3;
-      } else if (other.IsInfinity()) {
-        valueIOther = 1;
-      }
+ } else if (other.IsInfinity()) {
+   valueIOther = 1;
+ }
       if (valueIThis > valueIOther) {
         return neg1 ? -1 : 1;
       } else if (valueIThis < valueIOther) {
@@ -967,7 +967,7 @@ at: http://peteroupc.github.io/
         return neg1 ? -cmp : cmp;
       } else if (valueIThis == 1) {
         return 0;
-      } else {
+ } else {
         cmp = this.compareTo(other);
         if (cmp == 0) {
           cmp = this.exponent.compareTo(
@@ -1005,16 +1005,16 @@ at: http://peteroupc.github.io/
         valueIThis = 2;
       } else if (this.IsNaN()) {
         valueIThis = 3;
-      } else if (this.IsInfinity()) {
-        valueIThis = 1;
-      }
+ } else if (this.IsInfinity()) {
+   valueIThis = 1;
+ }
       if (other.IsSignalingNaN()) {
         valueIOther = 2;
       } else if (other.IsNaN()) {
         valueIOther = 3;
-      } else if (other.IsInfinity()) {
-        valueIOther = 1;
-      }
+ } else if (other.IsInfinity()) {
+   valueIOther = 1;
+ }
       if (valueIThis > valueIOther) {
         return 1;
       } else if (valueIThis < valueIOther) {
@@ -1026,7 +1026,7 @@ at: http://peteroupc.github.io/
         return cmp;
       } else if (valueIThis == 1) {
         return 0;
-      } else {
+ } else {
         cmp = this.Abs().compareTo(other.Abs());
         if (cmp == 0) {
           cmp = this.exponent.compareTo(

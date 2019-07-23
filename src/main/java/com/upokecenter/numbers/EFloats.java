@@ -268,8 +268,8 @@ private EFloats() {
      */
     public static EFloat LogB(EFloat ed, EContext ec) {
       if (ed == null) {
-  throw new NullPointerException("ed");
-}
+        throw new NullPointerException("ed");
+      }
       if (ed.IsNaN()) {
         return ed.RoundToPrecision(ec);
       }
@@ -490,7 +490,7 @@ private EFloats() {
         mantLeft = mant;
       } else if (leftShift.compareTo(ec.getPrecision()) == 0) {
         mantLeft = EInteger.FromInt32(0);
-      } else {
+ } else {
         EInteger mult = EInteger.FromInt32(1).ShiftLeft(leftShift);
         mantLeft = mant.Multiply(mult);
         EInteger mod = EInteger.FromInt32(1).ShiftLeft(ec.getPrecision());
@@ -629,15 +629,15 @@ private EFloats() {
      * @return An arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or
      * negative) as the second given number object.
-     * @throws NullPointerException The parameter {@code other} or {@code ed} is
+     * @throws NullPointerException The parameter {@code ed} or {@code other} is
      * null.
      */
     public static EFloat CopySign(EFloat ed, EFloat other) {
-      if (other == null) {
-        throw new NullPointerException("other");
-      }
       if (ed == null) {
         throw new NullPointerException("ed");
+      }
+      if (other == null) {
+        throw new NullPointerException("other");
       }
       return ed.isNegative() == other.isNegative() ? Copy(ed) : CopyNegate(ed);
     }
@@ -711,9 +711,9 @@ private EFloats() {
              EFloat.Zero).RoundToPrecision(ec);
         } else if (ed.getExponent().signum() > 0) {
           return ed.Reduce(ec);
-        } else if (ed.getExponent().signum() == 0) {
-          return ed.RoundToPrecision(ec);
-        } else {
+ } else if (ed.getExponent().signum() == 0) {
+   return ed.RoundToPrecision(ec);
+ } else {
           EInteger exp = ed.getExponent();
           EInteger mant = ed.getUnsignedMantissa();
           boolean neg = ed.isNegative();

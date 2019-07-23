@@ -62,9 +62,9 @@ private static final long serialVersionUID = 1L;
     /**
      * Initializes a new instance of the {@link
      * com.upokecenter.numbers.ETrapException}.
-     * @param flag The parameter {@code flag} is a 32-bit signed integer.
-     * @param ctx The parameter {@code ctx} is an EContext object.
-     * @param result The parameter {@code result} is an arbitrary object.
+     * @param flag A 32-bit signed integer.
+     * @param ctx An EContext object.
+     * @param result An arbitrary object.
      */
     public ETrapException(int flag, EContext ctx, Object result) {
  super(FlagToMessage(flag));

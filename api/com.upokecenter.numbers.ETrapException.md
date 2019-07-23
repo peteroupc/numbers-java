@@ -35,11 +35,11 @@ Initializes a new instance of the <code>ETrapException</code>.
 
 **Parameters:**
 
-* <code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.
+* <code>flag</code> - A 32-bit signed integer.
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - An EContext object.
 
-* <code>result</code> - The parameter <code>result</code> is an arbitrary object.
+* <code>result</code> - An arbitrary object.
 
 ### ETrapException
     public ETrapException​(int flag, EContext ctx, java.lang.Object result)
@@ -47,11 +47,11 @@ Initializes a new instance of the <code>ETrapException</code>.
 
 **Parameters:**
 
-* <code>flag</code> - The parameter <code>flag</code> is a 32-bit signed integer.
+* <code>flag</code> - A 32-bit signed integer.
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - An EContext object.
 
-* <code>result</code> - The parameter <code>result</code> is an arbitrary object.
+* <code>result</code> - An arbitrary object.
 
 ### getContext
     public final EContext getContext()

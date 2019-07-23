@@ -509,7 +509,7 @@ private EDecimals() {
         mantLeft = mant;
       } else if (leftShift.compareTo(ec.getPrecision()) == 0) {
         mantLeft = EInteger.FromInt32(0);
-      } else {
+ } else {
         EInteger mult = radix.Pow(leftShift);
         mantLeft = mant.Multiply(mult);
         EInteger mod = radix.Pow(ec.getPrecision());
@@ -730,9 +730,9 @@ private EDecimals() {
              EDecimal.Zero).RoundToPrecision(ec);
         } else if (ed.getExponent().signum() > 0) {
           return ed.Reduce(ec);
-        } else if (ed.getExponent().signum() == 0) {
-          return ed.RoundToPrecision(ec);
-        } else {
+ } else if (ed.getExponent().signum() == 0) {
+   return ed.RoundToPrecision(ec);
+ } else {
           EInteger exp = ed.getExponent();
           EInteger mant = ed.getUnsignedMantissa();
           boolean neg = ed.isNegative();

@@ -692,7 +692,7 @@ Returns an arbitrary-precision number object with the same value as the
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>other</code> or <code>ed</code> is
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>other</code> is
  null.
 
 ### SameQuantum

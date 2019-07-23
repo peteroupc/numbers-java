@@ -254,13 +254,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}.
-     * @param precision The parameter {@code precision} is a 32-bit signed integer.
-     * @param rounding The parameter {@code rounding} is an ERounding object.
-     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
-     * signed integer.
-     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
-     * signed integer.
-     * @param clampNormalExponents Either {@code true} or {@code false}.
+     * @param precision A 32-bit signed integer.
+     * @param rounding An ERounding object.
+     * @param exponentMinSmall Another 32-bit signed integer.
+     * @param exponentMaxSmall A 32-bit signed integer. (3).
+     * @param clampNormalExponents A Boolean object.
      */
     public EContext(
       int precision,
@@ -286,11 +284,11 @@ at: http://peteroupc.github.io/
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class, .
-     * @param bigintPrecision An arbitrary-precision integer.
-     * @param rounding The parameter {@code rounding} is an ERounding object.
-     * @param exponentMin An arbitrary-precision integer.
-     * @param exponentMax An arbitrary-precision integer. (3).
-     * @param clampNormalExponents Either {@code true} or {@code false}.
+     * @param bigintPrecision An EInteger object.
+     * @param rounding An ERounding object.
+     * @param exponentMin An EInteger object.
+     * @param exponentMax An EInteger object. (3).
+     * @param clampNormalExponents A Boolean object.
      */
     public EContext(
       EInteger bigintPrecision,

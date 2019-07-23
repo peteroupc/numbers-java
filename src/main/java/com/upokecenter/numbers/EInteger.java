@@ -1131,7 +1131,7 @@ at: http://peteroupc.github.io/
             return new EInteger(1, sumreg, this.negative);
           } else if (a == b) {
             return EInteger.FromInt32(0);
-          } else {
+ } else {
             b -= a;
             sumreg = new short[2];
             sumreg[0] = ((short)b);
@@ -2042,11 +2042,11 @@ at: http://peteroupc.github.io/
           v >>= 1;
         } else if (eu && !ev) {
           u >>= 1;
-        } else if (!eu && ev) {
-          v >>= 1;
-        } else if (u >= v) {
-          u = (u - v) >> 1;
-        } else {
+ } else if (!eu && ev) {
+   v >>= 1;
+ } else if (u >= v) {
+   u = (u - v) >> 1;
+ } else {
           long tmp = u;
           u = (v - u) >> 1;
           v = tmp;
@@ -2280,11 +2280,11 @@ WordsShiftRightOne(bu, buc);
             retval += 5;
           } else if (rest >= 1000) {
             retval += 4;
-          } else if (rest >= 100) {
-            retval += 3;
-          } else if (rest >= 10) {
-            retval += 2;
-          } else {
+ } else if (rest >= 100) {
+   retval += 3;
+ } else if (rest >= 10) {
+   retval += 2;
+ } else {
             ++retval;
           }
           break;
@@ -2296,21 +2296,21 @@ WordsShiftRightOne(bu, buc);
             retval += 10;
           } else if (rest >= 100000000) {
             retval += 9;
-          } else if (rest >= 10000000) {
-            retval += 8;
-          } else if (rest >= 1000000) {
-            retval += 7;
-          } else if (rest >= 100000) {
-            retval += 6;
-          } else if (rest >= 10000) {
-            retval += 5;
-          } else if (rest >= 1000) {
-            retval += 4;
-          } else if (rest >= 100) {
-            retval += 3;
-          } else if (rest >= 10) {
-            retval += 2;
-          } else {
+ } else if (rest >= 10000000) {
+   retval += 8;
+ } else if (rest >= 1000000) {
+   retval += 7;
+ } else if (rest >= 100000) {
+   retval += 6;
+ } else if (rest >= 10000) {
+   retval += 5;
+ } else if (rest >= 1000) {
+   retval += 4;
+ } else if (rest >= 100) {
+   retval += 3;
+ } else if (rest >= 10) {
+   retval += 2;
+ } else {
             ++retval;
           }
           break;

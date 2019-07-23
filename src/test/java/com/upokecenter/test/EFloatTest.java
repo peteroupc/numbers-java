@@ -1213,11 +1213,11 @@ import com.upokecenter.numbers.*;
       EFloat expected,
       EFloat input,
       EFloat src) {
-      if (expected == null) {
-        throw new NullPointerException("expected");
-      }
       if (input == null) {
         throw new NullPointerException("input");
+      }
+      if (expected == null) {
+        throw new NullPointerException("expected");
       }
       if (!input.isFinite() || !expected.isFinite()) {
         return;
