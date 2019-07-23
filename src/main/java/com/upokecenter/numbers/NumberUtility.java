@@ -648,8 +648,8 @@ private NumberUtility() {
           EInteger bigquo;
           {
             EInteger[] divrem = bigmant.DivRem(bigradix);
-bigquo = divrem[0];
-bigrem = divrem[1]; }
+            bigquo = divrem[0];
+            bigrem = divrem[1]; }
           if (!bigrem.isZero()) {
             break;
           }

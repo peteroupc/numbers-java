@@ -1733,8 +1733,12 @@ at: http://peteroupc.github.io/
      * the sum of the exponents of the two binary floating-point numbers.
      * @param otherValue Another binary float.
      * @return The product of the two binary floating-point numbers.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EFloat Multiply(EFloat otherValue) {
+      if (otherValue == null) {
+        throw new NullPointerException("otherValue");
+      }
       if (this.isFinite() && otherValue.isFinite()) {
         EInteger exp = this.exponent.Add(otherValue.exponent);
         int newflags = otherValue.flags ^ this.flags;
@@ -2547,10 +2551,14 @@ at: http://peteroupc.github.io/
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null.
      * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code bigPlaces} is null.
      */
     public EFloat ScaleByPowerOfTwo(
       EInteger bigPlaces,
       EContext ctx) {
+      if (bigPlaces == null) {
+        throw new NullPointerException("bigPlaces");
+      }
       if (bigPlaces.isZero()) {
         return this.RoundToPrecision(ctx);
       }

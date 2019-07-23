@@ -15,6 +15,9 @@ import com.upokecenter.numbers.*;
 private ExtraTest() {
 }
     public static void TestStringEqualRoundTrip(EDecimal obj) {
+      if (obj == null) {
+        throw new NullPointerException("obj");
+      }
       String str = obj.toString();
       EDecimal newobj = EDecimal.FromString(str);
       String str2 = newobj.toString();
@@ -23,6 +26,9 @@ private ExtraTest() {
     }
 
     public static void TestStringEqualRoundTrip(ERational obj) {
+      if (obj == null) {
+        throw new NullPointerException("obj");
+      }
       String str = obj.toString();
       ERational newobj = ERational.FromString(str);
       String str2 = newobj.toString();
@@ -30,6 +36,9 @@ private ExtraTest() {
       TestCommon.AssertEqualsHashCode(str, str2);
     }
     public static void TestStringEqualRoundTrip(EInteger obj) {
+      if (obj == null) {
+        throw new NullPointerException("obj");
+      }
       String str = obj.toString();
       EInteger newobj = EInteger.FromString(str);
       String str2 = newobj.toString();

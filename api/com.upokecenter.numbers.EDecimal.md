@@ -2424,6 +2424,10 @@ Multiplies two decimal numbers. The resulting exponent will be the sum of
 
 * The product of the two decimal numbers.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
+
 ### Multiply
     public EDecimal Multiply​(EDecimal op, EContext ctx)
 Multiplies two decimal numbers. The resulting scale will be the sum of the
@@ -3483,6 +3487,10 @@ Returns a number similar to this number but with its scale adjusted.
 
 * A number whose exponent is increased by <code>bigPlaces</code>.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigPlaces</code> is null.
+
 ### Sqrt
     public EDecimal Sqrt​(EContext ctx)
 Finds the square root of this object's value.
@@ -3723,6 +3731,10 @@ Creates a binary floating-point number from this object's value. Note that
 **Returns:**
 
 * An arbitrary-precision float floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ec</code> is null.
 
 ### ToByteChecked
     public byte ToByteChecked()

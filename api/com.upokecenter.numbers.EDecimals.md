@@ -385,6 +385,10 @@ Returns whether the given number is a <i>subnormal</i> number. A
  false</code> otherwise. Returns <code>false</code> if the given context is null
  or HasExponentRange of the given context is <code>false</code>.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
+
 ### IsZero
     public static boolean IsZero​(EDecimal ed)
 Returns whether the given arbitrary-precision number object is zero
@@ -523,6 +527,11 @@ Rotates the digits of an arbitrary-precision decimal number's mantissa.
  an absolute value that exceeds the maximum precision specified in
  the context.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed2</code> or <code>ed</code> is
+ null.
+
 ### CompareTotal
     public static int CompareTotal​(EDecimal ed, EDecimal other, EContext ec)
 Compares the values of one arbitrary-precision number object and another
@@ -553,6 +562,10 @@ Compares the values of one arbitrary-precision number object and another
 * The number 0 if both objects have the same value, or -1 if the first
  object is less than the other value, or 1 if the first object is
  greater. Does not signal flags if either value is signaling NaN.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### CompareTotalMagnitude
     public static int CompareTotalMagnitude​(EDecimal ed, EDecimal other, EContext ec)
@@ -587,6 +600,10 @@ Compares the absolute values of two arbitrary-precision number objects,
  (ignoring their signs). Does not signal flags if either value is
  signaling NaN.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
+
 ### Copy
     public static EDecimal Copy​(EDecimal ed)
 Creates a copy of the given arbitrary-precision number object.
@@ -598,6 +615,10 @@ Creates a copy of the given arbitrary-precision number object.
 **Returns:**
 
 * A copy of the given arbitrary-precision number object.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### Canonical
     public static EDecimal Canonical​(EDecimal ed)
@@ -627,6 +648,10 @@ Returns an arbitrary-precision number object with the same value as the
 * An arbitrary-precision number object with the same value as the
  given number object but with a nonnegative sign.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
+
 ### CopyNegate
     public static EDecimal CopyNegate​(EDecimal ed)
 Returns an arbitrary-precision number object with the sign reversed from the
@@ -640,6 +665,10 @@ Returns an arbitrary-precision number object with the sign reversed from the
 
 * An arbitrary-precision number object with the sign reversed from the
  given number object.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### CopySign
     public static EDecimal CopySign​(EDecimal ed, EDecimal other)
@@ -659,6 +688,11 @@ Returns an arbitrary-precision number object with the same value as the
 * An arbitrary-precision number object with the same value as the
  first given number object but with a the same sign (positive or
  negative) as the second given number object.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> or <code>other</code> is
+ null.
 
 ### SameQuantum
     public static boolean SameQuantum​(EDecimal ed1, EDecimal ed2)

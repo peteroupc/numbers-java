@@ -350,7 +350,7 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+ method. For example: <code>(this.getFlags() &amp;EContext.FlagInexact)
  != 0</code> returns <code>true</code> if the Inexact flag is set.
 
 **Returns:**
@@ -359,7 +359,7 @@ Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be
  0. This value is a combination of bit fields. To retrieve a
  particular flag, use the AND operation on the return value of this
- method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+ method. For example: <code>(this.getFlags() &amp;EContext.FlagInexact)
  != 0</code> returns <code>true</code> if the Inexact flag is set.
 
 ### setFlags

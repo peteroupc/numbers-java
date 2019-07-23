@@ -2701,8 +2701,12 @@ at: http://peteroupc.github.io/
      * the exponents of the two decimal numbers.
      * @param otherValue Another decimal number.
      * @return The product of the two decimal numbers.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EDecimal Multiply(EDecimal otherValue) {
+      if (otherValue == null) {
+        throw new NullPointerException("otherValue");
+      }
       if (this.isFinite() && otherValue.isFinite()) {
         int newflags = otherValue.flags ^ this.flags;
         if (this.unsignedMantissa.CanFitInInt32() &&
@@ -3756,10 +3760,14 @@ at: http://peteroupc.github.io/
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
      * @return A number whose exponent is increased by {@code bigPlaces}.
+     * @throws NullPointerException The parameter {@code bigPlaces} is null.
      */
     public EDecimal ScaleByPowerOfTen(
       EInteger bigPlaces,
       EContext ctx) {
+      if (bigPlaces == null) {
+        throw new NullPointerException("bigPlaces");
+      }
       if (bigPlaces.isZero()) {
         return this.RoundToPrecision(ctx);
       }
@@ -4337,6 +4345,7 @@ at: http://peteroupc.github.io/
      * value.
      * @param ec The parameter {@code ec} is an EContext object.
      * @return An arbitrary-precision float floating-point number.
+     * @throws NullPointerException The parameter {@code ec} is null.
      */
     public EFloat ToEFloat(EContext ec) {
       EInteger bigintExp = this.getExponent();
@@ -4557,6 +4566,9 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
         // DebugUtility.Log("-->" + (efret.getMantissa().ToRadixString(2)) + " " +
         // (// efret.getExponent()));
         efret = efret.RoundToPrecision(ec);
+        if (ec == null) {
+          throw new NullPointerException("ec");
+        }
         if (haveCopy && originalEc.getHasFlags()) {
           originalEc.setFlags(originalEc.getFlags()|(ec.getFlags()));
         }

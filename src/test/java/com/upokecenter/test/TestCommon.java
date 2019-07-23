@@ -17,6 +17,9 @@ private TestCommon() {
     public static int StringToInt(String str) {
       boolean neg = false;
       int i = 0;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
       if (str.length() > 0 && str.charAt(0) == '-') {
         neg = true;
         ++i;
@@ -56,6 +59,9 @@ private TestCommon() {
     public static long StringToLong(String str) {
       boolean neg = false;
       int i = 0;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
       if (str.length() > 0 && str.charAt(0) == '-') {
         neg = true;
         ++i;
@@ -100,13 +106,22 @@ private TestCommon() {
     }
 
     public static void AssertEquals(Object o, Object o2) {
+      if (o == null) {
+        throw new NullPointerException("o");
+      }
       if (!o.equals(o2)) {
         Assert.assertEquals(o, o2);
       }
     }
 
     public static void AssertEqualsHashCode(Object o, Object o2) {
+      if (o == null) {
+        throw new NullPointerException("o");
+      }
       if (o.equals(o2)) {
+        if (o2 == null) {
+          throw new NullPointerException("o2");
+        }
         if (!o2.equals(o)) {
           Assert.fail(
   "" + o + " equals " + o2 + " but not vice versa");

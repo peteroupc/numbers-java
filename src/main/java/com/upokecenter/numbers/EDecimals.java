@@ -240,8 +240,12 @@ private EDecimals() {
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code false} if the given context is null
      * or HasExponentRange of the given context is {@code false}.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static boolean IsSubnormal(EDecimal ed, EContext ec) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
       if (ed.isFinite() && ec != null && !ed.isZero() && ec.getHasExponentRange()) {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
@@ -447,10 +451,18 @@ private EDecimals() {
      * is not an integer, is negative, has an exponent other than 0, or has
      * an absolute value that exceeds the maximum precision specified in
      * the context.
+     * @throws NullPointerException The parameter {@code ed2} or {@code ed} is
+     * null.
      */
     public static EDecimal Rotate(EDecimal ed, EDecimal ed2, EContext ec) {
       if (ec == null || !ec.getHasMaxPrecision()) {
         return Shift(ed, ed2, ec);
+      }
+      if (ed2 == null) {
+        throw new NullPointerException("ed2");
+      }
+      if (ed == null) {
+        throw new NullPointerException("ed");
       }
       if (ed.IsNaN() || ed2.IsNaN()) {
         return ed.Add(ed2, ec);
@@ -528,8 +540,12 @@ private EDecimals() {
      * @return The number 0 if both objects have the same value, or -1 if the first
      * object is less than the other value, or 1 if the first object is
      * greater. Does not signal flags if either value is signaling NaN.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static int CompareTotal(EDecimal ed, EDecimal other, EContext ec) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
       return ed.CompareToTotal(other, ec);
     }
 
@@ -556,11 +572,15 @@ private EDecimals() {
      * (ignoring their signs), or 1 if the first object is greater
      * (ignoring their signs). Does not signal flags if either value is
      * signaling NaN.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static int CompareTotalMagnitude(
       EDecimal ed,
       EDecimal other,
       EContext ec) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
       return ed.CompareToTotalMagnitude(other, ec);
     }
 
@@ -568,8 +588,12 @@ private EDecimals() {
      * Creates a copy of the given arbitrary-precision number object.
      * @param ed An arbitrary-precision number object to copy.
      * @return A copy of the given arbitrary-precision number object.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EDecimal Copy(EDecimal ed) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
       return ed.Copy();
     }
 
@@ -590,8 +614,12 @@ private EDecimals() {
      * @param ed An arbitrary-precision number object.
      * @return An arbitrary-precision number object with the same value as the
      * given number object but with a nonnegative sign.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EDecimal CopyAbs(EDecimal ed) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
       return Copy(ed.Abs());
     }
 
@@ -601,8 +629,12 @@ private EDecimals() {
      * @param ed An arbitrary-precision number object.
      * @return An arbitrary-precision number object with the sign reversed from the
      * given number object.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EDecimal CopyNegate(EDecimal ed) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
       return Copy(ed.Negate());
     }
 
@@ -616,8 +648,16 @@ private EDecimals() {
      * @return An arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or
      * negative) as the second given number object.
+     * @throws NullPointerException The parameter {@code ed} or {@code other} is
+     * null.
      */
     public static EDecimal CopySign(EDecimal ed, EDecimal other) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
+      if (other == null) {
+        throw new NullPointerException("other");
+      }
       return ed.isNegative() == other.isNegative() ? Copy(ed) : CopyNegate(ed);
     }
 

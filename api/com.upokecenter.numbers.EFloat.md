@@ -2081,6 +2081,10 @@ Multiplies two binary floating-point numbers. The resulting exponent will be
 
 * The product of the two binary floating-point numbers.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
+
 ### Multiply
     public EFloat Multiply​(EFloat op, EContext ctx)
 Multiplies two binary floating-point numbers. The resulting scale will be
@@ -2938,6 +2942,10 @@ Returns a number similar to this number but with its scale adjusted.
 **Returns:**
 
 * An arbitrary-precision binary floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigPlaces</code> is null.
 
 ### Sqrt
     public EFloat Sqrt​(EContext ctx)

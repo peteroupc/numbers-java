@@ -10,6 +10,9 @@ import com.upokecenter.numbers.*;
       int smallExponent = 0;
       int index = 0;
       EInteger ret = EInteger.FromInt32(0);
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
       while (index < str.length()) {
         if (str.charAt(index) == '0') {
           ++index;
@@ -1116,6 +1119,9 @@ import com.upokecenter.numbers.*;
 
     public EFloat RandomDoubleEFloat(RandomGenerator rnd, boolean subnormal) {
       StringBuilder sb = new StringBuilder();
+      if (rnd == null) {
+        throw new NullPointerException("rnd");
+      }
       if (rnd.UniformInt(2) == 0) {
         sb.append('-');
       }
@@ -1151,6 +1157,9 @@ import com.upokecenter.numbers.*;
 
     public EFloat RandomSingleEFloat(RandomGenerator rnd, boolean subnormal) {
       StringBuilder sb = new StringBuilder();
+      if (rnd == null) {
+        throw new NullPointerException("rnd");
+      }
       if (rnd.UniformInt(2) == 0) {
         sb.append('-');
       }
@@ -1193,6 +1202,9 @@ import com.upokecenter.numbers.*;
     }
 
     public static String OutputEF(EFloat ef) {
+      if (ef == null) {
+        throw new NullPointerException("ef");
+      }
       return ef.ToDouble() + " [" + ef.getMantissa().Abs().ToRadixString(2) +
         "," + ef.getExponent() + "]";
     }
@@ -1201,6 +1213,12 @@ import com.upokecenter.numbers.*;
       EFloat expected,
       EFloat input,
       EFloat src) {
+      if (expected == null) {
+        throw new NullPointerException("expected");
+      }
+      if (input == null) {
+        throw new NullPointerException("input");
+      }
       if (!input.isFinite() || !expected.isFinite()) {
         return;
       }
@@ -1230,6 +1248,12 @@ import com.upokecenter.numbers.*;
       EFloat expected,
       EFloat input,
       EFloat src) {
+      if (expected == null) {
+        throw new NullPointerException("expected");
+      }
+      if (input == null) {
+        throw new NullPointerException("input");
+      }
       if (!input.isFinite() || !expected.isFinite()) {
         return;
       }
