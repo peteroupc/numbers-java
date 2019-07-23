@@ -135,6 +135,9 @@ private TestCommon() {
   "" + o + " and " + o2 + " don't have equal hash codes");
         }
       } else {
+        if (o2 == null) {
+          throw new NullPointerException("o2");
+        }
         if (o2.equals(o)) {
           Assert.fail("" + o + " does not equal " + o2 +
             " but not vice versa");
