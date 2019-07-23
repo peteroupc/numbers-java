@@ -98,8 +98,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}.
-     * @param numerator An EInteger object.
-     * @param denominator An EInteger object.
+     * @param numerator An arbitrary-precision integer.
+     * @param denominator An arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code numerator} or {@code
      * denominator} is null.
      * @throws IllegalArgumentException Denominator is zero.
