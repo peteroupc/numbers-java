@@ -1131,7 +1131,7 @@ at: http://peteroupc.github.io/
             return new EInteger(1, sumreg, this.negative);
           } else if (a == b) {
             return EInteger.FromInt32(0);
- } else {
+          } else {
             b -= a;
             sumreg = new short[2];
             sumreg[0] = ((short)b);
@@ -2042,11 +2042,11 @@ at: http://peteroupc.github.io/
           v >>= 1;
         } else if (eu && !ev) {
           u >>= 1;
- } else if (!eu && ev) {
-   v >>= 1;
- } else if (u >= v) {
-   u = (u - v) >> 1;
- } else {
+        } else if (!eu && ev) {
+          v >>= 1;
+        } else if (u >= v) {
+          u = (u - v) >> 1;
+        } else {
           long tmp = u;
           u = (v - u) >> 1;
           v = tmp;
@@ -2148,7 +2148,7 @@ WordsShiftRightOne(bu, buc);
             buc = WordsSubtract(bu, buc, bv, bvc);
             buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x02) == 0) ?
               WordsShiftRightTwo(bu, buc) : WordsShiftRightOne(bu, buc);
-          } else {
+            } else {
             short[] butmp = bv;
             short[] bvtmp = bu;
             int buctmp = bvc;
@@ -2227,7 +2227,7 @@ WordsShiftRightOne(bu, buc);
                     14 : ((value >= 1000000000000L) ? 13 : ((value
                     >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
                     11 : ((value >= 1000000000L) ? 10 : 9)))))))));
-        } else {
+                  } else {
           int v2 = (int)value;
           return (v2 >= 100000000) ? 9 : ((v2 >= 10000000) ? 8 : ((v2 >=
                     1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
@@ -2255,7 +2255,7 @@ WordsShiftRightOne(bu, buc);
         }
         return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigits)) >=
               0 ? maxDigits : minDigits;
-      } else if (bitlen <= 6432162) {
+            } else if (bitlen <= 6432162) {
         // Much more accurate approximation
         int minDigits = ApproxLogTenOfTwo(bitlen - 1);
         int maxDigits = ApproxLogTenOfTwo(bitlen);
@@ -2280,11 +2280,11 @@ WordsShiftRightOne(bu, buc);
             retval += 5;
           } else if (rest >= 1000) {
             retval += 4;
- } else if (rest >= 100) {
-   retval += 3;
- } else if (rest >= 10) {
-   retval += 2;
- } else {
+          } else if (rest >= 100) {
+            retval += 3;
+          } else if (rest >= 10) {
+            retval += 2;
+          } else {
             ++retval;
           }
           break;
@@ -2296,12 +2296,12 @@ WordsShiftRightOne(bu, buc);
             retval += 10;
           } else if (rest >= 100000000) {
             retval += 9;
- } else if (rest >= 10000000) {
-   retval += 8;
- } else if (rest >= 1000000) {
-   retval += 7;
- } else if (rest >= 100000) {
-   retval += 6;
+          } else if (rest >= 10000000) {
+            retval += 8;
+          } else if (rest >= 1000000) {
+            retval += 7;
+          } else if (rest >= 100000) {
+            retval += 6;
  } else if (rest >= 10000) {
    retval += 5;
  } else if (rest >= 1000) {
@@ -6265,7 +6265,7 @@ WordsShiftRightOne(bu, buc);
           (int)(resultStart + count + count2),
           count2,
           (short)carry);
-      } else {
+        } else {
         SameSizeMultiply(
           resultArr,
           resultStart,

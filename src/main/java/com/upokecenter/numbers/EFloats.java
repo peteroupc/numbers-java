@@ -233,7 +233,7 @@ private EFloats() {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
              ec.getEMin()) < 0;
-        } else {
+           } else {
           return ed.getExponent().compareTo(ec.getEMin()) < 0;
         }
       }
@@ -490,7 +490,7 @@ private EFloats() {
         mantLeft = mant;
       } else if (leftShift.compareTo(ec.getPrecision()) == 0) {
         mantLeft = EInteger.FromInt32(0);
- } else {
+      } else {
         EInteger mult = EInteger.FromInt32(1).ShiftLeft(leftShift);
         mantLeft = mant.Multiply(mult);
         EInteger mod = EInteger.FromInt32(1).ShiftLeft(ec.getPrecision());
@@ -709,11 +709,11 @@ private EFloats() {
         if (ed.isZero()) {
           return (ed.isNegative() ? EFloat.NegativeZero :
              EFloat.Zero).RoundToPrecision(ec);
-        } else if (ed.getExponent().signum() > 0) {
-          return ed.Reduce(ec);
- } else if (ed.getExponent().signum() == 0) {
-   return ed.RoundToPrecision(ec);
- } else {
+           } else if (ed.getExponent().signum() > 0) {
+             return ed.Reduce(ec);
+           } else if (ed.getExponent().signum() == 0) {
+             return ed.RoundToPrecision(ec);
+           } else {
           EInteger exp = ed.getExponent();
           EInteger mant = ed.getUnsignedMantissa();
           boolean neg = ed.isNegative();

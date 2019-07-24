@@ -747,11 +747,11 @@ import com.upokecenter.numbers.*;
           TestCommon.CompareTestEqual(
      bigintB,
      EFloat.Max(bigintA, bigintB));
-        } else if (cmp > 0) {
+   } else if (cmp > 0) {
           TestCommon.CompareTestEqual(
      bigintA,
      EFloat.Max(bigintA, bigintB));
-        } else {
+   } else {
           TestCommon.CompareTestEqual(
      bigintA,
      EFloat.Max(bigintA, bigintB));
@@ -815,11 +815,11 @@ import com.upokecenter.numbers.*;
           TestCommon.CompareTestEqual(
      bigintA,
      EFloat.Min(bigintA, bigintB));
-        } else if (cmp > 0) {
+   } else if (cmp > 0) {
           TestCommon.CompareTestEqual(
      bigintB,
      EFloat.Min(bigintA, bigintB));
-        } else {
+   } else {
           TestCommon.CompareTestEqual(
      bigintA,
      EFloat.Min(bigintA, bigintB));
@@ -1565,7 +1565,7 @@ import com.upokecenter.numbers.*;
             TestCommon.AssertEquals(
          eint,
          EInteger.FromByte(enumber.ToByteIfExact()));
-          } else {
+       } else {
             try {
               enumber.ToByteIfExact();
               Assert.fail("Should have failed");
@@ -1647,7 +1647,7 @@ import com.upokecenter.numbers.*;
             TestCommon.AssertEquals(
            eint,
            EInteger.FromInt16(enumber.ToInt16IfExact()));
-          } else {
+         } else {
             try {
               enumber.ToInt16IfExact();
               Assert.fail("Should have failed");
@@ -1730,7 +1730,7 @@ import com.upokecenter.numbers.*;
             TestCommon.AssertEquals(
            eint,
            EInteger.FromInt32(enumber.ToInt32IfExact()));
-          } else {
+         } else {
             try {
               enumber.ToInt32IfExact();
               Assert.fail("Should have failed");

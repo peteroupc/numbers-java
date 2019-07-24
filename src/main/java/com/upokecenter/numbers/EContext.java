@@ -254,11 +254,13 @@ at: http://peteroupc.github.io/
 
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}.
-     * @param precision A 32-bit signed integer.
-     * @param rounding An ERounding object.
-     * @param exponentMinSmall Another 32-bit signed integer.
-     * @param exponentMaxSmall A 32-bit signed integer. (3).
-     * @param clampNormalExponents A Boolean object.
+     * @param precision The parameter {@code precision} is a 32-bit signed integer.
+     * @param rounding The parameter {@code rounding} is an ERounding object.
+     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
+     * signed integer.
+     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
+     * signed integer.
+     * @param clampNormalExponents Either {@code true} or {@code false}.
      */
     public EContext(
       int precision,
@@ -284,11 +286,11 @@ at: http://peteroupc.github.io/
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class, .
-     * @param bigintPrecision An EInteger object.
-     * @param rounding An ERounding object.
-     * @param exponentMin An EInteger object.
-     * @param exponentMax An EInteger object. (3).
-     * @param clampNormalExponents A Boolean object.
+     * @param bigintPrecision An arbitrary-precision integer.
+     * @param rounding The parameter {@code rounding} is an ERounding object.
+     * @param exponentMin An arbitrary-precision integer.
+     * @param exponentMax An arbitrary-precision integer. (3).
+     * @param clampNormalExponents Either {@code true} or {@code false}.
      */
     public EContext(
       EInteger bigintPrecision,
@@ -389,7 +391,7 @@ at: http://peteroupc.github.io/
      * 0. This value is a combination of bit fields. To retrieve a
      * particular flag, use the AND operation on the return value of this
      * method. For example: {@code (this.getFlags() &EContext.FlagInexact)
-     * != 0} returns {@code true} if the Inexact flag is set.
+     * !=0} returns {@code true} if the Inexact flag is set.
      */
     public final int getFlags() {
         return this.flags;
