@@ -2668,6 +2668,8 @@ at: http://peteroupc.github.io/
           nan[1] |= ((int)(1 << 31));
         }
         if (this.IsQuietNaN()) {
+          // Quiet NaN is a NaN in which the highest bit of
+          // the mantissa area is set
           nan[1] |= 0x80000;
         } else if (this.getUnsignedMantissa().isZero()) {
           // Set the 0x40000 bit to keep the mantissa from

@@ -4547,9 +4547,9 @@ ERounding.HalfEven ||
                 incremented |= !neg && (lastDiscarded | olderDiscarded) != 0;
               } else if (rounding == ERounding.Floor) {
                 incremented |= neg && (lastDiscarded | olderDiscarded) != 0;
-      } else if (rounding == ERounding.Up) {
-        incremented |= (lastDiscarded | olderDiscarded) != 0;
-      } else if (rounding == ERounding.Odd ||
+              } else if (rounding == ERounding.Up) {
+                incremented |= (lastDiscarded | olderDiscarded) != 0;
+              } else if (rounding == ERounding.Odd ||
         (rounding == ERounding.OddOrZeroFiveUp && radix == 2)) {
         incremented |= (lastDiscarded | olderDiscarded) != 0 &&
             fastNumber.isEvenNumber();

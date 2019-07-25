@@ -2302,12 +2302,12 @@ WordsShiftRightOne(bu, buc);
             retval += 7;
           } else if (rest >= 100000) {
             retval += 6;
- } else if (rest >= 10000) {
-   retval += 5;
- } else if (rest >= 1000) {
-   retval += 4;
- } else if (rest >= 100) {
-   retval += 3;
+          } else if (rest >= 10000) {
+            retval += 5;
+          } else if (rest >= 1000) {
+            retval += 4;
+          } else if (rest >= 100) {
+            retval += 3;
  } else if (rest >= 10) {
    retval += 2;
  } else {

@@ -101,6 +101,9 @@ private RandomObjects() {
         }
         exponent = rand.UniformInt(2047);
       }
+      if (rand == null) {
+        throw new NullPointerException("rand");
+      }
       long r = rand.UniformInt(0x10000);
       r |= ((long)rand.UniformInt(0x10000)) << 16;
       if (rand.UniformInt(2) == 0) {
@@ -120,6 +123,9 @@ private RandomObjects() {
           throw new NullPointerException("rand");
         }
         exponent = rand.UniformInt(255);
+      }
+      if (rand == null) {
+        throw new NullPointerException("rand");
       }
       int r = rand.UniformInt(0x10000);
       if (rand.UniformInt(2) == 0) {
