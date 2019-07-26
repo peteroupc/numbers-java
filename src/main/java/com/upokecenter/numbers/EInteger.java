@@ -2308,9 +2308,9 @@ WordsShiftRightOne(bu, buc);
             retval += 4;
           } else if (rest >= 100) {
             retval += 3;
- } else if (rest >= 10) {
-   retval += 2;
- } else {
+          } else if (rest >= 10) {
+            retval += 2;
+          } else {
             ++retval;
           }
           break;
