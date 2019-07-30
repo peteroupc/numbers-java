@@ -823,13 +823,15 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Parameters:**
 
-* <code>bigIndex</code> - An arbitrary-precision integer.
+* <code>bigIndex</code> - The index, starting at zero, of the bit to test, where 0 is
+ the least significant bit, 1 is the next least significant bit, and
+ so on.
 
 **Returns:**
 
-* <code>true</code> if a bit is set in the two' s-complement form (see
- <code>EDecimal</code>) of this object' s value;
- otherwise, <code>false</code>.
+* <code>true</code> if the given bit is set in the two' s-complement form
+ (see <code>EDecimal</code>) of this object' s
+ value; otherwise, <code>false</code>.
 
 **Throws:**
 
@@ -842,20 +844,26 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Parameters:**
 
-* <code>index</code> - The parameter <code>index</code> is a 32-bit signed integer.
+* <code>index</code> - The index, starting at 0, of the bit to test, where 0 is the
+ least significant bit, 1 is the next least significant bit, and so
+ on.
 
 **Returns:**
 
-* <code>true</code> if a bit is set in the two' s-complement form (see
- <code>EDecimal</code>) of this object' s value;
- otherwise, <code>false</code>.
+* <code>true</code> if the given bit is set in the two' s-complement form
+ (see <code>EDecimal</code>) of this object' s
+ value; otherwise, <code>false</code>.
 
 ### GetSignedBitLengthAsEInteger
     public EInteger GetSignedBitLengthAsEInteger()
 Finds the minimum number of bits needed to represent this object's value,
  except for its sign, in the form of an arbitrary-precision integer.
  If the value is negative, finds the number of bits in the value
- equal to this object's absolute value minus 1.
+ equal to this object's absolute value minus 1. For example, all
+ integers in the interval [-(2^63), (2^63) - 1], which is the same as
+ the range of integers in Java's and.getNET()'s <code>long</code> type, have a
+ signed bit length of 63 or less, and all other integers have a
+ signed bit length of greater than 63.
 
 **Returns:**
 
@@ -883,11 +891,14 @@ Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
 
-* <code>bigIndex</code> - An arbitrary-precision integer.
+* <code>bigIndex</code> - The index, starting at zero, of the bit to test, where 0 is
+ the least significant bit, 1 is the next least significant bit, and
+ so on.
 
 **Returns:**
 
-* <code>true</code> if a bit is set in this number's absolute value.
+* <code>true</code> if the given bit is set in this number's absolute
+ value.
 
 **Throws:**
 
@@ -899,17 +910,23 @@ Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
 
-* <code>index</code> - Zero based index of the bit to test. 0 means the least
- significant bit.
+* <code>index</code> - The index, starting at 0, of the bit to test, where 0 is the
+ least significant bit, 1 is the next least significant bit, and so
+ on.
 
 **Returns:**
 
-* <code>true</code> if a bit is set in this number's absolute value.
+* <code>true</code> if the given bit is set in this number's absolute
+ value.
 
 ### GetUnsignedBitLengthAsEInteger
     public EInteger GetUnsignedBitLengthAsEInteger()
 Finds the minimum number of bits needed to represent this number's absolute
- value.
+ value. For example, all integers in the interval [-((2^63) - 1),
+ (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+ integers have an unsigned bit length of greater than 63. This
+ interval is not the same as the range of integers in Java's
+ and.getNET()'s <code>long</code> type.
 
 **Returns:**
 

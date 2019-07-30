@@ -2464,10 +2464,12 @@ WordsShiftRightOne(bu, buc);
      * Returns whether a bit is set in the two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
      * object' s value.
-     * @param bigIndex An arbitrary-precision integer.
-     * @return {@code true} if a bit is set in the two' s-complement form (see
-     * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
-     * otherwise, {@code false}.
+     * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
+     * the least significant bit, 1 is the next least significant bit, and
+     * so on.
+     * @return {@code true} if the given bit is set in the two' s-complement form
+     * (see {@link com.upokecenter.numbers.EDecimal}) of this object' s
+     * value; otherwise, {@code false}.
      * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
     public boolean GetSignedBit(EInteger bigIndex) {
@@ -2511,10 +2513,12 @@ WordsShiftRightOne(bu, buc);
      * Returns whether a bit is set in the two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
      * object' s value.
-     * @param index The parameter {@code index} is a 32-bit signed integer.
-     * @return {@code true} if a bit is set in the two' s-complement form (see
-     * {@link com.upokecenter.numbers.EDecimal}) of this object' s value;
-     * otherwise, {@code false}.
+     * @param index The index, starting at 0, of the bit to test, where 0 is the
+     * least significant bit, 1 is the next least significant bit, and so
+     * on.
+     * @return {@code true} if the given bit is set in the two' s-complement form
+     * (see {@link com.upokecenter.numbers.EDecimal}) of this object' s
+     * value; otherwise, {@code false}.
      */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
@@ -2549,7 +2553,11 @@ WordsShiftRightOne(bu, buc);
      * Finds the minimum number of bits needed to represent this object's value,
      * except for its sign, in the form of an arbitrary-precision integer.
      * If the value is negative, finds the number of bits in the value
-     * equal to this object's absolute value minus 1.
+     * equal to this object's absolute value minus 1. For example, all
+     * integers in the interval [-(2^63), (2^63) - 1], which is the same as
+     * the range of integers in Java's and.getNET()'s <code>long</code> type, have a
+     * signed bit length of 63 or less, and all other integers have a
+     * signed bit length of greater than 63.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      */
@@ -2601,7 +2609,11 @@ WordsShiftRightOne(bu, buc);
     /**
      * Finds the minimum number of bits needed to represent this object's value,
      * except for its sign. If the value is negative, finds the number of
-     * bits in the value equal to this object's absolute value minus 1.
+     * bits in the value equal to this object's absolute value minus 1. For
+     * example, all integers in the interval [-(2^63), (2^63) - 1], which
+     * is the same as the range of integers in Java's and.getNET()'s <code>long</code>
+     * type, have a signed bit length of 63 or less, and all other integers
+     * have a signed bit length of greater than 63.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
      * @throws ArithmeticException The return value would exceed the range of
@@ -2615,8 +2627,11 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in this number's absolute value.
-     * @param bigIndex An arbitrary-precision integer.
-     * @return {@code true} if a bit is set in this number's absolute value.
+     * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
+     * the least significant bit, 1 is the next least significant bit, and
+     * so on.
+     * @return {@code true} if the given bit is set in this number's absolute
+     * value.
      * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
     public boolean GetUnsignedBit(EInteger bigIndex) {
@@ -2640,9 +2655,11 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Returns whether a bit is set in this number's absolute value.
-     * @param index Zero based index of the bit to test. 0 means the least
-     * significant bit.
-     * @return {@code true} if a bit is set in this number's absolute value.
+     * @param index The index, starting at 0, of the bit to test, where 0 is the
+     * least significant bit, 1 is the next least significant bit, and so
+     * on.
+     * @return {@code true} if the given bit is set in this number's absolute
+     * value.
      */
     public boolean GetUnsignedBit(int index) {
       if (index < 0) {
@@ -2654,7 +2671,11 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Finds the minimum number of bits needed to represent this number's absolute
-     * value.
+     * value. For example, all integers in the interval [-((2^63) - 1),
+     * (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+     * integers have an unsigned bit length of greater than 63. This
+     * interval is not the same as the range of integers in Java's
+     * and.getNET()'s <code>long</code> type.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
      */
@@ -2691,7 +2712,11 @@ WordsShiftRightOne(bu, buc);
 
     /**
      * Finds the minimum number of bits needed to represent this number's absolute
-     * value.
+     * value. For example, all integers in the interval [-((2^63) - 1),
+     * (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+     * integers have an unsigned bit length of greater than 63. This
+     * interval is not the same as the range of integers in Java's
+     * and.getNET()'s <code>long</code> type.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
      * @throws ArithmeticException The return value would exceed the range of

@@ -4750,7 +4750,7 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
             builder.append('.');
             builder.append(
               mantissaString, tmpInt, (tmpInt)+(mantissaString.length() - tmpInt));
-            } else {
+          } else {
             if (!decimalPoint.CanFitInInt32()) {
               throw new UnsupportedOperationException();
             }
@@ -4824,8 +4824,8 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
             builder.append('.');
             builder.append(
               mantissaString, tmpInt, (tmpInt)+(mantissaString.length() - tmpInt));
-            } else if (adjustedExponent.signum() == 0 && !negative) {
-              return mantissaString;
+          } else if (adjustedExponent.signum() == 0 && !negative) {
+            return mantissaString;
           } else if (adjustedExponent.signum() == 0 && negative) {
             return "-" + mantissaString;
           } else {
