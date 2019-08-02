@@ -29,6 +29,7 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
 * `EInteger Abs()`<br>
  Returns the absolute value of this object's value.
 * `EInteger Add​(int intValue)`<br>
+ Not documented yet.
 * `EInteger Add​(EInteger bigintAugend)`<br>
  Adds this object and another object.
 * `EInteger And​(EInteger other)`<br>
@@ -588,6 +589,7 @@ Compares an arbitrary-precision integer with this instance.
 
 ### Add
     public EInteger Add​(int intValue)
+Not documented yet.
 
 **Parameters:**
 

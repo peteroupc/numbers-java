@@ -731,7 +731,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Not documented yet.
      * @param intValue The parameter {@code intValue} is not documented yet.
      * @return An arbitrary-precision binary floating-point number.
      */

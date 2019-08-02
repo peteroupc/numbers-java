@@ -94,6 +94,7 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
 * `EFloat Add​(int intValue)`<br>
+ Not documented yet.
 * `EFloat Add​(EFloat otherValue)`<br>
  Adds this object and another binary float and returns the result.
 * `EFloat Add​(EFloat otherValue,
@@ -1112,6 +1113,7 @@ Finds the absolute value of this object (if it's negative, it becomes
 
 ### Add
     public EFloat Add​(int intValue)
+Not documented yet.
 
 **Parameters:**
 
