@@ -62,7 +62,7 @@ at: http://peteroupc.github.io/
           this.ShiftRight(preShift);
           this.VerifyKnownLength();
           return;
-          } else {
+        } else {
           // NOTE: For BitShiftAccumulator, truncating and shifting
           // are the same, unlike in DigitShiftAccumulator
           this.ShiftRight(bitDiff);

@@ -120,7 +120,7 @@ import com.upokecenter.numbers.*;
         EDecimal.PositiveInfinity,
         valueEdTmp);
       {
-Object objectTemp = EDecimal.NegativeInfinity;
+        Object objectTemp = EDecimal.NegativeInfinity;
 Object objectTemp2 = EDecimal.FromString(
         "-9.3168444507547E+28").RoundToPrecision(EContext.CliDecimal);
 Assert.assertEquals(objectTemp, objectTemp2);
@@ -137,13 +137,13 @@ Assert.assertEquals(objectTemp, objectTemp2);
           stringTemp);
       }
       {
-Object objectTemp = EDecimal.PositiveInfinity;
+        Object objectTemp = EDecimal.PositiveInfinity;
 Object objectTemp2 = EDecimal.FromString(
   "96148154858060747311034406200").RoundToPrecision(EContext.CliDecimal);
 Assert.assertEquals(objectTemp, objectTemp2);
 }
       {
-Object objectTemp = EDecimal.PositiveInfinity;
+        Object objectTemp = EDecimal.PositiveInfinity;
 Object objectTemp2 = EDecimal.FromString(
   "90246605365627217170000000000").RoundToPrecision(EContext.CliDecimal);
 Assert.assertEquals(objectTemp, objectTemp2);
@@ -197,8 +197,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
     @Test
     public void TestToString() {
       if (EContext.Unlimited.toString() == null) {
- Assert.fail();
- }
+        Assert.fail();
+      }
     }
     @Test
     public void TestTraps() {

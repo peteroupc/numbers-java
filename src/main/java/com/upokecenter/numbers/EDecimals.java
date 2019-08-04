@@ -250,7 +250,7 @@ private EDecimals() {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
              ec.getEMin()) < 0;
-           } else {
+        } else {
           return ed.getExponent().compareTo(ec.getEMin()) < 0;
         }
       }
