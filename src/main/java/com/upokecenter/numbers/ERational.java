@@ -242,7 +242,7 @@ at: http://peteroupc.github.io/
      * binary rational number, use that object's {@code UnsignedNumerator}
      * property.
      * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The parameter "diag" is less than 0.
+     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
     public static ERational CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false);
@@ -259,8 +259,8 @@ at: http://peteroupc.github.io/
      * (false).
      * @param negative Whether the return value is negative.
      * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The parameter "diag" is less than 0.
-     * @throws NullPointerException The parameter "diag" is null.
+     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
+     * @throws NullPointerException The parameter {@code diag} is null.
      */
     public static ERational CreateNaN(
       EInteger diag,
@@ -292,7 +292,7 @@ at: http://peteroupc.github.io/
      * approximation, as is often the case by converting the number to a
      * string.
      * @param flt The parameter {@code flt} is a 64-bit floating-point number.
-     * @return A rational number with the same value as "flt".
+     * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromDouble(double flt) {
       return FromEFloat(EFloat.FromDouble(flt));
@@ -325,7 +325,7 @@ at: http://peteroupc.github.io/
      * Converts an arbitrary-precision decimal number to a rational number.
      * @param ef The number to convert as an arbitrary-precision decimal number.
      * @return An arbitrary-precision rational number.
-     * @throws NullPointerException The parameter "ef" is null.
+     * @throws NullPointerException The parameter {@code ef} is null.
      */
     public static ERational FromEDecimal(EDecimal ef) {
       if (ef == null) {
@@ -373,7 +373,7 @@ at: http://peteroupc.github.io/
      * @param ef The number to convert as an arbitrary-precision binary
      * floating-point number.
      * @return An arbitrary-precision rational number.
-     * @throws NullPointerException The parameter "ef" is null.
+     * @throws NullPointerException The parameter {@code ef} is null.
      */
     public static ERational FromEFloat(EFloat ef) {
       if (ef == null) {
@@ -431,7 +431,7 @@ at: http://peteroupc.github.io/
      * string.
      * @param flt The parameter {@code flt} is a 32-bit binary floating-point
      * number.
-     * @return A rational number with the same value as "flt".
+     * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromSingle(float flt) {
       return FromEFloat(EFloat.FromSingle(flt));
@@ -443,7 +443,7 @@ at: http://peteroupc.github.io/
      * @param str A string that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      */
     public static ERational FromString(String str) {
@@ -472,12 +472,12 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision rational number.
-     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
-     * @throws NullPointerException The parameter "str" is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
-     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static ERational FromString(
@@ -891,7 +891,7 @@ at: http://peteroupc.github.io/
      * @param otherValue Another arbitrary-precision rational number.
      * @return The sum of the two numbers. Returns not-a-number (NaN) if either
      * operand is NaN.
-     * @throws NullPointerException The parameter "otherValue" is null.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Add(ERational otherValue) {
       if (otherValue == null) {
@@ -1227,7 +1227,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * (positive or negative) of another number.
      * @param other A number whose sign will be copied.
      * @return An arbitrary-precision rational number.
-     * @throws NullPointerException The parameter "other" is null.
+     * @throws NullPointerException The parameter {@code other} is null.
      */
     public ERational CopySign(ERational other) {
       if (other == null) {
@@ -1245,7 +1245,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * object.
      * @param otherValue An arbitrary-precision rational number.
      * @return The quotient of the two objects.
-     * @throws NullPointerException The parameter "otherValue" is null.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Divide(ERational otherValue) {
       if (otherValue == null) {
@@ -1403,7 +1403,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * number.
      * @param otherValue An arbitrary-precision rational number.
      * @return The product of the two numbers.
-     * @throws NullPointerException The parameter "otherValue" is null.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Multiply(ERational otherValue) {
       if (otherValue == null) {
@@ -1459,7 +1459,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * of an arbitrary-precision rational number.
      * @param otherValue An arbitrary-precision rational number.
      * @return The remainder of the two numbers.
-     * @throws NullPointerException The parameter "otherValue" is null.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Remainder(ERational otherValue) {
       if (otherValue == null) {
@@ -1513,7 +1513,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * Subtracts an arbitrary-precision rational number from this instance.
      * @param otherValue An arbitrary-precision rational number.
      * @return The difference of the two objects.
-     * @throws NullPointerException The parameter "otherValue" is null.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Subtract(ERational otherValue) {
       if (otherValue == null) {

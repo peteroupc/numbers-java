@@ -418,7 +418,7 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter "diag" is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
 
 ### CreateNaN
     public static ERational CreateNaN​(EInteger diag, boolean signaling, boolean negative)
@@ -443,9 +443,9 @@ Creates a not-a-number arbitrary-precision rational number.
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - The parameter "diag" is less than 0.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.
 
-* <code>java.lang.NullPointerException</code> - The parameter "diag" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null.
 
 ### FromDouble
     public static ERational FromDouble​(double flt)
@@ -460,7 +460,7 @@ Converts a 64-bit floating-point number to a rational number. This method
 
 **Returns:**
 
-* A rational number with the same value as "flt".
+* A rational number with the same value as <code>flt</code>.
 
 ### FromExtendedDecimal
     @Deprecated public static ERational FromExtendedDecimal​(EDecimal ef)
@@ -503,7 +503,7 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "ef" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>ef</code> is null.
 
 ### FromEFloat
     public static ERational FromEFloat​(EFloat ef)
@@ -520,7 +520,7 @@ Converts an arbitrary-precision binary float to a rational number.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "ef" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>ef</code> is null.
 
 ### FromEInteger
     public static ERational FromEInteger​(EInteger bigint)
@@ -548,7 +548,7 @@ Converts a 32-bit binary floating-point number to a rational number. This
 
 **Returns:**
 
-* A rational number with the same value as "flt".
+* A rational number with the same value as <code>flt</code>.
 
 ### FromString
     public static ERational FromString​(java.lang.String str)
@@ -566,7 +566,7 @@ Creates a rational number from a text string that represents a number. See
 
 **Throws:**
 
-* <code>java.lang.NumberFormatException</code> - The parameter "str" is not a correctly
+* <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is not a correctly
  formatted number string.
 
 ### FromString
@@ -603,14 +603,14 @@ Creates a rational number from a text string that represents a number. See
 
 **Throws:**
 
-* <code>java.lang.NumberFormatException</code> - The parameter "str" is not a correctly
+* <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is not a correctly
  formatted number string.
 
-* <code>java.lang.NullPointerException</code> - The parameter "str" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
-  greater than "str"'s length, or "str"'s length minus "offset" is
-  less than "length".
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
@@ -686,7 +686,7 @@ Adds two rational numbers.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
 ### compareTo
     public int compareTo​(ERational other)
@@ -761,7 +761,7 @@ Returns a number with the same value as this one, but copying the sign
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "other" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### Divide
     public ERational Divide​(ERational otherValue)
@@ -778,7 +778,7 @@ Divides this instance by the value of an arbitrary-precision rational number
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
 ### equals
     public boolean equals​(java.lang.Object obj)
@@ -898,7 +898,7 @@ Multiplies this instance by the value of an arbitrary-precision rational
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
 ### Negate
     public ERational Negate()
@@ -924,7 +924,7 @@ Finds the remainder that results when this instance is divided by the value
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
 ### Subtract
     public ERational Subtract​(ERational otherValue)
@@ -940,7 +940,7 @@ Subtracts an arbitrary-precision rational number from this instance.
 
 **Throws:**
 
-* <code>java.lang.NullPointerException</code> - The parameter "otherValue" is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
 ### ToDouble
     public double ToDouble()

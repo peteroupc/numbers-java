@@ -350,7 +350,7 @@ at: http://peteroupc.github.io/
      * approximation, as is often the case by converting the floating point
      * number to a string first.
      * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
-     * @return A binary float with the same value as "dbl".
+     * @return A binary float with the same value as {@code dbl}.
      */
     public static EFloat FromDouble(double dbl) {
       int[] value = Extras.DoubleToIntegers(dbl);
@@ -409,7 +409,7 @@ at: http://peteroupc.github.io/
      * number to a string first.
      * @param flt The parameter {@code flt} is a 32-bit binary floating-point
      * number.
-     * @return A binary float with the same value as "flt".
+     * @return A binary float with the same value as {@code flt}.
      */
     public static EFloat FromSingle(float flt) {
       int value = Float.floatToRawIntBits(flt);
@@ -487,9 +487,9 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code str} 's length, or {@code str} ' s
      * length minus {@code offset} is less than {@code length}.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
-     *  less than "length".
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
       String str,
@@ -548,9 +548,9 @@ at: http://peteroupc.github.io/
      * is less than 0 or greater than {@code str} 's length, or {@code str}
      * ' s length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
-     *  less than "length".
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -686,10 +686,11 @@ at: http://peteroupc.github.io/
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * can't be null, as &#x3c0; can never be represented exactly.</i>.
+     * can't be null, as π can never be represented exactly.</i>.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
-     *  and returns not-a-number (NaN) if the parameter "ctx" is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
+     * or the precision is unlimited (the context's Precision property is
+     * 0).
      */
     public static EFloat PI(EContext ctx) {
       return MathValue.Pi(ctx);
@@ -814,7 +815,7 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision binary floating-point number.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other
-     *  value or if "other" is null, or 0 if both values are equal.
+     * value or if {@code other} is null, or 0 if both values are equal.
      */
     public int compareTo(EFloat other) {
       return MathValue.compareTo(this, other);
@@ -1456,9 +1457,9 @@ at: http://peteroupc.github.io/
      * Specification, any rounding mode is allowed.).
      * @return Exponential of this object. If this object's value is 1, returns an
      *  approximation to " e" within the given precision. Signals
-     *  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-     * null or the precision is unlimited (the context's Precision property
-     * is 0).
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null or the precision is unlimited (the context's Precision
+     * property is 0).
      */
     public EFloat Exp(EContext ctx) {
       return MathValue.Exp(this, ctx);
@@ -1555,9 +1556,9 @@ at: http://peteroupc.github.io/
      * with a real part equal to Ln of this object's absolute value and an
      * imaginary part equal to pi, but the return value is still NaN.).
      * Signals FlagInvalid and returns not-a-number (NaN) if the parameter
-     *  "ctx" is null or the precision is unlimited (the context's Precision
-     * property is 0). Signals no flags and returns negative infinity if
-     * this object's value is 0.
+     * {@code ctx} is null or the precision is unlimited (the context's
+     * Precision property is 0). Signals no flags and returns negative
+     * infinity if this object's value is 0.
      */
     public EFloat Log(EContext ctx) {
       return MathValue.Ln(this, ctx);
@@ -1576,9 +1577,9 @@ at: http://peteroupc.github.io/
      * any rounding mode is allowed.).
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals
-     *  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-     * null or the precision is unlimited (the context's Precision property
-     * is 0).
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null or the precision is unlimited (the context's Precision
+     * property is 0).
      */
     public EFloat Log10(EContext ctx) {
       return MathValue.Log10(this, ctx);
@@ -1590,8 +1591,8 @@ at: http://peteroupc.github.io/
      * @param places The number of binary digit places to move the radix point to
      * the left. If this number is negative, instead moves the radix point
      * to the right by this number's absolute value.
-     * @return A number whose exponent is decreased by "places", but not to more
-     * than 0.
+     * @return A number whose exponent is decreased by {@code places}, but not to
+     * more than 0.
      */
     public EFloat MovePointLeft(int places) {
       return this.MovePointLeft(EInteger.FromInt32(places), null);
@@ -1621,8 +1622,8 @@ at: http://peteroupc.github.io/
      * @param bigPlaces The number of binary digit places to move the radix point
      * to the left. If this number is negative, instead moves the radix
      * point to the right by this number's absolute value.
-     * @return A number whose exponent is decreased by "bigPlaces", but not to more
-     * than 0.
+     * @return A number whose exponent is decreased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointLeft(EInteger bigPlaces) {
       return this.MovePointLeft(bigPlaces, null);
@@ -1655,8 +1656,8 @@ at: http://peteroupc.github.io/
      * @param places The number of binary digit places to move the radix point to
      * the right. If this number is negative, instead moves the radix point
      * to the left by this number's absolute value.
-     * @return A number whose exponent is increased by "places", but not to more
-     * than 0.
+     * @return A number whose exponent is increased by {@code places}, but not to
+     * more than 0.
      */
     public EFloat MovePointRight(int places) {
       return this.MovePointRight(EInteger.FromInt32(places), null);
@@ -1686,8 +1687,8 @@ at: http://peteroupc.github.io/
      * @param bigPlaces The number of binary digit places to move the radix point
      * to the right. If this number is negative, instead moves the radix
      * point to the left by this number's absolute value.
-     * @return A number whose exponent is increased by "bigPlaces", but not to more
-     * than 0.
+     * @return A number whose exponent is increased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointRight(EInteger bigPlaces) {
       return this.MovePointRight(bigPlaces, null);
@@ -1887,8 +1888,9 @@ at: http://peteroupc.github.io/
      * the pre-existing flags).
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity. Signals
-     *  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-     *  null, the precision is 0, or "ctx" has an unlimited exponent range.
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null, the precision is 0, or {@code ctx} has an unlimited
+     * exponent range.
      */
     public EFloat NextMinus(EContext ctx) {
       return MathValue.NextMinus(this, ctx);
@@ -1903,8 +1905,8 @@ at: http://peteroupc.github.io/
      * the pre-existing flags).
      * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the
-     *  parameter "ctx" is null, the precision is 0, or "ctx" has an
-     * unlimited exponent range.
+     * parameter {@code ctx} is null, the precision is 0, or {@code ctx}
+     * has an unlimited exponent range.
      */
     public EFloat NextPlus(EContext ctx) {
       return MathValue.NextPlus(this, ctx);
@@ -1940,8 +1942,8 @@ at: http://peteroupc.github.io/
      * exponent range. Can be null, in which case the precision is
      * unlimited and rounding isn't needed.
      * @return The closest value to this object's value, rounded to the specified
-     *  precision. Returns the same value as this object if "ctx" is null or
-     * the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if {@code ctx} is
+     * null or the precision and exponent range are unlimited.
      */
     public EFloat Plus(EContext ctx) {
       return MathValue.Plus(this, ctx);
@@ -2505,8 +2507,8 @@ at: http://peteroupc.github.io/
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
      * @return The closest value to this object's value, rounded to the specified
-     *  precision. Returns the same value as this object if "ctx" is null or
-     * the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if {@code ctx} is
+     * null or the precision and exponent range are unlimited.
      */
     public EFloat RoundToPrecision(EContext ctx) {
       return MathValue.RoundToPrecision(this, ctx);
@@ -2537,7 +2539,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param bigPlaces An arbitrary-precision integer.
-     * @return A number whose exponent is increased by "bigPlaces".
+     * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) {
       return this.ScaleByPowerOfTwo(bigPlaces, null);
@@ -2585,8 +2587,8 @@ at: http://peteroupc.github.io/
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     *  returns not-a-number (NaN) if the parameter "ctx" is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
+     * the precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Sqrt(EContext ctx) {
       return MathValue.SquareRoot(this, ctx);
@@ -2604,8 +2606,8 @@ at: http://peteroupc.github.io/
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     *  returns not-a-number (NaN) if the parameter "ctx" is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
+     * the precision is unlimited (the context's Precision property is 0).
      * @deprecated Renamed to Sqrt.
  */
 @Deprecated

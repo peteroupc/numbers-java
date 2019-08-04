@@ -1064,7 +1064,7 @@ Raises an arbitrary-precision integer to a power.
 
 **Returns:**
 
-* The result. Returns 1 if "powerSmall" is 0.
+* The result. Returns 1 if <code>powerSmall</code> is 0.
 
 ### PowBigIntVar
     public EInteger PowBigIntVar​(EInteger power)
@@ -1077,7 +1077,7 @@ Raises an arbitrary-precision integer to a power, which is given as another
 
 **Returns:**
 
-* The result. Returns 1 if "power" is 0.
+* The result. Returns 1 if <code>power</code> is 0.
 
 **Throws:**
 

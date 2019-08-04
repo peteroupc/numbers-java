@@ -2991,7 +2991,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Raises an arbitrary-precision integer to a power.
      * @param powerSmall The exponent to raise this integer to.
-     * @return The result. Returns 1 if "powerSmall" is 0.
+     * @return The result. Returns 1 if {@code powerSmall} is 0.
      */
     public EInteger Pow(int powerSmall) {
       if (powerSmall < 0) {
@@ -3035,7 +3035,7 @@ WordsShiftRightOne(bu, buc);
      * Raises an arbitrary-precision integer to a power, which is given as another
      * arbitrary-precision integer.
      * @param power The exponent to raise to.
-     * @return The result. Returns 1 if "power" is 0.
+     * @return The result. Returns 1 if {@code power} is 0.
      * @throws IllegalArgumentException The parameter {@code power} is less than 0.
      * @throws NullPointerException The parameter {@code power} is null.
      */

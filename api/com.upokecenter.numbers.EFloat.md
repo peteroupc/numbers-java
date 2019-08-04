@@ -777,7 +777,7 @@ Creates a binary float from a 64-bit floating-point number. This method
 
 **Returns:**
 
-* A binary float with the same value as "dbl".
+* A binary float with the same value as <code>dbl</code>.
 
 ### FromEInteger
     public static EFloat FromEInteger​(EInteger bigint)
@@ -805,7 +805,7 @@ Creates a binary float from a 32-bit floating-point number. This method
 
 **Returns:**
 
-* A binary float with the same value as "flt".
+* A binary float with the same value as <code>flt</code>.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
@@ -853,9 +853,9 @@ Creates a binary float from a text string that represents a number. Note
  than 0 or greater than <code>str</code> 's length, or <code>str</code> ' s
  length minus <code>offset</code> is less than <code>length</code>.
 
-* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
-  greater than "str"'s length, or "str"'s length minus "offset" is
-  less than "length".
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str)
@@ -918,9 +918,9 @@ Creates a binary float from a text string that represents a number. For more
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Either "offset" or "length" is less than 0 or
-  greater than "str"'s length, or "str"'s length minus "offset" is
-  less than "length".
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
 
 ### Max
     public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
@@ -1077,8 +1077,9 @@ Finds the constant π, the circumference of a circle divided by its diameter.
 **Returns:**
 
 * The constant π rounded to the given precision. Signals FlagInvalid
-  and returns not-a-number (NaN) if the parameter "ctx" is null or the
- precision is unlimited (the context's Precision property is 0).
+ and returns not-a-number (NaN) if the parameter <code>ctx</code> is null
+ or the precision is unlimited (the context's Precision property is
+ 0).
 
 ### Abs
     public EFloat Abs()
@@ -1225,7 +1226,7 @@ Compares the mathematical values of this object and another object,
 
 * Less than 0 if this object's value is less than the other value, or
  greater than 0 if this object's value is greater than the other
-  value or if "other" is null, or 0 if both values are equal.
+ value or if <code>other</code> is null, or 0 if both values are equal.
 
 ### CompareToSignal
     public EFloat CompareToSignal​(EFloat other, EContext ctx)
@@ -1794,9 +1795,9 @@ Finds e (the base of natural logarithms) raised to the power of this
 
 * Exponential of this object. If this object's value is 1, returns an
   approximation to " e" within the given precision. Signals
-  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
- null or the precision is unlimited (the context's Precision property
- is 0).
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ ctx</code> is null or the precision is unlimited (the context's Precision
+ property is 0).
 
 ### hashCode
     public int hashCode()
@@ -1890,9 +1891,9 @@ Finds the natural logarithm of this object, that is, the power (exponent)
  with a real part equal to Ln of this object's absolute value and an
  imaginary part equal to pi, but the return value is still NaN.).
  Signals FlagInvalid and returns not-a-number (NaN) if the parameter
-  "ctx" is null or the precision is unlimited (the context's Precision
- property is 0). Signals no flags and returns negative infinity if
- this object's value is 0.
+ <code>ctx</code> is null or the precision is unlimited (the context's
+ Precision property is 0). Signals no flags and returns negative
+ infinity if this object's value is 0.
 
 ### Log10
     public EFloat Log10​(EContext ctx)
@@ -1914,9 +1915,9 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
 
 * Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
  not-a-number (NaN) if this object is less than 0. Signals
-  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
- null or the precision is unlimited (the context's Precision property
- is 0).
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ ctx</code> is null or the precision is unlimited (the context's Precision
+ property is 0).
 
 ### MovePointLeft
     public EFloat MovePointLeft​(int places)
@@ -1931,8 +1932,8 @@ Returns a number similar to this number but with the radix point moved to
 
 **Returns:**
 
-* A number whose exponent is decreased by "places", but not to more
- than 0.
+* A number whose exponent is decreased by <code>places</code>, but not to
+ more than 0.
 
 ### MovePointLeft
     public EFloat MovePointLeft​(int places, EContext ctx)
@@ -1969,8 +1970,8 @@ Returns a number similar to this number but with the radix point moved to
 
 **Returns:**
 
-* A number whose exponent is decreased by "bigPlaces", but not to more
- than 0.
+* A number whose exponent is decreased by <code>bigPlaces</code>, but not
+ to more than 0.
 
 ### MovePointLeft
     public EFloat MovePointLeft​(EInteger bigPlaces, EContext ctx)
@@ -2007,8 +2008,8 @@ Returns a number similar to this number but with the radix point moved to
 
 **Returns:**
 
-* A number whose exponent is increased by "places", but not to more
- than 0.
+* A number whose exponent is increased by <code>places</code>, but not to
+ more than 0.
 
 ### MovePointRight
     public EFloat MovePointRight​(int places, EContext ctx)
@@ -2045,8 +2046,8 @@ Returns a number similar to this number but with the radix point moved to
 
 **Returns:**
 
-* A number whose exponent is increased by "bigPlaces", but not to more
- than 0.
+* A number whose exponent is increased by <code>bigPlaces</code>, but not
+ to more than 0.
 
 ### MovePointRight
     public EFloat MovePointRight​(EInteger bigPlaces, EContext ctx)
@@ -2221,8 +2222,9 @@ Finds the largest value that's smaller than the given value.
 
 * Returns the largest value that's less than the given value. Returns
  negative infinity if the result is negative infinity. Signals
-  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-  null, the precision is 0, or "ctx" has an unlimited exponent range.
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
+ exponent range.
 
 ### NextPlus
     public EFloat NextPlus​(EContext ctx)
@@ -2240,8 +2242,8 @@ Finds the smallest value that's greater than the given value.
 
 * Returns the smallest value that's greater than the given
  value.Signals FlagInvalid and returns not-a-number (NaN) if the
-  parameter "ctx" is null, the precision is 0, or "ctx" has an
- unlimited exponent range.
+ parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code>
+ has an unlimited exponent range.
 
 ### NextToward
     public EFloat NextToward​(EFloat otherValue, EContext ctx)
@@ -2282,8 +2284,8 @@ Rounds this object's value to a given precision, using the given rounding
 **Returns:**
 
 * The closest value to this object's value, rounded to the specified
-  precision. Returns the same value as this object if "ctx" is null or
- the precision and exponent range are unlimited.
+ precision. Returns the same value as this object if <code>ctx</code> is
+ null or the precision and exponent range are unlimited.
 
 ### Pow
     public EFloat Pow​(EFloat exponent, EContext ctx)
@@ -2884,8 +2886,8 @@ Rounds this object's value to a given precision, using the given rounding
 **Returns:**
 
 * The closest value to this object's value, rounded to the specified
-  precision. Returns the same value as this object if "ctx" is null or
- the precision and exponent range are unlimited.
+ precision. Returns the same value as this object if <code>ctx</code> is
+ null or the precision and exponent range are unlimited.
 
 ### ScaleByPowerOfTwo
     public EFloat ScaleByPowerOfTwo​(int places)
@@ -2926,7 +2928,7 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* A number whose exponent is increased by "bigPlaces".
+* A number whose exponent is increased by <code>bigPlaces</code>.
 
 ### ScaleByPowerOfTwo
     public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces, EContext ctx)
@@ -2968,8 +2970,8 @@ Finds the square root of this object's value.
 * The square root. Signals the flag FlagInvalid and returns NaN if
  this object is less than 0 (the square root would be a complex
  number, but the return value is still NaN). Signals FlagInvalid and
-  returns not-a-number (NaN) if the parameter "ctx" is null or the
- precision is unlimited (the context's Precision property is 0).
+ returns not-a-number (NaN) if the parameter <code>ctx</code> is null or
+ the precision is unlimited (the context's Precision property is 0).
 
 ### SquareRoot
     @Deprecated public EFloat SquareRoot​(EContext ctx)
@@ -2991,8 +2993,8 @@ Renamed to Sqrt.
 * The square root. Signals the flag FlagInvalid and returns NaN if
  this object is less than 0 (the square root would be a complex
  number, but the return value is still NaN). Signals FlagInvalid and
-  returns not-a-number (NaN) if the parameter "ctx" is null or the
- precision is unlimited (the context's Precision property is 0).
+ returns not-a-number (NaN) if the parameter <code>ctx</code> is null or
+ the precision is unlimited (the context's Precision property is 0).
 
 ### Subtract
     public EFloat Subtract​(EFloat otherValue)

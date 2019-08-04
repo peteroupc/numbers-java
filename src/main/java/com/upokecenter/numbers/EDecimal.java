@@ -395,8 +395,8 @@ at: http://peteroupc.github.io/
      * @param mantissa Desired value for the mantissa.
      * @param exponent Desired value for the exponent.
      * @return An arbitrary-precision decimal number.
-     * @throws NullPointerException The parameter "mantissa" or "exponent" is
-     * null.
+     * @throws NullPointerException The parameter {@code mantissa} or {@code
+     * exponent} is null.
      */
     public static EDecimal Create(
       EInteger mantissa,
@@ -443,8 +443,8 @@ at: http://peteroupc.github.io/
      * if diagnostic information needs to be truncated and too much memory
      * is required to do so.
      * @return An arbitrary-precision decimal number.
-     * @throws NullPointerException The parameter "diag" is null or is less than
-     * 0.
+     * @throws NullPointerException The parameter {@code diag} is null or is less
+     * than 0.
      */
     public static EDecimal CreateNaN(
       EInteger diag,
@@ -505,7 +505,8 @@ at: http://peteroupc.github.io/
      * decimal number, use FromString instead in most cases (for example:
      *  <code>ExtendedDecimal.FromString("0.1")</code>).
      * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
-     * @return An arbitrary-precision decimal number with the same value as "dbl".
+     * @return An arbitrary-precision decimal number with the same value as {@code
+     * dbl}.
      */
     public static EDecimal FromDouble(double dbl) {
       int[] value = Extras.DoubleToIntegers(dbl);
@@ -595,7 +596,7 @@ at: http://peteroupc.github.io/
      * binary floating-point number.
      * @param bigfloat An arbitrary-precision binary floating-point number.
      * @return An arbitrary-precision decimal number.
-     * @throws NullPointerException The parameter "bigfloat" is null.
+     * @throws NullPointerException The parameter {@code bigfloat} is null.
      */
     public static EDecimal FromEFloat(EFloat bigfloat) {
       if (bigfloat == null) {
@@ -728,7 +729,8 @@ at: http://peteroupc.github.io/
      *  <code>ExtendedDecimal.FromString("0.1")</code>).
      * @param flt The parameter {@code flt} is a 32-bit binary floating-point
      * number.
-     * @return An arbitrary-precision decimal number with the same value as "flt".
+     * @return An arbitrary-precision decimal number with the same value as {@code
+     * flt}.
      */
     public static EDecimal FromSingle(float flt) {
       int value = Float.floatToRawIntBits(flt);
@@ -796,7 +798,7 @@ at: http://peteroupc.github.io/
      * @param str A string that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      */
     public static EDecimal FromString(String str) {
@@ -815,7 +817,7 @@ at: http://peteroupc.github.io/
      * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws NullPointerException The parameter "str" is null.
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EDecimal FromString(String str, EContext ctx) {
       return FromString(str, 0, str == null ? 0 : str.length(), ctx);
@@ -832,12 +834,12 @@ at: http://peteroupc.github.io/
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter "str" is not a correctly
+     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
-     * @throws NullPointerException The parameter "str" is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
-     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EDecimal FromString(
@@ -876,13 +878,13 @@ at: http://peteroupc.github.io/
      * which case the precision is unlimited and rounding isn't needed.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws NullPointerException The parameter "str" is null.
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str" 's length, or "str" 's length minus "offset" is
-     *  less than "length".
-     * @throws IllegalArgumentException Either "offset" or "length" is less than 0 or
-     *  greater than "str"'s length, or "str"'s length minus "offset" is
-     *  less than "length".
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EDecimal FromString(
@@ -1399,10 +1401,11 @@ at: http://peteroupc.github.io/
      * exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). <i>This parameter
-     * can't be null, as &#x3c0; can never be represented exactly.</i>.
+     * can't be null, as π can never be represented exactly.</i>.
      * @return The constant π rounded to the given precision. Signals FlagInvalid
-     *  and returns not-a-number (NaN) if the parameter "ctx" is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * and returns not-a-number (NaN) if the parameter {@code ctx} is null
+     * or the precision is unlimited (the context's Precision property is
+     * 0).
      */
     public static EDecimal PI(EContext ctx) {
       return GetMathValue(ctx).Pi(ctx);
@@ -1436,7 +1439,7 @@ at: http://peteroupc.github.io/
      * of this object.).
      * @param other A number whose sign will be copied.
      * @return An arbitrary-precision decimal number.
-     * @throws NullPointerException The parameter "other" is null.
+     * @throws NullPointerException The parameter {@code other} is null.
      */
     public EDecimal CopySign(EDecimal other) {
       if (other == null) {
@@ -1512,7 +1515,7 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision decimal number.
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other
-     *  value or if "other" is null, or 0 if both values are equal.
+     * value or if {@code other} is null, or 0 if both values are equal.
      */
     public int compareTo(EDecimal other) {
       return ExtendedMathValue.compareTo(this, other);
@@ -2422,9 +2425,9 @@ at: http://peteroupc.github.io/
      * Specification, any rounding mode is allowed.).
      * @return Exponential of this object. If this object's value is 1, returns an
      *  approximation to " e" within the given precision. Signals
-     *  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-     * null or the precision is unlimited (the context's Precision property
-     * is 0).
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null or the precision is unlimited (the context's Precision
+     * property is 0).
      */
     public EDecimal Exp(EContext ctx) {
       return GetMathValue(ctx).Exp(this, ctx);
@@ -2521,9 +2524,9 @@ at: http://peteroupc.github.io/
      * with a real part equal to Ln of this object's absolute value and an
      * imaginary part equal to pi, but the return value is still NaN.).
      * Signals FlagInvalid and returns not-a-number (NaN) if the parameter
-     *  "ctx" is null or the precision is unlimited (the context's Precision
-     * property is 0). Signals no flags and returns negative infinity if
-     * this object's value is 0.
+     * {@code ctx} is null or the precision is unlimited (the context's
+     * Precision property is 0). Signals no flags and returns negative
+     * infinity if this object's value is 0.
      */
     public EDecimal Log(EContext ctx) {
       return GetMathValue(ctx).Ln(this, ctx);
@@ -2542,9 +2545,9 @@ at: http://peteroupc.github.io/
      * any rounding mode is allowed.).
      * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals
-     *  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-     * null or the precision is unlimited (the context's Precision property
-     * is 0).
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null or the precision is unlimited (the context's Precision
+     * property is 0).
      */
     public EDecimal Log10(EContext ctx) {
       return GetMathValue(ctx).Log10(this, ctx);
@@ -2556,8 +2559,8 @@ at: http://peteroupc.github.io/
      * @param places The number of decimal places to move the decimal point to the
      * left. If this number is negative, instead moves the decimal point to
      * the right by this number's absolute value.
-     * @return A number whose exponent is decreased by "places", but not to more
-     * than 0.
+     * @return A number whose exponent is decreased by {@code places}, but not to
+     * more than 0.
      */
     public EDecimal MovePointLeft(int places) {
       return this.MovePointLeft(EInteger.FromInt32(places), null);
@@ -2587,8 +2590,8 @@ at: http://peteroupc.github.io/
      * @param bigPlaces The number of decimal places to move the decimal point to
      * the left. If this number is negative, instead moves the decimal
      * point to the right by this number's absolute value.
-     * @return A number whose exponent is decreased by "bigPlaces", but not to more
-     * than 0.
+     * @return A number whose exponent is decreased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EDecimal MovePointLeft(EInteger bigPlaces) {
       return this.MovePointLeft(bigPlaces, null);
@@ -2621,8 +2624,8 @@ at: http://peteroupc.github.io/
      * @param places The number of decimal places to move the decimal point to the
      * right. If this number is negative, instead moves the decimal point
      * to the left by this number's absolute value.
-     * @return A number whose exponent is increased by "places", but not to more
-     * than 0.
+     * @return A number whose exponent is increased by {@code places}, but not to
+     * more than 0.
      */
     public EDecimal MovePointRight(int places) {
       return this.MovePointRight(EInteger.FromInt32(places), null);
@@ -2652,8 +2655,8 @@ at: http://peteroupc.github.io/
      * @param bigPlaces The number of decimal places to move the decimal point to
      * the right. If this number is negative, instead moves the decimal
      * point to the left by this number's absolute value.
-     * @return A number whose exponent is increased by "bigPlaces", but not to more
-     * than 0.
+     * @return A number whose exponent is increased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EDecimal MovePointRight(EInteger bigPlaces) {
       return this.MovePointRight(bigPlaces, null);
@@ -2846,7 +2849,8 @@ at: http://peteroupc.github.io/
      * precision.Divide(exponent) adjustment is done only once, namely,
      * after multiplying and subtracting.
      * @return The result thisValue * multiplicand - subtrahend.
-     * @throws NullPointerException The parameter "op" or "subtrahend" is null.
+     * @throws NullPointerException The parameter {@code op} or {@code subtrahend}
+     * is null.
      */
     public EDecimal MultiplyAndSubtract(
       EDecimal op,
@@ -2912,8 +2916,9 @@ at: http://peteroupc.github.io/
      * the pre-existing flags).
      * @return Returns the largest value that's less than the given value. Returns
      * negative infinity if the result is negative infinity. Signals
-     *  FlagInvalid and returns not-a-number (NaN) if the parameter "ctx" is
-     *  null, the precision is 0, or "ctx" has an unlimited exponent range.
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null, the precision is 0, or {@code ctx} has an unlimited
+     * exponent range.
      */
     public EDecimal NextMinus(EContext ctx) {
       return GetMathValue(ctx).NextMinus(this, ctx);
@@ -2928,8 +2933,8 @@ at: http://peteroupc.github.io/
      * the pre-existing flags).
      * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the
-     *  parameter "ctx" is null, the precision is 0, or "ctx" has an
-     * unlimited exponent range.
+     * parameter {@code ctx} is null, the precision is 0, or {@code ctx}
+     * has an unlimited exponent range.
      */
     public EDecimal NextPlus(EContext ctx) {
       return GetMathValue(ctx)
@@ -2967,8 +2972,8 @@ at: http://peteroupc.github.io/
      * exponent range. Can be null, in which case the precision is
      * unlimited and rounding isn't needed.
      * @return The closest value to this object's value, rounded to the specified
-     *  precision. Returns the same value as this object if "ctx" is null or
-     * the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if {@code ctx} is
+     * null or the precision and exponent range are unlimited.
      */
     public EDecimal Plus(EContext ctx) {
       return GetMathValue(ctx).Plus(this, ctx);
@@ -3712,8 +3717,8 @@ at: http://peteroupc.github.io/
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
      * @return The closest value to this object's value, rounded to the specified
-     *  precision. Returns the same value as this object if "ctx" is null or
-     * the precision and exponent range are unlimited.
+     * precision. Returns the same value as this object if {@code ctx} is
+     * null or the precision and exponent range are unlimited.
      */
     public EDecimal RoundToPrecision(EContext ctx) {
       return GetMathValue(ctx).RoundToPrecision(this, ctx);
@@ -3794,8 +3799,8 @@ at: http://peteroupc.github.io/
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     *  returns not-a-number (NaN) if the parameter "ctx" is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
+     * the precision is unlimited (the context's Precision property is 0).
      */
     public EDecimal Sqrt(EContext ctx) {
       return GetMathValue(ctx).SquareRoot(this, ctx);
@@ -3813,8 +3818,8 @@ at: http://peteroupc.github.io/
      * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex
      * number, but the return value is still NaN). Signals FlagInvalid and
-     *  returns not-a-number (NaN) if the parameter "ctx" is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * returns not-a-number (NaN) if the parameter {@code ctx} is null or
+     * the precision is unlimited (the context's Precision property is 0).
      * @deprecated Renamed to Sqrt.
  */
 @Deprecated
@@ -3841,7 +3846,7 @@ at: http://peteroupc.github.io/
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
      * @return The difference of the two objects.
-     * @throws NullPointerException The parameter "otherValue" is null.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EDecimal Subtract(
       EDecimal otherValue,
