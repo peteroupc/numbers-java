@@ -637,6 +637,7 @@ Compares the absolute values of this object and another object, imposing a
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
+ This implementation returns a positive number if.
 
 ### CompareToTotal
     public int CompareToTotal​(ERational other)
@@ -661,6 +662,7 @@ Compares the values of this object and another object, imposing a total
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
+ This implementation returns a positive number if.
 
 ### Abs
     public ERational Abs()
@@ -703,12 +705,8 @@ Compares an arbitrary-precision rational number with this instance.
 **Returns:**
 
 * Zero if the values are equal; a negative number if this instance is
- less, or a positive number if this instance is greater.
-
-**Throws:**
-
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+ less, or a positive number if this instance is greater. This
+ implementation returns a positive number if.
 
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
@@ -721,12 +719,8 @@ Compares an arbitrary-precision binary float with this instance.
 **Returns:**
 
 * Zero if the values are equal; a negative number if this instance is
- less, or a positive number if this instance is greater.
-
-**Throws:**
-
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+ less, or a positive number if this instance is greater. This
+ implementation returns a positive number if.
 
 ### CompareToDecimal
     public int CompareToDecimal​(EDecimal other)
@@ -739,12 +733,8 @@ Compares an arbitrary-precision decimal number with this instance.
 **Returns:**
 
 * Zero if the values are equal; a negative number if this instance is
- less, or a positive number if this instance is greater.
-
-**Throws:**
-
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+ less, or a positive number if this instance is greater. This
+ implementation returns a positive number if.
 
 ### CopySign
     public ERational CopySign​(ERational other)

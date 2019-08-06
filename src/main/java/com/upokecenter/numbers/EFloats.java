@@ -518,16 +518,14 @@ private EFloats() {
      * {@code HasFlags} and {@code IsSimplified} of the context are true
      * and only if an operand needed to be rounded before carrying out the
      * operation. Can be null.
-     * @return The number 0 if both objects have the same value, or -1 if the first
-     * object is less than the other value, or 1 if the first object is
-     * greater. Does not signal flags if either value is signaling NaN.
-     * @throws NullPointerException The parameter {@code ed} is null.
+     * @return The number 0 if both objects are null or equal, or -1 if the first
+     * object is null or less than the other object, or 1 if the first
+     * object is greater or the other object is null. Does not signal flags
+     * if either value is signaling NaN.
      */
     public static int CompareTotal(EFloat ed, EFloat other, EContext ec) {
-      if (ed == null) {
-        throw new NullPointerException("ed");
-      }
-      return ed.CompareToTotal(other, ec);
+      return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1:
+ed.CompareToTotal(other, ec));
     }
 
     /**
@@ -548,21 +546,18 @@ private EFloats() {
      * {@code HasFlags} and {@code IsSimplified} of the context are true
      * and only if an operand needed to be rounded before carrying out the
      * operation. Can be null.
-     * @return The number 0 if both objects have the same value (ignoring their
-     * signs), or -1 if the first object is less than the other value
-     * (ignoring their signs), or 1 if the first object is greater
-     * (ignoring their signs). Does not signal flags if either value is
-     * signaling NaN.
-     * @throws NullPointerException The parameter {@code ed} is null.
+     * @return The number 0 if both objects are null or equal (ignoring their
+     * signs), or -1 if the first object is null or less than the other
+     * object (ignoring their signs), or 1 if the first object is greater
+     * (ignoring their signs) or the other object is null. Does not signal
+     * flags if either value is signaling NaN.
      */
     public static int CompareTotalMagnitude(
       EFloat ed,
       EFloat other,
       EContext ec) {
-      if (ed == null) {
-        throw new NullPointerException("ed");
-      }
-      return ed.CompareToTotalMagnitude(other, ec);
+      return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1:
+ed.CompareToTotalMagnitude(other, ec));
     }
 
     /**

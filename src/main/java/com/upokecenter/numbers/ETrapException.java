@@ -12,7 +12,8 @@ at: http://peteroupc.github.io/
      * and has this prefix to group it with the other classes common to
      * this library, particularly EDecimal, EFloat, and ERational.).
      */
-  public final class ETrapException extends ArithmeticException {
+
+public final class ETrapException extends ArithmeticException {
 private static final long serialVersionUID = 1L;
     private final Object result;
     private final EContext ctx;

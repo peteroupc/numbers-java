@@ -1451,6 +1451,7 @@ Compares the mathematical values of this object and another object,
 * Less than 0 if this object's value is less than the other value, or
  greater than 0 if this object's value is greater than the other
  value or if <code>other</code> is null, or 0 if both values are equal.
+ This implementation returns a positive number if.
 
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
@@ -1463,15 +1464,10 @@ Compares an arbitrary-precision binary float with this instance.
 **Returns:**
 
 * Zero if the values are equal; a negative number if this instance is
- less, or a positive number if this instance is greater. Returns 0 if
+ less; or a positive number if this instance is greater. Returns 0 if
  both values are NaN (even signaling NaN) and 1 if this value is NaN
  (even signaling NaN) and the other isn't, or if the other value is
- null.
-
-**Throws:**
-
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy this.isFinite(); doesn't satisfy
- other.isFinite().
+ null. This implementation returns a positive number if.
 
 ### CompareToSignal
     public EDecimal CompareToSignal​(EDecimal other, EContext ctx)
@@ -1494,7 +1490,8 @@ Compares the mathematical values of this object and another object, treating
 
 * Quiet NaN if this object or the other object is NaN, or 0 if both
  objects have the same value, or -1 if this object is less than the
- other value, or 1 if this object is greater.
+ other value, or a 1 if this object is greater. This implementation
+ returns a positive number if.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(EDecimal other)
@@ -1519,6 +1516,7 @@ Compares the absolute values of this object and another object, imposing a
 * The number 0 if both objects have the same value (ignoring their
  signs), or -1 if this object is less than the other value (ignoring
  their signs), or 1 if this object is greater (ignoring their signs).
+ This implementation returns a positive number if.
 
 ### CompareToTotal
     public int CompareToTotal​(EDecimal other, EContext ctx)
@@ -1547,7 +1545,8 @@ Compares the values of this object and another object, imposing a total
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
- Does not signal flags if either value is signaling NaN.
+ Does not signal flags if either value is signaling NaN. This
+ implementation returns a positive number if.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(EDecimal other, EContext ctx)
@@ -1577,7 +1576,8 @@ Compares the values of this object and another object, imposing a total
 * The number 0 if both objects have the same value (ignoring their
  signs), or -1 if this object is less than the other value (ignoring
  their signs), or 1 if this object is greater (ignoring their signs).
- Does not signal flags if either value is signaling NaN.
+ Does not signal flags if either value is signaling NaN. This
+ implementation returns a positive number if.
 
 ### CompareToTotal
     public int CompareToTotal​(EDecimal other)
@@ -1601,6 +1601,7 @@ Compares the values of this object and another object, imposing a total
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
+ This implementation returns a positive number if.
 
 ### CompareToWithContext
     public EDecimal CompareToWithContext​(EDecimal other, EContext ctx)
@@ -1623,7 +1624,8 @@ Compares the mathematical values of this object and another object. <p>In
 
 * Quiet NaN if this object or the other object is NaN, or 0 if both
  objects have the same value, or -1 if this object is less than the
- other value, or 1 if this object is greater.
+ other value, or 1 if this object is greater. This implementation
+ returns a positive number if.
 
 ### Divide
     public EDecimal Divide​(EDecimal divisor)

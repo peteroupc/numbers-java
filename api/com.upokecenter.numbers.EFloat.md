@@ -1249,7 +1249,8 @@ Compares the mathematical values of this object and another object, treating
 
 * Quiet NaN if this object or the other object is NaN, or 0 if both
  objects have the same value, or -1 if this object is less than the
- other value, or 1 if this object is greater.
+ other value, or 1 if this object is greater. This implementation
+ returns a positive number if.
 
 ### CompareToTotal
     public int CompareToTotal​(EFloat other, EContext ctx)
@@ -1278,7 +1279,8 @@ Compares the values of this object and another object, imposing a total
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
- Does not signal flags if either value is signaling NaN.
+ Does not signal flags if either value is signaling NaN. This
+ implementation returns a positive number if.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(EFloat other, EContext ctx)
@@ -1308,7 +1310,8 @@ Compares the values of this object and another object, imposing a total
 * The number 0 if both objects have the same value (ignoring their
  signs), or -1 if this object is less than the other value (ignoring
  their signs), or 1 if this object is greater (ignoring their signs).
- Does not signal flags if either value is signaling NaN.
+ Does not signal flags if either value is signaling NaN. This
+ implementation returns a positive number if.
 
 ### CompareToTotal
     public int CompareToTotal​(EFloat other)
@@ -1332,6 +1335,7 @@ Compares the values of this object and another object, imposing a total
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
+ This implementation returns a positive number if.
 
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(EFloat other)
@@ -1355,6 +1359,7 @@ Compares the absolute values of this object and another object, imposing a
 
 * The number 0 if both objects have the same value, or -1 if this
  object is less than the other value, or 1 if this object is greater.
+ This implementation returns a positive number if.
 
 ### CompareToWithContext
     public EFloat CompareToWithContext​(EFloat other, EContext ctx)
@@ -1377,7 +1382,8 @@ Compares the mathematical values of this object and another object. <p>In
 
 * Quiet NaN if this object or the other object is NaN, or 0 if both
  objects have the same value, or -1 if this object is less than the
- other value, or 1 if this object is greater.
+ other value, or 1 if this object is greater. This implementation
+ returns a positive number if.
 
 ### CopySign
     public EFloat CopySign​(EFloat other)

@@ -834,7 +834,8 @@ at: http://peteroupc.github.io/
      * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
-     * other value, or 1 if this object is greater.
+     * other value, or 1 if this object is greater. This implementation
+     * returns a positive number if.
      */
     public EFloat CompareToSignal(
       EFloat other,
@@ -861,11 +862,12 @@ at: http://peteroupc.github.io/
      * operation. Can be null.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
-     * Does not signal flags if either value is signaling NaN.
+     * Does not signal flags if either value is signaling NaN. This
+     * implementation returns a positive number if.
      */
     public int CompareToTotal(EFloat other, EContext ctx) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
         return this.CompareToTotal(other);
@@ -898,11 +900,12 @@ at: http://peteroupc.github.io/
      * @return The number 0 if both objects have the same value (ignoring their
      * signs), or -1 if this object is less than the other value (ignoring
      * their signs), or 1 if this object is greater (ignoring their signs).
-     * Does not signal flags if either value is signaling NaN.
+     * Does not signal flags if either value is signaling NaN. This
+     * implementation returns a positive number if.
      */
     public int CompareToTotalMagnitude(EFloat other, EContext ctx) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
         return this.CompareToTotalMagnitude(other);
@@ -930,10 +933,11 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision binary float to compare with this one.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
+     * This implementation returns a positive number if.
      */
     public int CompareToTotal(EFloat other) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       boolean neg1 = this.isNegative();
       boolean neg2 = other.isNegative();
@@ -994,10 +998,11 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision binary float to compare with this one.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
+     * This implementation returns a positive number if.
      */
     public int CompareToTotalMagnitude(EFloat other) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       int valueIThis = 0;
       int valueIOther = 0;
@@ -1051,7 +1056,8 @@ at: http://peteroupc.github.io/
      * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
-     * other value, or 1 if this object is greater.
+     * other value, or 1 if this object is greater. This implementation
+     * returns a positive number if.
      */
     public EFloat CompareToWithContext(
       EFloat other,

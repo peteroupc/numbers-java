@@ -1049,7 +1049,8 @@ at: http://peteroupc.github.io/
      * Compares an arbitrary-precision integer with this instance.
      * @param other The integer to compare to this value.
      * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
+     * less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.
      */
     public int compareTo(EInteger other) {
       if (other == null) {

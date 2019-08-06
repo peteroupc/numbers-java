@@ -762,10 +762,11 @@ at: http://peteroupc.github.io/
      * one.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
+     * This implementation returns a positive number if.
      */
     public int CompareToTotalMagnitude(ERational other) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       int valueIThis = 0;
       int valueIOther = 0;
@@ -822,10 +823,11 @@ at: http://peteroupc.github.io/
      * one.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
+     * This implementation returns a positive number if.
      */
     public int CompareToTotal(ERational other) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       boolean neg1 = this.isNegative();
       boolean neg2 = other.isNegative();
@@ -930,9 +932,8 @@ at: http://peteroupc.github.io/
      * Compares an arbitrary-precision rational number with this instance.
      * @param other An arbitrary-precision rational number.
      * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.
      */
     public int compareTo(ERational other) {
       if (other == null) {
@@ -996,9 +997,8 @@ at: http://peteroupc.github.io/
      * Compares an arbitrary-precision binary float with this instance.
      * @param other An arbitrary-precision binary floating-point number.
      * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
@@ -1111,9 +1111,8 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * Compares an arbitrary-precision decimal number with this instance.
      * @param other An arbitrary-precision decimal number.
      * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.
      */
     public int CompareToDecimal(EDecimal other) {
       if (other == null) {

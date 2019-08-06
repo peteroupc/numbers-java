@@ -9,6 +9,10 @@ at: http://peteroupc.github.io/
 
 // TODO: Add compareTo(int) to EDecimal/EFloat/ERational in
 // next minor/major version
+// TODO: Add CompareToValue which implements current
+// version of compareTo; replace compareTo with
+// CompareToTotal in next major version; do this for EDecimal,
+  // EFloat, and ERational
 
     /**
      * Represents an arbitrary-precision decimal floating-point number. (The "E"
@@ -1516,6 +1520,7 @@ at: http://peteroupc.github.io/
      * @return Less than 0 if this object's value is less than the other value, or
      * greater than 0 if this object's value is greater than the other
      * value or if {@code other} is null, or 0 if both values are equal.
+     * This implementation returns a positive number if.
      */
     public int compareTo(EDecimal other) {
       return ExtendedMathValue.compareTo(this, other);
@@ -1525,12 +1530,10 @@ at: http://peteroupc.github.io/
      * Compares an arbitrary-precision binary float with this instance.
      * @param other The other object to compare. Can be null.
      * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater. Returns 0 if
+     * less; or a positive number if this instance is greater. Returns 0 if
      * both values are NaN (even signaling NaN) and 1 if this value is NaN
      * (even signaling NaN) and the other isn't, or if the other value is
-     * null.
-     * @throws IllegalArgumentException Doesn't satisfy this.isFinite(); doesn't satisfy
-     * other.isFinite().
+     * null. This implementation returns a positive number if.
      */
     public int CompareToBinary(EFloat other) {
       return CompareEDecimalToEFloat(this, other);
@@ -1704,7 +1707,8 @@ at: http://peteroupc.github.io/
      * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
-     * other value, or 1 if this object is greater.
+     * other value, or a 1 if this object is greater. This implementation
+     * returns a positive number if.
      */
     public EDecimal CompareToSignal(
       EDecimal other,
@@ -1728,10 +1732,11 @@ at: http://peteroupc.github.io/
      * @return The number 0 if both objects have the same value (ignoring their
      * signs), or -1 if this object is less than the other value (ignoring
      * their signs), or 1 if this object is greater (ignoring their signs).
+     * This implementation returns a positive number if.
      */
     public int CompareToTotalMagnitude(EDecimal other) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       int valueIThis = 0;
       int valueIOther = 0;
@@ -1791,11 +1796,12 @@ at: http://peteroupc.github.io/
      * operation. Can be null.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
-     * Does not signal flags if either value is signaling NaN.
+     * Does not signal flags if either value is signaling NaN. This
+     * implementation returns a positive number if.
      */
     public int CompareToTotal(EDecimal other, EContext ctx) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
         return this.CompareToTotal(other);
@@ -1828,7 +1834,8 @@ at: http://peteroupc.github.io/
      * @return The number 0 if both objects have the same value (ignoring their
      * signs), or -1 if this object is less than the other value (ignoring
      * their signs), or 1 if this object is greater (ignoring their signs).
-     * Does not signal flags if either value is signaling NaN.
+     * Does not signal flags if either value is signaling NaN. This
+     * implementation returns a positive number if.
      */
     public int CompareToTotalMagnitude(EDecimal other, EContext ctx) {
       if (other == null) {
@@ -1860,6 +1867,7 @@ at: http://peteroupc.github.io/
      * @param other An arbitrary-precision decimal number to compare with this one.
      * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater.
+     * This implementation returns a positive number if.
      */
     public int CompareToTotal(EDecimal other) {
       if (other == null) {
@@ -1922,7 +1930,8 @@ at: http://peteroupc.github.io/
      * addition to the pre-existing flags). Can be null.
      * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the
-     * other value, or 1 if this object is greater.
+     * other value, or 1 if this object is greater. This implementation
+     * returns a positive number if.
      */
     public EDecimal CompareToWithContext(
       EDecimal other,

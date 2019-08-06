@@ -585,7 +585,8 @@ Compares an arbitrary-precision integer with this instance.
 **Returns:**
 
 * Zero if the values are equal; a negative number if this instance is
- less, or a positive number if this instance is greater.
+ less, or a positive number if this instance is greater. This
+ implementation returns a positive number if.
 
 ### Add
     public EInteger Add​(int intValue)

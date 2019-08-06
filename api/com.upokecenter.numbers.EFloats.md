@@ -560,13 +560,10 @@ Compares the values of one arbitrary-precision number object and another
 
 **Returns:**
 
-* The number 0 if both objects have the same value, or -1 if the first
- object is less than the other value, or 1 if the first object is
- greater. Does not signal flags if either value is signaling NaN.
-
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
+* The number 0 if both objects are null or equal, or -1 if the first
+ object is null or less than the other object, or 1 if the first
+ object is greater or the other object is null. Does not signal flags
+ if either value is signaling NaN.
 
 ### CompareTotalMagnitude
     public static int CompareTotalMagnitude​(EFloat ed, EFloat other, EContext ec)
@@ -595,15 +592,11 @@ Compares the absolute values of two arbitrary-precision number objects,
 
 **Returns:**
 
-* The number 0 if both objects have the same value (ignoring their
- signs), or -1 if the first object is less than the other value
- (ignoring their signs), or 1 if the first object is greater
- (ignoring their signs). Does not signal flags if either value is
- signaling NaN.
-
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.
+* The number 0 if both objects are null or equal (ignoring their
+ signs), or -1 if the first object is null or less than the other
+ object (ignoring their signs), or 1 if the first object is greater
+ (ignoring their signs) or the other object is null. Does not signal
+ flags if either value is signaling NaN.
 
 ### Copy
     public static EFloat Copy​(EFloat ed)
