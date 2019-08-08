@@ -853,10 +853,6 @@ Creates a binary float from a text string that represents a number. Note
  than 0 or greater than <code>str</code> 's length, or <code>str</code> ' s
  length minus <code>offset</code> is less than <code>length</code>.
 
-* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
- than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
- length minus <code>offset</code> is less than <code>length</code>.
-
 ### FromString
     public static EFloat FromString​(java.lang.String str)
 Creates a binary float from a text string that represents a number, using an

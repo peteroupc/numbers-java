@@ -478,7 +478,6 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code str} 's length, or {@code str} 's
      * length minus {@code offset} is less than {@code length}.
-     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static ERational FromString(
       String str,

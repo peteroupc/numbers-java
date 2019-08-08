@@ -612,8 +612,6 @@ Creates a rational number from a text string that represents a number. See
  than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
-
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(ERational other)
 Compares the absolute values of this object and another object, imposing a

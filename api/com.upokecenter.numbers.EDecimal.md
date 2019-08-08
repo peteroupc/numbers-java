@@ -1129,8 +1129,6 @@ Creates an arbitrary-precision decimal number from a text string that
  than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
-
 ### FromString
     public static EDecimal FromString​(java.lang.String str, int offset, int length, EContext ctx)
 <p>Creates an arbitrary-precision decimal number from a text string that
@@ -1178,12 +1176,6 @@ Creates an arbitrary-precision decimal number from a text string that
 * <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
  than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
-
-* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
- than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
- length minus <code>offset</code> is less than <code>length</code>.
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### Max
     public static EDecimal Max​(EDecimal first, EDecimal second, EContext ctx)
