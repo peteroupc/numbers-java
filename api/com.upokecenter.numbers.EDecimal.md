@@ -3601,8 +3601,8 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
- not-a-number (NaN).
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN).
 
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
@@ -3615,8 +3615,8 @@ Renamed to ToEIntegerIfExact.
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
- not-a-number (NaN).
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN).
 
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
@@ -3629,8 +3629,8 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This object's value is infinity or
- not-a-number (NaN).
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN).
 
 ### ToEngineeringString
     public java.lang.String ToEngineeringString()
@@ -3746,8 +3746,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is less than 0 or greater than 255.
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
+ truncated integer is less than 0 or greater than 255.
 
 ### ToByteUnchecked
     public byte ToByteUnchecked()
@@ -3798,8 +3798,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is less than -32768 or greater than 32767.
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
+ truncated integer is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -3850,8 +3850,8 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is less than -2147483648 or greater than
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
+ truncated integer is less than -2147483648 or greater than
  2147483647.
 
 ### ToInt32Unchecked
@@ -3892,9 +3892,9 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or
- the truncated integer is less than -9223372036854775808 or greater
- than 9223372036854775807.
+* <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
+ truncated integer is less than -9223372036854775808 or greater than
+ 9223372036854775807.
 
 ### ToInt64Unchecked
     public long ToInt64Unchecked()

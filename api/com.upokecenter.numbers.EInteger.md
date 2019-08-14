@@ -434,8 +434,7 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid
- format.
+* <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.
 
 * <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy (endIndex - index) % 4 == 0".
 
@@ -457,8 +456,7 @@ Converts a string to an arbitrary-precision integer.
 
 **Throws:**
 
-* <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid
- format.
+* <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid format.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
@@ -782,8 +780,8 @@ This method may overflow. Use GetDigitCountAsEInteger instead.
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
- a 32-bit signed integer.
+* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of a
+ 32-bit signed integer.
 
 ### hashCode
     public int hashCode()
@@ -885,8 +883,8 @@ This method may overflow. Use GetSignedBitLengthAsEInteger instead.
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
- a 32-bit signed integer.
+* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of a
+ 32-bit signed integer.
 
 ### GetUnsignedBit
     public boolean GetUnsignedBit​(EInteger bigIndex)
@@ -948,8 +946,8 @@ This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of
- a 32-bit signed integer.
+* <code>java.lang.ArithmeticException</code> - The return value would exceed the range of a
+ 32-bit signed integer.
 
 ### Mod
     public EInteger Mod​(EInteger divisor)
@@ -1398,8 +1396,7 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is less than 0 or greater than
- 255.
+* <code>java.lang.ArithmeticException</code> - This value is less than 0 or greater than 255.
 
 ### ToByteUnchecked
     public byte ToByteUnchecked()
@@ -1433,8 +1430,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater
- than 32767.
+* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater than
+ 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()

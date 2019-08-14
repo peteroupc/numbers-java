@@ -426,8 +426,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision integer with the same value as given in the
      * string portion.
      * @throws NullPointerException The parameter {@code str} is null.
-     * @throws java.lang.NumberFormatException The string portion is empty or in an invalid
-     * format.
+     * @throws NumberFormatException The string portion is empty or in an invalid format.
      * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 == 0".
      */
     public static EInteger FromRadixSubstring(
@@ -656,8 +655,7 @@ at: http://peteroupc.github.io/
      * contain white space characters, including spaces.
      * @return An arbitrary-precision integer with the same value as given in the
      * string.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is in an invalid
-     * format.
+     * @throws NumberFormatException The parameter {@code str} is in an invalid format.
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EInteger FromString(String str) {
@@ -2194,8 +2192,8 @@ WordsShiftRightOne(bu, buc);
      * Returns the number of decimal digits used by this integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
      * if this number is 0.
-     * @throws ArithmeticException The return value would exceed the range of
-     * a 32-bit signed integer.
+     * @throws ArithmeticException The return value would exceed the range of a
+     * 32-bit signed integer.
      * @deprecated This method may overflow. Use GetDigitCountAsEInteger instead.
  */
 @Deprecated
@@ -2617,8 +2615,8 @@ WordsShiftRightOne(bu, buc);
      * have a signed bit length of greater than 63.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0 or negative 1.
-     * @throws ArithmeticException The return value would exceed the range of
-     * a 32-bit signed integer.
+     * @throws ArithmeticException The return value would exceed the range of a
+     * 32-bit signed integer.
      * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
  */
 @Deprecated
@@ -2720,8 +2718,8 @@ WordsShiftRightOne(bu, buc);
      * and.getNET()'s <code>long</code> type.
      * @return The number of bits in this object's value. Returns 0 if this
      * object's value is 0, and returns 1 if the value is negative 1.
-     * @throws ArithmeticException The return value would exceed the range of
-     * a 32-bit signed integer.
+     * @throws ArithmeticException The return value would exceed the range of a
+     * 32-bit signed integer.
      * @deprecated This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
  */
 @Deprecated
@@ -7255,8 +7253,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255).
      * @return This number's value as a byte (from 0 to 255).
-     * @throws ArithmeticException This value is less than 0 or greater than
-     * 255.
+     * @throws ArithmeticException This value is less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
       int val = this.ToInt32Checked();
@@ -7290,8 +7287,8 @@ WordsShiftRightOne(bu, buc);
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer.
      * @return This number's value as a 16-bit signed integer.
-     * @throws ArithmeticException This value is less than -32768 or greater
-     * than 32767.
+     * @throws ArithmeticException This value is less than -32768 or greater than
+     * 32767.
      */
     public short ToInt16Checked() {
       int val = this.ToInt32Checked();

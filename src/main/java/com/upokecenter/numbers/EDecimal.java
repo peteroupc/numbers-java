@@ -802,7 +802,7 @@ at: http://peteroupc.github.io/
      * @param str A string that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * @throws NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      */
     public static EDecimal FromString(String str) {
@@ -838,7 +838,7 @@ at: http://peteroupc.github.io/
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
-     * @throws java.lang.NumberFormatException The parameter {@code str} is not a correctly
+     * @throws NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      * @throws NullPointerException The parameter {@code str} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
@@ -3961,8 +3961,8 @@ at: http://peteroupc.github.io/
      * in this value will be discarded when converting to an
      * arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or
-     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      */
     public EInteger ToEInteger() {
       return this.ToEIntegerInternal(false);
@@ -3972,8 +3972,8 @@ at: http://peteroupc.github.io/
      * Converts this value to an arbitrary-precision integer, checking whether the
      * fractional part of the value would be lost.
      * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or
-     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      * @deprecated Renamed to ToEIntegerIfExact.
  */
 @Deprecated
@@ -3985,8 +3985,8 @@ at: http://peteroupc.github.io/
      * Converts this value to an arbitrary-precision integer, checking whether the
      * fractional part of the value would be lost.
      * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or
-     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      */
     public EInteger ToEIntegerIfExact() {
       return this.ToEIntegerInternal(true);
@@ -5070,8 +5070,8 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after truncating to an integer.
      * @return This number's value, truncated to a byte (from 0 to 255).
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than 0 or greater than 255.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
       if (!this.isFinite()) {
@@ -5135,8 +5135,8 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 16-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than -32768 or greater than 32767.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -5197,8 +5197,8 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
      * Converts this number's value to a 32-bit signed integer if it can fit in a
      * 32-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 32-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than -2147483648 or greater than
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than -2147483648 or greater than
      * 2147483647.
      */
     public int ToInt32Checked() {
@@ -5251,9 +5251,9 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
      * Converts this number's value to a 64-bit signed integer if it can fit in a
      * 64-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 64-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than -9223372036854775808 or greater
-     * than 9223372036854775807.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than -9223372036854775808 or greater than
+     * 9223372036854775807.
      */
     public long ToInt64Checked() {
       if (!this.isFinite()) {

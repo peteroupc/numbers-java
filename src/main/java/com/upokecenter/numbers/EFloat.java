@@ -2751,8 +2751,8 @@ at: http://peteroupc.github.io/
      * of this value will be discarded when converting to an
      * arbitrary-precision integer.
      * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or
-     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      */
     public EInteger ToEInteger() {
       return this.ToEIntegerInternal(false);
@@ -2762,8 +2762,8 @@ at: http://peteroupc.github.io/
      * Converts this value to an arbitrary-precision integer, checking whether the
      * value contains a fractional part.
      * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or
-     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      * @deprecated Renamed to ToEIntegerIfExact.
  */
 @Deprecated
@@ -2775,8 +2775,8 @@ at: http://peteroupc.github.io/
      * Converts this value to an arbitrary-precision integer, checking whether the
      * value contains a fractional part.
      * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or
-     * not-a-number (NaN).
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      */
     public EInteger ToEIntegerIfExact() {
       return this.ToEIntegerInternal(true);
@@ -3262,8 +3262,8 @@ at: http://peteroupc.github.io/
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after truncating to an integer.
      * @return This number's value, truncated to a byte (from 0 to 255).
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than 0 or greater than 255.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
       if (!this.isFinite()) {
@@ -3315,8 +3315,8 @@ at: http://peteroupc.github.io/
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 16-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than -32768 or greater than 32767.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -3369,8 +3369,8 @@ at: http://peteroupc.github.io/
      * Converts this number's value to a 32-bit signed integer if it can fit in a
      * 32-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 32-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than -2147483648 or greater than
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than -2147483648 or greater than
      * 2147483647.
      */
     public int ToInt32Checked() {
@@ -3433,9 +3433,9 @@ at: http://peteroupc.github.io/
      * Converts this number's value to a 64-bit signed integer if it can fit in a
      * 64-bit signed integer after truncating to an integer.
      * @return This number's value, truncated to a 64-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or
-     * the truncated integer is less than -9223372036854775808 or greater
-     * than 9223372036854775807.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
+     * truncated integer is less than -9223372036854775808 or greater than
+     * 9223372036854775807.
      */
     public long ToInt64Checked() {
       if (!this.isFinite()) {
