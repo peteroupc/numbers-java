@@ -1089,8 +1089,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param intValue The parameter {@code intValue} is not documented yet.
+     * Adds this object and another object.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return An arbitrary-precision integer.
      */
     public EInteger Add(int intValue) {
