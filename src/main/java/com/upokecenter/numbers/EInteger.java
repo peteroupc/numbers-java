@@ -394,8 +394,8 @@ at: http://peteroupc.github.io/
      * Converts a string to an arbitrary-precision integer in a given radix.
      * @param str A string described by the FromRadixSubstring method.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
-     * letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
+     * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
      * 0-9, then A-F in radix 16.
      * @return An arbitrary-precision integer with the same value as the given
      * string.
@@ -417,8 +417,8 @@ at: http://peteroupc.github.io/
      * desired portion is not allowed to contain white space characters,
      * including spaces.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic
-     * letters A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and
+     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
+     * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
      * 0-9, then A-F in radix 16.
      * @param index The index of the string that starts the string portion.
      * @param endIndex The index of the string that ends the string portion. The
@@ -651,7 +651,7 @@ at: http://peteroupc.github.io/
      * Converts a string to an arbitrary-precision integer.
      * @param str A text string. The string must contain only basic digits 0 to 9
      *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
-     * U + 002D) to indicate a negative number. The string is not allowed to
+     * U+002D) to indicate a negative number. The string is not allowed to
      * contain white space characters, including spaces.
      * @return An arbitrary-precision integer with the same value as given in the
      * string.
@@ -668,7 +668,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts a portion of a string to an arbitrary-precision integer.
      * @param str A text string. The desired portion of the string must contain
-     * only basic digits 0 to 9 (U + 0030 to U + 0039), except that it may
+     * only basic digits 0 to 9 (U+0030 to U+0039), except that it may
      *  start with a minus sign ("-", U+002D) to indicate a negative number.
      * The desired portion is not allowed to contain white space
      * characters, including spaces.
@@ -4100,8 +4100,8 @@ WordsShiftRightOne(bu, buc);
      * @return A string representing the value of this object. If this value is 0,
      *  returns "0". If negative, the string will begin with a minus sign
      *  ("-", U+002D). Depending on the radix, the string will use the basic
-     * digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
-     * (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
+     * digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z
+     * (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F
      * in radix 16.
      */
     public String ToRadixString(int radix) {
@@ -4242,7 +4242,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object to a text string in base 10.
      * @return A string representation of this object. If negative, the string will
      *  begin with a minus sign ("-", U+002D). The string will use the basic
-     * digits 0 to 9 (U + 0030 to U + 0039).
+     * digits 0 to 9 (U+0030 to U+0039).
      */
     @Override public String toString() {
       if (this.isZero()) {

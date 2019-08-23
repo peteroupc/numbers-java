@@ -675,7 +675,8 @@ Returns an arbitrary-precision number object with the same value as the
 * <code>ed</code> - An arbitrary-precision number object with the value the result
  will have.
 
-* <code>other</code> - The parameter <code>other</code> is an EDecimal object.
+* <code>other</code> - The parameter <code>other</code> is an arbitrary-precision decimal
+ floating-point number.
 
 **Returns:**
 

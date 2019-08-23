@@ -284,7 +284,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a copy of this arbitrary-precision binary number.
-     * @return An EDecimal object.
+     * @return An arbitrary-precision decimal floating-point number.
      */
     public EDecimal Copy() {
       return new EDecimal(
@@ -423,8 +423,9 @@ at: http://peteroupc.github.io/
      * Creates a not-a-number arbitrary-precision decimal number.
      * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To
-     * get the diagnostic information from another EDecimal object, use
-     * that object's {@code UnsignedMantissa} property.
+     * get the diagnostic information from another arbitrary-precision
+     * decimal floating-point number, use that object's {@code
+     * UnsignedMantissa} property.
      * @return A quiet not-a-number.
      */
     public static EDecimal CreateNaN(EInteger diag) {
@@ -435,8 +436,9 @@ at: http://peteroupc.github.io/
      * Creates a not-a-number arbitrary-precision decimal number.
      * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To
-     * get the diagnostic information from another EDecimal object, use
-     * that object's {@code UnsignedMantissa} property.
+     * get the diagnostic information from another arbitrary-precision
+     * decimal floating-point number, use that object's {@code
+     * UnsignedMantissa} property.
      * @param signaling Whether the return value will be signaling (true) or quiet
      * (false).
      * @param negative Whether the return value is negative.
@@ -832,8 +834,8 @@ at: http://peteroupc.github.io/
      * represents a number. See <code>FromString(string, int, int,
      * EContext)</code> for more information.
      * @param str A string that represents a number.
-     * @param offset A zero-based index showing where the desired portion of {@code
-     * str} begins.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
@@ -867,11 +869,11 @@ at: http://peteroupc.github.io/
      * by any number of digits, all in any combination of upper and lower
      * case.</p> <p>All characters mentioned above are the corresponding
      * characters in the Basic Latin range. In particular, the digits must
-     * be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not
+     * be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
      * allowed to contain white space characters, including spaces.</p>
      * @param str A text string, a portion of which represents a number.
-     * @param offset A zero-based index showing where the desired portion of {@code
-     * str} begins.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @param ctx An arithmetic context to control the precision, rounding, and
@@ -2333,7 +2335,8 @@ at: http://peteroupc.github.io/
      * Divides this object by another object, and returns the integer part of the
      * result (which is initially rounded down), with the preferred
      * exponent set to this value's exponent minus the divisor's exponent.
-     * @param divisor The parameter {@code divisor} is an EDecimal object.
+     * @param divisor The parameter {@code divisor} is an arbitrary-precision
+     * decimal floating-point number.
      * @param ctx The parameter {@code ctx} is an EContext object.
      * @return The integer part of the quotient of the two objects. Signals
      * FlagInvalid and returns not-a-number (NaN) if the return value would
@@ -2811,7 +2814,7 @@ at: http://peteroupc.github.io/
      * Multiplies by one decimal number, and then adds another decimal number.
      * @param multiplicand The value to multiply.
      * @param augend The value to add.
-     * @return An EDecimal object.
+     * @return An arbitrary-precision decimal floating-point number.
      */
     public EDecimal MultiplyAndAdd(
       EDecimal multiplicand,

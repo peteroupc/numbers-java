@@ -824,7 +824,7 @@ Creates a binary float from a text string that represents a number. Note
   ("sNaN") followed by any number of digits, all in any combination of
  upper and lower case.</p> <p>All characters mentioned above are the
  corresponding characters in the Basic Latin range. In particular,
- the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
  string is not allowed to contain white space characters, including
  spaces.</p>
 
@@ -832,8 +832,8 @@ Creates a binary float from a text string that represents a number. Note
 
 * <code>str</code> - The parameter <code>str</code> is a text string.
 
-* <code>offset</code> - A zero-based index showing where the desired portion of <code>
- str</code> begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>str</code> begins.
 
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
@@ -900,8 +900,8 @@ Creates a binary float from a text string that represents a number. For more
 
 * <code>str</code> - The parameter <code>str</code> is a text string.
 
-* <code>offset</code> - A zero-based index showing where the desired portion of <code>
- str</code> begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>str</code> begins.
 
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
@@ -1114,7 +1114,7 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>intValue</code> - The parameter <code>intValue</code> is not documented yet.
+* <code>intValue</code> - The parameter <code>intValue</code> is a.Int32 object.
 
 **Returns:**
 

@@ -130,7 +130,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a copy of this arbitrary-precision rational number.
-     * @return An arbitrary-precision binary rational number.
+     * @return An arbitrary-precision rational number.
      */
     public ERational Copy() {
       return new ERational(
@@ -212,7 +212,7 @@ at: http://peteroupc.github.io/
      * Creates a rational number with the given numerator and denominator.
      * @param numeratorSmall The numerator.
      * @param denominatorSmall The denominator.
-     * @return An arbitrary-precision binary rational number.
+     * @return An arbitrary-precision rational number.
      * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
@@ -225,7 +225,7 @@ at: http://peteroupc.github.io/
      * Creates a rational number with the given numerator and denominator.
      * @param numerator The numerator.
      * @param denominator The denominator.
-     * @return An arbitrary-precision binary rational number.
+     * @return An arbitrary-precision rational number.
      * @throws IllegalArgumentException The denominator is zero.
      */
     public static ERational Create(
@@ -239,7 +239,7 @@ at: http://peteroupc.github.io/
      * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To
      * get the diagnostic information from another arbitrary-precision
-     * binary rational number, use that object's {@code UnsignedNumerator}
+     * rational number, use that object's {@code UnsignedNumerator}
      * property.
      * @return An arbitrary-precision rational number.
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
@@ -253,7 +253,7 @@ at: http://peteroupc.github.io/
      * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To
      * get the diagnostic information from another arbitrary-precision
-     * binary rational number, use that object's {@code UnsignedNumerator}
+     * rational number, use that object's {@code UnsignedNumerator}
      * property.
      * @param signaling Whether the return value will be signaling (true) or quiet
      * (false).
@@ -463,12 +463,12 @@ at: http://peteroupc.github.io/
      * followed by any number of digits, all in any combination of upper
      * and lower case.</p> <p>All characters mentioned above are the
      * corresponding characters in the Basic Latin range. In particular,
-     * the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
      * string is not allowed to contain white space characters, including
      * spaces.</p>
      * @param str A text string, a portion of which represents a number.
-     * @param offset A zero-based index showing where the desired portion of {@code
-     * str} begins.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision rational number.
@@ -875,7 +875,7 @@ at: http://peteroupc.github.io/
     /**
      * Returns the absolute value of this rational number, that is, a number with
      * the same value as this one but as a nonnegative number.
-     * @return An arbitrary-precision binary rational number.
+     * @return An arbitrary-precision rational number.
      */
     public ERational Abs() {
       if (this.isNegative()) {
@@ -1443,7 +1443,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     /**
      * Returns a rational number with the same value as this one but with the sign
      * reversed.
-     * @return An arbitrary-precision binary rational number.
+     * @return An arbitrary-precision rational number.
      */
     public ERational Negate() {
       return new ERational(

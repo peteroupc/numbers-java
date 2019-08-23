@@ -767,7 +767,7 @@ Creates a copy of this arbitrary-precision binary number.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision decimal floating-point number.
 
 ### getExponent
     public final EInteger getExponent()
@@ -879,8 +879,9 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 * <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
  associated with this object. If none is needed, should be zero. To
- get the diagnostic information from another EDecimal object, use
- that object's <code>UnsignedMantissa</code> property.
+ get the diagnostic information from another arbitrary-precision
+ decimal floating-point number, use that object's <code>
+ UnsignedMantissa</code> property.
 
 **Returns:**
 
@@ -894,8 +895,9 @@ Creates a not-a-number arbitrary-precision decimal number.
 
 * <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
  associated with this object. If none is needed, should be zero. To
- get the diagnostic information from another EDecimal object, use
- that object's <code>UnsignedMantissa</code> property.
+ get the diagnostic information from another arbitrary-precision
+ decimal floating-point number, use that object's <code>
+ UnsignedMantissa</code> property.
 
 * <code>signaling</code> - Whether the return value will be signaling (true) or quiet
  (false).
@@ -1107,8 +1109,8 @@ Creates an arbitrary-precision decimal number from a text string that
 
 * <code>str</code> - A string that represents a number.
 
-* <code>offset</code> - A zero-based index showing where the desired portion of <code>
- str</code> begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>str</code> begins.
 
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
@@ -1145,15 +1147,15 @@ Creates an arbitrary-precision decimal number from a text string that
  by any number of digits, all in any combination of upper and lower
  case.</p> <p>All characters mentioned above are the corresponding
  characters in the Basic Latin range. In particular, the digits must
- be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not
+ be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
  allowed to contain white space characters, including spaces.</p>
 
 **Parameters:**
 
 * <code>str</code> - A text string, a portion of which represents a number.
 
-* <code>offset</code> - A zero-based index showing where the desired portion of <code>
- str</code> begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>str</code> begins.
 
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
@@ -2020,7 +2022,8 @@ Divides this object by another object, and returns the integer part of the
 
 **Parameters:**
 
-* <code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.
+* <code>divisor</code> - The parameter <code>divisor</code> is an arbitrary-precision
+ decimal floating-point number.
 
 * <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
 
@@ -2512,7 +2515,7 @@ Multiplies by one decimal number, and then adds another decimal number.
 
 **Returns:**
 
-* An EDecimal object.
+* An arbitrary-precision decimal floating-point number.
 
 ### MultiplyAndAdd
     public EDecimal MultiplyAndAdd​(EDecimal op, EDecimal augend, EContext ctx)

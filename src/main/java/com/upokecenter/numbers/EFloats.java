@@ -620,7 +620,8 @@ ed.CompareToTotalMagnitude(other, ec));
      * negative) as the second given number object.
      * @param ed An arbitrary-precision number object with the value the result
      * will have.
-     * @param other The parameter {@code other} is an EDecimal object.
+     * @param other The parameter {@code other} is an arbitrary-precision decimal
+     * floating-point number.
      * @return An arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or
      * negative) as the second given number object.

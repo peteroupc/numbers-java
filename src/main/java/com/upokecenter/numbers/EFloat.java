@@ -472,12 +472,12 @@ at: http://peteroupc.github.io/
      *  ("sNaN") followed by any number of digits, all in any combination of
      * upper and lower case.</p> <p>All characters mentioned above are the
      * corresponding characters in the Basic Latin range. In particular,
-     * the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
      * string is not allowed to contain white space characters, including
      * spaces.</p>
      * @param str The parameter {@code str} is a text string.
-     * @param offset A zero-based index showing where the desired portion of {@code
-     * str} begins.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @param ctx The parameter {@code ctx} is an EContext object.
@@ -536,8 +536,8 @@ at: http://peteroupc.github.io/
      * information, see the <code>FromString(string, int, int, EContext)</code>
      * method.
      * @param str The parameter {@code str} is a text string.
-     * @param offset A zero-based index showing where the desired portion of {@code
-     * str} begins.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision binary floating-point number.
@@ -730,7 +730,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Not documented yet.
-     * @param intValue The parameter {@code intValue} is not documented yet.
+     * @param intValue The parameter {@code intValue} is a.Int32 object.
      * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Add(int intValue) {

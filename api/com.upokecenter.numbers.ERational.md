@@ -297,7 +297,7 @@ Creates a copy of this arbitrary-precision rational number.
 
 **Returns:**
 
-* An arbitrary-precision binary rational number.
+* An arbitrary-precision rational number.
 
 ### getDenominator
     public final EInteger getDenominator()
@@ -376,7 +376,7 @@ Creates a rational number with the given numerator and denominator.
 
 **Returns:**
 
-* An arbitrary-precision binary rational number.
+* An arbitrary-precision rational number.
 
 **Throws:**
 
@@ -394,7 +394,7 @@ Creates a rational number with the given numerator and denominator.
 
 **Returns:**
 
-* An arbitrary-precision binary rational number.
+* An arbitrary-precision rational number.
 
 **Throws:**
 
@@ -409,7 +409,7 @@ Creates a not-a-number arbitrary-precision rational number.
 * <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
  associated with this object. If none is needed, should be zero. To
  get the diagnostic information from another arbitrary-precision
- binary rational number, use that object's <code>UnsignedNumerator</code>
+ rational number, use that object's <code>UnsignedNumerator</code>
  property.
 
 **Returns:**
@@ -429,7 +429,7 @@ Creates a not-a-number arbitrary-precision rational number.
 * <code>diag</code> - An integer, 0 or greater, to use as diagnostic information
  associated with this object. If none is needed, should be zero. To
  get the diagnostic information from another arbitrary-precision
- binary rational number, use that object's <code>UnsignedNumerator</code>
+ rational number, use that object's <code>UnsignedNumerator</code>
  property.
 
 * <code>signaling</code> - Whether the return value will be signaling (true) or quiet
@@ -583,7 +583,7 @@ Creates a rational number from a text string that represents a number. See
  followed by any number of digits, all in any combination of upper
  and lower case.</p> <p>All characters mentioned above are the
  corresponding characters in the Basic Latin range. In particular,
- the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
  string is not allowed to contain white space characters, including
  spaces.</p>
 
@@ -591,8 +591,8 @@ Creates a rational number from a text string that represents a number. See
 
 * <code>str</code> - A text string, a portion of which represents a number.
 
-* <code>offset</code> - A zero-based index showing where the desired portion of <code>
- str</code> begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>str</code> begins.
 
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
@@ -669,7 +669,7 @@ Returns the absolute value of this rational number, that is, a number with
 
 **Returns:**
 
-* An arbitrary-precision binary rational number.
+* An arbitrary-precision rational number.
 
 ### Add
     public ERational Add​(ERational otherValue)
@@ -895,7 +895,7 @@ Returns a rational number with the same value as this one but with the sign
 
 **Returns:**
 
-* An arbitrary-precision binary rational number.
+* An arbitrary-precision rational number.
 
 ### Remainder
     public ERational Remainder​(ERational otherValue)
