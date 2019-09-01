@@ -3096,28 +3096,21 @@ EInteger.FromString("244").Gcd(EInteger.FromInt32(1)).toString();
     public static void TestMultiplyDivideOne(
       EInteger bigintA,
       EInteger bigintB) {
-      if (bigintB == null) {
-        if (bigintB == null) {
-          Assert.fail();
+        if (bigintA == null) {
+          throw new NullPointerException("bigintA");
         }
-      }
+        if (bigintB == null) {
+          throw new NullPointerException("bigintB");
+        }
       // Test that A*B/A = B and A*B/B = A
       try {
         EInteger bigintRem;
         EInteger bigintE;
         EInteger bigintD;
-        if (bigintA == null) {
-          throw new NullPointerException("bigintA");
-        }
         EInteger bigintC = bigintA.Multiply(bigintB);
-        {
-          Object objectTemp = bigintC;
-Object objectTemp2 = if (bigintB == null) {
-              throw new NullPointerException("bigintB");
-            }
-            bigintB.Multiply(bigintA);
-TestCommon.CompareTestEqualAndConsistent(objectTemp, objectTemp2);
-}
+        TestCommon.CompareTestEqualAndConsistent(
+   bigintC,
+   bigintMultiply(bigintA));
         if (!bigintB.isZero()) {
           {
             EInteger[] divrem = bigintC.DivRem(bigintB);
@@ -3235,9 +3228,6 @@ TestCommon.CompareTestEqualAndConsistent(objectTemp, objectTemp2);
         }
       } catch (Exception ex) {
     String testLine = "TestMultiplyDivideOne (\nEInteger.FromRadixString (\"" +
-           if (bigintA == null) {
-             throw new NullPointerException("bigintA");
-           }
            bigintA.ToRadixString(16) + "\",16),\nEInteger.FromRadixString(\"" +
                     bigintB.ToRadixString(16) + "\",16));";
                     System.out.println(testLine);

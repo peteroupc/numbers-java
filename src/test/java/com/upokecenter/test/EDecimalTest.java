@@ -944,15 +944,29 @@ import com.upokecenter.numbers.*;
 
 @Test
 public void TestCompareToNull() {
- Assert.Less(0, EInteger.FromInt32(0).compareTo(null));
+ TestCommon.CompareTestLess(0, EInteger.FromInt32(0).compareTo(null));
 
- Assert.Less(0, EDecimal.Zero.compareTo(null));
- Assert.Less(0, EDecimal.Zero.CompareToBinary(null));
- Assert.Less(0, EDecimal.Zero.CompareToTotal(null, EContext.Unlimited));
- Assert.Less(0, EDecimal.Zero.CompareToTotalMagnitude(null,
-  EContext.Unlimited));
- Assert.Less(0, EDecimal.Zero.CompareToTotal(null, null));
- Assert.Less(0, EDecimal.Zero.CompareToTotalMagnitude(null, null));
+ TestCommon.CompareTestLess(0, EDecimal.Zero.compareTo(null));
+ TestCommon.CompareTestLess(0, EDecimal.Zero.CompareToBinary(null));
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EDecimal.Zero.CompareToTotal(null,
+  EContext.Unlimited);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
+  EContext.Unlimited);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
+ TestCommon.CompareTestLess(0, EDecimal.Zero.CompareToTotal(null, null));
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
+  null);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
  TestCommon.CompareTestGreater(
     EDecimal.Zero.CompareToSignal(null, EContext.Unlimited),
     EDecimal.Zero);
@@ -960,11 +974,21 @@ public void TestCompareToNull() {
     EDecimal.Zero.CompareToWithContext(null, null),
     EDecimal.Zero);
 
- Assert.Less(0, EFloat.Zero.compareTo(null));
- Assert.Less(0, EFloat.Zero.CompareToTotal(null, EContext.Unlimited));
- Assert.Less(0, EFloat.Zero.CompareToTotalMagnitude(null, EContext.Unlimited));
- Assert.Less(0, EFloat.Zero.CompareToTotal(null, null));
- Assert.Less(0, EFloat.Zero.CompareToTotalMagnitude(null, null));
+ TestCommon.CompareTestLess(0, EFloat.Zero.compareTo(null));
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EFloat.Zero.CompareToTotal(null,
+  EContext.Unlimited);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EFloat.Zero.CompareToTotalMagnitude(null,
+  EContext.Unlimited);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
+ TestCommon.CompareTestLess(0, EFloat.Zero.CompareToTotal(null, null));
+ TestCommon.CompareTestLess(0, EFloat.Zero.CompareToTotalMagnitude(null, null));
  TestCommon.CompareTestGreater(
     EFloat.Zero.CompareToSignal(null, EContext.Unlimited),
     EFloat.Zero);
@@ -972,61 +996,73 @@ public void TestCompareToNull() {
     EFloat.Zero.CompareToWithContext(null, null),
     EFloat.Zero);
 
- Assert.Less(0, ERational.Zero.compareTo(null));
- Assert.Less(0, ERational.Zero.CompareToTotal(null));
- Assert.Less(0, ERational.Zero.CompareToTotalMagnitude(null));
- Assert.Less(0, ERational.Zero.CompareToBinary(null));
- Assert.Less(0, ERational.Zero.CompareToDecimal(null));
-
+ TestCommon.CompareTestLess(0, ERational.Zero.compareTo(null));
+ TestCommon.CompareTestLess(0, ERational.Zero.CompareToTotal(null));
+ TestCommon.CompareTestLess(0, ERational.Zero.CompareToTotalMagnitude(null));
+ TestCommon.CompareTestLess(0, ERational.Zero.CompareToBinary(null));
+ TestCommon.CompareTestLess(0, ERational.Zero.CompareToDecimal(null));
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimals.CompareTotal(EDecimal.Zero, null,
+   int objectTemp2 = EDecimals.CompareTotal(EDecimal.Zero, null,
   EContext.Unlimited);
-Assert.Less(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, objectTemp2);
+  }
+ {
+   int objectTemp2 = EDecimals.CompareTotalMagnitude(EDecimal.Zero, null,
+  EContext.Unlimited);
+  TestCommon.CompareTestLess(0, objectTemp2);
+}
+{
+  int objectTemp2 = EDecimals.CompareTotal(null, EDecimal.Zero,
+  EContext.Unlimited);
+  TestCommon.CompareTestGreater(0, objectTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimals.CompareTotalMagnitude(EDecimal.Zero, null,
+ int objectTemp2 = EDecimals.CompareTotalMagnitude(null, EDecimal.Zero,
   EContext.Unlimited);
-Assert.Less(objectTemp, objectTemp2);
-}
- {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimals.CompareTotal(null, EDecimal.Zero,
-  EContext.Unlimited);
-Assert.Greater(objectTemp, objectTemp2);
-}
- {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimals.CompareTotalMagnitude(null, EDecimal.Zero,
-  EContext.Unlimited);
-Assert.Greater(objectTemp, objectTemp2);
+  TestCommon.CompareTestGreater(0, objectTemp2);
 }
  Assert.assertEquals(0, EDecimals.CompareTotal(null, null, EContext.Unlimited));
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimals.CompareTotalMagnitude(null, null,
+ int objectTemp2 = EDecimals.CompareTotalMagnitude(null, null,
   EContext.Unlimited);
-Assert.assertEquals(objectTemp, objectTemp2);
+  Assert.assertEquals(0, objectTemp2);
 }
- Assert.Less(0, EFloats.CompareTotal(EFloat.Zero, null, EContext.Unlimited));
- Assert.Less(0, EFloats.CompareTotalMagnitude(EFloat.Zero, null,
-  EContext.Unlimited));
- Assert.Greater(0, EFloats.CompareTotal(null, EFloat.Zero, EContext.Unlimited));
- Assert.Greater(0, EFloats.CompareTotalMagnitude(null, EFloat.Zero,
-  EContext.Unlimited));
- Assert.assertEquals(0, EFloats.CompareTotal(null, null, EContext.Unlimited));
  {
    Object objectTemp = 0;
-Object objectTemp2 = EFloats.CompareTotalMagnitude(null, null,
+Object objectTemp2 = EFloats.CompareTotal(EFloat.Zero, null,
   EContext.Unlimited);
-Assert.assertEquals(objectTemp, objectTemp2);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EFloats.CompareTotalMagnitude(EFloat.Zero, null,
+ EContext.Unlimited);
+TestCommon.CompareTestLess(objectTemp, objectTemp2);
+}
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EFloats.CompareTotal(null, EFloat.Zero,
+  EContext.Unlimited);
+TestCommon.CompareTestGreater(objectTemp, objectTemp2);
+}
+ {
+   Object objectTemp = 0;
+Object objectTemp2 = EFloats.CompareTotalMagnitude(null,
+  EFloat.Zero,
+  EContext.Unlimited);
+TestCommon.CompareTestGreater(objectTemp, objectTemp2);
+}
+ Assert.assertEquals(0, EFloats.CompareTotal(null, null, EContext.Unlimited));
+ {
+   int objectTemp2 = EFloats.CompareTotalMagnitude(null, null,
+  EContext.Unlimited);
+  Assert.assertEquals(0, objectTemp2);
 }
 }
 
     @Test
     public void TestDivide() {
-      {
+    {
         String stringTemp = EDecimal.FromString(
         "1").Divide(EDecimal.FromInt32(8)).toString();
         Assert.assertEquals(
