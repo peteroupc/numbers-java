@@ -1836,7 +1836,7 @@ at: http://peteroupc.github.io/
      */
     public int CompareToTotalMagnitude(EDecimal other, EContext ctx) {
       if (other == null) {
-        return -1;
+        return 1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
         return this.CompareToTotalMagnitude(other);

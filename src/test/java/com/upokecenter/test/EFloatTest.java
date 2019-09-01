@@ -1917,6 +1917,68 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
     }
+
+    @Test
+    public void TestInfinities() {
+      Assert.assertEquals(
+        EDecimal.PositiveInfinity,
+        EDecimal.FromSingle(Float.POSITIVE_INFINITY));
+      Assert.assertEquals(
+        EDecimal.NegativeInfinity,
+        EDecimal.FromSingle(Float.NEGATIVE_INFINITY));
+
+      Assert.assertEquals(
+        EFloat.PositiveInfinity,
+        EFloat.FromDouble(Double.POSITIVE_INFINITY));
+      Assert.assertEquals(
+        EFloat.NegativeInfinity,
+        EFloat.FromDouble(Double.NEGATIVE_INFINITY));
+      Assert.assertEquals(
+        EFloat.PositiveInfinity,
+        EFloat.FromSingle(Float.POSITIVE_INFINITY));
+      Assert.assertEquals(
+        EFloat.NegativeInfinity,
+        EFloat.FromSingle(Float.NEGATIVE_INFINITY));
+
+      Assert.assertEquals(
+        ERational.PositiveInfinity,
+        ERational.FromDouble(Double.POSITIVE_INFINITY));
+      Assert.assertEquals(
+        ERational.NegativeInfinity,
+        ERational.FromDouble(Double.NEGATIVE_INFINITY));
+      Assert.assertEquals(
+        ERational.PositiveInfinity,
+        ERational.FromSingle(Float.POSITIVE_INFINITY));
+      Assert.assertEquals(
+        ERational.NegativeInfinity,
+        ERational.FromSingle(Float.NEGATIVE_INFINITY));
+
+      Assert.assertEquals(
+        ERational.PositiveInfinity,
+        ERational.FromEDecimal(EDecimal.PositiveInfinity));
+      Assert.assertEquals(
+        ERational.NegativeInfinity,
+        ERational.FromEDecimal(EDecimal.NegativeInfinity));
+      Assert.assertEquals(
+        ERational.PositiveInfinity,
+        ERational.FromEFloat(EFloat.PositiveInfinity));
+      Assert.assertEquals(
+        ERational.NegativeInfinity,
+        ERational.FromEFloat(EFloat.NegativeInfinity));
+      if (!(
+        ((
+          ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail();
+      if (!(
+        ((
+          ERational.NegativeInfinity.ToDouble()) == Double.NEGATIVE_INFINITY)))Assert.fail();
+      if (!(
+    ((
+      ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
+      if (!(
+    ((
+      ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
+    }
+
     @Test
     public void TestToEngineeringString() {
       // not implemented yet
@@ -1938,7 +2000,10 @@ import com.upokecenter.numbers.*;
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EFloat dec = RandomObjects.RandomEFloat(fr);
-        ExtraTest.TestStringEqualRoundTrip(dec);
+        if (dec.isFinite()) {
+          EDecimal ed = EDecimal.FromString(dec.toString());
+          Assert.assertEquals(0, ed.CompareToBinary(dec));
+        }
       }
     }
     @Test

@@ -3112,8 +3112,11 @@ EInteger.FromString("244").Gcd(EInteger.FromInt32(1)).toString();
         EInteger bigintC = bigintA.Multiply(bigintB);
         {
           Object objectTemp = bigintC;
-          Object objectTemp2 = bigintB.Multiply(bigintA);
-          TestCommon.CompareTestEqualAndConsistent(objectTemp, objectTemp2);
+Object objectTemp2 = if (bigintB == null) {
+              throw new NullPointerException("bigintB");
+            }
+            bigintB.Multiply(bigintA);
+TestCommon.CompareTestEqualAndConsistent(objectTemp, objectTemp2);
 }
         if (!bigintB.isZero()) {
           {
@@ -3232,6 +3235,9 @@ EInteger.FromString("244").Gcd(EInteger.FromInt32(1)).toString();
         }
       } catch (Exception ex) {
     String testLine = "TestMultiplyDivideOne (\nEInteger.FromRadixString (\"" +
+           if (bigintA == null) {
+             throw new NullPointerException("bigintA");
+           }
            bigintA.ToRadixString(16) + "\",16),\nEInteger.FromRadixString(\"" +
                     bigintB.ToRadixString(16) + "\",16));";
                     System.out.println(testLine);
