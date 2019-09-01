@@ -949,23 +949,20 @@ public void TestCompareToNull() {
  TestCommon.CompareTestLess(0, EDecimal.Zero.compareTo(null));
  TestCommon.CompareTestLess(0, EDecimal.Zero.CompareToBinary(null));
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimal.Zero.CompareToTotal(null,
+   int objectTemp2 = EDecimal.Zero.CompareToTotal(null,
   EContext.Unlimited);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, objectTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
+   int integerTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
   EContext.Unlimited);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, integerTemp2);
 }
  TestCommon.CompareTestLess(0, EDecimal.Zero.CompareToTotal(null, null));
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
+   int integerTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
   null);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, integerTemp2);
 }
  TestCommon.CompareTestGreater(
     EDecimal.Zero.CompareToSignal(null, EContext.Unlimited),
@@ -976,16 +973,14 @@ TestCommon.CompareTestLess(objectTemp, objectTemp2);
 
  TestCommon.CompareTestLess(0, EFloat.Zero.compareTo(null));
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EFloat.Zero.CompareToTotal(null,
+   int integerTemp2 = EFloat.Zero.CompareToTotal(null,
   EContext.Unlimited);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, integerTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EFloat.Zero.CompareToTotalMagnitude(null,
+   int integerTemp2 = EFloat.Zero.CompareToTotalMagnitude(null,
   EContext.Unlimited);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, integerTemp2);
 }
  TestCommon.CompareTestLess(0, EFloat.Zero.CompareToTotal(null, null));
  TestCommon.CompareTestLess(0, EFloat.Zero.CompareToTotalMagnitude(null, null));
@@ -1028,29 +1023,25 @@ TestCommon.CompareTestLess(objectTemp, objectTemp2);
   Assert.assertEquals(0, objectTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EFloats.CompareTotal(EFloat.Zero, null,
+   int integerTemp2 = EFloats.CompareTotal(EFloat.Zero, null,
   EContext.Unlimited);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+  TestCommon.CompareTestLess(0, integerTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EFloats.CompareTotalMagnitude(EFloat.Zero, null,
+   int integerTemp2 = EFloats.CompareTotalMagnitude(EFloat.Zero, null,
  EContext.Unlimited);
-TestCommon.CompareTestLess(objectTemp, objectTemp2);
+ TestCommon.CompareTestLess(0, integerTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EFloats.CompareTotal(null, EFloat.Zero,
+   int integerTemp2 = EFloats.CompareTotal(null, EFloat.Zero,
   EContext.Unlimited);
-TestCommon.CompareTestGreater(objectTemp, objectTemp2);
+  TestCommon.CompareTestGreater(0, integerTemp2);
 }
  {
-   Object objectTemp = 0;
-Object objectTemp2 = EFloats.CompareTotalMagnitude(null,
+   int integerTemp2 = EFloats.CompareTotalMagnitude(null,
   EFloat.Zero,
   EContext.Unlimited);
-TestCommon.CompareTestGreater(objectTemp, objectTemp2);
+  TestCommon.CompareTestGreater(0, integerTemp2);
 }
  Assert.assertEquals(0, EFloats.CompareTotal(null, null, EContext.Unlimited));
  {
