@@ -90,7 +90,8 @@ A class that implements additional operations on arbitrary-precision binary
            EContext ec)`<br>
  Finds the number class for an arbitrary-precision decimal number object.
 * `static java.lang.String NumberClassString​(int nc)`<br>
- Converts a number class identifier (ranging from 1 to 9) to a text string.
+ Converts a number class identifier (ranging from 0 through 9) to a text
+ string.
 * `static EFloat Or​(EFloat ed1,
   EFloat ed2,
   EContext ec)`<br>
@@ -310,9 +311,9 @@ Returns whether the given arbitrary-precision number object is a signaling
 
 ### NumberClassString
     public static java.lang.String NumberClassString​(int nc)
-Converts a number class identifier (ranging from 1 to 9) to a text string.
- An arbitrary-precision number object can belong in one of ten number
- classes.
+Converts a number class identifier (ranging from 0 through 9) to a text
+ string. An arbitrary-precision number object can belong in one of
+ ten number classes.
 
 **Parameters:**
 

@@ -162,9 +162,9 @@ private EDecimals() {
     };
 
     /**
-     * Converts a number class identifier (ranging from 1 to 9) to a text string.
-     * An arbitrary-precision number object can belong in one of ten number
-     * classes.
+     * Converts a number class identifier (ranging from 0 through 9) to a text
+     * string. An arbitrary-precision number object can belong in one of
+     * ten number classes.
      * @param nc An integer identifying a number class.
      * @return A text string identifying the given number class as follows: 0 =
      *  "+Normal"; 1 = "-Normal", 2 = "+Subnormal", 3 = "-Subnormal", 4 =
