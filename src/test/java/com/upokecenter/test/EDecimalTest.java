@@ -949,9 +949,9 @@ public void TestCompareToNull() {
  TestCommon.CompareTestLess(0, EDecimal.Zero.compareTo(null));
  TestCommon.CompareTestLess(0, EDecimal.Zero.CompareToBinary(null));
  {
-   int objectTemp2 = EDecimal.Zero.CompareToTotal(null,
+   int integerTemp2 = EDecimal.Zero.CompareToTotal(null,
   EContext.Unlimited);
-  TestCommon.CompareTestLess(0, objectTemp2);
+  TestCommon.CompareTestLess(0, integerTemp2);
 }
  {
    int integerTemp2 = EDecimal.Zero.CompareToTotalMagnitude(null,
@@ -2491,7 +2491,7 @@ public void TestCompareToNull() {
       AppResources resources = new AppResources("Resources");
       String json = resources.GetString("logprec15");
       json = DecTestUtil.ParseJSONString(json);
-      String[] items = json.Split(',');
+      String[] items = DecTestUtility.SplitAt(json, "\u002c");
       for (int i = 0; i < items.length; i += 2) {
         TestCommon.CompareTestEqual(
            EDecimal.FromString(items[i]),

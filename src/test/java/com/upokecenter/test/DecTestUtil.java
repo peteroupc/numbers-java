@@ -12,16 +12,49 @@ import com.upokecenter.numbers.*;
 private DecTestUtil() {
 }
     private static final Pattern ValuePropertyLine = Pattern.compile(
-      "^(\\w+)\\:\\s*(\\S+)",
-      RegexOptions.Compiled);
+      "^(\\w+)\\:\\s*(\\S+)");
 
     private static final Pattern ValueQuotes = Pattern.compile(
-      "^[\\'\\\"]|[\\'\\\"]$",
-      RegexOptions.Compiled);
+      "^[\\'\\\"]|[\\'\\\"]$");
 
     private static final Pattern ValueTestLine = Pattern.compile(
-  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)",
-  RegexOptions.Compiled);
+  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)");
+
+    public static String[] SplitAt(String str, String delimiter) {
+      if (delimiter == null) {
+        throw new NullPointerException("delimiter");
+      }
+      if (delimiter.length() == 0) {
+        throw new IllegalArgumentException("delimiter is empty.");
+      }
+      if (((str) == null || (str).length() == 0)) {
+        return new String[] { "" };
+      }
+      int index = 0;
+      boolean first = true;
+      ArrayList<String> strings = null;
+      int delimLength = delimiter.length();
+      while (true) {
+        int index2 = str.indexOf(delimiter, index);
+        if (index2 < 0) {
+          if (first) {
+            String[] strret = new String[1];
+            strret[0] = str;
+            return strret;
+          }
+          strings = (strings == null) ? (new ArrayList<String>()) : strings;
+          strings.add(str.substring(index));
+          break;
+        } else {
+          first = false;
+          String newstr = str.substring(index, (index)+(index2 - index));
+          strings = (strings == null) ? (new ArrayList<String>()) : strings;
+          strings.add(newstr);
+          index = index2 + delimLength;
+        }
+      }
+      return strings.toArray(new String[] { });
+    }
 
     /**
      * Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
