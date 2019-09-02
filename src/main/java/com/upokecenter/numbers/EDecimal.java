@@ -4652,7 +4652,7 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
                 if (negative) {
                   builder.append('-');
                 }
-                builder.append(mantissaString, 0, (0)+(dp));
+                builder.append(mantissaString, 0, dp);
                 builder.append('.');
                 builder.append(
                   mantissaString, dp, (dp)+(mantissaString.length() - dp));
@@ -4754,7 +4754,7 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
             if (negative) {
               builder.append('-');
             }
-            builder.append(mantissaString, 0, (0)+(tmpInt));
+            builder.append(mantissaString, 0, tmpInt);
             AppendString(
               builder,
               '0',
@@ -4776,7 +4776,7 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
             if (negative) {
               builder.append('-');
             }
-            builder.append(mantissaString, 0, (0)+(tmpInt));
+            builder.append(mantissaString, 0, tmpInt);
             builder.append('.');
             builder.append(
               mantissaString, tmpInt, (tmpInt)+(mantissaString.length() - tmpInt));
@@ -4832,7 +4832,7 @@ bigmantissa.GetUnsignedBitLengthAsEInteger();
             if (negative) {
               builder.append('-');
             }
-            builder.append(mantissaString, 0, (0)+(tmpInt));
+            builder.append(mantissaString, 0, tmpInt);
             builder.append('.');
             builder.append(
               mantissaString, tmpInt, (tmpInt)+(mantissaString.length() - tmpInt));

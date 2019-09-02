@@ -2491,7 +2491,7 @@ public void TestCompareToNull() {
       AppResources resources = new AppResources("Resources");
       String json = resources.GetString("logprec15");
       json = DecTestUtil.ParseJSONString(json);
-      String[] items = DecTestUtility.SplitAt(json, "\u002c");
+      String[] items = DecTestUtil.SplitAt(json, "\u002c");
       for (int i = 0; i < items.length; i += 2) {
         TestCommon.CompareTestEqual(
            EDecimal.FromString(items[i]),

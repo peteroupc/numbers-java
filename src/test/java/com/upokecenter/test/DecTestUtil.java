@@ -102,13 +102,8 @@ private DecTestUtil() {
       if (((str) == null || (str).length() == 0)) {
         return 0;
       }
-      try {
-        return (str.charAt(0) == '+') ? TestCommon.StringToInt(str.substring(1)) :
+      return (str.charAt(0) == '+') ? TestCommon.StringToInt(str.substring(1)) :
           TestCommon.StringToInt(str);
-      } catch (Exception ex) {
-        System.out.println(ex.getStackTrace());
-        throw ex;
-      }
     }
 
     public static String ParseJSONString(String str) {

@@ -4076,7 +4076,7 @@ WordsShiftRightOne(bu, buc);
         }
       }
       ReverseChars(s, 0, i);
-      outputSB.append(s, 0, (0)+(i));
+      outputSB.append(s, 0, i);
     }
 
     private String ToUnoptString() {
