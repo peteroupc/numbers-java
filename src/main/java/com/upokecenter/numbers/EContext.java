@@ -7,24 +7,23 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-    /**
-     * Contains parameters for controlling the precision, rounding, and exponent
-     *  range of arbitrary-precision numbers. (The "E" stands for
-     *  "extended", and has this prefix to group it with the other classes
-     * common to this library, particularly EDecimal, EFloat, and
-     * ERational.). <p><b>Thread safety:</b> With one exception, instances
-     * of this class are immutable and are safe to use among multiple
-     * threads. The one exception involves the <code>Flags</code> property. If
-     * the context's <code>HasFlags</code> property (a read-only property) is
-     * <code>true</code>, the <code>Flags</code> property is mutable, thus making the
-     * context mutable. This class doesn't synchronize access to such
-     * mutable contexts, so applications should provide their own
-     * synchronization if a context with the <code>HasFlags</code> property set
-     * to <code>true</code> will be shared among multiple threads and at least
-     * one of those threads needs to write the <code>Flags</code> property (which
-     * can happen, for example, by passing the context to most methods of
-     * <code>EDecimal</code> such as <code>Add</code>).</p>
-     */
+  /**
+   * Contains parameters for controlling the precision, rounding, and exponent
+   *  range of arbitrary-precision numbers. (The "E" stands for "extended",
+   * and has this prefix to group it with the other classes common to this
+   * library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
+   * safety:</b> With one exception, instances of this class are immutable
+   * and are safe to use among multiple threads. The one exception involves
+   * the <code>Flags</code> property. If the context's <code>HasFlags</code> property
+   * (a read-only property) is <code>true</code>, the <code>Flags</code> property is
+   * mutable, thus making the context mutable. This class doesn't
+   * synchronize access to such mutable contexts, so applications should
+   * provide their own synchronization if a context with the
+   * <code>HasFlags</code> property set to <code>true</code> will be shared among
+   * multiple threads and at least one of those threads needs to write the
+   * <code>Flags</code> property (which can happen, for example, by passing the
+   * context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
+   */
   public final class EContext {
     /**
      * Signals that the exponent was adjusted to fit the exponent range.
@@ -93,10 +92,10 @@ at: http://peteroupc.github.io/
 
     public static final EContext BigDecimalJava =
       new EContext(0, ERounding.HalfUp, 0, 0, true)
-      .WithExponentClamp(true).WithAdjustExponent(false)
-      .WithBigExponentRange(
-  EInteger.FromInt32(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
-  EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
+    .WithExponentClamp(true).WithAdjustExponent(false)
+    .WithBigExponentRange (
+      EInteger.FromInt32(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
+      EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
     /**
      * An arithmetic context for the IEEE-754-2008 binary128 format, 113 bits
@@ -146,7 +145,7 @@ at: http://peteroupc.github.io/
 
     public static final EContext CliDecimal =
       new EContext(96, ERounding.HalfEven, 0, 28, true)
-      .WithPrecisionInBits(true);
+    .WithPrecisionInBits(true);
 
     /**
      * An arithmetic context for the IEEE-754-2008 decimal128 format. The default
@@ -209,11 +208,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("exponentMax");
       }
       if (bigintPrecision.signum() < 0) {
-        throw new IllegalArgumentException("precision (" + bigintPrecision +
+        throw new IllegalArgumentException("precision(" + bigintPrecision +
           ") is less than 0");
       }
       if (exponentMin.compareTo(exponentMax) > 0) {
-        throw new IllegalArgumentException("exponentMinSmall (" + exponentMin +
+        throw new IllegalArgumentException("exponentMinSmall(" + exponentMin +
           ") is more than " + exponentMax);
       }
       this.adjustExponent = adjustExponent;
@@ -255,12 +254,10 @@ at: http://peteroupc.github.io/
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}.
      * @param precision The parameter {@code precision} is a 32-bit signed integer.
-     * @param rounding The parameter {@code rounding} is an ERounding object.
-     * @param exponentMinSmall The parameter {@code exponentMinSmall} is a 32-bit
-     * signed integer.
-     * @param exponentMaxSmall The parameter {@code exponentMaxSmall} is a 32-bit
-     * signed integer.
-     * @param clampNormalExponents Either {@code true} or {@code false}.
+     * @param rounding The value of the Rounding property.
+     * @param exponentMinSmall The value of the EMin property.
+     * @param exponentMaxSmall The value of the EMax property.
+     * @param clampNormalExponents The value of the ClampNormalExponents property.
      */
     public EContext(
       int precision,
@@ -269,18 +266,18 @@ at: http://peteroupc.github.io/
       int exponentMaxSmall,
       boolean clampNormalExponents) {
  this(
-      true,
-      EInteger.FromInt32(precision),
-      clampNormalExponents,
-      EInteger.FromInt32(exponentMaxSmall),
-      EInteger.FromInt32(exponentMinSmall),
-      0,
-      true,
-      false,
-      false,
-      rounding,
-      false,
-      0);
+          true,
+          EInteger.FromInt32(precision),
+          clampNormalExponents,
+          EInteger.FromInt32(exponentMaxSmall),
+          EInteger.FromInt32(exponentMinSmall),
+          0,
+          true,
+          false,
+          false,
+          rounding,
+          false,
+          0);
     }
 
     /**
@@ -299,18 +296,18 @@ at: http://peteroupc.github.io/
       EInteger exponentMax,
       boolean clampNormalExponents) {
  this(
-      true,
-      bigintPrecision,
-      clampNormalExponents,
-      exponentMax,
-      exponentMin,
-      0,
-      true,
-      false,
-      false,
-      rounding,
-      false,
-      0);
+          true,
+          bigintPrecision,
+          clampNormalExponents,
+          exponentMax,
+          exponentMin,
+          0,
+          true,
+          false,
+          false,
+          rounding,
+          false,
+          0);
     }
 
     /**
@@ -319,8 +316,8 @@ at: http://peteroupc.github.io/
      * just the number's Exponent property. The default value is true,
      * meaning that EMax and EMin refer to the adjusted exponent. Setting
      * this value to false (using WithAdjustExponent) is useful for
-     * modeling floating point representations with an integer mantissa
-     * (significand) and an integer exponent, such as Java's BigDecimal.
+     * modeling floating point representations with an integer significand
+     * and an integer exponent, such as Java's BigDecimal.
      * @return {@code true} if the EMax and EMin properties refer to the number's
      * Exponent property adjusted to the number's precision, or false if
      * they refer to just the number's Exponent property.
@@ -334,7 +331,7 @@ at: http://peteroupc.github.io/
      * not be higher than EMax + 1 - Precision. If a number's exponent is
      * higher than that value, but not high enough to cause overflow, the
      * exponent is clamped to that value and enough zeros are added to the
-     * number's mantissa (significand) to account for the adjustment. If
+     * number's significand to account for the adjustment. If
      * HasExponentRange is false, this value is always false.
      * @return If true, a converted number's Exponent property will not be higher
      * than EMax + 1 - Precision.
@@ -428,6 +425,8 @@ public final void setFlags(int value) {
 
     /**
      * Gets a value indicating whether this context defines a maximum precision.
+     * This is the same as whether this context's Precision property is
+     * zero.
      * @return {@code true} if this context defines a maximum precision; otherwise,
      * {@code false}.
      */
@@ -462,8 +461,8 @@ public final void setFlags(int value) {
     /**
      * Gets the maximum length of a converted number in digits, ignoring the radix
      * point and exponent. For example, if precision is 3, a converted
-     * number's mantissa (significand) can range from 0 to 999 (up to three
-     * digits long). If 0, converted numbers can have any precision.
+     * number's significand can range from 0 to 999 (up to three digits
+     * long). If 0, converted numbers can have any precision.
      * <p>Not-a-number (NaN) values can carry an optional number, its
      *  payload, that serves as its "diagnostic information", In general, if
      * an operation requires copying an NaN's payload, only up to as many
@@ -471,9 +470,8 @@ public final void setFlags(int value) {
      * namely the least significant digits, are copied.</p>
      * @return The maximum length of a converted number in digits, ignoring the
      * radix point and exponent. For example, if precision is 3, a
-     * converted number's mantissa (significand) can range from 0 to 999
-     * (up to three digits long). If 0, converted numbers can have any
-     * precision.
+     * converted number's significand can range from 0 to 999 (up to three
+     * digits long). If 0, converted numbers can have any precision.
      */
     public final EInteger getPrecision() {
         return this.bigintPrecision;
@@ -615,16 +613,17 @@ public final void setFlags(int value) {
       if (this.bigintPrecision.isZero()) {
         // Only check EMax, since with an unlimited
         // precision, any exponent less than EMin will exceed EMin if
-        // the mantissa is the right size
+        // the significand is the right size
+        // TODO: In next major version, perhaps correct this to check
+        // EMin here as well if AdjustExponent is true
         return exponent.compareTo(this.getEMax()) <= 0;
       } else {
         EInteger bigint = exponent;
         if (this.adjustExponent) {
-          bigint = bigint.Add(this.bigintPrecision);
-          bigint = bigint.Subtract(EInteger.FromInt32(1));
+          bigint = bigint.Add(this.bigintPrecision).Subtract(1);
         }
         return (bigint.compareTo(this.getEMin()) >= 0) &&
-          (exponent.compareTo(this.getEMax()) <= 0);
+(exponent.compareTo(this.getEMax()) <= 0);
       }
     }
 
@@ -638,8 +637,11 @@ public final void setFlags(int value) {
         ", Traps=" + this.traps + ", ExponentMin=" + this.exponentMin +
         ", HasExponentRange=" + this.hasExponentRange + ", BigintPrecision=" +
         this.bigintPrecision + ", Rounding=" + this.rounding +
-        ", ClampNormalExponents=" + this.clampNormalExponents + ", Flags=" +
-        this.flags + ", HasFlags=" + this.hasFlags + "]";
+        ", ClampNormalExponents=" + this.clampNormalExponents +
+        ", AdjustExponent=" + this.adjustExponent + ", Flags=" +
+        this.flags + ", HasFlags=" + this.hasFlags + ", IsSimplified=" +
+this.simplified +
+        "]";
     }
 
     /**
@@ -796,9 +798,9 @@ public final void setFlags(int value) {
     public EContext WithExponentRange(
       int exponentMinSmall,
       int exponentMaxSmall) {
-      return this.WithBigExponentRange(
-        EInteger.FromInt32(exponentMinSmall),
-        EInteger.FromInt32(exponentMaxSmall));
+      return this.WithBigExponentRange (
+          EInteger.FromInt32(exponentMinSmall),
+          EInteger.FromInt32(exponentMaxSmall));
     }
 
     /**

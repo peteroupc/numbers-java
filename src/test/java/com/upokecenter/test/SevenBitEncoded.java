@@ -53,7 +53,7 @@ private SevenBitEncoded() {
     }
 
     private static EInteger Read7BitEncoded(InputStream inputStream, EInteger
-maxValue) throws java.io.IOException {
+      maxValue) throws java.io.IOException {
       if (inputStream == null) {
         throw new NullPointerException("inputStream");
       }

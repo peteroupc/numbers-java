@@ -10,9 +10,9 @@ at: http://peteroupc.github.io/
 import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
-    /**
-     * Description of RandomObjects.
-     */
+  /**
+   * Description of RandomObjects.
+   */
   public final class RandomObjects {
 private RandomObjects() {
 }
@@ -168,9 +168,9 @@ private RandomObjects() {
         return sabi.getBigIntValue();
       }
       if (selection < 50) {
-        StringAndBigInt sabi = StringAndBigInt.Generate(
-          r,
-          2 + r.UniformInt(35));
+        StringAndBigInt sabi = StringAndBigInt.Generate (
+            r,
+            2 + r.UniformInt(35));
         return sabi.getBigIntValue();
       } else {
         int count = r.UniformInt(400) + 1;
@@ -198,9 +198,9 @@ private RandomObjects() {
           return EFloat.NaN;
         }
       }
-      return EFloat.Create(
-  RandomEInteger(r),
-  EInteger.FromInt64(r.UniformInt(400) - 200));
+      return EFloat.Create (
+          RandomEInteger(r),
+          EInteger.FromInt64(r.UniformInt(400) - 200));
     }
 
     public static String RandomBigIntString(RandomGenerator r) {

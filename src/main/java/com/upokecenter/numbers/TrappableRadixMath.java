@@ -21,7 +21,7 @@ at: http://peteroupc.github.io/
 
     private static EContext GetTrappableContext(EContext ctx) {
       return (ctx == null) ? null : ((ctx.getTraps() == 0) ? ctx :
-      ctx.WithBlankFlags());
+          ctx.WithBlankFlags());
     }
 
     private T TriggerTraps(
@@ -40,8 +40,8 @@ at: http://peteroupc.github.io/
         return result;
       }
       int mutexConditions = traps & (~(
-        EContext.FlagClamped | EContext.FlagInexact | EContext.FlagRounded |
-          EContext.FlagSubnormal));
+            EContext.FlagClamped | EContext.FlagInexact | EContext.FlagRounded |
+            EContext.FlagSubnormal));
       if (mutexConditions != 0) {
         for (int i = 0; i < 32; ++i) {
           int flag = mutexConditions & (i << 1);
@@ -344,6 +344,12 @@ at: http://peteroupc.github.io/
     public T RoundAfterConversion(T thisValue, EContext ctx) {
       EContext tctx = GetTrappableContext(ctx);
       T result = this.math.RoundAfterConversion(thisValue, tctx);
+      return this.TriggerTraps(result, tctx, ctx);
+    }
+
+    public T SignalOverflow(EContext ctx, boolean neg) {
+      EContext tctx = GetTrappableContext(ctx);
+      T result = this.math.SignalOverflow(tctx, neg);
       return this.TriggerTraps(result, tctx, ctx);
     }
 

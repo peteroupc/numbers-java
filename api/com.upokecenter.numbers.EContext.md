@@ -3,21 +3,20 @@
     public final class EContext extends java.lang.Object
 
 Contains parameters for controlling the precision, rounding, and exponent
-  range of arbitrary-precision numbers. (The "E" stands for
-  "extended", and has this prefix to group it with the other classes
- common to this library, particularly EDecimal, EFloat, and
- ERational.). <p><b>Thread safety:</b> With one exception, instances
- of this class are immutable and are safe to use among multiple
- threads. The one exception involves the <code>Flags</code> property. If
- the context's <code>HasFlags</code> property (a read-only property) is
- <code>true</code>, the <code>Flags</code> property is mutable, thus making the
- context mutable. This class doesn't synchronize access to such
- mutable contexts, so applications should provide their own
- synchronization if a context with the <code>HasFlags</code> property set
- to <code>true</code> will be shared among multiple threads and at least
- one of those threads needs to write the <code>Flags</code> property (which
- can happen, for example, by passing the context to most methods of
- <code>EDecimal</code> such as <code>Add</code>).</p>
+  range of arbitrary-precision numbers. (The "E" stands for "extended",
+ and has this prefix to group it with the other classes common to this
+ library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
+ safety:</b> With one exception, instances of this class are immutable
+ and are safe to use among multiple threads. The one exception involves
+ the <code>Flags</code> property. If the context's <code>HasFlags</code> property
+ (a read-only property) is <code>true</code>, the <code>Flags</code> property is
+ mutable, thus making the context mutable. This class doesn't
+ synchronize access to such mutable contexts, so applications should
+ provide their own synchronization if a context with the
+ <code>HasFlags</code> property set to <code>true</code> will be shared among
+ multiple threads and at least one of those threads needs to write the
+ <code>Flags</code> property (which can happen, for example, by passing the
+ context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p>
 
 ## Fields
 
@@ -285,8 +284,8 @@ Gets a value indicating whether the EMax and EMin properties refer to the
  just the number's Exponent property. The default value is true,
  meaning that EMax and EMin refer to the adjusted exponent. Setting
  this value to false (using WithAdjustExponent) is useful for
- modeling floating point representations with an integer mantissa
- (significand) and an integer exponent, such as Java's BigDecimal.
+ modeling floating point representations with an integer significand
+ and an integer exponent, such as Java's BigDecimal.
 
 **Returns:**
 
@@ -300,7 +299,7 @@ Gets a value indicating whether a converted number's Exponent property will
  not be higher than EMax + 1 - Precision. If a number's exponent is
  higher than that value, but not high enough to cause overflow, the
  exponent is clamped to that value and enough zeros are added to the
- number's mantissa (significand) to account for the adjustment. If
+ number's significand to account for the adjustment. If
  HasExponentRange is false, this value is always false.
 
 **Returns:**
@@ -390,6 +389,8 @@ Gets a value indicating whether this context has a mutable Flags field.
 ### getHasMaxPrecision
     public final boolean getHasMaxPrecision()
 Gets a value indicating whether this context defines a maximum precision.
+ This is the same as whether this context's Precision property is
+ zero.
 
 **Returns:**
 
@@ -419,8 +420,8 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
     public final EInteger getPrecision()
 Gets the maximum length of a converted number in digits, ignoring the radix
  point and exponent. For example, if precision is 3, a converted
- number's mantissa (significand) can range from 0 to 999 (up to three
- digits long). If 0, converted numbers can have any precision.
+ number's significand can range from 0 to 999 (up to three digits
+ long). If 0, converted numbers can have any precision.
  <p>Not-a-number (NaN) values can carry an optional number, its
   payload, that serves as its "diagnostic information", In general, if
  an operation requires copying an NaN's payload, only up to as many
@@ -431,9 +432,8 @@ Gets the maximum length of a converted number in digits, ignoring the radix
 
 * The maximum length of a converted number in digits, ignoring the
  radix point and exponent. For example, if precision is 3, a
- converted number's mantissa (significand) can range from 0 to 999
- (up to three digits long). If 0, converted numbers can have any
- precision.
+ converted number's significand can range from 0 to 999 (up to three
+ digits long). If 0, converted numbers can have any precision.
 
 ### getRounding
     public final ERounding getRounding()

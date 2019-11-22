@@ -66,9 +66,9 @@ at: http://peteroupc.github.io/
     static FastIntegerFixed FromLong(long longVal) {
       return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
         FastIntegerFixed((int)longVal) : new FastIntegerFixed(
-         2,
-         0,
-         EInteger.FromInt64(longVal));
+          2,
+          0,
+          EInteger.FromInt64(longVal));
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {
@@ -113,12 +113,14 @@ at: http://peteroupc.github.io/
       if (this.integerMode == 0 && this.smallValue >= 0) {
         return this.smallValue % value;
       } else {
-      EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(value));
-      return retval.ToInt32Checked();
+        EInteger retval = this.ToEInteger().Remainder(EInteger.FromInt32(
+  value));
+        return retval.ToInt32Checked();
       }
     }
 
-    public static FastIntegerFixed Add(FastIntegerFixed a, FastIntegerFixed b) {
+    public static FastIntegerFixed Add(FastIntegerFixed a,
+      FastIntegerFixed b) {
       if (a.integerMode == 0 && b.integerMode == 0) {
         if (a.smallValue == 0) {
           return b;
@@ -147,7 +149,7 @@ at: http://peteroupc.github.io/
         if (
           (b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
           (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
-                          a.smallValue)) {
+            a.smallValue)) {
           return new FastIntegerFixed(a.smallValue - b.smallValue);
         }
       }
@@ -159,10 +161,10 @@ at: http://peteroupc.github.io/
     public int compareTo(FastIntegerFixed val) {
       switch ((this.integerMode << 2) | val.integerMode) {
         case (0 << 2) | 0: {
-            int vsv = val.smallValue;
-            return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
-                  1);
-          }
+          int vsv = val.smallValue;
+          return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
+              1);
+        }
         case (0 << 2) | 2:
           return this.ToEInteger().compareTo(val.largeValue);
         case (2 << 2) | 0:
@@ -236,7 +238,8 @@ at: http://peteroupc.github.io/
                 1);
           case 2:
             return this.largeValue.signum();
-          default: return 0;
+          default:
+            return 0;
         }
       }
 
@@ -257,7 +260,7 @@ at: http://peteroupc.github.io/
           return true;
         case 2:
           return this.largeValue
-                     .CanFitInInt64();
+            .CanFitInInt64();
 
         default: throw new IllegalStateException();
       }
@@ -269,7 +272,7 @@ at: http://peteroupc.github.io/
           return (long)this.smallValue;
         case 2:
           return this.largeValue
-                     .ToInt64Unchecked();
+            .ToInt64Unchecked();
 
         default: throw new IllegalStateException();
       }
@@ -279,7 +282,7 @@ at: http://peteroupc.github.io/
       switch (this.integerMode) {
         case 0:
           return (val == this.smallValue) ? 0 : (this.smallValue < val ? -1 :
-          1);
+              1);
         case 2:
           return this.largeValue.compareTo(EInteger.FromInt32(val));
         default: return 0;

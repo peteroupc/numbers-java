@@ -3,26 +3,26 @@
     public final class EInteger extends java.lang.Object implements java.lang.Comparable<EInteger>
 
 Represents an arbitrary-precision integer. (The "E" stands for "extended",
- and has this prefix to group it with the other classes common to
- this library, particularly EDecimal, EFloat, and ERational.)
- <p>Instances of this class are immutable, so they are inherently
- safe for use by multiple threads. Multiple instances of this object
- with the same value are interchangeable, but they should be compared
-  using the "Equals" method rather than the "==" operator.</p>
- <p><b>Security note</b></p> <p>It is not recommended to implement
- security-sensitive algorithms using the methods in this class, for
- several reasons:</p> <ul> <li><code>EInteger</code> objects are immutable,
- so they can't be modified, and the memory they occupy is not
- guaranteed to be cleared in a timely fashion due to garbage
- collection. This is relevant for applications that use many-bit-long
- numbers as secret parameters.</li> <li>The methods in this class
- (especially those that involve arithmetic) are not guaranteed to be
-  "constant-time" (non-data-dependent) for all relevant inputs.
- Certain attacks that involve encrypted communications have exploited
- the timing and other aspects of such communications to derive keying
- material or cleartext indirectly.</li></ul> <p>Applications should
- instead use dedicated security libraries to handle big numbers in
- security-sensitive algorithms.</p>
+ and has this prefix to group it with the other classes common to this
+ library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+ of this class are immutable, so they are inherently safe for use by
+ multiple threads. Multiple instances of this object with the same
+ value are interchangeable, but they should be compared using the
+  "Equals" method rather than the "==" operator.</p> <p><b>Security
+ note</b></p> <p>It is not recommended to implement security-sensitive
+ algorithms using the methods in this class, for several reasons:</p>
+ <ul> <li><code>EInteger</code> objects are immutable, so they can't be
+ modified, and the memory they occupy is not guaranteed to be cleared
+ in a timely fashion due to garbage collection. This is relevant for
+ applications that use many-bit-long numbers as secret parameters.</li>
+ <li>The methods in this class (especially those that involve
+  arithmetic) are not guaranteed to be "constant-time"
+ (non-data-dependent) for all relevant inputs. Certain attacks that
+ involve encrypted communications have exploited the timing and other
+ aspects of such communications to derive keying material or cleartext
+ indirectly.</li></ul> <p>Applications should instead use dedicated
+ security libraries to handle big numbers in security-sensitive
+ algorithms.</p>
 
 ## Methods
 
@@ -58,6 +58,8 @@ Renamed to ToInt64Unchecked.
  Compares an arbitrary-precision integer with this instance.
 * `int compareTo​(EInteger other)`<br>
  Compares an arbitrary-precision integer with this instance.
+* `EInteger Decrement()`<br>
+ Returns one subtracted from this arbitrary-precision integer.
 * `EInteger Divide​(int intValue)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
 * `EInteger Divide​(EInteger bigintDivisor)`<br>
@@ -116,10 +118,10 @@ This method may overflow.
  Gets the number 1 as an arbitrary-precision integer.
 * `boolean GetSignedBit​(int index) "Forms of numbers"`<br>
  Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
- object' s value.
+ object's value.
 * `boolean GetSignedBit​(EInteger bigIndex) "Forms of numbers"`<br>
  Returns whether a bit is set in the two's-complement form (see "Forms of numbers") of this
- object' s value.
+ object's value.
 * `int GetSignedBitLength()`<br>
  Deprecated.
 This method may overflow.
@@ -144,6 +146,8 @@ This method may overflow.
  Gets the number zero as an arbitrary-precision integer.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
+* `EInteger Increment()`<br>
+ Returns one added to this arbitrary-precision integer.
 * `boolean isEven()`<br>
  Gets a value indicating whether this value is even.
 * `boolean isPowerOfTwo()`<br>
@@ -163,7 +167,7 @@ This method may overflow.
  certain power is divided by another arbitrary-precision integer.
 * `EInteger Multiply​(int intValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
- object.
+  object.
 * `EInteger Multiply​(EInteger bigintMult)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
  object.
@@ -282,7 +286,7 @@ Gets a value indicating whether this object's value is a power of two, and
 
 **Returns:**
 
-* <code>true</code> if this object' s value is a power of two, and greater
+* <code>true</code> if this object's value is a power of two, and greater
  than 0; otherwise, <code>false</code>.
 
 ### isZero
@@ -299,7 +303,7 @@ Gets the sign of this object's value.
 
 **Returns:**
 
-* The sign of this object' s value.
+* The sign of this object's value.
 
 ### FromBytes
     public static EInteger FromBytes​(byte[] bytes, boolean littleEndian)
@@ -413,7 +417,8 @@ Converts a portion of a string to an arbitrary-precision integer in a given
  only characters allowed by the given radix, except that it may start
   with a minus sign ("-", U+002D) to indicate a negative number. The
  desired portion is not allowed to contain white space characters,
- including spaces.
+ including spaces. The desired portion may start with any number of
+ zeros.
 
 * <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
  the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
@@ -436,8 +441,6 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 * <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.
 
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy (endIndex - index) % 4 == 0".
-
 ### FromString
     public static EInteger FromString​(java.lang.String str)
 Converts a string to an arbitrary-precision integer.
@@ -447,7 +450,8 @@ Converts a string to an arbitrary-precision integer.
 * <code>str</code> - A text string. The string must contain only basic digits 0 to 9
   (U+0030 to U+0039), except that it may start with a minus sign ("-",
  U+002D) to indicate a negative number. The string is not allowed to
- contain white space characters, including spaces.
+ contain white space characters, including spaces. The string may
+ start with any number of zeros.
 
 **Returns:**
 
@@ -470,7 +474,8 @@ Converts a portion of a string to an arbitrary-precision integer.
  only basic digits 0 to 9 (U+0030 to U+0039), except that it may
   start with a minus sign ("-", U+002D) to indicate a negative number.
  The desired portion is not allowed to contain white space
- characters, including spaces.
+ characters, including spaces. The desired portion may start with any
+ number of zeros.
 
 * <code>index</code> - The index of the string that starts the string portion.
 
@@ -614,8 +619,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### Multiply
     public EInteger Multiply​(int intValue)
 Multiplies this instance by the value of an arbitrary-precision integer
- object.<p> </p><pre>EInteger result =
-  EInteger.FromString("5").Multiply(200);</pre> .
+  object.<p> </p><pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> .
 
 **Parameters:**
 
@@ -820,7 +824,7 @@ Gets the lowest set bit in this number's absolute value, in the form of an
 ### GetSignedBit
     public boolean GetSignedBit​(EInteger bigIndex)
 Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this
- object' s value.
+ object's value.
 
 **Parameters:**
 
@@ -831,7 +835,7 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 **Returns:**
 
 * <code>true</code> if the given bit is set in the two' s-complement form
- (see <code>EDecimal</code>) of this object' s
+ (see <code>EDecimal</code>) of this object's
  value; otherwise, <code>false</code>.
 
 **Throws:**
@@ -841,7 +845,7 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 ### GetSignedBit
     public boolean GetSignedBit​(int index)
 Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this
- object' s value.
+ object's value.
 
 **Parameters:**
 
@@ -852,7 +856,7 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 **Returns:**
 
 * <code>true</code> if the given bit is set in the two' s-complement form
- (see <code>EDecimal</code>) of this object' s
+ (see <code>EDecimal</code>) of this object's
  value; otherwise, <code>false</code>.
 
 ### GetSignedBitLengthAsEInteger
@@ -1295,7 +1299,7 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 ### ToBytes
     public byte[] ToBytes​(boolean littleEndian)
 Returns a byte array of this integer's value. The byte array will take the
- number's two' s-complement form (see <code>"Forms of numbers"</code>), using the
+ number's two's-complement form (see <code>"Forms of numbers"</code>), using the
  fewest bytes necessary to store its value unambiguously. If this
  value is negative, the bits that appear beyond the most significant
  bit of the number will be all ones. The resulting byte array can be
@@ -1324,7 +1328,7 @@ Converts this object's value to a 32-bit signed integer, throwing an
     public int ToInt32Unchecked()
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
- two' s-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ two's-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
  different sign than this object's value).
 
 **Returns:**
@@ -1344,7 +1348,7 @@ Converts this object's value to a 64-bit signed integer, throwing an
     public long ToInt64Unchecked()
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
- two' s-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
+ two's-complement form (see <code>"Forms of numbers"</code>) (in which case the return value might have a
  different sign than this object's value).
 
 **Returns:**
@@ -1384,6 +1388,22 @@ Converts this object to a text string in base 10.
 * A string representation of this object. If negative, the string will
   begin with a minus sign ("-", U+002D). The string will use the basic
  digits 0 to 9 (U+0030 to U+0039).
+
+### Increment
+    public EInteger Increment()
+Returns one added to this arbitrary-precision integer.
+
+**Returns:**
+
+* The given arbitrary-precision integer plus one.
+
+### Decrement
+    public EInteger Decrement()
+Returns one subtracted from this arbitrary-precision integer.
+
+**Returns:**
+
+* The given arbitrary-precision integer minus one.
 
 ### ToByteChecked
     public byte ToByteChecked()

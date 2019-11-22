@@ -136,7 +136,7 @@ private NumberUtility() {
 
     static boolean HasBitSet(int[] arr, int bit) {
       return (bit >> 5) < arr.length && (arr[bit >> 5] & (1 << (bit & 31))) !=
-      0;
+        0;
     }
 
     private static final class PowerCache {
@@ -162,8 +162,8 @@ private NumberUtility() {
         synchronized (this.outputs) {
           for (int i = 0; i < this.size; ++i) {
             if (this.inputs[i].compareTo(bi) <= 0 && (minValue == null ||
-            this.inputs[i].compareTo(minValue) >= 0)) {
-   // DebugUtility.Log("Have cached power (" + inputs[i] + "," + bi + ") ");
+                this.inputs[i].compareTo(minValue) >= 0)) {
+              // DebugUtility.Log("Have cached power (" + inputs[i] + "," + bi + ") ");
               ret = new EInteger[2];
               ret[0] = this.inputs[i];
               ret[1] = this.outputs[i];
@@ -180,9 +180,9 @@ private NumberUtility() {
         synchronized (this.outputs) {
           for (int i = 0; i < this.size; ++i) {
             if (this.inputsInts[i] >= 0 &&
-                this.inputsInts[i] <= precision && (integerMinValue == -1 ||
-            this.inputsInts[i] >= integerMinValue)) {
-   // DebugUtility.Log("Have cached power (" + inputs[i] + "," + bi + ") ");
+              this.inputsInts[i] <= precision && (integerMinValue == -1 ||
+                this.inputsInts[i] >= integerMinValue)) {
+              // DebugUtility.Log("Have cached power (" + inputs[i] + "," + bi + ") ");
               ret = new EInteger[2];
               ret[0] = this.inputs[i];
               ret[1] = this.outputs[i];
@@ -219,7 +219,7 @@ private NumberUtility() {
                   this.inputs[1] = tmp;
                   tmpi = this.inputsInts[i];
                   this.inputsInts[i] =
-                  this.inputsInts[1];
+                    this.inputsInts[1];
                   this.inputsInts[1] = tmpi;
                   tmp = this.outputs[i];
                   this.outputs[i] = this.outputs[1];
@@ -256,7 +256,7 @@ private NumberUtility() {
                   this.inputs[1] = tmp;
                   tmpi = this.inputsInts[i];
                   this.inputsInts[i] =
-                  this.inputsInts[1];
+                    this.inputsInts[1];
                   this.inputsInts[1] = tmpi;
                   tmp = this.outputs[i];
                   this.outputs[i] = this.outputs[1];
@@ -304,7 +304,7 @@ private NumberUtility() {
     NumberUtility.PowerCache();
 
     private static final PowerCache ValuePowerOfTenCache = new
-      NumberUtility.PowerCache();
+    NumberUtility.PowerCache();
 
     static EInteger FindPowerOfFiveFromBig(EInteger diff) {
       int sign = diff.signum();
@@ -327,7 +327,7 @@ private NumberUtility() {
         return bigpow;
       }
       EInteger[] otherPower =
-      ValuePowerOfFiveCache.FindCachedPowerOrSmaller(origdiff);
+        ValuePowerOfFiveCache.FindCachedPowerOrSmaller(origdiff);
       if (otherPower != null) {
         // DebugUtility.Log("Found cached power " +otherPower[0]+", "
         // +otherPower[1]);
@@ -347,8 +347,8 @@ private NumberUtility() {
           int icurexp = intcurexp.AsInt32();
           int halficurexp = icurexp / 2;
           bigpow = FindPowerOfFive(halficurexp);
-          bigpow = bigpow.Multiply(
-           FindPowerOfFive(icurexp - halficurexp));
+          bigpow = bigpow.Multiply (
+              FindPowerOfFive(icurexp - halficurexp));
           mantissa = mantissa.Multiply(bigpow);
           break;
         }
@@ -365,7 +365,7 @@ private NumberUtility() {
     private static final EInteger ValueBigInt36 = EInteger.FromInt64(36);
 
     static EInteger FindPowerOfTenFromBig(EInteger
-    bigintExponent) {
+      bigintExponent) {
       int sign = bigintExponent.signum();
       if (sign < 0) {
         return EInteger.FromInt32(0);
@@ -404,7 +404,7 @@ private NumberUtility() {
     }
 
     private static final EInteger ValueFivePower40 =
-    (EInteger.FromInt64(95367431640625L)).Multiply(EInteger.FromInt64(95367431640625L));
+      (EInteger.FromInt64(95367431640625L)).Multiply(EInteger.FromInt64(95367431640625L));
 
     static EInteger FindPowerOfFive(int precision) {
       if (precision < 0) {
@@ -450,7 +450,7 @@ private NumberUtility() {
       bigpow = EInteger.FromInt32(0);
       while (true) {
         otherPower =
-        ValuePowerOfFiveCache.FindCachedPowerIntOrSmaller(precision);
+          ValuePowerOfFiveCache.FindCachedPowerIntOrSmaller(precision);
         if (otherPower != null) {
           EInteger otherPower0 = otherPower[0];
           EInteger otherPower1 = otherPower[1];
@@ -547,13 +547,13 @@ private NumberUtility() {
       bigpow = EInteger.FromInt32(0);
       while (true) {
         otherPower =
-        ValuePowerOfTenCache.FindCachedPowerOrSmaller(EInteger.FromInt32(precision));
+          ValuePowerOfTenCache.FindCachedPowerOrSmaller(EInteger.FromInt32(precision));
         if (otherPower != null) {
           EInteger otherPower0 = otherPower[0];
           EInteger otherPower1 = otherPower[1];
           // if (precision != otherPower0.ToInt32Checked()) {
-            // DebugUtility.Log("bigcachedpower miss {0} -> {1}"
-            // , precision, otherPower0);
+          // DebugUtility.Log("bigcachedpower miss {0} -> {1}"
+          // , precision, otherPower0);
           // }
           precision -= otherPower0.ToInt32Checked();
           if (first) {
@@ -649,7 +649,8 @@ private NumberUtility() {
           {
             EInteger[] divrem = bigmant.DivRem(bigradix);
             bigquo = divrem[0];
-            bigrem = divrem[1]; }
+            bigrem = divrem[1];
+          }
           if (!bigrem.isZero()) {
             break;
           }

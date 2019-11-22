@@ -43,12 +43,12 @@ at: http://peteroupc.github.io/
 
     @Override public String toString() {
       return "[this.bitLeftmost=" + this.bitLeftmost +
-       ", this.bitsAfterLeftmost=" + this.bitsAfterLeftmost +
-       ", this.discardedBitCount=" + this.discardedBitCount +
-       ", this.isSmall=" + this.isSmall + ", this.knownDigitLength=" +
-         this.knownDigitLength + ", this.shiftedBigInt=" +
-         this.shiftedBigInt + ", this.shiftedSmall=" +
-       this.shiftedSmall + "]";
+        ", this.bitsAfterLeftmost=" + this.bitsAfterLeftmost +
+        ", this.discardedBitCount=" + this.discardedBitCount +
+        ", this.isSmall=" + this.isSmall + ", this.knownDigitLength=" +
+        this.knownDigitLength + ", this.shiftedBigInt=" +
+        this.shiftedBigInt + ", this.shiftedSmall=" +
+        this.shiftedSmall + "]";
     }
 
     public DigitShiftAccumulator(
@@ -58,7 +58,7 @@ at: http://peteroupc.github.io/
       if (bigint.CanFitInInt32()) {
         this.shiftedSmall = bigint.ToInt32Checked();
         if (this.shiftedSmall < 0) {
-          throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
+          throw new IllegalArgumentException("shiftedSmall(" + this.shiftedSmall +
             ") is less than 0");
         }
         this.isSmall = true;
@@ -76,7 +76,7 @@ at: http://peteroupc.github.io/
       int olderDiscarded) {
       this.shiftedSmall = smallint;
       if (this.shiftedSmall < 0) {
-        throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
+        throw new IllegalArgumentException("shiftedSmall(" + this.shiftedSmall +
           ") is less than 0");
       }
       this.isSmall = true;
@@ -99,12 +99,12 @@ at: http://peteroupc.github.io/
 
     public final EInteger getShiftedInt() {
         return this.isSmall ? (EInteger.FromInt32(this.shiftedSmall)) :
-        this.shiftedBigInt;
+          this.shiftedBigInt;
       }
 
     public final FastInteger getShiftedIntFast() {
         return this.isSmall ? new FastInteger(this.shiftedSmall) :
-        FastInteger.FromBig(this.shiftedBigInt);
+          FastInteger.FromBig(this.shiftedBigInt);
       }
 
     public FastInteger GetDigitLength() {
@@ -135,7 +135,7 @@ at: http://peteroupc.github.io/
           this.ShiftRightInt(count);
           bi = bi.Subtract(EInteger.FromInt32(count));
           if (this.isSmall ? this.shiftedSmall == 0 :
-          this.shiftedBigInt.isZero()) {
+            this.shiftedBigInt.isZero()) {
             break;
           }
         }
@@ -185,8 +185,8 @@ at: http://peteroupc.github.io/
       if (bits.CanFitInInt32()) {
         int intval = bits.AsInt32();
         if (intval < 0) {
-          throw new IllegalArgumentException("intval (" + intval + ") is less than " +
-                   "0");
+          throw new IllegalArgumentException("intval(" + intval + ") is less than " +
+            "0");
         }
         if (this.isSmall) {
           this.ShiftToDigitsSmall(intval);
@@ -236,8 +236,8 @@ at: http://peteroupc.github.io/
       // Assumes the String is length 9 or less and contains
       // only the digits '0' through '9'
       if (length > 9) {
-        throw new IllegalArgumentException("length (" + length + ") is more than " +
-               "9 ");
+        throw new IllegalArgumentException("length(" + length + ") is more than " +
+          "9 ");
       }
       int ret = 0;
       for (int i = 0; i < length; ++i) {
@@ -251,19 +251,19 @@ at: http://peteroupc.github.io/
     private static int LongDigitLength(long value) {
       if (value >= 1000000000L) {
         return (value >= 1000000000000000000L) ? 19 : ((value >=
-                 100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
-                  17 : ((value >= 1000000000000000L) ? 16 :
-                  ((value >= 100000000000000L) ? 15 : ((value
-                  >= 10000000000000L) ?
-                  14 : ((value >= 1000000000000L) ? 13 : ((value
-                  >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
-                  11 : ((value >= 1000000000L) ? 10 : 9)))))))));
-                } else {
+              100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
+              17 : ((value >= 1000000000000000L) ? 16 :
+                ((value >= 100000000000000L) ? 15 : ((value
+                      >= 10000000000000L) ?
+                    14 : ((value >= 1000000000000L) ? 13 : ((value
+                          >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+                          11 : ((value >= 1000000000L) ? 10 : 9)))))))));
+      } else {
         int v2 = (int)value;
         return (v2 >= 100000000) ? 9 : ((v2 >= 10000000) ? 8 : ((v2 >=
-                  1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
-                  >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
-                  3 : ((v2 >= 10) ? 2 : 1)))))));
+                1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
+                    >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
+                      3 : ((v2 >= 10) ? 2 : 1)))))));
       }
     }
 
@@ -273,10 +273,10 @@ at: http://peteroupc.github.io/
         int v2 = this.shiftedSmall;
         if (v2 < 100000) {
           kb = (v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
-          3 : ((v2 >= 10) ? 2 : 1)));
+                3 : ((v2 >= 10) ? 2 : 1)));
         } else {
           kb = (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
-          10000000) ? 8 : ((v2 >= 1000000) ? 7 : 6)));
+                  10000000) ? 8 : ((v2 >= 1000000) ? 7 : 6)));
         }
         return new FastInteger(kb);
       }
@@ -319,11 +319,11 @@ at: http://peteroupc.github.io/
           // To avoid having to calculate a very big power of 10,
           // check the digit count to see if doing so can be avoided
           EInteger bigBitLength =
-this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
+            this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
           // NOTE: Overflowing bigBitLength will be MaxValue, which is OK
           // for the use of this variable
           int bitLength = bigBitLength.CanFitInInt32() ?
-             bigBitLength.ToInt32Checked() : Integer.MAX_VALUE;
+            bigBitLength.ToInt32Checked() : Integer.MAX_VALUE;
           boolean bigPower = false;
           // 10^48 has 160 bits; 10^98 has 326; bit length is cheaper
           // to calculate than base-10 digit length
@@ -352,18 +352,18 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
           }
         }
         if (this.shiftedBigInt.isEven() && this.bitLeftmost == 0) {
-          EInteger[] quorem = this.shiftedBigInt.DivRem(
-          NumberUtility.FindPowerOfTen(digits));
+          EInteger[] quorem = this.shiftedBigInt.DivRem (
+              NumberUtility.FindPowerOfTen(digits));
           bigquo = quorem[0];
           this.bitLeftmost |= quorem[1].isZero() ? 0 : 1;
         } else {
           this.bitLeftmost = 1;
-          bigquo = this.shiftedBigInt.Divide(
-          NumberUtility.FindPowerOfTen(digits));
+          bigquo = this.shiftedBigInt.Divide (
+              NumberUtility.FindPowerOfTen(digits));
         }
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.discardedBitCount = this.discardedBitCount == null ?
-           new FastInteger(digits) : this.discardedBitCount.AddInt(digits);
+          new FastInteger(digits) : this.discardedBitCount.AddInt(digits);
         if (bigquo.isZero()) {
           // Shifted all the way to 0
           this.isSmall = true;
@@ -423,7 +423,7 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
       }
       this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
       if (new FastInteger(digits).Decrement().compareTo(this.knownDigitLength)
-      >= 0) {
+        >= 0) {
         // Shifting more bits than available
         this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
         this.isSmall = true;
@@ -505,7 +505,8 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
         if (shiftedLong >= ValueTenPowers[digits]) {
           long bigPower = ValueTenPowers[digits];
           long smallPower = ValueTenPowers[digits - 1];
-          this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
+          this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(
+  0)) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           long div = shiftedLong / bigPower;
           long rem = shiftedLong - (div * bigPower);
@@ -552,7 +553,7 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
           return;
         }
       }
-      this.knownDigitLength = new FastInteger(
+      this.knownDigitLength = new FastInteger (
         LongDigitLength(shiftedLong));
       if (this.discardedBitCount != null) {
         this.discardedBitCount.AddInt(digits);
@@ -655,12 +656,12 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
         EInteger[] divrem;
         if (!this.shiftedBigInt.isEven() || this.bitsAfterLeftmost != 0) {
           EInteger radixPower =
-          NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
+            NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
           this.bitsAfterLeftmost |= 1;
           bigquo = this.shiftedBigInt.Divide(radixPower);
         } else {
           EInteger radixPower =
-          NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
+            NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
           divrem = this.shiftedBigInt.DivRem(radixPower);
           bigquo = divrem[0];
           bigrem = divrem[1];
@@ -720,9 +721,11 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
       int kb = 0;
       int v2 = this.shiftedSmall;
       kb = (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
-      10000000) ? 8 : ((v2 >= 1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2 >=
-      10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2 >= 10) ? 2 :
-      1))))))));
+              10000000) ? 8 : ((v2 >= 1000000) ? 7 : ((v2 >= 100000) ? 6 :
+((v2 >=
+                    10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2
+>= 10) ? 2 :
+                        1))))))));
       this.knownDigitLength = new FastInteger(kb);
       if (kb > digits) {
         int digitShift = (int)(kb - digits);
@@ -813,7 +816,8 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
         if (this.shiftedSmall >= ValueTenPowers[digits]) {
           int bigPower = ValueTenPowers[digits];
           int smallPower = ValueTenPowers[digits - 1];
-          this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
+          this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(
+  0)) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           int div = this.shiftedSmall / bigPower;
           int rem = this.shiftedSmall - (div * bigPower);
@@ -854,9 +858,11 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
       }
       int v2 = this.shiftedSmall;
       int kb = (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
-      10000000) ? 8 : ((v2 >= 1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2 >=
-      10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2 >= 10) ? 2 :
-      1))))))));
+              10000000) ? 8 : ((v2 >= 1000000) ? 7 : ((v2 >= 100000) ? 6 :
+((v2 >=
+                    10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2
+>= 10) ? 2 :
+                        1))))))));
       this.knownDigitLength = new FastInteger(kb);
       if (this.discardedBitCount != null) {
         this.discardedBitCount.AddInt(digits);

@@ -7,8 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-  final class BitShiftAccumulator implements IShiftAccumulator
-  {
+  final class BitShiftAccumulator implements IShiftAccumulator {
     private static final int SmallBitLength = 32;
     private int bitLeftmost;
 
@@ -37,7 +36,7 @@ at: http://peteroupc.github.io/
       FastInteger preShift,
       boolean truncate) {
       if (bits.signum() < 0) {
-        throw new IllegalArgumentException("bits's sign (" + bits.signum() +
+        throw new IllegalArgumentException("bits's sign(" + bits.signum() +
           ") is less than 0");
       }
       if (preShift != null && preShift.signum() > 0) {
@@ -57,17 +56,17 @@ at: http://peteroupc.github.io/
           // DebugUtility.Log("bitDiff=" + bitDiff);
           int cmp = bitDiff.compareTo(preShift);
           if (cmp <= 0) {
-          // NOTE: For BitShiftAccumulator, truncating and shifting
-          // are the same, unlike in DigitShiftAccumulator
-          this.ShiftRight(preShift);
-          this.VerifyKnownLength();
-          return;
-        } else {
-          // NOTE: For BitShiftAccumulator, truncating and shifting
-          // are the same, unlike in DigitShiftAccumulator
-          this.ShiftRight(bitDiff);
-          this.VerifyKnownLength();
-          return;
+            // NOTE: For BitShiftAccumulator, truncating and shifting
+            // are the same, unlike in DigitShiftAccumulator
+            this.ShiftRight(preShift);
+            this.VerifyKnownLength();
+            return;
+          } else {
+            // NOTE: For BitShiftAccumulator, truncating and shifting
+            // are the same, unlike in DigitShiftAccumulator
+            this.ShiftRight(bitDiff);
+            this.VerifyKnownLength();
+            return;
           }
         }
       }
@@ -93,12 +92,12 @@ at: http://peteroupc.github.io/
 
     public final EInteger getShiftedInt() {
         return this.isSmall ? (EInteger.FromInt32(this.shiftedSmall)) :
-        this.shiftedBigInt;
+          this.shiftedBigInt;
       }
 
     public final FastInteger getShiftedIntFast() {
         return this.isSmall ? new FastInteger(this.shiftedSmall) :
-        FastInteger.FromBig(this.shiftedBigInt);
+          FastInteger.FromBig(this.shiftedBigInt);
       }
 
     private FastInteger discardedBitCount;
@@ -112,7 +111,7 @@ at: http://peteroupc.github.io/
       int lastDiscarded,
       int olderDiscarded) {
       if (bigint.signum() < 0) {
-        throw new IllegalArgumentException("bigint's sign (" + bigint.signum() +
+        throw new IllegalArgumentException("bigint's sign(" + bigint.signum() +
           ") is less than 0");
       }
       if (bigint.CanFitInInt32()) {
@@ -130,20 +129,20 @@ at: http://peteroupc.github.io/
       int smallint,
       int lastDiscarded,
       int olderDiscarded) {
-        this.shiftedSmall = smallint;
-        if (this.shiftedSmall < 0) {
-          throw new IllegalArgumentException("shiftedSmall (" + this.shiftedSmall +
-            ") is less than 0");
-        }
-        this.isSmall = true;
-        this.discardedBitCount = new FastInteger(0);
-        this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
-        this.bitLeftmost = (lastDiscarded != 0) ? 1 : 0;
+      this.shiftedSmall = smallint;
+      if (this.shiftedSmall < 0) {
+        throw new IllegalArgumentException("shiftedSmall(" + this.shiftedSmall +
+          ") is less than 0");
+      }
+      this.isSmall = true;
+      this.discardedBitCount = new FastInteger(0);
+      this.bitsAfterLeftmost = (olderDiscarded != 0) ? 1 : 0;
+      this.bitLeftmost = (lastDiscarded != 0) ? 1 : 0;
     }
 
     public static BitShiftAccumulator FromInt32(int smallNumber) {
       if (smallNumber < 0) {
-        throw new IllegalArgumentException("smallNumber (" + smallNumber +
+        throw new IllegalArgumentException("smallNumber(" + smallNumber +
           ") is less than 0");
       }
       BitShiftAccumulator bsa = new BitShiftAccumulator(EInteger.FromInt32(0), 0, 0);
@@ -173,7 +172,7 @@ at: http://peteroupc.github.io/
           this.ShiftRightInt(count);
           bi = bi.Subtract(EInteger.FromInt32(count));
           if (this.isSmall ? this.shiftedSmall == 0 :
-          this.shiftedBigInt.isZero()) {
+            this.shiftedBigInt.isZero()) {
             break;
           }
         }
@@ -257,7 +256,7 @@ at: http://peteroupc.github.io/
         return new FastInteger(kb);
       }
       return this.shiftedBigInt.isZero() ? new FastInteger(1) :
-  FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
+        FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
     }
 
     private void ShiftBigToBits(int bits) {
@@ -282,7 +281,7 @@ at: http://peteroupc.github.io/
           bs -= bits;
         } else {
           FastInteger bitShift =
-          this.knownBitLength.Copy().SubtractInt(bits);
+            this.knownBitLength.Copy().SubtractInt(bits);
           if (!bitShift.CanFitInInt32()) {
             this.ShiftRight(bitShift);
             return;
@@ -361,7 +360,7 @@ at: http://peteroupc.github.io/
       this.bitsAfterLeftmost |= this.bitLeftmost;
       // Get the bottommost shift minus 1 bits
       this.bitsAfterLeftmost |= (shift > 1 && (this.shiftedSmall <<
-      (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
+            (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
       // Get the bit just above that bit
       this.bitLeftmost = (int)((this.shiftedSmall >> (shift - 1)) & 0x01);
       this.shiftedSmall >>= shift;
@@ -374,7 +373,7 @@ at: http://peteroupc.github.io/
     }
     public void ShiftToDigitsInt(int bits) {
       if (bits < 0) {
-        throw new IllegalArgumentException("bits (" + bits + ") is less than 0");
+        throw new IllegalArgumentException("bits(" + bits + ") is less than 0");
       }
       if (this.isSmall) {
         this.ShiftSmallToBits(bits);
@@ -403,7 +402,7 @@ at: http://peteroupc.github.io/
         this.bitsAfterLeftmost |= this.bitLeftmost;
         // Get the bottommost shift minus 1 bits
         this.bitsAfterLeftmost |= (shift > 1 && (this.shiftedSmall <<
-        (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
+              (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
         // Get the bit just above that bit
         this.bitLeftmost = (int)((this.shiftedSmall >> (shift - 1)) & 0x01);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;

@@ -92,9 +92,9 @@ private DecTestUtil() {
     }
 
     private static <TKey, TValue> TValue GetKeyOrDefault(
-  Map<TKey, TValue> dict,
-  TKey key,
-  TValue defaultValue) {
+      Map<TKey, TValue> dict,
+      TKey key,
+      TValue defaultValue) {
       return (!dict.containsKey(key)) ? defaultValue : dict.get(key);
     }
 
@@ -103,7 +103,7 @@ private DecTestUtil() {
         return 0;
       }
       return (str.charAt(0) == '+') ? TestCommon.StringToInt(str.substring(1)) :
-          TestCommon.StringToInt(str);
+        TestCommon.StringToInt(str);
     }
 
     public static String ParseJSONString(String str) {
@@ -159,89 +159,89 @@ private DecTestUtil() {
                 sb.append('\t');
                 break;
               case 'u': { // Unicode escape
-                  c = 0;
-                  // Consists of 4 hex digits
-                  for (int i = 0; i < 4; ++i) {
-                    int ch = index >= str.length() ? -1 : str.charAt(index++);
-                    if (ch >= '0' && ch <= '9') {
-                      c <<= 4;
-                      c |= ch - '0';
-                    } else if (ch >= 'A' && ch <= 'F') {
-                      c <<= 4;
-                      c |= ch + 10 - 'A';
-                    } else if (ch >= 'a' && ch <= 'f') {
-                      c <<= 4;
-                      c |= ch + 10 - 'a';
-                    } else {
-                      return null;
-                    }
-                  }
-                  if ((c & 0xf800) != 0xd800) {
-                    // Non-surrogate
-                    sb.append((char)c);
-                  } else if ((c & 0xfc00) == 0xd800) {
-                    int ch = index >= str.length() ? -1 : str.charAt(index++);
-                    if (ch != '\\' ||
-                       (index >= str.length() ? -1 : str.charAt(index++)) != 'u') {
-                      return null;
-                    }
-                    int c2 = 0;
-                    for (int i = 0; i < 4; ++i) {
-                      ch = index >= str.length() ? -1 : str.charAt(index++);
-                      if (ch >= '0' && ch <= '9') {
-                        c2 <<= 4;
-                        c2 |= ch - '0';
-                      } else if (ch >= 'A' && ch <= 'F') {
-                        c2 <<= 4;
-                        c2 |= ch + 10 - 'A';
-                      } else if (ch >= 'a' && ch <= 'f') {
-                        c2 <<= 4;
-                        c2 |= ch + 10 - 'a';
-                      } else {
-                        return null;
-                      }
-                    }
-                    if ((c2 & 0xfc00) != 0xdc00) {
-                      return null;
-                    } else {
-                      sb.append((char)c);
-                      sb.append((char)c2);
-                    }
+                c = 0;
+                // Consists of 4 hex digits
+                for (int i = 0; i < 4; ++i) {
+                  int ch = index >= str.length() ? -1 : str.charAt(index++);
+                  if (ch >= '0' && ch <= '9') {
+                    c <<= 4;
+                    c |= ch - '0';
+                  } else if (ch >= 'A' && ch <= 'F') {
+                    c <<= 4;
+                    c |= ch + 10 - 'A';
+                  } else if (ch >= 'a' && ch <= 'f') {
+                    c <<= 4;
+                    c |= ch + 10 - 'a';
                   } else {
                     return null;
                   }
-                  break;
                 }
-              default: {
-                  // NOTE: Includes surrogate code
-                  // units
+                if ((c & 0xf800) != 0xd800) {
+                  // Non-surrogate
+                  sb.append((char)c);
+                } else if ((c & 0xfc00) == 0xd800) {
+                  int ch = index >= str.length() ? -1 : str.charAt(index++);
+                  if (ch != '\\' ||
+                    (index >= str.length() ? -1 : str.charAt(index++)) != 'u') {
+                    return null;
+                  }
+                  int c2 = 0;
+                  for (int i = 0; i < 4; ++i) {
+                    ch = index >= str.length() ? -1 : str.charAt(index++);
+                    if (ch >= '0' && ch <= '9') {
+                      c2 <<= 4;
+                      c2 |= ch - '0';
+                    } else if (ch >= 'A' && ch <= 'F') {
+                      c2 <<= 4;
+                      c2 |= ch + 10 - 'A';
+                    } else if (ch >= 'a' && ch <= 'f') {
+                      c2 <<= 4;
+                      c2 |= ch + 10 - 'a';
+                    } else {
+                      return null;
+                    }
+                  }
+                  if ((c2 & 0xfc00) != 0xdc00) {
+                    return null;
+                  } else {
+                    sb.append((char)c);
+                    sb.append((char)c2);
+                  }
+                } else {
                   return null;
                 }
+                break;
+              }
+              default: {
+                // NOTE: Includes surrogate code
+                // units
+                return null;
+              }
             }
             break;
           case 0x22: // double quote
             return sb.toString();
           default: {
-              // NOTE: Assumes the character reader
-              // throws an error on finding illegal surrogate
-              // pairs in the String or invalid encoding
-              // in the stream
-              if ((c >> 16) == 0) {
-                sb.append((char)c);
-              } else {
-                sb.append((char)((((c - 0x10000) >> 10) & 0x3ff) | 0xd800));
-                sb.append((char)(((c - 0x10000) & 0x3ff) | 0xdc00));
-              }
-              break;
+            // NOTE: Assumes the character reader
+            // throws an error on finding illegal surrogate
+            // pairs in the String or invalid encoding
+            // in the stream
+            if ((c >> 16) == 0) {
+              sb.append((char)c);
+            } else {
+              sb.append((char)((((c - 0x10000) >> 10) & 0x3ff) | 0xd800));
+              sb.append((char)(((c - 0x10000) & 0x3ff) | 0xdc00));
             }
+            break;
+          }
         }
       }
       return null;
     }
 
     public static void ParseDecTest(
-  String ln,
-  Map<String, String> context) {
+      String ln,
+      Map<String, String> context) {
       Matcher match;
       if (ln == null) {
         throw new NullPointerException("ln");
@@ -251,8 +251,8 @@ private DecTestUtil() {
       }
       match = (!ln.contains(":")) ? null : ValuePropertyLine.matcher(ln);
       if (match != null && match.matches()) {
-        String paramName = ToLowerCaseAscii(
-           match.group(1));
+        String paramName = ToLowerCaseAscii (
+            match.group(1));
         if (context == null) {
           throw new NullPointerException("context");
         }
@@ -277,37 +277,38 @@ private DecTestUtil() {
         if (context == null) {
           throw new NullPointerException("context");
         }
-        boolean extended = GetKeyOrDefault(context, "extended",
-  "1").equals("1");
+        boolean extended = GetKeyOrDefault(
+          context,
+          "extended",
+          "1").equals("1");
         boolean clamp = GetKeyOrDefault(context, "clamp", "0").equals("1");
         int precision = 0, minexponent = 0, maxexponent = 0;
         EContext ctx = null;
         String rounding = null;
-        precision = StringToIntAllowPlus(
-  GetKeyOrDefault(context, "precision", "9"));
-        minexponent = StringToIntAllowPlus(
-  GetKeyOrDefault(context, "minexponent", "-9999"));
-        maxexponent = StringToIntAllowPlus(
-  GetKeyOrDefault(context, "maxexponent", "9999"));
+        precision = StringToIntAllowPlus (
+            GetKeyOrDefault(context, "precision", "9"));
+        minexponent = StringToIntAllowPlus (
+            GetKeyOrDefault(context, "minexponent", "-9999"));
+        maxexponent = StringToIntAllowPlus (
+            GetKeyOrDefault(context, "maxexponent", "9999"));
         // Skip tests that take null as input or output;
         // also skip tests that take a hex number format
         if (input1.contains("#") ||
-input2.contains("#") ||
-input3.contains("#") ||
-output.contains("#")) {
+                 input2.contains("#") ||
+                 input3.contains("#") ||
+                 output.contains("#")) {
           return;
         }
         if (!extended && (input1.contains("sNaN") ||
-input2.contains("sNaN") ||
-input3.contains("sNaN") ||
-output.contains("sNaN"))) {
+            input2.contains("sNaN") || input3.contains("sNaN") ||
+            output.contains("sNaN"))) {
           System.out.println(ln);
         }
         // Skip some tests that assume a maximum
         // supported precision of 999999999
         if (name.equals("pow250") ||
-name.equals("pow251") ||
-name.equals("pow252")) {
+          name.equals("pow251") ||
+          name.equals("pow252")) {
           return;
         }
         // Assumes a maximum supported
@@ -321,9 +322,9 @@ name.equals("pow252")) {
         // say to truncate that operand's coefficient before
         // the shift operation, unlike for the rotate operation.
         if (name.equals("extr1651") ||
-name.equals("extr1652") ||
-name.equals("extr1653") ||
-name.equals("extr1654")) {
+          name.equals("extr1652") ||
+          name.equals("extr1653") ||
+          name.equals("extr1654")) {
           return;
         }
         // Skip these unofficial test cases, which misapply the
@@ -334,49 +335,49 @@ name.equals("extr1654")) {
         // have neither a coefficient nor an exponent, so the
         // 'clamp' directive doesn't properly apply to NaNs
         if (name.equals("covx5076") ||
-name.equals("covx5082") ||
-name.equals("covx5085") ||
-name.equals("covx5086")) {
+          name.equals("covx5082") ||
+          name.equals("covx5085") ||
+          name.equals("covx5086")) {
           return;
         }
         // Skip these unofficial test cases, which are incorrect
         // for expecting underflow on raising a huge
         // positive integer to its own power
         if (name.equals("power_eq4") ||
-name.equals("power_eq46") ||
-name.equals("power_eq48") ||
-name.equals("power_eq11") ||
-name.equals("power_eq65") ||
-name.equals("power_eq84") ||
-name.equals("power_eq94")) {
+          name.equals("power_eq46") ||
+          name.equals("power_eq48") ||
+          name.equals("power_eq11") ||
+          name.equals("power_eq65") ||
+          name.equals("power_eq84") ||
+          name.equals("power_eq94")) {
           return;
         }
         // Skip some test cases that are incorrect
         // (all simplified arithmetic test cases)
         if (!extended) {
           if (
-  // result expected by test case is wrong by > 0.5 ULP
-  name.equals("ln116") ||
-// assumes that the input will underflow to 0
-name.equals("qua530") ||
-              // assumes that the input will underflow to 0
-              name.equals("qua531") ||
-name.equals("rpow068") ||
-name.equals("rpow159") ||
-name.equals("rpow217") ||
-name.equals("rpow272") ||
-name.equals("rpow324") ||
-name.equals("rpow327") ||
-              // following cases incorrectly remove trailing zeros
-              name.equals("sqtx2207") ||
-name.equals("sqtx2231") ||
-name.equals("sqtx2271") ||
-name.equals("sqtx2327") ||
-name.equals("sqtx2399") ||
-name.equals("sqtx2487") ||
-name.equals("sqtx2591") ||
-name.equals("sqtx2711") ||
-name.equals("sqtx2847")) {
+            // result expected by test case is wrong by > 0.5 ULP
+            name.equals("ln116") ||
+            // assumes that the input will underflow to 0
+            name.equals("qua530") ||
+            // assumes that the input will underflow to 0
+            name.equals("qua531") ||
+            name.equals("rpow068") ||
+            name.equals("rpow159") ||
+            name.equals("rpow217") ||
+            name.equals("rpow272") ||
+            name.equals("rpow324") ||
+            name.equals("rpow327") ||
+            // following cases incorrectly remove trailing zeros
+            name.equals("sqtx2207") ||
+            name.equals("sqtx2231") ||
+            name.equals("sqtx2271") ||
+            name.equals("sqtx2327") ||
+            name.equals("sqtx2399") ||
+            name.equals("sqtx2487") ||
+            name.equals("sqtx2591") ||
+            name.equals("sqtx2711") ||
+            name.equals("sqtx2847")) {
             return;
           }
         }
@@ -434,11 +435,11 @@ name.equals("sqtx2847")) {
         }
         EDecimal d1 = EDecimal.Zero, d2 = null, d2a = null;
         if (!op.equals("toSci") &&
-!op.equals("toEng") &&
-!op.equals("tosci") &&
-!op.equals("toeng") &&
-!op.equals("class") &&
-!op.equals("format")) {
+          !op.equals("toEng") &&
+          !op.equals("tosci") &&
+          !op.equals("toeng") &&
+          !op.equals("class") &&
+          !op.equals("format")) {
           d1 = ((input1) == null || (input1).length() == 0) ? EDecimal.Zero :
             EDecimal.FromString(input1);
           d2 = ((input2) == null || (input2).length() == 0) ? null :
@@ -458,15 +459,15 @@ name.equals("sqtx2847")) {
         if (op.equals("multiply")) {
           d3 = d1.Multiply(d2, ctx);
         } else if (op.equals("toSci")) {
-// handled below
+          // handled below
         } else if (op.equals("toEng")) {
-// handled below
+          // handled below
         } else if (op.equals("tosci")) {
-// handled below
+          // handled below
         } else if (op.equals("toeng")) {
-// handled below
+          // handled below
         } else if (op.equals("class")) {
-// handled below
+          // handled below
         } else if (op.equals("fma")) {
           d3 = d1.MultiplyAndAdd(d2, d2a, ctx);
         } else if (op.equals("min")) {
@@ -541,7 +542,7 @@ name.equals("sqtx2847")) {
         } else if (op.equals("squareroot")) {
           d3 = d1.Sqrt(ctx);
         } else if (op.equals("remaindernear") ||
-op.equals("remainderNear")) {
+          op.equals("remainderNear")) {
           d3 = d1.RemainderNear(d2, ctx);
         } else if (op.equals("nexttoward")) {
           d3 = d1.NextToward(d2, ctx);
@@ -593,7 +594,8 @@ op.equals("remainderNear")) {
             Assert.assertEquals(EDecimals.IsQuietNaN(d1), d1.IsQuietNaN());
             d3 = EDecimal.FromBoolean(EDecimals.IsQuietNaN(d1));
           } else if (op.equals("issnan")) {
-            Assert.assertEquals(EDecimals.IsSignalingNaN(d1), d1.IsSignalingNaN());
+            Assert.assertEquals(EDecimals.IsSignalingNaN(d1),
+  d1.IsSignalingNaN());
             d3 = EDecimal.FromBoolean(EDecimals.IsSignalingNaN(d1));
           } else if (op.equals("isfinite")) {
             Assert.assertEquals(EDecimals.IsFinite(d1), d1.isFinite());
@@ -617,7 +619,7 @@ op.equals("remainderNear")) {
           } else if (op.equals("samequantum")) {
             d3 = EDecimal.FromBoolean(EDecimals.SameQuantum(d1, d2));
           } else {
-            System.out.println("unknown op " + op);
+            // System.out.println("unknown op " + op);
             return;
           }
         }
@@ -658,11 +660,11 @@ op.equals("remainderNear")) {
         }
         if (op.equals("class")) {
           d1 = EDecimal.FromString(input1);
-          String numclass = EDecimals.NumberClassString(
-                  EDecimals.NumberClass(d1, ctx));
+          String numclass = EDecimals.NumberClassString (
+              EDecimals.NumberClass(d1, ctx));
           Assert.assertEquals(input1, output, numclass);
         } else if (op.equals("toSci") ||
-op.equals("tosci")) {
+          op.equals("tosci")) {
           try {
             d1 = EDecimal.FromString(input1, ctx);
             if (!(!conversionError)) {
@@ -678,7 +680,7 @@ op.equals("tosci")) {
  }
           }
         } else if (op.equals("toEng") ||
-op.equals("toeng")) {
+          op.equals("toeng")) {
           try {
             d1 = EDecimal.FromString(input1, ctx);
             if (!(!conversionError)) {
@@ -704,9 +706,9 @@ op.equals("toeng")) {
                 Object objectTemp = output;
                 Object objectTemp2 = d3.toString();
                 String messageTemp = name + ": expected: [" +
-                d4.getUnsignedMantissa() + " " + d4.getExponent() +
-                    "]\n" + "but was: [" + d3.getUnsignedMantissa() + " " +
-                    d3.getExponent() + "]\n" + ln;
+                  d4.getUnsignedMantissa() + " " + d4.getExponent() +
+                  "]\n" + "but was: [" + d3.getUnsignedMantissa() + " " +
+                  d3.getExponent() + "]\n" + ln;
                 Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
               }
             }
@@ -718,10 +720,10 @@ op.equals("toeng")) {
         // some of them have no flags in their
         // result.
         if (!name.equals("pow118") &&
-!name.equals("pow119") &&
-!name.equals("pow120") &&
-!name.equals("pow121") &&
-!name.equals("pow122")) {
+          !name.equals("pow119") &&
+          !name.equals("pow120") &&
+          !name.equals("pow121") &&
+          !name.equals("pow122")) {
           AssertFlags(expectedFlags, ctx.getFlags(), ln);
         }
       }

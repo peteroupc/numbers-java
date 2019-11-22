@@ -7,14 +7,14 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-    // <summary>Implements the simplified arithmetic in Appendix A of the
-    // General Decimal Arithmetic Specification. Unfortunately, it doesn't
-    // pass all the test cases, since some aspects of the spec are left
-    // open. For example: in which cases is the Clamped flag set? The test
-    // cases set the Clamped flag in only a handful of test cases, all
-    // within the <c>exp</c> operation.</summary>
-    // <typeparam name='T'>Data type for a numeric value in a particular
-    // radix.</typeparam>
+  // <summary>Implements the simplified arithmetic in Appendix A of the
+  // General Decimal Arithmetic Specification. Unfortunately, it doesn't
+  // pass all the test cases, since some aspects of the spec are left
+  // open. For example: in which cases is the Clamped flag set? The test
+  // cases set the Clamped flag in only a handful of test cases, all
+  // within the <c>exp</c> operation.</summary>
+  // <typeparam name='T'>Data type for a numeric value in a particular
+  // radix.</typeparam>
   final class SimpleRadixMath<T> implements IRadixMath<T> {
     private final IRadixMath<T> wrapper;
 
@@ -28,7 +28,7 @@ at: http://peteroupc.github.io/
 
     private T SignalInvalid(EContext ctx) {
       if (this.GetHelper().GetArithmeticSupport() ==
-          BigNumberFlags.FiniteOnly) {
+        BigNumberFlags.FiniteOnly) {
         throw new ArithmeticException("Invalid operation");
       }
       if (ctx != null && ctx.getHasFlags()) {
@@ -85,12 +85,12 @@ at: http://peteroupc.github.io/
       }
       EInteger mant = this.GetHelper().GetMantissa(thisValue).Abs();
       if (mant.isZero()) {
-        return afterQuantize ? this.GetHelper().CreateNewWithFlags(
-          mant,
-          this.GetHelper().GetExponent(thisValue),
-          0) : this.wrapper.RoundToPrecision(
-          this.GetHelper().ValueOf(0),
-          ctxDest);
+        return afterQuantize ? this.GetHelper().CreateNewWithFlags (
+            mant,
+            this.GetHelper().GetExponent(thisValue),
+            0) : this.wrapper.RoundToPrecision (
+            this.GetHelper().ValueOf(0),
+            ctxDest);
       }
       if (afterQuantize) {
         return thisValue;
@@ -127,20 +127,20 @@ at: http://peteroupc.github.io/
             null,
             null,
             null);
-          thisValue = this.GetHelper().CreateNewWithFlags(
-            mant,
-            fastExp.AsEInteger(),
-            thisFlags);
+          thisValue = this.GetHelper().CreateNewWithFlags (
+              mant,
+              fastExp.AsEInteger(),
+              thisFlags);
         }
       } else if (afterDivision && exp.signum() < 0) {
         FastInteger fastExp = FastInteger.FromBig(exp);
         int radix = this.GetHelper().GetRadix();
-        mant = NumberUtility.ReduceTrailingZeros(
-          mant, fastExp, radix, null, null, new FastInteger(0));
-        thisValue = this.GetHelper().CreateNewWithFlags(
-          mant,
-          fastExp.AsEInteger(),
-          thisFlags);
+        mant = NumberUtility.ReduceTrailingZeros (
+            mant, fastExp, radix, null, null, new FastInteger(0));
+        thisValue = this.GetHelper().CreateNewWithFlags (
+            mant,
+            fastExp.AsEInteger(),
+            thisFlags);
       }
       return thisValue;
     }
@@ -149,9 +149,9 @@ at: http://peteroupc.github.io/
       EInteger mant = this.GetHelper().GetMantissa(thisValue).Abs();
       boolean mantChanged = false;
       if (!mant.isZero() && ctx != null && ctx.getHasMaxPrecision()) {
-        EInteger limit = this.GetHelper().MultiplyByRadixPower(
-          EInteger.FromInt32(1),
-          FastInteger.FromBig(ctx.getPrecision()));
+        EInteger limit = this.GetHelper().MultiplyByRadixPower (
+            EInteger.FromInt32(1),
+            FastInteger.FromBig(ctx.getPrecision()));
         if (mant.compareTo(limit) >= 0) {
           mant = mant.Remainder(limit);
           mantChanged = true;
@@ -179,9 +179,9 @@ at: http://peteroupc.github.io/
       // Check this value then the other value for quiet NaN
       return ((thisFlags & BigNumberFlags.FlagQuietNaN) != 0) ?
         this.ReturnQuietNaN(thisValue, ctx) : (((otherFlags &
-                BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
-                  other,
-                  ctx) : null);
+              BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
+                other,
+                ctx) : null);
     }
 
     private T CheckNotANumber3(
@@ -205,11 +205,11 @@ at: http://peteroupc.github.io/
       // Check this value then the other value for quiet NaN
       return ((thisFlags & BigNumberFlags.FlagQuietNaN) != 0) ?
         this.ReturnQuietNaN(thisValue, ctx) : (((otherFlags &
-                BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
-                  other,
-                  ctx) :
-                    (((other2Flags & BigNumberFlags.FlagQuietNaN) !=
-                0) ? this.ReturnQuietNaN(other, ctx) : null));
+              BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
+                other,
+                ctx) :
+          (((other2Flags & BigNumberFlags.FlagQuietNaN) !=
+              0) ? this.ReturnQuietNaN(other, ctx) : null));
     }
 
     private T SignalingNaNInvalid(T value, EContext ctx) {
@@ -386,12 +386,12 @@ at: http://peteroupc.github.io/
             EContext.FlagInexact | EContext.FlagRounded));
         }
         if (pc.getHasMaxPrecision() && pc.getHasExponentRange() &&
-            (roundingOnOverflow == ERounding.Down ||
-             roundingOnOverflow == ERounding.ZeroFiveUp ||
-             roundingOnOverflow == ERounding.OddOrZeroFiveUp ||
-             roundingOnOverflow == ERounding.Odd ||
-             (roundingOnOverflow == ERounding.Ceiling && neg) ||
-             (roundingOnOverflow == ERounding.Floor && !neg))) {
+          (roundingOnOverflow == ERounding.Down ||
+            roundingOnOverflow == ERounding.ZeroFiveUp ||
+            roundingOnOverflow == ERounding.OddOrZeroFiveUp ||
+            roundingOnOverflow == ERounding.Odd ||
+            (roundingOnOverflow == ERounding.Ceiling && neg) ||
+            (roundingOnOverflow == ERounding.Floor && !neg))) {
           // Set to the highest possible value for
           // the given precision
           EInteger overflowMant = EInteger.FromInt32(0);
@@ -402,18 +402,19 @@ at: http://peteroupc.github.io/
           overflowMant = overflowMant.Subtract(EInteger.FromInt32(1));
           FastInteger clamp =
             FastInteger.FromBig(pc.getEMax()).Increment().Subtract(fastPrecision);
-          return this.GetHelper().CreateNewWithFlags(
-            overflowMant,
-            clamp.AsEInteger(),
-            neg ? BigNumberFlags.FlagNegative : 0);
+          return this.GetHelper().CreateNewWithFlags (
+              overflowMant,
+              clamp.AsEInteger(),
+              neg ? BigNumberFlags.FlagNegative : 0);
         }
       }
+      int flagneg = neg ? BigNumberFlags.FlagNegative : 0;
       return this.GetHelper().GetArithmeticSupport() ==
         BigNumberFlags.FiniteOnly ?
         null : this.GetHelper().CreateNewWithFlags(
           EInteger.FromInt32(0),
-  EInteger.FromInt32(0),
-  (neg ? BigNumberFlags.FlagNegative : 0) | BigNumberFlags.FlagInfinity);
+          EInteger.FromInt32(0),
+          flagneg | BigNumberFlags.FlagInfinity);
     }
 
     public T Power(T thisValue, T pow, EContext ctx) {
@@ -727,7 +728,10 @@ at: http://peteroupc.github.io/
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      thisValue = this.wrapper.RoundToExponentSimple(thisValue, expOther, ctx2);
+      thisValue = this.wrapper.RoundToExponentSimple(
+        thisValue,
+        expOther,
+        ctx2);
       return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
     }
 
@@ -829,13 +833,20 @@ at: http://peteroupc.github.io/
       return this.wrapper.compareTo(thisValue, otherValue);
     }
 
+    public T SignalOverflow(EContext ctx, boolean neg) {
+      EContext ctx2 = GetContextWithFlags(ctx);
+      T thisValue = this.SignalOverflow2(ctx2, neg);
+      return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
+    }
+
     public T RoundAfterConversion(T thisValue, EContext ctx) {
       T ret = this.CheckNotANumber1(thisValue, ctx);
       if ((Object)ret != (Object)null) {
         return ret;
       }
       if (this.GetHelper().GetSign(thisValue) == 0) {
-        return this.wrapper.RoundToPrecision(this.GetHelper().ValueOf(0), ctx);
+        return this.wrapper.RoundToPrecision(this.GetHelper().ValueOf(0),
+  ctx);
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       thisValue = this.wrapper.RoundToPrecision(thisValue, ctx2);

@@ -15,29 +15,29 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-    /**
-     * Represents an arbitrary-precision integer. (The "E" stands for "extended",
-     * and has this prefix to group it with the other classes common to
-     * this library, particularly EDecimal, EFloat, and ERational.)
-     * <p>Instances of this class are immutable, so they are inherently
-     * safe for use by multiple threads. Multiple instances of this object
-     * with the same value are interchangeable, but they should be compared
-     *  using the "Equals" method rather than the "==" operator.</p>
-     * <p><b>Security note</b></p> <p>It is not recommended to implement
-     * security-sensitive algorithms using the methods in this class, for
-     * several reasons:</p> <ul> <li><code>EInteger</code> objects are immutable,
-     * so they can't be modified, and the memory they occupy is not
-     * guaranteed to be cleared in a timely fashion due to garbage
-     * collection. This is relevant for applications that use many-bit-long
-     * numbers as secret parameters.</li> <li>The methods in this class
-     * (especially those that involve arithmetic) are not guaranteed to be
-     *  "constant-time" (non-data-dependent) for all relevant inputs.
-     * Certain attacks that involve encrypted communications have exploited
-     * the timing and other aspects of such communications to derive keying
-     * material or cleartext indirectly.</li></ul> <p>Applications should
-     * instead use dedicated security libraries to handle big numbers in
-     * security-sensitive algorithms.</p>
-     */
+  /**
+   * Represents an arbitrary-precision integer. (The "E" stands for "extended",
+   * and has this prefix to group it with the other classes common to this
+   * library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+   * of this class are immutable, so they are inherently safe for use by
+   * multiple threads. Multiple instances of this object with the same
+   * value are interchangeable, but they should be compared using the
+   *  "Equals" method rather than the "==" operator.</p> <p><b>Security
+   * note</b></p> <p>It is not recommended to implement security-sensitive
+   * algorithms using the methods in this class, for several reasons:</p>
+   * <ul> <li><code>EInteger</code> objects are immutable, so they can't be
+   * modified, and the memory they occupy is not guaranteed to be cleared
+   * in a timely fashion due to garbage collection. This is relevant for
+   * applications that use many-bit-long numbers as secret parameters.</li>
+   * <li>The methods in this class (especially those that involve
+   *  arithmetic) are not guaranteed to be "constant-time"
+   * (non-data-dependent) for all relevant inputs. Certain attacks that
+   * involve encrypted communications have exploited the timing and other
+   * aspects of such communications to derive keying material or cleartext
+   * indirectly.</li></ul> <p>Applications should instead use dedicated
+   * security libraries to handle big numbers in security-sensitive
+   * algorithms.</p>
+   */
   public final class EInteger implements Comparable<EInteger> {
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -73,13 +73,13 @@ at: http://peteroupc.github.io/
       59652322,
     };
 
-    private static final EInteger ValueOne = new EInteger(
+    private static final EInteger ValueOne = new EInteger (
       1, new short[] { 1 }, false);
 
-    private static final EInteger ValueTen = new EInteger(
+    private static final EInteger ValueTen = new EInteger (
       1, new short[] { 10 }, false);
 
-    private static final EInteger ValueZero = new EInteger(
+    private static final EInteger ValueZero = new EInteger (
       0, new short[] { 0 }, false);
 
     private final boolean negative;
@@ -127,13 +127,13 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value is a power of two, and
      * greater than 0.
-     * @return {@code true} if this object' s value is a power of two, and greater
+     * @return {@code true} if this object's value is a power of two, and greater
      * than 0; otherwise, {@code false}.
      */
     public final boolean isPowerOfTwo() {
         return !this.negative && this.wordCount > 0 &&
           this.GetUnsignedBitLengthAsEInteger().Subtract(1)
-           .equals(this.GetLowBitAsEInteger());
+          .equals(this.GetLowBitAsEInteger());
       }
 
     /**
@@ -146,7 +146,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets the sign of this object's value.
-     * @return The sign of this object' s value.
+     * @return The sign of this object's value.
      */
     public final int signum() {
         return (this.wordCount == 0) ? 0 : (this.negative ? -1 : 1);
@@ -165,7 +165,7 @@ at: http://peteroupc.github.io/
         --newwordCount;
       }
       return (newwordCount == 0) ? EInteger.FromInt32(0) :
-              new EInteger(newwordCount, words, false);
+        new EInteger(newwordCount, words, false);
     }
 
     /**
@@ -382,7 +382,7 @@ at: http://peteroupc.github.io/
           // be 0 (the check for 0 was already done above)
           retwordcount = 4;
           while (retwordcount != 0 &&
-                 retreg[retwordcount - 1] == 0) {
+            retreg[retwordcount - 1] == 0) {
             --retwordcount;
           }
         }
@@ -415,7 +415,8 @@ at: http://peteroupc.github.io/
      * only characters allowed by the given radix, except that it may start
      *  with a minus sign ("-", U+002D) to indicate a negative number. The
      * desired portion is not allowed to contain white space characters,
-     * including spaces.
+     * including spaces. The desired portion may start with any number of
+     * zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
      * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
      * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
@@ -427,7 +428,6 @@ at: http://peteroupc.github.io/
      * string portion.
      * @throws NullPointerException The parameter {@code str} is null.
      * @throws NumberFormatException The string portion is empty or in an invalid format.
-     * @throws IllegalArgumentException Doesn't satisfy (endIndex - index) % 4 == 0".
      */
     public static EInteger FromRadixSubstring(
       String str,
@@ -438,32 +438,32 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("str");
       }
       if (radix < 2) {
-        throw new IllegalArgumentException("radix (" + radix +
-                    ") is less than 2");
+        throw new IllegalArgumentException("radix(" + radix +
+          ") is less than 2");
       }
       if (radix > 36) {
-        throw new IllegalArgumentException("radix (" + radix +
-                    ") is more than 36");
+        throw new IllegalArgumentException("radix(" + radix +
+          ") is more than 36");
       }
       if (index < 0) {
-        throw new IllegalArgumentException("index (" + index + ") is less than " +
-                    "0");
+        throw new IllegalArgumentException("index(" + index + ") is less than " +
+          "0");
       }
       if (index > str.length()) {
-        throw new IllegalArgumentException("index (" + index + ") is more than " +
-                    str.length());
+        throw new IllegalArgumentException("index(" + index + ") is more than " +
+          str.length());
       }
       if (endIndex < 0) {
-        throw new IllegalArgumentException("endIndex (" + endIndex +
-                    ") is less than 0");
+        throw new IllegalArgumentException("endIndex(" + endIndex +
+          ") is less than 0");
       }
       if (endIndex > str.length()) {
-        throw new IllegalArgumentException("endIndex (" + endIndex +
-                    ") is more than " + str.length());
+        throw new IllegalArgumentException("endIndex(" + endIndex +
+          ") is more than " + str.length());
       }
       if (endIndex < index) {
-        throw new IllegalArgumentException("endIndex (" + endIndex +
-                    ") is less than " + index);
+        throw new IllegalArgumentException("endIndex(" + endIndex +
+          ") is less than " + index);
       }
       if (index == endIndex) {
         throw new NumberFormatException("No digits");
@@ -546,6 +546,11 @@ at: http://peteroupc.github.io/
           bigint[currentDigit] = ((short)word);
           --currentDigit;
         }
+        int count = CountWords(bigint);
+        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
+          count,
+          bigint,
+          negative);
       } else if (radix == 2) {
         // Special case for binary radix
         int leftover = effectiveLength & 15;
@@ -588,13 +593,64 @@ at: http://peteroupc.github.io/
           bigint[currentDigit] = ((short)word);
           --currentDigit;
         }
+        int count = CountWords(bigint);
+        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
+          count,
+          bigint,
+          negative);
       } else {
-        bigint = new short[4];
+        return FromRadixSubstringGeneral(str, radix, index, endIndex, negative);
+      }
+    }
+
+    private static EInteger FromRadixSubstringGeneral(
+      String str,
+      int radix,
+      int index,
+      int endIndex,
+      boolean negative) {
+      if (endIndex - index > 32) {
+        int midIndex = index + (endIndex - index) / 2;
+        EInteger eia = FromRadixSubstringGeneral(
+          str,
+          radix,
+          index,
+          midIndex,
+          false);
+        EInteger eib = FromRadixSubstringGeneral(
+          str,
+          radix,
+          midIndex,
+          endIndex,
+          false);
+        EInteger mult = null;
+        mult = (radix == 10) ? NumberUtility.FindPowerOfTen(endIndex -
+midIndex) : EInteger.FromInt32(radix).Pow(endIndex - midIndex);
+        eia = eia.Multiply(mult).Add(eib);
+        if (negative) {
+          eia = eia.Negate();
+        }
+        return eia;
+      } else {
+        return FromRadixSubstringInner(str, radix, index, endIndex, negative);
+      }
+    }
+
+    private static EInteger FromRadixSubstringInner(
+      String str,
+      int radix,
+      int index,
+      int endIndex,
+      boolean negative) {
+        short[] bigint = new short[4];
         boolean haveSmallInt = true;
         int maxSafeInt = ValueMaxSafeInts[radix - 2];
         int maxShortPlusOneMinusRadix = 65536 - radix;
         int smallInt = 0;
         for (int i = index; i < endIndex; ++i) {
+          if (str == null) {
+            throw new NullPointerException("str");
+          }
           char c = str.charAt(i);
           int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
           if (digit >= radix) {
@@ -628,8 +684,11 @@ at: http://peteroupc.github.io/
               int d = bigint[0] & 0xffff;
               if (d <= maxShortPlusOneMinusRadix) {
                 bigint[0] = ((short)(d + digit));
-              } else if (Increment(bigint, 0, bigint.length, (short)digit) !=
-                    0) {
+              } else if (IncrementWords (
+                  bigint,
+                  0,
+                  bigint.length,
+                  (short)digit) != 0) {
                 bigint = GrowForCarry(bigint, (short)1);
               }
             }
@@ -639,12 +698,11 @@ at: http://peteroupc.github.io/
           bigint[0] = ((short)(smallInt & 0xffff));
           bigint[1] = ((short)((smallInt >> 16) & 0xffff));
         }
-      }
-      int count = CountWords(bigint);
-      return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-        count,
-        bigint,
-        negative);
+        int count = CountWords(bigint);
+        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
+          count,
+          bigint,
+          negative);
     }
 
     /**
@@ -652,7 +710,8 @@ at: http://peteroupc.github.io/
      * @param str A text string. The string must contain only basic digits 0 to 9
      *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
      * U+002D) to indicate a negative number. The string is not allowed to
-     * contain white space characters, including spaces.
+     * contain white space characters, including spaces. The string may
+     * start with any number of zeros.
      * @return An arbitrary-precision integer with the same value as given in the
      * string.
      * @throws NumberFormatException The parameter {@code str} is in an invalid format.
@@ -671,7 +730,8 @@ at: http://peteroupc.github.io/
      * only basic digits 0 to 9 (U+0030 to U+0039), except that it may
      *  start with a minus sign ("-", U+002D) to indicate a negative number.
      * The desired portion is not allowed to contain white space
-     * characters, including spaces.
+     * characters, including spaces. The desired portion may start with any
+     * number of zeros.
      * @param index The index of the string that starts the string portion.
      * @param endIndex The index of the string that ends the string portion. The
      * length will be index + endIndex - 1.
@@ -725,10 +785,10 @@ at: http://peteroupc.github.io/
           sumreg = new short[2];
           sumreg[0] = ((short)intSum);
           sumreg[1] = ((short)(intSum >> 16));
-          return new EInteger(
-            ((intSum >> 16) == 0) ? 1 : 2,
-            sumreg,
-            this.negative);
+          return new EInteger (
+              ((intSum >> 16) == 0) ? 1 : 2,
+              sumreg,
+              this.negative);
         } else {
           int a = ((int)this.words[0]) & 0xffff;
           int b = ((int)bigintAugend.words[0]) & 0xffff;
@@ -752,8 +812,8 @@ at: http://peteroupc.github.io/
         int addendCount = this.wordCount;
         int augendCount = bigintAugend.wordCount;
         if (augendCount <= 2 && addendCount <= 2 &&
-           (this.wordCount < 2 || (this.words[1] >> 15) == 0) &&
-           (bigintAugend.wordCount < 2 || (bigintAugend.words[1] >> 15) == 0)) {
+          (this.wordCount < 2 || (this.words[1] >> 15) == 0) &&
+          (bigintAugend.wordCount < 2 || (bigintAugend.words[1] >> 15) == 0)) {
           int a = ((int)this.words[0]) & 0xffff;
           if (this.wordCount == 2) {
             a |= (((int)this.words[1]) & 0xffff) << 16;
@@ -822,22 +882,22 @@ at: http://peteroupc.github.io/
             augendCount,
             addendCount - augendCount);
           if (carry != 0) {
-            carry = Increment(
-              sumreg,
-              augendCount,
-              addendCount - augendCount,
-              (short)carry);
+            carry = IncrementWords (
+                sumreg,
+                augendCount,
+                addendCount - augendCount,
+                (short)carry);
           }
         } else {
           // Augend is bigger
-          carry = AddInternal(
-            sumreg,
-            0,
-            this.words,
-            0,
-            bigintAugend.words,
-            0,
-            (int)addendCount);
+          carry = AddInternal (
+              sumreg,
+              0,
+              this.words,
+              0,
+              bigintAugend.words,
+              0,
+              (int)addendCount);
           System.arraycopy(
             bigintAugend.words,
             addendCount,
@@ -845,11 +905,11 @@ at: http://peteroupc.github.io/
             addendCount,
             augendCount - addendCount);
           if (carry != 0) {
-            carry = Increment(
-              sumreg,
-              addendCount,
-              (int)(augendCount - addendCount),
-              (short)carry);
+            carry = IncrementWords (
+                sumreg,
+                addendCount,
+                (int)(augendCount - addendCount),
+                (short)carry);
           }
         }
         boolean needShorten = true;
@@ -888,7 +948,7 @@ at: http://peteroupc.github.io/
       short[] diffReg = new short[wordLength];
       if (words1Size == words2Size) {
         if (Compare(minuend.words, 0, subtrahend.words, 0, (int)words1Size) >=
-            0) {
+          0) {
           // words1 is at least as high as words2
           SubtractInternal(
             diffReg,
@@ -926,7 +986,11 @@ at: http://peteroupc.github.io/
           diffReg,
           words2Size,
           words1Size - words2Size);
-        Decrement(diffReg, words2Size, (int)(words1Size - words2Size), borrow);
+        DecrementWords(
+          diffReg,
+          words2Size,
+          words1Size - words2Size,
+          borrow);
       } else {
         // words1 is less than words2
         borrow = (short)SubtractInternal(
@@ -943,7 +1007,11 @@ at: http://peteroupc.github.io/
           diffReg,
           words1Size,
           words2Size - words1Size);
-        Decrement(diffReg, words1Size, (int)(words2Size - words1Size), borrow);
+        DecrementWords(
+          diffReg,
+          words1Size,
+          words2Size - words1Size,
+          borrow);
         diffNeg = true;
       }
       int count = CountWords(diffReg);
@@ -958,7 +1026,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws T:ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object's value is too big to fit a
      * 32-bit signed integer.
      * @deprecated Renamed to ToInt32Checked.
  */
@@ -970,7 +1038,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
@@ -985,7 +1053,7 @@ at: http://peteroupc.github.io/
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws T:ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object's value is too big to fit a
      * 64-bit signed integer.
      * @deprecated Renamed to ToInt64Checked.
  */
@@ -997,7 +1065,7 @@ at: http://peteroupc.github.io/
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
@@ -1107,19 +1175,19 @@ at: http://peteroupc.github.io/
           sumreg = new short[2];
           sumreg[0] = ((short)intSum);
           sumreg[1] = ((short)(intSum >> 16));
-          return new EInteger(
-            ((intSum >> 16) == 0) ? 1 : 2,
-            sumreg,
-            this.negative);
+          return new EInteger (
+              ((intSum >> 16) == 0) ? 1 : 2,
+              sumreg,
+              this.negative);
         } else if (intValue < 0 && this.negative) {
           int intSum = (((int)this.words[0]) & 0xffff) - intValue;
           sumreg = new short[2];
           sumreg[0] = ((short)intSum);
           sumreg[1] = ((short)(intSum >> 16));
-          return new EInteger(
-            ((intSum >> 16) == 0) ? 1 : 2,
-            sumreg,
-            this.negative);
+          return new EInteger (
+              ((intSum >> 16) == 0) ? 1 : 2,
+              sumreg,
+              this.negative);
         } else {
           int a = ((int)this.words[0]) & 0xffff;
           int b = Math.abs(intValue);
@@ -1149,14 +1217,13 @@ at: http://peteroupc.github.io/
      */
     public EInteger Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
-        this.Subtract(EInteger.FromInt32(intValue)) : ((intValue == 0) ? this :
-          this.Add(-intValue));
+        this.Subtract(EInteger.FromInt32(intValue)) : ((intValue == 0) ?
+          this : this.Add(-intValue));
     }
 
     /**
      * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.<p> <pre>EInteger result =
-     *  EInteger.FromString("5").Multiply(200);</pre> . </p>
+     *  object.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -1246,7 +1313,7 @@ at: http://peteroupc.github.io/
       }
       // DebugUtility.Log("divide " + this + " " + bigintDivisor);
       if (words1Size <= 2 && words2Size <= 2 && this.CanFitInInt32() &&
-          bigintDivisor.CanFitInInt32()) {
+        bigintDivisor.CanFitInInt32()) {
         int valueASmall = this.ToInt32Checked();
         int valueBSmall = bigintDivisor.ToInt32Checked();
         if (valueASmall != Integer.MIN_VALUE || valueBSmall != -1) {
@@ -1255,7 +1322,7 @@ at: http://peteroupc.github.io/
         }
       }
       if (words1Size <= 4 && words2Size <= 4 && this.CanFitInInt64() &&
-          bigintDivisor.CanFitInInt64()) {
+        bigintDivisor.CanFitInInt64()) {
         long valueALong = this.ToInt64Checked();
         long valueBLong = bigintDivisor.ToInt64Checked();
         if (valueALong != Long.MIN_VALUE || valueBLong != -1) {
@@ -1273,11 +1340,10 @@ at: http://peteroupc.github.io/
         while (quotwordCount != 0 && quotReg[quotwordCount - 1] == 0) {
           --quotwordCount;
         }
-        return (quotwordCount != 0) ?
- new EInteger(
-   quotwordCount,
-   quotReg,
-   this.negative ^ bigintDivisor.negative) : EInteger.FromInt32(0);
+        return (quotwordCount != 0) ? new EInteger(
+          quotwordCount,
+          quotReg,
+          this.negative ^ bigintDivisor.negative) : EInteger.FromInt32(0);
       }
       // ---- General case
       quotReg = new short[(int)(words1Size - words2Size + 1)];
@@ -1294,10 +1360,9 @@ at: http://peteroupc.github.io/
         0);
       quotwordCount = CountWords(quotReg);
       quotReg = ShortenArray(quotReg, quotwordCount);
-      return (quotwordCount != 0) ?
- new EInteger(quotwordCount,
-              quotReg,
-              this.negative ^ bigintDivisor.negative) :
+      return (quotwordCount != 0) ? new EInteger(quotwordCount,
+          quotReg,
+          this.negative ^ bigintDivisor.negative) :
         EInteger.FromInt32(0);
     }
 
@@ -1350,13 +1415,13 @@ at: http://peteroupc.github.io/
       int c;
       // If AHigh is less than BHigh
       if (
-  WordsCompare(
-    valueAMidHigh,
-    posAMidHigh + blockCount,
-    blockCount,
-    b,
-    posB + blockCount,
-    blockCount) < 0) {
+        WordsCompare(
+          valueAMidHigh,
+          posAMidHigh + blockCount,
+          blockCount,
+          b,
+          posB + blockCount,
+          blockCount) < 0) {
         // Divide AMidHigh by BHigh
         RecursiveDivideInner(
           valueAMidHigh,
@@ -1403,7 +1468,7 @@ at: http://peteroupc.github.io/
           b,
           posB + blockCount,
           blockCount);
-        Increment(tmp, blockCount * 5, blockCount, (short)c);
+        IncrementWords(tmp, blockCount * 5, blockCount, (short)c);
       }
       AsymmetricMultiply(
         tmp,
@@ -1423,8 +1488,8 @@ at: http://peteroupc.github.io/
       if (c != 0) {
         while (true) {
           c = AddInternal(tmp, bc3, tmp, bc3, b, posB, blockCount * 2);
-          c = Increment(tmp, blockCount * 5, blockCount, (short)c);
-          Decrement(quot, posQuot, blockCount * 2, (short)1);
+          c = IncrementWords(tmp, blockCount * 5, blockCount, (short)c);
+          DecrementWords(quot, posQuot, blockCount * 2, (short)1);
           if (c != 0) {
             break;
           }
@@ -1548,17 +1613,17 @@ at: http://peteroupc.github.io/
       int totalWordsA = blocksA * blocksB;
       workA = new short[totalWordsA];
       workPosA = 0;
-      System.arraycopy(
-  a,
-  posA,
-  workA,
-  workPosA + (blocksB - countB),
-  countA);
-      ShiftWordsLeftByBits(
-      workA,
-      workPosA + (blocksB - countB),
-      countA + extraWord,
-      shiftB);
+      System.arraycopy (
+        a,
+        posA,
+        workA,
+        workPosA + (blocksB - countB),
+        countA);
+      ShiftWordsLeftByBits (
+        workA,
+        workPosA + (blocksB - countB),
+        countA + extraWord,
+        shiftB);
       // Start division
       // "tmprem" holds temporary space for the following:
       // - blocksB: Remainder
@@ -1588,12 +1653,12 @@ at: http://peteroupc.github.io/
           // DebugUtility.Log("quot len=" + quot.length + ",bb=" + blocksB +
           // ",size=" + size + " [" + countA + "," + countB + "]");
           if (size > 0) {
-            System.arraycopy(
-    tmprem,
-    blocksB * 3,
-    quot,
-    posQuot + (i * blocksB),
-    size);
+            System.arraycopy (
+              tmprem,
+              blocksB * 3,
+              quot,
+              posQuot + (i * blocksB),
+              size);
           }
         }
         // Set the high part of the sub-dividend with the remainder
@@ -1642,11 +1707,10 @@ at: http://peteroupc.github.io/
       while (len != 0 && words[len - 1] == 0) {
         --len;
       }
-      return (len == 0) ?
-  "\"0\"" : ("\"" + new EInteger(
-    len,
-    words,
-    false).ToUnoptString() + "\"");
+      return (len == 0) ? "\"0\"" : ("\"" + new EInteger(
+        len,
+        words,
+        false).ToUnoptString() + "\"");
     }
 
     private static void GeneralDivide(
@@ -1792,7 +1856,7 @@ at: http://peteroupc.github.io/
         int dividend = (wpaNextHigh + (wpaHigh << 16));
         int divnext = ((int)workA[wpoffset + countB - 2]) & 0xffff;
         int quorem0 = (dividend >> 31) == 0 ? (dividend / pieceBHighInt) :
-         ((int)(((long)dividend & 0xffffffffL) / pieceBHighInt));
+          ((int)(((long)dividend & 0xffffffffL) / pieceBHighInt));
         int quorem1 = (dividend - (quorem0 * pieceBHighInt));
         // DebugUtility.Log("{0:X8}/{1:X4} = {2:X8},{3:X4}",
         // dividend, pieceBHigh, quorem0, quorem1);
@@ -1813,7 +1877,7 @@ at: http://peteroupc.github.io/
           if ((quorem1 >> 16) == 0) {
             t = (((long)quorem1) << 16) | (divnext & 0xffffL);
             if ((quorem0 >> 16) != 0 ||
-                ((quorem0 * pieceBNextHighInt) & 0xffffffffL) > t) {
+              ((quorem0 * pieceBNextHighInt) & 0xffffffffL) > t) {
               --quorem0;
               if (rem == null && offset == 0) {
                 // We can stop now and break; all cases where quorem0
@@ -1847,7 +1911,7 @@ at: http://peteroupc.github.io/
             workB,
             workPosB,
             countB);
-          c = Increment(workA, wpoffset + countB, 1, (short)c);
+          c = IncrementWords(workA, wpoffset + countB, 1, (short)c);
           // T(workA,workPosA,countA+1,"workA "+c);
           --quorem0;
         }
@@ -1922,7 +1986,7 @@ at: http://peteroupc.github.io/
         }
         int count = this.wordCount;
         while (count != 0 &&
-               quotient[count - 1] == 0) {
+          quotient[count - 1] == 0) {
           --count;
         }
         if (count == 0) {
@@ -2012,7 +2076,8 @@ at: http://peteroupc.github.io/
       return false;
     }
 
-    private static EInteger LeftShiftBigIntVar(EInteger ei, EInteger bigShift) {
+    private static EInteger LeftShiftBigIntVar(EInteger ei,
+      EInteger bigShift) {
       if (ei.isZero()) {
         return ei;
       }
@@ -2077,7 +2142,7 @@ at: http://peteroupc.github.io/
       }
       bigintSecond = bigintSecond.Abs();
       if (bigintSecond.equals(EInteger.FromInt32(1)) ||
-          thisValue.equals(bigintSecond)) {
+        thisValue.equals(bigintSecond)) {
         return bigintSecond;
       }
       if (thisValue.equals(EInteger.FromInt32(1))) {
@@ -2097,9 +2162,9 @@ at: http://peteroupc.github.io/
         int bvc = bigintSecond.wordCount;
         while (buc != 0 && bvc != 0 && !WordsEqual(bu, buc, bv, bvc)) {
           if (buc <= 3 && bvc <= 3) {
-            return GcdLong(
-              WordsToLongUnchecked(bu, buc),
-              WordsToLongUnchecked(bv, bvc));
+            return GcdLong (
+                WordsToLongUnchecked(bu, buc),
+                WordsToLongUnchecked(bv, bvc));
           }
           if ((bu[0] & 0x0f) == 0 && (bv[0] & 0x0f) == 0) {
             if (bshl < 0) {
@@ -2131,17 +2196,16 @@ at: http://peteroupc.github.io/
             bvc = WordsShiftRightOne(bv, bvc);
           } else if (eu && !ev) {
             buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x0f) == 0) ?
-              WordsShiftRightFour(bu, buc) :
-WordsShiftRightOne(bu, buc);
-          } else if (!eu && ev) {
+              WordsShiftRightFour(bu, buc) : WordsShiftRightOne(bu, buc);
+            } else if (!eu && ev) {
             if ((bv[0] & 0xff) == 0 && Math.abs(buc - bvc) > 1) {
               // DebugUtility.Log("bv8");
               bvc = WordsShiftRightEight(bv, bvc);
             } else {
               bvc = (
-             (bv[0] & 0x0f) == 0 && Math.abs(
-             buc - bvc) > 1) ?
-             WordsShiftRightFour(bv, bvc) : WordsShiftRightOne(bv, bvc);
+                  (bv[0] & 0x0f) == 0 && Math.abs (
+                    buc - bvc) > 1) ?
+                WordsShiftRightFour(bv, bvc) : WordsShiftRightOne(bv, bvc);
             }
           } else if (WordsCompare(bu, buc, bv, bvc) >= 0) {
             buc = WordsSubtract(bu, buc, bv, bvc);
@@ -2165,12 +2229,11 @@ WordsShiftRightOne(bu, buc);
         if (bshl >= 0) {
           valueBuVar = valueBuVar.isZero() ? (valueBvVar.ShiftLeft(bshl)) : (valueBuVar.ShiftLeft(bshl));
         } else {
-          valueBuVar = valueBuVar.isZero() ?
-  LeftShiftBigIntVar(
-    valueBvVar,
-    ebshl) : LeftShiftBigIntVar(
- valueBuVar,
- ebshl);
+          valueBuVar = valueBuVar.isZero() ? LeftShiftBigIntVar(
+            valueBvVar,
+            ebshl) : LeftShiftBigIntVar (
+              valueBuVar,
+              ebshl);
         }
         return valueBuVar;
       }
@@ -2219,19 +2282,19 @@ WordsShiftRightOne(bu, buc);
         }
         if (value >= 1000000000L) {
           return (value >= 1000000000000000000L) ? 19 : ((value >=
-                   100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
-                    17 : ((value >= 1000000000000000L) ? 16 :
-                    ((value >= 100000000000000L) ? 15 : ((value
-                    >= 10000000000000L) ?
-                    14 : ((value >= 1000000000000L) ? 13 : ((value
-                    >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
-                    11 : ((value >= 1000000000L) ? 10 : 9)))))))));
-                  } else {
+                100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
+                17 : ((value >= 1000000000000000L) ? 16 :
+                  ((value >= 100000000000000L) ? 15 : ((value
+                        >= 10000000000000L) ?
+                      14 : ((value >= 1000000000000L) ? 13 : ((value
+                            >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+                            11 : ((value >= 1000000000L) ? 10 : 9)))))))));
+        } else {
           int v2 = (int)value;
           return (v2 >= 100000000) ? 9 : ((v2 >= 10000000) ? 8 : ((v2 >=
-                    1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
-                    >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
-                    3 : ((v2 >= 10) ? 2 : 1)))))));
+                  1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
+                      >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
+                        3 : ((v2 >= 10) ? 2 : 1)))))));
         }
       }
       // NOTE: Bitlength accurate for wordCount<1000000 here, only as
@@ -2252,9 +2315,9 @@ WordsShiftRightOne(bu, buc);
           // all numbers with this bit length
           return minDigits;
         }
-        return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigits)) >=
-              0 ? maxDigits : minDigits;
-            } else if (bitlen <= 6432162) {
+        return this.Abs().compareTo(NumberUtility.FindPowerOfTen(
+  minDigits)) >= 0 ? maxDigits : minDigits;
+        } else if (bitlen <= 6432162) {
         // Much more accurate approximation
         int minDigits = ApproxLogTenOfTwo(bitlen - 1);
         int maxDigits = ApproxLogTenOfTwo(bitlen);
@@ -2265,7 +2328,7 @@ WordsShiftRightOne(bu, buc);
         }
         if (bitlen < 50000) {
           return this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigits +
-               1)) >= 0 ? maxDigits + 1 : minDigits + 1;
+                1)) >= 0 ? maxDigits + 1 : minDigits + 1;
         }
       }
       short[] tempReg = null;
@@ -2323,7 +2386,7 @@ WordsShiftRightOne(bu, buc);
           while ((wci--) > 0) {
             int curValue = ((int)dividend[wci]) & 0xffff;
             int currentDividend = ((int)(curValue |
-                    ((int)remainderShort << 16)));
+                  ((int)remainderShort << 16)));
             quo = currentDividend / 10000;
             if (!firstdigit && quo != 0) {
               firstdigit = true;
@@ -2333,7 +2396,7 @@ WordsShiftRightOne(bu, buc);
               // NOTE: Bitlength accurate for wci<1000000 here, only as
               // an approximation
               bitlen = (wci < 1000000) ? GetUnsignedBitLengthEx(quo, wci + 1) :
-                  Integer.MAX_VALUE;
+                Integer.MAX_VALUE;
               if (bitlen <= 2135) {
                 // (x*631305) >> 21 is an approximation
                 // to trunc(x*log10(2)) that is correct up
@@ -2354,8 +2417,9 @@ WordsShiftRightOne(bu, buc);
                   int maxDigitEstimate = maxDigits + 4;
                   int minDigitEstimate = minDigits + 4;
                   return
-   this.Abs().compareTo(NumberUtility.FindPowerOfTen(minDigitEstimate))
-                 >= 0 ? retval + maxDigitEstimate : retval + minDigitEstimate;
+                    this.Abs().compareTo(NumberUtility.FindPowerOfTen(
+  minDigitEstimate)) >= 0 ? retval + maxDigitEstimate : retval +
+minDigitEstimate;
                 }
               } else if (bitlen <= 6432162) {
                 // Much more accurate approximation
@@ -2442,18 +2506,22 @@ WordsShiftRightOne(bu, buc);
         } else {
           int rsb = (((c << 15) & 0xffff) != 0) ? 0 : ((((c <<
                     14) & 0xffff) != 0) ? 1 : ((((c <<
-                    13) & 0xffff) != 0) ? 2 : ((((c <<
-                    12) & 0xffff) != 0) ? 3 : ((((c << 11) &
-                    0xffff) != 0) ? 4 : ((((c << 10) & 0xffff) != 0) ? 5 :
-                ((((c << 9) & 0xffff) != 0) ? 6 : ((((c <<
-            8) & 0xffff) != 0) ? 7 : ((((c << 7) & 0xffff) !=
-                0) ? 8 : ((((c << 6) & 0xffff) != 0) ? 9 : ((((c <<
-                    5) & 0xffff) != 0) ? 10 : ((((c <<
-                    4) & 0xffff) != 0) ? 11 : ((((c << 3) &
-                0xffff) != 0) ? 12 : ((((c << 2) & 0xffff) !=
-                0) ? 13 : ((((c << 1) & 0xffff) != 0) ? 14 : 15))))))))))))));
+                      13) & 0xffff) != 0) ? 2 : ((((c <<
+                        12) & 0xffff) != 0) ? 3 : ((((c << 11) &
+                        0xffff) != 0) ? 4 : ((((c << 10) & 0xffff) != 0) ? 5 :
+                      ((((c << 9) & 0xffff) != 0) ? 6 : ((((c <<
+                                8) & 0xffff) != 0) ? 7 : ((((c << 7) &
+0xffff) !=
+                              0) ? 8 : ((((c << 6) & 0xffff) != 0) ? 9 :
+((((c <<
+                                      5) & 0xffff) != 0) ? 10 : ((((c <<
+                                        4) & 0xffff) != 0) ? 11 : ((((c << 3) &
+                                        0xffff) != 0) ? 12 : ((((c << 2) &
+0xffff) !=
+                                        0) ? 13 : ((((c << 1) & 0xffff) !=
+0) ? 14 : 15))))))))))))));
           return EInteger.FromInt64(retSetBitLong).Add(
-           EInteger.FromInt32(rsb));
+              EInteger.FromInt32(rsb));
         }
       }
       return EInteger.FromInt32(-1);
@@ -2462,12 +2530,12 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
-     * object' s value.
+     * object's value.
      * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
      * the least significant bit, 1 is the next least significant bit, and
      * so on.
      * @return {@code true} if the given bit is set in the two' s-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal}) of this object' s
+     * (see {@link com.upokecenter.numbers.EDecimal}) of this object's
      * value; otherwise, {@code false}.
      * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
@@ -2488,7 +2556,7 @@ WordsShiftRightOne(bu, buc);
         }
         long tcindex = 0;
         while (valueEWordPos.compareTo(EInteger.FromInt64(tcindex)) > 0 &&
-              this.words[((int)tcindex)] == 0) {
+          this.words[((int)tcindex)] == 0) {
           ++tcindex;
         }
         short tc;
@@ -2511,12 +2579,12 @@ WordsShiftRightOne(bu, buc);
     /**
      * Returns whether a bit is set in the two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
-     * object' s value.
+     * object's value.
      * @param index The index, starting at 0, of the bit to test, where 0 is the
      * least significant bit, 1 is the next least significant bit, and so
      * on.
      * @return {@code true} if the given bit is set in the two' s-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal}) of this object' s
+     * (see {@link com.upokecenter.numbers.EDecimal}) of this object's
      * value; otherwise, {@code false}.
      */
     public boolean GetSignedBit(int index) {
@@ -2638,8 +2706,8 @@ WordsShiftRightOne(bu, buc);
         throw new NullPointerException("bigIndex");
       }
       if (bigIndex.signum() < 0) {
-        throw new IllegalArgumentException("bigIndex (" + bigIndex +
-             ") is less than 0");
+        throw new IllegalArgumentException("bigIndex(" + bigIndex +
+          ") is less than 0");
       }
       if (bigIndex.CanFitInInt32()) {
         return this.GetUnsignedBit(bigIndex.ToInt32Checked());
@@ -2662,7 +2730,7 @@ WordsShiftRightOne(bu, buc);
      */
     public boolean GetUnsignedBit(int index) {
       if (index < 0) {
-        throw new IllegalArgumentException("index (" + index + ") is less than 0");
+        throw new IllegalArgumentException("index(" + index + ") is less than 0");
       }
       return ((index >> 4) < this.words.length) &&
         ((boolean)(((this.words[index >> 4] >> (int)(index & 15)) & 1) != 0));
@@ -2789,10 +2857,10 @@ WordsShiftRightOne(bu, buc);
         throw new NullPointerException("mod");
       }
       if (pow.signum() < 0) {
-        throw new IllegalArgumentException("pow (" + pow + ") is less than 0");
+        throw new IllegalArgumentException("pow(" + pow + ") is less than 0");
       }
       if (mod.signum() <= 0) {
-        throw new IllegalArgumentException("mod (" + mod + ") is not greater than 0");
+        throw new IllegalArgumentException("mod(" + mod + ") is not greater than 0");
       }
       EInteger r = EInteger.FromInt32(1);
       EInteger eiv = this;
@@ -2994,8 +3062,8 @@ WordsShiftRightOne(bu, buc);
      */
     public EInteger Pow(int powerSmall) {
       if (powerSmall < 0) {
-        throw new IllegalArgumentException("powerSmall (" + powerSmall +
-                    ") is less than 0");
+        throw new IllegalArgumentException("powerSmall(" + powerSmall +
+          ") is less than 0");
       }
       EInteger thisVar = this;
       if (powerSmall == 0) {
@@ -3044,7 +3112,7 @@ WordsShiftRightOne(bu, buc);
       }
       int sign = power.signum();
       if (sign < 0) {
-        throw new IllegalArgumentException(
+        throw new IllegalArgumentException (
           "sign (" + sign + ") is less than 0");
       }
       EInteger thisVar = this;
@@ -3211,7 +3279,7 @@ WordsShiftRightOne(bu, buc);
       if (!this.negative) {
         short[] ret = new short[numWords + BitsToWords((int)numberBits)];
         System.arraycopy(this.words, 0, ret, shiftWords, numWords);
-        ShiftWordsLeftByBits(
+        ShiftWordsLeftByBits (
           ret,
           (int)shiftWords,
           numWords + BitsToWords(shiftBits),
@@ -3222,7 +3290,7 @@ WordsShiftRightOne(bu, buc);
         System.arraycopy(this.words, 0, ret, 0, numWords);
         TwosComplement(ret, 0, (int)ret.length);
         ShiftWordsLeftByWords(ret, 0, numWords + shiftWords, shiftWords);
-        ShiftWordsLeftByBits(
+        ShiftWordsLeftByBits (
           ret,
           (int)shiftWords,
           numWords + BitsToWords(shiftBits),
@@ -3272,7 +3340,9 @@ WordsShiftRightOne(bu, buc);
       if (this.negative) {
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
-      NotWords(valueXaReg, (int)valueXaReg.length);
+      NotWords(
+        valueXaReg,
+        (int)valueXaReg.length);
       if (this.negative) {
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
@@ -3303,9 +3373,9 @@ WordsShiftRightOne(bu, buc);
       if (!this.negative && !other.negative) {
         int smallerCount = Math.min(this.wordCount, other.wordCount);
         short[] smaller = (this.wordCount == smallerCount) ?
-            this.words : other.words;
+          this.words : other.words;
         short[] bigger = (this.wordCount == smallerCount) ?
-            other.words : this.words;
+          other.words : this.words;
         short[] result = new short[smallerCount];
         for (int i = 0; i < smallerCount; ++i) {
           result[i] = ((short)(smaller[i] & bigger[i]));
@@ -3324,12 +3394,12 @@ WordsShiftRightOne(bu, buc);
       valueXaNegative = this.negative;
       valueXaWordCount = this.wordCount;
       valueXbNegative = other.negative;
-      valueXaReg = CleanGrow(
-  valueXaReg,
-  Math.max(valueXaReg.length, valueXbReg.length));
-      valueXbReg = CleanGrow(
-      valueXbReg,
-      Math.max(valueXaReg.length, valueXbReg.length));
+      valueXaReg = CleanGrow (
+          valueXaReg,
+          Math.max(valueXaReg.length, valueXbReg.length));
+      valueXbReg = CleanGrow (
+          valueXbReg,
+          Math.max(valueXaReg.length, valueXbReg.length));
       if (valueXaNegative) {
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
@@ -3371,9 +3441,9 @@ WordsShiftRightOne(bu, buc);
         int smallerCount = Math.min(this.wordCount, second.wordCount);
         int biggerCount = Math.max(this.wordCount, second.wordCount);
         short[] smaller = (this.wordCount == smallerCount) ?
-            this.words : second.words;
+          this.words : second.words;
         short[] bigger = (this.wordCount == smallerCount) ?
-            second.words : this.words;
+          second.words : this.words;
         short[] result = new short[biggerCount];
         for (int i = 0; i < smallerCount; ++i) {
           result[i] = ((short)(smaller[i] | bigger[i]));
@@ -3397,12 +3467,12 @@ WordsShiftRightOne(bu, buc);
       valueXaNegative = this.negative;
       valueXaWordCount = this.wordCount;
       valueXbNegative = second.negative;
-      valueXaReg = CleanGrow(
-  valueXaReg,
-  Math.max(valueXaReg.length, valueXbReg.length));
-      valueXbReg = CleanGrow(
-      valueXbReg,
-      Math.max(valueXaReg.length, valueXbReg.length));
+      valueXaReg = CleanGrow (
+          valueXaReg,
+          Math.max(valueXaReg.length, valueXbReg.length));
+      valueXbReg = CleanGrow (
+          valueXbReg,
+          Math.max(valueXaReg.length, valueXbReg.length));
       if (valueXaNegative) {
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
@@ -3448,9 +3518,9 @@ WordsShiftRightOne(bu, buc);
         int smallerCount = Math.min(this.wordCount, other.wordCount);
         int biggerCount = Math.max(this.wordCount, other.wordCount);
         short[] smaller = (this.wordCount == smallerCount) ?
-            this.words : other.words;
+          this.words : other.words;
         short[] bigger = (this.wordCount == smallerCount) ?
-            other.words : this.words;
+          other.words : this.words;
         short[] result = new short[biggerCount];
         for (int i = 0; i < smallerCount; ++i) {
           result[i] = ((short)(smaller[i] ^ bigger[i]));
@@ -3462,10 +3532,10 @@ WordsShiftRightOne(bu, buc);
           smallerCount,
           biggerCount - smallerCount);
         smallerCount = (smallerCount == biggerCount) ?
-            CountWords(result) : biggerCount;
+          CountWords(result) : biggerCount;
 
         return (smallerCount == 0) ? EInteger.FromInt32(0) :
-           new EInteger(smallerCount, result, false);
+          new EInteger(smallerCount, result, false);
       }
       boolean valueXaNegative = false;
       int valueXaWordCount = 0;
@@ -3477,12 +3547,12 @@ WordsShiftRightOne(bu, buc);
       valueXaNegative = this.negative;
       valueXaWordCount = this.wordCount;
       valueXbNegative = other.negative;
-      valueXaReg = CleanGrow(
-  valueXaReg,
-  Math.max(valueXaReg.length, valueXbReg.length));
-      valueXbReg = CleanGrow(
-  valueXbReg,
-  Math.max(valueXaReg.length, valueXbReg.length));
+      valueXaReg = CleanGrow (
+          valueXaReg,
+          Math.max(valueXaReg.length, valueXbReg.length));
+      valueXbReg = CleanGrow (
+          valueXbReg,
+          Math.max(valueXaReg.length, valueXbReg.length));
       if (valueXaNegative) {
         TwosComplement(valueXaReg, 0, (int)valueXaReg.length);
       }
@@ -3684,11 +3754,11 @@ WordsShiftRightOne(bu, buc);
         0,
         subtrahendCount);
       if (borrow != 0) {
-        Decrement(
- words,
- subtrahendCount,
- (int)(wordCount - subtrahendCount),
- borrow);
+        DecrementWords (
+          words,
+          subtrahendCount,
+          (int)(wordCount - subtrahendCount),
+          borrow);
       }
       while (wordCount != 0 && words[wordCount - 1] == 0) {
         --wordCount;
@@ -3747,7 +3817,7 @@ WordsShiftRightOne(bu, buc);
         retWordCount = numWords - shiftWords;
       }
       while (retWordCount != 0 &&
-             ret[retWordCount - 1] == 0) {
+        ret[retWordCount - 1] == 0) {
         --retWordCount;
       }
       if (retWordCount == 0) {
@@ -3792,12 +3862,12 @@ WordsShiftRightOne(bu, buc);
         throw new NullPointerException("subtrahend");
       }
       return (this.wordCount == 0) ? subtrahend.Negate() :
-        ((subtrahend.wordCount == 0) ? this : this.Add(subtrahend.Negate()));
+((subtrahend.wordCount == 0) ? this : this.Add(subtrahend.Negate()));
     }
 
     /**
      * Returns a byte array of this integer's value. The byte array will take the
-     * number's two' s-complement form (see {@link
+     * number's two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
      * fewest bytes necessary to store its value unambiguously. If this
      * value is negative, the bits that appear beyond the most significant
@@ -3874,7 +3944,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws T:ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object's value is too big to fit a
      * 32-bit signed integer.
      */
     public int ToInt32Checked() {
@@ -3887,7 +3957,7 @@ WordsShiftRightOne(bu, buc);
       }
       if (count == 2 && (this.words[1] & 0x8000) != 0) {
         if (this.negative && this.words[1] == ((short)0x8000) &&
-            this.words[0] == 0) {
+          this.words[0] == 0) {
           return Integer.MIN_VALUE;
         }
         throw new ArithmeticException();
@@ -3898,7 +3968,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Converts this object's value to a 32-bit signed integer. If the value can't
      * fit in a 32-bit integer, returns the lower 32 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 32-bit signed integer.
@@ -3923,7 +3993,7 @@ WordsShiftRightOne(bu, buc);
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws T:ArithmeticException This object' s value is too big to fit a
+     * @throws T:ArithmeticException This object's value is too big to fit a
      * 64-bit signed integer.
      */
     public long ToInt64Checked() {
@@ -3936,8 +4006,8 @@ WordsShiftRightOne(bu, buc);
       }
       if (count == 4 && (this.words[3] & 0x8000) != 0) {
         if (this.negative && this.words[3] == ((short)0x8000) &&
-            this.words[2] == 0 && this.words[1] == 0 &&
-            this.words[0] == 0) {
+          this.words[2] == 0 && this.words[1] == 0 &&
+          this.words[0] == 0) {
           return Long.MIN_VALUE;
         }
         throw new ArithmeticException();
@@ -3948,7 +4018,7 @@ WordsShiftRightOne(bu, buc);
     /**
      * Converts this object's value to a 64-bit signed integer. If the value can't
      * fit in a 64-bit integer, returns the lower 64 bits of this object's
-     * two' s-complement form (see {@link com.upokecenter.numbers.EDecimal
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      *  "Forms of numbers"}) (in which case the return value might have a
      * different sign than this object's value).
      * @return A 64-bit signed integer.
@@ -3987,6 +4057,90 @@ WordsShiftRightOne(bu, buc);
         ivv = -ivv;
       }
       return ivv;
+    }
+
+    // Estimated number of base-N digits, divided by 8 (or estimated
+    // number of half-digits divided by 16) contained in each 16-bit
+    // word of an EInteger. Used in divide-and-conquer to guess
+    // the power-of-base needed to split an EInteger by roughly half.
+    // Calculated from: ln(65536)*(16/2)/ln(base)
+    private static int[] EstimatedHalfDigitCountPerWord = {
+      0, 0,
+      128, 80, 64, 55, 49, 45, 42, 40, 38, 37, 35, 34, 33,
+      32, 32, 31, 30, 30, 29, 29, 28, 28, 27, 27, 27, 26,
+      26, 26, 26, 25, 25, 25, 25, 24, 24,
+    };
+
+    private void ToRadixStringGeneral(
+      StringBuilder outputSB,
+      int radix) {
+      int i = 0;
+      if (this.wordCount >= 100) {
+        StringBuilder rightBuilder = new StringBuilder();
+        int digits = (EstimatedHalfDigitCountPerWord[radix] *
+            this.wordCount) / 16;
+        EInteger pow = EInteger.FromInt32(radix).Pow(digits);
+        EInteger[] divrem = this.DivRem(pow);
+        // DebugUtility.Log("divrem wc=" + divrem[0].wordCount + " wc=" + (//
+        // divrem[1].wordCount));
+        divrem[0].ToRadixStringGeneral(outputSB, radix);
+        divrem[1].ToRadixStringGeneral(rightBuilder, radix);
+        for (i = rightBuilder.length(); i < digits; ++i) {
+          outputSB.append('0');
+        }
+        outputSB.append(rightBuilder.toString());
+        return;
+      }
+      short[] tempReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
+    int numWordCount = tempReg.length;
+    while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
+      --numWordCount;
+    }
+    i = 0;
+    char[] s = new char[(numWordCount << 4) + 1];
+    while (numWordCount != 0) {
+      if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
+            int rest = tempReg[0];
+            while (rest != 0) {
+              int newrest = rest / radix;
+              s[i++] = Digits.charAt(rest - (newrest * radix));
+              rest = newrest;
+            }
+            break;
+          }
+          if (numWordCount == 2 && tempReg[1] > 0 && tempReg[1] <= 0x7fff) {
+            int rest = ((int)tempReg[0]) & 0xffff;
+            rest |= (((int)tempReg[1]) & 0xffff) << 16;
+            while (rest != 0) {
+              int newrest = rest / radix;
+              s[i++] = Digits.charAt(rest - (newrest * radix));
+              rest = newrest;
+            }
+            break;
+          } else {
+            int wci = numWordCount;
+            short remainderShort = 0;
+            int quo, rem;
+            // Divide by radix
+            while ((wci--) > 0) {
+              int currentDividend = ((int)((((int)tempReg[wci]) &
+                      0xffff) | ((int)remainderShort << 16)));
+              quo = currentDividend / radix;
+              tempReg[wci] = ((short)quo);
+              rem = currentDividend - (radix * quo);
+              remainderShort = ((short)rem);
+            }
+            int remainderSmall = remainderShort;
+            // Recalculate word count
+            while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
+              --numWordCount;
+            }
+            s[i++] = Digits.charAt(remainderSmall);
+          }
+        }
+        ReverseChars(s, 0, i);
+      outputSB.append(s, 0, i);
     }
 
     private void ToRadixStringDecimal(
@@ -4050,7 +4204,7 @@ WordsShiftRightOne(bu, buc);
           // Divide by 10000
           while ((wci--) > 0) {
             int currentDividend = ((int)((((int)tempReg[wci]) &
-                  0xffff) | ((int)remainderShort << 16)));
+                    0xffff) | ((int)remainderShort << 16)));
             quo = currentDividend / 10000;
             tempReg[wci] = ((short)quo);
             rem = currentDividend - (10000 * quo);
@@ -4106,12 +4260,12 @@ WordsShiftRightOne(bu, buc);
      */
     public String ToRadixString(int radix) {
       if (radix < 2) {
-        throw new IllegalArgumentException("radix (" + radix +
-                    ") is less than 2");
+        throw new IllegalArgumentException("radix(" + radix +
+          ") is less than 2");
       }
       if (radix > 36) {
-        throw new IllegalArgumentException("radix (" + radix +
-                    ") is more than 36");
+        throw new IllegalArgumentException("radix(" + radix +
+          ") is more than 36");
       }
       if (this.wordCount == 0) {
         return "0";
@@ -4177,64 +4331,12 @@ WordsShiftRightOne(bu, buc);
         return sb.toString();
       } else {
         // Other radixes
-        short[] tempReg = new short[this.wordCount];
-        System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
-        int numWordCount = tempReg.length;
-        while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
-          --numWordCount;
-        }
-        int i = 0;
-        char[] s = new char[(numWordCount << 4) + 1];
-        while (numWordCount != 0) {
-          if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
-            int rest = tempReg[0];
-            while (rest != 0) {
-              int newrest = rest / radix;
-              s[i++] = Digits.charAt(rest - (newrest * radix));
-              rest = newrest;
-            }
-            break;
-          }
-          if (numWordCount == 2 && tempReg[1] > 0 && tempReg[1] <= 0x7fff) {
-            int rest = ((int)tempReg[0]) & 0xffff;
-            rest |= (((int)tempReg[1]) & 0xffff) << 16;
-            while (rest != 0) {
-              int newrest = rest / radix;
-              s[i++] = Digits.charAt(rest - (newrest * radix));
-              rest = newrest;
-            }
-            break;
-          } else {
-            int wci = numWordCount;
-            short remainderShort = 0;
-            int quo, rem;
-            // Divide by radix
-            while ((wci--) > 0) {
-              int currentDividend = ((int)((((int)tempReg[wci]) &
-                    0xffff) | ((int)remainderShort << 16)));
-              quo = currentDividend / radix;
-              tempReg[wci] = ((short)quo);
-              rem = currentDividend - (radix * quo);
-              remainderShort = ((short)rem);
-            }
-            int remainderSmall = remainderShort;
-            // Recalculate word count
-            while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
-              --numWordCount;
-            }
-            s[i++] = Digits.charAt(remainderSmall);
-          }
-        }
-        ReverseChars(s, 0, i);
+        StringBuilder sb = new StringBuilder();
         if (this.negative) {
-          StringBuilder sb = new StringBuilder(i + 1);
           sb.append('-');
-          for (int j = 0; j < i; ++j) {
-            sb.append(s[j]);
-          }
-          return sb.toString();
         }
-        return new String(s, 0, i);
+        this.Abs().ToRadixStringGeneral(sb, radix);
+        return sb.toString();
       }
     }
 
@@ -4420,14 +4522,14 @@ WordsShiftRightOne(bu, buc);
       }
 
       if (words1Count == 1 || (words1Count == 2 && words1[words1Start + 1] ==
-                    0)) {
+          0)) {
         switch (words1[words1Start]) {
           case 0:
             // words1 is ValueZero, so result is 0
             java.util.Arrays.fill(resultArr, resultStart, (resultStart)+(words2Count + 2), (short)0);
             return;
           case 1:
-            System.arraycopy(
+            System.arraycopy (
               words2,
               words2Start,
               resultArr,
@@ -4503,7 +4605,7 @@ WordsShiftRightOne(bu, buc);
               words2,
               words2Start,
               words1Count);
-            System.arraycopy(
+            System.arraycopy (
               resultArr,
               resultStart + words1Count,
               tempArr,
@@ -4560,7 +4662,7 @@ WordsShiftRightOne(bu, buc);
             }
           }
           if (
-            AddInternal(
+            AddInternal (
               resultArr,
               resultStart + words1Count,
               resultArr,
@@ -4568,7 +4670,7 @@ WordsShiftRightOne(bu, buc);
               tempArr,
               tempStart + (words1Count << 1),
               words2Count - words1Count) != 0) {
-            Increment(
+            IncrementWords (
               resultArr,
               (int)(resultStart + words2Count),
               words1Count,
@@ -4588,8 +4690,8 @@ WordsShiftRightOne(bu, buc);
             words1Start,
             words1Count);
         } else if (words1Count + 1 == words2Count ||
-                   (words1Count + 2 == words2Count && words2[words2Start +
-                    words2Count - 1] == 0)) {
+          (words1Count + 2 == words2Count && words2[words2Start +
+              words2Count - 1] == 0)) {
           java.util.Arrays.fill(resultArr, resultStart, (resultStart)+(words1Count + words2Count), (short)0);
           // Multiply the low parts of each operand
           SameSizeMultiply(
@@ -4667,7 +4769,7 @@ WordsShiftRightOne(bu, buc);
             int a1b1low = valueA1B1 & 0xffff;
             int a1b1high = ((int)(valueA1B1 >> 16)) & 0xffff;
             tempInt = (((int)(tempInt >> 16)) & 0xffff) + (((int)valueA0B0) &
-                    0xffff) + (((int)d) & 0xffff) + a1b1low +
+                0xffff) + (((int)d) & 0xffff) + a1b1low +
               (((int)c[csi + 1]) & 0xffff);
             c[csi + 1] = (short)(((int)tempInt) & 0xffff);
 
@@ -4707,7 +4809,7 @@ WordsShiftRightOne(bu, buc);
             int a1b1low = valueA1B1 & 0xffff;
             int a1b1high = (valueA1B1 >> 16) & 0xffff;
             tempInt = (((int)(tempInt >> 16)) & 0xffff) + (((int)valueA0B0) &
-                    0xffff) + (((int)d) & 0xffff) + a1b1low +
+                0xffff) + (((int)d) & 0xffff) + a1b1low +
               (((int)c[csi + 1]) & 0xffff);
             c[csi + 1] = (short)(((int)tempInt) & 0xffff);
 
@@ -4761,7 +4863,7 @@ WordsShiftRightOne(bu, buc);
             int valueA1B1 = valueA1 * valueB1;
             int tempInt;
             tempInt = a0b0high + (((int)valueA0B0) & 0xffff) + (((int)d) &
-                    0xffff) + (((int)valueA1B1) & 0xffff);
+                0xffff) + (((int)valueA1B1) & 0xffff);
             c[csi + 1] = (short)tempInt;
             tempInt = valueA1B1 + (((int)(tempInt >> 16)) & 0xffff) +
               a0b0high + (((int)(d >> 16)) & 0xffff) + (((int)(valueA1B1 >>
@@ -4790,7 +4892,7 @@ WordsShiftRightOne(bu, buc);
             int valueA1B1 = valueA1 * valueB1;
             int tempInt;
             tempInt = a0b0high + (((int)valueA0B0) & 0xffff) + (((int)d) &
-                    0xffff) + (((int)valueA1B1) & 0xffff);
+                0xffff) + (((int)valueA1B1) & 0xffff);
             c[csi + 1] = (short)tempInt;
 
             tempInt = valueA1B1 + (((int)(tempInt >> 16)) & 0xffff) +
@@ -4881,7 +4983,7 @@ WordsShiftRightOne(bu, buc);
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -4897,13 +4999,13 @@ WordsShiftRightOne(bu, buc);
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
 
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -4915,17 +5017,17 @@ WordsShiftRightOne(bu, buc);
         c = (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -4934,22 +5036,22 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         result[rstart + 5] = c;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += d;
         result[rstart + 6] = (short)p;
         result[rstart + 7] = (short)(p >>
-                    16);
+            16);
       }
     }
 
@@ -4966,19 +5068,19 @@ WordsShiftRightOne(bu, buc);
         int d;
         int SMask = ShortMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         c = (short)p;
         d = ((int)p >> 16) & SMask;
         result[rstart] = c;
         c = (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 1]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -4987,17 +5089,17 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 2]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5006,22 +5108,22 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 3]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5030,27 +5132,27 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 4]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5059,32 +5161,32 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 5]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5093,37 +5195,37 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 6]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5132,42 +5234,42 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart]) & SMask) * (((int)words2[bstart + 7]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart]) &
-                    SMask);
+            SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5176,37 +5278,37 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    1]) & SMask);
+                1]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5215,32 +5317,32 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    2]) & SMask);
+                2]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5249,27 +5351,27 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    3]) & SMask);
+                3]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5278,22 +5380,22 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 4]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    4]) & SMask);
+                4]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5302,17 +5404,17 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 5]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    5]) & SMask);
+                5]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
@@ -5321,18 +5423,18 @@ WordsShiftRightOne(bu, buc);
           (short)d;
         d = ((int)d >> 16) & SMask;
         p = (((int)words1[astart + 6]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    6]) & SMask);
+                6]) & SMask);
         p += ((int)c) & SMask;
         c = (short)p;
         d += ((int)p >> 16) & SMask;
         result[rstart + 13] = c;
         p = (((int)words1[astart + 7]) & SMask) * (((int)words2[bstart +
-                    7]) & SMask);
+                7]) & SMask);
         p += d;
         result[rstart + 14] = (short)p;
         result[rstart + 15] =
@@ -5353,11 +5455,11 @@ WordsShiftRightOne(bu, buc);
         int d;
         int e;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
-                    0xffff);
+            0xffff);
         result[rstart] = (short)p;
         e = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
@@ -5367,11 +5469,11 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    1]) & 0xffff);
+                1]) & 0xffff);
         p += e;
         result[rstart + 2] = (short)p;
         result[rstart + 3] = (short)(p >>
-                    16);
+            16);
       }
     }
 
@@ -5386,11 +5488,11 @@ WordsShiftRightOne(bu, buc);
         int d;
         int e;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
-                    0xffff);
+            0xffff);
         result[rstart] = (short)p;
         e = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
@@ -5400,13 +5502,13 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 2]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    1]) & 0xffff);
+                1]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5415,11 +5517,11 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 2] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 3]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    2]) & 0xffff);
+                2]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5428,16 +5530,16 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 3] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    3]) & 0xffff);
+                3]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    2]) & 0xffff);
+                2]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5446,7 +5548,7 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 4] = c;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    3]) & 0xffff);
+                3]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
@@ -5454,14 +5556,14 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + (2 * 4) - 3] = c;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
-                    3]) & 0xffff);
+                3]) & 0xffff);
         p += e;
         result[rstart + 6] = (short)p;
         result[rstart + 7] = (short)(p >>
-                    16);
+            16);
       }
     }
 
@@ -5476,11 +5578,11 @@ WordsShiftRightOne(bu, buc);
         int d;
         int e;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart]) &
-                    0xffff);
+            0xffff);
         result[rstart] = (short)p;
         e = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 1]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
@@ -5490,13 +5592,13 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 1] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 2]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    1]) & 0xffff);
+                1]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5505,11 +5607,11 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 2] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 3]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    2]) & 0xffff);
+                2]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5518,21 +5620,21 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 3] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 4]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    3]) & 0xffff);
+                3]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    2]) & 0xffff);
+                2]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5541,16 +5643,16 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 4] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 5]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    4]) & 0xffff);
+                4]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    3]) & 0xffff);
+                3]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5559,26 +5661,26 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 5] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 6]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    5]) & 0xffff);
+                5]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    4]) & 0xffff);
+                4]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
-                    3]) & 0xffff);
+                3]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5587,21 +5689,21 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 6] = c;
         p = (((int)words1[astart]) & 0xffff) * (((int)words1[astart + 7]) &
-                    0xffff);
+            0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    6]) & 0xffff);
+                6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    5]) & 0xffff);
+                5]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
-                    4]) & 0xffff);
+                4]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5610,26 +5712,26 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 7] = c;
         p = (((int)words1[astart + 1]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    6]) & 0xffff);
+                6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
-                    5]) & 0xffff);
+                5]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
-                    4]) & 0xffff);
+                4]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5638,16 +5740,16 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 8] = c;
         p = (((int)words1[astart + 2]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
-                    6]) & 0xffff);
+                6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
-                    5]) & 0xffff);
+                5]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5656,21 +5758,21 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 9] = c;
         p = (((int)words1[astart + 3]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
-                    6]) & 0xffff);
+                6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
-                    5]) & 0xffff);
+                5]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5679,11 +5781,11 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 10] = c;
         p = (((int)words1[astart + 4]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
-                    6]) & 0xffff);
+                6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5692,16 +5794,16 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 11] = c;
         p = (((int)words1[astart + 5]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
         c <<= 1;
         p = (((int)words1[astart + 6]) & 0xffff) * (((int)words1[astart +
-                    6]) & 0xffff);
+                6]) & 0xffff);
         p += ((int)c) & 0xffff;
         c = (short)p;
         d += ((int)p >> 16) & 0xffff;
@@ -5710,7 +5812,7 @@ WordsShiftRightOne(bu, buc);
         e = d + (((int)e >> 16) & 0xffff);
         result[rstart + 12] = c;
         p = (((int)words1[astart + 6]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         c = (short)p;
         d = ((int)p >> 16) & 0xffff;
         d = (int)((d << 1) + (((int)c >> 15) & 1));
@@ -5718,10 +5820,10 @@ WordsShiftRightOne(bu, buc);
         e += ((int)c) & 0xffff;
         c = (short)e;
         e = d + (((int)e >> 16) &
-                    0xffff);
+            0xffff);
         result[rstart + 13] = c;
         p = (((int)words1[astart + 7]) & 0xffff) * (((int)words1[astart +
-                    7]) & 0xffff);
+                7]) & 0xffff);
         p += e;
         result[rstart + 14] = (short)p;
         result[rstart + 15] =
@@ -5910,7 +6012,7 @@ WordsShiftRightOne(bu, buc);
       return (int)n;
     }
 
-    private static int Decrement(
+    private static int DecrementWords(
       short[] words1,
       int words1Start,
       int n,
@@ -5955,8 +6057,8 @@ WordsShiftRightOne(bu, buc);
         }
       }
       return returnRemainder ? ((short)(((int)dividendHigh) &
-                    0xffff)) : ((short)(((int)dividendLow) &
-                    0xffff));
+            0xffff)) : ((short)(((int)dividendLow) &
+            0xffff));
     }
 
     private static short DivideUnsigned(int x, short y) {
@@ -6033,7 +6135,7 @@ WordsShiftRightOne(bu, buc);
         currentDividend = ((int)dividendReg[ds]) & 0xffff;
         currentDividend |= rem << 16;
         quo = (currentDividend < 43698) ? ((currentDividend * 26215) >> 18) :
-            (currentDividend / 10);
+          (currentDividend / 10);
         quotientReg[qs] = ((short)quo);
         rem = currentDividend - (10 * quo);
         --ds;
@@ -6095,7 +6197,7 @@ WordsShiftRightOne(bu, buc);
       short remainder = 0;
       while ((i--) > 0) {
         int dividendSmall = ((int)((((int)dividendReg[i]) & 0xffff) |
-          ((int)remainder << 16)));
+              ((int)remainder << 16)));
         remainder = RemainderUnsigned(
           dividendSmall,
           divisorSmall);
@@ -6150,7 +6252,7 @@ WordsShiftRightOne(bu, buc);
       return ret;
     }
 
-    private static int Increment(
+    private static int IncrementWords(
       short[] words1,
       int words1Start,
       int n,
@@ -6284,12 +6386,12 @@ WordsShiftRightOne(bu, buc);
           tempArr,
           tempStart,
           count);
-        Increment(
+        IncrementWords (
           resultArr,
           (int)(resultStart + count + count2),
           count2,
           (short)carry);
-        } else {
+      } else {
         SameSizeMultiply(
           resultArr,
           resultStart,
@@ -6442,7 +6544,7 @@ WordsShiftRightOne(bu, buc);
             words1Start + count2,
             count2) > 0 ? 0 : count2;
           int tmpvar = (int)(words1Start + (count2 ^
-                    offset2For1));
+                offset2For1));
           // Abs(LowA - HighA)
           SubtractInternal(
             resultArr,
@@ -6561,9 +6663,9 @@ WordsShiftRightOne(bu, buc);
               count);
           }
           // Add carry
-          c3 += Increment(resultArr, resultMediumHigh, count2, (short)c2);
+          c3 += IncrementWords(resultArr, resultMediumHigh, count2, (short)c2);
           if (c3 != 0) {
-            Increment(resultArr, resultHigh, count2, (short)c3);
+            IncrementWords(resultArr, resultHigh, count2, (short)c3);
           }
         } else {
           // Count is odd, high part will be 1 shorter
@@ -6702,34 +6804,34 @@ WordsShiftRightOne(bu, buc);
             // than their high parts
             // Medium low/Medium high result = Medium low/Medium high result
             // - Low(Temp)
-            c3 -= SubtractInternal(
-              resultArr,
-              resultStart + countLow,
-              resultArr,
-              resultStart + countLow,
-              tempArr,
-              tempStart + shorterOffset,
-              countLow << 1);
+            c3 -= SubtractInternal (
+                resultArr,
+                resultStart + countLow,
+                resultArr,
+                resultStart + countLow,
+                tempArr,
+                tempStart + shorterOffset,
+                countLow << 1);
           } else {
             // Medium low/Medium high result = Medium low/Medium high result
             // + Low(Temp)
-            c3 += AddInternal(
-              resultArr,
-              resultStart + countLow,
-              resultArr,
-              resultStart + countLow,
-              tempArr,
-              tempStart + shorterOffset,
-              countLow << 1);
+            c3 += AddInternal (
+                resultArr,
+                resultStart + countLow,
+                resultArr,
+                resultStart + countLow,
+                tempArr,
+                tempStart + shorterOffset,
+                countLow << 1);
           }
           // Add carry
-          c3 += Increment(
-            resultArr,
-            resultStart + countMiddle,
-            countLow,
-            (short)c2);
+          c3 += IncrementWords (
+              resultArr,
+              resultStart + countMiddle,
+              countLow,
+              (short)c2);
           if (c3 != 0) {
-            Increment(
+            IncrementWords (
               resultArr,
               resultStart + countMiddle + countLow,
               countLow - 2,
@@ -6756,7 +6858,7 @@ WordsShiftRightOne(bu, buc);
         for (int j = 0; j < words2Count; ++j) {
           int p;
           p = ((((int)words2[words2Start + j]) & 0xffff) *
-            valueBint);
+              valueBint);
           p = (p + (((int)carry) & 0xffff));
           resultArr[resultStart + j] = ((short)p);
           carry = (p >> 16) & 0xffff;
@@ -6769,7 +6871,7 @@ WordsShiftRightOne(bu, buc);
           for (int j = 0; j < words2Count; ++j) {
             int p;
             p = ((((int)words2[words2Start + j]) & 0xffff) *
-              valueBint);
+                valueBint);
             p = (p + (((int)carry) & 0xffff));
             p = (p + (((int)resultArr[cstart + j]) & 0xffff));
             resultArr[cstart + j] = ((short)p);
@@ -6784,7 +6886,7 @@ WordsShiftRightOne(bu, buc);
         for (int j = 0; j < words1Count; ++j) {
           int p;
           p = ((((int)words1[words1Start + j]) & 0xffff) *
-            valueBint);
+              valueBint);
           p = (p + (((int)carry) & 0xffff));
           resultArr[resultStart + j] = ((short)p);
           carry = (p >> 16) & 0xffff;
@@ -6797,7 +6899,7 @@ WordsShiftRightOne(bu, buc);
           for (int j = 0; j < words1Count; ++j) {
             int p;
             p = ((((int)words1[words1Start + j]) & 0xffff) *
-              valueBint);
+                valueBint);
             p = (p + (((int)carry) & 0xffff));
             p = (p + (((int)resultArr[cstart + j]) & 0xffff));
             resultArr[cstart + j] = ((short)p);
@@ -6882,7 +6984,7 @@ WordsShiftRightOne(bu, buc);
             u = r[rstart + i - 1];
             r[rstart + i - 1] = (short)((((((int)u) & 0xffff) >>
                     (int)shiftBits) & 0xffff) | (((int)carry) &
-                    0xffff));
+                  0xffff));
             carry = (short)((((int)u) & 0xffff) << (int)(16 - shiftBits));
           }
         }
@@ -6901,7 +7003,7 @@ WordsShiftRightOne(bu, buc);
           for (int i = n; i > 0; --i) {
             u = r[rstart + i - 1];
             r[rstart + i - 1] = (short)(((((int)u) & 0xffff) >>
-                    (int)shiftBits) | (((int)carry) & 0xffff));
+                  (int)shiftBits) | (((int)carry) & 0xffff));
             carry = (short)((((int)u) & 0xffff) << (int)(16 - shiftBits));
           }
         }
@@ -6956,7 +7058,7 @@ WordsShiftRightOne(bu, buc);
         int cm1 = words1Count - 1;
         for (int i = 0; i < cm1; i += 1) {
           u = (((int)words1[astart]) & 0xffff) - (((int)words2[bstart]) &
-                    0xffff) - (int)((u >> 31) & 1);
+              0xffff) - (int)((u >> 31) & 1);
           c[cstart++] = (short)u;
           ++astart;
           ++bstart;
@@ -6981,7 +7083,7 @@ WordsShiftRightOne(bu, buc);
       int cm1 = words2Count - 1;
       for (int i = 0; i < cm1; i += 1) {
         u = ((((int)words1[astart]) & 0xffff) -
-              (((int)words2[bstart]) & 0xffff) - (int)((u >> 31) & 1));
+            (((int)words2[bstart]) & 0xffff) - (int)((u >> 31) & 1));
         c[cstart++] = ((short)u);
         ++astart;
         ++bstart;
@@ -7020,7 +7122,7 @@ WordsShiftRightOne(bu, buc);
       }
       if (odd) {
         u = ((((int)words1[astart]) & mask) -
-              (((int)words2[bstart]) & mask) - (int)((u >> 31) & 1));
+            (((int)words2[bstart]) & mask) - (int)((u >> 31) & 1));
         c[cstart++] = ((short)u);
         ++astart;
         ++bstart;
@@ -7028,10 +7130,14 @@ WordsShiftRightOne(bu, buc);
       return (int)((u >> 31) & 1);
     }
 
-    private static void TwosComplement(short[] words1, int words1Start, int n) {
-      Decrement(words1, words1Start, n, (short)1);
+    private static void TwosComplement(
+      short[] words1,
+      int words1Start,
+      int n) {
+      DecrementWords(words1, words1Start, n, (short)1);
       for (int i = 0; i < n; ++i) {
-        words1[words1Start + i] = ((short)(~words1[words1Start + i]));
+        words1[words1Start + i] = ((short)(~words1[words1Start +
+i]));
       }
     }
 
@@ -7061,12 +7167,12 @@ WordsShiftRightOne(bu, buc);
     private int PositiveCompare(EInteger t) {
       int size = this.wordCount, tempSize = t.wordCount;
       return (
-        size == tempSize) ? Compare(
-        this.words,
-        0,
-        t.words,
-        0,
-        (int)size) : (size > tempSize ? 1 : -1);
+          size == tempSize) ? Compare (
+          this.words,
+          0,
+          t.words,
+          0,
+          (int)size) : (size > tempSize ? 1 : -1);
     }
 
     private String SmallValueToString() {
@@ -7168,7 +7274,7 @@ WordsShiftRightOne(bu, buc);
         thisValue.GetUnsignedBitLengthAsEInteger().Add(1).Divide(2);
       if (this.wordCount >= 4) {
         int wordsPerPart = (this.wordCount >> 2) +
-             ((this.wordCount & 3) > 0 ? 1 : 0);
+          ((this.wordCount & 3) > 0 ? 1 : 0);
         long bitsPerPart = wordsPerPart * 16;
         EInteger valueEBitsPerPart = EInteger.FromInt64(bitsPerPart);
         long totalBits = bitsPerPart * 4;
@@ -7176,9 +7282,8 @@ WordsShiftRightOne(bu, buc);
         boolean bitLengthEven = valueEBitLength.isEven();
         bigintX = this;
         EInteger eshift = EInteger.FromInt32(0);
-        if
-     (valueEBitLength.compareTo(EInteger.FromInt64(totalBits).Subtract(1)) <
-                0) {
+        if (valueEBitLength.compareTo(EInteger.FromInt64(totalBits).Subtract(
+  1)) < 0) {
           long targetLength = bitLengthEven ? totalBits : (totalBits - 1);
           eshift = EInteger.FromInt64(targetLength).Subtract(valueEBitLength);
           bigintX = bigintX.ShiftLeft(eshift);
@@ -7204,14 +7309,14 @@ WordsShiftRightOne(bu, buc);
         // if (!srem[0].equals(srem2.get(0)) || !srem[1].equals(srem2.get(1))) {
         // throw new IllegalStateException(this.toString());
         // }
-        EInteger[] qrem = srem[1].ShiftLeft(
-          valueEBitsPerPart).Add(e2).DivRem(
-                srem[0].ShiftLeft(1));
+        EInteger[] qrem = srem[1].ShiftLeft (
+            valueEBitsPerPart).Add(e2).DivRem(
+            srem[0].ShiftLeft(1));
         EInteger sqroot =
           srem[0].ShiftLeft(valueEBitsPerPart).Add(qrem[0]);
-        EInteger sqrem = qrem[1].ShiftLeft(
-          valueEBitsPerPart).Add(e1).Subtract(
-       qrem[0].Multiply(qrem[0]));
+        EInteger sqrem = qrem[1].ShiftLeft (
+            valueEBitsPerPart).Add(e1).Subtract(
+            qrem[0].Multiply(qrem[0]));
         // DebugUtility.Log("sqrem=" + sqrem + ",sqroot=" + sqroot);
         if (sqrem.signum() < 0) {
           if (useRem) {
@@ -7247,6 +7352,23 @@ WordsShiftRightOne(bu, buc);
       return new EInteger[] { bigintX, bigintY,
       };
     }
+
+    /**
+     * Returns one added to this arbitrary-precision integer.
+     * @return The given arbitrary-precision integer plus one.
+     */
+    public EInteger Increment() {
+      return this.Add(EInteger.FromInt32(1));
+    }
+
+    /**
+     * Returns one subtracted from this arbitrary-precision integer.
+     * @return The given arbitrary-precision integer minus one.
+     */
+    public EInteger Decrement() {
+      return this.Subtract(EInteger.FromInt32(1));
+    }
+
     // Begin integer conversions
 
     /**

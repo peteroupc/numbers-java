@@ -15,7 +15,7 @@ at: http://peteroupc.github.io/
       static MutableNumber FromEInteger(EInteger bigintVal) {
         MutableNumber mnum = new MutableNumber(0);
         if (bigintVal.signum() < 0) {
-          throw new IllegalArgumentException("bigintVal's sign (" + bigintVal.signum() +
+          throw new IllegalArgumentException("bigintVal's sign(" + bigintVal.signum() +
             ") is less than " + "0 ");
         }
         byte[] bytes = bigintVal.ToBytes(true);
@@ -49,7 +49,8 @@ at: http://peteroupc.github.io/
 
       MutableNumber(int val) {
         if (val < 0) {
-          throw new IllegalArgumentException("val (" + val + ") is less than " + "0 ");
+          throw new IllegalArgumentException("val(" + val + ") is less than " +
+"0 ");
         }
         this.data = new int[4];
         this.wordCount = (val == 0) ? 0 : 1;
@@ -58,7 +59,8 @@ at: http://peteroupc.github.io/
 
       MutableNumber SetInt(int val) {
         if (val < 0) {
-          throw new IllegalArgumentException("val (" + val + ") is less than " + "0 ");
+          throw new IllegalArgumentException("val(" + val + ") is less than " +
+"0 ");
         }
         this.wordCount = (val == 0) ? 0 : 1;
         this.data[0] = val;
@@ -86,7 +88,7 @@ at: http://peteroupc.github.io/
 
       boolean CanFitInInt32() {
         return this.wordCount == 0 || (this.wordCount == 1 && (this.data[0] >>
-        31) == 0);
+              31) == 0);
       }
 
       int ToInt32() {
@@ -118,7 +120,7 @@ at: http://peteroupc.github.io/
       }
       MutableNumber Multiply(int multiplicand) {
         if (multiplicand < 0) {
-          throw new IllegalArgumentException("multiplicand (" + multiplicand +
+          throw new IllegalArgumentException("multiplicand(" + multiplicand +
             ") is less than " + "0 ");
         }
         if (multiplicand != 0) {
@@ -169,7 +171,7 @@ at: http://peteroupc.github.io/
                 x1 = ((int)(result2 | (result3 << 16)));
                 int x2 = (x0 + carry);
                 if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
-                Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
+                      Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
                   // Carry in addition
                   x1 = (x1 + 1);
                 }
@@ -219,7 +221,7 @@ at: http://peteroupc.github.io/
                 x1 = ((int)(result2 | (result3 << 16)));
                 int x2 = (x0 + carry);
                 if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
-                Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
+                      Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
                   // Carry in addition
                   x1 = (x1 + 1);
                 }
@@ -269,14 +271,14 @@ at: http://peteroupc.github.io/
           return 0;
         }
         return (((this.data[0] >> 31) == (val >> 31)) ? ((this.data[0] &
-        Integer.MAX_VALUE) < (val & Integer.MAX_VALUE)) :
-                  ((this.data[0] >> 31) == 0)) ? -1 : 1;
+                Integer.MAX_VALUE) < (val & Integer.MAX_VALUE)) :
+            ((this.data[0] >> 31) == 0)) ? -1 : 1;
       }
 
       MutableNumber SubtractInt(int other) {
         if (other < 0) {
-          throw new IllegalArgumentException("other (" + other + ") is less than " +
-                 "0 ");
+          throw new IllegalArgumentException("other(" + other + ") is less than " +
+            "0 ");
         }
         if (other != 0) {
           {
@@ -293,14 +295,14 @@ at: http://peteroupc.github.io/
             int a = this.data[0];
             u = a - other;
             borrow = ((((a >> 31) == (u >> 31)) ?
-                    ((a & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
-                    ((a >> 31) == 0)) || (a == u && other != 0)) ? 1 : 0;
+                  ((a & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
+                  ((a >> 31) == 0)) || (a == u && other != 0)) ? 1 : 0;
             this.data[0] = (int)u;
             if (borrow != 0) {
               for (int i = 1; i < this.wordCount; ++i) {
                 u = this.data[i] - borrow;
                 borrow = (((this.data[i] >> 31) == (u >> 31)) ?
-                ((this.data[i] & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
+                    ((this.data[i] & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
                     ((this.data[i] >> 31) == 0)) ? 1 : 0;
                 this.data[i] = (int)u;
               }
@@ -320,21 +322,21 @@ at: http://peteroupc.github.io/
             // System.out.println("" + this.data.length + " " +
             // (other.data.length));
             int neededSize = (this.wordCount > other.wordCount) ?
-            this.wordCount : other.wordCount;
+              this.wordCount : other.wordCount;
             if (this.data.length < neededSize) {
               int[] newdata = new int[neededSize + 20];
               System.arraycopy(this.data, 0, newdata, 0, this.data.length);
               this.data = newdata;
             }
             neededSize = (this.wordCount < other.wordCount) ? this.wordCount :
-            other.wordCount;
+              other.wordCount;
             int u = 0;
             int borrow = 0;
             for (int i = 0; i < neededSize; ++i) {
               int a = this.data[i];
               u = (a - other.data[i]) - borrow;
               borrow = ((((a >> 31) == (u >> 31)) ? ((a & Integer.MAX_VALUE) <
-              (u & Integer.MAX_VALUE)) :
+                      (u & Integer.MAX_VALUE)) :
                     ((a >> 31) == 0)) || (a == u && other.data[i] !=
                     0)) ? 1 : 0;
               this.data[i] = (int)u;
@@ -344,9 +346,9 @@ at: http://peteroupc.github.io/
                 int a = this.data[i];
                 u = (a - other.data[i]) - borrow;
                 borrow = ((((a >> 31) == (u >> 31)) ? ((a & Integer.MAX_VALUE) <
-                (u & Integer.MAX_VALUE)) :
-                    ((a >> 31) == 0)) || (a == u && other.data[i] !=
-                    0)) ? 1 : 0;
+                        (u & Integer.MAX_VALUE)) :
+                      ((a >> 31) == 0)) || (a == u && other.data[i] !=
+                      0)) ? 1 : 0;
                 this.data[i] = (int)u;
               }
             }
@@ -369,8 +371,8 @@ at: http://peteroupc.github.io/
           int bn = other.data[valueN];
           // Unsigned less-than check
           if (((an >> 31) == (bn >> 31)) ?
-              ((an & Integer.MAX_VALUE) < (bn & Integer.MAX_VALUE)) :
-              ((an >> 31) == 0)) {
+            ((an & Integer.MAX_VALUE) < (bn & Integer.MAX_VALUE)) :
+            ((an >> 31) == 0)) {
             return -1;
           }
           if (an != bn) {
@@ -381,8 +383,8 @@ at: http://peteroupc.github.io/
       }
       MutableNumber Add(int augend) {
         if (augend < 0) {
-          throw new IllegalArgumentException("augend (" + augend + ") is less than " +
-                   "0 ");
+          throw new IllegalArgumentException("augend(" + augend + ") is less than " +
+            "0 ");
         }
         {
           if (augend != 0) {
@@ -400,8 +402,8 @@ at: http://peteroupc.github.io/
               int a = this.data[i];
               u = (a + augend) + carry;
               carry = ((((u >> 31) == (a >> 31)) ? ((u & Integer.MAX_VALUE) < (a &
-              Integer.MAX_VALUE)) :
-                      ((u >> 31) == 0)) || (u == a && augend != 0)) ? 1 : 0;
+                        Integer.MAX_VALUE)) :
+                    ((u >> 31) == 0)) || (u == a && augend != 0)) ? 1 : 0;
               this.data[i] = u;
               if (carry == 0) {
                 return this;
@@ -451,7 +453,7 @@ at: http://peteroupc.github.io/
       fi.integerMode = this.integerMode;
       fi.largeValue = this.largeValue;
       fi.mnum = (this.mnum == null || this.integerMode != 1) ? null :
-      this.mnum.Copy();
+        this.mnum.Copy();
       return fi;
     }
 
@@ -460,7 +462,7 @@ at: http://peteroupc.github.io/
       fi.integerMode = value.integerMode;
       fi.largeValue = value.largeValue;
       fi.mnum = (value.mnum == null || value.integerMode != 1) ? null :
-      value.mnum.Copy();
+        value.mnum.Copy();
       fi.frozen = true;
       return fi;
     }
@@ -496,17 +498,30 @@ at: http://peteroupc.github.io/
 
     private void CheckFrozen() {
     }
+
+    public int compareTo(EInteger ei) {
+switch (this.integerMode) {
+ case 0:
+   return -ei.compareTo(this.smallValue);
+ case 1:
+   return this.AsEInteger().compareTo(ei);
+ case 2:
+   return this.largeValue.compareTo(ei);
+ default: throw new IllegalStateException();
+}
+    }
+
     public int compareTo(FastInteger val) {
       switch ((this.integerMode << 2) | val.integerMode) {
         case (0 << 2) | 0: {
-            int vsv = val.smallValue;
-            return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
+          int vsv = val.smallValue;
+          return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
               1);
-          }
+        }
         case (0 << 2) | 1:
           return -val.mnum.CompareToInt(this.smallValue);
         case (0 << 2) | 2:
-          return this.AsEInteger().compareTo(val.largeValue);
+          return -val.largeValue.compareTo(this.smallValue);
         case (1 << 2) | 0:
           return this.mnum.CompareToInt(val.smallValue);
         case (1 << 2) | 1:
@@ -538,8 +553,8 @@ at: http://peteroupc.github.io/
     }
 
     static int[] GetLastWords(EInteger bigint, int numWords32Bit) {
-      return
-      MutableNumber.FromEInteger(bigint).GetLastWordsInternal(numWords32Bit);
+      return MutableNumber.FromEInteger(bigint).GetLastWordsInternal(
+  numWords32Bit);
     }
 
     FastInteger SetInt(int val) {
@@ -562,27 +577,27 @@ at: http://peteroupc.github.io/
       } else {
         switch (this.integerMode) {
           case 0: {
-              long amult = ((long)val) * ((long)this.smallValue);
-              if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
-                // would overflow, convert to large
-                boolean apos = this.smallValue > 0L;
-                boolean bpos = val > 0L;
-                if (apos && bpos) {
-                  // if both operands are nonnegative
-                  // convert to mutable big integer
-                  this.integerMode = 1;
-                  this.mnum = MutableNumber.FromLong(amult);
-                } else {
-                  // if either operand is negative
-                  // convert to big integer
-                  this.integerMode = 2;
-                  this.largeValue = EInteger.FromInt64(amult);
-                }
+            long amult = ((long)val) * ((long)this.smallValue);
+            if (amult > Integer.MAX_VALUE || amult < Integer.MIN_VALUE) {
+              // would overflow, convert to large
+              boolean apos = this.smallValue > 0L;
+              boolean bpos = val > 0L;
+              if (apos && bpos) {
+                // if both operands are nonnegative
+                // convert to mutable big integer
+                this.integerMode = 1;
+                this.mnum = MutableNumber.FromLong(amult);
               } else {
-                this.smallValue = ((int)amult);
+                // if either operand is negative
+                // convert to big integer
+                this.integerMode = 2;
+                this.largeValue = EInteger.FromInt64(amult);
               }
-              break;
+            } else {
+              this.smallValue = ((int)amult);
             }
+            break;
+          }
           case 1:
             if (val < 0) {
               this.integerMode = 2;
@@ -613,8 +628,8 @@ at: http://peteroupc.github.io/
             // would overflow, convert to large
             this.integerMode = 1;
             this.mnum =
-            MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
-          } else {
+              MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
+            } else {
             this.smallValue = -this.smallValue;
           }
           break;
@@ -645,7 +660,7 @@ at: http://peteroupc.github.io/
           if (val.integerMode == 0) {
             int vsv = val.smallValue;
             if ((vsv < 0 && Integer.MAX_VALUE + vsv < this.smallValue) ||
-                (vsv > 0 && Integer.MIN_VALUE + vsv > this.smallValue)) {
+              (vsv > 0 && Integer.MIN_VALUE + vsv > this.smallValue)) {
               // would overflow, convert to large
               this.integerMode = 2;
               this.largeValue = EInteger.FromInt32(this.smallValue);
@@ -695,7 +710,7 @@ at: http://peteroupc.github.io/
       }
       if (this.integerMode == 0) {
         if ((val < 0 && Integer.MAX_VALUE + val < this.smallValue) ||
-                (val > 0 && Integer.MIN_VALUE + val > this.smallValue)) {
+          (val > 0 && Integer.MIN_VALUE + val > this.smallValue)) {
           // would overflow, convert to large
           this.integerMode = 2;
           this.largeValue = EInteger.FromInt32(this.smallValue);
@@ -717,9 +732,9 @@ at: http://peteroupc.github.io/
       this.CheckFrozen();
       switch (this.integerMode) {
         case 0: {
-            return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.ToInt32Checked()) :
+          return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.ToInt32Checked()) :
             this.Add(FastInteger.FromBig(bigintVal));
-          }
+        }
         case 1:
           this.integerMode = 2;
           this.largeValue = this.mnum.ToEInteger();
@@ -769,8 +784,8 @@ at: http://peteroupc.github.io/
         case 0:
           if (val.integerMode == 0) {
             if ((this.smallValue < 0 && (int)val.smallValue < Integer.MIN_VALUE
-            - this.smallValue) ||
-                (this.smallValue > 0 && (int)val.smallValue > Integer.MAX_VALUE
+                - this.smallValue) ||
+              (this.smallValue > 0 && (int)val.smallValue > Integer.MAX_VALUE
                 - this.smallValue)) {
               // would overflow
               if (val.smallValue >= 0) {
@@ -878,8 +893,8 @@ at: http://peteroupc.github.io/
               // would overflow, convert to large
               this.integerMode = 1;
               this.mnum =
-              MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
-            } else {
+                MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
+              } else {
               this.smallValue /= divisor;
             }
             break;
@@ -939,8 +954,8 @@ at: http://peteroupc.github.io/
       switch (this.integerMode) {
         case 0:
           if ((this.smallValue < 0 && (int)val < Integer.MIN_VALUE -
-        this.smallValue) || (this.smallValue > 0 && (int)val >
-            Integer.MAX_VALUE - this.smallValue)) {
+              this.smallValue) || (this.smallValue > 0 && (int)val >
+              Integer.MAX_VALUE - this.smallValue)) {
             // would overflow
             if (val >= 0) {
               this.integerMode = 1;
@@ -1077,7 +1092,8 @@ at: http://peteroupc.github.io/
             return this.mnum.signum();
           case 2:
             return this.largeValue.signum();
-          default: return 0;
+          default:
+            return 0;
         }
       }
 
@@ -1098,7 +1114,7 @@ at: http://peteroupc.github.io/
       switch (this.integerMode) {
         case 0:
           return (val == this.smallValue) ? 0 : (this.smallValue < val ? -1 :
-          1);
+              1);
         case 1:
           return this.mnum.ToEInteger().compareTo(EInteger.FromInt32(val));
         case 2:

@@ -1,10 +1,10 @@
 package com.upokecenter.numbers;
 
-    /**
-     * A class that implements additional operations on arbitrary-precision decimal
-     * numbers. Many of them are listed as miscellaneous operations in the
-     * General Decimal Arithmetic Specification version 1.70.
-     */
+  /**
+   * A class that implements additional operations on arbitrary-precision decimal
+   * numbers. Many of them are listed as miscellaneous operations in the
+   * General Decimal Arithmetic Specification version 1.70.
+   */
   public final class EDecimals {
 private EDecimals() {
 }
@@ -175,12 +175,12 @@ private EDecimals() {
      */
     public static String NumberClassString(int nc) {
       if (nc < 0) {
-        throw new IllegalArgumentException("nc (" + nc +
-               ") is not greater or equal to 0");
+        throw new IllegalArgumentException("nc(" + nc +
+          ") is not greater or equal to 0");
       }
       if (nc > 9) {
-        throw new IllegalArgumentException("nc (" + nc +
-            ") is not less or equal to 9");
+        throw new IllegalArgumentException("nc(" + nc +
+          ") is not less or equal to 9");
       }
       return NumberClasses[nc];
     }
@@ -249,7 +249,7 @@ private EDecimals() {
       if (ed.isFinite() && ec != null && !ed.isZero() && ec.getHasExponentRange()) {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
-             ec.getEMin()) < 0;
+              ec.getEMin()) < 0;
         } else {
           return ed.getExponent().compareTo(ec.getEMin()) < 0;
         }
@@ -345,9 +345,9 @@ private EDecimals() {
       if (scale.isZero()) {
         return ed.RoundToPrecision(ec);
       }
-      EDecimal ret = EDecimal.Create(
-         ed.getUnsignedMantissa(),
-         ed.getExponent().Add(scale));
+      EDecimal ret = EDecimal.Create (
+          ed.getUnsignedMantissa(),
+          ed.getExponent().Add(scale));
       if (ed.isNegative()) {
         ret = ret.Negate();
       }
@@ -355,22 +355,22 @@ private EDecimals() {
     }
 
     /**
-     * Shifts the digits of an arbitrary-precision decimal number's mantissa.
-     * @param ed An arbitrary-precision number containing the mantissa to shift.
+     * Shifts the digits of an arbitrary-precision decimal number's significand.
+     * @param ed An arbitrary-precision number containing the significand to shift.
      * @param ed2 An arbitrary-precision number indicating the number of digits to
-     * shift the first operand's mantissa. Must be an integer with an
-     * exponent of 0. If this parameter is positive, the mantissa is
+     * shift the first operand's significand. Must be an integer with an
+     * exponent of 0. If this parameter is positive, the significand is
      * shifted to the left by the given number of digits. If this parameter
-     * is negative, the mantissa is shifted to the right by the given
+     * is negative, the significand is shifted to the right by the given
      * number of digits.
      * @param ec An arithmetic context to control the precision of
      * arbitrary-precision numbers. Can be null.
-     * @return An arbitrary-precision decimal number whose mantissa is shifted the
-     * given number of digits. Signals an invalid operation and returns NaN
-     * (not-a-number) if {@code ed2} is a signaling NaN or if {@code ed2}
-     * is not an integer, is negative, has an exponent other than 0, or has
-     * an absolute value that exceeds the maximum precision specified in
-     * the context.
+     * @return An arbitrary-precision decimal number whose significand is shifted
+     * the given number of digits. Signals an invalid operation and returns
+     * NaN (not-a-number) if {@code ed2} is a signaling NaN or if {@code
+     * ed2} is not an integer, is negative, has an exponent other than 0,
+     * or has an absolute value that exceeds the maximum precision
+     * specified in the context.
      * @throws NullPointerException The parameter {@code ed} or {@code ed2} is
      * null.
      */
@@ -427,30 +427,30 @@ private EDecimals() {
     }
 
     /**
-     * Rotates the digits of an arbitrary-precision decimal number's mantissa.
-     * @param ed An arbitrary-precision number containing the mantissa to rotate.
-     * If this mantissa contains more digits than the precision, the
-     * most-significant digits are chopped off the mantissa before the
-     * rotation begins.
+     * Rotates the digits of an arbitrary-precision decimal number's significand.
+     * @param ed An arbitrary-precision number containing the significand to
+     * rotate. If this significand contains more digits than the precision,
+     * the most-significant digits are chopped off the significand before
+     * the rotation begins.
      * @param ed2 An arbitrary-precision number indicating the number of digits to
-     * rotate the first operand's mantissa. Must be an integer with an
-     * exponent of 0. If this parameter is positive, the mantissa is
+     * rotate the first operand's significand. Must be an integer with an
+     * exponent of 0. If this parameter is positive, the significand is
      * shifted to the left by the given number of digits and the
-     * most-significant digits shifted out of the mantissa become the
+     * most-significant digits shifted out of the significand become the
      * least-significant digits instead. If this parameter is negative, the
-     * mantissa is shifted to the right by the given number of digits and
-     * the least-significant digits shifted out of the mantissa become the
-     * most-significant digits instead.
+     * significand is shifted to the right by the given number of digits
+     * and the least-significant digits shifted out of the significand
+     * become the most-significant digits instead.
      * @param ec An arithmetic context to control the precision of
      * arbitrary-precision numbers. If this parameter is null or specifies
      * an unlimited precision, this method has the same behavior as {@code
      * Shift}.
-     * @return An arbitrary-precision decimal number whose mantissa is rotated the
-     * given number of digits. Signals an invalid operation and returns NaN
-     * (not-a-number) if {@code ed2} is a signaling NaN or if {@code ed2}
-     * is not an integer, is negative, has an exponent other than 0, or has
-     * an absolute value that exceeds the maximum precision specified in
-     * the context.
+     * @return An arbitrary-precision decimal number whose significand is rotated
+     * the given number of digits. Signals an invalid operation and returns
+     * NaN (not-a-number) if {@code ed2} is a signaling NaN or if {@code
+     * ed2} is not an integer, is negative, has an exponent other than 0,
+     * or has an absolute value that exceeds the maximum precision
+     * specified in the context.
      * @throws NullPointerException The parameter {@code ed2} or {@code ed} is
      * null.
      */
@@ -483,9 +483,9 @@ private EDecimals() {
       EInteger mant = ed.getUnsignedMantissa();
       EInteger mantprec = ed.Precision();
       if (ec != null && ec.getHasMaxPrecision() &&
-          mantprec.compareTo(ec.getPrecision()) > 0) {
-        mant = mant.Remainder(
-               EInteger.FromInt32(DecimalRadix).Pow(ec.getPrecision()));
+        mantprec.compareTo(ec.getPrecision()) > 0) {
+        mant = mant.Remainder (
+            EInteger.FromInt32(DecimalRadix).Pow(ec.getPrecision()));
         mantprec = ec.getPrecision();
       }
       if (mant.isZero()) {
@@ -544,7 +544,7 @@ private EDecimals() {
      */
     public static int CompareTotal(EDecimal ed, EDecimal other, EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
-ed.CompareToTotal(other, ec));
+          ed.CompareToTotal(other, ec));
     }
 
     /**
@@ -576,7 +576,7 @@ ed.CompareToTotal(other, ec));
       EDecimal other,
       EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
-ed.CompareToTotalMagnitude(other, ec));
+          ed.CompareToTotalMagnitude(other, ec));
     }
 
     /**
@@ -687,24 +687,24 @@ ed.CompareToTotalMagnitude(other, ec));
         return ed1.getExponent().equals(ed2.getExponent());
       } else {
         return (ed1.IsNaN() && ed2.IsNaN()) || (ed1.IsInfinity() &&
-                 ed2.IsInfinity());
+            ed2.IsInfinity());
       }
     }
 
     /**
      * Returns an arbitrary-precision number with the same value as this one but
-     * with certain trailing zeros removed from its mantissa. If the
+     * with certain trailing zeros removed from its significand. If the
      * number's exponent is 0, it is returned unchanged (but may be rounded
      * depending on the arithmetic context); if that exponent is greater 0,
-     * its trailing zeros are removed from the mantissa (then rounded if
+     * its trailing zeros are removed from the significand (then rounded if
      * necessary); if that exponent is less than 0, its trailing zeros are
-     * removed from the mantissa until the exponent reaches 0 (then the
+     * removed from the significand until the exponent reaches 0 (then the
      * number is rounded if necessary).
      * @param ed1 An arbitrary-precision number.
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.
      * @return An arbitrary-precision number with the same value as this one but
-     * with certain trailing zeros removed from its mantissa. If {@code
+     * with certain trailing zeros removed from its significand. If {@code
      * ed1} is not-a-number (NaN) or infinity, it is generally returned
      * unchanged.
      */
@@ -723,12 +723,12 @@ ed.CompareToTotalMagnitude(other, ec));
       if (ed.isFinite()) {
         if (ed.isZero()) {
           return (ed.isNegative() ? EDecimal.NegativeZero :
-             EDecimal.Zero).RoundToPrecision(ec);
-           } else if (ed.getExponent().signum() > 0) {
-             return ed.Reduce(ec);
-           } else if (ed.getExponent().signum() == 0) {
-             return ed.RoundToPrecision(ec);
-           } else {
+              EDecimal.Zero).RoundToPrecision(ec);
+        } else if (ed.getExponent().signum() > 0) {
+          return ed.Reduce(ec);
+        } else if (ed.getExponent().signum() == 0) {
+          return ed.RoundToPrecision(ec);
+        } else {
           EInteger exp = ed.getExponent();
           EInteger mant = ed.getUnsignedMantissa();
           boolean neg = ed.isNegative();
@@ -809,9 +809,9 @@ ed.CompareToTotalMagnitude(other, ec));
           return InvalidOperation(EDecimal.NaN, ec);
         }
         EDecimal rounded = scale.Quantize(0, tec);
-        return ed.Quantize(
-          EDecimal.Create(EInteger.FromInt32(1), rounded.getMantissa()),
-          ec);
+        return ed.Quantize (
+            EDecimal.Create(EInteger.FromInt32(1), rounded.getMantissa()),
+            ec);
       }
     }
 
@@ -851,7 +851,8 @@ ed.CompareToTotalMagnitude(other, ec));
       for (int i = 0; i < smaller.length; ++i) {
         smaller[i] &= bigger[i];
       }
-      return EDecimal.FromEInteger(ToLogical(smaller, 10)).RoundToPrecision(ec);
+      return EDecimal.FromEInteger(ToLogical(smaller,
+            10)).RoundToPrecision(ec);
     }
 
     /**
@@ -890,7 +891,8 @@ ed.CompareToTotalMagnitude(other, ec));
       for (int i = 0; i < smaller.length; ++i) {
         bigger[i] ^= smaller[i];
       }
-      return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(ec);
+      return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(
+  ec);
     }
 
     /**
@@ -925,7 +927,8 @@ ed.CompareToTotalMagnitude(other, ec));
       for (int i = 0; i < smaller.length; ++i) {
         bigger[i] ^= smaller[i];
       }
-      return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(ec);
+      return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(
+  ec);
     }
 
     /**
@@ -962,7 +965,8 @@ ed.CompareToTotalMagnitude(other, ec));
       for (int i = 0; i < smaller.length; ++i) {
         bigger[i] |= smaller[i];
       }
-      return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(ec);
+      return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(
+  ec);
     }
 
     static EInteger ToLogical(byte[] bytes, int iradix) {
@@ -975,7 +979,7 @@ ed.CompareToTotalMagnitude(other, ec));
         int b = bytes[i];
         for (int j = 7; j >= 0; --j) {
           ret = ((bytes[i] & (1 << j)) != 0) ? ret.Multiply(iradix).Add(1) :
-               ret.Multiply(iradix);
+            ret.Multiply(iradix);
         }
       }
       return ret;
@@ -991,7 +995,7 @@ ed.CompareToTotalMagnitude(other, ec));
       EInteger ret = EInteger.FromInt32(0);
       EInteger prec = um.GetDigitCountAsEInteger();
       EInteger maxprec = (ec != null && ec.getHasMaxPrecision()) ? ec.getPrecision() :
-           null;
+        null;
       EInteger bytecount = prec.ShiftRight(3).Add(1);
       if (bytecount.compareTo(0x7fffffff) > 0) {
         return null; // Out of memory
@@ -1027,10 +1031,10 @@ ed.CompareToTotalMagnitude(other, ec));
         ed = ed.RoundToPrecision(ec);
       }
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
-    ed.getMantissa().signum() < 0) ? null : FromLogical(
-      ed.getUnsignedMantissa(),
-      ec,
-      iradix);
+          ed.getMantissa().signum() < 0) ? null : FromLogical(
+            ed.getUnsignedMantissa(),
+            ec,
+            iradix);
     }
 
     static byte[] FromLogical(EFloat ed, EContext ec, int iradix) {
@@ -1040,9 +1044,9 @@ ed.CompareToTotalMagnitude(other, ec));
       // NOTE: Precision of EFloat is already in bits, so no need to check for
       // IsPrecisionInBits here
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
-    ed.getMantissa().signum() < 0) ? null : FromLogical(
-      ed.getUnsignedMantissa(),
-      ec,
-      iradix);
+          ed.getMantissa().signum() < 0) ? null : FromLogical(
+            ed.getUnsignedMantissa(),
+            ec,
+            iradix);
     }
   }

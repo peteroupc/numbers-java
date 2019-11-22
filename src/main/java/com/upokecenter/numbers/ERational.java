@@ -7,17 +7,17 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-    /**
-     * Represents an arbitrary-precision rational number. This class can't be
-     *  inherited. (The "E" stands for "extended", meaning that instances of
-     * this class can be values other than numbers proper, such as infinity
-     * and not-a-number.) <p><b>Thread safety:</b> Instances of this class
-     * are immutable, so they are inherently safe for use by multiple
-     * threads. Multiple instances of this object with the same properties
-     *  are interchangeable, so they should not be compared using the "=="
-     * operator (which might only check if each side of the operator is the
-     * same instance).</p>
-     */
+  /**
+   * Represents an arbitrary-precision rational number. This class can't be
+   *  inherited. (The "E" stands for "extended", meaning that instances of
+   * this class can be values other than numbers proper, such as infinity
+   * and not-a-number.) <p><b>Thread safety:</b> Instances of this class
+   * are immutable, so they are inherently safe for use by multiple
+   * threads. Multiple instances of this object with the same properties
+   *  are interchangeable, so they should not be compared using the "=="
+   * operator (which might only check if each side of the operator is the
+   * same instance).</p>
+   */
   public final class ERational implements Comparable<ERational> {
     private static final int MaxSafeInt = 214748363;
 
@@ -141,7 +141,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Gets this object's denominator.
-     * @return This object' s denominator.
+     * @return This object's denominator.
      */
     public final EInteger getDenominator() {
         return this.denominator;
@@ -170,17 +170,17 @@ at: http://peteroupc.github.io/
     /**
      * Gets a value indicating whether this object's value equals 0.
      * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object' s value equals 0; otherwise,
+     * false}. {@code true} if this object's value equals 0; otherwise,
      * {@code false}.
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
-          BigNumberFlags.FlagNaN)) == 0) && this.unsignedNumerator.isZero();
+                BigNumberFlags.FlagNaN)) == 0) && this.unsignedNumerator.isZero();
       }
 
     /**
      * Gets this object's numerator.
-     * @return This object' s numerator. If this object is a not-a-number value,
+     * @return This object's numerator. If this object is a not-a-number value,
      * returns the diagnostic information (which will be negative if this
      * object is negative).
      */
@@ -195,7 +195,7 @@ at: http://peteroupc.github.io/
      */
     public final int signum() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
-          BigNumberFlags.FlagNaN)) != 0) ? (this.isNegative() ? -1 : 1) :
+                BigNumberFlags.FlagNaN)) != 0) ? (this.isNegative() ? -1 : 1) :
           (this.unsignedNumerator.isZero() ? 0 : (this.isNegative() ? -1 : 1));
       }
 
@@ -271,7 +271,8 @@ at: http://peteroupc.github.io/
       }
       if (diag.signum() < 0) {
         throw new
-  IllegalArgumentException("Diagnostic information must be 0 or greater, was: " +
+        IllegalArgumentException("Diagnostic information must be 0 or greater," +
+"\u0020 was: " +
           diag);
       }
       if (diag.isZero() && !negative) {
@@ -310,7 +311,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts an arbitrary-precision binary float to a rational number.
+     * Converts an arbitrary-precision binary floating-point number to a rational
+     * number.
      * @param ef The number to convert as an arbitrary-precision binary
      * floating-point number.
      * @return An arbitrary-precision rational number.
@@ -369,7 +371,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Converts an arbitrary-precision binary float to a rational number.
+     * Converts an arbitrary-precision binary floating-point number to a rational
+     * number.
      * @param ef The number to convert as an arbitrary-precision binary
      * floating-point number.
      * @return An arbitrary-precision rational number.
@@ -455,17 +458,18 @@ at: http://peteroupc.github.io/
      * number.</p> <p>The format of the string generally consists of:</p>
      *  <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
      * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
-     *  the form of one or more digits.</li> <li>Optionally, "/" followed by
-     * the denominator in the form of one or more digits. If a denominator
-     * is not given, it's equal to 1.</li></ul> <p>The string can also be
-     *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
-     *  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
-     * followed by any number of digits, all in any combination of upper
-     * and lower case.</p> <p>All characters mentioned above are the
-     * corresponding characters in the Basic Latin range. In particular,
-     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
-     * string is not allowed to contain white space characters, including
-     * spaces.</p>
+     * the form of one or more digits (these digits may begin with any
+     *  number of zeros).</li> <li>Optionally, "/" followed by the
+     * denominator in the form of one or more digits (these digits may
+     * begin with any number of zeros). If a denominator is not given, it's
+     *  equal to 1.</li></ul> <p>The string can also be "-INF", "-Infinity",
+     *  "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed by any number
+     *  of digits, or signaling NaN ("sNaN" /"-sNaN") followed by any number
+     * of digits, all in any combination of upper and lower case.</p>
+     * <p>All characters mentioned above are the corresponding characters
+     * in the Basic Latin range. In particular, the digits must be the
+     * basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to
+     * contain white space characters, including spaces.</p>
      * @param str A text string, a portion of which represents a number.
      * @param offset An index starting at 0 showing where the desired portion of
      * {@code str} begins.
@@ -488,24 +492,24 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("str");
       }
       if (tmpoffset < 0) {
-        throw new NumberFormatException("offset (" + tmpoffset + ") is less than " +
-                    "0");
+        throw new NumberFormatException("offset(" + tmpoffset + ") is less than " +
+          "0");
       }
       if (tmpoffset > str.length()) {
-        throw new NumberFormatException("offset (" + tmpoffset + ") is more than " +
-                    str.length());
+        throw new NumberFormatException("offset(" + tmpoffset + ") is more than " +
+          str.length());
       }
       if (length < 0) {
-        throw new NumberFormatException("length (" + length + ") is less than " +
-                    "0");
+        throw new NumberFormatException("length(" + length + ") is less than " +
+          "0");
       }
       if (length > str.length()) {
-        throw new NumberFormatException("length (" + length + ") is more than " +
-                    str.length());
+        throw new NumberFormatException("length(" + length + ") is more than " +
+          str.length());
       }
       if (str.length() - tmpoffset < length) {
-        throw new NumberFormatException("str's length minus " + tmpoffset + " (" +
-                    (str.length() - tmpoffset) + ") is less than " + length);
+        throw new NumberFormatException("str's length minus " + tmpoffset + "(" +
+          (str.length() - tmpoffset) + ") is less than " + length);
       }
       if (length == 0) {
         throw new NumberFormatException();
@@ -517,64 +521,44 @@ at: http://peteroupc.github.io/
         ++tmpoffset;
       }
       int numerInt = 0;
-      FastInteger numer = null;
-      int numerBuffer = 0;
-      int numerBufferMult = 1;
-      int denomBuffer = 0;
-      int denomBufferMult = 1;
+      EInteger numer = null;
       boolean haveDigits = false;
       boolean haveDenominator = false;
       int ndenomInt = 0;
-      FastInteger ndenom = null;
+      EInteger ndenom = null;
       int i = tmpoffset;
       if (i + 8 == endStr) {
         if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
-            (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') &&
-            (str.charAt(i + 2) == 'F' || str.charAt(i + 2) == 'f') &&
-            (str.charAt(i + 3) == 'I' || str.charAt(i + 3) == 'i') && (str.charAt(i + 4) == 'N' ||
-                    str.charAt(i + 4) == 'n') && (str.charAt(i + 5) ==
-                    'I' || str.charAt(i + 5) == 'i') &&
-            (str.charAt(i + 6) == 'T' || str.charAt(i + 6) == 't') && (str.charAt(i + 7) == 'Y' ||
-                    str.charAt(i + 7) == 'y')) {
+          (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') &&
+          (str.charAt(i + 2) == 'F' || str.charAt(i + 2) == 'f') &&
+          (str.charAt(i + 3) == 'I' || str.charAt(i + 3) == 'i') && (str.charAt(i + 4) == 'N' ||
+            str.charAt(i + 4) == 'n') && (str.charAt(i + 5) == 'I' || str.charAt(i + 5) == 'i') &&
+          (str.charAt(i + 6) == 'T' || str.charAt(i + 6) == 't') && (str.charAt(i + 7) == 'Y' ||
+            str.charAt(i + 7) == 'y')) {
           return negative ? NegativeInfinity : PositiveInfinity;
         }
       }
       if (i + 3 == endStr) {
         if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
-            (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') && (str.charAt(i + 2) == 'F' ||
-                    str.charAt(i + 2) == 'f')) {
+          (str.charAt(i + 1) == 'N' || str.charAt(i + 1) == 'n') && (str.charAt(i + 2) == 'F' ||
+            str.charAt(i + 2) == 'f')) {
           return negative ? NegativeInfinity : PositiveInfinity;
         }
       }
+      int numerStart = 0;
       if (i + 3 <= endStr) {
         // Quiet NaN
         if ((str.charAt(i) == 'N' || str.charAt(i) == 'n') && (str.charAt(i + 1) == 'A' || str.charAt(i +
-                1) == 'a') && (str.charAt(i + 2) == 'N' || str.charAt(i + 2) == 'n')) {
+              1) == 'a') && (str.charAt(i + 2) == 'N' || str.charAt(i + 2) == 'n')) {
           if (i + 3 == endStr) {
             return (!negative) ? NaN : NaN.Negate();
           }
           i += 3;
+          numerStart = i;
           for (; i < endStr; ++i) {
             if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
               int thisdigit = (int)(str.charAt(i) - '0');
-              haveDigits = haveDigits || thisdigit != 0;
-              if (numerInt > MaxSafeInt) {
-                if (numer == null) {
-                  numer = new FastInteger(numerInt);
-                  numerBuffer = thisdigit;
-                  numerBufferMult = 10;
-                } else {
-                  if (numerBufferMult >= 1000000000) {
-                    numer.Multiply(numerBufferMult).AddInt(numerBuffer);
-                    numerBuffer = thisdigit;
-                    numerBufferMult = 10;
-                  } else {
-                    numerBufferMult *= 10;
-                    numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
-                    numerBuffer += thisdigit;
-                  }
-                }
-              } else {
+              if (numerInt <= MaxSafeInt) {
                 numerInt *= 10;
                 numerInt += thisdigit;
               }
@@ -582,44 +566,29 @@ at: http://peteroupc.github.io/
               throw new NumberFormatException();
             }
           }
-          if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
-            numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+          if (numerInt > MaxSafeInt) {
+            numer = EInteger.FromSubstring(str, numerStart, endStr);
+            return CreateNaN(numer, false, negative);
+          } else {
+            return CreateNaN(EInteger.FromInt32(numerInt), false, negative);
           }
-          EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
-            numer.AsEInteger();
-          return CreateNaN(bignumer, false, negative);
         }
       }
       if (i + 4 <= endStr) {
         // Signaling NaN
         if ((str.charAt(i) == 'S' || str.charAt(i) == 's') && (str.charAt(i + 1) == 'N' || str.charAt(i +
-                    1) == 'n') && (str.charAt(i + 2) == 'A' || str.charAt(i + 2) == 'a') &&
-                (str.charAt(i + 3) == 'N' || str.charAt(i + 3) == 'n')) {
+              1) == 'n') && (str.charAt(i + 2) == 'A' || str.charAt(i + 2) == 'a') &&
+          (str.charAt(i + 3) == 'N' || str.charAt(i + 3) == 'n')) {
           if (i + 4 == endStr) {
             return (!negative) ? SignalingNaN : SignalingNaN.Negate();
           }
           i += 4;
+          numerStart = i;
           for (; i < endStr; ++i) {
             if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
               int thisdigit = (int)(str.charAt(i) - '0');
               haveDigits = haveDigits || thisdigit != 0;
-              if (numerInt > MaxSafeInt) {
-                if (numer == null) {
-                  numer = new FastInteger(numerInt);
-                  numerBuffer = thisdigit;
-                  numerBufferMult = 10;
-                } else {
-                  if (numerBufferMult >= 1000000000) {
-                    numer.Multiply(numerBufferMult).AddInt(numerBuffer);
-                    numerBuffer = thisdigit;
-                    numerBufferMult = 10;
-                  } else {
-                    numerBufferMult *= 10;
-                    numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
-                    numerBuffer += thisdigit;
-                  }
-                }
-              } else {
+              if (numerInt <= MaxSafeInt) {
                 numerInt *= 10;
                 numerInt += thisdigit;
               }
@@ -627,42 +596,28 @@ at: http://peteroupc.github.io/
               throw new NumberFormatException();
             }
           }
-          if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
-            numer.Multiply(numerBufferMult).AddInt(numerBuffer);
-          }
           int flags3 = (negative ? BigNumberFlags.FlagNegative : 0) |
             BigNumberFlags.FlagSignalingNaN;
-          EInteger bignumer = (numer == null) ? (EInteger.FromInt32(numerInt)) :
-            numer.AsEInteger();
-          return new ERational(
-            bignumer,
+          if (numerInt > MaxSafeInt) {
+            numer = EInteger.FromSubstring(str, numerStart, endStr);
+            return new ERational(numer,
             EInteger.FromInt32(1),
             flags3);
+          } else {
+            return new ERational(EInteger.FromInt32(numerInt),
+            EInteger.FromInt32(1),
+            flags3);
+          }
         }
       }
       // Ordinary number
+      numerStart = i;
+      int numerEnd = i;
       for (; i < endStr; ++i) {
         if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
           int thisdigit = (int)(str.charAt(i) - '0');
-          if (numerInt > MaxSafeInt) {
-            if (numer == null) {
-              numer = new FastInteger(numerInt);
-              numerBuffer = thisdigit;
-              numerBufferMult = 10;
-            } else {
-              if (numerBufferMult >= 1000000000) {
-                numer.Multiply(numerBufferMult).AddInt(numerBuffer);
-                numerBuffer = thisdigit;
-                numerBufferMult = 10;
-              } else {
-                // multiply numerBufferMult and numerBuffer each by 10
-                numerBufferMult = (numerBufferMult << 3) + (numerBufferMult <<
-                     1);
-                numerBuffer = (numerBuffer << 3) + (numerBuffer << 1);
-                numerBuffer += thisdigit;
-              }
-            }
-          } else {
+          numerEnd = i + 1;
+          if (numerInt <= MaxSafeInt) {
             numerInt *= 10;
             numerInt += thisdigit;
           }
@@ -678,40 +633,24 @@ at: http://peteroupc.github.io/
       if (!haveDigits) {
         throw new NumberFormatException();
       }
-      if (numer != null && (numerBufferMult != 1 || numerBuffer != 0)) {
-        numer.Multiply(numerBufferMult).AddInt(numerBuffer);
+      if (numerInt > MaxSafeInt) {
+        numer = EInteger.FromSubstring(str, numerStart, numerEnd);
       }
       if (haveDenominator) {
-        FastInteger denom = null;
+        EInteger denom = null;
         int denomInt = 0;
         tmpoffset = 1;
         haveDigits = false;
         if (i == endStr) {
           throw new NumberFormatException();
         }
+        numerStart = i;
         for (; i < endStr; ++i) {
           if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
             haveDigits = true;
             int thisdigit = (int)(str.charAt(i) - '0');
-            if (denomInt > MaxSafeInt) {
-              if (denom == null) {
-                denom = new FastInteger(denomInt);
-                denomBuffer = thisdigit;
-                denomBufferMult = 10;
-              } else {
-                if (denomBufferMult >= 1000000000) {
-                  denom.Multiply(denomBufferMult).AddInt(denomBuffer);
-                  denomBuffer = thisdigit;
-                  denomBufferMult = 10;
-                } else {
-                  // multiply denomBufferMult and denomBuffer each by 10
-                  denomBufferMult = (denomBufferMult << 3) + (denomBufferMult <<
-                         1);
-                  denomBuffer = (denomBuffer << 3) + (denomBuffer << 1);
-                  denomBuffer += thisdigit;
-                }
-              }
-            } else {
+            numerEnd = i + 1;
+            if (denomInt <= MaxSafeInt) {
               denomInt *= 10;
               denomInt += thisdigit;
             }
@@ -722,8 +661,8 @@ at: http://peteroupc.github.io/
         if (!haveDigits) {
           throw new NumberFormatException();
         }
-        if (denom != null && (denomBufferMult != 1 || denomBuffer != 0)) {
-          denom.Multiply(denomBufferMult).AddInt(denomBuffer);
+        if (denomInt > MaxSafeInt) {
+          denom = EInteger.FromSubstring(str, numerStart, numerEnd);
         }
         if (denom == null) {
           ndenomInt = denomInt;
@@ -736,12 +675,12 @@ at: http://peteroupc.github.io/
       if (i != endStr) {
         throw new NumberFormatException();
       }
-      if (ndenom == null ? (ndenomInt == 0) : ndenom.isValueZero()) {
+      if (ndenom == null ? (ndenomInt == 0) : ndenom.isZero()) {
         throw new NumberFormatException();
       }
-      ERational erat = Create(
-        numer == null ? EInteger.FromInt32(numerInt) : numer.AsEInteger(),
-        ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom.AsEInteger());
+      ERational erat = Create (
+          numer == null ? EInteger.FromInt32(numerInt) : numer,
+          ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom);
       return negative ? erat.Negate() : erat;
     }
 
@@ -790,16 +729,16 @@ at: http://peteroupc.github.io/
         return -1;
       }
       if (valueIThis >= 2) {
-        cmp = this.unsignedNumerator.compareTo(
-         other.unsignedNumerator);
+        cmp = this.unsignedNumerator.compareTo (
+            other.unsignedNumerator);
         return cmp;
       } else if (valueIThis == 1) {
         return 0;
       } else {
         cmp = this.Abs().compareTo(other.Abs());
         if (cmp == 0) {
-          cmp = this.denominator.compareTo(
-           other.denominator);
+          cmp = this.denominator.compareTo (
+              other.denominator);
           return cmp;
         }
         return cmp;
@@ -856,16 +795,16 @@ at: http://peteroupc.github.io/
         return neg1 ? 1 : -1;
       }
       if (valueIThis >= 2) {
-        cmp = this.unsignedNumerator.compareTo(
-         other.unsignedNumerator);
+        cmp = this.unsignedNumerator.compareTo (
+            other.unsignedNumerator);
         return neg1 ? -cmp : cmp;
       } else if (valueIThis == 1) {
         return 0;
       } else {
         cmp = this.compareTo(other);
         if (cmp == 0) {
-          cmp = this.denominator.compareTo(
-           other.denominator);
+          cmp = this.denominator.compareTo (
+              other.denominator);
           return neg1 ? -cmp : cmp;
         }
         return cmp;
@@ -915,7 +854,7 @@ at: http://peteroupc.github.io/
       }
       if (this.IsInfinity()) {
         return otherValue.IsInfinity() ? ((this.isNegative() ==
-          otherValue.isNegative()) ? this : NaN) : this;
+              otherValue.isNegative()) ? this : NaN) : this;
       }
       if (otherValue.IsInfinity()) {
         return otherValue;
@@ -928,13 +867,32 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Compares an arbitrary-precision rational number with this instance.
+     * Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. This method currently uses the rules
+     * given in the CompareToValue method, so that it it is not consistent
+     * with the Equals method, but it may change in a future version to use
+     * the rules for the CompareToTotal method instead.
      * @param other An arbitrary-precision rational number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater. This
      * implementation returns a positive number if.
      */
     public int compareTo(ERational other) {
+       return this.CompareToValue(other);
+    }
+
+    /**
+     * Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. In this method, NaN values are greater
+     * than any other ERational value, and two NaN values (even if their
+     * payloads differ) are treated as equal by this method. This method is
+     * not consistent with the Equals method.
+     * @param other An arbitrary-precision rational number.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.
+     */
+    public int CompareToValue(ERational other) {
       if (other == null) {
         return 1;
       }
@@ -992,8 +950,29 @@ at: http://peteroupc.github.io/
       return ad.compareTo(bc);
     }
 
+  /**
+   * Not documented yet.
+   * @param intOther Not documented yet.
+   * @return The return value is not documented yet.
+   */
+    public int compareTo(int intOther) {
+      return this.CompareToValue(ERational.FromInt32(intOther));
+    }
+
+  /**
+   * Not documented yet.
+   * @param intOther Not documented yet.
+   * @return The return value is not documented yet.
+   */
+    public int CompareToValue(int intOther) {
+      return this.CompareToValue(ERational.FromInt32(intOther));
+    }
+
     /**
-     * Compares an arbitrary-precision binary float with this instance.
+     * Compares an arbitrary-precision binary floating-point number with this
+     * instance. In this method, NaN values are greater than any other
+     * ERational or EFloat value, and two NaN values (even if their
+     * payloads differ) are treated as equal by this method.
      * @param other An arbitrary-precision binary floating-point number.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater. This
@@ -1084,10 +1063,10 @@ at: http://peteroupc.github.io/
           // NOTE: if unsigned numerator is 0, bitLength will return
           // 0 instead of 1, but the possibility of 0 was already excluded
           EInteger bigDigitCount =
-this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
-                               .Subtract(1);
+            this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
+            .Subtract(1);
           if (bigDigitCount.compareTo(other.getExponent()) < 0) {
-            // Numerator's digit count minus 1 is less than the other' s
+            // Numerator's digit count minus 1 is less than the other's
             // exponent,
             // and other's exponent is positive, so this value's absolute
             // value is less
@@ -1187,8 +1166,8 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
         // Conservative approximation of this rational number's absolute value,
         // as a decimal number. The true value will be greater or equal.
         thisIntDec = EDecimal.FromEInteger(this.getUnsignedNumerator()).Divide(
-              EDecimal.FromEInteger(this.getDenominator()),
-              EContext.ForPrecisionAndRounding(20, ERounding.Down));
+            EDecimal.FromEInteger(this.getDenominator()),
+            EContext.ForPrecisionAndRounding(20, ERounding.Down));
         if (thisIntDec.compareTo(otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
@@ -1198,10 +1177,10 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
         // System.out.println("---" + this + " " + other);
         if (other.getExponent().signum() > 0) {
           EInteger bigDigitCount =
-                this.getUnsignedNumerator().GetDigitCountAsEInteger()
-                 .Subtract(1);
+            this.getUnsignedNumerator().GetDigitCountAsEInteger()
+            .Subtract(1);
           if (bigDigitCount.compareTo(other.getExponent()) < 0) {
-            // Numerator's digit count minus 1 is less than the other' s
+            // Numerator's digit count minus 1 is less than the other's
             // exponent,
             // and other's exponent is positive, so this value's absolute
             // value is less
@@ -1267,24 +1246,24 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
       boolean resultNeg = this.isNegative() ^ otherValue.isNegative();
       if (this.IsInfinity()) {
         return otherValue.IsInfinity() ? NaN : (resultNeg ? NegativeInfinity :
-          PositiveInfinity);
+            PositiveInfinity);
       }
       if (otherValue.IsInfinity()) {
         return resultNeg ? NegativeZero : Zero;
       }
       if (otherValue.isZero()) {
         return this.isZero() ? NaN : (resultNeg ? NegativeInfinity :
-                PositiveInfinity);
+            PositiveInfinity);
       }
       if (this.isZero()) {
         return resultNeg ? NegativeZero : Zero;
       }
       EInteger ad = this.getNumerator().Multiply(otherValue.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
-      return new ERational(
-  ad.Abs(),
-  bc.Abs(),
-  resultNeg ? BigNumberFlags.FlagNegative : 0);
+      return new ERational (
+          ad.Abs(),
+          bc.Abs(),
+          resultNeg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -1298,12 +1277,12 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
       return (
-  other != null) && (
-  (((
-    this.unsignedNumerator) == null) ? ((other.unsignedNumerator) == null) : (
-    this.unsignedNumerator).equals(other.unsignedNumerator)) && (((
-  this.denominator) == null) ? ((other.denominator) == null) : (
-  this.denominator).equals(other.denominator)) && this.flags == other.flags);
+          other != null) && (
+          (((
+            this.unsignedNumerator) == null) ? ((other.unsignedNumerator) == null) : (
+            this.unsignedNumerator).equals(other.unsignedNumerator)) && (((
+            this.denominator) == null) ? ((other.denominator) == null) : (
+            this.denominator).equals(other.denominator)) && this.flags == other.flags);
     }
 
     /**
@@ -1361,7 +1340,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
-        BigNumberFlags.FlagNegative)) ==
+            BigNumberFlags.FlagNegative)) ==
         (BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
     }
 
@@ -1372,7 +1351,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
-        BigNumberFlags.FlagNegative)) == BigNumberFlags.FlagInfinity;
+            BigNumberFlags.FlagNegative)) == BigNumberFlags.FlagInfinity;
     }
 
     /**
@@ -1425,19 +1404,19 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
       boolean resultNeg = this.isNegative() ^ otherValue.isNegative();
       if (this.IsInfinity()) {
         return otherValue.isZero() ? NaN : (resultNeg ? NegativeInfinity :
-          PositiveInfinity);
+            PositiveInfinity);
       }
       if (otherValue.IsInfinity()) {
         return this.isZero() ? NaN : (resultNeg ? NegativeInfinity :
-                PositiveInfinity);
+            PositiveInfinity);
       }
       EInteger ac = this.getNumerator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       return ac.isZero() ? (resultNeg ? NegativeZero : Zero) :
-  new ERational(
-  ac.Abs(),
-  bd.Abs(),
-  resultNeg ? BigNumberFlags.FlagNegative : 0);
+        new ERational (
+          ac.Abs(),
+          bd.Abs(),
+          resultNeg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -1501,10 +1480,10 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
       bc = thisDen.Multiply(tnum);
       tden = tden.Multiply(thisDen);
       ad = ad.Subtract(bc);
-      return new ERational(
-  ad.Abs(),
-  tden.Abs(),
-  resultNeg ? BigNumberFlags.FlagNegative : 0);
+      return new ERational (
+          ad.Abs(),
+          tden.Abs(),
+          resultNeg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -1569,9 +1548,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Converts this value to an arbitrary-precision integer. Any fractional part
-     * in this value will be discarded when converting to an
-     * arbitrary-precision integer.
+     * Converts this value to an arbitrary-precision integer by dividing the
+     * numerator by the denominator and discarding the fractional part of
+     * the result.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
@@ -1644,11 +1623,11 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
-        return EDecimal.CreateNaN(
-  this.unsignedNumerator,
-  this.IsSignalingNaN(),
-  this.isNegative(),
-  ctx);
+        return EDecimal.CreateNaN (
+            this.unsignedNumerator,
+            this.IsSignalingNaN(),
+            this.isNegative(),
+            ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
@@ -1657,7 +1636,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
         return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
       }
       EDecimal ef = (this.isNegative() && this.isZero()) ?
- EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
+        EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
       return ef.Divide(EDecimal.FromEInteger(this.getDenominator()), ctx);
     }
 
@@ -1678,16 +1657,16 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      * exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
-          ctx) {
+      ctx) {
       if (ctx == null) {
         return this.ToEDecimal(null);
       }
       if (this.IsNaN()) {
-        return EDecimal.CreateNaN(
-  this.unsignedNumerator,
-  this.IsSignalingNaN(),
-  this.isNegative(),
-  ctx);
+        return EDecimal.CreateNaN (
+            this.unsignedNumerator,
+            this.IsSignalingNaN(),
+            this.isNegative(),
+            ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
@@ -1699,7 +1678,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
         return EDecimal.NegativeZero;
       }
       EDecimal valueEdNum = (this.isNegative() && this.isZero()) ?
- EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
+        EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
       EDecimal valueEdDen = EDecimal.FromEInteger(this.getDenominator());
       EDecimal ed = valueEdNum.Divide(valueEdDen, null);
       if (ed.IsNaN()) {
@@ -1762,7 +1741,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Converts this rational number to a binary float.
+     * Converts this rational number to a binary floating-point number.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating binary
      * expansion.
@@ -1772,8 +1751,8 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Converts this rational number to a binary float and rounds that result to
-     * the given precision.
+     * Converts this rational number to a binary floating-point number and rounds
+     * that result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is
      * true, will also store the flags resulting from the operation (the
@@ -1785,11 +1764,11 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
-        return EFloat.CreateNaN(
-  this.unsignedNumerator,
-  this.IsSignalingNaN(),
-  this.isNegative(),
-  ctx);
+        return EFloat.CreateNaN (
+            this.unsignedNumerator,
+            this.IsSignalingNaN(),
+            this.isNegative(),
+            ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EFloat.PositiveInfinity.RoundToPrecision(ctx);
@@ -1798,14 +1777,14 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
         return EFloat.NegativeInfinity.RoundToPrecision(ctx);
       }
       EFloat ef = (this.isNegative() && this.isZero()) ?
-     EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
+        EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
       return ef.Divide(EFloat.FromEInteger(this.getDenominator()), ctx);
     }
 
     /**
-     * Converts this rational number to a binary float, but if the result would
-     * have a nonterminating binary expansion, rounds that result to the
-     * given precision.
+     * Converts this rational number to a binary floating-point number, but if the
+     * result would have a nonterminating binary expansion, rounds that
+     * result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating binary expansion. If
@@ -1823,11 +1802,11 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
         return this.ToEFloat(null);
       }
       if (this.IsNaN()) {
-        return EFloat.CreateNaN(
-  this.unsignedNumerator,
-  this.IsSignalingNaN(),
-  this.isNegative(),
-  ctx);
+        return EFloat.CreateNaN (
+            this.unsignedNumerator,
+            this.IsSignalingNaN(),
+            this.isNegative(),
+            ctx);
       }
       if (this.IsPositiveInfinity()) {
         return EFloat.PositiveInfinity.RoundToPrecision(ctx);
@@ -1837,10 +1816,10 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
       }
       if (this.isZero()) {
         return this.isNegative() ? EFloat.NegativeZero :
-            EFloat.Zero;
+          EFloat.Zero;
       }
       EFloat valueEdNum = (this.isNegative() && this.isZero()) ?
-     EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
+        EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
       EFloat valueEdDen = EFloat.FromEInteger(this.getDenominator());
       EFloat ed = valueEdNum.Divide(valueEdDen, null);
       if (ed.IsNaN()) {
@@ -1851,7 +1830,7 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Converts this rational number to a binary float.
+     * Converts this rational number to a binary floating-point number.
      * @return The exact value of the rational number, or not-a-number (NaN) if the
      * result can't be exact because it has a nonterminating binary
      * expansion.
@@ -1863,8 +1842,8 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Converts this rational number to a binary float and rounds that result to
-     * the given precision.
+     * Converts this rational number to a binary floating-point number and rounds
+     * that result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is
      * true, will also store the flags resulting from the operation (the
@@ -1881,9 +1860,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Converts this rational number to a binary float, but if the result would
-     * have a nonterminating binary expansion, rounds that result to the
-     * given precision.
+     * Converts this rational number to a binary floating-point number, but if the
+     * result would have a nonterminating binary expansion, rounds that
+     * result to the given precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if
      * the exact result would have a nonterminating binary expansion. If
@@ -1935,31 +1914,94 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
             return this.isNegative() ? "-sNaN" : "sNaN";
           }
           return this.isNegative() ? "-sNaN" + this.unsignedNumerator :
-              "sNaN" + this.unsignedNumerator;
+            "sNaN" + this.unsignedNumerator;
         }
         if (this.IsQuietNaN()) {
           if (this.unsignedNumerator.isZero()) {
             return this.isNegative() ? "-NaN" : "NaN";
           }
           return this.isNegative() ? "-NaN" + this.unsignedNumerator :
-              "NaN" + this.unsignedNumerator;
+            "NaN" + this.unsignedNumerator;
         }
         if (this.IsInfinity()) {
           return this.isNegative() ? "-Infinity" : "Infinity";
         }
       }
       return (this.getNumerator().isZero() && this.isNegative()) ? ("-0/" +
-        this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
+          this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
     }
+
+    /**
+     * Adds one to an arbitrary-precision rational number.
+     * @return The given arbitrary-precision rational number plus one.
+     */
+    public ERational Increment() {
+      return this.Add(FromInt32(1));
+    }
+
+    /**
+     * Subtracts one from an arbitrary-precision rational number.
+     * @return The given arbitrary-precision rational number minus one.
+     */
+    public ERational Decrement() {
+      return this.Subtract(FromInt32(1));
+    }
+
+  /**
+   * Not documented yet.
+   * @param v Not documented yet.
+   * @return The return value is not documented yet.
+   */
+  public ERational Add(int v) {
+ return this.Add(FromInt32(v));
+  }
+
+  /**
+   * Not documented yet.
+   * @param v Not documented yet.
+   * @return The return value is not documented yet.
+   */
+  public ERational Subtract(int v) {
+ return this.Subtract(FromInt32(v));
+  }
+
+  /**
+   * Not documented yet.
+   * @param v Not documented yet.
+   * @return The return value is not documented yet.
+   */
+  public ERational Multiply(int v) {
+ return this.Multiply(FromInt32(v));
+  }
+
+  /**
+   * Not documented yet.
+   * @param v Not documented yet.
+   * @return The return value is not documented yet.
+   */
+  public ERational Divide(int v) {
+ return this.Divide(FromInt32(v));
+  }
+
+  /**
+   * Not documented yet.
+   * @param v Not documented yet.
+   * @return The return value is not documented yet.
+   */
+  public ERational Remainder(int v) {
+ return this.Remainder(FromInt32(v));
+}
 
     // Begin integer conversions
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
-     * byte (from 0 to 255) after truncating to an integer.
+     * byte (from 0 to 255) after converting it to an integer by discarding
+     * its fractional part.
      * @return This number's value, truncated to a byte (from 0 to 255).
      * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * truncated integer is less than 0 or greater than 255.
+     * number, once converted to an integer by discarding its fractional
+     * part, is less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
       if (!this.isFinite()) {
@@ -1969,9 +2011,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Truncates this number's value to an integer and returns the
-     * least-significant bits of its two's-complement form as a byte (from
-     * 0 to 255).
+     * Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement
+     * form as a byte (from 0 to 255).
      * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
      * value is infinity or not-a-number.
      */
@@ -2006,10 +2048,12 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
 
     /**
      * Converts this number's value to a 16-bit signed integer if it can fit in a
-     * 16-bit signed integer after truncating to an integer.
+     * 16-bit signed integer after converting it to an integer by
+     * discarding its fractional part.
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * truncated integer is less than -32768 or greater than 32767.
+     * number, once converted to an integer by discarding its fractional
+     * part, is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -2019,9 +2063,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Truncates this number's value to an integer and returns the
-     * least-significant bits of its two's-complement form as a 16-bit
-     * signed integer.
+     * Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement
+     * form as a 16-bit signed integer.
      * @return This number, converted to a 16-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
@@ -2057,11 +2101,12 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
 
     /**
      * Converts this number's value to a 32-bit signed integer if it can fit in a
-     * 32-bit signed integer after truncating to an integer.
+     * 32-bit signed integer after converting it to an integer by
+     * discarding its fractional part.
      * @return This number's value, truncated to a 32-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * truncated integer is less than -2147483648 or greater than
-     * 2147483647.
+     * number, once converted to an integer by discarding its fractional
+     * part, is less than -2147483648 or greater than 2147483647.
      */
     public int ToInt32Checked() {
       if (!this.isFinite()) {
@@ -2071,9 +2116,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Truncates this number's value to an integer and returns the
-     * least-significant bits of its two's-complement form as a 32-bit
-     * signed integer.
+     * Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement
+     * form as a 32-bit signed integer.
      * @return This number, converted to a 32-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */
@@ -2118,10 +2163,12 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
 
     /**
      * Converts this number's value to a 64-bit signed integer if it can fit in a
-     * 64-bit signed integer after truncating to an integer.
+     * 64-bit signed integer after converting it to an integer by
+     * discarding its fractional part.
      * @return This number's value, truncated to a 64-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * truncated integer is less than -9223372036854775808 or greater than
+     * number, once converted to an integer by discarding its fractional
+     * part, is less than -9223372036854775808 or greater than
      * 9223372036854775807.
      */
     public long ToInt64Checked() {
@@ -2132,9 +2179,9 @@ this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
     }
 
     /**
-     * Truncates this number's value to an integer and returns the
-     * least-significant bits of its two's-complement form as a 64-bit
-     * signed integer.
+     * Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement
+     * form as a 64-bit signed integer.
      * @return This number, converted to a 64-bit signed integer. Returns 0 if this
      * value is infinity or not-a-number.
      */

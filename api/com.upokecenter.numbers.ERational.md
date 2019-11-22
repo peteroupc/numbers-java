@@ -42,12 +42,18 @@ Represents an arbitrary-precision rational number. This class can't be
 * `ERational Abs()`<br>
  Returns the absolute value of this rational number, that is, a number with
  the same value as this one but as a nonnegative number.
+* `ERational Add​(int v)`<br>
+ Not documented yet.
 * `ERational Add​(ERational otherValue)`<br>
  Adds two rational numbers.
+* `int compareTo​(int intOther)`<br>
+ Not documented yet.
 * `int compareTo​(ERational other)`<br>
- Compares an arbitrary-precision rational number with this instance.
+ Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance.
 * `int CompareToBinary​(EFloat other)`<br>
- Compares an arbitrary-precision binary float with this instance.
+ Compares an arbitrary-precision binary floating-point number with this
+ instance.
 * `int CompareToDecimal​(EDecimal other)`<br>
  Compares an arbitrary-precision decimal number with this instance.
 * `int CompareToTotal​(ERational other)`<br>
@@ -56,6 +62,11 @@ Represents an arbitrary-precision rational number. This class can't be
 * `int CompareToTotalMagnitude​(ERational other)`<br>
  Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs).
+* `int CompareToValue​(int intOther)`<br>
+ Not documented yet.
+* `int CompareToValue​(ERational other)`<br>
+ Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance.
 * `ERational Copy()`<br>
  Creates a copy of this arbitrary-precision rational number.
 * `ERational CopySign​(ERational other)`<br>
@@ -73,6 +84,10 @@ Represents an arbitrary-precision rational number. This class can't be
          boolean signaling,
          boolean negative)`<br>
  Creates a not-a-number arbitrary-precision rational number.
+* `ERational Decrement()`<br>
+ Subtracts one from an arbitrary-precision rational number.
+* `ERational Divide​(int v)`<br>
+ Not documented yet.
 * `ERational Divide​(ERational otherValue)`<br>
  Divides this instance by the value of an arbitrary-precision rational number
  object.
@@ -93,7 +108,8 @@ Represents an arbitrary-precision rational number. This class can't be
 * `static ERational FromEDecimal​(EDecimal ef)`<br>
  Converts an arbitrary-precision decimal number to a rational number.
 * `static ERational FromEFloat​(EFloat ef)`<br>
- Converts an arbitrary-precision binary float to a rational number.
+ Converts an arbitrary-precision binary floating-point number to a rational
+ number.
 * `static ERational FromEInteger​(EInteger bigint)`<br>
  Converts an arbitrary-precision integer to a rational number.
 * `static ERational FromExtendedDecimal​(EDecimal ef)`<br>
@@ -127,6 +143,8 @@ Renamed to FromEFloat.
  Gets this object's numerator with the sign removed.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
+* `ERational Increment()`<br>
+ Adds one to an arbitrary-precision rational number.
 * `boolean isFinite()`<br>
  Gets a value indicating whether this object is finite (not infinity or NaN).
 * `boolean IsInfinity()`<br>
@@ -148,30 +166,37 @@ Renamed to FromEFloat.
  class).
 * `boolean isZero()`<br>
  Gets a value indicating whether this object's value equals 0.
+* `ERational Multiply​(int v)`<br>
+ Not documented yet.
 * `ERational Multiply​(ERational otherValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision rational
  number.
 * `ERational Negate()`<br>
  Returns a rational number with the same value as this one but with the sign
  reversed.
+* `ERational Remainder​(int v)`<br>
+ Not documented yet.
 * `ERational Remainder​(ERational otherValue)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision rational number.
 * `int signum()`<br>
  Gets the sign of this rational number.
+* `ERational Subtract​(int v)`<br>
+ Not documented yet.
 * `ERational Subtract​(ERational otherValue)`<br>
  Subtracts an arbitrary-precision rational number from this instance.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) after truncating to an integer.
+ byte (from 0 to 255) after converting it to an integer by discarding
+ its fractional part.
 * `byte ToByteIfExact()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) without rounding to a different numerical
  value.
 * `byte ToByteUnchecked()`<br>
- Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a byte (from
- 0 to 255).
+ Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a byte (from 0 to 255).
 * `double ToDouble()`<br>
  Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
@@ -184,16 +209,18 @@ Renamed to FromEFloat.
  if the result would have a nonterminating decimal expansion, rounds
  that result to the given precision.
 * `EFloat ToEFloat()`<br>
- Converts this rational number to a binary float.
+ Converts this rational number to a binary floating-point number.
 * `EFloat ToEFloat​(EContext ctx)`<br>
- Converts this rational number to a binary float and rounds that result to
- the given precision.
+ Converts this rational number to a binary floating-point number and rounds
+ that result to the given precision.
 * `EFloat ToEFloatExactIfPossible​(EContext ctx)`<br>
- Converts this rational number to a binary float, but if the result would
- have a nonterminating binary expansion, rounds that result to the
- given precision.
+ Converts this rational number to a binary floating-point number, but if the
+ result would have a nonterminating binary expansion, rounds that
+ result to the given precision.
 * `EInteger ToEInteger()`<br>
- Converts this value to an arbitrary-precision integer.
+ Converts this value to an arbitrary-precision integer by dividing the
+ numerator by the denominator and discarding the fractional part of
+ the result.
 * `EInteger ToEIntegerExact()`<br>
  Deprecated.
 Renamed to ToEIntegerIfExact.
@@ -227,37 +254,40 @@ Renamed to ToEFloatExactIfPossible.
  Renamed to ToEFloatExactIfPossible.
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
- 16-bit signed integer after truncating to an integer.
+ 16-bit signed integer after converting it to an integer by
+ discarding its fractional part.
 * `short ToInt16IfExact()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer without rounding to a different numerical
  value.
 * `short ToInt16Unchecked()`<br>
- Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a 16-bit
- signed integer.
+ Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a 16-bit signed integer.
 * `int ToInt32Checked()`<br>
  Converts this number's value to a 32-bit signed integer if it can fit in a
- 32-bit signed integer after truncating to an integer.
+ 32-bit signed integer after converting it to an integer by
+ discarding its fractional part.
 * `int ToInt32IfExact()`<br>
  Converts this number's value to a 32-bit signed integer if it can fit in a
  32-bit signed integer without rounding to a different numerical
  value.
 * `int ToInt32Unchecked()`<br>
- Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a 32-bit
- signed integer.
+ Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a 32-bit signed integer.
 * `long ToInt64Checked()`<br>
  Converts this number's value to a 64-bit signed integer if it can fit in a
- 64-bit signed integer after truncating to an integer.
+ 64-bit signed integer after converting it to an integer by
+ discarding its fractional part.
 * `long ToInt64IfExact()`<br>
  Converts this number's value to a 64-bit signed integer if it can fit in a
  64-bit signed integer without rounding to a different numerical
  value.
 * `long ToInt64Unchecked()`<br>
- Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a 64-bit
- signed integer.
+ Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a 64-bit signed integer.
 * `float ToSingle()`<br>
  Converts this value to a 32-bit binary floating-point number.
 * `java.lang.String toString()`<br>
@@ -305,7 +335,7 @@ Gets this object's denominator.
 
 **Returns:**
 
-* This object' s denominator.
+* This object's denominator.
 
 ### isFinite
     public final boolean isFinite()
@@ -334,7 +364,7 @@ Gets a value indicating whether this object's value equals 0.
 **Returns:**
 
 * <code>true</code> if this object's value equals 0; otherwise, <code>
- false</code>. <code>true</code> if this object' s value equals 0; otherwise,
+ false</code>. <code>true</code> if this object's value equals 0; otherwise,
  <code>false</code>.
 
 ### getNumerator
@@ -343,7 +373,7 @@ Gets this object's numerator.
 
 **Returns:**
 
-* This object' s numerator. If this object is a not-a-number value,
+* This object's numerator. If this object is a not-a-number value,
  returns the diagnostic information (which will be negative if this
  object is negative).
 
@@ -507,7 +537,8 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 ### FromEFloat
     public static ERational FromEFloat​(EFloat ef)
-Converts an arbitrary-precision binary float to a rational number.
+Converts an arbitrary-precision binary floating-point number to a rational
+ number.
 
 **Parameters:**
 
@@ -575,17 +606,18 @@ Creates a rational number from a text string that represents a number. See
  number.</p> <p>The format of the string generally consists of:</p>
   <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
  U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
-  the form of one or more digits.</li> <li>Optionally, "/" followed by
- the denominator in the form of one or more digits. If a denominator
- is not given, it's equal to 1.</li></ul> <p>The string can also be
-  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
-  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
- followed by any number of digits, all in any combination of upper
- and lower case.</p> <p>All characters mentioned above are the
- corresponding characters in the Basic Latin range. In particular,
- the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
- string is not allowed to contain white space characters, including
- spaces.</p>
+ the form of one or more digits (these digits may begin with any
+  number of zeros).</li> <li>Optionally, "/" followed by the
+ denominator in the form of one or more digits (these digits may
+ begin with any number of zeros). If a denominator is not given, it's
+  equal to 1.</li></ul> <p>The string can also be "-INF", "-Infinity",
+  "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed by any number
+  of digits, or signaling NaN ("sNaN" /"-sNaN") followed by any number
+ of digits, all in any combination of upper and lower case.</p>
+ <p>All characters mentioned above are the corresponding characters
+ in the Basic Latin range. In particular, the digits must be the
+ basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to
+ contain white space characters, including spaces.</p>
 
 **Parameters:**
 
@@ -690,7 +722,11 @@ Adds two rational numbers.
 
 ### compareTo
     public int compareTo​(ERational other)
-Compares an arbitrary-precision rational number with this instance.
+Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. This method currently uses the rules
+ given in the CompareToValue method, so that it it is not consistent
+ with the Equals method, but it may change in a future version to use
+ the rules for the CompareToTotal method instead.
 
 **Specified by:**
 
@@ -706,9 +742,54 @@ Compares an arbitrary-precision rational number with this instance.
  less, or a positive number if this instance is greater. This
  implementation returns a positive number if.
 
+### CompareToValue
+    public int CompareToValue​(ERational other)
+Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. In this method, NaN values are greater
+ than any other ERational value, and two NaN values (even if their
+ payloads differ) are treated as equal by this method. This method is
+ not consistent with the Equals method.
+
+**Parameters:**
+
+* <code>other</code> - An arbitrary-precision rational number.
+
+**Returns:**
+
+* Zero if the values are equal; a negative number if this instance is
+ less, or a positive number if this instance is greater. This
+ implementation returns a positive number if.
+
+### compareTo
+    public int compareTo​(int intOther)
+Not documented yet.
+
+**Parameters:**
+
+* <code>intOther</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### CompareToValue
+    public int CompareToValue​(int intOther)
+Not documented yet.
+
+**Parameters:**
+
+* <code>intOther</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
-Compares an arbitrary-precision binary float with this instance.
+Compares an arbitrary-precision binary floating-point number with this
+ instance. In this method, NaN values are greater than any other
+ ERational or EFloat value, and two NaN values (even if their
+ payloads differ) are treated as equal by this method.
 
 **Parameters:**
 
@@ -943,9 +1024,9 @@ Converts this value to a 64-bit floating-point number. The half-even
 
 ### ToEInteger
     public EInteger ToEInteger()
-Converts this value to an arbitrary-precision integer. Any fractional part
- in this value will be discarded when converting to an
- arbitrary-precision integer.
+Converts this value to an arbitrary-precision integer by dividing the
+ numerator by the denominator and discarding the fractional part of
+ the result.
 
 **Returns:**
 
@@ -1090,7 +1171,7 @@ Renamed to ToEDecimalExactIfPossible.
 
 ### ToEFloat
     public EFloat ToEFloat()
-Converts this rational number to a binary float.
+Converts this rational number to a binary floating-point number.
 
 **Returns:**
 
@@ -1100,8 +1181,8 @@ Converts this rational number to a binary float.
 
 ### ToEFloat
     public EFloat ToEFloat​(EContext ctx)
-Converts this rational number to a binary float and rounds that result to
- the given precision.
+Converts this rational number to a binary floating-point number and rounds
+ that result to the given precision.
 
 **Parameters:**
 
@@ -1119,9 +1200,9 @@ Converts this rational number to a binary float and rounds that result to
 
 ### ToEFloatExactIfPossible
     public EFloat ToEFloatExactIfPossible​(EContext ctx)
-Converts this rational number to a binary float, but if the result would
- have a nonterminating binary expansion, rounds that result to the
- given precision.
+Converts this rational number to a binary floating-point number, but if the
+ result would have a nonterminating binary expansion, rounds that
+ result to the given precision.
 
 **Parameters:**
 
@@ -1218,10 +1299,87 @@ Converts this object to a text string.
  of the <code>EDecimal.toString</code> method. Otherwise, the return value
  has the following form: <code>[-]numerator.Divide(denominator)</code>.
 
+### Increment
+    public ERational Increment()
+Adds one to an arbitrary-precision rational number.
+
+**Returns:**
+
+* The given arbitrary-precision rational number plus one.
+
+### Decrement
+    public ERational Decrement()
+Subtracts one from an arbitrary-precision rational number.
+
+**Returns:**
+
+* The given arbitrary-precision rational number minus one.
+
+### Add
+    public ERational Add​(int v)
+Not documented yet.
+
+**Parameters:**
+
+* <code>v</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Subtract
+    public ERational Subtract​(int v)
+Not documented yet.
+
+**Parameters:**
+
+* <code>v</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Multiply
+    public ERational Multiply​(int v)
+Not documented yet.
+
+**Parameters:**
+
+* <code>v</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Divide
+    public ERational Divide​(int v)
+Not documented yet.
+
+**Parameters:**
+
+* <code>v</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Remainder
+    public ERational Remainder​(int v)
+Not documented yet.
+
+**Parameters:**
+
+* <code>v</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
 ### ToByteChecked
     public byte ToByteChecked()
 Converts this number's value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) after truncating to an integer.
+ byte (from 0 to 255) after converting it to an integer by discarding
+ its fractional part.
 
 **Returns:**
 
@@ -1230,13 +1388,14 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
- truncated integer is less than 0 or greater than 255.
+ number, once converted to an integer by discarding its fractional
+ part, is less than 0 or greater than 255.
 
 ### ToByteUnchecked
     public byte ToByteUnchecked()
-Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a byte (from
- 0 to 255).
+Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a byte (from 0 to 255).
 
 **Returns:**
 
@@ -1273,7 +1432,8 @@ Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 ### ToInt16Checked
     public short ToInt16Checked()
 Converts this number's value to a 16-bit signed integer if it can fit in a
- 16-bit signed integer after truncating to an integer.
+ 16-bit signed integer after converting it to an integer by
+ discarding its fractional part.
 
 **Returns:**
 
@@ -1282,13 +1442,14 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
- truncated integer is less than -32768 or greater than 32767.
+ number, once converted to an integer by discarding its fractional
+ part, is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
-Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a 16-bit
- signed integer.
+Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a 16-bit signed integer.
 
 **Returns:**
 
@@ -1325,7 +1486,8 @@ Converts a 16-bit signed integer to an arbitrary-precision rational number.
 ### ToInt32Checked
     public int ToInt32Checked()
 Converts this number's value to a 32-bit signed integer if it can fit in a
- 32-bit signed integer after truncating to an integer.
+ 32-bit signed integer after converting it to an integer by
+ discarding its fractional part.
 
 **Returns:**
 
@@ -1334,14 +1496,14 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
- truncated integer is less than -2147483648 or greater than
- 2147483647.
+ number, once converted to an integer by discarding its fractional
+ part, is less than -2147483648 or greater than 2147483647.
 
 ### ToInt32Unchecked
     public int ToInt32Unchecked()
-Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a 32-bit
- signed integer.
+Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a 32-bit signed integer.
 
 **Returns:**
 
@@ -1392,7 +1554,8 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.
 ### ToInt64Checked
     public long ToInt64Checked()
 Converts this number's value to a 64-bit signed integer if it can fit in a
- 64-bit signed integer after truncating to an integer.
+ 64-bit signed integer after converting it to an integer by
+ discarding its fractional part.
 
 **Returns:**
 
@@ -1401,14 +1564,15 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
- truncated integer is less than -9223372036854775808 or greater than
+ number, once converted to an integer by discarding its fractional
+ part, is less than -9223372036854775808 or greater than
  9223372036854775807.
 
 ### ToInt64Unchecked
     public long ToInt64Unchecked()
-Truncates this number's value to an integer and returns the
- least-significant bits of its two's-complement form as a 64-bit
- signed integer.
+Converts this number's value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two's-complement
+ form as a 64-bit signed integer.
 
 **Returns:**
 

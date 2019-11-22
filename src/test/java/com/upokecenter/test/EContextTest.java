@@ -8,24 +8,24 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestConstructor() {
       try {
-        Assert.assertEquals(
+        Assert.assertEquals (
           null,
           new EContext(-1, ERounding.HalfEven, 0, 0, false));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
       try {
-        Assert.assertEquals(
+        Assert.assertEquals (
           null,
           new EContext(0, ERounding.HalfEven, 0, -1, false));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -58,20 +58,22 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestExponentWithinRange() {
-  if (!(EContext.Unlimited.ExponentWithinRange(EInteger.FromString(
-  "-9999999"))))Assert.fail();
+      if (!(EContext.Unlimited.ExponentWithinRange(
+  EInteger.FromString (
+            "-9999999"))))Assert.fail();
 
-  if (!(EContext.Unlimited.ExponentWithinRange(EInteger.FromString(
-  "9999999"))))Assert.fail();
-  try {
- EContext.Unlimited.ExponentWithinRange(null);
- Assert.fail("Should have failed");
-} catch (NullPointerException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
- Assert.fail(ex.toString());
- throw new IllegalStateException("", ex);
-}
+      if (!(EContext.Unlimited.ExponentWithinRange(
+  EInteger.FromString (
+            "9999999"))))Assert.fail();
+      try {
+        EContext.Unlimited.ExponentWithinRange(null);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
     @Test
     public void TestFlags() {
@@ -80,8 +82,8 @@ import com.upokecenter.numbers.*;
         ctx.setFlags(5);
         Assert.fail("Should have failed");
       } catch (IllegalStateException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -97,8 +99,8 @@ import com.upokecenter.numbers.*;
         ctx.setFlags(5);
         Assert.fail("Should have failed");
       } catch (IllegalStateException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -107,47 +109,48 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestCliDecimal() {
       EDecimal valueEdTmp;
-      valueEdTmp = EDecimal.FromString(
-  "-79228162514264337593543950336")
-.RoundToPrecision(EContext.CliDecimal);
+      valueEdTmp = EDecimal.FromString (
+          "-79228162514264337593543950336")
+        .RoundToPrecision(EContext.CliDecimal);
       Assert.assertEquals(
         EDecimal.NegativeInfinity,
         valueEdTmp);
-      valueEdTmp = EDecimal.FromString(
-     "8.782580686213340724E+28")
-     .RoundToPrecision(EContext.CliDecimal);
+      valueEdTmp = EDecimal.FromString (
+          "8.782580686213340724E+28")
+        .RoundToPrecision(EContext.CliDecimal);
       Assert.assertEquals(
         EDecimal.PositiveInfinity,
         valueEdTmp);
       {
         Object objectTemp = EDecimal.NegativeInfinity;
-Object objectTemp2 = EDecimal.FromString(
-        "-9.3168444507547E+28").RoundToPrecision(EContext.CliDecimal);
-Assert.assertEquals(objectTemp, objectTemp2);
-}
+        Object objectTemp2 = EDecimal.FromString (
+            "-9.3168444507547E+28").RoundToPrecision(EContext.CliDecimal);
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
       {
         String stringTemp =
 
-          EDecimal.FromString(
-  "-9344285899206687626894794544.04982268810272216796875")
-.RoundToPrecision(EContext.CliDecimal)
-          .ToPlainString();
+          EDecimal.FromString (
+            "-9344285899206687626894794544.04982268810272216796875")
+          .RoundToPrecision(EContext.CliDecimal).ToPlainString();
         Assert.assertEquals(
           "-9344285899206687626894794544",
           stringTemp);
       }
       {
         Object objectTemp = EDecimal.PositiveInfinity;
-Object objectTemp2 = EDecimal.FromString(
-  "96148154858060747311034406200").RoundToPrecision(EContext.CliDecimal);
-Assert.assertEquals(objectTemp, objectTemp2);
-}
+        Object objectTemp2 = EDecimal.FromString (
+            "96148154858060747311034406200").RoundToPrecision(
+  EContext.CliDecimal);
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
       {
         Object objectTemp = EDecimal.PositiveInfinity;
-Object objectTemp2 = EDecimal.FromString(
-  "90246605365627217170000000000").RoundToPrecision(EContext.CliDecimal);
-Assert.assertEquals(objectTemp, objectTemp2);
-}
+        Object objectTemp2 = EDecimal.FromString (
+            "90246605365627217170000000000").RoundToPrecision(
+  EContext.CliDecimal);
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
     }
 
     @Test
@@ -227,8 +230,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithBigPrecision(EInteger.FromInt64(-1));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -247,8 +250,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithExponentRange(1, 0);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -256,8 +259,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithBigExponentRange(null, EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -265,8 +268,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithBigExponentRange(EInteger.FromInt32(0), null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -277,8 +280,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
           EInteger.FromInt32(0));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
@@ -293,8 +296,8 @@ Assert.assertEquals(objectTemp, objectTemp2);
         EContext.Unlimited.WithPrecision(-1);
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
