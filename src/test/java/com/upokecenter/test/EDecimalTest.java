@@ -5293,6 +5293,17 @@ Assert.assertEquals(expected, actualstr);
 }
 
 @Test
+public void TestStringContextSpecific7() {
+EContext ec = EContext.Unlimited.WithExponentClamp(
+  true).WithAdjustExponent(
+  true).WithRounding(
+  ERounding.Floor).WithExponentRange(-9999999, 9999999);
+String str = TestCommon.Repeat("7", 1000) + "E-" +
+   TestCommon.Repeat("7", 1000);
+TestStringContextOne(str, ec);
+}
+
+@Test
 public void TestStringContextSpecific3() {
 String str = "10991.709233660650E-90";
 String expected = "1.099171E-86";
@@ -5324,27 +5335,45 @@ TestStringContextOne("66.666666666666666E+40", ec);
 TestStringContextOne("666.66666666666666E+40", ec);
 }
 
- // private static final System.Diagnostics.Stopwatch swUnopt = new
- // System.Diagnostics.Stopwatch();
- // private static final System.Diagnostics.Stopwatch swOpt2 = new
- // System.Diagnostics.Stopwatch();
+/*
+ private static final System.Diagnostics.Stopwatch swUnopt = new
+ System.Diagnostics.Stopwatch();
+ private static final System.Diagnostics.Stopwatch swOpt2 = new
+ System.Diagnostics.Stopwatch();
+ private static long unoptTime = 0;
+ private static long optTime = 0;
 
+ public void TearDown() {
+   System.out.println("unoptTime = " + unoptTime + " ms");
+   System.out.println("optTime = " + optTime + " ms");
+ }
+*/
 // Test potential cases where FromString is implemented
 // to take context into account when building the EDecimal
 public static void TestStringContextOne(String str, EContext ec) {
   EDecimal ed, ed2;
- // swUnopt.Restart();
+  /*
+   swUnopt.Restart();
+  */
   ed = EDecimal.FromString(str).RoundToPrecision(ec);
- // swUnopt.Stop();
-  // swOpt2.Restart();
+  /*
+   swUnopt.Stop();
+   swOpt2.Restart();
+  */
   ed2 = EDecimal.FromString(str, ec);
    /*
    swOpt2.Stop();
+   unoptTime+=swUnopt.getElapsedMilliseconds();
+   optTime+=swOpt2.getElapsedMilliseconds();
    if (swUnopt.getElapsedMilliseconds()>100 &&
       swUnopt.getElapsedMilliseconds()/4 <= swOpt2.getElapsedMilliseconds()) {
     String bstr = str.substring(0, Math.min(str.length(), 200)) +
       (str.length() > 200 ? "..." : "");
-    System.out.println(bstr +"\n" + ec.toString() +"\nunopt="+
+    String edstr = ed.toString();
+    edstr = edstr.substring(0, Math.min(edstr.length(), 200)) +
+      (edstr.length() > 200 ? "..." : "");
+    System.out.println(bstr +"\nresult=" + edstr + "\n" + ec.toString()
++"\nunopt="+
          swUnopt.getElapsedMilliseconds()+" ms; opt="+swOpt2.getElapsedMilliseconds());
    }
    */
@@ -5430,7 +5459,7 @@ public void TestLeadingTrailingPoint() {
 @Test
 public void TestStringContextSpecific5() {
   StringBuilder sb = new StringBuilder();
-  var ec = EContext.Basic.WithPrecision(7).WithExponentClamp(true)
+  EContext ec = EContext.Basic.WithPrecision(7).WithExponentClamp(true)
     .WithAdjustExponent(true).WithExponentRange(-95, 96)
     .WithRounding(ERounding.HalfUp);
   AppendNines(sb, 400, 283);
@@ -5441,7 +5470,7 @@ public void TestStringContextSpecific5() {
 @Test
 public void TestStringContextSpecific6() {
   StringBuilder sb = new StringBuilder();
-  var ec = EContext.Basic.WithPrecision(7).WithExponentClamp(true)
+  EContext ec = EContext.Basic.WithPrecision(7).WithExponentClamp(true)
     .WithAdjustExponent(true).WithExponentRange(-95, 96)
     .WithRounding(ERounding.HalfUp);
   AppendNines(sb, 400, 284);
@@ -5507,7 +5536,7 @@ public void TestStringContext() {
   };
   String[] digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
   RandomGenerator rand = new RandomGenerator();
-  for (int i = 0; i < 2000; ++i) {
+  for (int i = 0; i < 4000; ++i) {
     if (i % 1000 == 0) {
       System.out.println(i);
     }
@@ -5520,7 +5549,6 @@ public void TestStringContext() {
     int eprec = precisionRanges[precRange] +
          rand.UniformInt(1 + (precisionRanges[precRange + 1] -
          precisionRanges[precRange]));
-    eprec *= 10;
     int point = -1;
     if (rand.UniformInt(2) == 0) {
        point = rand.UniformInt(prec);
