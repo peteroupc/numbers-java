@@ -496,9 +496,6 @@ at: http://peteroupc.github.io/
       }
     }
 
-    private void CheckFrozen() {
-    }
-
     public int compareTo(EInteger ei) {
 switch (this.integerMode) {
  case 0:
@@ -558,7 +555,6 @@ switch (this.integerMode) {
     }
 
     FastInteger SetInt(int val) {
-      this.CheckFrozen();
       this.smallValue = val;
       this.integerMode = 0;
       return this;
@@ -570,7 +566,6 @@ switch (this.integerMode) {
      * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
-      this.CheckFrozen();
       if (val == 0) {
         this.smallValue = 0;
         this.integerMode = 0;
@@ -621,7 +616,6 @@ switch (this.integerMode) {
      * @return A FastInteger object.
      */
     FastInteger Negate() {
-      this.CheckFrozen();
       switch (this.integerMode) {
         case 0:
           if (this.smallValue == Integer.MIN_VALUE) {
@@ -653,7 +647,6 @@ switch (this.integerMode) {
      * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
-      this.CheckFrozen();
       EInteger valValue;
       switch (this.integerMode) {
         case 0:
@@ -704,7 +697,6 @@ switch (this.integerMode) {
      * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {
-      this.CheckFrozen();
       if (val == Integer.MIN_VALUE) {
         return this.AddBig(ValueNegativeInt32MinValue);
       }
@@ -729,7 +721,6 @@ switch (this.integerMode) {
      * @return A FastInteger object.
      */
     FastInteger AddBig(EInteger bigintVal) {
-      this.CheckFrozen();
       switch (this.integerMode) {
         case 0: {
           return bigintVal.CanFitInInt32() ? this.AddInt(bigintVal.ToInt32Checked()) :
@@ -755,7 +746,6 @@ switch (this.integerMode) {
      * @return A FastInteger object.
      */
     FastInteger SubtractBig(EInteger bigintVal) {
-      this.CheckFrozen();
       if (this.integerMode == 2) {
         this.largeValue = this.largeValue.Subtract(bigintVal);
         return this;
@@ -778,7 +768,6 @@ switch (this.integerMode) {
     }
 
     FastInteger Add(FastInteger val) {
-      this.CheckFrozen();
       EInteger valValue;
       switch (this.integerMode) {
         case 0:
@@ -829,7 +818,7 @@ switch (this.integerMode) {
     FastInteger Remainder(int divisor) {
       // Mod operator will always result in a
       // number that fits an int for int divisors
-      this.CheckFrozen();
+
       if (divisor != 0) {
         switch (this.integerMode) {
           case 0:
@@ -856,7 +845,6 @@ switch (this.integerMode) {
     }
 
     FastInteger Increment() {
-      this.CheckFrozen();
       if (this.integerMode == 0) {
         if (this.smallValue != Integer.MAX_VALUE) {
           ++this.smallValue;
@@ -870,7 +858,6 @@ switch (this.integerMode) {
     }
 
     FastInteger Decrement() {
-      this.CheckFrozen();
       if (this.integerMode == 0) {
         if (this.smallValue != Integer.MIN_VALUE) {
           --this.smallValue;
@@ -885,7 +872,6 @@ switch (this.integerMode) {
     }
 
     FastInteger Divide(int divisor) {
-      this.CheckFrozen();
       if (divisor != 0) {
         switch (this.integerMode) {
           case 0:
@@ -949,7 +935,6 @@ switch (this.integerMode) {
       }
 
     FastInteger AddInt(int val) {
-      this.CheckFrozen();
       EInteger valValue;
       switch (this.integerMode) {
         case 0:

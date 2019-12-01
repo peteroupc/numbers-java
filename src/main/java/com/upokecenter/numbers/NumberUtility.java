@@ -306,6 +306,17 @@ private NumberUtility() {
     private static final PowerCache ValuePowerOfTenCache = new
     NumberUtility.PowerCache();
 
+    public static EInteger FindPowerOfTen(long diffLong) {
+if (diffLong < 0) {
+  return EInteger.FromInt32(0);
+}
+if (diffLong == 0) {
+  return EInteger.FromInt32(1);
+}
+return (diffLong <= Integer.MAX_VALUE) ? FindPowerOfTen((int)diffLong) :
+FindPowerOfTenFromBig(EInteger.FromInt64(diffLong));
+    }
+
     static EInteger FindPowerOfFiveFromBig(EInteger diff) {
       int sign = diff.signum();
       if (sign < 0) {

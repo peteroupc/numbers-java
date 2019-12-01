@@ -54,19 +54,19 @@ at: http://peteroupc.github.io/
    * number can't be represented in a given exponent range.
    * <b>Not-a-number</b> is generally used to signal errors.</p> <p>This
    * class implements the General Decimal Arithmetic Specification version
-   * 1.70 (except part of chapter 6):
-   * <code>http://speleotrove.com/decimal/decarith.html</code> </p> <p><b>Errors
-   * and Exceptions</b> </p> <p>Passing a signaling NaN to any arithmetic
-   * operation shown here will signal the flag FlagInvalid and return a
-   * quiet NaN, even if another operand to that operation is a quiet NaN,
-   * unless noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
-   * operation shown here will return a quiet NaN, unless noted otherwise.
-   * Invalid operations will also return a quiet NaN, as stated in the
-   * individual methods.</p> <p>Unless noted otherwise, passing a null
-   * arbitrary-precision decimal argument to any method here will throw an
-   * exception.</p> <p>When an arithmetic operation signals the flag
-   * FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an
-   * exception too, unless the flag's trap is enabled in the arithmetic
+   * 1.70 except part of chapter 6(
+   * <code>http://speleotrove.com/decimal/decarith.html</code>).</p>
+   * <p><b>Errors and Exceptions</b> </p> <p>Passing a signaling NaN to any
+   * arithmetic operation shown here will signal the flag FlagInvalid and
+   * return a quiet NaN, even if another operand to that operation is a
+   * quiet NaN, unless noted otherwise.</p> <p>Passing a quiet NaN to any
+   * arithmetic operation shown here will return a quiet NaN, unless noted
+   * otherwise. Invalid operations will also return a quiet NaN, as stated
+   * in the individual methods.</p> <p>Unless noted otherwise, passing a
+   * null arbitrary-precision decimal argument to any method here will
+   * throw an exception.</p> <p>When an arithmetic operation signals the
+   * flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw
+   * an exception too, unless the flag's trap is enabled in the arithmetic
    * context (see EContext's Traps property).</p> <p>If an operation
    * requires creating an intermediate value that might be too big to fit
    * in memory (or might require more than 2 gigabytes of memory to store
@@ -164,6 +164,7 @@ at: http://peteroupc.github.io/
    * element, that is, either most significant first or least significant
    * first.</p>
    */
+
   public final class EDecimal implements Comparable<EDecimal> {
     //----------------------------------------------------------------
 
@@ -172,9 +173,9 @@ at: http://peteroupc.github.io/
      */
 
     public static final EDecimal NaN = CreateWithFlags(
-      EInteger.FromInt32(0),
-      EInteger.FromInt32(0),
-      BigNumberFlags.FlagQuietNaN);
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
+        BigNumberFlags.FlagQuietNaN);
 
     /**
      * Negative infinity, less than any other number.
@@ -242,12 +243,12 @@ at: http://peteroupc.github.io/
     private static final int MaxSafeInt = 214748363;
 
     private static final IRadixMath<EDecimal> ExtendedMathValue = new
-    RadixMath<EDecimal>(new DecimalMathHelper());
+RadixMath<EDecimal>(new DecimalMathHelper());
     private static final FastIntegerFixed FastIntZero = new
-    FastIntegerFixed(0);
+FastIntegerFixed(0);
     //----------------------------------------------------------------
     private static final IRadixMath<EDecimal> MathValue = new
-    TrappableRadixMath<EDecimal>(
+TrappableRadixMath<EDecimal>(
       new ExtendedOrSimpleRadixMath<EDecimal>(new
         DecimalMathHelper()));
 
@@ -275,7 +276,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision decimal floating-point number.
      */
     public EDecimal Copy() {
-      return new EDecimal (
+      return new EDecimal(
           this.unsignedMantissa.Copy(),
           this.exponent.Copy(),
           this.flags);
@@ -366,17 +367,17 @@ at: http://peteroupc.github.io/
       if (mantissaSmall == Integer.MIN_VALUE) {
         return Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
       } else if (mantissaSmall < 0) {
-        return new EDecimal (
+        return new EDecimal(
             new FastIntegerFixed(mantissaSmall).Negate(),
             new FastIntegerFixed(exponentSmall),
             BigNumberFlags.FlagNegative);
       } else if (mantissaSmall == 0) {
-        return new EDecimal (
+        return new EDecimal(
             FastIntZero,
             new FastIntegerFixed(exponentSmall),
             0);
       } else {
-        return new EDecimal (
+        return new EDecimal(
             new FastIntegerFixed(mantissaSmall),
             new FastIntegerFixed(exponentSmall),
             0);
@@ -385,8 +386,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a number with the value <code>exponent*10^significand</code>.
-     * @param mantissa Not documented yet.
-     * @param exponent Not documented yet.
+     * @param mantissa The parameter {@code mantissa} is a Numbers.EInteger object.
+     * @param exponent Desired value for the exponent.
      * @return An arbitrary-precision decimal number.
      * @throws NullPointerException The parameter {@code mantissa} or {@code
      * exponent} is null.
@@ -402,7 +403,7 @@ at: http://peteroupc.github.io/
       }
       FastIntegerFixed fi = FastIntegerFixed.FromBig(mantissa);
       int sign = fi.signum();
-      return new EDecimal (
+      return new EDecimal(
           sign < 0 ? fi.Negate() : fi,
           FastIntegerFixed.FromBig(exponent),
           (sign < 0) ? BigNumberFlags.FlagNegative : 0);
@@ -450,10 +451,9 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("diag");
       }
       if (diag.signum() < 0) {
-        throw new
-        IllegalArgumentException("Diagnostic information must be 0 or greater," +
-"\u0020 was: " +
-          diag);
+        throw new IllegalArgumentException("Diagnostic information must be 0 or" +
+"\u0020greater," +
+          "\u0020 was: " + diag);
       }
       if (diag.isZero() && !negative) {
         return signaling ? SignalingNaN : NaN;
@@ -464,7 +464,7 @@ at: http://peteroupc.github.io/
       }
       if (ctx != null && ctx.getHasMaxPrecision()) {
         flags |= BigNumberFlags.FlagQuietNaN;
-        EDecimal ef = new EDecimal (
+        EDecimal ef = new EDecimal(
           FastIntegerFixed.FromBig(diag),
           FastIntZero,
           flags).RoundToPrecision(ctx);
@@ -473,13 +473,13 @@ at: http://peteroupc.github.io/
         newFlags |= signaling ? BigNumberFlags.FlagSignalingNaN :
           BigNumberFlags.FlagQuietNaN;
         return new EDecimal(
-          ef.unsignedMantissa,
-          ef.exponent,
-          newFlags);
+            ef.unsignedMantissa,
+            ef.exponent,
+            newFlags);
       }
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
-      return new EDecimal (
+      return new EDecimal(
           FastIntegerFixed.FromBig(diag),
           FastIntZero,
           flags);
@@ -493,12 +493,12 @@ at: http://peteroupc.github.io/
      * though, that the exact value of a 64-bit binary floating-point
      * number is not always the value that results when passing a literal
      * decimal number (for example, calling
-     * <code>ExtendedDecimal.FromDouble(0.1f)</code>), since not all decimal
+     * <code>ExtendedDecimal.FromDouble(0.1)</code>), since not all decimal
      * numbers can be converted to exact binary numbers (in the example
      * given, the resulting arbitrary-precision decimal will be the value
      *  of the closest "double" to 0.1, not 0.1 exactly). To create an
-     * arbitrary-precision decimal number from an arbitrary-precision
-     * decimal number, use FromString instead in most cases (for example:
+     * arbitrary-precision decimal number from a decimal value, use
+     * FromString instead in most cases (for example:
      *  <code>ExtendedDecimal.FromString("0.1")</code>).
      * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
      * @return An arbitrary-precision decimal number with the same value as {@code
@@ -520,7 +520,7 @@ at: http://peteroupc.github.io/
         int flags = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
             BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
         return lvalue == 0 ? (quiet ? NaN : SignalingNaN) :
-          new EDecimal (
+          new EDecimal(
             FastIntegerFixed.FromLong(lvalue),
             FastIntZero,
             flags);
@@ -535,7 +535,7 @@ at: http://peteroupc.github.io/
       }
       if ((value[1] | value[0]) != 0) {
         floatExponent += NumberUtility.ShiftAwayTrailingZerosTwoElements(
-  value);
+            value);
       } else {
         return neg ? EDecimal.NegativeZero : EDecimal.Zero;
       }
@@ -605,9 +605,9 @@ at: http://peteroupc.github.io/
           (bigfloat.IsQuietNaN() ? BigNumberFlags.FlagQuietNaN : 0) |
           (bigfloat.IsSignalingNaN() ? BigNumberFlags.FlagSignalingNaN : 0);
         return CreateWithFlags(
-          bigfloat.getUnsignedMantissa(),
-          bigfloat.getExponent(),
-          flags);
+            bigfloat.getUnsignedMantissa(),
+            bigfloat.getExponent(),
+            flags);
       }
       EInteger bigintExp = bigfloat.getExponent();
       EInteger bigintMant = bigfloat.getMantissa();
@@ -673,13 +673,15 @@ at: http://peteroupc.github.io/
         return Create(EInteger.FromInt32(valueSmaller), EInteger.FromInt32(0));
       }
       if (valueSmaller < 0) {
-        return new EDecimal (
+        return new EDecimal(
             new FastIntegerFixed(valueSmaller).Negate(),
             FastIntZero,
             BigNumberFlags.FlagNegative);
       } else {
-        return new EDecimal(new FastIntegerFixed(valueSmaller),
-  FastIntZero, 0);
+        return new EDecimal(
+            new FastIntegerFixed(valueSmaller),
+            FastIntZero,
+            0);
       }
     }
 
@@ -695,12 +697,12 @@ at: http://peteroupc.github.io/
       }
       if (valueSmall > Integer.MIN_VALUE && valueSmall <= Integer.MAX_VALUE) {
         if (valueSmall < 0) {
-          return new EDecimal (
+          return new EDecimal(
               new FastIntegerFixed((int)valueSmall).Negate(),
               FastIntZero,
               BigNumberFlags.FlagNegative);
         } else {
-          return new EDecimal (
+          return new EDecimal(
               new FastIntegerFixed((int)valueSmall),
               FastIntZero,
               0);
@@ -722,8 +724,8 @@ at: http://peteroupc.github.io/
      * numbers can be converted to exact binary numbers (in the example
      * given, the resulting arbitrary-precision decimal will be the the
      *  value of the closest "float" to 0.1, not 0.1 exactly). To create an
-     * arbitrary-precision decimal number from an arbitrary-precision
-     * decimal number, use FromString instead in most cases (for example:
+     * arbitrary-precision decimal number from a decimal value, use
+     * FromString instead in most cases (for example:
      *  <code>ExtendedDecimal.FromString("0.1")</code>).
      * @param flt The parameter {@code flt} is a 32-bit binary floating-point
      * number.
@@ -744,9 +746,9 @@ at: http://peteroupc.github.io/
         valueFpMantissa &= 0x3fffff;
         value = (neg ? BigNumberFlags.FlagNegative : 0) |
           (quiet ? BigNumberFlags.FlagQuietNaN :
-BigNumberFlags.FlagSignalingNaN);
+            BigNumberFlags.FlagSignalingNaN);
         return valueFpMantissa == 0 ? (quiet ? NaN : SignalingNaN) :
-          new EDecimal (
+          new EDecimal(
             new FastIntegerFixed(valueFpMantissa),
             FastIntZero,
             value);
@@ -793,7 +795,11 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Creates an arbitrary-precision decimal number from a text string that
      * represents a number. See <code>FromString(string, int, int,
-     * EContext)</code> for more information.
+     * EContext)</code> for more information. Note that calling the overload
+     * that takes an EContext is often much faster than creating the
+     * EDecimal then calling <code>RoundToPrecision</code> on that EDecimal,
+     * especially if the context specifies a precision limit and exponent
+     * range.
      * @param str A string that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
@@ -814,6 +820,10 @@ BigNumberFlags.FlagSignalingNaN);
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
+     * Note that providing a context is often much faster than creating the
+     * EDecimal without a context then calling {@code RoundToPrecision} on
+     * that EDecimal, especially if the context specifies a precision limit
+     * and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
      * @throws NullPointerException The parameter {@code str} is null.
@@ -825,7 +835,11 @@ BigNumberFlags.FlagSignalingNaN);
     /**
      * Creates an arbitrary-precision decimal number from a text string that
      * represents a number. See <code>FromString(string, int, int,
-     * EContext)</code> for more information.
+     * EContext)</code> for more information. Note that calling the overload
+     * that takes an EContext is often much faster than creating the
+     * EDecimal then calling <code>RoundToPrecision</code> on that EDecimal,
+     * especially if the context specifies a precision limit and exponent
+     * range.
      * @param str A string that represents a number.
      * @param offset An index starting at 0 showing where the desired portion of
      * {@code str} begins.
@@ -846,6 +860,9 @@ BigNumberFlags.FlagSignalingNaN);
       int length) {
       return FromString(str, offset, length, null);
     }
+
+    // private static final System.Diagnostics.Stopwatch swRound = new
+    // System.Diagnostics.Stopwatch();
 
     /**
      * <p>Creates an arbitrary-precision decimal number from a text string that
@@ -879,6 +896,10 @@ BigNumberFlags.FlagSignalingNaN);
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
+     * Note that providing a context is often much faster than creating the
+     * EDecimal without a context then calling {@code RoundToPrecision} on
+     * that EDecimal, especially if the context specifies a precision limit
+     * and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
      * given string.
      * @throws NullPointerException The parameter {@code str} is null.
@@ -926,12 +947,8 @@ BigNumberFlags.FlagSignalingNaN);
       }
       int mantInt = 0;
       EInteger mant = null;
-      boolean haveDecimalPoint = false;
       boolean haveDigits = false;
-      boolean haveExponent = false;
-      int newScaleInt = 0;
       int digitStart = 0;
-      EInteger newScale = null;
       int i = tmpoffset;
       if (i + 8 == endStr) {
         if ((str.charAt(i) == 'I' || str.charAt(i) == 'i') &&
@@ -968,9 +985,9 @@ BigNumberFlags.FlagSignalingNaN);
             BigNumberFlags.FlagQuietNaN;
           if (i + 3 == endStr) {
             return (!negative) ? NaN : new EDecimal(
-              FastIntZero,
-              FastIntZero,
-              flags2);
+                FastIntZero,
+                FastIntZero,
+                flags2);
           }
           i += 3;
           FastInteger digitCount = new FastInteger(0);
@@ -1010,7 +1027,7 @@ BigNumberFlags.FlagSignalingNaN);
             mant;
           flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
             BigNumberFlags.FlagQuietNaN;
-          return CreateWithFlags (
+          return CreateWithFlags(
               FastIntegerFixed.FromBig(bigmant),
               FastIntZero,
               flags2);
@@ -1072,65 +1089,123 @@ BigNumberFlags.FlagSignalingNaN);
           EInteger bigmant = (mant == null) ? (EInteger.FromInt32(mantInt)) :
             mant;
           return CreateWithFlags(
-            bigmant,
-            EInteger.FromInt32(0),
-            flags3);
+              bigmant,
+              EInteger.FromInt32(0),
+              flags3);
         }
       }
+      if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
+        !ctx.isSimplified()) {
+        return ParseOrdinaryNumberLimitedPrecision(
+            str,
+            i,
+            endStr,
+            negative,
+            ctx);
+      } else {
+        return ParseOrdinaryNumber(str, i, endStr, negative, ctx);
+      }
+    }
+
+    private static EDecimal SignalUnderflow(EContext ec, boolean negative, boolean
+      zeroSignificand) {
+      EInteger eTiny = ec.getEMin().Subtract(ec.getPrecision().Subtract(1));
+      eTiny = eTiny.Subtract(1); // subtract 1 from proper eTiny to
+      // trigger underflow
+      EDecimal ret = EDecimal.Create(
+          zeroSignificand ? EInteger.FromInt32(0) : EInteger.FromInt32(1),
+          eTiny);
+      if (negative) {
+        ret = ret.Negate();
+      }
+      return ret.RoundToPrecision(ec);
+    }
+
+    private static EDecimal SignalOverflow(EContext ec, boolean negative, boolean
+      zeroSignificand) {
+      if (zeroSignificand) {
+        EDecimal ret = EDecimal.Create(EInteger.FromInt32(0), ec.getEMax());
+        if (negative) {
+          ret = ret.Negate();
+        }
+        return ret.RoundToPrecision(ec);
+      } else {
+        return GetMathValue(ec).SignalOverflow(ec, negative);
+      }
+    }
+
+    private static EDecimal ParseOrdinaryNumberLimitedPrecision(
+      String str,
+      int offset,
+      int endStr,
+      boolean negative,
+      EContext ctx) {
+      int tmpoffset = offset;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      if (ctx == null || !ctx.getHasMaxPrecision()) {
+        throw new IllegalStateException();
+      }
+      boolean haveDecimalPoint = false;
+      boolean haveDigits = false;
+      boolean haveExponent = false;
+      int newScaleInt = 0;
+      int i = tmpoffset;
+      long mantissaLong = 0L;
       // Ordinary number
-      digitStart = i;
+      int digitStart = i;
       int digitEnd = i;
       int decimalDigitStart = i;
       boolean haveNonzeroDigit = false;
       int decimalPrec = 0;
       int decimalDigitEnd = i;
-      // NOTE: Also check HasFlagsOrTraps here because
-      // it's burdensome to determine which flags have
-      // to be set when applying the optimization here
-      boolean roundDown = ctx != null && ctx.getHasMaxPrecision() &&
-          !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.Down ||
-           (negative && ctx.getRounding() == ERounding.Ceiling) ||
-           (!negative && ctx.getRounding() == ERounding.Floor)) &&
-           !ctx.getHasFlagsOrTraps();
+      boolean nonzeroBeyondMax = false;
+      boolean beyondMax = false;
+      int lastdigit = -1;
       for (; i < endStr; ++i) {
         char ch = str.charAt(i);
         if (ch >= '0' && ch <= '9') {
           int thisdigit = (int)(ch - '0');
-          haveNonzeroDigit |= thisdigit != 0;
           haveDigits = true;
-          if (roundDown && ctx != null &&
-              ctx.getPrecision().compareTo(decimalPrec) <= 0) {
-            if (newScaleInt == Integer.MIN_VALUE ||
-                newScaleInt == Integer.MAX_VALUE) {
-                newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
-                newScale = newScale.Add(1);
-              } else {
-                ++newScaleInt;
-              }
-          } else {
-            if (haveNonzeroDigit) {
-              ++decimalPrec;
+          haveNonzeroDigit |= thisdigit != 0;
+          if (beyondMax || (ctx.getPrecision().Add(2).compareTo(decimalPrec) < 0 &&
+              mantissaLong == Long.MAX_VALUE)) {
+            // Well beyond maximum precision, significand is
+            // max or bigger
+            beyondMax = true;
+            if (thisdigit != 0) {
+              nonzeroBeyondMax = true;
             }
-            if (haveDecimalPoint) {
-              decimalDigitEnd = i + 1;
-            } else {
-              digitEnd = i + 1;
+            if (!haveDecimalPoint) {
+              // NOTE: Absolute value will not be more than
+              // the String portion's length, so will fit comfortably
+              // in an 'int'.
+              newScaleInt = (newScaleInt + 1);
             }
-            if (mantInt <= MaxSafeInt) {
-              // multiply by 10
-              mantInt = (mantInt << 3) + (mantInt << 1);
-              mantInt += thisdigit;
-            }
+            continue;
+          }
+          lastdigit = thisdigit;
+          if (haveNonzeroDigit) {
+            ++decimalPrec;
           }
           if (haveDecimalPoint) {
-            if (newScaleInt == Integer.MIN_VALUE ||
-                newScaleInt == Integer.MAX_VALUE) {
-                newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
-                newScale = newScale.Subtract(1);
-              } else {
-                --newScaleInt;
-              }
-            }
+            decimalDigitEnd = i + 1;
+          } else {
+            digitEnd = i + 1;
+          }
+          if (mantissaLong <= 922337203685477580L) {
+            mantissaLong *= 10;
+            mantissaLong += thisdigit;
+          } else {
+            mantissaLong = Long.MAX_VALUE;
+          }
+          if (haveDecimalPoint) {
+            // NOTE: Absolute value will not be more than
+            // the String portion's length, so will fit comfortably
+            // in an 'int'.
+            newScaleInt = (newScaleInt - 1);
+          }
         } else if (ch == '.') {
           if (haveDecimalPoint) {
             throw new NumberFormatException();
@@ -1148,6 +1223,336 @@ BigNumberFlags.FlagSignalingNaN);
       }
       if (!haveDigits) {
         throw new NumberFormatException();
+      }
+      int expInt = 0;
+      int expoffset = 1;
+      int expDigitStart = -1;
+      int expPrec = 0;
+      boolean zeroMantissa = !haveNonzeroDigit;
+      haveNonzeroDigit = false;
+      if (haveExponent) {
+        haveDigits = false;
+        if (i == endStr) {
+          throw new NumberFormatException();
+        }
+        if (str.charAt(i) == '+' || str.charAt(i) == '-') {
+          if (str.charAt(i) == '-') {
+            expoffset = -1;
+          }
+          ++i;
+        }
+        expDigitStart = i;
+        for (; i < endStr; ++i) {
+          char ch = str.charAt(i);
+          if (ch >= '0' && ch <= '9') {
+            haveDigits = true;
+            int thisdigit = (int)(ch - '0');
+            haveNonzeroDigit |= thisdigit != 0;
+            if (haveNonzeroDigit) {
+              ++expPrec;
+            }
+            if (expInt <= 214748364) {
+              expInt *= 10;
+              expInt += thisdigit;
+            } else {
+              expInt = Integer.MAX_VALUE;
+            }
+          } else {
+            throw new NumberFormatException();
+          }
+        }
+        if (!haveDigits) {
+          throw new NumberFormatException();
+        }
+        expInt *= expoffset;
+        if (expPrec > 12) {
+          // Exponent that can't be compensated by digit
+          // length without remaining higher than Integer.MAX_VALUE
+          if (expoffset < 0) {
+            return SignalUnderflow(ctx, negative, zeroMantissa);
+          } else {
+            return SignalOverflow(ctx, negative, zeroMantissa);
+          }
+        }
+      }
+      if (i != endStr) {
+        throw new NumberFormatException();
+      }
+      if (expInt != Integer.MAX_VALUE && expInt > -Integer.MAX_VALUE &&
+        mantissaLong != Long.MAX_VALUE) {
+        // Low precision, low exponent
+        long finalexp = (long)expInt + (long)newScaleInt;
+        if (negative) {
+          mantissaLong = -mantissaLong;
+        }
+        EDecimal eret = EDecimal.Create(
+            EInteger.FromInt64(mantissaLong),
+            EInteger.FromInt64(finalexp));
+        if (negative && zeroMantissa) {
+          eret = eret.Negate();
+        }
+        return eret.RoundToPrecision(ctx);
+      }
+      EInteger mant = null;
+      EInteger exp = (!haveExponent) ? EInteger.FromInt32(0) :
+        EInteger.FromSubstring(str, expDigitStart, endStr);
+      if (expoffset < 0) {
+        exp = exp.Negate();
+      }
+      exp = exp.Add(newScaleInt);
+      if (nonzeroBeyondMax) {
+        exp = exp.Subtract(1);
+        ++decimalPrec;
+      }
+      if (ctx.getHasExponentRange()) {
+        EInteger adjExpUpperBound = exp.Add(decimalPrec).Subtract(1);
+        EInteger adjExpLowerBound = exp;
+        EInteger eTiny = ctx.getEMin().Subtract(ctx.getPrecision().Subtract(1));
+        eTiny = eTiny.Subtract(1);
+        // DebugUtility.Log("exp=" + adjExpLowerBound + "~" +
+        // adjExpUpperBound + ", emin={0} emax={1}", ctx.getEMin(), ctx.getEMax());
+        if (adjExpUpperBound.compareTo(eTiny) < 0) {
+          return SignalUnderflow(ctx, negative, zeroMantissa);
+        } else if (adjExpLowerBound.compareTo(ctx.getEMax()) > 0) {
+          return SignalOverflow(ctx, negative, zeroMantissa);
+        }
+      }
+      if (zeroMantissa) {
+        EDecimal ef = EDecimal.Create(
+            EInteger.FromInt32(0),
+            exp);
+        if (negative) {
+          ef = ef.Negate();
+        }
+        return ef.RoundToPrecision(ctx);
+      } else if (decimalDigitStart != decimalDigitEnd) {
+        String tmpstr = str.substring(digitStart, (digitStart)+(digitEnd - digitStart)) +
+          str.substring(
+            decimalDigitStart, (
+            decimalDigitStart)+(decimalDigitEnd - decimalDigitStart));
+        mant = EInteger.FromString(tmpstr);
+      } else {
+        mant = EInteger.FromSubstring(str, digitStart, digitEnd);
+      }
+      if (nonzeroBeyondMax) {
+        mant = mant.Multiply(10).Add(1);
+      }
+      if (negative) {
+        mant = mant.Negate();
+      }
+      return EDecimal.Create(mant, exp)
+        .RoundToPrecision(ctx);
+    }
+
+    private static EDecimal ParseOrdinaryNumber(
+      String str,
+      int i,
+      int endStr,
+      boolean negative,
+      EContext ctx) {
+      int mantInt = 0;
+      EInteger mant = null;
+      boolean haveDecimalPoint = false;
+      boolean haveExponent = false;
+      int newScaleInt = 0;
+      boolean haveDigits = false;
+      int digitStart = 0;
+      EInteger newScale = null;
+      // Ordinary number
+      digitStart = i;
+      int digitEnd = i;
+      int decimalDigitStart = i;
+      boolean haveNonzeroDigit = false;
+      int decimalPrec = 0;
+      int decimalDigitEnd = i;
+      // NOTE: Also check HasFlagsOrTraps here because
+      // it's burdensome to determine which flags have
+      // to be set when applying the optimization here
+      boolean roundDown = ctx != null && ctx.getHasMaxPrecision() &&
+        !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.Down ||
+          (negative && ctx.getRounding() == ERounding.Ceiling) ||
+          (!negative && ctx.getRounding() == ERounding.Floor)) &&
+        !ctx.getHasFlagsOrTraps();
+      boolean roundHalf = ctx != null && ctx.getHasMaxPrecision() &&
+        !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.HalfUp ||
+          (ctx.getRounding() == ERounding.HalfDown) ||
+          (ctx.getRounding() == ERounding.HalfEven)) &&
+        !ctx.getHasFlagsOrTraps();
+      boolean roundUp = ctx != null && ctx.getHasMaxPrecision() &&
+        !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.Up ||
+          (!negative && ctx.getRounding() == ERounding.Ceiling) ||
+          (negative && ctx.getRounding() == ERounding.Floor)) &&
+        !ctx.getHasFlagsOrTraps();
+      boolean haveIgnoredDigit = false;
+      int lastdigit = -1;
+      boolean beyondPrecision = false;
+      boolean ignoreNextDigit = false;
+      int zerorun = 0;
+      // DebugUtility.Log("round half=" + (// roundHalf) +
+      // " up=" + roundUp + " down=" + roundDown +
+      // " maxprec=" + (ctx != null && ctx.getHasMaxPrecision()));
+      for (; i < endStr; ++i) {
+        char ch = str.charAt(i);
+        if (ch >= '0' && ch <= '9') {
+          int thisdigit = (int)(ch - '0');
+          haveNonzeroDigit |= thisdigit != 0;
+          haveDigits = true;
+          beyondPrecision |= ctx != null && ctx.getHasMaxPrecision() &&
+            !ctx.isPrecisionInBits() && ctx.getPrecision().compareTo(decimalPrec)
+            <= 0;
+          if (ctx != null) {
+            if (ignoreNextDigit) {
+              haveIgnoredDigit = true;
+              ignoreNextDigit = false;
+            }
+            if (roundDown && (haveIgnoredDigit || beyondPrecision)) {
+              // "Ignored" digit
+              haveIgnoredDigit = true;
+            } else if (roundUp && beyondPrecision && !haveIgnoredDigit) {
+              if (thisdigit > 0) {
+                ignoreNextDigit = true;
+              } else {
+                roundUp = false;
+              }
+            } else if (roundHalf && beyondPrecision && !haveIgnoredDigit) {
+              if (thisdigit >= 1 && thisdigit < 5) {
+                ignoreNextDigit = true;
+              } else if (thisdigit > 5 || (thisdigit == 5 &&
+                  ctx.getRounding() == ERounding.HalfUp)) {
+                roundHalf = false;
+                roundUp = true;
+                ignoreNextDigit = true;
+              } else {
+                roundHalf = false;
+              }
+            }
+          }
+          if (haveIgnoredDigit) {
+            zerorun = 0;
+            if (newScaleInt == Integer.MIN_VALUE ||
+              newScaleInt == Integer.MAX_VALUE) {
+              newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+              newScale = newScale.Add(1);
+            } else {
+              ++newScaleInt;
+            }
+          } else {
+            lastdigit = thisdigit;
+            if (beyondPrecision && thisdigit == 0) {
+              ++zerorun;
+            } else {
+              zerorun = 0;
+            }
+            if (haveNonzeroDigit) {
+              ++decimalPrec;
+            }
+            if (haveDecimalPoint) {
+              decimalDigitEnd = i + 1;
+            } else {
+              digitEnd = i + 1;
+            }
+            if (mantInt <= MaxSafeInt) {
+              // multiply by 10
+              mantInt = (mantInt << 3) + (mantInt << 1);
+              mantInt += thisdigit;
+            }
+          }
+          if (haveDecimalPoint) {
+            if (newScaleInt == Integer.MIN_VALUE ||
+              newScaleInt == Integer.MAX_VALUE) {
+              newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+              newScale = newScale.Subtract(1);
+            } else {
+              --newScaleInt;
+            }
+          }
+        } else if (ch == '.') {
+          if (haveDecimalPoint) {
+            throw new NumberFormatException();
+          }
+          haveDecimalPoint = true;
+          decimalDigitStart = i + 1;
+          decimalDigitEnd = i + 1;
+        } else if (ch == 'E' || ch == 'e') {
+          haveExponent = true;
+          ++i;
+          break;
+        } else {
+          throw new NumberFormatException();
+        }
+      }
+      if (!haveDigits) {
+        throw new NumberFormatException();
+      }
+      /*
+      if (ctx != null) {
+       DebugUtility.Log("zerorun=" + zerorun + " roundup=" + roundUp +
+       ", haveIgnored="+haveIgnoredDigit +", decimalPrec=" + decimalPrec +
+      ", ctx="+ctx);
+      }*/
+      if (zerorun > 0 && lastdigit == 0 && (ctx == null ||
+          !ctx.getHasFlagsOrTraps())) {
+        decimalPrec -= zerorun;
+        int nondec = 0;
+        // NOTE: This check is apparently needed for correctness
+        if (ctx == null || (!ctx.getHasMaxPrecision() ||
+            decimalPrec - ctx.getPrecision().ToInt32Checked() > zerorun)) {
+          if (haveDecimalPoint) {
+            int decdigits = decimalDigitEnd - decimalDigitStart;
+            nondec = Math.min(decdigits, zerorun);
+            decimalDigitEnd -= nondec;
+            int remain = zerorun - nondec;
+            digitEnd -= remain;
+            // DebugUtility.Log("remain={0} nondec={1}
+            // newScale={2}",remain,nondec,newScaleInt);
+            nondec = zerorun;
+          } else {
+            digitEnd -= zerorun;
+            nondec = zerorun;
+          }
+          if (newScaleInt > Integer.MIN_VALUE + nondec &&
+            newScaleInt < Integer.MAX_VALUE - nondec) {
+            newScaleInt += nondec;
+          } else {
+            newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+            newScale = newScale.Add(nondec);
+          }
+        }
+        // DebugUtility.Log("-->zerorun={0} prec={1} [whole={2}, dec={3}]
+        // str={4}",zerorun,decimalPrec,
+        // digitEnd-digitStart, decimalDigitEnd-decimalDigitStart, str);
+      }
+      // if (ctx != null) {
+      // DebugUtility.Log("roundup [prec=" + decimalPrec + ", ctxprec=" +
+      // (// ctx.getPrecision()) + ", str=" + (// str.substring(0,Math.min(20,
+      // str.length()))) + "] " + (ctx.getRounding()));
+      // }
+      if (roundUp && ctx != null && ctx.getPrecision().compareTo(decimalPrec) < 0) {
+        int precdiff = decimalPrec - ctx.getPrecision().ToInt32Checked();
+        // DebugUtility.Log("precdiff = " + precdiff + " [prec=" + (// decimalPrec) +
+        // ",
+        // ctxprec=" + ctx.getPrecision() + "]");
+        if (precdiff > 1) {
+          int precchop = precdiff - 1;
+          decimalPrec -= precchop;
+          int nondec = precchop;
+          // DebugUtility.Log("precchop=" + (precchop));
+          if (haveDecimalPoint) {
+            int decdigits = decimalDigitEnd - decimalDigitStart;
+            // DebugUtility.Log("decdigits=" + decdigits + " decprecchop=" + (decdigits));
+            decimalDigitEnd -= nondec;
+            int remain = precchop - nondec;
+            digitEnd -= remain;
+          } else {
+            digitEnd -= precchop;
+          }
+          if (newScaleInt < Integer.MAX_VALUE - nondec) {
+            newScaleInt += nondec;
+          } else {
+            newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+            newScale = newScale.Add(nondec);
+          }
+        }
       }
       EDecimal ret = null;
       EInteger exp = null;
@@ -1197,13 +1602,13 @@ BigNumberFlags.FlagSignalingNaN);
         if (expoffset >= 0 && newScaleInt == 0 && newScale == null) {
           newScaleInt = expInt;
         } else {
-            newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
-            if (expoffset < 0) {
-              newScale = newScale.Subtract(expInt);
-            } else if (expInt != 0) {
-              newScale = newScale.Add(expInt);
-            }
+          newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+          if (expoffset < 0) {
+            newScale = newScale.Subtract(expInt);
+          } else if (expInt != 0) {
+            newScale = newScale.Add(expInt);
           }
+        }
       }
       if (mantInt > MaxSafeInt || (haveExponent && expInt > MaxSafeInt)) {
         EInteger ns;
@@ -1222,7 +1627,7 @@ BigNumberFlags.FlagSignalingNaN);
           } else {
             ns = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
             ns = (expoffset < 0) ? ns.Subtract(trialExponent) :
-                ns.Add(trialExponent);
+              ns.Add(trialExponent);
           }
         }
         EInteger eiDecPrec = EInteger.FromInt32(decimalPrec);
@@ -1231,47 +1636,47 @@ BigNumberFlags.FlagSignalingNaN);
             eiDecPrec,
             ns);
         if (mantInt == 0 && (expwithin == 1 || expwithin == 2 ||
-             expwithin == 3)) {
-              // Significand is zero
-              ret = new EDecimal(
-                new FastIntegerFixed(0),
-                FastIntegerFixed.FromBig(ns),
-                negative ? BigNumberFlags.FlagNegative : 0);
-              return GetMathValue(ctx).RoundAfterConversion(ret, ctx);
+            expwithin == 3)) {
+          // Significand is zero
+          ret = new EDecimal(
+            new FastIntegerFixed(0),
+            FastIntegerFixed.FromBig(ns),
+            negative ? BigNumberFlags.FlagNegative : 0);
+          return GetMathValue(ctx).RoundAfterConversion(ret, ctx);
         }
         if (expwithin == 1) {
-              // Exponent indicates overflow
-              return GetMathValue(ctx).SignalOverflow(ctx, negative);
+          // Exponent indicates overflow
+          return GetMathValue(ctx).SignalOverflow(ctx, negative);
         }
         if (expwithin == 2 || (expwithin == 3 && mantInt < MaxSafeInt)) {
-            // Exponent indicates underflow to zero
-            ret = new EDecimal(
-              new FastIntegerFixed(expwithin == 3 ? mantInt : 1),
-              FastIntegerFixed.FromBig(ns),
-              negative ? BigNumberFlags.FlagNegative : 0);
-            return GetMathValue(ctx).RoundAfterConversion(ret, ctx);
-          } else if (expwithin == 3 && (ctx == null || ctx.getTraps() == 0)) {
-            // Exponent indicates underflow to zero, adjust exponent
-            ret = new EDecimal(
-              new FastIntegerFixed(1),
-              FastIntegerFixed.FromBig(ns),
-              negative ? BigNumberFlags.FlagNegative : 0);
-            ret = GetMathValue(ctx).RoundAfterConversion(ret, ctx);
-            ns = ret.getExponent().Subtract(eiDecPrec.Subtract(1));
-            ret = new EDecimal(
-              ret.unsignedMantissa.Copy(),
-              FastIntegerFixed.FromBig(ns),
-              ret.flags);
-            return ret;
+          // Exponent indicates underflow to zero
+          ret = new EDecimal(
+            new FastIntegerFixed(expwithin == 3 ? mantInt : 1),
+            FastIntegerFixed.FromBig(ns),
+            negative ? BigNumberFlags.FlagNegative : 0);
+          return GetMathValue(ctx).RoundAfterConversion(ret, ctx);
+        } else if (expwithin == 3 && (ctx == null || ctx.getTraps() == 0)) {
+          // Exponent indicates underflow to zero, adjust exponent
+          ret = new EDecimal(
+            new FastIntegerFixed(1),
+            FastIntegerFixed.FromBig(ns),
+            negative ? BigNumberFlags.FlagNegative : 0);
+          ret = GetMathValue(ctx).RoundAfterConversion(ret, ctx);
+          ns = ret.getExponent().Subtract(eiDecPrec.Subtract(1));
+          ret = new EDecimal(
+            ret.unsignedMantissa.Copy(),
+            FastIntegerFixed.FromBig(ns),
+            ret.flags);
+          return ret;
         }
       }
       // Parse significand if it's "big"
       if (mantInt > MaxSafeInt) {
         if (haveDecimalPoint) {
           String decstr = str.substring(digitStart, (digitStart)+(digitEnd - digitStart)) +
-              str.substring(
-                decimalDigitStart, (
-                decimalDigitStart)+(decimalDigitEnd - decimalDigitStart));
+            str.substring(
+              decimalDigitStart, (
+              decimalDigitStart)+(decimalDigitEnd - decimalDigitStart));
           mant = EInteger.FromString(decstr);
         } else {
           mant = EInteger.FromSubstring(str, digitStart, digitEnd);
@@ -1279,10 +1684,10 @@ BigNumberFlags.FlagSignalingNaN);
       }
       if (haveExponent && expInt > MaxSafeInt) {
         // Parse exponent if it's "big"
-          exp = EInteger.FromSubstring(str, expDigitStart, endStr);
-          newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
-          newScale = (expoffset < 0) ? newScale.Subtract(exp) :
-               newScale.Add(exp);
+        exp = EInteger.FromSubstring(str, expDigitStart, endStr);
+        newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+        newScale = (expoffset < 0) ? newScale.Subtract(exp) :
+          newScale.Add(exp);
       }
       FastIntegerFixed fastIntScale;
       FastIntegerFixed fastIntMant;
@@ -1313,77 +1718,77 @@ BigNumberFlags.FlagSignalingNaN);
       return ret;
     }
 
-// 1 = Overflow; 2 = Underflow, adjust significand to 1; 0 = None;
-// 3 = Underflow, adjust significant to have precision
-private static int CheckOverflowUnderflow(
-  EContext ec,
-  EInteger precision,
-  EInteger exponent) {
-// NOTE: Not guaranteed to catch all overflows or underflows.
- if (exponent == null) {
-   throw new NullPointerException("exponent");
- }
- if (precision == null) {
-   throw new NullPointerException("precision");
- }
- if (!(precision.signum() >= 0)) {
-   throw new IllegalArgumentException("doesn't satisfy precision.signum()>= 0");
- }
- // "Precision" is the number of digits in a number starting with
- // the first nonzero digit
- if (ec == null || !ec.getHasExponentRange()) {
-   return 0;
- }
- if (ec.getAdjustExponent()) {
-   // If precision is in bits, this is too difficult to determine,
-   // so ignore precision
-   if (ec.isPrecisionInBits()) {
-     if (exponent.compareTo(ec.getEMax()) > 0) {
-        return 2; // Underflow
-     }
-   } else {
-     EInteger adjExponent = exponent.Add(precision).Subtract(1);
-     if (adjExponent.compareTo(ec.getEMax()) > 0) {
-       return 1; // Overflow
-     }
-     if (ec.getHasMaxPrecision()) {
-       EInteger etiny = ec.getEMin().Subtract(ec.getPrecision().Subtract(1));
-       etiny = etiny.Subtract(1); // Buffer in case of rounding
-       //DebugUtility.Log("adj: adjexp=" + adjExponent + " exp=" + exponent + "
-       //etiny="+etiny);
-       if (adjExponent.compareTo(etiny) < 0) {
-         return 2; // Underflow to zero
-       }
-     } else {
-       EInteger etiny = ec.getEMin().Subtract(precision.Subtract(1));
-       etiny = etiny.Subtract(1); // Buffer in case of rounding
-       //DebugUtility.Log("adj: adjexp=" + adjExponent + " exp=" + exponent + "
-       //etiny="+etiny);
-       if (adjExponent.compareTo(etiny) < 0) {
-         return 3; // Underflow to zero
-       }
-     }
-   }
- } else {
-    // Exponent range is independent of precision
-   if (exponent.compareTo(ec.getEMax()) > 0) {
-     return 1; // Overflow
-   }
-   if (/*ec.getHasMaxPrecision() &&*/ !ec.isPrecisionInBits()) {
-     EInteger adjExponent = exponent.Add(precision).Subtract(1);
-     EInteger etiny = ec.getHasMaxPrecision() ?
-           ec.getEMin().Subtract(ec.getPrecision().Subtract(1)) :
-           ec.getEMin().Subtract(precision.Subtract(1));
-     etiny = etiny.Subtract(1); // Buffer in case of rounding
-     //DebugUtility.Log("noadj: adjexp=" + adjExponent + " exp=" + exponent + "
-     //etiny="+etiny);
-     if (adjExponent.compareTo(etiny) < 0) {
-         return 2; // Underflow to zero
-     }
-   }
- }
- return 0;
-}
+    // 1 = Overflow; 2 = Underflow, adjust significand to 1; 0 = None;
+    // 3 = Underflow, adjust significant to have precision
+    private static int CheckOverflowUnderflow(
+      EContext ec,
+      EInteger precision,
+      EInteger exponent) {
+      // NOTE: Not guaranteed to catch all overflows or underflows.
+      if (exponent == null) {
+        throw new NullPointerException("exponent");
+      }
+      if (precision == null) {
+        throw new NullPointerException("precision");
+      }
+      if (!(precision.signum() >= 0)) {
+        throw new IllegalArgumentException("doesn't satisfy precision.signum()>= 0");
+      }
+      // "Precision" is the number of digits in a number starting with
+      // the first nonzero digit
+      if (ec == null || !ec.getHasExponentRange()) {
+        return 0;
+      }
+      if (ec.getAdjustExponent()) {
+        // If precision is in bits, this is too difficult to determine,
+        // so ignore precision
+        if (ec.isPrecisionInBits()) {
+          if (exponent.compareTo(ec.getEMax()) > 0) {
+            return 2; // Underflow
+          }
+        } else {
+          EInteger adjExponent = exponent.Add(precision).Subtract(1);
+          if (adjExponent.compareTo(ec.getEMax()) > 0) {
+            return 1; // Overflow
+          }
+          if (ec.getHasMaxPrecision()) {
+            EInteger etiny = ec.getEMin().Subtract(ec.getPrecision().Subtract(1));
+            etiny = etiny.Subtract(1); // Buffer in case of rounding
+            // DebugUtility.Log("adj: adjexp=" + adjExponent + " exp=" + exponent + "
+            // etiny="+etiny);
+            if (adjExponent.compareTo(etiny) < 0) {
+              return 2; // Underflow to zero
+            }
+          } else {
+            EInteger etiny = ec.getEMin().Subtract(precision.Subtract(1));
+            etiny = etiny.Subtract(1); // Buffer in case of rounding
+            // DebugUtility.Log("adj: adjexp=" + adjExponent + " exp=" + exponent + "
+            // etiny="+etiny);
+            if (adjExponent.compareTo(etiny) < 0) {
+              return 3; // Underflow to zero
+            }
+          }
+        }
+      } else {
+        // Exponent range is independent of precision
+        if (exponent.compareTo(ec.getEMax()) > 0) {
+          return 1; // Overflow
+        }
+        if (!ec.isPrecisionInBits()) {
+          EInteger adjExponent = exponent.Add(precision).Subtract(1);
+          EInteger etiny = ec.getHasMaxPrecision() ?
+            ec.getEMin().Subtract(ec.getPrecision().Subtract(1)) :
+            ec.getEMin().Subtract(precision.Subtract(1));
+          etiny = etiny.Subtract(1); // Buffer in case of rounding
+          // DebugUtility.Log("noadj: adjexp=" + adjExponent + " exp=" + exponent + "
+          // etiny="+etiny);
+          if (adjExponent.compareTo(etiny) < 0) {
+            return 2; // Underflow to zero
+          }
+        }
+      }
+      return 0;
+    }
 
     /**
      * Gets the greater value between two decimal numbers.
@@ -1592,8 +1997,8 @@ private static int CheckOverflowUnderflow(
         ((this.flags | otherValue.flags) & BigNumberFlags.FlagNegative) == 0 &&
         this.exponent.compareTo(otherValue.exponent) == 0) {
         FastIntegerFixed result = FastIntegerFixed.Add(
-          this.unsignedMantissa,
-          otherValue.unsignedMantissa);
+            this.unsignedMantissa,
+            otherValue.unsignedMantissa);
         return new EDecimal(result, this.exponent, 0);
       }
       return this.Add(otherValue, EContext.UnlimitedHalfEven);
@@ -1632,20 +2037,36 @@ private static int CheckOverflowUnderflow(
       return this.CompareToValue(other);
     }
 
-  /**
-   * Not documented yet.
-   * @param intOther Not documented yet.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Compares the mathematical values of this object and another object,
+     * accepting NaN values. This method currently uses the rules given in
+     * the CompareToValue method, so that it it is not consistent with the
+     * Equals method, but it may change in a future version to use the
+     * rules for the CompareToTotal method instead.
+     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other
+     * value, or 0 if both values are equal.
+     */
     public int compareTo(int intOther) {
       return this.CompareToValue(EDecimal.FromInt32(intOther));
     }
 
-  /**
-   * Not documented yet.
-   * @param intOther Not documented yet.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Compares the mathematical values of this object and another object,
+     * accepting NaN values. <p>This method is not consistent with the
+     * Equals method because two different numbers with the same
+     * mathematical value, but different exponents, will compare as
+     * equal.</p> <p>In this method, negative zero and positive zero are
+     * considered equal.</p> <p>If this object or the other object is a
+     * quiet NaN or signaling NaN, this method will not trigger an error.
+     * Instead, NaN will compare greater than any other number, including
+     * infinity. Two different NaN values will be considered equal.</p>
+     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other
+     * value, or 0 if both values are equal.
+     */
     public int CompareToValue(int intOther) {
       return this.CompareToValue(EDecimal.FromInt32(intOther));
     }
@@ -1731,7 +2152,8 @@ private static int CheckOverflowUnderflow(
         if (absexp.compareTo(bitCount) > 0) {
           // Float's absolute value is less than 1, so do a trial comparison
           // using exponent closer to 0
-          EFloat trial = EFloat.Create(ef.getMantissa(), EInteger.FromInt32(-1000));
+          EFloat trial = EFloat.Create(ef.getMantissa(), EInteger.FromInt32(
+                -1000));
           int trialcmp = CompareEDecimalToEFloat(ed, trial);
           if (ef.signum() < 0 && trialcmp < 0) {
             // if float and decimal are negative and
@@ -1754,16 +2176,14 @@ private static int CheckOverflowUnderflow(
         // DebugUtility.Log("td=" + ed.ToDouble() + ", tf=" + ef.ToDouble());
         if (
           thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000))
->= 0 &&
-          otherAdjExp.compareTo(EInteger.FromInt64(-4000)) < 0) {
+          >= 0 && otherAdjExp.compareTo(EInteger.FromInt64(-4000)) < 0) {
           // With these exponent combinations, the binary's absolute
           // value is less than the decimal's
           return (signA > 0) ? 1 : -1;
         }
         if (
           thisAdjExp.signum() < 0 && thisAdjExp.compareTo(EInteger.FromInt64(-1000)) <
-0 &&
-          otherAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0) {
+          0 && otherAdjExp.compareTo(EInteger.FromInt64(-1000)) < 0) {
           thisAdjExp = thisAdjExp.Add(EInteger.FromInt32(1)).Abs();
           otherAdjExp = otherAdjExp.Add(EInteger.FromInt32(1)).Abs();
           EInteger ratio = otherAdjExp.Multiply(1000).Divide(thisAdjExp);
@@ -1908,7 +2328,7 @@ private static int CheckOverflowUnderflow(
         return -1;
       }
       if (valueIThis >= 2) {
-        cmp = this.unsignedMantissa.compareTo (
+        cmp = this.unsignedMantissa.compareTo(
             other.unsignedMantissa);
         return cmp;
       } else if (valueIThis == 1) {
@@ -1916,7 +2336,7 @@ private static int CheckOverflowUnderflow(
       } else {
         cmp = this.Abs().compareTo(other.Abs());
         if (cmp == 0) {
-          cmp = this.exponent.compareTo (
+          cmp = this.exponent.compareTo(
               other.exponent);
           return cmp;
         }
@@ -2048,7 +2468,7 @@ private static int CheckOverflowUnderflow(
         return neg1 ? 1 : -1;
       }
       if (valueIThis >= 2) {
-        cmp = this.unsignedMantissa.compareTo (
+        cmp = this.unsignedMantissa.compareTo(
             other.unsignedMantissa);
         return neg1 ? -cmp : cmp;
       } else if (valueIThis == 1) {
@@ -2056,7 +2476,7 @@ private static int CheckOverflowUnderflow(
       } else {
         cmp = this.compareTo(other);
         if (cmp == 0) {
-          cmp = this.exponent.compareTo (
+          cmp = this.exponent.compareTo(
               other.exponent);
           return neg1 ? -cmp : cmp;
         }
@@ -2096,7 +2516,7 @@ private static int CheckOverflowUnderflow(
      * exact because it would have a nonterminating decimal expansion.
      */
     public EDecimal Divide(EDecimal divisor) {
-      return this.Divide (
+      return this.Divide(
           divisor,
           EContext.ForRounding(ERounding.None));
     }
@@ -2198,7 +2618,7 @@ private static int CheckOverflowUnderflow(
       EContext ctx) {
       EDecimal[] result = new EDecimal[2];
       result[0] = this.DivideToIntegerNaturalScale(divisor, null);
-      result[1] = this.Subtract (
+      result[1] = this.Subtract(
           result[0].Multiply(divisor, null),
           ctx);
       result[0] = result[0].RoundToPrecision(ctx);
@@ -2236,7 +2656,7 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       long desiredExponentSmall,
       EContext ctx) {
-      return this.DivideToExponent (
+      return this.DivideToExponent(
           divisor,
           EInteger.FromInt64(desiredExponentSmall),
           ctx);
@@ -2274,7 +2694,7 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       int desiredExponentInt,
       EContext ctx) {
-      return this.DivideToExponent (
+      return this.DivideToExponent(
           divisor,
           EInteger.FromInt32(desiredExponentInt),
           ctx);
@@ -2302,7 +2722,7 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       long desiredExponentSmall,
       ERounding rounding) {
-      return this.DivideToExponent (
+      return this.DivideToExponent(
           divisor,
           EInteger.FromInt64(desiredExponentSmall),
           EContext.ForRounding(rounding));
@@ -2331,7 +2751,7 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       int desiredExponentInt,
       ERounding rounding) {
-      return this.DivideToExponent (
+      return this.DivideToExponent(
           divisor,
           EInteger.FromInt32(desiredExponentInt),
           EContext.ForRounding(rounding));
@@ -2408,9 +2828,9 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       long desiredExponentSmall) {
       return this.DivideToExponent(
-        divisor,
-        desiredExponentSmall,
-        ERounding.HalfEven);
+          divisor,
+          desiredExponentSmall,
+          ERounding.HalfEven);
     }
 
     /**
@@ -2432,9 +2852,9 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       int desiredExponentInt) {
       return this.DivideToExponent(
-        divisor,
-        desiredExponentInt,
-        ERounding.HalfEven);
+          divisor,
+          desiredExponentInt,
+          ERounding.HalfEven);
     }
 
     /**
@@ -2458,7 +2878,7 @@ private static int CheckOverflowUnderflow(
       EDecimal divisor,
       EInteger desiredExponent,
       ERounding rounding) {
-      return this.DivideToExponent (
+      return this.DivideToExponent(
           divisor,
           desiredExponent,
           EContext.ForRounding(rounding));
@@ -2476,7 +2896,7 @@ private static int CheckOverflowUnderflow(
      */
     public EDecimal DivideToIntegerNaturalScale(EDecimal
       divisor) {
-      return this.DivideToIntegerNaturalScale (
+      return this.DivideToIntegerNaturalScale(
           divisor,
           EContext.ForRounding(ERounding.Down));
     }
@@ -2499,8 +2919,10 @@ private static int CheckOverflowUnderflow(
     public EDecimal DivideToIntegerNaturalScale(
       EDecimal divisor,
       EContext ctx) {
-      return GetMathValue(ctx).DivideToIntegerNaturalScale(this, divisor,
-  ctx);
+      return GetMathValue(ctx).DivideToIntegerNaturalScale(
+          this,
+          divisor,
+          ctx);
     }
 
     /**
@@ -2541,7 +2963,7 @@ private static int CheckOverflowUnderflow(
     public EDecimal DivideToSameExponent(
       EDecimal divisor,
       ERounding rounding) {
-      return this.DivideToExponent (
+      return this.DivideToExponent(
           divisor,
           this.exponent.ToEInteger(),
           EContext.ForRounding(rounding));
@@ -2565,7 +2987,9 @@ private static int CheckOverflowUnderflow(
      * arbitrary-precision decimal number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
      * @param obj The parameter {@code obj} is an arbitrary object.
-     * @return {@code true} if the objects are equal; otherwise, {@code false}.
+     * @return {@code true} if the objects are equal; otherwise, {@code false}. In
+     * this method, two objects are not equal if they don't have the same
+     * type or if one is null and the other isn't.
      */
     @Override public boolean equals(Object obj) {
       return this.EqualsInternal(((obj instanceof EDecimal) ? (EDecimal)obj : null));
@@ -2847,11 +3271,11 @@ private static int CheckOverflowUnderflow(
         EInteger bigPower = NumberUtility.FindPowerOfTenFromBig(bigExp);
         mant = mant.Multiply(bigPower);
         return CreateWithFlags(
-          mant,
-          EInteger.FromInt32(0),
-          this.flags).RoundToPrecision(ctx);
+            mant,
+            EInteger.FromInt32(0),
+            this.flags).RoundToPrecision(ctx);
       }
-      return CreateWithFlags (
+      return CreateWithFlags(
           this.unsignedMantissa,
           FastIntegerFixed.FromBig(bigExp),
           this.flags).RoundToPrecision(ctx);
@@ -2876,23 +3300,23 @@ private static int CheckOverflowUnderflow(
           int integerB = otherValue.unsignedMantissa.AsInt32();
           long longA = ((long)integerA) * ((long)integerB);
           FastIntegerFixed exp = FastIntegerFixed.Add(
-            this.exponent,
-            otherValue.exponent);
+              this.exponent,
+              otherValue.exponent);
           if ((longA >> 31) == 0) {
-            return new EDecimal (
+            return new EDecimal(
                 new FastIntegerFixed((int)longA),
                 exp,
                 newflags);
           } else {
-            return new EDecimal (
+            return new EDecimal(
                 FastIntegerFixed.FromBig(EInteger.FromInt64(longA)),
                 exp,
                 newflags);
           }
         } else {
-          EInteger eintA = this.unsignedMantissa.ToEInteger().Multiply (
+          EInteger eintA = this.unsignedMantissa.ToEInteger().Multiply(
               otherValue.unsignedMantissa.ToEInteger());
-          return new EDecimal (
+          return new EDecimal(
               FastIntegerFixed.FromBig(eintA),
               FastIntegerFixed.Add(this.exponent, otherValue.exponent),
               newflags);
@@ -3024,9 +3448,9 @@ private static int CheckOverflowUnderflow(
       if ((subtrahend.flags & BigNumberFlags.FlagNaN) == 0) {
         int newflags = subtrahend.flags ^ BigNumberFlags.FlagNegative;
         negated = CreateWithFlags(
-          subtrahend.unsignedMantissa,
-          subtrahend.exponent,
-          newflags);
+            subtrahend.unsignedMantissa,
+            subtrahend.exponent,
+            newflags);
       }
       return GetMathValue(ctx)
         .MultiplyAndAdd(this, op, negated, ctx);
@@ -3043,9 +3467,9 @@ private static int CheckOverflowUnderflow(
      */
     public EDecimal Negate() {
       return new EDecimal(
-        this.unsignedMantissa,
-        this.exponent,
-        this.flags ^ BigNumberFlags.FlagNegative);
+          this.unsignedMantissa,
+          this.exponent,
+          this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
@@ -3241,7 +3665,7 @@ private static int CheckOverflowUnderflow(
     public EDecimal Quantize(
       EInteger desiredExponent,
       EContext ctx) {
-      return this.Quantize (
+      return this.Quantize(
           EDecimal.Create(EInteger.FromInt32(1), desiredExponent),
           ctx);
     }
@@ -3270,12 +3694,12 @@ private static int CheckOverflowUnderflow(
       int desiredExponentInt,
       ERounding rounding) {
       EDecimal ret = this.RoundToExponentFast(
-        desiredExponentInt,
-        rounding);
+          desiredExponentInt,
+          rounding);
       if (ret != null) {
         return ret;
       }
-      return this.Quantize (
+      return this.Quantize(
           EDecimal.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
           EContext.ForRounding(rounding));
     }
@@ -3321,13 +3745,13 @@ private static int CheckOverflowUnderflow(
         (!ctx.getHasExponentRange() && !ctx.getHasFlags() && ctx.getTraps() == 0 &&
           !ctx.getHasMaxPrecision() && !ctx.isSimplified())) {
         EDecimal ret = this.RoundToExponentFast(
-          desiredExponentInt,
-          ctx == null ? ERounding.HalfEven : ctx.getRounding());
+            desiredExponentInt,
+            ctx == null ? ERounding.HalfEven : ctx.getRounding());
         if (ret != null) {
           return ret;
         }
       }
-      return this.Quantize (
+      return this.Quantize(
           EDecimal.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
           ctx);
     }
@@ -3465,7 +3889,7 @@ private static int CheckOverflowUnderflow(
     public EDecimal RemainderNaturalScale(
       EDecimal divisor,
       EContext ctx) {
-      return this.Subtract (
+      return this.Subtract(
         this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
         ctx);
     }
@@ -3556,7 +3980,7 @@ private static int CheckOverflowUnderflow(
      */
     public EDecimal RoundToExponent(
       EInteger exponent) {
-      return this.RoundToExponent (
+      return this.RoundToExponent(
           exponent,
           EContext.ForRounding(ERounding.HalfEven));
     }
@@ -3580,7 +4004,7 @@ private static int CheckOverflowUnderflow(
     public EDecimal RoundToExponent(
       EInteger exponent,
       ERounding rounding) {
-      return this.RoundToExponent (
+      return this.RoundToExponent(
           exponent,
           EContext.ForRounding(rounding));
     }
@@ -3637,8 +4061,8 @@ private static int CheckOverflowUnderflow(
         (!ctx.getHasExponentRange() && !ctx.getHasFlags() && ctx.getTraps() == 0 &&
           !ctx.getHasMaxPrecision() && !ctx.isSimplified())) {
         EDecimal ret = this.RoundToExponentFast(
-          exponentSmall,
-          ctx == null ? ERounding.HalfEven : ctx.getRounding());
+            exponentSmall,
+            ctx == null ? ERounding.HalfEven : ctx.getRounding());
         if (ret != null) {
           return ret;
         }
@@ -3667,12 +4091,12 @@ private static int CheckOverflowUnderflow(
       int exponentSmall,
       ERounding rounding) {
       EDecimal ret = this.RoundToExponentFast(
-        exponentSmall,
-        rounding);
+          exponentSmall,
+          rounding);
       if (ret != null) {
         return ret;
       }
-      return this.RoundToExponent (
+      return this.RoundToExponent(
           exponentSmall,
           EContext.ForRounding(rounding));
     }
@@ -3764,7 +4188,7 @@ private static int CheckOverflowUnderflow(
     public EDecimal RoundToExponentExact(
       int exponentSmall,
       ERounding rounding) {
-      return this.RoundToExponentExact (
+      return this.RoundToExponentExact(
           EInteger.FromInt32(exponentSmall),
           EContext.Unlimited.WithRounding(rounding));
     }
@@ -3940,7 +4364,7 @@ private static int CheckOverflowUnderflow(
       }
       EInteger bigExp = this.getExponent();
       bigExp = bigExp.Add(bigPlaces);
-      return CreateWithFlags (
+      return CreateWithFlags(
           this.unsignedMantissa,
           FastIntegerFixed.FromBig(bigExp),
           this.flags).RoundToPrecision(ctx);
@@ -4017,9 +4441,9 @@ private static int CheckOverflowUnderflow(
       if ((otherValue.flags & BigNumberFlags.FlagNaN) == 0) {
         int newflags = otherValue.flags ^ BigNumberFlags.FlagNegative;
         negated = CreateWithFlags(
-          otherValue.unsignedMantissa,
-          otherValue.exponent,
-          newflags);
+            otherValue.unsignedMantissa,
+            otherValue.exponent,
+            newflags);
       }
       return this.Add(negated, ctx);
     }
@@ -4301,9 +4725,9 @@ private static int CheckOverflowUnderflow(
       }
 
       return new EDecimal(
-        mantissa,
-        exponent,
-        flags);
+          mantissa,
+          exponent,
+          flags);
     }
 
     static EDecimal CreateWithFlags(
@@ -4317,7 +4741,7 @@ private static int CheckOverflowUnderflow(
         throw new NullPointerException("exponent");
       }
 
-      return new EDecimal (
+      return new EDecimal(
           FastIntegerFixed.FromBig(mantissa),
           FastIntegerFixed.FromBig(exponent),
           flags);
@@ -4395,7 +4819,7 @@ private static int CheckOverflowUnderflow(
             int diff = exponentSmall - thisExponentSmall;
             if (diff >= 1 && diff <= 9) {
               thisMantissaSmall /= ValueTenPowers[diff];
-              return new EDecimal (
+              return new EDecimal(
                   new FastIntegerFixed(thisMantissaSmall),
                   new FastIntegerFixed(exponentSmall),
                   this.flags);
@@ -4415,7 +4839,7 @@ private static int CheckOverflowUnderflow(
               } else if (rem == 5 && (div2 & 1) == 1) {
                 ++div2;
               }
-              return new EDecimal (
+              return new EDecimal(
                   new FastIntegerFixed(div2),
                   new FastIntegerFixed(exponentSmall),
                   this.flags);
@@ -4505,13 +4929,46 @@ private static int CheckOverflowUnderflow(
       return this.isNegative() ? ef.Negate() : ef;
     }
 
+    private static EInteger DigitCountUpperBound(EInteger ei) {
+      EInteger bi = ei.GetUnsignedBitLengthAsEInteger();
+      if (bi.compareTo(33) < 0) {
+        // Can easily be calculated without estimation
+        return ei.GetDigitCountAsEInteger();
+      } else if (bi.compareTo(2135) <= 0) {
+        // May overestimate by 1
+        return EInteger.FromInt32(1 + ((bi.ToInt32Checked() *
+                631305) >> 21));
+      } else {
+        // Bit length is big enough that dividing it by 3 will not
+        // underestimate the true base-10 digit length.
+        return bi.Divide(3);
+      }
+    }
+
+    private static EInteger DigitCountLowerBound(EInteger ei) {
+      EInteger bi = ei.GetUnsignedBitLengthAsEInteger();
+      if (bi.compareTo(33) < 0) {
+        // Can easily be calculated without estimation
+        return ei.GetDigitCountAsEInteger();
+      } else if (bi.compareTo(2135) <= 0) {
+        int ov = 1 + ((bi.ToInt32Checked() * 631305) >> 21);
+        return EInteger.FromInt32(ov - 2);
+      } else {
+        // Bit length is big enough that multiplying it by 100 and dividing by 335
+        // will not
+        // overestimate the true base-10 digit length.
+        return bi.Multiply(100).Divide(335);
+      }
+    }
+
     /**
      * Creates a binary floating-point number from this object's value. Note that
      * if the binary floating-point number contains a negative exponent,
      * the resulting value might not be exact, in which case the resulting
      * binary floating-point number will be an approximation of this
      * decimal number's value.
-     * @param ec The parameter {@code ec} is an EContext object.
+     * @param ec An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. Can be null.
      * @return An arbitrary-precision float floating-point number.
      * @throws NullPointerException The parameter {@code ec} is null.
      */
@@ -4519,7 +4976,7 @@ private static int CheckOverflowUnderflow(
       EInteger bigintExp = this.getExponent();
       EInteger bigintMant = this.getUnsignedMantissa();
       if (this.IsNaN()) {
-        return EFloat.CreateNaN (
+        return EFloat.CreateNaN(
             this.getUnsignedMantissa(),
             this.IsSignalingNaN(),
             this.isNegative(),
@@ -4540,6 +4997,33 @@ private static int CheckOverflowUnderflow(
         // DebugUtility.Log("Integer");
         return this.WithThisSign(EFloat.FromEInteger(bigintMant))
           .RoundToPrecision(ec);
+      }
+      EContext b64 = EContext.Binary64;
+      if (ec != null && ec.getHasMaxPrecision() && ec.getHasExponentRange() &&
+        !ec.isSimplified() && ec.getEMax().compareTo(b64.getEMax()) <= 0 &&
+        ec.getEMin().compareTo(b64.getEMin()) >= 0 &&
+        ec.getPrecision().compareTo(b64.getPrecision()) <= 0) {
+        // Quick check for overflow or underflow
+        EInteger adjexpLowerBound = bigintExp;
+        EInteger adjexpUpperBound = bigintExp.Add(
+            DigitCountUpperBound(bigintMant.Abs()).Subtract(1));
+        if (adjexpUpperBound.compareTo(-326) < 0) {
+          // Underflow to zero
+          EInteger eTiny = ec.getEMin().Subtract(ec.getPrecision().Subtract(1));
+          eTiny = eTiny.Subtract(1); // subtract 1 from proper eTiny to
+          // trigger underflow
+          EFloat ret = EFloat.Create(EInteger.FromInt32(
+                this.isNegative() ? -1 : 1),
+              eTiny);
+          return ret.RoundToPrecision(ec);
+        } else if (adjexpLowerBound.compareTo(309) > 0) {
+          return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
+        }
+        EInteger digitsLowerBound = DigitCountLowerBound(bigintMant.Abs());
+        if (digitsLowerBound.compareTo(800) > 0) {
+          String estr = this.toString();
+          return EFloat.FromString(estr, ec);
+        }
       }
       if (bigintExp.signum() > 0) {
         // Scaled integer
@@ -4572,7 +5056,8 @@ private static int CheckOverflowUnderflow(
           bigmantissa=(bigmantissa).Negate();
         }
         EInteger negscale = scale.Negate();
-        // DebugUtility.Log("" + negscale);
+        // DebugUtility.Log("scale=" + scale + " mantissaPrecision=" +
+        // bigmantissa.GetDigitCountAsEInteger());
         EInteger divisor = NumberUtility.FindPowerOfTenFromBig(negscale);
         EInteger desiredHigh;
         EInteger desiredLow;
@@ -4600,7 +5085,6 @@ private static int CheckOverflowUnderflow(
         }
         // NOTE: Precision raised by 2 to accommodate rounding
         // to odd
-        // TODO: Improve performance of this part of code in 1.4 or later
         EInteger valueEcPrec = ec.getHasMaxPrecision() ? ec.getPrecision().Add(2) :
           ec.getPrecision();
         desiredHigh = EInteger.FromInt32(1).ShiftLeft(valueEcPrec);
@@ -4634,7 +5118,7 @@ private static int CheckOverflowUnderflow(
                 }
               } else {
                 if (valueBmBits.compareTo(divBits) >= 0 &&
-                  valueEcPrec.compareTo (
+                  valueEcPrec.compareTo(
                     EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <=
                   0) {
                   EInteger vbb = divBits.Add(valueEcPrec);
@@ -4691,7 +5175,7 @@ private static int CheckOverflowUnderflow(
                   bigmantissa.GetUnsignedBitLengthAsEInteger();
                 EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
                 if (valueBmBits.compareTo(divBits) >= 0 &&
-                  valueEcPrec.compareTo (
+                  valueEcPrec.compareTo(
                     EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <=
                   0) {
                   EInteger vbb = divBits.Add(valueEcPrec);
@@ -4727,12 +5211,12 @@ private static int CheckOverflowUnderflow(
         if (!quorem[1].isZero() && quorem[0].isEven()) {
           quorem[0] = quorem[0].Add(EInteger.FromInt32(1));
         }
-        EFloat efret = this.WithThisSign (
-            EFloat.Create (
+        EFloat efret = this.WithThisSign(
+            EFloat.Create(
               quorem[0],
               adjust.AsEInteger()));
         // DebugUtility.Log("-->" + (efret.getMantissa().ToRadixString(2)) + " " +
-        // (// efret.getExponent()));
+        // efret.getExponent());
         efret = efret.RoundToPrecision(ec);
         if (ec == null) {
           throw new NullPointerException("ec");
@@ -4911,7 +5395,7 @@ private static int CheckOverflowUnderflow(
               builder.append('-');
             }
             builder.append(mantissaString, 0, tmpInt);
-            AppendString (
+            AppendString(
               builder,
               '0',
               decimalPoint.Copy().SubtractInt(builder.length()));
@@ -4958,7 +5442,7 @@ private static int CheckOverflowUnderflow(
           }
           builder.append(mantissaString);
           builder.append('.');
-          AppendString (
+          AppendString(
             builder,
             '0',
             decimalPointAdjust.Copy().Decrement());
@@ -5085,12 +5569,12 @@ private static int CheckOverflowUnderflow(
         int lastDigit,
         int olderDigits) {
         if (fastInt.CanFitInInt32()) {
-          return new DigitShiftAccumulator (
+          return new DigitShiftAccumulator(
               fastInt.AsInt32(),
               lastDigit,
               olderDigits);
         } else {
-          return new DigitShiftAccumulator (
+          return new DigitShiftAccumulator(
               fastInt.ToEInteger(),
               lastDigit,
               olderDigits);
@@ -5183,16 +5667,16 @@ private static int CheckOverflowUnderflow(
 
       /**
        * This is an internal method.
-       * @param mantissa Not documented yet.
-       * @param exponent Not documented yet.
-       * @param flags Not documented yet.
+       * @param mantissa The parameter {@code mantissa} is a Numbers.EInteger object.
+       * @param exponent The parameter {@code exponent} is an internal parameter.
+       * @param flags The parameter {@code flags} is an internal parameter.
        * @return An arbitrary-precision decimal number.
        */
       public EDecimal CreateNewWithFlags(
         EInteger mantissa,
         EInteger exponent,
         int flags) {
-        return CreateWithFlags (
+        return CreateWithFlags(
             FastIntegerFixed.FromBig(mantissa),
             FastIntegerFixed.FromBig(exponent),
             flags);

@@ -239,9 +239,34 @@ private DecTestUtil() {
       return null;
     }
 
+    public static void ParseDecTests(
+      String lines) {
+      ParseDecTests(lines, true);
+    }
+
+    public static void ParseDecTests(
+      String lines,
+      boolean checkFlags) {
+      if (lines == null) {
+        throw new NullPointerException("lines");
+      }
+      String[] linearray = SplitAt(lines, "\n");
+      HashMap<String, String> context = new HashMap<String, String>();
+      for (String str : linearray) {
+        ParseDecTest(str, context, checkFlags);
+      }
+    }
+
     public static void ParseDecTest(
       String ln,
       Map<String, String> context) {
+      ParseDecTest(ln, context, true);
+    }
+
+    public static void ParseDecTest(
+      String ln,
+      Map<String, String> context,
+      boolean checkFlags) {
       Matcher match;
       if (ln == null) {
         throw new NullPointerException("ln");
@@ -251,7 +276,7 @@ private DecTestUtil() {
       }
       match = (!ln.contains(":")) ? null : ValuePropertyLine.matcher(ln);
       if (match != null && match.matches()) {
-        String paramName = ToLowerCaseAscii (
+        String paramName = ToLowerCaseAscii(
             match.group(1));
         if (context == null) {
           throw new NullPointerException("context");
@@ -278,18 +303,18 @@ private DecTestUtil() {
           throw new NullPointerException("context");
         }
         boolean extended = GetKeyOrDefault(
-          context,
-          "extended",
-          "1").equals("1");
+            context,
+            "extended",
+            "1").equals("1");
         boolean clamp = GetKeyOrDefault(context, "clamp", "0").equals("1");
         int precision = 0, minexponent = 0, maxexponent = 0;
         EContext ctx = null;
         String rounding = null;
-        precision = StringToIntAllowPlus (
+        precision = StringToIntAllowPlus(
             GetKeyOrDefault(context, "precision", "9"));
-        minexponent = StringToIntAllowPlus (
+        minexponent = StringToIntAllowPlus(
             GetKeyOrDefault(context, "minexponent", "-9999"));
-        maxexponent = StringToIntAllowPlus (
+        maxexponent = StringToIntAllowPlus(
             GetKeyOrDefault(context, "maxexponent", "9999"));
         // Skip tests that take null as input or output;
         // also skip tests that take a hex number format
@@ -393,10 +418,10 @@ private DecTestUtil() {
           .WithExponentClamp(clamp).WithExponentRange(
             minexponent,
             maxexponent);
-        rounding = GetKeyOrDefault(
-          context,
-          "rounding",
-          "half_even");
+        rounding = ToLowerCaseAscii(GetKeyOrDefault(
+              context,
+              "rounding",
+              "half_even"));
         if (rounding.equals("half_up")) {
           ctx = ctx.WithRounding(ERounding.HalfUp);
         }
@@ -427,16 +452,17 @@ private DecTestUtil() {
         if (!extended) {
           ctx = ctx.WithSimplified(true);
         }
-        ctx = ctx.WithBlankFlags();
+        if (checkFlags) {
+          ctx = ctx.WithBlankFlags();
+        }
+        op = ToLowerCaseAscii(op);
         if (op.length() > 3 && op.substring(op.length() - 3).equals("_eq")) {
           // Binary operators with both operands the same
           input2 = input1;
           op = op.substring(0, op.length() - 3);
         }
         EDecimal d1 = EDecimal.Zero, d2 = null, d2a = null;
-        if (!op.equals("toSci") &&
-          !op.equals("toEng") &&
-          !op.equals("tosci") &&
+        if (!op.equals("tosci") &&
           !op.equals("toeng") &&
           !op.equals("class") &&
           !op.equals("format")) {
@@ -458,10 +484,6 @@ private DecTestUtil() {
         }
         if (op.equals("multiply")) {
           d3 = d1.Multiply(d2, ctx);
-        } else if (op.equals("toSci")) {
-          // handled below
-        } else if (op.equals("toEng")) {
-          // handled below
         } else if (op.equals("tosci")) {
           // handled below
         } else if (op.equals("toeng")) {
@@ -490,9 +512,9 @@ private DecTestUtil() {
           {
             Object objectTemp = id3;
             Object objectTemp2 = EDecimals.CompareTotalMagnitude(
-              d1,
-              d2,
-              ctx);
+                d1,
+                d2,
+                ctx);
             String messageTemp = ln;
             Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
           }
@@ -535,7 +557,7 @@ private DecTestUtil() {
           d3 = d1.Log10(ctx);
         } else if (op.equals("power")) {
           if (d2a != null) {
-            System.out.println("Three-op power not yet supported");
+            // System.out.println("Three-op power not yet supported");
             return;
           }
           d3 = d1.Pow(d2, ctx);
@@ -595,7 +617,7 @@ private DecTestUtil() {
             d3 = EDecimal.FromBoolean(EDecimals.IsQuietNaN(d1));
           } else if (op.equals("issnan")) {
             Assert.assertEquals(EDecimals.IsSignalingNaN(d1),
-  d1.IsSignalingNaN());
+              d1.IsSignalingNaN());
             d3 = EDecimal.FromBoolean(EDecimals.IsSignalingNaN(d1));
           } else if (op.equals("isfinite")) {
             Assert.assertEquals(EDecimals.IsFinite(d1), d1.isFinite());
@@ -623,35 +645,36 @@ private DecTestUtil() {
             return;
           }
         }
-        boolean invalid = flags.contains("Division_impossible") ||
-          flags.contains("Division_undefined") ||
-          flags.contains("Invalid_operation");
-        boolean divzero = flags.contains("Division_by_zero");
+        flags = ToLowerCaseAscii(flags);
+        boolean invalid = flags.contains("division_impossible") ||
+          flags.contains("division_undefined") ||
+          flags.contains("invalid_operation");
+        boolean divzero = flags.contains("division_by_zero");
         int expectedFlags = 0;
-        if (flags.contains("Inexact") || flags.contains("inexact")) {
+        if (flags.contains("inexact")) {
           expectedFlags |= EContext.FlagInexact;
         }
-        if (flags.contains("Subnormal")) {
+        if (flags.contains("subnormal")) {
           expectedFlags |= EContext.FlagSubnormal;
         }
-        if (flags.contains("Rounded") || flags.contains("rounded")) {
+        if (flags.contains("rounded")) {
           expectedFlags |= EContext.FlagRounded;
         }
-        if (flags.contains("Underflow")) {
+        if (flags.contains("underflow")) {
           expectedFlags |= EContext.FlagUnderflow;
         }
-        if (flags.contains("Overflow")) {
+        if (flags.contains("overflow")) {
           expectedFlags |= EContext.FlagOverflow;
         }
-        if (flags.contains("Clamped")) {
+        if (flags.contains("clamped")) {
           if (extended || clamp) {
             expectedFlags |= EContext.FlagClamped;
           }
         }
-        if (flags.contains("Lost_digits")) {
+        if (flags.contains("lost_digits")) {
           expectedFlags |= EContext.FlagLostDigits;
         }
-        boolean conversionError = flags.contains("Conversion_syntax");
+        boolean conversionError = flags.contains("conversion_syntax");
         if (invalid) {
           expectedFlags |= EContext.FlagInvalid;
         }
@@ -660,7 +683,7 @@ private DecTestUtil() {
         }
         if (op.equals("class")) {
           d1 = EDecimal.FromString(input1);
-          String numclass = EDecimals.NumberClassString (
+          String numclass = EDecimals.NumberClassString(
               EDecimals.NumberClass(d1, ctx));
           Assert.assertEquals(input1, output, numclass);
         } else if (op.equals("toSci") ||
@@ -719,7 +742,7 @@ private DecTestUtil() {
         // extended arithmetic counterparts for at least
         // some of them have no flags in their
         // result.
-        if (!name.equals("pow118") &&
+        if (checkFlags && !name.equals("pow118") &&
           !name.equals("pow119") &&
           !name.equals("pow120") &&
           !name.equals("pow121") &&
@@ -727,6 +750,81 @@ private DecTestUtil() {
           AssertFlags(expectedFlags, ctx.getFlags(), ln);
         }
       }
+    }
+
+    public static String ContextToDecTestForm(EContext ec) {
+      String roundingstr = "half_even";
+      if (ec == null) {
+        throw new NullPointerException("ec");
+      }
+      if (ec.getRounding() == ERounding.Ceiling) {
+        roundingstr = "ceiling";
+      }
+      if (ec.getRounding() == ERounding.Floor) {
+        roundingstr = "floor";
+      }
+      if (ec.getRounding() == ERounding.Up) {
+        roundingstr = "up";
+      }
+      if (ec.getRounding() == ERounding.Down) {
+        roundingstr = "down";
+      }
+      if (ec.getRounding() == ERounding.HalfEven) {
+        roundingstr = "half_even";
+      }
+      if (ec.getRounding() == ERounding.HalfUp) {
+        roundingstr = "half_up";
+      }
+      if (ec.getRounding() == ERounding.HalfDown) {
+        roundingstr = "half_down";
+      }
+      if (ec.getRounding() == ERounding.OddOrZeroFiveUp) {
+        roundingstr = "05up";
+      }
+      return "\nprecision: " + (ec.getPrecision().signum() == 0 ? "9999999" :
+          ec.getPrecision().toString()) + "\nrounding: " + roundingstr +
+        "\nmaxexponent: " + (ec.getEMax().signum() == 0 ? "999999999999999" :
+          ec.getEMax().toString()) +
+        "\nminexponent: " + (ec.getEMin().signum() == 0 ? "-999999999999999" :
+          ec.getEMin().toString()) +
+        "\n# adjustexp: " + (ec.getAdjustExponent() ? "1" : "0") +
+        "\nextended: 1\nclamp: " + (ec.getClampNormalExponents() ? "1" : "0") +
+        "\n";
+    }
+
+    public static String FlagsToString(int flags) {
+      if (flags == 0) {
+        return "";
+      }
+      StringBuilder sb = new StringBuilder();
+      if ((flags & EContext.FlagInexact) != 0) {
+        sb.append(" Inexact");
+      }
+      if ((flags & EContext.FlagRounded) != 0) {
+        sb.append(" Rounded");
+      }
+      if ((flags & EContext.FlagSubnormal) != 0) {
+        sb.append(" Subnormal");
+      }
+      if ((flags & EContext.FlagOverflow) != 0) {
+        sb.append(" Overflow");
+      }
+      if ((flags & EContext.FlagUnderflow) != 0) {
+        sb.append(" Underflow");
+      }
+      if ((flags & EContext.FlagClamped) != 0) {
+        sb.append(" Clamped");
+      }
+      if ((flags & EContext.FlagInvalid) != 0) {
+        sb.append(" Invalid");
+      }
+      if ((flags & EContext.FlagDivideByZero) != 0) {
+        sb.append(" Divide_by_zero");
+      }
+      if ((flags & EContext.FlagLostDigits) != 0) {
+        sb.append(" Lost_digits");
+      }
+      return sb.toString();
     }
 
     public static void AssertFlags(int expected, int actual, String name) {

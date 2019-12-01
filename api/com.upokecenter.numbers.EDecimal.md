@@ -48,19 +48,19 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  number can't be represented in a given exponent range.
  <b>Not-a-number</b> is generally used to signal errors.</p> <p>This
  class implements the General Decimal Arithmetic Specification version
- 1.70 (except part of chapter 6):
- <code>http://speleotrove.com/decimal/decarith.html</code> </p> <p><b>Errors
- and Exceptions</b> </p> <p>Passing a signaling NaN to any arithmetic
- operation shown here will signal the flag FlagInvalid and return a
- quiet NaN, even if another operand to that operation is a quiet NaN,
- unless noted otherwise.</p> <p>Passing a quiet NaN to any arithmetic
- operation shown here will return a quiet NaN, unless noted otherwise.
- Invalid operations will also return a quiet NaN, as stated in the
- individual methods.</p> <p>Unless noted otherwise, passing a null
- arbitrary-precision decimal argument to any method here will throw an
- exception.</p> <p>When an arithmetic operation signals the flag
- FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an
- exception too, unless the flag's trap is enabled in the arithmetic
+ 1.70 except part of chapter 6(
+ <code>http://speleotrove.com/decimal/decarith.html</code>).</p>
+ <p><b>Errors and Exceptions</b> </p> <p>Passing a signaling NaN to any
+ arithmetic operation shown here will signal the flag FlagInvalid and
+ return a quiet NaN, even if another operand to that operation is a
+ quiet NaN, unless noted otherwise.</p> <p>Passing a quiet NaN to any
+ arithmetic operation shown here will return a quiet NaN, unless noted
+ otherwise. Invalid operations will also return a quiet NaN, as stated
+ in the individual methods.</p> <p>Unless noted otherwise, passing a
+ null arbitrary-precision decimal argument to any method here will
+ throw an exception.</p> <p>When an arithmetic operation signals the
+ flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw
+ an exception too, unless the flag's trap is enabled in the arithmetic
  context (see EContext's Traps property).</p> <p>If an operation
  requires creating an intermediate value that might be too big to fit
  in memory (or might require more than 2 gigabytes of memory to store
@@ -195,7 +195,8 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
    EContext ctx)`<br>
  Finds the sum of this object and another object.
 * `int compareTo​(int intOther)`<br>
- Not documented yet.
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
 * `int compareTo​(EDecimal other)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
@@ -221,7 +222,8 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs).
 * `int CompareToValue​(int intOther)`<br>
- Not documented yet.
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
 * `int CompareToValue​(EDecimal other)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
@@ -872,9 +874,9 @@ Creates a number with the value <code>exponent*10^significand</code>.
 
 **Parameters:**
 
-* <code>mantissa</code> - Not documented yet.
+* <code>mantissa</code> - The parameter <code>mantissa</code> is a Numbers.EInteger object.
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - Desired value for the exponent.
 
 **Returns:**
 
@@ -943,12 +945,12 @@ Creates an arbitrary-precision decimal number from a 64-bit binary
  though, that the exact value of a 64-bit binary floating-point
  number is not always the value that results when passing a literal
  decimal number (for example, calling
- <code>ExtendedDecimal.FromDouble(0.1f)</code>), since not all decimal
+ <code>ExtendedDecimal.FromDouble(0.1)</code>), since not all decimal
  numbers can be converted to exact binary numbers (in the example
  given, the resulting arbitrary-precision decimal will be the value
   of the closest "double" to 0.1, not 0.1 exactly). To create an
- arbitrary-precision decimal number from an arbitrary-precision
- decimal number, use FromString instead in most cases (for example:
+ arbitrary-precision decimal number from a decimal value, use
+ FromString instead in most cases (for example:
   <code>ExtendedDecimal.FromString("0.1")</code>).
 
 **Parameters:**
@@ -1054,8 +1056,8 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
  numbers can be converted to exact binary numbers (in the example
  given, the resulting arbitrary-precision decimal will be the the
   value of the closest "float" to 0.1, not 0.1 exactly). To create an
- arbitrary-precision decimal number from an arbitrary-precision
- decimal number, use FromString instead in most cases (for example:
+ arbitrary-precision decimal number from a decimal value, use
+ FromString instead in most cases (for example:
   <code>ExtendedDecimal.FromString("0.1")</code>).
 
 **Parameters:**
@@ -1072,7 +1074,11 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
     public static EDecimal FromString​(java.lang.String str)
 Creates an arbitrary-precision decimal number from a text string that
  represents a number. See <code>FromString(string, int, int,
- EContext)</code> for more information.
+ EContext)</code> for more information. Note that calling the overload
+ that takes an EContext is often much faster than creating the
+ EDecimal then calling <code>RoundToPrecision</code> on that EDecimal,
+ especially if the context specifies a precision limit and exponent
+ range.
 
 **Parameters:**
 
@@ -1103,6 +1109,10 @@ Creates an arbitrary-precision decimal number from a text string that
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). Can be null, in
  which case the precision is unlimited and rounding isn't needed.
+ Note that providing a context is often much faster than creating the
+ EDecimal without a context then calling <code>RoundToPrecision</code> on
+ that EDecimal, especially if the context specifies a precision limit
+ and exponent range.
 
 **Returns:**
 
@@ -1117,7 +1127,11 @@ Creates an arbitrary-precision decimal number from a text string that
     public static EDecimal FromString​(java.lang.String str, int offset, int length)
 Creates an arbitrary-precision decimal number from a text string that
  represents a number. See <code>FromString(string, int, int,
- EContext)</code> for more information.
+ EContext)</code> for more information. Note that calling the overload
+ that takes an EContext is often much faster than creating the
+ EDecimal then calling <code>RoundToPrecision</code> on that EDecimal,
+ especially if the context specifies a precision limit and exponent
+ range.
 
 **Parameters:**
 
@@ -1184,6 +1198,10 @@ Creates an arbitrary-precision decimal number from a text string that
  true, will also store the flags resulting from the operation (the
  flags are in addition to the pre-existing flags). Can be null, in
  which case the precision is unlimited and rounding isn't needed.
+ Note that providing a context is often much faster than creating the
+ EDecimal without a context then calling <code>RoundToPrecision</code> on
+ that EDecimal, especially if the context specifies a precision limit
+ and exponent range.
 
 **Returns:**
 
@@ -1464,27 +1482,43 @@ Compares the mathematical values of this object and another object,
 
 ### compareTo
     public int compareTo​(int intOther)
-Not documented yet.
+Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the
+ Equals method, but it may change in a future version to use the
+ rules for the CompareToTotal method instead.
 
 **Parameters:**
 
-* <code>intOther</code> - Not documented yet.
+* <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
 
 ### CompareToValue
     public int CompareToValue​(int intOther)
-Not documented yet.
+Compares the mathematical values of this object and another object,
+ accepting NaN values. <p>This method is not consistent with the
+ Equals method because two different numbers with the same
+ mathematical value, but different exponents, will compare as
+ equal.</p> <p>In this method, negative zero and positive zero are
+ considered equal.</p> <p>If this object or the other object is a
+ quiet NaN or signaling NaN, this method will not trigger an error.
+ Instead, NaN will compare greater than any other number, including
+ infinity. Two different NaN values will be considered equal.</p>
 
 **Parameters:**
 
-* <code>intOther</code> - Not documented yet.
+* <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
 
 ### CompareToValue
     public int CompareToValue​(EDecimal other)
@@ -2177,7 +2211,9 @@ Determines whether this object's significand, exponent, and properties are
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>. In
+ this method, two objects are not equal if they don't have the same
+ type or if one is null and the other isn't.
 
 ### Exp
     public EDecimal Exp​(EContext ctx)
@@ -3796,7 +3832,8 @@ Creates a binary floating-point number from this object's value. Note that
 
 **Parameters:**
 
-* <code>ec</code> - The parameter <code>ec</code> is an EContext object.
+* <code>ec</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. Can be null.
 
 **Returns:**
 

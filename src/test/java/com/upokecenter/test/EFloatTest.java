@@ -1,5 +1,7 @@
 package com.upokecenter.test;
 
+import java.util.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 import com.upokecenter.util.*;
@@ -105,7 +107,7 @@ import com.upokecenter.numbers.*;
         "7.00468923842476447758037175245551511770928808756622205663208" +
         "4784688080253355047487262563521426272927783429622650146484375";
 
-      EDecimal a = EDecimal.FromString (
+      EDecimal a = EDecimal.FromString(
           str2561);
       EDecimal b = EDecimal.FromString("5");
       TestCommon.CompareTestLess(b, a);
@@ -169,35 +171,35 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "1").Divide(EFloat.FromInt32(8)).toString();
         Assert.assertEquals(
           "0.125",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "10").Divide(EFloat.FromInt32(80)).toString();
         Assert.assertEquals(
           "0.125",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "10000").Divide(EFloat.FromInt32(80000)).toString();
         Assert.assertEquals(
           "0.125",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "1000").Divide(EFloat.FromInt32(8)).toString();
         Assert.assertEquals(
           "125",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "1").Divide(EFloat.FromInt32(256)).toString();
         Assert.assertEquals(
           "0.00390625",
@@ -271,6 +273,65 @@ import com.upokecenter.numbers.*;
       // not implemented yet
     }
 
+    public static String RandomDecimalString(RandomGenerator rand, int
+digitsBefore) {
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < digitsBefore; ++i) {
+        if (rand == null) {
+          throw new NullPointerException("rand");
+        }
+        sb.append((char)(0x30 + rand.UniformInt(10)));
+      }
+      sb.append('.');
+      for (int i = 0; i < digitsBefore; ++i) {
+        if (rand == null) {
+          throw new NullPointerException("rand");
+        }
+        sb.append((char)(0x30 + rand.UniformInt(10)));
+        sb.append((char)(0x30 + rand.UniformInt(10)));
+      }
+      return sb.toString();
+    }
+
+    public static void TestDigitStringsOne(String str) {
+      TestCommon.CompareTestEqual(
+          EDecimal.FromString(str).ToEFloat(EContext.Binary64),
+          EFloat.FromString(str, EContext.Binary64),
+          str);
+    }
+
+    @Test
+    public void TestRandomDigitStrings() {
+      TestDigitStringsOne("9.5");
+      TestDigitStringsOne("0.1");
+      TestDigitStringsOne("664.07742299");
+      TestDigitStringsOne("7062.66606310");
+      TestDigitStringsOne("0664.07742299");
+      RandomGenerator rand = new RandomGenerator();
+      ArrayList<String> strings = new ArrayList<String>();
+      for (int i = 0; i < 10000; ++i) {
+        strings.add(RandomDecimalString(rand, 4));
+      }
+      ArrayList<EFloat> eflist1 = new ArrayList<EFloat>();
+      ArrayList<EFloat> eflist2 = new ArrayList<EFloat>();
+      EContext ec = EContext.Binary64;
+      // System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+      // sw.Restart();
+      for (int i = 0; i < strings.size(); ++i) {
+        eflist1.add(EDecimal.FromString(strings.get(i)).ToEFloat(ec));
+      }
+      // long em = sw.getElapsedMilliseconds();
+      // sw.Restart();
+      for (int i = 0; i < strings.size(); ++i) {
+        eflist2.add(EFloat.FromString(strings.get(i), ec));
+      }
+      // long em2 = sw.getElapsedMilliseconds();
+      // System.out.println("EFloat FS={0} ms\nDouble FS={1} ms", em, em2);
+      for (int i = 0; i < strings.size(); ++i) {
+        TestCommon.CompareTestEqual(eflist1.get(i), eflist2.get(i), strings.get(i));
+      }
+    }
+
     @Test
     public void TestEFloatDouble() {
       TestEFloatDoubleCore(3.5, "3.5");
@@ -278,7 +339,7 @@ import com.upokecenter.numbers.*;
       TestEFloatDoubleCore(1.75, "1.75");
       TestEFloatDoubleCore(3.5, "3.5");
       TestEFloatDoubleCore((double)Integer.MIN_VALUE, "-2147483648");
-      TestEFloatDoubleCore (
+      TestEFloatDoubleCore(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
       RandomGenerator rand = new RandomGenerator();
@@ -309,7 +370,7 @@ import com.upokecenter.numbers.*;
       EFloat enumber = EFloat.Create(0x03, -1);
       EContext ectx = EContext.ForPrecisionAndRounding(1, ERounding.HalfEven);
       enumber = enumber.RoundToPrecision(ectx);
-      TestCommon.CompareTestEqual (
+      TestCommon.CompareTestEqual(
         EFloat.Create(0x04, -1),
         enumber);
     }
@@ -540,7 +601,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "Infinity",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -551,7 +612,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "-Infinity",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -562,7 +623,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "NaN",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -573,7 +634,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "sNaN",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -584,7 +645,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "Infinity",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -595,7 +656,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "-Infinity",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -606,7 +667,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "NaN",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -617,7 +678,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString (
+        EFloat.FromString(
           "sNaN",
           EContext.Unlimited.WithSimplified(true));
         Assert.fail("Should have failed");
@@ -744,18 +805,18 @@ import com.upokecenter.numbers.*;
         }
         int cmp = TestCommon.CompareTestReciprocal(bigintA, bigintB);
         if (cmp < 0) {
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintB,
             EFloat.Max(bigintA, bigintB));
         } else if (cmp > 0) {
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintA,
             EFloat.Max(bigintA, bigintB));
         } else {
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintA,
             EFloat.Max(bigintA, bigintB));
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintB,
             EFloat.Max(bigintA, bigintB));
         }
@@ -812,18 +873,18 @@ import com.upokecenter.numbers.*;
         }
         int cmp = TestCommon.CompareTestReciprocal(bigintA, bigintB);
         if (cmp < 0) {
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintA,
             EFloat.Min(bigintA, bigintB));
         } else if (cmp > 0) {
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintB,
             EFloat.Min(bigintA, bigintB));
         } else {
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintA,
             EFloat.Min(bigintA, bigintB));
-          TestCommon.CompareTestEqual (
+          TestCommon.CompareTestEqual(
             bigintB,
             EFloat.Min(bigintA, bigintB));
         }
@@ -921,7 +982,7 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals(ValueFPIntegers[i], ef.toString());
         ef = EFloat.FromDouble(ef.ToDouble());
         Assert.assertEquals(ValueFPIntegers[i], ef.toString());
-        ef = EFloat.FromDouble (
+        ef = EFloat.FromDouble(
             EDecimal.FromString(ValueFPIntegers[i]).ToDouble());
         Assert.assertEquals(ValueFPIntegers[i], ef.toString());
         // Negative
@@ -929,7 +990,7 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
         ef = EFloat.FromDouble(ef.ToDouble());
         Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
-        ef = EFloat.FromDouble (
+        ef = EFloat.FromDouble(
             EDecimal.FromString("-" + ValueFPIntegers[i]).ToDouble());
         Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
       }
@@ -940,7 +1001,7 @@ import com.upokecenter.numbers.*;
         String fpstr = ef.toString();
         ef = EFloat.FromDouble(ef.ToDouble());
         Assert.assertEquals(intstr, fpstr, ef.toString());
-        ef = EFloat.FromDouble (
+        ef = EFloat.FromDouble(
             EDecimal.FromString(fpstr).ToDouble());
         Assert.assertEquals(intstr, fpstr, ef.toString());
         // Negative
@@ -948,7 +1009,7 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
         ef = EFloat.FromDouble(ef.ToDouble());
         Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
-        ef = EFloat.FromDouble (
+        ef = EFloat.FromDouble(
             EDecimal.FromString("-" + fpstr).ToDouble());
         Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
       }
@@ -969,10 +1030,10 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestPlus() {
-      Assert.assertEquals (
+      Assert.assertEquals(
         EFloat.Zero,
         EFloat.NegativeZero.Plus(EContext.Basic));
-      Assert.assertEquals (
+      Assert.assertEquals(
         EFloat.Zero,
         EFloat.NegativeZero.Plus(null));
     }
@@ -1113,11 +1174,12 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    public EFloat RandomDoubleEFloat(RandomGenerator rnd) {
-      return this.RandomDoubleEFloat(rnd, false);
+    public static EFloat RandomDoubleEFloat(RandomGenerator rnd) {
+      return RandomDoubleEFloat(rnd, false);
     }
 
-    public EFloat RandomDoubleEFloat(RandomGenerator rnd, boolean subnormal) {
+    public static EFloat RandomDoubleEFloat(RandomGenerator rnd, boolean
+subnormal) {
       StringBuilder sb = new StringBuilder();
       if (rnd == null) {
         throw new NullPointerException("rnd");
@@ -1145,17 +1207,18 @@ import com.upokecenter.numbers.*;
         exponent = expo - 52;
       }
       EInteger valueEiExponent = EInteger.FromInt64(exponent);
-      EFloat ef = EFloat.Create (
+      EFloat ef = EFloat.Create(
           EInteger.FromRadixString(valueSbString, 2),
           valueEiExponent);
       return ef;
     }
 
-    public EFloat RandomSingleEFloat(RandomGenerator rnd) {
-      return this.RandomSingleEFloat(rnd, false);
+    public static EFloat RandomSingleEFloat(RandomGenerator rnd) {
+      return RandomSingleEFloat(rnd, false);
     }
 
-    public EFloat RandomSingleEFloat(RandomGenerator rnd, boolean subnormal) {
+    public static EFloat RandomSingleEFloat(RandomGenerator rnd, boolean
+subnormal) {
       StringBuilder sb = new StringBuilder();
       if (rnd == null) {
         throw new NullPointerException("rnd");
@@ -1183,7 +1246,7 @@ import com.upokecenter.numbers.*;
         exponent = expo - 23;
       }
       EInteger valueEiExponent = EInteger.FromInt64(exponent);
-      EFloat ef = EFloat.Create (
+      EFloat ef = EFloat.Create(
           EInteger.FromRadixString(valueSbString, 2),
           valueEiExponent);
       return ef;
@@ -1205,7 +1268,8 @@ import com.upokecenter.numbers.*;
       if (ef == null) {
         throw new NullPointerException("ef");
       }
-      return ef.ToDouble() + " [" + ef.getMantissa().Abs().ToRadixString(2) +
+      return ef.ToDouble() +
+        " [" + ef.getMantissa().Abs().ToRadixString(2) +
         "," + ef.getExponent() + "]";
     }
 
@@ -1281,6 +1345,228 @@ import com.upokecenter.numbers.*;
       }
     }
 
+    private static void TestStringEFloatPrecisionOne(String str) {
+      EFloat ef1 = EDecimal.FromString(str).ToEFloat(EContext.Binary32);
+      EFloat ef2 = EFloat.FromString(str, EContext.Binary32);
+      System.out.println(OutputEF(ef1));
+      System.out.println(OutputEF(ef2));
+      TestCommon.CompareTestLess(ef1.getMantissa().ToInt32Checked(), 1 << 24);
+      TestCommon.CompareTestLess(ef2.getMantissa().ToInt32Checked(), 1 << 24);
+    }
+
+    @Test
+    public void TestStringEFloatPrecision() {
+      TestStringEFloatPrecisionOne("43260094.4962653487189790");
+    }
+
+    private static ERational PowerOfTwo(int p) {
+      EInteger ei = EInteger.FromInt32(1).ShiftLeft(Math.abs(p));
+      if (p < 0) {
+        return ERational.Create(EInteger.FromInt32(1), ei);
+      } else {
+        return ERational.Create(ei, EInteger.FromInt32(1));
+      }
+    }
+
+    private static void TestStringToSingleOne(String str) {
+      EDecimal ed = EDecimal.FromString(str);
+      if (ed.IsInfinity() || ed.IsNaN()) {
+        // Expected String to represent a finite number
+        Assert.fail(str);
+      }
+      EFloat ef = EFloat.FromString(str, EContext.Binary32);
+      if (ef.signum() == 0) {
+        if (!(ed.isNegative() == ef.isNegative())) {
+ Assert.fail();
+ }
+        ERational half = PowerOfTwo(-149).Divide(2);
+        if (half.CompareToDecimal(ed.Abs()) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
+      } else if (ef.IsInfinity()) {
+        EDecimal half = EDecimal.FromEInteger(
+             EInteger.FromInt32((1 << 25) - 1).ShiftLeft(103));
+        if (ed.Abs().compareTo(half) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
+      } else if (ef.IsNaN()) {
+        String msg = "str=" + str + "\nef=" + OutputEF(ef);
+        Assert.fail(msg);
+      } else {
+        if (ed.isNegative() != ef.isNegative()) {
+          if (!(
+            ed.isNegative() == ef.isNegative())) {
+ Assert.fail(
+            ed + "\nef=" + ef + "\nstr=" + str);
+ }
+        }
+        EInteger eimant = ef.Abs().getMantissa();
+        long lmant = eimant.ToInt64Checked();
+        int exp = ef.getExponent().ToInt32Checked();
+        while (lmant < (1 << 23) && exp > -149) {
+          --exp;
+          lmant <<= 1;
+        }
+        while (lmant >= (1 >> 24) && (lmant & 1) == 0) {
+          ++exp;
+          lmant >>= 1;
+        }
+        if (!(lmant < (1 << 24))) {
+ Assert.fail();
+ }
+        ERational ulp = PowerOfTwo(exp);
+        ERational half = ulp.Divide(2);
+        ERational ulped = ERational.FromInt64(lmant).Multiply(ulp);
+        ERational efe = ulped.Subtract(ERational.FromEDecimal(ed).Abs());
+        if (!(!efe.IsNaN())) {
+ Assert.fail();
+ }
+        if (half.compareTo(efe) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef) +
+            "\nmant=" + lmant + "\nexp=" + exp + "\nulped=" + ulped +
+            "\nhalf=" + half + "\nefe=" + efe;
+          Assert.fail(msg);
+        }
+      }
+    }
+
+    private static void TestStringToDoubleOne(String str) {
+      EDecimal ed = EDecimal.FromString(str);
+      if (ed.IsInfinity() || ed.IsNaN()) {
+        // Expected String to represent a finite number
+        Assert.fail(str);
+      }
+      EFloat ef = EFloat.FromString(str, EContext.Binary64);
+      if (ef.signum() == 0) {
+        if (!(ed.isNegative() == ef.isNegative())) {
+ Assert.fail();
+ }
+        ERational half = ERational.Create(
+            EInteger.FromInt32(1),
+            EInteger.FromInt32(2).Pow(1074)).Divide(2);
+        if (half.CompareToDecimal(ed.Abs()) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
+      } else if (ef.IsInfinity()) {
+        EDecimal half = EDecimal.FromEInteger(
+             EInteger.FromInt64((1L << 54) - 1).ShiftLeft(970));
+        if (ed.Abs().compareTo(half) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
+      } else if (ef.IsNaN()) {
+        String msg = "str=" + str + "\nef=" + OutputEF(ef);
+        Assert.fail(msg);
+      } else {
+        if (!(ed.isNegative() == ef.isNegative())) {
+ Assert.fail();
+ }
+        EInteger eimant = ef.Abs().getMantissa();
+        long lmant = eimant.ToInt64Checked();
+        int exp = ef.getExponent().ToInt32Checked();
+        while (lmant < (1L << 52) && exp > -1074) {
+          --exp;
+          lmant <<= 1;
+        }
+        while (lmant >= (1L >> 53) && (lmant & 1) == 0) {
+          ++exp;
+          lmant >>= 1;
+        }
+        if (!(lmant < (1L << 53))) {
+ Assert.fail();
+ }
+        ERational ulp = PowerOfTwo(exp);
+        ERational half = ulp.Divide(2);
+        ERational ulped = ERational.FromInt64(lmant).Multiply(ulp);
+        ERational efe = ulped.Subtract(ERational.FromEDecimal(ed).Abs());
+        if (!(!efe.IsNaN())) {
+ Assert.fail();
+ }
+        if (half.compareTo(efe) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef) +
+            "\nmant=" + lmant + "\nexp=" + exp;
+          Assert.fail(msg);
+        }
+      }
+    }
+
+    private static void TestStringToDoubleSingleOne(String str) {
+      TestStringToDoubleOne(str);
+      TestStringToSingleOne(str);
+    }
+
+    @Test
+    public void TestStringToDoubleSubnormal() {
+      String str = "-2.3369664830896376E-303";
+      TestStringToDoubleSingleOne(str);
+      double efd = EFloat.FromString(str).ToDouble();
+      if (!(Math.abs(efd) > 0.0)) {
+ Assert.fail();
+ }
+    }
+
+    @Test
+    public void TestStringToDoubleManyDigits() {
+      RandomGenerator rand = new RandomGenerator();
+      for (int i = 0; i < 1000; ++i) {
+        StringBuilder sb = new StringBuilder();
+        int pointIndex = rand.UniformInt(1000);
+        for (int j = 0; j < 1000; ++j) {
+          if (j == pointIndex) {
+            sb.append('.');
+          }
+          sb.append((char)(0x30 + rand.UniformInt(10)));
+        }
+        String str = sb.toString();
+        TestStringToDoubleSingleOne(str);
+        TestStringToDoubleSingleOne(str + "e" +
+           TestCommon.IntToString(rand.UniformInt(100) - 50));
+      }
+    }
+
+    @Test
+    public void TestStringToDoubleExp() {
+      ArrayList<String> s1 = new ArrayList<String>();
+      ArrayList<String> s2 = new ArrayList<String>();
+      for (int i = -304; i <= 304; ++i) {
+        s1.add(TestCommon.IntToString(i));
+      }
+      for (int i = 0; i <= 1000; ++i) {
+        s2.add(TestCommon.IntToString(i));
+      }
+      for (int i = 0; i < s1.size(); ++i) {
+        for (int j = 0; j < s2.size(); ++j) {
+          TestStringToDoubleSingleOne(s2.get(j) + "e" + s1.get(i));
+        }
+      }
+    }
+
+    @Test
+    public void TestIntStringToDouble() {
+      for (int i = 0; i < 1000000; ++i) {
+        TestStringToDoubleSingleOne(TestCommon.IntToString(i));
+        TestStringToDoubleSingleOne(TestCommon.IntToString(i) + ".0");
+        TestStringToDoubleSingleOne(TestCommon.IntToString(i) + ".000");
+      }
+    }
+
+    @Test
+    public void TestStringToDouble() {
+      RandomGenerator rg = new RandomGenerator();
+      TestStringToDoubleSingleOne("9.5");
+      TestStringToDoubleSingleOne("0.1");
+      TestStringToDoubleSingleOne("43260094.4962653487189790");
+      TestStringToDoubleSingleOne("215e7");
+      for (int i = 0; i < 100; ++i) {
+        for (int j = 1; j <= 10; ++j) {
+          TestStringToDoubleSingleOne(RandomDecimalString(rg, j));
+        }
+      }
+    }
+
     private static EFloat quarter = EFloat.FromString("0.25");
     private static EFloat half = EFloat.FromString("0.5");
     private static EFloat threequarter = EFloat.FromString("0.75");
@@ -1293,11 +1579,11 @@ import com.upokecenter.numbers.*;
           EContext.Binary32);
       EFloat efnextgap = efnext.Subtract(efa);
       EFloat efprevgap = efa.Subtract(efprev);
-      EFloat efprev1q = efprev.Add (
+      EFloat efprev1q = efprev.Add(
           efprevgap.Multiply(quarter));
-      EFloat efprev2q = efprev.Add (
+      EFloat efprev2q = efprev.Add(
           efprevgap.Multiply(half));
-      EFloat efprev3q = efprev.Add (
+      EFloat efprev3q = efprev.Add(
           efprevgap.Multiply(threequarter));
       EFloat efnext1q = efa.Add(efnextgap.Multiply(quarter));
       EFloat efnext2q = efa.Add(efnextgap.Multiply(half));
@@ -1340,7 +1626,7 @@ import com.upokecenter.numbers.*;
         ERounding.HalfEven);
       String str = EFloat.FromString(input, EContext.Binary64)
         .ToEDecimal().RoundToPrecision(ec).toString();
-      TestCommon.CompareTestEqual (
+      TestCommon.CompareTestEqual(
         EDecimal.FromString(expected),
         EDecimal.FromString(str),
         msg);
@@ -1370,7 +1656,7 @@ import com.upokecenter.numbers.*;
           stringTemp);
       }
       {
-        String stringTemp = EFloat.NegativeZero.ToShortestString (
+        String stringTemp = EFloat.NegativeZero.ToShortestString(
             EContext.Binary32);
         Assert.assertEquals(
           "-0",
@@ -1384,35 +1670,45 @@ import com.upokecenter.numbers.*;
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "100").ToShortestString(EContext.Binary64);
         Assert.assertEquals(
           "100",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "1000").ToShortestString(EContext.Binary64);
         Assert.assertEquals(
           "1000",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "1000000").ToShortestString(EContext.Binary64);
         Assert.assertEquals(
           "1000000",
           stringTemp);
+        stringTemp = EFloat.FromString(
+            "9.5").ToShortestString(EContext.Binary64);
+        Assert.assertEquals(
+          "9.5",
+          stringTemp);
+        stringTemp = EFloat.FromString(
+            "0.1").ToShortestString(EContext.Binary64);
+        Assert.assertEquals(
+          "0.1",
+          stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "10000000").ToShortestString(EContext.Binary64);
         Assert.assertEquals(
           "1E+7",
           stringTemp);
       }
       {
-        String stringTemp = EFloat.FromString (
+        String stringTemp = EFloat.FromString(
             "10000000000").ToShortestString(EContext.Binary64);
         Assert.assertEquals(
           "1E+10",
@@ -1425,9 +1721,18 @@ import com.upokecenter.numbers.*;
           "199999",
           stringTemp);
       }
+      // Power of 2
+      EFloat eef = EFloat.Create(EInteger.FromInt64(4503599627370496L),
+          EInteger.FromInt32(-49));
+      {
+        String stringTemp = eef.ToShortestString(EContext.Binary64);
+        Assert.assertEquals(
+          "8",
+          stringTemp);
+      }
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
-        EFloat efa = this.RandomDoubleEFloat(fr);
+        EFloat efa = RandomDoubleEFloat(fr);
         String shortestStr = efa.ToShortestString(EContext.Binary64);
         EFloat shortest = EFloat.FromString(
           shortestStr,
@@ -1447,7 +1752,7 @@ import com.upokecenter.numbers.*;
     public void TestToSingleRounding() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {
-        EFloat efa = this.RandomSingleEFloat(fr, i >= 250);
+        EFloat efa = RandomSingleEFloat(fr, i >= 250);
         TestToFloatRoundingOne(efa, false);
       }
     }
@@ -1469,7 +1774,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
@@ -1490,7 +1795,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
@@ -1511,7 +1816,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
@@ -1532,7 +1837,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
@@ -1549,21 +1854,21 @@ import com.upokecenter.numbers.*;
         EFloat enumberInteger = EFloat.FromEInteger(enumber.ToEInteger());
         isInteger = enumberInteger.compareTo(enumber) == 0;
         eint = enumber.ToEInteger();
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             EFloat.FromString("0")) >= 0 && enumber.compareTo(
             EFloat.FromString("255")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("0")) >= 0 && enumber.ToEInteger().compareTo(
             EInteger.FromString("255")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteUnchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
@@ -1578,10 +1883,10 @@ import com.upokecenter.numbers.*;
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
@@ -1631,22 +1936,22 @@ import com.upokecenter.numbers.*;
             }
           }
         }
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             EFloat.FromString("-32768")) >= 0 && enumber.compareTo(
             EFloat.FromString("32767")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-32768")) >= 0 &&
-enumber.ToEInteger().compareTo (
+enumber.ToEInteger().compareTo(
             EInteger.FromString("32767")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
@@ -1661,10 +1966,10 @@ enumber.ToEInteger().compareTo (
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
@@ -1714,22 +2019,22 @@ enumber.ToEInteger().compareTo (
             }
           }
         }
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             EFloat.FromString("-2147483648")) >= 0 && enumber.compareTo(
             EFloat.FromString("2147483647")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-2147483648")) >= 0 &&
-          enumber.ToEInteger().compareTo (
+          enumber.ToEInteger().compareTo(
             EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
@@ -1744,10 +2049,10 @@ enumber.ToEInteger().compareTo (
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
@@ -1797,13 +2102,13 @@ enumber.ToEInteger().compareTo (
             }
           }
         }
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             EFloat.FromString("-9223372036854775808")) >= 0 &&
-enumber.compareTo (
+enumber.compareTo(
             EFloat.FromString("9223372036854775807")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-9223372036854775808")) >= 0 &&
-          enumber.ToEInteger().compareTo (
+          enumber.ToEInteger().compareTo(
             EInteger.FromString("9223372036854775807")) <= 0;
         EInteger eb;
         if (isNum) {
@@ -1880,13 +2185,11 @@ enumber.compareTo (
       }
     }
 
-    @Test(timeout = 250000)
+    @Test(timeout = 100000)
     public void TestToDoubleRounding() {
-      // TODO: Reduce timeout to 100000 once EDecimal.ToEFloat's
-      // performance improves
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {
-        EFloat efa = this.RandomDoubleEFloat(fr, i >= 250);
+        EFloat efa = RandomDoubleEFloat(fr, i >= 250);
         TestToFloatRoundingOne(efa, true);
       }
       TestToFloatRoundingOne(EFloat.Create(0, -1074), true);
@@ -1894,13 +2197,13 @@ enumber.compareTo (
         "10000000000000000000000000000000000000000000000000000",
         2);
       {
-        EFloat objectTemp = EFloat.Create (
+        EFloat objectTemp = EFloat.Create(
             mant,
             EInteger.FromInt32(-1074));
         TestToFloatRoundingOne(objectTemp, true);
       }
       {
-        EFloat objectTemp = EFloat.Create (
+        EFloat objectTemp = EFloat.Create(
           EInteger.FromRadixString("-10000000000000000000000000000000000000000000000000000", 2),
           EInteger.FromInt32(-1074));
         TestToFloatRoundingOne(objectTemp, true);
@@ -1923,49 +2226,49 @@ enumber.compareTo (
 
     @Test
     public void TestInfinities() {
-      Assert.assertEquals (
+      Assert.assertEquals(
         EDecimal.PositiveInfinity,
         EDecimal.FromSingle(Float.POSITIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         EDecimal.NegativeInfinity,
         EDecimal.FromSingle(Float.NEGATIVE_INFINITY));
 
-      Assert.assertEquals (
+      Assert.assertEquals(
         EFloat.PositiveInfinity,
         EFloat.FromDouble(Double.POSITIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         EFloat.NegativeInfinity,
         EFloat.FromDouble(Double.NEGATIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         EFloat.PositiveInfinity,
         EFloat.FromSingle(Float.POSITIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         EFloat.NegativeInfinity,
         EFloat.FromSingle(Float.NEGATIVE_INFINITY));
 
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.PositiveInfinity,
         ERational.FromDouble(Double.POSITIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.NegativeInfinity,
         ERational.FromDouble(Double.NEGATIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.PositiveInfinity,
         ERational.FromSingle(Float.POSITIVE_INFINITY));
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.NegativeInfinity,
         ERational.FromSingle(Float.NEGATIVE_INFINITY));
 
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.PositiveInfinity,
         ERational.FromEDecimal(EDecimal.PositiveInfinity));
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.NegativeInfinity,
         ERational.FromEDecimal(EDecimal.NegativeInfinity));
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.PositiveInfinity,
         ERational.FromEFloat(EFloat.PositiveInfinity));
-      Assert.assertEquals (
+      Assert.assertEquals(
         ERational.NegativeInfinity,
         ERational.FromEFloat(EFloat.NegativeInfinity));
       if (!(
@@ -2018,7 +2321,7 @@ enumber.compareTo (
       for (int i = 0; i < 1000; ++i) {
         EInteger exp1 = EInteger.FromInt32(exp)
           .Add(EInteger.FromInt32(fr.UniformInt(32) - 16));
-        EInteger exp2 = exp1.Add (
+        EInteger exp2 = exp1.Add(
             EInteger.FromInt32(fr.UniformInt(18) - 30));
         EInteger mant1 = EInteger.FromInt32(fr.UniformInt(0x10000000));
         EInteger mant2 = EInteger.FromInt32(fr.UniformInt(0x10000000));
@@ -2040,6 +2343,9 @@ enumber.compareTo (
       }
       d = bf.ToDouble();
       Assert.assertEquals((double)oldd, d, 0);
+      if (bf.isFinite()) {
+        TestStringToDoubleOne(bf.toString());
+      }
     }
 
     private static void TestEFloatSingleCore(float d, String s) {
@@ -2050,5 +2356,8 @@ enumber.compareTo (
       }
       d = bf.ToSingle();
       Assert.assertEquals((float)oldd, d, 0f);
+      if (bf.isFinite()) {
+        TestStringToSingleOne(bf.toString());
+      }
     }
   }

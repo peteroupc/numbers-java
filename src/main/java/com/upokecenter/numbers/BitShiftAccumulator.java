@@ -28,6 +28,11 @@ at: http://peteroupc.github.io/
       this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
       return FastInteger.CopyFrozen(this.knownBitLength);
     }
+
+    public FastInteger OverestimateDigitLength() {
+       return this.GetDigitLength();
+    }
+
     private void VerifyKnownLength() {
     }
 

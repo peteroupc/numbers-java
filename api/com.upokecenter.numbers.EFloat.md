@@ -93,7 +93,7 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
 * `EFloat Add​(int intValue)`<br>
- Not documented yet.
+ Adds this object and another number and returns the result.
 * `EFloat Add​(EFloat otherValue)`<br>
  Adds this object and another binary floating-point number and returns the
  result.
@@ -101,7 +101,8 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
    EContext ctx)`<br>
  Finds the sum of this object and another object.
 * `int compareTo​(int intOther)`<br>
- Not documented yet.
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
 * `int compareTo​(EFloat other)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
@@ -124,7 +125,8 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs).
 * `int CompareToValue​(int intOther)`<br>
- Not documented yet.
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
 * `int CompareToValue​(EFloat other)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
@@ -728,9 +730,9 @@ Creates a number with the value exponent*2^significand.
 
 **Parameters:**
 
-* <code>mantissa</code> - Not documented yet.
+* <code>mantissa</code> - The parameter <code>mantissa</code> is a Numbers.EInteger object.
 
-* <code>exponent</code> - Not documented yet.
+* <code>exponent</code> - The value of the exponent.
 
 **Returns:**
 
@@ -873,7 +875,14 @@ Creates a binary floating-point number from a text string that represents a
 * <code>length</code> - The length, in code units, of the desired portion of <code>
  str</code> (but not more than <code>str</code> 's length).
 
-* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags
+ are in addition to the pre-existing flags). Can be null, in which
+ case the precision is unlimited. Note that providing a context is
+ often much faster than creating an EDecimal without a context then
+ calling ToEFloat on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
 
 **Returns:**
 
@@ -884,9 +893,10 @@ Creates a binary floating-point number from a text string that represents a
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
- than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
- length minus <code>offset</code> is less than <code>length</code>.
+* <code>java.lang.NumberFormatException</code> - The portion given of <code>str</code> is not a correctly
+ formatted number string; or either <code>offset</code> or <code>length</code>
+ is less than 0 or greater than <code>str</code> 's length, or <code>str</code>
+ 's length minus <code>offset</code> is less than <code>length</code>.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str)
@@ -903,6 +913,13 @@ Creates a binary floating-point number from a text string that represents a
 * The parsed number, converted to arbitrary-precision binary
  floating-point number.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion given of <code>str</code> is not a correctly
+ formatted number string.
+
 ### FromString
     public static EFloat FromString​(java.lang.String str, EContext ctx)
 Creates a binary floating-point number from a text string that represents a
@@ -913,8 +930,14 @@ Creates a binary floating-point number from a text string that represents a
 
 * <code>str</code> - A text string to convert to a binary floating-point number.
 
-* <code>ctx</code> - An arithmetic context specifying the precision, rounding, and
- exponent range to apply to the parsed number. Can be null.
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags
+ are in addition to the pre-existing flags). Can be null, in which
+ case the precision is unlimited. Note that providing a context is
+ often much faster than creating an EDecimal without a context then
+ calling ToEFloat on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
 
 **Returns:**
 
@@ -1145,7 +1168,7 @@ Finds the absolute value of this object (if it's negative, it becomes
 
 ### Add
     public EFloat Add​(int intValue)
-Not documented yet.
+Adds this object and another number and returns the result.
 
 **Parameters:**
 
@@ -1153,7 +1176,7 @@ Not documented yet.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The sum of the two objects.
 
 ### Subtract
     public EFloat Subtract​(int intValue)
@@ -1279,27 +1302,42 @@ Compares the mathematical values of this object and another object,
 
 ### compareTo
     public int compareTo​(int intOther)
-Not documented yet.
+Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the
+ Equals method, but it may change in a future version to use the
+ rules for the CompareToTotal method instead.
 
 **Parameters:**
 
-* <code>intOther</code> - Not documented yet.
+* <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
 
 ### CompareToValue
     public int CompareToValue​(int intOther)
-Not documented yet.
+Compares the mathematical values of this object and another object,
+ accepting NaN values. <p>This method is not consistent with the
+ Equals method because two different numbers with the same
+ mathematical value, but different exponents, will compare as
+ equal.</p> <p>In this method, negative zero and positive zero are
+ considered equal.</p> <p>If this object is a quiet NaN or signaling
+ NaN, this method will not trigger an error. Instead, NaN will
+ compare greater than any other number.</p>
 
 **Parameters:**
 
-* <code>intOther</code> - Not documented yet.
+* <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
 
 ### CompareToSignal
     public EFloat CompareToSignal​(EFloat other, EContext ctx)
@@ -1844,7 +1882,9 @@ Determines whether this object's significand, exponent, and properties are
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>. In
+ this method, two objects are not equal if they don't have the same
+ type or if one is null and the other isn't.
 
 ### EqualsInternal
     public boolean EqualsInternal​(EFloat otherValue)
@@ -3219,8 +3259,9 @@ Converts this value to a string, but without exponential notation.
 Returns a string representation of this number's value after rounding to the
  given precision (using the given arithmetic context). If the number
  after rounding is neither infinity nor not-a-number (NaN), returns
- the shortest decimal form (in terms of nonzero decimal digits) of
- this number's value that results in the rounded number after the
+ the shortest decimal form of this number's value (in terms of
+ decimal digits starting with the first nonzero digit and ending with
+ the last nonzero digit) that results in the rounded number after the
  decimal form is converted to binary floating-point format (using the
  given arithmetic context).
 
@@ -3237,9 +3278,10 @@ Returns a string representation of this number's value after rounding to the
 
 * Shortest decimal form of this number's value for the given
  arithmetic context. The text string will be in exponential notation
- if the number's first nonzero decimal digit is more than five digits
- after the decimal point, or if the number's exponent is greater than
- 0 and its value is 10, 000, 000 or greater.
+ (expressed as a number 1 or greater, but less than 10, times a power
+ of 10) if the number's first nonzero decimal digit is more than five
+ digits after the decimal point, or if the number's exponent is
+ greater than 0 and its value is 10, 000, 000 or greater.
 
 ### ToSingle
     public float ToSingle()
@@ -3272,7 +3314,8 @@ Converts this number's value to a text string.
 
 * A string representation of this object. The value is converted to
  decimal and the decimal form of this number's value is returned. The
- text string will be in exponential notation if the converted
+ text string will be in exponential notation (expressed as a number 1
+ or greater, but less than 10, times a power of 10) if the converted
  number's scale is positive or if the number's first nonzero decimal
  digit is more than five digits after the decimal point.
 

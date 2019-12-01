@@ -93,7 +93,7 @@ at: http://peteroupc.github.io/
     public static final EContext BigDecimalJava =
       new EContext(0, ERounding.HalfUp, 0, 0, true)
     .WithExponentClamp(true).WithAdjustExponent(false)
-    .WithBigExponentRange (
+    .WithBigExponentRange(
       EInteger.FromInt32(0).Subtract(EInteger.FromInt64(Integer.MAX_VALUE)),
       EInteger.FromInt32(1).Add(EInteger.FromInt64(Integer.MAX_VALUE)));
 
@@ -252,8 +252,9 @@ at: http://peteroupc.github.io/
     private int flags;
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}.
-     * @param precision The parameter {@code precision} is a 32-bit signed integer.
+     * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
+     * class.
+     * @param precision The value of the Precision property.
      * @param rounding The value of the Rounding property.
      * @param exponentMinSmall The value of the EMin property.
      * @param exponentMaxSmall The value of the EMax property.
@@ -283,11 +284,11 @@ at: http://peteroupc.github.io/
     /**
      * Initializes a new instance of the {@link com.upokecenter.numbers.EContext}
      * class, .
-     * @param bigintPrecision An arbitrary-precision integer.
-     * @param rounding The parameter {@code rounding} is an ERounding object.
-     * @param exponentMin An arbitrary-precision integer.
-     * @param exponentMax An arbitrary-precision integer. (3).
-     * @param clampNormalExponents Either {@code true} or {@code false}.
+     * @param bigintPrecision The value of the Precision property.
+     * @param rounding The value of the Rounding property.
+     * @param exponentMin The value of the EMin property.
+     * @param exponentMax The value of the EMax property.
+     * @param clampNormalExponents The value of the ClampNormalExponents property.
      */
     public EContext(
       EInteger bigintPrecision,
@@ -798,7 +799,7 @@ this.simplified +
     public EContext WithExponentRange(
       int exponentMinSmall,
       int exponentMaxSmall) {
-      return this.WithBigExponentRange (
+      return this.WithBigExponentRange(
           EInteger.FromInt32(exponentMinSmall),
           EInteger.FromInt32(exponentMaxSmall));
     }

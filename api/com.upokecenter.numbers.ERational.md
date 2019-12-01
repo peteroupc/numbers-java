@@ -35,7 +35,8 @@ Represents an arbitrary-precision rational number. This class can't be
 
 * `ERational​(EInteger numerator,
          EInteger denominator) ERational`<br>
- Initializes a new instance of the ERational.
+ Initializes a new instance of the ERational
+ class.
 
 ## Methods
 
@@ -43,11 +44,12 @@ Represents an arbitrary-precision rational number. This class can't be
  Returns the absolute value of this rational number, that is, a number with
  the same value as this one but as a nonnegative number.
 * `ERational Add​(int v)`<br>
- Not documented yet.
+ Returns the sum of a rational number and a 32-bit signed integer.
 * `ERational Add​(ERational otherValue)`<br>
  Adds two rational numbers.
 * `int compareTo​(int intOther)`<br>
- Not documented yet.
+ Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance.
 * `int compareTo​(ERational other)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
@@ -63,7 +65,8 @@ Represents an arbitrary-precision rational number. This class can't be
  Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs).
 * `int CompareToValue​(int intOther)`<br>
- Not documented yet.
+ Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance.
 * `int CompareToValue​(ERational other)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
@@ -87,7 +90,8 @@ Represents an arbitrary-precision rational number. This class can't be
 * `ERational Decrement()`<br>
  Subtracts one from an arbitrary-precision rational number.
 * `ERational Divide​(int v)`<br>
- Not documented yet.
+ Divides this instance by the value of an arbitrary-precision rational number
+ object.
 * `ERational Divide​(ERational otherValue)`<br>
  Divides this instance by the value of an arbitrary-precision rational number
  object.
@@ -167,7 +171,7 @@ Renamed to FromEFloat.
 * `boolean isZero()`<br>
  Gets a value indicating whether this object's value equals 0.
 * `ERational Multiply​(int v)`<br>
- Not documented yet.
+ Returns the value of this instance multiplied by a 32-bit signed integer.
 * `ERational Multiply​(ERational otherValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision rational
  number.
@@ -175,14 +179,16 @@ Renamed to FromEFloat.
  Returns a rational number with the same value as this one but with the sign
  reversed.
 * `ERational Remainder​(int v)`<br>
- Not documented yet.
+ Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision rational number.
 * `ERational Remainder​(ERational otherValue)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision rational number.
 * `int signum()`<br>
  Gets the sign of this rational number.
 * `ERational Subtract​(int v)`<br>
- Not documented yet.
+ Returns the result of subtracting a 32-bit signed integer from this
+ instance.
 * `ERational Subtract​(ERational otherValue)`<br>
  Subtracts an arbitrary-precision rational number from this instance.
 * `byte ToByteChecked()`<br>
@@ -762,27 +768,37 @@ Compares the mathematical value of an arbitrary-precision rational number
 
 ### compareTo
     public int compareTo​(int intOther)
-Not documented yet.
+Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. This method currently uses the rules
+ given in the CompareToValue method, so that it it is not consistent
+ with the Equals method, but it may change in a future version to use
+ the rules for the CompareToTotal method instead.
 
 **Parameters:**
 
-* <code>intOther</code> - Not documented yet.
+* <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Zero if the values are equal; a negative number if this instance is
+ less, or a positive number if this instance is greater.
 
 ### CompareToValue
     public int CompareToValue​(int intOther)
-Not documented yet.
+Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. In this method, NaN values are greater
+ than any other ERational value, and two NaN values (even if their
+ payloads differ) are treated as equal by this method. This method is
+ not consistent with the Equals method.
 
 **Parameters:**
 
-* <code>intOther</code> - Not documented yet.
+* <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Zero if the values are equal; a negative number if this instance is
+ less, or a positive number if this instance is greater.
 
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
@@ -866,7 +882,9 @@ Determines whether this object's numerator, denominator, and properties are
 
 **Returns:**
 
-* <code>true</code> if the objects are equal; otherwise, <code>false</code>.
+* <code>true</code> if the objects are equal; otherwise, <code>false</code>. In
+ this method, two objects are not equal if they don't have the same
+ type or if one is null and the other isn't.
 
 ### equals
     public boolean equals​(ERational other)
@@ -1317,63 +1335,75 @@ Subtracts one from an arbitrary-precision rational number.
 
 ### Add
     public ERational Add​(int v)
-Not documented yet.
+Returns the sum of a rational number and a 32-bit signed integer.
 
 **Parameters:**
 
-* <code>v</code> - Not documented yet.
+* <code>v</code> - A 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The sum of the two numbers. Returns not-a-number (NaN) if this
+ object is NaN.
 
 ### Subtract
     public ERational Subtract​(int v)
-Not documented yet.
+Returns the result of subtracting a 32-bit signed integer from this
+ instance.
 
 **Parameters:**
 
-* <code>v</code> - Not documented yet.
+* <code>v</code> - The parameter <code>v</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The difference of the two objects.
 
 ### Multiply
     public ERational Multiply​(int v)
-Not documented yet.
+Returns the value of this instance multiplied by a 32-bit signed integer.
 
 **Parameters:**
 
-* <code>v</code> - Not documented yet.
+* <code>v</code> - The parameter <code>v</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The product of the two numbers.
 
 ### Divide
     public ERational Divide​(int v)
-Not documented yet.
+Divides this instance by the value of an arbitrary-precision rational number
+ object.
 
 **Parameters:**
 
-* <code>v</code> - Not documented yet.
+* <code>v</code> - The parameter <code>v</code> is a 32-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The quotient of the two objects.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - The parameter <code>v</code> is zero.
 
 ### Remainder
     public ERational Remainder​(int v)
-Not documented yet.
+Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision rational number.
 
 **Parameters:**
 
-* <code>v</code> - Not documented yet.
+* <code>v</code> - The divisor.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The remainder of the two numbers.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>v</code> is zero.
 
 ### ToByteChecked
     public byte ToByteChecked()

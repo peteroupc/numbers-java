@@ -16,6 +16,8 @@ at: http://peteroupc.github.io/
 
     FastInteger GetDigitLength();
 
+    FastInteger OverestimateDigitLength();
+
     int getOlderDiscardedDigits();
 
     int getLastDiscardedDigit();

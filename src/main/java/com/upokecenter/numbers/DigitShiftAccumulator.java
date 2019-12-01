@@ -112,6 +112,53 @@ at: http://peteroupc.github.io/
       return this.knownDigitLength;
     }
 
+    public FastInteger OverestimateDigitLength() {
+      // If digit length is known, return it
+      if (this.knownDigitLength != null) {
+        return this.knownDigitLength;
+      }
+      if (this.isSmall) {
+        // Can easily be calculated without estimation
+        return this.GetDigitLength();
+      } else {
+        EInteger sbi = this.shiftedBigInt;
+        EInteger bigBitLength = sbi.GetUnsignedBitLengthAsEInteger();
+        if (bigBitLength.compareTo(2135) <= 0) {
+          // May overestimate by 1
+          return new FastInteger(1 + ((bigBitLength.ToInt32Checked() *
+                  631305) >> 21));
+        } else {
+          // Bit length is big enough that dividing it by 3 will not
+          // underestimate the true base-10 digit length.
+          return FastInteger.FromBig(bigBitLength.Divide(3));
+        }
+      }
+    }
+
+    private FastInteger UnderestimateDigitLength() {
+      // If digit length is known, return it
+      if (this.knownDigitLength != null) {
+        return this.knownDigitLength;
+      }
+      if (this.isSmall) {
+        // Can easily be calculated without estimation
+        return this.GetDigitLength();
+      } else {
+        EInteger sbi = this.shiftedBigInt;
+        EInteger bigBitLength = sbi.GetUnsignedBitLengthAsEInteger();
+        if (bigBitLength.compareTo(2135) <= 0) {
+          int ov = 1 + ((bigBitLength.ToInt32Checked() *
+                631305) >> 21);
+          return new FastInteger(ov - 2);
+        } else {
+          // Bit length is big enough that multiplying it by 100 and dividing by 335
+          // will not
+          // overestimate the true base-10 digit length.
+          return FastInteger.FromBig(bigBitLength.Multiply(100).Divide(335));
+        }
+      }
+    }
+
     public void ShiftRight(FastInteger fastint) {
       if (fastint == null) {
         throw new NullPointerException("fastint");
@@ -248,6 +295,16 @@ at: http://peteroupc.github.io/
       return ret;
     }
 
+    private static EInteger DivideByPowerOfTen(EInteger ei, int pow) {
+      // if (pow > 100) {
+      // int mid = pow / 2;
+      // ei = DivideByPowerOfTen(ei, pow - mid);
+      // return DivideByPowerOfTen(ei, mid);
+      // } else {
+      return ei.Divide(NumberUtility.FindPowerOfTen(pow));
+      // }
+    }
+
     private static int LongDigitLength(long value) {
       if (value >= 1000000000L) {
         return (value >= 1000000000000000000L) ? 19 : ((value >=
@@ -313,6 +370,9 @@ at: http://peteroupc.github.io/
         this.knownDigitLength = new FastInteger(1);
         return;
       }
+      // if (digits > 50) {
+      // DebugUtility.Log("ShiftRightBig(" + digits + ")");
+      // }
       if (truncate) {
         EInteger bigquo;
         if (digits > 50) {
@@ -352,13 +412,13 @@ at: http://peteroupc.github.io/
           }
         }
         if (this.shiftedBigInt.isEven() && this.bitLeftmost == 0) {
-          EInteger[] quorem = this.shiftedBigInt.DivRem (
+          EInteger[] quorem = this.shiftedBigInt.DivRem(
               NumberUtility.FindPowerOfTen(digits));
           bigquo = quorem[0];
           this.bitLeftmost |= quorem[1].isZero() ? 0 : 1;
         } else {
           this.bitLeftmost = 1;
-          bigquo = this.shiftedBigInt.Divide (
+          bigquo = this.shiftedBigInt.Divide(
               NumberUtility.FindPowerOfTen(digits));
         }
         this.bitsAfterLeftmost |= this.bitLeftmost;
@@ -501,12 +561,13 @@ at: http://peteroupc.github.io/
         this.knownDigitLength = new FastInteger(1);
         return;
       }
+
       if (digits >= 2 && digits <= 8) {
         if (shiftedLong >= ValueTenPowers[digits]) {
           long bigPower = ValueTenPowers[digits];
           long smallPower = ValueTenPowers[digits - 1];
           this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(
-  0)) : this.discardedBitCount;
+              0)) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           long div = shiftedLong / bigPower;
           long rem = shiftedLong - (div * bigPower);
@@ -553,7 +614,7 @@ at: http://peteroupc.github.io/
           return;
         }
       }
-      this.knownDigitLength = new FastInteger (
+      this.knownDigitLength = new FastInteger(
         LongDigitLength(shiftedLong));
       if (this.discardedBitCount != null) {
         this.discardedBitCount.AddInt(digits);
@@ -599,14 +660,29 @@ at: http://peteroupc.github.io/
           return;
         }
       }
+      // DebugUtility.Log("ShiftToDigitsBig(" + digits + ")");
+      // System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();sw.Restart();
       String str;
-      this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
-      if (this.knownDigitLength.CompareToInt(digits) <= 0) {
+      FastInteger estDigitLength = this.UnderestimateDigitLength();
+      boolean haveKnownDigitLength = this.knownDigitLength != null;
+
+      if (estDigitLength.CompareToInt(digits) <= 0) {
+        if (!haveKnownDigitLength) {
+          this.GetDigitLength();
+          this.ShiftToDigitsBig(digits, truncate);
+        }
+
         return;
       }
-      FastInteger digitDiff = this.knownDigitLength.Copy().SubtractInt(digits);
+      FastInteger digitDiff = estDigitLength.Copy().SubtractInt(digits);
       if (truncate && digitDiff.CanFitInInt32()) {
+        // DebugUtility.Log("d=" + sw.getElapsedMilliseconds() + " ms");
         this.TruncateOrShiftRight(digitDiff, truncate);
+        if (!haveKnownDigitLength) {
+          this.GetDigitLength();
+          this.ShiftToDigitsBig(digits, truncate);
+        }
+
         return;
       }
       if (digitDiff.CompareToInt(1) == 0) {
@@ -620,8 +696,14 @@ at: http://peteroupc.github.io/
         this.shiftedBigInt = bigquo;
         this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
-        this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
+        if (!haveKnownDigitLength) {
+          this.GetDigitLength();
+          this.ShiftToDigitsBig(digits, truncate);
+        } else {
+          this.UpdateKnownLength(digitDiff);
+        }
+
         return;
       }
       if (digitDiff.CompareToInt(9) <= 0) {
@@ -646,22 +728,38 @@ at: http://peteroupc.github.io/
         this.shiftedBigInt = bigquo;
         this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
-        this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
+        if (!haveKnownDigitLength) {
+          this.GetDigitLength();
+          this.ShiftToDigitsBig(digits, truncate);
+        } else {
+          this.UpdateKnownLength(digitDiff);
+        }
+
         return;
       }
+      // DebugUtility.Log("e1=" + sw.getElapsedMilliseconds() + " ms");
       if (digitDiff.CanFitInInt32()) {
         EInteger bigrem = null;
         EInteger bigquo;
         EInteger[] divrem;
+        EInteger radixPower;
+        int power = digitDiff.AsInt32() - 1;
         if (!this.shiftedBigInt.isEven() || this.bitsAfterLeftmost != 0) {
-          EInteger radixPower =
-            NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
+          // DebugUtility.Log("f=" + sw.getElapsedMilliseconds() + " ms.get(pow=" + power +
+          // ")");
+          bigquo = this.shiftedBigInt;
+          // DebugUtility.Log("fa=" + sw.getElapsedMilliseconds() + " ms.get(" + (//
+          // (!this.shiftedBigInt.isEven() || this.bitsAfterLeftmost != 0)) + ")");
           this.bitsAfterLeftmost |= 1;
-          bigquo = this.shiftedBigInt.Divide(radixPower);
+          bigquo = DivideByPowerOfTen(bigquo, power);
+          // DebugUtility.Log("faa=" + sw.getElapsedMilliseconds() + " ms");
         } else {
-          EInteger radixPower =
-            NumberUtility.FindPowerOfTen(digitDiff.AsInt32() - 1);
+          // DebugUtility.Log("fb=" + sw.getElapsedMilliseconds() + " ms.get(pow=" + power +
+          // ")");
+          radixPower = NumberUtility.FindPowerOfTen(power);
+          // DebugUtility.Log("fc=" + sw.getElapsedMilliseconds() + " ms.get(" + (//
+          // (!this.shiftedBigInt.isEven() || this.bitsAfterLeftmost != 0)) + ")");
           divrem = this.shiftedBigInt.DivRem(radixPower);
           bigquo = divrem[0];
           bigrem = divrem[1];
@@ -670,6 +768,7 @@ at: http://peteroupc.github.io/
             this.bitsAfterLeftmost |= 1;
           }
         }
+        // DebugUtility.Log("g=" + sw.getElapsedMilliseconds() + " ms");
         EInteger bigquo2;
         divrem = bigquo.DivRem(ValueTen);
         bigquo2 = divrem[0];
@@ -678,10 +777,18 @@ at: http://peteroupc.github.io/
         this.shiftedBigInt = bigquo2;
         this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(0)) : this.discardedBitCount;
         this.discardedBitCount.Add(digitDiff);
-        this.UpdateKnownLength(digitDiff);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
+        // DebugUtility.Log("h=" + sw.getElapsedMilliseconds() + " ms");
+        if (!haveKnownDigitLength) {
+          this.GetDigitLength();
+          this.ShiftToDigitsBig(digits, truncate);
+        } else {
+          this.UpdateKnownLength(digitDiff);
+        }
+
         return;
       }
+      // DebugUtility.Log("e2=" + sw.getElapsedMilliseconds() + " ms");
       str = this.shiftedBigInt.toString();
       // NOTE: Will be 1 if the value is 0
       int digitLength = str.length();
@@ -722,10 +829,8 @@ at: http://peteroupc.github.io/
       int v2 = this.shiftedSmall;
       kb = (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
               10000000) ? 8 : ((v2 >= 1000000) ? 7 : ((v2 >= 100000) ? 6 :
-((v2 >=
-                    10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2
->= 10) ? 2 :
-                        1))))))));
+                ((v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2
+                >= 10) ? 2 : 1))))))));
       this.knownDigitLength = new FastInteger(kb);
       if (kb > digits) {
         int digitShift = (int)(kb - digits);
@@ -817,7 +922,7 @@ at: http://peteroupc.github.io/
           int bigPower = ValueTenPowers[digits];
           int smallPower = ValueTenPowers[digits - 1];
           this.discardedBitCount = (this.discardedBitCount == null) ? (new FastInteger(
-  0)) : this.discardedBitCount;
+              0)) : this.discardedBitCount;
           this.discardedBitCount.AddInt(digits);
           int div = this.shiftedSmall / bigPower;
           int rem = this.shiftedSmall - (div * bigPower);
@@ -859,10 +964,8 @@ at: http://peteroupc.github.io/
       int v2 = this.shiftedSmall;
       int kb = (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
               10000000) ? 8 : ((v2 >= 1000000) ? 7 : ((v2 >= 100000) ? 6 :
-((v2 >=
-                    10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2
->= 10) ? 2 :
-                        1))))))));
+                ((v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ? 3 : ((v2
+                >= 10) ? 2 : 1))))))));
       this.knownDigitLength = new FastInteger(kb);
       if (this.discardedBitCount != null) {
         this.discardedBitCount.AddInt(digits);

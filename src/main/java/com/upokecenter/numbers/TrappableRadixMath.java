@@ -13,10 +13,11 @@ at: http://peteroupc.github.io/
   // radix.</typeparam>
   class TrappableRadixMath<T> implements IRadixMath<T> {
     private static void ThrowTrapException(
+      int flags,
       int flag,
       EContext ctx,
       Object result) {
-      throw new ETrapException(flag, ctx, result);
+      throw new ETrapException(flags, flag, ctx, result);
     }
 
     private static EContext GetTrappableContext(EContext ctx) {
@@ -44,32 +45,36 @@ at: http://peteroupc.github.io/
             EContext.FlagSubnormal));
       if (mutexConditions != 0) {
         for (int i = 0; i < 32; ++i) {
-          int flag = mutexConditions & (i << 1);
+          int flag = mutexConditions & (1 << i);
           if (flag != 0) {
-            ThrowTrapException(flag, dst, result);
+            ThrowTrapException(traps, flag, dst, result);
           }
         }
       }
       if ((traps & EContext.FlagSubnormal) != 0) {
         ThrowTrapException(
+          traps,
           traps & EContext.FlagSubnormal,
           dst,
           result);
       }
       if ((traps & EContext.FlagInexact) != 0) {
         ThrowTrapException(
+          traps,
           traps & EContext.FlagInexact,
           dst,
           result);
       }
       if ((traps & EContext.FlagRounded) != 0) {
         ThrowTrapException(
+          traps,
           traps & EContext.FlagRounded,
           dst,
           result);
       }
       if ((traps & EContext.FlagClamped) != 0) {
         ThrowTrapException(
+          traps,
           traps & EContext.FlagClamped,
           dst,
           result);

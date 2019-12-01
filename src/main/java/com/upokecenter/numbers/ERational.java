@@ -18,6 +18,7 @@ at: http://peteroupc.github.io/
    * operator (which might only check if each side of the operator is the
    * same instance).</p>
    */
+
   public final class ERational implements Comparable<ERational> {
     private static final int MaxSafeInt = 214748363;
 
@@ -97,9 +98,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}.
-     * @param numerator An arbitrary-precision integer.
-     * @param denominator An arbitrary-precision integer.
+     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
+     * class.
+     * @param numerator An arbitrary-precision integer serving as the numerator.
+     * @param denominator An arbitrary-precision integer serving as the
+     * denominator.
      * @throws NullPointerException The parameter {@code numerator} or {@code
      * denominator} is null.
      * @throws IllegalArgumentException Denominator is zero.
@@ -134,9 +137,9 @@ at: http://peteroupc.github.io/
      */
     public ERational Copy() {
       return new ERational(
-        this.unsignedNumerator,
-        this.denominator,
-        this.flags);
+          this.unsignedNumerator,
+          this.denominator,
+          this.flags);
     }
 
     /**
@@ -272,8 +275,7 @@ at: http://peteroupc.github.io/
       if (diag.signum() < 0) {
         throw new
         IllegalArgumentException("Diagnostic information must be 0 or greater," +
-"\u0020 was: " +
-          diag);
+          "\u0020 was: " + diag);
       }
       if (diag.isZero() && !negative) {
         return signaling ? SignalingNaN : NaN;
@@ -601,12 +603,12 @@ at: http://peteroupc.github.io/
           if (numerInt > MaxSafeInt) {
             numer = EInteger.FromSubstring(str, numerStart, endStr);
             return new ERational(numer,
-            EInteger.FromInt32(1),
-            flags3);
+                EInteger.FromInt32(1),
+                flags3);
           } else {
             return new ERational(EInteger.FromInt32(numerInt),
-            EInteger.FromInt32(1),
-            flags3);
+                EInteger.FromInt32(1),
+                flags3);
           }
         }
       }
@@ -678,7 +680,7 @@ at: http://peteroupc.github.io/
       if (ndenom == null ? (ndenomInt == 0) : ndenom.isZero()) {
         throw new NumberFormatException();
       }
-      ERational erat = Create (
+      ERational erat = Create(
           numer == null ? EInteger.FromInt32(numerInt) : numer,
           ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom);
       return negative ? erat.Negate() : erat;
@@ -729,7 +731,7 @@ at: http://peteroupc.github.io/
         return -1;
       }
       if (valueIThis >= 2) {
-        cmp = this.unsignedNumerator.compareTo (
+        cmp = this.unsignedNumerator.compareTo(
             other.unsignedNumerator);
         return cmp;
       } else if (valueIThis == 1) {
@@ -737,7 +739,7 @@ at: http://peteroupc.github.io/
       } else {
         cmp = this.Abs().compareTo(other.Abs());
         if (cmp == 0) {
-          cmp = this.denominator.compareTo (
+          cmp = this.denominator.compareTo(
               other.denominator);
           return cmp;
         }
@@ -795,7 +797,7 @@ at: http://peteroupc.github.io/
         return neg1 ? 1 : -1;
       }
       if (valueIThis >= 2) {
-        cmp = this.unsignedNumerator.compareTo (
+        cmp = this.unsignedNumerator.compareTo(
             other.unsignedNumerator);
         return neg1 ? -cmp : cmp;
       } else if (valueIThis == 1) {
@@ -803,7 +805,7 @@ at: http://peteroupc.github.io/
       } else {
         cmp = this.compareTo(other);
         if (cmp == 0) {
-          cmp = this.denominator.compareTo (
+          cmp = this.denominator.compareTo(
               other.denominator);
           return neg1 ? -cmp : cmp;
         }
@@ -819,9 +821,9 @@ at: http://peteroupc.github.io/
     public ERational Abs() {
       if (this.isNegative()) {
         return new ERational(
-          this.unsignedNumerator,
-          this.denominator,
-          this.flags & ~BigNumberFlags.FlagNegative);
+            this.unsignedNumerator,
+            this.denominator,
+            this.flags & ~BigNumberFlags.FlagNegative);
       }
       return this;
     }
@@ -842,9 +844,9 @@ at: http://peteroupc.github.io/
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-          otherValue.unsignedNumerator,
-          false,
-          otherValue.isNegative());
+            otherValue.unsignedNumerator,
+            false,
+            otherValue.isNegative());
       }
       if (this.IsQuietNaN()) {
         return this;
@@ -878,7 +880,7 @@ at: http://peteroupc.github.io/
      * implementation returns a positive number if.
      */
     public int compareTo(ERational other) {
-       return this.CompareToValue(other);
+      return this.CompareToValue(other);
     }
 
     /**
@@ -950,20 +952,30 @@ at: http://peteroupc.github.io/
       return ad.compareTo(bc);
     }
 
-  /**
-   * Not documented yet.
-   * @param intOther Not documented yet.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. This method currently uses the rules
+     * given in the CompareToValue method, so that it it is not consistent
+     * with the Equals method, but it may change in a future version to use
+     * the rules for the CompareToTotal method instead.
+     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     */
     public int compareTo(int intOther) {
       return this.CompareToValue(ERational.FromInt32(intOther));
     }
 
-  /**
-   * Not documented yet.
-   * @param intOther Not documented yet.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. In this method, NaN values are greater
+     * than any other ERational value, and two NaN values (even if their
+     * payloads differ) are treated as equal by this method. This method is
+     * not consistent with the Equals method.
+     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     */
     public int CompareToValue(int intOther) {
       return this.CompareToValue(ERational.FromInt32(intOther));
     }
@@ -1233,9 +1245,9 @@ at: http://peteroupc.github.io/
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-          otherValue.unsignedNumerator,
-          false,
-          otherValue.isNegative());
+            otherValue.unsignedNumerator,
+            false,
+            otherValue.isNegative());
       }
       if (this.IsQuietNaN()) {
         return this;
@@ -1260,7 +1272,7 @@ at: http://peteroupc.github.io/
       }
       EInteger ad = this.getNumerator().Multiply(otherValue.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
-      return new ERational (
+      return new ERational(
           ad.Abs(),
           bc.Abs(),
           resultNeg ? BigNumberFlags.FlagNegative : 0);
@@ -1272,7 +1284,9 @@ at: http://peteroupc.github.io/
      * arbitrary-precision rational number. Not-a-number values are
      * considered equal if the rest of their properties are equal.
      * @param obj The parameter {@code obj} is an arbitrary object.
-     * @return {@code true} if the objects are equal; otherwise, {@code false}.
+     * @return {@code true} if the objects are equal; otherwise, {@code false}. In
+     * this method, two objects are not equal if they don't have the same
+     * type or if one is null and the other isn't.
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1391,9 +1405,9 @@ at: http://peteroupc.github.io/
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-          otherValue.unsignedNumerator,
-          false,
-          otherValue.isNegative());
+            otherValue.unsignedNumerator,
+            false,
+            otherValue.isNegative());
       }
       if (this.IsQuietNaN()) {
         return this;
@@ -1413,7 +1427,7 @@ at: http://peteroupc.github.io/
       EInteger ac = this.getNumerator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       return ac.isZero() ? (resultNeg ? NegativeZero : Zero) :
-        new ERational (
+        new ERational(
           ac.Abs(),
           bd.Abs(),
           resultNeg ? BigNumberFlags.FlagNegative : 0);
@@ -1426,9 +1440,9 @@ at: http://peteroupc.github.io/
      */
     public ERational Negate() {
       return new ERational(
-        this.unsignedNumerator,
-        this.denominator,
-        this.flags ^ BigNumberFlags.FlagNegative);
+          this.unsignedNumerator,
+          this.denominator,
+          this.flags ^ BigNumberFlags.FlagNegative);
     }
 
     /**
@@ -1447,9 +1461,9 @@ at: http://peteroupc.github.io/
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-          otherValue.unsignedNumerator,
-          false,
-          otherValue.isNegative());
+            otherValue.unsignedNumerator,
+            false,
+            otherValue.isNegative());
       }
       if (this.IsQuietNaN()) {
         return this;
@@ -1480,7 +1494,7 @@ at: http://peteroupc.github.io/
       bc = thisDen.Multiply(tnum);
       tden = tden.Multiply(thisDen);
       ad = ad.Subtract(bc);
-      return new ERational (
+      return new ERational(
           ad.Abs(),
           tden.Abs(),
           resultNeg ? BigNumberFlags.FlagNegative : 0);
@@ -1501,9 +1515,9 @@ at: http://peteroupc.github.io/
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-          otherValue.unsignedNumerator,
-          false,
-          otherValue.isNegative());
+            otherValue.unsignedNumerator,
+            false,
+            otherValue.isNegative());
       }
       if (this.IsQuietNaN()) {
         return this;
@@ -1623,7 +1637,7 @@ at: http://peteroupc.github.io/
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
-        return EDecimal.CreateNaN (
+        return EDecimal.CreateNaN(
             this.unsignedNumerator,
             this.IsSignalingNaN(),
             this.isNegative(),
@@ -1662,7 +1676,7 @@ at: http://peteroupc.github.io/
         return this.ToEDecimal(null);
       }
       if (this.IsNaN()) {
-        return EDecimal.CreateNaN (
+        return EDecimal.CreateNaN(
             this.unsignedNumerator,
             this.IsSignalingNaN(),
             this.isNegative(),
@@ -1764,7 +1778,7 @@ at: http://peteroupc.github.io/
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
-        return EFloat.CreateNaN (
+        return EFloat.CreateNaN(
             this.unsignedNumerator,
             this.IsSignalingNaN(),
             this.isNegative(),
@@ -1802,7 +1816,7 @@ at: http://peteroupc.github.io/
         return this.ToEFloat(null);
       }
       if (this.IsNaN()) {
-        return EFloat.CreateNaN (
+        return EFloat.CreateNaN(
             this.unsignedNumerator,
             this.IsSignalingNaN(),
             this.isNegative(),
@@ -1947,50 +1961,56 @@ at: http://peteroupc.github.io/
       return this.Subtract(FromInt32(1));
     }
 
-  /**
-   * Not documented yet.
-   * @param v Not documented yet.
-   * @return The return value is not documented yet.
-   */
-  public ERational Add(int v) {
- return this.Add(FromInt32(v));
-  }
+    /**
+     * Returns the sum of a rational number and a 32-bit signed integer.
+     * @param v A 32-bit signed integer.
+     * @return The sum of the two numbers. Returns not-a-number (NaN) if this
+     * object is NaN.
+     */
+    public ERational Add(int v) {
+      return this.Add(FromInt32(v));
+    }
 
-  /**
-   * Not documented yet.
-   * @param v Not documented yet.
-   * @return The return value is not documented yet.
-   */
-  public ERational Subtract(int v) {
- return this.Subtract(FromInt32(v));
-  }
+    /**
+     * Returns the result of subtracting a 32-bit signed integer from this
+     * instance.
+     * @param v The parameter {@code v} is a 32-bit signed integer.
+     * @return The difference of the two objects.
+     */
+    public ERational Subtract(int v) {
+      return this.Subtract(FromInt32(v));
+    }
 
-  /**
-   * Not documented yet.
-   * @param v Not documented yet.
-   * @return The return value is not documented yet.
-   */
-  public ERational Multiply(int v) {
- return this.Multiply(FromInt32(v));
-  }
+    /**
+     * Returns the value of this instance multiplied by a 32-bit signed integer.
+     * @param v The parameter {@code v} is a 32-bit signed integer.
+     * @return The product of the two numbers.
+     */
+    public ERational Multiply(int v) {
+      return this.Multiply(FromInt32(v));
+    }
 
-  /**
-   * Not documented yet.
-   * @param v Not documented yet.
-   * @return The return value is not documented yet.
-   */
-  public ERational Divide(int v) {
- return this.Divide(FromInt32(v));
-  }
+    /**
+     * Divides this instance by the value of an arbitrary-precision rational number
+     * object.
+     * @param v The parameter {@code v} is a 32-bit signed integer.
+     * @return The quotient of the two objects.
+     * @throws ArithmeticException The parameter {@code v} is zero.
+     */
+    public ERational Divide(int v) {
+      return this.Divide(FromInt32(v));
+    }
 
-  /**
-   * Not documented yet.
-   * @param v Not documented yet.
-   * @return The return value is not documented yet.
-   */
-  public ERational Remainder(int v) {
- return this.Remainder(FromInt32(v));
-}
+    /**
+     * Finds the remainder that results when this instance is divided by the value
+     * of an arbitrary-precision rational number.
+     * @param v The divisor.
+     * @return The remainder of the two numbers.
+     * @throws IllegalArgumentException The parameter {@code v} is zero.
+     */
+    public ERational Remainder(int v) {
+      return this.Remainder(FromInt32(v));
+    }
 
     // Begin integer conversions
 

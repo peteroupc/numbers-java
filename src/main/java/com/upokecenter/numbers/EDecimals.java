@@ -58,7 +58,12 @@ private EDecimals() {
      * @param ed An arbitrary-precision number object.
      * @return Always {@code true}.
      */
+
     public static boolean IsCanonical(EDecimal ed) {
+      // Deliberately unused because all objects are in a canonical
+      // form regardless of their value. Removing the parameter
+      // or renaming it to be a "discard" parameter would be a
+      // breaking change, though.
       return true;
     }
 
@@ -330,13 +335,13 @@ private EDecimals() {
         return ed.Add(ed2, ec);
       }
       if (!ed2.isFinite() || ed2.getExponent().signum() != 0) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       EInteger scale = ed2.getMantissa();
       if (ec != null && ec.getHasMaxPrecision() && ec.getHasExponentRange()) {
         EInteger exp = ec.getEMax().Add(ec.getPrecision()).Multiply(2);
         if (scale.Abs().compareTo(exp.Abs()) > 0) {
-          return InvalidOperation(EDecimal.NaN, ec);
+          return InvalidOperation(ec);
         }
       }
       if (ed.IsInfinity()) {
@@ -345,7 +350,7 @@ private EDecimals() {
       if (scale.isZero()) {
         return ed.RoundToPrecision(ec);
       }
-      EDecimal ret = EDecimal.Create (
+      EDecimal ret = EDecimal.Create(
           ed.getUnsignedMantissa(),
           ed.getExponent().Add(scale));
       if (ed.isNegative()) {
@@ -385,12 +390,12 @@ private EDecimals() {
         return ed.Add(ed2, ec);
       }
       if (!ed2.isFinite() || ed2.getExponent().signum() != 0) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       EInteger shift = ed2.getMantissa();
       if (ec != null) {
         if (shift.Abs().compareTo(ec.getPrecision()) > 0) {
-          return InvalidOperation(EDecimal.NaN, ec);
+          return InvalidOperation(ec);
         }
       }
       if (ed.IsInfinity()) {
@@ -468,11 +473,11 @@ private EDecimals() {
         return ed.Add(ed2, ec);
       }
       if (!ed2.isFinite() || ed2.getExponent().signum() != 0) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       EInteger shift = ed2.getMantissa();
       if (shift.Abs().compareTo(ec.getPrecision()) > 0) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       if (ed.IsInfinity()) {
         // NOTE: Must check for validity of second
@@ -484,7 +489,7 @@ private EDecimals() {
       EInteger mantprec = ed.Precision();
       if (ec != null && ec.getHasMaxPrecision() &&
         mantprec.compareTo(ec.getPrecision()) > 0) {
-        mant = mant.Remainder (
+        mant = mant.Remainder(
             EInteger.FromInt32(DecimalRadix).Pow(ec.getPrecision()));
         mantprec = ec.getPrecision();
       }
@@ -657,16 +662,8 @@ private EDecimals() {
       return ed.isNegative() == other.isNegative() ? Copy(ed) : CopyNegate(ed);
     }
 
-    private static EDecimal InvalidOperation(EDecimal ed, EContext ec) {
-      if (ec != null) {
-        if (ec.getHasFlags()) {
-          ec.setFlags(ec.getFlags()|(EContext.FlagInvalid));
-        }
-        if ((ec.getTraps() & EContext.FlagInvalid) != 0) {
-          throw new ETrapException(EContext.FlagInvalid, ec, ed);
-        }
-      }
-      return ed;
+    private static EDecimal InvalidOperation(EContext ec) {
+      return EDecimal.SignalingNaN.Plus(ec);
     }
 
     /**
@@ -711,7 +708,7 @@ private EDecimals() {
     public static EDecimal Trim(EDecimal ed1, EContext ec) {
       EDecimal ed = ed1;
       if (ed1 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       if (ed.IsSignalingNaN()) {
         return EDecimal.CreateNaN(
@@ -790,7 +787,7 @@ private EDecimals() {
      */
     public static EDecimal Rescale(EDecimal ed, EDecimal scale, EContext ec) {
       if (ed == null || scale == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       if (!scale.isFinite()) {
         return ed.Quantize(scale, ec);
@@ -806,10 +803,10 @@ private EDecimals() {
             // appropriate error conditions
             scale = scale.RoundToPrecision(ec);
           }
-          return InvalidOperation(EDecimal.NaN, ec);
+          return InvalidOperation(ec);
         }
         EDecimal rounded = scale.Quantize(0, tec);
-        return ed.Quantize (
+        return ed.Quantize(
             EDecimal.Create(EInteger.FromInt32(1), rounded.getMantissa()),
             ec);
       }
@@ -840,11 +837,11 @@ private EDecimals() {
     public static EDecimal And(EDecimal ed1, EDecimal ed2, EContext ec) {
       byte[] logi1 = FromLogical(ed1, ec, 10);
       if (logi1 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] logi2 = FromLogical(ed2, ec, 10);
       if (logi2 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] smaller = logi1.length < logi2.length ? logi1 : logi2;
       byte[] bigger = logi1.length < logi2.length ? logi2 : logi1;
@@ -879,11 +876,11 @@ private EDecimals() {
      */
     public static EDecimal Invert(EDecimal ed1, EContext ec) {
       if (ec == null || !ec.getHasMaxPrecision()) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] smaller = FromLogical(ed1, ec, 10);
       if (smaller == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       EInteger ei = EInteger.FromInt32(1).ShiftLeft(ec.getPrecision()).Subtract(1);
       byte[] bigger = ei.ToBytes(true);
@@ -916,11 +913,11 @@ private EDecimals() {
     public static EDecimal Xor(EDecimal ed1, EDecimal ed2, EContext ec) {
       byte[] logi1 = FromLogical(ed1, ec, 10);
       if (logi1 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] logi2 = FromLogical(ed2, ec, 10);
       if (logi2 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] smaller = logi1.length < logi2.length ? logi1 : logi2;
       byte[] bigger = logi1.length < logi2.length ? logi2 : logi1;
@@ -954,11 +951,11 @@ private EDecimals() {
     public static EDecimal Or(EDecimal ed1, EDecimal ed2, EContext ec) {
       byte[] logi1 = FromLogical(ed1, ec, 10);
       if (logi1 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] logi2 = FromLogical(ed2, ec, 10);
       if (logi2 == null) {
-        return InvalidOperation(EDecimal.NaN, ec);
+        return InvalidOperation(ec);
       }
       byte[] smaller = logi1.length < logi2.length ? logi1 : logi2;
       byte[] bigger = logi1.length < logi2.length ? logi2 : logi1;
