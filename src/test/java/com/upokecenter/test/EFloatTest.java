@@ -1290,20 +1290,22 @@ subnormal) {
       if (((Double)(expectedDouble)).isInfinite()) {
         return;
       }
-      String str = input.toString();
       if (input.ToDouble() != expectedDouble) {
-        String msg = "\nexpectedDbl " + OutputDouble(expectedDouble) +
+        String msg = "\ninputDouble\nexpectedDbl " +
+OutputDouble(expectedDouble) +
           ",\ngot----- " + OutputDouble(input.ToDouble()) +
           "\nsrc-----=" + OutputEF(src) + "\nexpected=" +
           OutputEF(expected) + "\ninput---=" + OutputEF(input);
         Assert.fail(msg);
       }
-      double inputDouble = EDecimal.FromString(str).ToDouble();
+      String str = input.toString();
+      double inputDouble = EFloat.FromString(str, EContext.Binary64).ToDouble();
       if (inputDouble != expectedDouble) {
-        String msg = "\nexpectedDbl " + OutputDouble(expectedDouble) +
+        String msg = "\ninputString\nexpectedDbl " +
+OutputDouble(expectedDouble) +
           ",\ngot----- " + OutputDouble(inputDouble) +
-          "\nsrc-----=" + OutputEF(src) + "\nexpected=" +
-          OutputEF(expected) + "\ninput---=" + OutputEF(input);
+          "\nsrc-----=" + OutputEF(src) + "\nstr------=" + str +
+          "\nexpected=" + OutputEF(expected) + "\ninput---=" + OutputEF(input);
         Assert.fail(msg);
       }
     }
@@ -1334,7 +1336,7 @@ subnormal) {
           OutputEF(input);
         Assert.fail(msg);
       }
-      float inputSingle = EDecimal.FromString(str).ToSingle();
+      float inputSingle = EFloat.FromString(str, EContext.Binary32).ToSingle();
       if (inputSingle != expectedSingle) {
         String msg = "\nexpectedDbl " + OutputSingle(expectedSingle) +
           ",\ngot----- " +
