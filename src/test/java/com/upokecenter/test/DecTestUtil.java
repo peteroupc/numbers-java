@@ -295,6 +295,11 @@ private DecTestUtil() {
         String input3 = match.group(5);
         String output = match.group(6);
         String flags = match.group(7);
+        input1 = (input1 == null) ? ("") : input1;
+        input2 = (input2 == null) ? ("") : input2;
+        input3 = (input3 == null) ? ("") : input3;
+        output = (output == null) ? ("") : output;
+        flags = (flags == null) ? ("") : flags;
         input1 = ValueQuotes.matcher(input1).replaceAll("");
         input2 = ValueQuotes.matcher(input2).replaceAll("");
         input3 = ValueQuotes.matcher(input3).replaceAll("");
