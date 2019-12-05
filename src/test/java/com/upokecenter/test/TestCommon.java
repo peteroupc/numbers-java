@@ -535,8 +535,8 @@ private TestCommon() {
 
     public static String Repeat(char c, int num) {
       if (num < 0) {
-        throw new IllegalArgumentException("num (" + num + ") is not greater or
-equal to 0");
+        throw new IllegalArgumentException("num (" + num +
+           ") is not greater or equal to 0");
       }
       StringBuilder sb = new StringBuilder(num);
       if (num > RepeatDivideThreshold) {
@@ -545,7 +545,7 @@ equal to 0");
         var rem = num % RepeatDivideThreshold;
         for (int i = 0; i < count; ++i) {
           sb.append(sb2);
-          num-=RepeatDivideThreshold;
+          num -= RepeatDivideThreshold;
         }
         sb.append(Repeat(c, rem));
       } else {
@@ -558,10 +558,10 @@ equal to 0");
 
     public static String Repeat(String str, int num) {
       if (num < 0) {
-        throw new IllegalArgumentException("num (" + num + ") is not greater or
-equal to 0");
+        throw new IllegalArgumentException("num (" + num +
+           ") is not greater or equal to 0");
       }
-      if ((str) == null) {
+      if (str == null) {
         throw new NullPointerException("str");
       }
       if (str.length() == 1) {

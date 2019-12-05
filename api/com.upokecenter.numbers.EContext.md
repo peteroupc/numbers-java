@@ -151,7 +151,7 @@ Contains parameters for controlling the precision, rounding, and exponent
  Gets a value indicating whether to use a "simplified" arithmetic.
 * `void setFlags​(int value)`<br>
 * `java.lang.String toString()`<br>
- Gets a string representation of this object.
+ Returns this object in a text form intended to be read by humans.
 * `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
@@ -535,8 +535,10 @@ Determines whether a number can have the given Exponent property under this
 
 ### toString
     public java.lang.String toString()
-Gets a string representation of this object. Note that the string's format
- is not intended to be parsed and may change at any time.
+Returns this object in a text form intended to be read by humans. The value
+ returned by this method is not intended to be parsed by computer
+ programs, and the exact text of the value may change at any time
+ between versions of this library.
 
 **Overrides:**
 

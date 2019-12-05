@@ -15,6 +15,13 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
+// TODO: In next major version, perhaps change GetSigned/UnsignedBitLength
+// to return MaxValue on overflow
+// TODO: Add GetSigned/UnsignedBitLengthAsInt64
+// TODO: In next major version, perhaps change GetLowBit/GetDigitCount
+// to return MaxValue on overflow
+// TODO: Add GetLowBitAsInt64/GetDigitCountAsInt64
+
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
    * and has this prefix to group it with the other classes common to this
