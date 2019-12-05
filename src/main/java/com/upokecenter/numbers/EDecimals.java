@@ -933,10 +933,10 @@ private EDecimals() {
      * <i>logical operands</i>. A <code>logical operand</code> is a non-negative
      * base-10 number with an Exponent property of 0 and no other base-10
      * digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>,
-     * but not <code>02001</code> or <code>99999</code>). The logical OR operation sets
-     * each digit of the result to 1 if either or both of the corresponding
-     * digits of the logical operands are 1, and to 0 otherwise. For
-     * example, <code>01001 OR 111010 = 111011</code>.
+     * but not <code>02001</code> or <code>99999</code>). The logical OR operation
+     * sets each digit of the result to 1 if either or both of the
+     * corresponding digits of the logical operands are 1, and to 0
+     * otherwise. For example, <code>01001 OR 111010 = 111011</code>.
      * @param ed1 The first logical operand to the logical OR operation.
      * @param ed2 The second logical operand to the logical OR operation.
      * @param ec An arithmetic context to control the maximum precision of

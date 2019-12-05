@@ -3479,8 +3479,8 @@ maxDigitEstimate : retval +
      * @param second The second operand.
      * @return An arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code second} is null.
-     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't satisfy
-     * biggerCount == CountWords(result).
+     * @throws IllegalArgumentException doesn't satisfy biggerCount&gt;0; doesn't satisfy
+     * biggerCount == CountWords(result)
      */
     public EInteger Or(EInteger second) {
       if (second == null) {
@@ -3553,8 +3553,6 @@ maxDigitEstimate : retval +
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bit is set in one input integer but not in the other.
      * @throws NullPointerException The parameter {@code other} is null.
-     * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
-     * CountWords(result).
      */
     public EInteger Xor(EInteger other) {
       if (other == null) {
