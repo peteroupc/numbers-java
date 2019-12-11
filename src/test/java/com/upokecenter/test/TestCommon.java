@@ -540,9 +540,9 @@ private TestCommon() {
       }
       StringBuilder sb = new StringBuilder(num);
       if (num > RepeatDivideThreshold) {
-        var sb2 = Repeat(c, RepeatDivideThreshold);
-        var count = num / RepeatDivideThreshold;
-        var rem = num % RepeatDivideThreshold;
+        String sb2 = Repeat(c, RepeatDivideThreshold);
+        int count = num / RepeatDivideThreshold;
+        int rem = num % RepeatDivideThreshold;
         for (int i = 0; i < count; ++i) {
           sb.append(sb2);
         }
