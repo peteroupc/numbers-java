@@ -82,9 +82,14 @@ import com.upokecenter.numbers.*;
         if (ei2.isZero()) {
           ei2 = EInteger.FromInt32(1);
         }
-        er = ERational.FromString(ei1 + "/" + ei2);
+        String erstr = ei1 + "/" + ei2;
+        er = ERational.FromString(erstr);
         Assert.assertEquals(ei1, er.getNumerator());
         Assert.assertEquals(ei2, er.getDenominator());
+        ERational er2 = ERational.FromString("xyzxyz" + erstr, 6, erstr.length());
+        Assert.assertEquals(er, er2);
+        er2 = ERational.FromString(erstr + "xyzxyz", 0, erstr.length());
+        Assert.assertEquals(er, er2);
       }
     }
     @Test
@@ -115,7 +120,7 @@ import com.upokecenter.numbers.*;
         TestCommon.CompareTestLess(rat2, rat);
         TestCommon.CompareTestGreater(rat, rat2);
       }
-      TestCommon.CompareTestLess (
+      TestCommon.CompareTestLess(
         ERational.Create(EInteger.FromInt32(1), EInteger.FromInt64(2)),
         ERational.Create(EInteger.FromInt64(4), EInteger.FromInt32(1)));
       for (int i = 0; i < 100; ++i) {
@@ -149,7 +154,7 @@ import com.upokecenter.numbers.*;
       for (int i = 0; i < 100; ++i) {
         ERational er = RandomObjects.RandomERational(fr);
         int exp = -100000 + fr.UniformInt(200000);
-        EDecimal ed = EDecimal.Create (
+        EDecimal ed = EDecimal.Create(
             RandomObjects.RandomEInteger(fr),
             EInteger.FromInt32(exp));
         ERational er2 = ERational.FromEDecimal(ed);
@@ -256,7 +261,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
@@ -277,7 +282,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
@@ -298,7 +303,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
@@ -319,7 +324,7 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          Assert.assertEquals (
+          Assert.assertEquals(
             EInteger.FromInt32(0),
             EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
@@ -337,21 +342,21 @@ import com.upokecenter.numbers.*;
   enumber.ToEInteger());
         isInteger = enumberInteger.compareTo(enumber) == 0;
         eint = enumber.ToEInteger();
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             ERational.FromString("0")) >= 0 && enumber.compareTo(
             ERational.FromString("255")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("0")) >= 0 && enumber.ToEInteger().compareTo(
             EInteger.FromString("255")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteUnchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
@@ -366,10 +371,10 @@ import com.upokecenter.numbers.*;
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
@@ -419,22 +424,22 @@ import com.upokecenter.numbers.*;
             }
           }
         }
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             ERational.FromString("-32768")) >= 0 && enumber.compareTo(
             ERational.FromString("32767")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-32768")) >= 0 &&
-enumber.ToEInteger().compareTo (
+enumber.ToEInteger().compareTo(
             EInteger.FromString("32767")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
@@ -449,10 +454,10 @@ enumber.ToEInteger().compareTo (
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
@@ -502,22 +507,22 @@ enumber.ToEInteger().compareTo (
             }
           }
         }
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             ERational.FromString("-2147483648")) >= 0 && enumber.compareTo(
             ERational.FromString("2147483647")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-2147483648")) >= 0 &&
-          enumber.ToEInteger().compareTo (
+          enumber.ToEInteger().compareTo(
             EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
@@ -532,10 +537,10 @@ enumber.ToEInteger().compareTo (
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
@@ -585,23 +590,23 @@ enumber.ToEInteger().compareTo (
             }
           }
         }
-        isNum = enumber.compareTo (
+        isNum = enumber.compareTo(
             ERational.FromString("-9223372036854775808")) >= 0 &&
-enumber.compareTo (
+enumber.compareTo(
             ERational.FromString("9223372036854775807")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo (
+        isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-9223372036854775808")) >= 0 &&
-          enumber.ToEInteger().compareTo (
+          enumber.ToEInteger().compareTo(
             EInteger.FromString("9223372036854775807")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt64(enumber.ToInt64Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt64(enumber.ToInt64Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals (
+            TestCommon.AssertEquals(
               eint,
               EInteger.FromInt64(enumber.ToInt64IfExact()));
           } else {
@@ -616,10 +621,10 @@ enumber.compareTo (
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt64(enumber.ToInt64Checked()));
-          TestCommon.AssertEquals (
+          TestCommon.AssertEquals(
             eint,
             EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
@@ -833,10 +838,10 @@ enumber.compareTo (
       for (int i = 0; i < 100; ++i) {
         ERational er;
         ERational er2;
-        er = ERational.Create (
+        er = ERational.Create(
             RandomObjects.RandomEInteger(fr),
             EInteger.FromInt32(1));
-        er2 = ERational.Create (
+        er2 = ERational.Create(
             RandomObjects.RandomEInteger(fr),
             EInteger.FromInt32(1));
         if (er2.isZero() || !er2.isFinite()) {
@@ -935,8 +940,8 @@ enumber.compareTo (
     public void TestToDouble() {
       // test for correct rounding
       double dbl;
-      dbl = ERational.FromEDecimal (
-          EDecimal.FromString (
+      dbl = ERational.FromEDecimal(
+          EDecimal.FromString(
   "1.972579273363468721491642554610734805464744567871093749999999999999"))
         .ToDouble();
       {

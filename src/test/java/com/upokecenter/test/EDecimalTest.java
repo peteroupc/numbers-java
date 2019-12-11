@@ -5570,22 +5570,25 @@ import com.upokecenter.numbers.*;
     // Test potential cases where FromString is implemented
     // to take context into account when building the EFloat
     public static void TestStringContextOneEFloat(String str, EContext ec) {
+      if (ec == null) {
+        throw new NullPointerException("ec");
+      }
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
       EFloat ef = null, ef2 = null;
       // System.out.println("TestStringContextOne ---- ec=" + (ec));
       // swUnopt.Restart();
       EDecimal ed = null;
-      if (ec == null) {
-        throw new NullPointerException("ec");
-      }
       EContext noneRounding = ec.WithRounding(
           ERounding.None).WithTraps(EContext.FlagInvalid);
       EContext downRounding = ec.WithRounding(ERounding.Down);
-      ed = EDecimal.FromString(str);
+      ed = EDecimal.FromString("xyzxyz" + str, 6, str.length());
       ef = ed.ToEFloat(ec);
       // swUnoptRound.Stop();
       // swUnopt.Stop();
       // swOpt2.Restart();
-      ef2 = EFloat.FromString(str, ec);
+      ef2 = EFloat.FromString("xyzxyz" + str, 6, str.length(), ec);
       // swOpt2.Stop();
       EFloat ef3 = EFloat.NaN;
       try {
@@ -5778,8 +5781,58 @@ import com.upokecenter.numbers.*;
         .WithAdjustExponent(true).WithExponentRange(-14, 15)
         .WithRounding(ERounding.HalfDown);
       String str =
+
   "00726010602910507435000059115940090202200019076401000797770037005004100060.0201983258000005067E-96";
       TestStringContextOne(str, ec);
+    }
+
+    @Test
+    public void TestFromStringSubstring() {
+      String tstr =
+
+  "-3.00931381333368754713014659613049757554804012787921371662913692598770508705049030832574634419795955864174175076186656951904296875000E-49";
+      try {
+ EDecimal.FromString(
+   "xyzxyz" + tstr,
+   6,
+   tstr.length());
+} catch (Exception ex) {
+Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EFloat.FromString("xyzxyz" + tstr, 6, tstr.length());
+} catch (Exception ex) {
+Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EDecimal.FromString(tstr, 0, tstr.length());
+} catch (Exception ex) {
+Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EFloat.FromString(tstr, 0, tstr.length());
+} catch (Exception ex) {
+Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EDecimal.FromString(
+   tstr + "xyzxyz",
+   0,
+   tstr.length());
+} catch (Exception ex) {
+Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
+      try {
+ EFloat.FromString(tstr + "xyzxyz", 0, tstr.length());
+} catch (Exception ex) {
+Assert.fail(ex.toString());
+throw new IllegalStateException("", ex);
+}
     }
 
     @Test
@@ -5798,17 +5851,17 @@ import com.upokecenter.numbers.*;
       }
       {
         EContext ec =
-EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+          EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.Down).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
         String str = "" + TestCommon.Repeat("6", 4605) + "." +
-TestCommon.Repeat("6",
+          TestCommon.Repeat("6",
             1538) + "E-999";
         TestStringContextOneEFloat(str, ec);
       }
       {
         EContext ec =
-EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+          EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.Ceiling).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
         String str = "" + TestCommon.Repeat("2", 6125) + "E-6143";
@@ -5816,7 +5869,7 @@ EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
       }
       {
         EContext ec =
-EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+          EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.Down).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
         String str = "" + TestCommon.Repeat("2", 6165) + "E-6144";
@@ -5824,7 +5877,7 @@ EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
       }
       {
         EContext ec =
-EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+          EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.HalfDown).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
         String str =

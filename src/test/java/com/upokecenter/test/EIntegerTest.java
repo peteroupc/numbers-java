@@ -1736,10 +1736,31 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals(
           "789",
           stringTemp);
+        stringTemp = EInteger.FromSubstring(
+            "xxxxxxx789",
+            7,
+            10).toString();
+        Assert.assertEquals(
+          "789",
+          stringTemp);
+        stringTemp = EInteger.FromSubstring(
+            "xxxxxxx789xxx",
+            7,
+            10).toString();
+        Assert.assertEquals(
+          "789",
+          stringTemp);
       }
       {
         String stringTemp = EInteger.FromSubstring(
             "0123456789",
+            6,
+            10).toString();
+        Assert.assertEquals(
+          "6789",
+          stringTemp);
+        stringTemp = EInteger.FromSubstring(
+            "xyzxyz6789",
             6,
             10).toString();
         Assert.assertEquals(

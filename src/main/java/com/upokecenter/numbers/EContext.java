@@ -629,10 +629,8 @@ public final void setFlags(int value) {
     }
 
     /**
-     * Returns this object in a text form intended to be read by humans. The value
-     * returned by this method is not intended to be parsed by computer
-     * programs, and the exact text of the value may change at any time
-     * between versions of this library.
+     * Gets a string representation of this object. Note that the string's format
+     * is not intended to be parsed and may change at any time.
      * @return A string representation of this object.
      */
     @Override public String toString() {

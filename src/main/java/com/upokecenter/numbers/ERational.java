@@ -518,8 +518,8 @@ at: http://peteroupc.github.io/
       }
       boolean negative = false;
       int endStr = tmpoffset + length;
-      if (str.charAt(0) == '+' || str.charAt(0) == '-') {
-        negative = str.charAt(0) == '-';
+      if (str.charAt(tmpoffset) == '+' || str.charAt(tmpoffset) == '-') {
+        negative = str.charAt(tmpoffset) == '-';
         ++tmpoffset;
       }
       int numerInt = 0;

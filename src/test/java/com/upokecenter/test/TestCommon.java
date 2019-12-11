@@ -545,9 +545,10 @@ private TestCommon() {
         var rem = num % RepeatDivideThreshold;
         for (int i = 0; i < count; ++i) {
           sb.append(sb2);
-          num -= RepeatDivideThreshold;
         }
-        sb.append(Repeat(c, rem));
+        for (int i = 0; i < rem; ++i) {
+          sb.append(c);
+        }
       } else {
         for (int i = 0; i < num; ++i) {
           sb.append(c);
