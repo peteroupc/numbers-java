@@ -237,6 +237,9 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  (positive or negative) of another number.
 * `static EDecimal Create​(int mantissaSmall,
       int exponentSmall) exponent*10^significand`<br>
+ Returns a number with the value exponent*10^significand.
+* `static EDecimal Create​(long mantissaLong,
+      long exponentLong) exponent*10^significand`<br>
  Creates a number with the value exponent*10^significand.
 * `static EDecimal Create​(EInteger mantissa,
       EInteger exponent) exponent*10^significand`<br>
@@ -855,12 +858,11 @@ Gets the absolute value of this object's unscaled value, or significand. If
 
 ### Create
     public static EDecimal Create​(int mantissaSmall, int exponentSmall)
-Creates a number with the value <code>exponent*10^significand</code>.
+Returns a number with the value <code>exponent*10^significand</code>.
 
 **Parameters:**
 
-* <code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is a 32-bit signed
- integer.
+* <code>mantissaSmall</code> - Desired value for the significand.
 
 * <code>exponentSmall</code> - Desired value for the exponent.
 
@@ -874,7 +876,7 @@ Creates a number with the value <code>exponent*10^significand</code>.
 
 **Parameters:**
 
-* <code>mantissa</code> - The parameter <code>mantissa</code> is a Numbers.EInteger object.
+* <code>mantissa</code> - Desired value for the significand.
 
 * <code>exponent</code> - Desired value for the exponent.
 
@@ -886,6 +888,25 @@ Creates a number with the value <code>exponent*10^significand</code>.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or <code>
  exponent</code> is null.
+
+### Create
+    public static EDecimal Create​(long mantissaLong, long exponentLong)
+Creates a number with the value <code>exponent*10^significand</code>.
+
+**Parameters:**
+
+* <code>mantissaLong</code> - Desired value for the significand.
+
+* <code>exponentLong</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision decimal number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
+ exponentLong</code> is null.
 
 ### CreateNaN
     public static EDecimal CreateNaN​(EInteger diag)

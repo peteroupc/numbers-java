@@ -8,24 +8,49 @@ at: http://peteroupc.github.io/
  */
 
   final class FastIntegerFixed implements Comparable<FastIntegerFixed> {
+    // TODO: Implement cache similar to EInteger here
     private final int smallValue; // if integerMode is 0
     private final EInteger largeValue; // if integerMode is 2
-    private final int integerMode;
+    private final byte integerMode;
 
-    public static final FastIntegerFixed Zero = new FastIntegerFixed(0);
-    public static final FastIntegerFixed One = new FastIntegerFixed(1);
+    public static final FastIntegerFixed Zero = new FastIntegerFixed(
+      (byte)0,
+      0,
+      null);
+    public static final FastIntegerFixed One = new FastIntegerFixed(
+      (byte)0,
+      1,
+      null);
 
     private static final EInteger ValueInt32MinValue =
       EInteger.FromInt64(Integer.MIN_VALUE);
 
     private static final EInteger ValueNegativeInt32MinValue=(ValueInt32MinValue).Negate();
 
-    FastIntegerFixed(int smallValue) {
- this(0, smallValue, null);
+    private static final int CacheFirst = -24;
+    private static final int CacheLast = 128;
+    private static final FastIntegerFixed[] Cache =
+FastIntegerFixedCache(CacheFirst,
+  CacheLast);
+
+    private static FastIntegerFixed[] FastIntegerFixedCache(
+      int first,
+      int last) {
+FastIntegerFixed[] cache = new FastIntegerFixed[(last - first) + 1];
+for (int i = first; i <= last; ++i) {
+  if (i == 0) {
+    cache[i - first] = Zero;
+  } else if (i == 1) {
+    cache[i - first] = One;
+  } else {
+ cache[i - first] = new FastIntegerFixed((byte)0, i, null);
+}
+}
+return cache;
     }
 
-    FastIntegerFixed(
-      int integerMode,
+    private FastIntegerFixed(
+      byte integerMode,
       int smallValue,
       EInteger largeValue) {
       this.integerMode = integerMode;
@@ -63,18 +88,24 @@ at: http://peteroupc.github.io/
       return hash;
     }
 
+    static FastIntegerFixed FromInt32(int intVal) {
+return (intVal >= CacheFirst && intVal <= CacheLast) ?
+Cache[intVal - CacheFirst] :
+      new FastIntegerFixed((byte)0, intVal, null);
+    }
+
     static FastIntegerFixed FromLong(long longVal) {
-      return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
-        FastIntegerFixed((int)longVal) : new FastIntegerFixed(
-          2,
+      return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ?
+FromInt32((int)longVal) : new FastIntegerFixed(
+          (byte)2,
           0,
           EInteger.FromInt64(longVal));
     }
 
     static FastIntegerFixed FromBig(EInteger bigintVal) {
-      return bigintVal.CanFitInInt32() ? new
-        FastIntegerFixed(bigintVal.ToInt32Unchecked()) : new
-        FastIntegerFixed(2, 0, bigintVal);
+      return bigintVal.CanFitInInt32() ?
+FromInt32(bigintVal.ToInt32Unchecked()) : new
+        FastIntegerFixed((byte)2, 0, bigintVal);
     }
 
     int AsInt32() {
@@ -84,7 +115,7 @@ at: http://peteroupc.github.io/
 
     public static FastIntegerFixed FromFastInteger(FastInteger fi) {
       if (fi.CanFitInInt32()) {
-        return new FastIntegerFixed(fi.AsInt32());
+        return FromInt32(fi.AsInt32());
       } else {
         return FastIntegerFixed.FromBig(fi.AsEInteger());
       }
@@ -100,7 +131,7 @@ at: http://peteroupc.github.io/
 
     public FastIntegerFixed Increment() {
       if (this.integerMode == 0 && this.smallValue != Integer.MAX_VALUE) {
-        return new FastIntegerFixed(this.smallValue + 1);
+        return FromInt32(this.smallValue + 1);
       } else {
         return Add(this, FastIntegerFixed.One);
       }
@@ -131,7 +162,7 @@ at: http://peteroupc.github.io/
         if ((a.smallValue < 0 && b.smallValue >= Integer.MIN_VALUE -
             a.smallValue) || (a.smallValue > 0 && b.smallValue <=
             Integer.MAX_VALUE - a.smallValue)) {
-          return new FastIntegerFixed(a.smallValue + b.smallValue);
+          return FromInt32(a.smallValue + b.smallValue);
         }
       }
       EInteger bigA = a.ToEInteger();
@@ -150,7 +181,7 @@ at: http://peteroupc.github.io/
           (b.smallValue < 0 && Integer.MAX_VALUE + b.smallValue >= a.smallValue) ||
           (b.smallValue > 0 && Integer.MIN_VALUE + b.smallValue <=
             a.smallValue)) {
-          return new FastIntegerFixed(a.smallValue - b.smallValue);
+          return FromInt32(a.smallValue - b.smallValue);
         }
       }
       EInteger bigA = a.ToEInteger();
@@ -177,7 +208,7 @@ at: http://peteroupc.github.io/
     FastIntegerFixed Copy() {
       switch (this.integerMode) {
         case 0:
-          return new FastIntegerFixed(this.smallValue);
+          return FromInt32(this.smallValue);
         case 2:
           return FastIntegerFixed.FromBig(this.largeValue);
         default: throw new IllegalStateException();
@@ -194,7 +225,7 @@ at: http://peteroupc.github.io/
           if (this.smallValue == Integer.MIN_VALUE) {
             return FastIntegerFixed.FromBig(ValueNegativeInt32MinValue);
           } else {
-            return new FastIntegerFixed(-this.smallValue);
+            return FromInt32(-this.smallValue);
           }
         case 2:
           return FastIntegerFixed.FromBig((this.largeValue).Negate());

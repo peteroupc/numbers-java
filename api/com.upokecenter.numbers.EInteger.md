@@ -394,8 +394,10 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 * <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
  the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
- letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
- 0-9, then A-F in radix 16.
+ upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
+ radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case
+ letter A to Z is allowed in the string, the corresponding basic
+ lower-case letter (U+0061 to U+007a) is allowed instead.
 
 **Returns:**
 
@@ -422,8 +424,10 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 * <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
  the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
- letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
- 0-9, then A-F in radix 16.
+ upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
+ radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case
+ letter A to Z is allowed in the string, the corresponding basic
+ lower-case letter (U+0061 to U+007a) is allowed instead.
 
 * <code>index</code> - The index of the string that starts the string portion.
 
@@ -447,11 +451,12 @@ Converts a string to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>str</code> - A text string. The string must contain only basic digits 0 to 9
-  (U+0030 to U+0039), except that it may start with a minus sign ("-",
- U+002D) to indicate a negative number. The string is not allowed to
- contain white space characters, including spaces. The string may
- start with any number of zeros.
+* <code>str</code> - A text string describing an integer in base-10 (decimal) form.
+ The string must contain only basic digits 0 to 9 (U+0030 to U+0039),
+  except that it may start with a minus sign ("-", U+002D) to indicate
+ a negative number. The string is not allowed to contain white space
+ characters, including spaces. The string may start with any number
+ of zeros.
 
 **Returns:**
 
@@ -470,10 +475,11 @@ Converts a portion of a string to an arbitrary-precision integer.
 
 **Parameters:**
 
-* <code>str</code> - A text string. The desired portion of the string must contain
- only basic digits 0 to 9 (U+0030 to U+0039), except that it may
-  start with a minus sign ("-", U+002D) to indicate a negative number.
- The desired portion is not allowed to contain white space
+* <code>str</code> - A text string, the desired portion of which describes an integer
+ in base-10 (decimal) form. The desired portion of the string must
+ contain only basic digits 0 to 9 (U+0030 to U+0039), except that it
+  may start with a minus sign ("-", U+002D) to indicate a negative
+ number. The desired portion is not allowed to contain white space
  characters, including spaces. The desired portion may start with any
  number of zeros.
 
@@ -1216,8 +1222,7 @@ Does an OR operation between two arbitrary-precision integer
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy biggerCount&gt;0; doesn't satisfy
- biggerCount == CountWords(result).
+* <code>java.lang.IllegalArgumentException</code> - doesn't satisfy biggerCount&gt;0
 
 ### Xor
     public EInteger Xor​(EInteger other)
@@ -1238,9 +1243,6 @@ Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
 **Throws:**
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
-
-* <code>java.lang.IllegalArgumentException</code> - Doesn't satisfy smallerCount ==
- CountWords(result).
 
 ### ShiftRight
     public EInteger ShiftRight​(int numberBits)
@@ -1371,9 +1373,9 @@ Generates a string representing the value of this object, in the given
 * A string representing the value of this object. If this value is 0,
   returns "0". If negative, the string will begin with a minus sign
   ("-", U+002D). Depending on the radix, the string will use the basic
- digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z
- (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F
- in radix 16.
+ digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case
+ letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
+ 0-9, then A-F in radix 16.
 
 ### toString
     public java.lang.String toString()

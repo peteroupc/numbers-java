@@ -15,6 +15,13 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
+// TODO: In next major version, perhaps change GetSigned/UnsignedBitLength
+// to return MaxValue on overflow
+// TODO: Add GetSigned/UnsignedBitLengthAsInt64
+// TODO: In next major version, perhaps change GetLowBit/GetDigitCount
+// to return MaxValue on overflow
+// TODO: Add GetLowBitAsInt64/GetDigitCountAsInt64
+
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
    * and has this prefix to group it with the other classes common to this
@@ -86,6 +93,32 @@ at: http://peteroupc.github.io/
     private final boolean negative;
     private final int wordCount;
     private final short[] words;
+
+    private static final int CacheFirst = -24;
+    private static final int CacheLast = 128;
+    private static final EInteger[] Cache = EIntegerCache(CacheFirst,
+        CacheLast);
+
+    private static EInteger[] EIntegerCache(int first, int last) {
+      int i = 0;
+      EInteger[] cache = new EInteger[(last - first) + 1];
+      for (i = first; i <= last; ++i) {
+        if (i == 0) {
+          cache[i - first] = ValueZero;
+        } else if (i == 1) {
+          cache[i - first] = ValueOne;
+        } else if (i == 10) {
+          cache[i - first] = ValueTen;
+        } else {
+          int iabs = Math.abs(i);
+          short[] words = new short[] {
+            ((short)iabs),
+          };
+          cache[i - first] = new EInteger(1, words, i < 0);
+        }
+      }
+      return cache;
+    }
 
     private EInteger(int wordCount, short[] reg, boolean negative) {
       this.wordCount = wordCount;
@@ -280,14 +313,8 @@ at: http://peteroupc.github.io/
      * number.
      */
     public static EInteger FromInt32(int intValue) {
-      if (intValue == 0) {
-        return ValueZero;
-      }
-      if (intValue == 1) {
-        return ValueOne;
-      }
-      if (intValue == 10) {
-        return ValueTen;
+      if (intValue >= CacheFirst && intValue <= CacheLast) {
+        return Cache[intValue - CacheFirst];
       }
       short[] retreg;
       boolean retnegative;
@@ -328,14 +355,8 @@ at: http://peteroupc.github.io/
      * number.
      */
     public static EInteger FromInt64(long longerValue) {
-      if (longerValue == 0) {
-        return ValueZero;
-      }
-      if (longerValue == 1) {
-        return ValueOne;
-      }
-      if (longerValue == 10) {
-        return ValueTen;
+      if (longerValue >= CacheFirst && longerValue <= CacheLast) {
+        return Cache[(int)(longerValue - CacheFirst)];
       }
       short[] retreg;
       boolean retnegative;
@@ -396,8 +417,10 @@ at: http://peteroupc.github.io/
      * @param str A string described by the FromRadixSubstring method.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
      * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
-     * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
-     * 0-9, then A-F in radix 16.
+     * upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
+     * radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case
+     * letter A to Z is allowed in the string, the corresponding basic
+     * lower-case letter (U+0061 to U+007a) is allowed instead.
      * @return An arbitrary-precision integer with the same value as the given
      * string.
      * @throws NullPointerException The parameter {@code str} is null.
@@ -420,8 +443,10 @@ at: http://peteroupc.github.io/
      * zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
      * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
-     * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
-     * 0-9, then A-F in radix 16.
+     * upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
+     * radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case
+     * letter A to Z is allowed in the string, the corresponding basic
+     * lower-case letter (U+0061 to U+007a) is allowed instead.
      * @param index The index of the string that starts the string portion.
      * @param endIndex The index of the string that ends the string portion. The
      * length will be index + endIndex - 1.
@@ -601,11 +626,11 @@ at: http://peteroupc.github.io/
             negative);
       } else {
         return FromRadixSubstringGeneral(
-          str,
-          radix,
-          index,
-          endIndex,
-          negative);
+            str,
+            radix,
+            index,
+            endIndex,
+            negative);
       }
     }
 
@@ -659,15 +684,27 @@ at: http://peteroupc.github.io/
       int index,
       int endIndex,
       boolean negative) {
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      if (endIndex - index <= 18 && radix <= 10) {
+        long rv = 0;
+        for (int i = index; i < endIndex; ++i) {
+        char c = str.charAt(i);
+        int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+        if (digit >= radix) {
+          throw new NumberFormatException("Illegal character found");
+        }
+        rv = (rv * radix) + digit;
+      }
+      return FromInt64(negative ? -rv : rv);
+      }
       short[] bigint = new short[4];
       boolean haveSmallInt = true;
       int maxSafeInt = ValueMaxSafeInts[radix - 2];
       int maxShortPlusOneMinusRadix = 65536 - radix;
       int smallInt = 0;
       for (int i = index; i < endIndex; ++i) {
-        if (str == null) {
-          throw new NullPointerException("str");
-        }
         char c = str.charAt(i);
         int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
         if (digit >= radix) {
@@ -724,11 +761,12 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts a string to an arbitrary-precision integer.
-     * @param str A text string. The string must contain only basic digits 0 to 9
-     *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
-     * U+002D) to indicate a negative number. The string is not allowed to
-     * contain white space characters, including spaces. The string may
-     * start with any number of zeros.
+     * @param str A text string describing an integer in base-10 (decimal) form.
+     * The string must contain only basic digits 0 to 9 (U+0030 to U+0039),
+     *  except that it may start with a minus sign ("-", U+002D) to indicate
+     * a negative number. The string is not allowed to contain white space
+     * characters, including spaces. The string may start with any number
+     * of zeros.
      * @return An arbitrary-precision integer with the same value as given in the
      * string.
      * @throws NumberFormatException The parameter {@code str} is in an invalid format.
@@ -743,10 +781,11 @@ at: http://peteroupc.github.io/
 
     /**
      * Converts a portion of a string to an arbitrary-precision integer.
-     * @param str A text string. The desired portion of the string must contain
-     * only basic digits 0 to 9 (U+0030 to U+0039), except that it may
-     *  start with a minus sign ("-", U+002D) to indicate a negative number.
-     * The desired portion is not allowed to contain white space
+     * @param str A text string, the desired portion of which describes an integer
+     * in base-10 (decimal) form. The desired portion of the string must
+     * contain only basic digits 0 to 9 (U+0030 to U+0039), except that it
+     *  may start with a minus sign ("-", U+002D) to indicate a negative
+     * number. The desired portion is not allowed to contain white space
      * characters, including spaces. The desired portion may start with any
      * number of zeros.
      * @param index The index of the string that starts the string portion.
@@ -775,7 +814,7 @@ at: http://peteroupc.github.io/
      */
     public EInteger Abs() {
       return (this.wordCount == 0 || !this.negative) ? this : new
-        EInteger(this.wordCount, this.words, false);
+EInteger(this.wordCount, this.words, false);
     }
 
     /**
@@ -1185,42 +1224,46 @@ at: http://peteroupc.github.io/
       if (this.wordCount == 0) {
         return EInteger.FromInt32(intValue);
       }
-      if (this.wordCount == 1 && intValue < 65535 && intValue >= -65535) {
+      if (this.wordCount == 1 && intValue >= -0x7ffe0000 && intValue <
+0x7ffe0000) {
         short[] sumreg;
-        if (intValue > 0 && !this.negative) {
-          int intSum = (((int)this.words[0]) & 0xffff) + intValue;
+        int intSum = this.negative ?
+          intValue - (((int)this.words[0]) & 0xffff) :
+          intValue + (((int)this.words[0]) & 0xffff);
+        if (intSum >= CacheFirst && intSum <= CacheLast) {
+          return Cache[intSum - CacheFirst];
+        } else if ((intSum >> 16) == 0) {
+          sumreg = new short[1];
+          sumreg[0] = ((short)intSum);
+          return new EInteger(
+              1,
+              sumreg,
+              false);
+        } else if (intSum > 0) {
           sumreg = new short[2];
           sumreg[0] = ((short)intSum);
           sumreg[1] = ((short)(intSum >> 16));
           return new EInteger(
-              ((intSum >> 16) == 0) ? 1 : 2,
+              2,
               sumreg,
-              this.negative);
-        } else if (intValue < 0 && this.negative) {
-          int intSum = (((int)this.words[0]) & 0xffff) - intValue;
-          sumreg = new short[2];
+              false);
+        } else if (intSum > -65536) {
+          sumreg = new short[1];
+          intSum = -intSum;
           sumreg[0] = ((short)intSum);
-          sumreg[1] = ((short)(intSum >> 16));
           return new EInteger(
-              ((intSum >> 16) == 0) ? 1 : 2,
+              1,
               sumreg,
-              this.negative);
+              true);
         } else {
-          int a = ((int)this.words[0]) & 0xffff;
-          int b = Math.abs(intValue);
-          if (a > b) {
-            a -= b;
-            sumreg = new short[2];
-            sumreg[0] = ((short)a);
-            return new EInteger(1, sumreg, this.negative);
-          } else if (a == b) {
-            return EInteger.FromInt32(0);
-          } else {
-            b -= a;
-            sumreg = new short[2];
-            sumreg[0] = ((short)b);
-            return new EInteger(1, sumreg, !this.negative);
-          }
+          sumreg = new short[2];
+          intSum = -intSum;
+          sumreg[0] = ((short)intSum);
+          sumreg[1] = ((short)(intSum >> 16));
+          return new EInteger(
+              2,
+              sumreg,
+              true);
         }
       }
       return this.Add(EInteger.FromInt32(intValue));
@@ -2061,9 +2104,9 @@ at: http://peteroupc.github.io/
       bigRemainderreg = ShortenArray(bigRemainderreg, remCount);
       quotientreg = ShortenArray(quotientreg, quoCount);
       EInteger bigrem = (remCount == 0) ? EInteger.FromInt32(0) : new
-        EInteger(remCount, bigRemainderreg, this.negative);
+EInteger(remCount, bigRemainderreg, this.negative);
       EInteger bigquo2 = (quoCount == 0) ? EInteger.FromInt32(0) : new
-        EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
+EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
       return new EInteger[] { bigquo2, bigrem };
     }
 
@@ -2313,8 +2356,7 @@ at: http://peteroupc.github.io/
                     ((value >= 100000000000000L) ? 15 : ((value
                           >= 10000000000000L) ?
                         14 : ((value >= 1000000000000L) ? 13 : ((value
-                              >= 100000000000L) ? 12 : ((value >=
-10000000000L) ?
+                >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
                               11 : ((value >= 1000000000L) ? 10 : 9)))))))));
           } else {
             int v2 = (int)value;
@@ -2371,7 +2413,7 @@ at: http://peteroupc.github.io/
           break;
         } else if (bitlen < 50000) {
           retval += ei.Abs().compareTo(NumberUtility.FindPowerOfTen(
-  minDigits + 1)) >= 0 ? maxDigits + 1 : minDigits + 1;
+                minDigits + 1)) >= 0 ? maxDigits + 1 : minDigits + 1;
           break;
         }
         short[] tempReg = null;
@@ -2438,8 +2480,8 @@ at: http://peteroupc.github.io/
                 // NOTE: Bitlength accurate for wci<1000000 here, only as
                 // an approximation
                 bitlen = (wci < 1000000) ? GetUnsignedBitLengthEx(
-                  quo,
-                  wci + 1) :
+                    quo,
+                    wci + 1) :
                   Integer.MAX_VALUE;
                 if (bitlen <= 2135) {
                   // (x*631305) >> 21 is an approximation
@@ -2463,8 +2505,7 @@ at: http://peteroupc.github.io/
                     int maxDigitEstimate = maxDigits + 4;
                     int minDigitEstimate = minDigits + 4;
                     retval += ei.Abs().compareTo(NumberUtility.FindPowerOfTen(
-                          minDigitEstimate)) >= 0 ? retval +
-maxDigitEstimate : retval +
+                minDigitEstimate)) >= 0 ? retval + maxDigitEstimate : retval +
                       minDigitEstimate;
                     done = true;
                     break;
@@ -2561,12 +2602,14 @@ maxDigitEstimate : retval +
                         12) & 0xffff) != 0) ? 3 : ((((c << 11) &
                         0xffff) != 0) ? 4 : ((((c << 10) & 0xffff) != 0) ? 5 :
                       ((((c << 9) & 0xffff) != 0) ? 6 : ((((c <<
-                8) & 0xffff) != 0) ? 7 : ((((c << 7) & 0xffff) !=
+                                8) & 0xffff) != 0) ? 7 : ((((c << 7) &
+0xffff) !=
                               0) ? 8 : ((((c << 6) & 0xffff) != 0) ? 9 :
-                ((((c << 5) & 0xffff) != 0) ? 10 : ((((c <<
+                              ((((c << 5) & 0xffff) != 0) ? 10 : ((((c <<
                                         4) & 0xffff) != 0) ? 11 : ((((c << 3) &
                                         0xffff) != 0) ? 12 : ((((c << 2) &
-                0xffff) != 0) ? 13 : ((((c << 1) & 0xffff) !=
+                                          0xffff) != 0) ? 13 : ((((c << 1) &
+0xffff) !=
                                           0) ? 14 : 15))))))))))))));
           return EInteger.FromInt64(retSetBitLong).Add(
               EInteger.FromInt32(rsb));
@@ -3397,7 +3440,7 @@ maxDigitEstimate : retval +
       valueXaNegative = !this.negative;
       valueXaWordCount = CountWords(valueXaReg);
       return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     /**
@@ -3430,7 +3473,7 @@ maxDigitEstimate : retval +
         }
         smallerCount = CountWords(result);
         return (smallerCount == 0) ? EInteger.FromInt32(0) : new
-          EInteger(smallerCount, result, false);
+EInteger(smallerCount, result, false);
       }
       boolean valueXaNegative = false;
       int valueXaWordCount = 0;
@@ -3461,7 +3504,7 @@ maxDigitEstimate : retval +
       }
       valueXaWordCount = CountWords(valueXaReg);
       return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     /**
@@ -3472,8 +3515,7 @@ maxDigitEstimate : retval +
      * @param second The second operand.
      * @return An arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code second} is null.
-     * @throws IllegalArgumentException Doesn't satisfy biggerCount&gt;0; doesn't satisfy
-     * biggerCount == CountWords(result).
+     * @throws IllegalArgumentException doesn't satisfy biggerCount&gt;0
      */
     public EInteger Or(EInteger second) {
       if (second == null) {
@@ -3534,7 +3576,7 @@ maxDigitEstimate : retval +
       }
       valueXaWordCount = CountWords(valueXaReg);
       return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     /**
@@ -3546,8 +3588,6 @@ maxDigitEstimate : retval +
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bit is set in one input integer but not in the other.
      * @throws NullPointerException The parameter {@code other} is null.
-     * @throws IllegalArgumentException Doesn't satisfy smallerCount ==
-     * CountWords(result).
      */
     public EInteger Xor(EInteger other) {
       if (other == null) {
@@ -3614,7 +3654,7 @@ maxDigitEstimate : retval +
       }
       valueXaWordCount = CountWords(valueXaReg);
       return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
-        EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
+EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
     private short[] Copy() {
@@ -4303,9 +4343,9 @@ maxDigitEstimate : retval +
      * @return A string representing the value of this object. If this value is 0,
      *  returns "0". If negative, the string will begin with a minus sign
      *  ("-", U+002D). Depending on the radix, the string will use the basic
-     * digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z
-     * (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F
-     * in radix 16.
+     * digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case
+     * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
+     * 0-9, then A-F in radix 16.
      */
     public String ToRadixString(int radix) {
       if (radix < 2) {
@@ -4574,7 +4614,7 @@ maxDigitEstimate : retval +
           0)) {
         switch (words1[words1Start]) {
           case 0:
-            // words1 is ValueZero, so result is 0
+            // words1 is zero, so result is 0
             java.util.Arrays.fill(resultArr, resultStart, (resultStart)+(words2Count + 2), (short)0);
             return;
           case 1:
@@ -5925,7 +5965,7 @@ maxDigitEstimate : retval +
       int bcount) {
       {
         int carryPos = 0;
-        // Set carry to ValueZero
+        // Set carry to zero
         java.util.Arrays.fill(productArr, cstart, (cstart)+(bcount), (short)0);
         for (int i = 0; i < acount; i += bcount) {
           int diff = acount - i;
@@ -7302,7 +7342,7 @@ maxDigitEstimate : retval +
         int smallPowerBits =
           (thisValue.GetUnsignedBitLengthAsEInteger().ToInt32Checked() + 1)
           / 2;
-        // No need to check for ValueZero; already done above
+        // No need to check for zero; already done above
         int smallintX = 0;
         int smallintY = 1 << smallPowerBits;
         do {

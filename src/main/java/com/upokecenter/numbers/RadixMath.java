@@ -189,7 +189,7 @@ at: http://peteroupc.github.io/
             if (m2 <= Integer.MAX_VALUE - m1) {
               m1 += m2;
               retval = this.helper.CreateNewWithFlagsFastInt(
-                  new FastIntegerFixed(m1),
+                  FastIntegerFixed.FromInt32(m1),
                   resultExponent,
                   negflag);
               haveRetval = true;
@@ -210,7 +210,7 @@ at: http://peteroupc.github.io/
                 if (m2 <= Integer.MAX_VALUE - m1) {
                   m1 += m2;
                   retval = this.helper.CreateNewWithFlagsFastInt(
-                      new FastIntegerFixed(m1),
+                      FastIntegerFixed.FromInt32(m1),
                       resultExponent,
                       negflag);
                   haveRetval = true;
@@ -230,7 +230,7 @@ at: http://peteroupc.github.io/
                 if (m1 <= Integer.MAX_VALUE - m2) {
                   m2 += m1;
                   retval = this.helper.CreateNewWithFlagsFastInt(
-                      new FastIntegerFixed(m2),
+                      FastIntegerFixed.FromInt32(m2),
                       resultExponent,
                       negflag);
                   haveRetval = true;
@@ -252,7 +252,7 @@ at: http://peteroupc.github.io/
                 if (m2 <= Integer.MAX_VALUE - m1) {
                   m1 += m2;
                   retval = this.helper.CreateNewWithFlagsFastInt(
-                      new FastIntegerFixed(m1),
+                      FastIntegerFixed.FromInt32(m1),
                       resultExponent,
                       negflag);
                   haveRetval = true;
@@ -271,7 +271,7 @@ at: http://peteroupc.github.io/
                 if (m1 <= Integer.MAX_VALUE - m2) {
                   m2 += m1;
                   retval = this.helper.CreateNewWithFlagsFastInt(
-                      new FastIntegerFixed(m2),
+                      FastIntegerFixed.FromInt32(m2),
                       resultExponent,
                       negflag);
                   haveRetval = true;
@@ -334,7 +334,7 @@ at: http://peteroupc.github.io/
               m1 -= m2;
               result = m1;
               retval = this.helper.CreateNewWithFlagsFastInt(
-                  new FastIntegerFixed(m1),
+                  FastIntegerFixed.FromInt32(m1),
                   resultExponent,
                   0);
               haveRetval = true;
@@ -363,7 +363,7 @@ at: http://peteroupc.github.io/
                 negbit = m1 < 0;
                 result = Math.abs(m1);
                 retval = this.helper.CreateNewWithFlagsFastInt(
-                    new FastIntegerFixed(result),
+                    FastIntegerFixed.FromInt32(result),
                     resultExponent,
                     negbit ? BigNumberFlags.FlagNegative : 0);
                 haveRetval = true;

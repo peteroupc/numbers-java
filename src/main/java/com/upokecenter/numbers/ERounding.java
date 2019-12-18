@@ -17,8 +17,8 @@ at: http://peteroupc.github.io/
    */
   public enum ERounding {
     /**
-     * Indicates that rounding will not be used. If rounding is required, the
-     * rounding operation will report an error.
+     * Indicates that rounding will not be used. If rounding to an inexact value is
+     * required, the rounding operation will report an error.
      */
     None,
 

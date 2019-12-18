@@ -85,8 +85,8 @@ the order they are declared.
 
 ### None
     public static final ERounding None
-Indicates that rounding will not be used. If rounding is required, the
- rounding operation will report an error.
+Indicates that rounding will not be used. If rounding to an inexact value is
+ required, the rounding operation will report an error.
 ### Up
     public static final ERounding Up
 If there is a fractional part, the number is rounded to the closest

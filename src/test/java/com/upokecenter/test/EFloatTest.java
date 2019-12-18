@@ -1510,7 +1510,7 @@ OutputDouble(expectedDouble) +
  }
     }
 
-    @Test
+    @Test(timeout = 100000)
     public void TestStringToDoubleManyDigits() {
       RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
@@ -1549,9 +1549,10 @@ OutputDouble(expectedDouble) +
     @Test
     public void TestIntStringToDouble() {
       for (int i = 0; i < 1000000; ++i) {
-        TestStringToDoubleSingleOne(TestCommon.IntToString(i));
-        TestStringToDoubleSingleOne(TestCommon.IntToString(i) + ".0");
-        TestStringToDoubleSingleOne(TestCommon.IntToString(i) + ".000");
+        String intstr = TestCommon.IntToString(i);
+        TestStringToDoubleSingleOne(intstr);
+        TestStringToDoubleSingleOne(intstr + ".0");
+        TestStringToDoubleSingleOne(intstr + ".000");
       }
     }
 
