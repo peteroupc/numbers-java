@@ -1447,16 +1447,19 @@ TrappableRadixMath<EDecimal>(
       int digitStart = 0;
       EInteger newScale = null;
       // Ordinary number
-      if (endStr - i == 1 && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+      if (endStr - i == 1) {
+        char tch = str.charAt(i);
+        if (tch >= '0' && tch <= '9') {
         // String portion is a single digit
         EDecimal cret;
-        int si = (int)(str.charAt(i) - '0');
+        int si = (int)(tch - '0');
         cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
-CacheFirst]) : (Cache[si - CacheFirst]);
-if (ctx != null) {
-  cret = GetMathValue(ctx).RoundAfterConversion(cret, ctx);
-}
+           CacheFirst]) : (Cache[si - CacheFirst]);
+           if (ctx != null) {
+             cret = GetMathValue(ctx).RoundAfterConversion(cret, ctx);
+           }
         return cret;
+        }
       }
       digitStart = i;
       int digitEnd = i;
@@ -1593,12 +1596,6 @@ if (ctx != null) {
       if (realDecimalEnd < 0) {
         realDecimalEnd = i;
       }
-      /*
-      if (ctx != null) {
-       DebugUtility.Log("zerorun=" + zerorun + " roundup=" + roundUp +
-       ", haveIgnored="+haveIgnoredDigit +", decimalPrec=" + decimalPrec +
-      ", ctx="+ctx);
-      }*/
       if (zerorun > 0 && lastdigit == 0 && (ctx == null ||
           !ctx.getHasFlagsOrTraps())) {
         decimalPrec -= zerorun;
