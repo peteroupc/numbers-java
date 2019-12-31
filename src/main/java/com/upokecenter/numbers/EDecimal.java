@@ -1103,7 +1103,7 @@ TrappableRadixMath<EDecimal>(
               haveDigits = haveDigits || thisdigit != 0;
               if (mantInt <= MaxSafeInt) {
                 // multiply by 10
-                mantInt = (mantInt << 3) + (mantInt << 1);
+                mantInt *= 10;
                 mantInt += thisdigit;
               }
               if (haveDigits && maxDigits != null) {
@@ -1164,7 +1164,7 @@ TrappableRadixMath<EDecimal>(
               haveDigits = haveDigits || thisdigit != 0;
               if (mantInt <= MaxSafeInt) {
                 // multiply by 10
-                mantInt = (mantInt << 3) + (mantInt << 1);
+                mantInt *= 10;
                 mantInt += thisdigit;
               }
               if (haveDigits && maxDigits != null) {
@@ -1430,12 +1430,242 @@ TrappableRadixMath<EDecimal>(
         .RoundToPrecision(ctx);
     }
 
+    private static EDecimal ParseOrdinaryNumberNoContext(
+      String str,
+      int i,
+      int endStr,
+      boolean negative) {
+      // NOTE: Negative sign at beginning was omitted
+      // from the String portion
+      int mantInt = 0;
+      EInteger mant = null;
+      boolean haveDecimalPoint = false;
+      boolean haveExponent = false;
+      int newScaleInt = 0;
+      boolean haveDigits = false;
+      int digitStart = 0;
+      EInteger newScale = null;
+      // Ordinary number
+      if (endStr - i == 1) {
+        char tch = str.charAt(i);
+        if (tch >= '0' && tch <= '9') {
+        // String portion is a single digit
+        EDecimal cret;
+        int si = (int)(tch - '0');
+        cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
+           CacheFirst]) : (Cache[si - CacheFirst]);
+           return cret; }
+      }
+      digitStart = i;
+      int digitEnd = i;
+      int decimalDigitStart = i;
+      boolean haveNonzeroDigit = false;
+      int decimalPrec = 0;
+      int decimalDigitEnd = i;
+      // NOTE: Also check HasFlagsOrTraps here because
+      // it's burdensome to determine which flags have
+      // to be set when applying the optimization here
+      boolean haveIgnoredDigit = false;
+      int lastdigit = -1;
+      boolean beyondPrecision = false;
+      boolean ignoreNextDigit = false;
+      int zerorun = 0;
+      int realDigitEnd = -1;
+      int realDecimalEnd = -1;
+      for (; i < endStr; ++i) {
+        char ch = str.charAt(i);
+        if (ch >= '0' && ch <= '9') {
+          int thisdigit = (int)(ch - '0');
+          haveNonzeroDigit |= thisdigit != 0;
+          haveDigits = true;
+          {
+            lastdigit = thisdigit;
+            if (haveNonzeroDigit) {
+              ++decimalPrec;
+            }
+            if (haveDecimalPoint) {
+              decimalDigitEnd = i + 1;
+            } else {
+              digitEnd = i + 1;
+            }
+            if (mantInt <= MaxSafeInt) {
+              // multiply by 10
+              mantInt *= 10;
+              mantInt += thisdigit;
+            }
+          }
+          if (haveDecimalPoint) {
+            if (newScaleInt == Integer.MIN_VALUE ||
+              newScaleInt == Integer.MAX_VALUE) {
+              newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+              newScale = newScale.Subtract(1);
+            } else {
+              --newScaleInt;
+            }
+          }
+        } else if (ch == '.') {
+          if (haveDecimalPoint) {
+            throw new NumberFormatException();
+          }
+          haveDecimalPoint = true;
+          realDigitEnd = i;
+          decimalDigitStart = i + 1;
+          decimalDigitEnd = i + 1;
+        } else if (ch == 'E' || ch == 'e') {
+          realDecimalEnd = i;
+          haveExponent = true;
+          ++i;
+          break;
+        } else {
+          throw new NumberFormatException();
+        }
+      }
+      if (!haveDigits) {
+        throw new NumberFormatException();
+      }
+      if (realDigitEnd < 0) {
+        realDigitEnd = i;
+      }
+      if (realDecimalEnd < 0) {
+        realDecimalEnd = i;
+      }
+      EDecimal ret = null;
+      EInteger exp = null;
+      int expInt = 0;
+      int expoffset = 1;
+      int expDigitStart = -1;
+      int expPrec = 0;
+      haveNonzeroDigit = false;
+      if (haveExponent) {
+        haveDigits = false;
+        if (i == endStr) {
+          throw new NumberFormatException();
+        }
+        if (str.charAt(i) == '+' || str.charAt(i) == '-') {
+          if (str.charAt(i) == '-') {
+            expoffset = -1;
+          }
+          ++i;
+        }
+        expDigitStart = i;
+        for (; i < endStr; ++i) {
+          char ch = str.charAt(i);
+          if (ch >= '0' && ch <= '9') {
+            haveDigits = true;
+            int thisdigit = (int)(ch - '0');
+            haveNonzeroDigit |= thisdigit != 0;
+            if (haveNonzeroDigit) {
+              ++expPrec;
+            }
+            if (expInt <= MaxSafeInt) {
+              expInt *= 10;
+              expInt += thisdigit;
+            }
+          } else {
+            throw new NumberFormatException();
+          }
+        }
+        if (!haveDigits) {
+          throw new NumberFormatException();
+        }
+      }
+      if (i != endStr) {
+        throw new NumberFormatException();
+      }
+      // Calculate newScale if exponent is "small"
+      if (haveExponent && expInt <= MaxSafeInt) {
+        if (expoffset >= 0 && newScaleInt == 0 && newScale == null) {
+          newScaleInt = expInt;
+        } else if (newScale == null) {
+          long tmplong = newScaleInt;
+          if (expoffset < 0) {
+            tmplong -= expInt;
+          } else if (expInt != 0) {
+            tmplong += expInt;
+          }
+          if (tmplong >= Integer.MAX_VALUE && tmplong <= Integer.MIN_VALUE) {
+            newScaleInt = (int)tmplong;
+          } else {
+            newScale = EInteger.FromInt64(tmplong);
+          }
+        } else {
+          if (expoffset < 0) {
+            newScale = newScale.Subtract(expInt);
+          } else if (expInt != 0) {
+            newScale = newScale.Add(expInt);
+          }
+        }
+      }
+      int de = digitEnd;
+      int dde = decimalDigitEnd;
+      if (!haveExponent && haveDecimalPoint &&
+        (de - digitStart) + (dde - decimalDigitStart) <=
+        18) {
+        // No more than 18 digits
+        long lv = 0L;
+        int expo = -(dde - decimalDigitStart);
+        int vi = 0;
+        for (vi = digitStart; vi < de; ++vi) {
+          lv = (lv * 10 + (int)(str.charAt(vi) - '0'));
+        }
+        for (vi = decimalDigitStart; vi < dde; ++vi) {
+          lv = (lv * 10 + (int)(str.charAt(vi) - '0'));
+        }
+        if (negative) {
+          lv = -lv;
+        }
+        if (!negative || lv != 0) {
+          ret = EDecimal.Create(lv, expo);
+          return ret;
+        }
+      }
+      // Parse significand if it's "big"
+      if (mantInt > MaxSafeInt) {
+        if (haveDecimalPoint) {
+          String decstr = str.substring(digitStart, (digitStart)+(digitEnd - digitStart)) +
+            str.substring(
+              decimalDigitStart, (
+              decimalDigitStart)+(decimalDigitEnd - decimalDigitStart));
+          mant = EInteger.FromString(decstr);
+        } else {
+          mant = EInteger.FromSubstring(str, digitStart, digitEnd);
+        }
+      }
+      if (haveExponent && expInt > MaxSafeInt) {
+        // Parse exponent if it's "big"
+        exp = EInteger.FromSubstring(str, expDigitStart, endStr);
+        newScale = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
+        newScale = (expoffset < 0) ? newScale.Subtract(exp) :
+          newScale.Add(exp);
+      }
+      FastIntegerFixed fastIntScale;
+      FastIntegerFixed fastIntMant;
+      fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
+  newScaleInt) : FastIntegerFixed.FromBig(newScale);
+      if (mant == null) {
+        fastIntMant = FastIntegerFixed.FromInt32(mantInt);
+      } else if (mant.CanFitInInt32()) {
+        mantInt = mant.ToInt32Checked();
+        fastIntMant = FastIntegerFixed.FromInt32(mantInt);
+      } else {
+        fastIntMant = FastIntegerFixed.FromBig(mant);
+      }
+      ret = new EDecimal(
+        fastIntMant,
+        fastIntScale,
+        (byte)(negative ? BigNumberFlags.FlagNegative : 0));
+      return ret;
+    }
+
     private static EDecimal ParseOrdinaryNumber(
       String str,
       int i,
       int endStr,
       boolean negative,
       EContext ctx) {
+if (ctx == null) {
+  return ParseOrdinaryNumberNoContext(str, i, endStr, negative);
+}
       // NOTE: Negative sign at beginning was omitted
       // from the String portion
       int mantInt = 0;
@@ -1475,23 +1705,23 @@ TrappableRadixMath<EDecimal>(
           (negative && ctx.getRounding() == ERounding.Ceiling) ||
           (!negative && ctx.getRounding() == ERounding.Floor)) &&
         !ctx.getHasFlagsOrTraps();
-      boolean roundHalf = ctx != null && ctx.getHasMaxPrecision() &&
+        boolean roundHalf = ctx != null && ctx.getHasMaxPrecision() &&
         !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.HalfUp ||
           (ctx.getRounding() == ERounding.HalfDown) ||
           (ctx.getRounding() == ERounding.HalfEven)) &&
         !ctx.getHasFlagsOrTraps();
-      boolean roundUp = ctx != null && ctx.getHasMaxPrecision() &&
+        boolean roundUp = ctx != null && ctx.getHasMaxPrecision() &&
         !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.Up ||
           (!negative && ctx.getRounding() == ERounding.Ceiling) ||
           (negative && ctx.getRounding() == ERounding.Floor)) &&
         !ctx.getHasFlagsOrTraps();
-      boolean haveIgnoredDigit = false;
-      int lastdigit = -1;
-      boolean beyondPrecision = false;
-      boolean ignoreNextDigit = false;
-      int zerorun = 0;
-      int realDigitEnd = -1;
-      int realDecimalEnd = -1;
+        boolean haveIgnoredDigit = false;
+        int lastdigit = -1;
+        boolean beyondPrecision = false;
+        boolean ignoreNextDigit = false;
+        int zerorun = 0;
+        int realDigitEnd = -1;
+        int realDecimalEnd = -1;
       // DebugUtility.Log("round half=" + (// roundHalf) +
       // " up=" + roundUp + " down=" + roundDown +
       // " maxprec=" + (ctx != null && ctx.getHasMaxPrecision()));
@@ -1557,7 +1787,7 @@ TrappableRadixMath<EDecimal>(
             }
             if (mantInt <= MaxSafeInt) {
               // multiply by 10
-              mantInt = (mantInt << 3) + (mantInt << 1);
+              mantInt *= 10;
               mantInt += thisdigit;
             }
           }
@@ -1633,7 +1863,8 @@ TrappableRadixMath<EDecimal>(
       // (// ctx.getPrecision()) + ", str=" + (// str.substring(0,Math.min(20,
       // str.length()))) + "] " + (ctx.getRounding()));
       // }
-      if (roundUp && ctx != null && ctx.getPrecision().compareTo(decimalPrec) < 0) {
+      if (
+        roundUp && ctx != null && ctx.getPrecision().compareTo(decimalPrec) < 0) {
         int precdiff = decimalPrec - ctx.getPrecision().ToInt32Checked();
         // DebugUtility.Log("precdiff = " + precdiff + " [prec=" + (// decimalPrec) +
         // ",
@@ -1836,18 +2067,11 @@ TrappableRadixMath<EDecimal>(
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
   newScaleInt) : FastIntegerFixed.FromBig(newScale);
-      int sign = negative ? -1 : 1;
-      if (mant == null) {
+  if (mant == null) {
+    fastIntMant = FastIntegerFixed.FromInt32(mantInt);
+  } else if (mant.CanFitInInt32()) {
+    mantInt = mant.ToInt32Checked();
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);
-        if (mantInt == 0) {
-          sign = 0;
-        }
-      } else if (mant.CanFitInInt32()) {
-        mantInt = mant.ToInt32Checked();
-        fastIntMant = FastIntegerFixed.FromInt32(mantInt);
-        if (mantInt == 0) {
-          sign = 0;
-        }
       } else {
         fastIntMant = FastIntegerFixed.FromBig(mant);
       }
