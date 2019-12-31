@@ -465,12 +465,19 @@ TrappableRadixMath<EDecimal>(
       if (mantissaLong >= Integer.MIN_VALUE && mantissaLong <= Integer.MAX_VALUE &&
         exponentLong >= Integer.MIN_VALUE && exponentLong <= Integer.MAX_VALUE) {
         return Create((int)mantissaLong, (int)exponentLong);
+      } else if (mantissaLong == Long.MIN_VALUE) {
+        FastIntegerFixed fi = FastIntegerFixed.FromLong(mantissaLong);
+        return new EDecimal(
+            fi.Negate(),
+            FastIntegerFixed.FromLong(exponentLong),
+            (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
+      } else {
+        FastIntegerFixed fi = FastIntegerFixed.FromLong(Math.abs(mantissaLong));
+        return new EDecimal(
+            fi,
+            FastIntegerFixed.FromLong(exponentLong),
+            (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
       }
-      FastIntegerFixed fi = FastIntegerFixed.FromLong(mantissaLong);
-      return new EDecimal(
-          mantissaLong < 0 ? fi.Negate() : fi,
-          FastIntegerFixed.FromLong(exponentLong),
-          (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
     }
 
     /**
@@ -1541,15 +1548,16 @@ TrappableRadixMath<EDecimal>(
         if (i == endStr) {
           throw new NumberFormatException();
         }
-        if (str.charAt(i) == '+' || str.charAt(i) == '-') {
-          if (str.charAt(i) == '-') {
+        char ch = str.charAt(i);
+        if (ch == '+' || ch == '-') {
+          if (ch == '-') {
             expoffset = -1;
           }
           ++i;
         }
         expDigitStart = i;
         for (; i < endStr; ++i) {
-          char ch = str.charAt(i);
+          ch = str.charAt(i);
           if (ch >= '0' && ch <= '9') {
             haveDigits = true;
             int thisdigit = (int)(ch - '0');
@@ -1606,10 +1614,14 @@ TrappableRadixMath<EDecimal>(
         int expo = -(dde - decimalDigitStart);
         int vi = 0;
         for (vi = digitStart; vi < de; ++vi) {
-          lv = (lv * 10 + (int)(str.charAt(vi) - '0'));
+          char chvi = str.charAt(vi);
+
+          lv = (lv * 10 + (int)(chvi - '0'));
         }
         for (vi = decimalDigitStart; vi < dde; ++vi) {
-          lv = (lv * 10 + (int)(str.charAt(vi) - '0'));
+          char chvi = str.charAt(vi);
+
+          lv = (lv * 10 + (int)(chvi - '0'));
         }
         if (negative) {
           lv = -lv;
