@@ -53,6 +53,9 @@ at: http://peteroupc.github.io/
 
     private static final int RecursionLimit = 10;
 
+    private static final int CacheFirst = -24;
+    private static final int CacheLast = 128;
+
     private static final int ShortMask = 0xffff;
 
     private static final int[] ValueCharToDigit = {
@@ -94,8 +97,6 @@ at: http://peteroupc.github.io/
     private final int wordCount;
     private final short[] words;
 
-    private static final int CacheFirst = -24;
-    private static final int CacheLast = 128;
     private static final EInteger[] Cache = EIntegerCache(CacheFirst,
         CacheLast);
 
@@ -3515,7 +3516,6 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
      * @param second The second operand.
      * @return An arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code second} is null.
-     * @throws IllegalArgumentException doesn't satisfy biggerCount&gt;0
      */
     public EInteger Or(EInteger second) {
       if (second == null) {

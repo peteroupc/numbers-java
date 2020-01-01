@@ -1222,8 +1222,6 @@ Does an OR operation between two arbitrary-precision integer
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - doesn't satisfy biggerCount&gt;0
-
 ### Xor
     public EInteger Xor​(EInteger other)
 Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each

@@ -1462,8 +1462,9 @@ TrappableRadixMath<EDecimal>(
           EDecimal cret;
           int si = (int)(tch - '0');
           cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
-                CacheFirst]) : (Cache[si - CacheFirst]);
-                return cret; }
+                CacheFirst]) : Cache[si - CacheFirst];
+                return cret;
+        }
       }
       digitStart = i;
       int digitEnd = i;
@@ -1611,12 +1612,12 @@ TrappableRadixMath<EDecimal>(
         for (vi = digitStart; vi < de; ++vi) {
           char chvi = str.charAt(vi);
 
-          lv = (lv * 10 + (int)(chvi - '0'));
+          lv = ((lv * 10) + (int)(chvi - '0'));
         }
         for (vi = decimalDigitStart; vi < dde; ++vi) {
           char chvi = str.charAt(vi);
 
-          lv = (lv * 10 + (int)(chvi - '0'));
+          lv = ((lv * 10) + (int)(chvi - '0'));
         }
         if (negative) {
           lv = -lv;
@@ -1691,10 +1692,10 @@ TrappableRadixMath<EDecimal>(
           EDecimal cret;
           int si = (int)(tch - '0');
           cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
-                CacheFirst]) : (Cache[si - CacheFirst]);
-                if (ctx != null) {
-                  cret = GetMathValue(ctx).RoundAfterConversion(cret, ctx);
-                }
+                CacheFirst]) : Cache[si - CacheFirst];
+          if (ctx != null) {
+            cret = GetMathValue(ctx).RoundAfterConversion(cret, ctx);
+          }
           return cret;
         }
       }
@@ -2035,10 +2036,10 @@ TrappableRadixMath<EDecimal>(
         int expo = -(dde - decimalDigitStart);
         int vi = 0;
         for (vi = digitStart; vi < de; ++vi) {
-          lv = (lv * 10 + (int)(str.charAt(vi) - '0'));
+          lv = ((lv * 10) + (int)(str.charAt(vi) - '0'));
         }
         for (vi = decimalDigitStart; vi < dde; ++vi) {
-          lv = (lv * 10 + (int)(str.charAt(vi) - '0'));
+          lv = ((lv * 10) + (int)(str.charAt(vi) - '0'));
         }
         if (negative) {
           lv = -lv;
@@ -6092,7 +6093,7 @@ TrappableRadixMath<EDecimal>(
        * @return An arbitrary-precision decimal number.
        */
       public EDecimal ValueOf(int val) {
-        return (val == 0) ? Zero :((val == 1) ? One : FromInt64(val));
+        return (val == 0) ? Zero : ((val == 1) ? One : FromInt64(val));
       }
     }
 

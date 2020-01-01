@@ -8,7 +8,9 @@ at: http://peteroupc.github.io/
  */
 
   final class FastIntegerFixed implements Comparable<FastIntegerFixed> {
-    // TODO: Implement cache similar to EInteger here
+    private static final int CacheFirst = -24;
+    private static final int CacheLast = 128;
+
     private final int smallValue; // if integerMode is 0
     private final EInteger largeValue; // if integerMode is 2
     private final byte integerMode;
@@ -27,8 +29,6 @@ at: http://peteroupc.github.io/
 
     private static final EInteger ValueNegativeInt32MinValue=(ValueInt32MinValue).Negate();
 
-    private static final int CacheFirst = -24;
-    private static final int CacheLast = 128;
     private static final FastIntegerFixed[] Cache =
 FastIntegerFixedCache(CacheFirst,
   CacheLast);
