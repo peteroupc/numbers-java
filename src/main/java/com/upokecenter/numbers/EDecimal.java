@@ -168,6 +168,9 @@ at: http://peteroupc.github.io/
    */
 
   public final class EDecimal implements Comparable<EDecimal> {
+    private static final int RepeatDivideThreshold = 10000;
+    private static final int MaxSafeInt = 214748363;
+
     //----------------------------------------------------------------
 
     /**
@@ -272,8 +275,6 @@ at: http://peteroupc.github.io/
       }
       return cache;
     }
-
-    private static final int MaxSafeInt = 214748363;
 
     private static final IRadixMath<EDecimal> ExtendedMathValue = new
 RadixMath<EDecimal>(new DecimalMathHelper());
@@ -472,7 +473,8 @@ TrappableRadixMath<EDecimal>(
             FastIntegerFixed.FromLong(exponentLong),
             (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
       } else {
-        FastIntegerFixed fi = FastIntegerFixed.FromLong(Math.abs(mantissaLong));
+        FastIntegerFixed fi = FastIntegerFixed.FromLong(Math.abs(
+  mantissaLong));
         return new EDecimal(
             fi,
             FastIntegerFixed.FromLong(exponentLong),
@@ -1026,10 +1028,10 @@ TrappableRadixMath<EDecimal>(
       }
       int i = tmpoffset;
       if (str.charAt(tmpoffset) < '0' || str.charAt(tmpoffset) > '9') {
-       EDecimal ed = ParseSpecialValue(str, i, endStr, negative, ctx);
-       if (ed != null) {
-         return ed;
-       }
+        EDecimal ed = ParseSpecialValue(str, i, endStr, negative, ctx);
+        if (ed != null) {
+          return ed;
+        }
       }
       if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
         !ctx.isSimplified()) {
@@ -1456,12 +1458,12 @@ TrappableRadixMath<EDecimal>(
       if (endStr - i == 1) {
         char tch = str.charAt(i);
         if (tch >= '0' && tch <= '9') {
-        // String portion is a single digit
-        EDecimal cret;
-        int si = (int)(tch - '0');
-        cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
-           CacheFirst]) : (Cache[si - CacheFirst]);
-           return cret; }
+          // String portion is a single digit
+          EDecimal cret;
+          int si = (int)(tch - '0');
+          cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
+                CacheFirst]) : (Cache[si - CacheFirst]);
+                return cret; }
       }
       digitStart = i;
       int digitEnd = i;
@@ -1469,14 +1471,7 @@ TrappableRadixMath<EDecimal>(
       boolean haveNonzeroDigit = false;
       int decimalPrec = 0;
       int decimalDigitEnd = i;
-      // NOTE: Also check HasFlagsOrTraps here because
-      // it's burdensome to determine which flags have
-      // to be set when applying the optimization here
-      boolean haveIgnoredDigit = false;
       int lastdigit = -1;
-      boolean beyondPrecision = false;
-      boolean ignoreNextDigit = false;
-      int zerorun = 0;
       int realDigitEnd = -1;
       int realDecimalEnd = -1;
       for (; i < endStr; ++i) {
@@ -1653,7 +1648,7 @@ TrappableRadixMath<EDecimal>(
       FastIntegerFixed fastIntScale;
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
-  newScaleInt) : FastIntegerFixed.FromBig(newScale);
+          newScaleInt) : FastIntegerFixed.FromBig(newScale);
       if (mant == null) {
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);
       } else if (mant.CanFitInInt32()) {
@@ -1675,9 +1670,9 @@ TrappableRadixMath<EDecimal>(
       int endStr,
       boolean negative,
       EContext ctx) {
-if (ctx == null) {
-  return ParseOrdinaryNumberNoContext(str, i, endStr, negative);
-}
+      if (ctx == null) {
+        return ParseOrdinaryNumberNoContext(str, i, endStr, negative);
+      }
       // NOTE: Negative sign at beginning was omitted
       // from the String portion
       int mantInt = 0;
@@ -1692,15 +1687,15 @@ if (ctx == null) {
       if (endStr - i == 1) {
         char tch = str.charAt(i);
         if (tch >= '0' && tch <= '9') {
-        // String portion is a single digit
-        EDecimal cret;
-        int si = (int)(tch - '0');
-        cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
-           CacheFirst]) : (Cache[si - CacheFirst]);
-           if (ctx != null) {
-             cret = GetMathValue(ctx).RoundAfterConversion(cret, ctx);
-           }
-        return cret;
+          // String portion is a single digit
+          EDecimal cret;
+          int si = (int)(tch - '0');
+          cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
+                CacheFirst]) : (Cache[si - CacheFirst]);
+                if (ctx != null) {
+                  cret = GetMathValue(ctx).RoundAfterConversion(cret, ctx);
+                }
+          return cret;
         }
       }
       digitStart = i;
@@ -1717,23 +1712,23 @@ if (ctx == null) {
           (negative && ctx.getRounding() == ERounding.Ceiling) ||
           (!negative && ctx.getRounding() == ERounding.Floor)) &&
         !ctx.getHasFlagsOrTraps();
-        boolean roundHalf = ctx != null && ctx.getHasMaxPrecision() &&
+      boolean roundHalf = ctx != null && ctx.getHasMaxPrecision() &&
         !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.HalfUp ||
           (ctx.getRounding() == ERounding.HalfDown) ||
           (ctx.getRounding() == ERounding.HalfEven)) &&
         !ctx.getHasFlagsOrTraps();
-        boolean roundUp = ctx != null && ctx.getHasMaxPrecision() &&
+      boolean roundUp = ctx != null && ctx.getHasMaxPrecision() &&
         !ctx.isPrecisionInBits() && (ctx.getRounding() == ERounding.Up ||
           (!negative && ctx.getRounding() == ERounding.Ceiling) ||
           (negative && ctx.getRounding() == ERounding.Floor)) &&
         !ctx.getHasFlagsOrTraps();
-        boolean haveIgnoredDigit = false;
-        int lastdigit = -1;
-        boolean beyondPrecision = false;
-        boolean ignoreNextDigit = false;
-        int zerorun = 0;
-        int realDigitEnd = -1;
-        int realDecimalEnd = -1;
+      boolean haveIgnoredDigit = false;
+      int lastdigit = -1;
+      boolean beyondPrecision = false;
+      boolean ignoreNextDigit = false;
+      int zerorun = 0;
+      int realDigitEnd = -1;
+      int realDecimalEnd = -1;
       // DebugUtility.Log("round half=" + (// roundHalf) +
       // " up=" + roundUp + " down=" + roundDown +
       // " maxprec=" + (ctx != null && ctx.getHasMaxPrecision()));
@@ -2078,11 +2073,11 @@ if (ctx == null) {
       FastIntegerFixed fastIntScale;
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
-  newScaleInt) : FastIntegerFixed.FromBig(newScale);
-  if (mant == null) {
-    fastIntMant = FastIntegerFixed.FromInt32(mantInt);
-  } else if (mant.CanFitInInt32()) {
-    mantInt = mant.ToInt32Checked();
+          newScaleInt) : FastIntegerFixed.FromBig(newScale);
+      if (mant == null) {
+        fastIntMant = FastIntegerFixed.FromInt32(mantInt);
+      } else if (mant.CanFitInInt32()) {
+        mantInt = mant.ToInt32Checked();
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);
       } else {
         fastIntMant = FastIntegerFixed.FromBig(mant);
@@ -5124,7 +5119,6 @@ if (ctx == null) {
           FastIntegerFixed.FromBig(exponent),
           (byte)flags);
     }
-    private static final int RepeatDivideThreshold = 10000;
     private static boolean AppendString(
       StringBuilder builder,
       char c,
@@ -6098,7 +6092,7 @@ if (ctx == null) {
        * @return An arbitrary-precision decimal number.
        */
       public EDecimal ValueOf(int val) {
-        return (val == 0) ? Zero : ((val == 1) ? One : FromInt64(val));
+        return (val == 0) ? Zero :((val == 1) ? One : FromInt64(val));
       }
     }
 

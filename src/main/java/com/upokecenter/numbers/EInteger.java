@@ -690,14 +690,14 @@ at: http://peteroupc.github.io/
       if (endIndex - index <= 18 && radix <= 10) {
         long rv = 0;
         for (int i = index; i < endIndex; ++i) {
-        char c = str.charAt(i);
-        int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-        if (digit >= radix) {
-          throw new NumberFormatException("Illegal character found");
+          char c = str.charAt(i);
+          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          if (digit >= radix) {
+            throw new NumberFormatException("Illegal character found");
+          }
+          rv = (rv * radix) + digit;
         }
-        rv = (rv * radix) + digit;
-      }
-      return FromInt64(negative ? -rv : rv);
+        return FromInt64(negative ? -rv : rv);
       }
       short[] bigint = new short[4];
       boolean haveSmallInt = true;
@@ -1225,7 +1225,7 @@ EInteger(this.wordCount, this.words, false);
         return EInteger.FromInt32(intValue);
       }
       if (this.wordCount == 1 && intValue >= -0x7ffe0000 && intValue <
-0x7ffe0000) {
+        0x7ffe0000) {
         short[] sumreg;
         int intSum = this.negative ?
           intValue - (((int)this.words[0]) & 0xffff) :
@@ -2356,7 +2356,8 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
                     ((value >= 100000000000000L) ? 15 : ((value
                           >= 10000000000000L) ?
                         14 : ((value >= 1000000000000L) ? 13 : ((value
-                >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+                              >= 100000000000L) ? 12 : ((value >=
+10000000000L) ?
                               11 : ((value >= 1000000000L) ? 10 : 9)))))))));
           } else {
             int v2 = (int)value;
@@ -2505,7 +2506,8 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
                     int maxDigitEstimate = maxDigits + 4;
                     int minDigitEstimate = minDigits + 4;
                     retval += ei.Abs().compareTo(NumberUtility.FindPowerOfTen(
-                minDigitEstimate)) >= 0 ? retval + maxDigitEstimate : retval +
+                          minDigitEstimate)) >= 0 ? retval +
+maxDigitEstimate : retval +
                       minDigitEstimate;
                     done = true;
                     break;
@@ -2602,14 +2604,12 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
                         12) & 0xffff) != 0) ? 3 : ((((c << 11) &
                         0xffff) != 0) ? 4 : ((((c << 10) & 0xffff) != 0) ? 5 :
                       ((((c << 9) & 0xffff) != 0) ? 6 : ((((c <<
-                                8) & 0xffff) != 0) ? 7 : ((((c << 7) &
-0xffff) !=
+                8) & 0xffff) != 0) ? 7 : ((((c << 7) & 0xffff) !=
                               0) ? 8 : ((((c << 6) & 0xffff) != 0) ? 9 :
                               ((((c << 5) & 0xffff) != 0) ? 10 : ((((c <<
                                         4) & 0xffff) != 0) ? 11 : ((((c << 3) &
                                         0xffff) != 0) ? 12 : ((((c << 2) &
-                                          0xffff) != 0) ? 13 : ((((c << 1) &
-0xffff) !=
+                0xffff) != 0) ? 13 : ((((c << 1) & 0xffff) !=
                                           0) ? 14 : 15))))))))))))));
           return EInteger.FromInt64(retSetBitLong).Add(
               EInteger.FromInt32(rsb));
