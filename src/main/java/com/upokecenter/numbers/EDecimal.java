@@ -1461,9 +1461,8 @@ TrappableRadixMath<EDecimal>(
           // String portion is a single digit
           EDecimal cret;
           int si = (int)(tch - '0');
-          cret = negative ? ((si == 0) ? NegativeZero : Cache[-si -
-                CacheFirst]) : Cache[si - CacheFirst];
-                return cret;
+          return negative ? ((si == 0) ? NegativeZero :
+            Cache[-si - CacheFirst]) : Cache[si - CacheFirst];
         }
       }
       digitStart = i;
