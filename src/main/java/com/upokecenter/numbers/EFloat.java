@@ -3245,14 +3245,17 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns a string representation of this number's value after rounding to the
-     * given precision (using the given arithmetic context). If the number
-     * after rounding is neither infinity nor not-a-number (NaN), returns
-     * the shortest decimal form of this number's value (in terms of
-     * decimal digits starting with the first nonzero digit and ending with
-     * the last nonzero digit) that results in the rounded number after the
-     * decimal form is converted to binary floating-point format (using the
-     * given arithmetic context).
+     * Returns a string representation of this number's value after rounding that
+     * value to the given precision (using the given arithmetic context,
+     * such as <code>EContext.Binary64</code>). If the number after rounding is
+     * neither infinity nor not-a-number (NaN), returns the shortest
+     * decimal form of this number's value (in terms of decimal digits
+     * starting with the first nonzero digit and ending with the last
+     * nonzero digit) that results in the rounded number after the decimal
+     * form is converted to binary floating-point format (using the given
+     * arithmetic context).<p> <p>The following example converts an EFloat
+     * number to its shortest round-tripping decimal form using the same
+     * precision as the <code>double</code> type in Java and.getNET():</p> <pre> string str = efloat.ToShortestString(EContext.Binary64); </pre> </p>
      * @param ctx An arithmetic context to control precision (in bits), rounding,
      * and exponent range of the rounded number. If {@code HasFlags} of the
      * context is true, will also store the flags resulting from the

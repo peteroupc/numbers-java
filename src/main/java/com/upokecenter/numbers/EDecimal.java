@@ -1459,7 +1459,6 @@ TrappableRadixMath<EDecimal>(
         char tch = str.charAt(i);
         if (tch >= '0' && tch <= '9') {
           // String portion is a single digit
-          EDecimal cret;
           int si = (int)(tch - '0');
           return negative ? ((si == 0) ? NegativeZero :
             Cache[-si - CacheFirst]) : Cache[si - CacheFirst];

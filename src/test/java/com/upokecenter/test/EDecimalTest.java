@@ -5567,9 +5567,33 @@ import com.upokecenter.numbers.*;
       return sb.toString();
     }
 
+    public static void TestStringContextOneEFloat(String str, EContext ec) {
+      if (ec == null) {
+        throw new NullPointerException("ec");
+      }
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+       if (str.length()==0 || str.charAt(0)=='-') {
+        TestStringContextOneEFloatCore(str, ec);
+         return;
+       }
+       String leadingZeros=TestCommon.Repeat('0', 800);
+       int[] counts={ 0, 1, 2, 4, 6, 8, 10, 50, 100, 200, 300, 400,
+          500, 600, 700, 800 };
+       for (int i = 1; i < counts.length; ++i) {
+         // Parse a String with leading zeros (to test whether
+         // the 768-digit trick delivers a correctly rounded EFloat
+         // even if the String has leading zeros)
+         TestStringContextOneEFloatCore(
+           leadingZeros.substring(0, counts[i]) + str,
+           ec);
+       }
+    }
+
     // Test potential cases where FromString is implemented
     // to take context into account when building the EFloat
-    public static void TestStringContextOneEFloat(String str, EContext ec) {
+    public static void TestStringContextOneEFloatCore(String str, EContext ec) {
       if (ec == null) {
         throw new NullPointerException("ec");
       }

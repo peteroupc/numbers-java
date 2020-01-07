@@ -332,14 +332,24 @@ digitsBefore) {
       }
     }
 
+    public void TestEFloatDoubleCoreExact(double d, String s) {
+      Assert.assertEquals(s, EFloat.FromDouble(d).toString());
+      TestEFloatDoubleCore(d, s);
+    }
+
+    public void TestEFloatSingleCoreExact(float d, String s) {
+      Assert.assertEquals(s, EFloat.FromSingle(d).toString());
+      TestEFloatSingleCore(d, s);
+    }
+
     @Test
     public void TestEFloatDouble() {
-      TestEFloatDoubleCore(3.5, "3.5");
-      TestEFloatDoubleCore(7, "7");
-      TestEFloatDoubleCore(1.75, "1.75");
-      TestEFloatDoubleCore(3.5, "3.5");
-      TestEFloatDoubleCore((double)Integer.MIN_VALUE, "-2147483648");
-      TestEFloatDoubleCore(
+      TestEFloatDoubleCoreExact(3.5, "3.5");
+      TestEFloatDoubleCoreExact(7, "7");
+      TestEFloatDoubleCoreExact(1.75, "1.75");
+      TestEFloatDoubleCoreExact(3.5, "3.5");
+      TestEFloatDoubleCoreExact((double)Integer.MIN_VALUE, "-2147483648");
+      TestEFloatDoubleCoreExact(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
       RandomGenerator rand = new RandomGenerator();
@@ -1541,7 +1551,7 @@ OutputDouble(expectedDouble) +
       }
       for (int i = 0; i < s1.size(); ++i) {
         for (int j = 0; j < s2.size(); ++j) {
-          TestStringToDoubleSingleOne(s2.get(j) + "e" + s1.get(i));
+          TestStringToDoubleSingleOne(s2.charAt(j) + "e" + s1.get(i));
         }
       }
     }
@@ -2341,26 +2351,62 @@ enumber.compareTo(
     private static void TestEFloatDoubleCore(double d, String s) {
       double oldd = d;
       EFloat bf = EFloat.FromDouble(d);
-      if (s != null) {
-        Assert.assertEquals(s, bf.toString());
-      }
       d = bf.ToDouble();
-      Assert.assertEquals((double)oldd, d, 0);
+      if (Double.isNaN(oldd)) {
+        if (!(Double.isNaN(d))) {
+ Assert.fail();
+ }
+      } else {
+        Assert.assertEquals((double)oldd, d, 0);
+      }
+      if (s != null) {
+        EFloat bf2 = EFloat.FromString(s, EContext.Binary64);
+       d = bf.ToDouble();
+       if (Double.isNaN(oldd)) {
+         if (!(Double.isNaN(d))) {
+ Assert.fail();
+ }
+       } else {
+         Assert.assertEquals((double)oldd, d, 0);
+       }
+      }
       if (bf.isFinite()) {
-        TestStringToDoubleOne(bf.toString());
+        String s2 = bf.toString();
+        TestStringToDoubleOne(s2);
+if (s != null && !s.equals(s2)) {
+  TestStringToDoubleOne(s);
+}
       }
     }
 
     private static void TestEFloatSingleCore(float d, String s) {
       float oldd = d;
       EFloat bf = EFloat.FromSingle(d);
-      if (s != null) {
-        Assert.assertEquals(s, bf.toString());
-      }
       d = bf.ToSingle();
-      Assert.assertEquals((float)oldd, d, 0f);
+      if (Float.isNaN(oldd)) {
+        if (!(Float.isNaN(d))) {
+ Assert.fail();
+ }
+      } else {
+        Assert.assertEquals((float)oldd, d, 0f);
+      }
+      if (s != null) {
+        EFloat bf2 = EFloat.FromString(s, EContext.Binary32);
+       d = bf.ToSingle();
+       if (Float.isNaN(oldd)) {
+         if (!(Float.isNaN(d))) {
+ Assert.fail();
+ }
+       } else {
+         Assert.assertEquals((double)oldd, d, 0);
+       }
+      }
       if (bf.isFinite()) {
-        TestStringToSingleOne(bf.toString());
+        String s2 = bf.toString();
+        TestStringToSingleOne(s2);
+if (s != null && !s.equals(s2)) {
+  TestStringToSingleOne(s);
+}
       }
     }
   }
