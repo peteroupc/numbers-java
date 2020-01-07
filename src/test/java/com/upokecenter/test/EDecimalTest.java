@@ -5574,46 +5574,44 @@ import com.upokecenter.numbers.*;
       if (str == null) {
         throw new NullPointerException("str");
       }
-       if (str.length()==0 || str.charAt(0)=='-') {
-        TestStringContextOneEFloatCore(str, ec);
-         return;
-       }
-       String leadingZeros=TestCommon.Repeat('0', 800);
-       int[] counts={ 0, 1, 2, 4, 6, 8, 10, 50, 100, 200, 300, 400,
-          500, 600, 700, 800 };
+      String leadingZeros = TestCommon.Repeat('0', 800);
+      int[] counts = {
+        0, 1, 2, 4, 6, 8, 10, 50, 100, 200, 300, 400,
+        500, 600, 700, 800,
+      };
+       EDecimal ed = EDecimal.FromString("xyzxyz" + str, 6, str.length());
+       EFloat ef = ed.ToEFloat(ec);
        for (int i = 1; i < counts.length; ++i) {
          // Parse a String with leading zeros (to test whether
          // the 768-digit trick delivers a correctly rounded EFloat
          // even if the String has leading zeros)
          TestStringContextOneEFloatCore(
            leadingZeros.substring(0, counts[i]) + str,
-           ec);
+           ec, ed, ef);
+         if (str.length() == 0 || str.charAt(0)=='-') {
+           break;
+         }
        }
     }
 
     // Test potential cases where FromString is implemented
     // to take context into account when building the EFloat
-    public static void TestStringContextOneEFloatCore(String str, EContext ec) {
+    public static void TestStringContextOneEFloatCore(
+      String str,
+      EContext ec,
+      EDecimal ed,
+      EFloat ef) {
       if (ec == null) {
         throw new NullPointerException("ec");
       }
       if (str == null) {
         throw new NullPointerException("str");
       }
-      EFloat ef = null, ef2 = null;
-      // System.out.println("TestStringContextOne ---- ec=" + (ec));
-      // swUnopt.Restart();
-      EDecimal ed = null;
+      EFloat ef2 = null;
       EContext noneRounding = ec.WithRounding(
           ERounding.None).WithTraps(EContext.FlagInvalid);
       EContext downRounding = ec.WithRounding(ERounding.Down);
-      ed = EDecimal.FromString("xyzxyz" + str, 6, str.length());
-      ef = ed.ToEFloat(ec);
-      // swUnoptRound.Stop();
-      // swUnopt.Stop();
-      // swOpt2.Restart();
       ef2 = EFloat.FromString("xyzxyz" + str, 6, str.length(), ec);
-      // swOpt2.Stop();
       EFloat ef3 = EFloat.NaN;
       try {
         ef3 = EFloat.FromString(str, noneRounding);

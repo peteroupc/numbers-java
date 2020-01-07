@@ -7,6 +7,11 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
+// TODO: Consider adding a logb (floor of log2) operation,
+  // as well as a Log2 method here and in EDecimal
+// TODO: Consider adding byte[] equivalent of FromString
+// here and in EDecimal
+
   /**
    * Represents an arbitrary-precision binary floating-point number. (The "E"
    *  stands for "extended", meaning that instances of this class can be

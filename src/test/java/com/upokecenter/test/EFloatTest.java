@@ -344,12 +344,12 @@ digitsBefore) {
 
     @Test
     public void TestEFloatDouble() {
-      TestEFloatDoubleCoreExact(3.5, "3.5");
-      TestEFloatDoubleCoreExact(7, "7");
-      TestEFloatDoubleCoreExact(1.75, "1.75");
-      TestEFloatDoubleCoreExact(3.5, "3.5");
-      TestEFloatDoubleCoreExact((double)Integer.MIN_VALUE, "-2147483648");
-      TestEFloatDoubleCoreExact(
+      this.TestEFloatDoubleCoreExact(3.5, "3.5");
+      this.TestEFloatDoubleCoreExact(7, "7");
+      this.TestEFloatDoubleCoreExact(1.75, "1.75");
+      this.TestEFloatDoubleCoreExact(3.5, "3.5");
+      this.TestEFloatDoubleCoreExact((double)Integer.MIN_VALUE, "-2147483648");
+      this.TestEFloatDoubleCoreExact(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
       RandomGenerator rand = new RandomGenerator();
@@ -1541,17 +1541,17 @@ OutputDouble(expectedDouble) +
 
     @Test
     public void TestStringToDoubleExp() {
-      ArrayList<String> s1 = new ArrayList<String>();
-      ArrayList<String> s2 = new ArrayList<String>();
+      ArrayList<String> s1list = new ArrayList<String>();
+      ArrayList<String> s2list = new ArrayList<String>();
       for (int i = -304; i <= 304; ++i) {
-        s1.add(TestCommon.IntToString(i));
+        s1list.add(TestCommon.IntToString(i));
       }
       for (int i = 0; i <= 1000; ++i) {
-        s2.add(TestCommon.IntToString(i));
+        s2list.add(TestCommon.IntToString(i));
       }
-      for (int i = 0; i < s1.size(); ++i) {
-        for (int j = 0; j < s2.size(); ++j) {
-          TestStringToDoubleSingleOne(s2.charAt(j) + "e" + s1.get(i));
+      for (int i = 0; i < s1list.size(); ++i) {
+        for (int j = 0; j < s2list.size(); ++j) {
+          TestStringToDoubleSingleOne(s2list.get(j) + "e" + s1list.get(i));
         }
       }
     }
@@ -2361,21 +2361,21 @@ enumber.compareTo(
       }
       if (s != null) {
         EFloat bf2 = EFloat.FromString(s, EContext.Binary64);
-       d = bf.ToDouble();
-       if (Double.isNaN(oldd)) {
-         if (!(Double.isNaN(d))) {
+        d = bf.ToDouble();
+        if (Double.isNaN(oldd)) {
+          if (!(Double.isNaN(d))) {
  Assert.fail();
  }
-       } else {
+        } else {
          Assert.assertEquals((double)oldd, d, 0);
        }
       }
       if (bf.isFinite()) {
         String s2 = bf.toString();
         TestStringToDoubleOne(s2);
-if (s != null && !s.equals(s2)) {
-  TestStringToDoubleOne(s);
-}
+      if (s != null && !s.equals(s2)) {
+        TestStringToDoubleOne(s);
+      }
       }
     }
 
@@ -2392,21 +2392,21 @@ if (s != null && !s.equals(s2)) {
       }
       if (s != null) {
         EFloat bf2 = EFloat.FromString(s, EContext.Binary32);
-       d = bf.ToSingle();
-       if (Float.isNaN(oldd)) {
-         if (!(Float.isNaN(d))) {
+        d = bf.ToSingle();
+        if (Float.isNaN(oldd)) {
+          if (!(Float.isNaN(d))) {
  Assert.fail();
  }
-       } else {
+        } else {
          Assert.assertEquals((double)oldd, d, 0);
        }
       }
       if (bf.isFinite()) {
         String s2 = bf.toString();
         TestStringToSingleOne(s2);
-if (s != null && !s.equals(s2)) {
-  TestStringToSingleOne(s);
-}
+      if (s != null && !s.equals(s2)) {
+        TestStringToSingleOne(s);
+      }
       }
     }
   }
