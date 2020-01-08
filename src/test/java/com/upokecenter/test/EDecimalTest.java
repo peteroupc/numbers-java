@@ -5579,16 +5579,16 @@ import com.upokecenter.numbers.*;
         0, 1, 2, 4, 6, 8, 10, 50, 100, 200, 300, 400,
         500, 600, 700, 800,
       };
-       EDecimal ed = EDecimal.FromString("xyzxyz" + str, 6, str.length());
-       EFloat ef = ed.ToEFloat(ec);
-       for (int i = 1; i < counts.length; ++i) {
+      EDecimal ed = EDecimal.FromString("xyzxyz" + str, 6, str.length());
+      EFloat ef = ed.ToEFloat(ec);
+      for (int i = 1; i < counts.length; ++i) {
          // Parse a String with leading zeros (to test whether
          // the 768-digit trick delivers a correctly rounded EFloat
          // even if the String has leading zeros)
          TestStringContextOneEFloatCore(
            leadingZeros.substring(0, counts[i]) + str,
            ec, ed, ef);
-         if (str.length() == 0 || str.charAt(0)=='-') {
+         if (str.length() == 0 || str.charAt(0) == '-') {
            break;
          }
        }
@@ -5609,15 +5609,15 @@ import com.upokecenter.numbers.*;
       }
       EFloat ef2 = null;
       EContext noneRounding = ec.WithRounding(
-          ERounding.None).WithTraps(EContext.FlagInvalid);
+          ERounding.None); // .WithTraps(EContext.FlagInvalid);
       EContext downRounding = ec.WithRounding(ERounding.Down);
       ef2 = EFloat.FromString("xyzxyz" + str, 6, str.length(), ec);
       EFloat ef3 = EFloat.NaN;
-      try {
-        ef3 = EFloat.FromString(str, noneRounding);
-      } catch (ETrapException ex) {
+      // try {
+      ef3 = EFloat.FromString(str, noneRounding);
+      // } catch (ETrapException ex) {
         // NOTE: Intentionally empty
-      }
+      // }
       EDecimal edef2 = (ec.getRounding() == ERounding.Down ?
           ef2 : EFloat.FromString(str, downRounding)).ToEDecimal();
       if ((ef3 != null && !ef3.IsNaN()) && ed != null &&
