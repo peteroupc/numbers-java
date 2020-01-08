@@ -78,6 +78,9 @@ Represents an arbitrary-precision rational number. This class can't be
 * `static ERational Create​(int numeratorSmall,
       int denominatorSmall)`<br>
  Creates a rational number with the given numerator and denominator.
+* `static ERational Create​(long numeratorLong,
+      long denominatorLong)`<br>
+ Creates a rational number with the given numerator and denominator.
 * `static ERational Create​(EInteger numerator,
       EInteger denominator)`<br>
  Creates a rational number with the given numerator and denominator.
@@ -409,6 +412,24 @@ Creates a rational number with the given numerator and denominator.
 * <code>numeratorSmall</code> - The numerator.
 
 * <code>denominatorSmall</code> - The denominator.
+
+**Returns:**
+
+* An arbitrary-precision rational number.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - The denominator is zero.
+
+### Create
+    public static ERational Create​(long numeratorLong, long denominatorLong)
+Creates a rational number with the given numerator and denominator.
+
+**Parameters:**
+
+* <code>numeratorLong</code> - The numerator.
+
+* <code>denominatorLong</code> - The denominator.
 
 **Returns:**
 

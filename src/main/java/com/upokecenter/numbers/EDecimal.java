@@ -7,8 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-// TODO: Add Create(long, long) to EFloat/ERational
-
   /**
    * Represents an arbitrary-precision decimal floating-point number. (The "E"
    *  stands for "extended", meaning that instances of this class can be

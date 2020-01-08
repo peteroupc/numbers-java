@@ -274,7 +274,7 @@ import com.upokecenter.numbers.*;
     }
 
     public static String RandomDecimalString(RandomGenerator rand, int
-digitsBefore) {
+      digitsBefore) {
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < digitsBefore; ++i) {
         if (rand == null) {
@@ -295,9 +295,9 @@ digitsBefore) {
 
     public static void TestDigitStringsOne(String str) {
       TestCommon.CompareTestEqual(
-          EDecimal.FromString(str).ToEFloat(EContext.Binary64),
-          EFloat.FromString(str, EContext.Binary64),
-          str);
+        EDecimal.FromString(str).ToEFloat(EContext.Binary64),
+        EFloat.FromString(str, EContext.Binary64),
+        str);
     }
 
     @Test
@@ -1189,7 +1189,7 @@ digitsBefore) {
     }
 
     public static EFloat RandomDoubleEFloat(RandomGenerator rnd, boolean
-subnormal) {
+      subnormal) {
       StringBuilder sb = new StringBuilder();
       if (rnd == null) {
         throw new NullPointerException("rnd");
@@ -1228,7 +1228,7 @@ subnormal) {
     }
 
     public static EFloat RandomSingleEFloat(RandomGenerator rnd, boolean
-subnormal) {
+      subnormal) {
       StringBuilder sb = new StringBuilder();
       if (rnd == null) {
         throw new NullPointerException("rnd");
@@ -1302,20 +1302,22 @@ subnormal) {
       }
       if (input.ToDouble() != expectedDouble) {
         String msg = "\ninputDouble\nexpectedDbl " +
-OutputDouble(expectedDouble) +
+          OutputDouble(expectedDouble) +
           ",\ngot----- " + OutputDouble(input.ToDouble()) +
           "\nsrc-----=" + OutputEF(src) + "\nexpected=" +
           OutputEF(expected) + "\ninput---=" + OutputEF(input);
         Assert.fail(msg);
       }
       String str = input.toString();
-      double inputDouble = EFloat.FromString(str, EContext.Binary64).ToDouble();
+      double inputDouble = EFloat.FromString(str,
+  EContext.Binary64).ToDouble();
       if (inputDouble != expectedDouble) {
         String msg = "\ninputString\nexpectedDbl " +
-OutputDouble(expectedDouble) +
+          OutputDouble(expectedDouble) +
           ",\ngot----- " + OutputDouble(inputDouble) +
           "\nsrc-----=" + OutputEF(src) + "\nstr------=" + str +
-          "\nexpected=" + OutputEF(expected) + "\ninput---=" + OutputEF(input);
+          "\nexpected=" + OutputEF(expected) + "\ninput---=" + OutputEF(
+  input);
         Assert.fail(msg);
       }
     }
@@ -1398,7 +1400,7 @@ OutputDouble(expectedDouble) +
         }
       } else if (ef.IsInfinity()) {
         EDecimal half = EDecimal.FromEInteger(
-             EInteger.FromInt32((1 << 25) - 1).ShiftLeft(103));
+            EInteger.FromInt32((1 << 25) - 1).ShiftLeft(103));
         if (ed.Abs().compareTo(half) < 0) {
           String msg = "str=" + str + "\nef=" + OutputEF(ef);
           Assert.fail(msg);
@@ -1464,7 +1466,7 @@ OutputDouble(expectedDouble) +
         }
       } else if (ef.IsInfinity()) {
         EDecimal half = EDecimal.FromEInteger(
-             EInteger.FromInt64((1L << 54) - 1).ShiftLeft(970));
+            EInteger.FromInt64((1L << 54) - 1).ShiftLeft(970));
         if (ed.Abs().compareTo(half) < 0) {
           String msg = "str=" + str + "\nef=" + OutputEF(ef);
           Assert.fail(msg);
@@ -1535,7 +1537,7 @@ OutputDouble(expectedDouble) +
         String str = sb.toString();
         TestStringToDoubleSingleOne(str);
         TestStringToDoubleSingleOne(str + "e" +
-           TestCommon.IntToString(rand.UniformInt(100) - 50));
+          TestCommon.IntToString(rand.UniformInt(100) - 50));
       }
     }
 
@@ -1635,8 +1637,8 @@ OutputDouble(expectedDouble) +
       String expected,
       String msg) {
       EContext ec = EContext.ForPrecisionAndRounding(
-        digits,
-        ERounding.HalfEven);
+          digits,
+          ERounding.HalfEven);
       String str = EFloat.FromString(input, EContext.Binary64)
         .ToEDecimal().RoundToPrecision(ec).toString();
       TestCommon.CompareTestEqual(
@@ -1748,8 +1750,8 @@ OutputDouble(expectedDouble) +
         EFloat efa = RandomDoubleEFloat(fr);
         String shortestStr = efa.ToShortestString(EContext.Binary64);
         EFloat shortest = EFloat.FromString(
-          shortestStr,
-          EContext.Binary64);
+            shortestStr,
+            EContext.Binary64);
         if (!efa.equals(shortest)) {
           String msg = "\n" + EFToString(efa) + "\n" + EFToString(shortest) +
             "\n" + shortestStr;
@@ -1954,7 +1956,7 @@ OutputDouble(expectedDouble) +
             EFloat.FromString("32767")) <= 0;
         isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-32768")) >= 0 &&
-enumber.ToEInteger().compareTo(
+          enumber.ToEInteger().compareTo(
             EInteger.FromString("32767")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(
@@ -2117,7 +2119,7 @@ enumber.ToEInteger().compareTo(
         }
         isNum = enumber.compareTo(
             EFloat.FromString("-9223372036854775808")) >= 0 &&
-enumber.compareTo(
+          enumber.compareTo(
             EFloat.FromString("9223372036854775807")) <= 0;
         isTruncated = enumber.ToEInteger().compareTo(
             EInteger.FromString("-9223372036854775808")) >= 0 &&
@@ -2207,8 +2209,8 @@ enumber.compareTo(
       }
       TestToFloatRoundingOne(EFloat.Create(0, -1074), true);
       EInteger mant = EInteger.FromRadixString(
-        "10000000000000000000000000000000000000000000000000000",
-        2);
+          "10000000000000000000000000000000000000000000000000000",
+          2);
       {
         EFloat objectTemp = EFloat.Create(
             mant,
@@ -2367,15 +2369,15 @@ enumber.compareTo(
  Assert.fail();
  }
         } else {
-         Assert.assertEquals((double)oldd, d, 0);
-       }
+          Assert.assertEquals((double)oldd, d, 0);
+        }
       }
       if (bf.isFinite()) {
         String s2 = bf.toString();
         TestStringToDoubleOne(s2);
-      if (s != null && !s.equals(s2)) {
-        TestStringToDoubleOne(s);
-      }
+        if (s != null && !s.equals(s2)) {
+          TestStringToDoubleOne(s);
+        }
       }
     }
 
@@ -2398,15 +2400,15 @@ enumber.compareTo(
  Assert.fail();
  }
         } else {
-         Assert.assertEquals((double)oldd, d, 0);
-       }
+          Assert.assertEquals((double)oldd, d, 0);
+        }
       }
       if (bf.isFinite()) {
         String s2 = bf.toString();
         TestStringToSingleOne(s2);
-      if (s != null && !s.equals(s2)) {
-        TestStringToSingleOne(s);
-      }
+        if (s != null && !s.equals(s2)) {
+          TestStringToSingleOne(s);
+        }
       }
     }
   }

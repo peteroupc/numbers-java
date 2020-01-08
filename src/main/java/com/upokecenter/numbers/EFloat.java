@@ -250,9 +250,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Creates a number with the value exponent*2^significand.
-     * @param mantissaSmall The parameter {@code mantissaSmall} is a 32-bit signed
-     * integer.
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissaSmall Desired value for the significand.
      * @param exponentSmall Desired value for the exponent.
      * @return An arbitrary-precision binary floating-point number.
      */
@@ -261,9 +260,19 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Creates a number with the value exponent*2^significand.
-     * @param mantissa The parameter {@code mantissa} is a Numbers.EInteger object.
-     * @param exponent The value of the exponent.
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissaLong Desired value for the significand.
+     * @param exponentLong Desired value for the exponent.
+     * @return An arbitrary-precision binary floating-point number.
+     */
+    public static EFloat Create(long mantissaLong, long exponentLong) {
+      return Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong));
+    }
+
+    /**
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissa Desired value for the significand.
+     * @param exponent Desired value for the exponent.
      * @return An arbitrary-precision binary floating-point number.
      * @throws NullPointerException The parameter {@code mantissa} or {@code
      * exponent} is null.
@@ -705,15 +714,16 @@ at: http://peteroupc.github.io/
         if (i == endStr) {
           throw new NumberFormatException();
         }
-        if (str.charAt(i) == '+' || str.charAt(i) == '-') {
-          if (str.charAt(i) == '-') {
+        char ch = str.charAt(i);
+        if (ch == '+' || ch == '-') {
+          if (ch == '-') {
             expoffset = -1;
           }
           ++i;
         }
         expDigitStart = i;
         for (; i < endStr; ++i) {
-          char ch = str.charAt(i);
+          ch = str.charAt(i);
           if (ch >= '0' && ch <= '9') {
             haveDigits = true;
             int thisdigit = (int)(ch - '0');

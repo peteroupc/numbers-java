@@ -226,6 +226,19 @@ at: http://peteroupc.github.io/
 
     /**
      * Creates a rational number with the given numerator and denominator.
+     * @param numeratorLong The numerator.
+     * @param denominatorLong The denominator.
+     * @return An arbitrary-precision rational number.
+     * @throws IllegalArgumentException The denominator is zero.
+     */
+    public static ERational Create(
+      long numeratorLong,
+      long denominatorLong) {
+      return Create(EInteger.FromInt64(numeratorLong), EInteger.FromInt64(denominatorLong));
+    }
+
+    /**
+     * Creates a rational number with the given numerator and denominator.
      * @param numerator The numerator.
      * @param denominator The denominator.
      * @return An arbitrary-precision rational number.
