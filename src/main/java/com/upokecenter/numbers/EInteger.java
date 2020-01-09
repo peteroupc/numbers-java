@@ -17,10 +17,10 @@ at: http://peteroupc.github.io/
 
 // TODO: In next major version, perhaps change GetSigned/UnsignedBitLength
 // to return MaxValue on overflow
-// TODO: Add GetSigned/UnsignedBitLengthAsInt64
+// TODO: Add GetSigned/UnsignedBitLengthAsInt64 or ...OrMax
 // TODO: In next major version, perhaps change GetLowBit/GetDigitCount
 // to return MaxValue on overflow
-// TODO: Add GetLowBitAsInt64/GetDigitCountAsInt64
+// TODO: Add GetLowBitAsInt64/GetDigitCountAsInt64 or ...OrMax
 
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
