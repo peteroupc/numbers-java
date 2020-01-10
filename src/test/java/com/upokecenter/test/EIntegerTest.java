@@ -2837,6 +2837,19 @@ import com.upokecenter.numbers.*;
       }
     }
 
+@Test
+public void TestMultiplyDivideASpecific() {
+EInteger eia =
+EInteger.FromRadixString("8B7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",16);
+EInteger eib = EInteger.FromRadixString("8B7BFFFFFFFFFFFF",16);
+EInteger eic =
+  EInteger.FromRadixString("4bffe40fffffffff7483ffffffffffffffffffffffff7484000000000001",
+  16);
+Assert.assertEquals(eic, eia.Multiply(eib));
+Assert.assertEquals(eic, eib.Multiply(eia));
+TestMultiplyDivideOne(eia, eib);
+}
+
     @Test
     public void TestMultiplyDivideA() {
       RandomGenerator r = new RandomGenerator();
@@ -3315,7 +3328,10 @@ import com.upokecenter.numbers.*;
             bigintD = divrem[0];
             bigintRem = divrem[1];
           }
-          TestCommon.CompareTestEqualAndConsistent(bigintD, bigintA);
+          if (!bigintD.equals(bigintA)) {
+            TestCommon.CompareTestEqualAndConsistent(bigintD, bigintA,
+               "bigintC = " + bigintC);
+          }
           TestCommon.CompareTestEqual(EInteger.FromInt32(0), bigintRem);
           bigintE = bigintC.Divide(bigintB);
           // Testing that DivRem and division method return
@@ -3425,8 +3441,8 @@ import com.upokecenter.numbers.*;
           TestCommon.CompareTestEqualAndConsistent(efloatA, efloatD);
         }
       } catch (Exception ex) {
-        String testLine = "TestMultiplyDivideOne (\nEInteger.getFromRadixString()" +
-          "\u0020(\"" + bigintA.ToRadixString(16) +
+        String testLine = "TestMultiplyDivideOne(\nEInteger.getFromRadixString()" +
+          "(\"" + bigintA.ToRadixString(16) +
           "\",16),\nEInteger.FromRadixString(\"" +
           bigintB.ToRadixString(16) + "\",16));";
         System.out.println(testLine);
