@@ -2843,11 +2843,15 @@ EInteger eia =
 EInteger.FromRadixString("8B7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",16);
 EInteger eib = EInteger.FromRadixString("8B7BFFFFFFFFFFFF",16);
 EInteger eic =
+
   EInteger.FromRadixString("4bffe40fffffffff7483ffffffffffffffffffffffff7484000000000001",
   16);
 Assert.assertEquals(eic, eia.Multiply(eib));
 Assert.assertEquals(eic, eib.Multiply(eia));
 TestMultiplyDivideOne(eia, eib);
+TestMultiplyDivideOne(
+  EInteger.FromRadixString("A0C3FFFFFFFFFFFFFFFFFFFFFFFF",16),
+  EInteger.FromRadixString("A0C3FFFFFFFFFFFF",16));
 }
 
     @Test
@@ -3105,18 +3109,15 @@ TestMultiplyDivideOne(eia, eib);
     @Test
     public void TestSubtract() {
       EInteger ei1 =
-        EInteger.FromString(
-  "5903310052234442839693218602919688229567185544510721229016780853271484375");
-      EInteger ei2 = EInteger.FromString("710542735760100185871124267578125");
+        EInteger.FromRadixString(
+           "35755f086749e85ae75e683cae8be000000fada9c78600acc48a7995a57d7",
+           16);
+      EInteger ei2 =
+EInteger.FromRadixString("23084f676940b7915149bd08b30d", 16);
       {
-        String stringTemp = ei1.Subtract(ei2).toString();
-        {
-          Object objectTemp =
-
-  "5903310052234442839693218602919688229566475001774961128830909729003906250";
-          Object objectTemp2 = stringTemp;
-          Assert.assertEquals(objectTemp, objectTemp2);
-        }
+          String sobjectTemp =
+  "35755F086749E85AE75E683CAE8BDFFFFDDF28B350F1F533AF75DDC51A4CA";
+          Assert.assertEquals(sobjectTemp, ei1.Subtract(ei2).ToRadixString(16));
       }
     }
     @Test

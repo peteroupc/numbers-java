@@ -49,7 +49,7 @@ at: http://peteroupc.github.io/
   public final class EInteger implements Comparable<EInteger> {
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private static final int RecursiveDivisionLimit = 40;
+    private static final int RecursiveDivisionLimit = 200;
 
     private static final int RecursionLimit = 10;
 
@@ -777,7 +777,15 @@ at: http://peteroupc.github.io/
       if (str == null) {
         throw new NullPointerException("str");
       }
-      return FromRadixSubstring(str, 10, 0, str.length());
+      int len = str.length();
+      if (len == 1) {
+        char c = str.charAt(0);
+        if (c>= '0' && c<= '9') {
+          return FromInt32((int)(c-'0'));
+        }
+        throw new NumberFormatException();
+      }
+      return FromRadixSubstring(str, 10, 0, len);
     }
 
     /**
@@ -1427,7 +1435,7 @@ EInteger(this.wordCount, this.words, false);
         EInteger.FromInt32(0);
     }
 
-    private static short LinearMultiplySubtractMinuend1Bigger(
+    private static int LinearMultiplySubtractMinuend1Bigger(
       short[] resultArr,
       int resultStart,
       short[] minuendArr,
@@ -1436,25 +1444,23 @@ EInteger(this.wordCount, this.words, false);
       short[] factor2,
       int factor2Start,
       int factor2Count) {
-      if (factor2Count <= 0 || (factor1 >> 16) != 0) {
-        throw new IllegalStateException();
-      }
       int a = 0;
       int b = 0;
       int cc = 0;
+      int SMask = ShortMask;
       for (int i = 0; i < factor2Count; ++i) {
-        a = ((((int)factor2[factor2Start + i]) & ShortMask) * factor1);
-        a = (a + (cc & ShortMask));
-        b = ((int)minuendArr[minuendArrStart + i] & ShortMask) - (a &
-ShortMask);
+        a = ((((int)factor2[factor2Start + i]) & SMask) * factor1);
+        a = (a + cc);
+        b = ((int)minuendArr[minuendArrStart + i] & SMask) - (a & SMask);
         resultArr[resultStart + i] = ((short)b);
-        cc = ((a >> 16) & ShortMask) + ((b >> 31) & 1);
+        cc = ((a >> 16) & SMask) + ((b >> 31) & 1);
+        cc &= SMask;
       }
-      a = cc & ShortMask;
-      b = ((int)minuendArr[minuendArrStart + factor2Count] & ShortMask) - a;
+      a = cc;
+      b = ((int)minuendArr[minuendArrStart + factor2Count] & SMask) - a;
       resultArr[resultStart + factor2Count] = ((short)b);
       cc = (b >> 31) & 1;
-      return (short)cc;
+      return cc;
     }
 
     private static void DivideThreeBlocksByTwo(
@@ -1501,8 +1507,9 @@ ShortMask);
       } else {
         // BHigh is less than AHigh
         // set quotient to all ones
+        short allones = ((short)0xffff);
         for (int i = 0; i < blockCount; ++i) {
-          quot[posQuot + i] = ((short)0xffff);
+          quot[posQuot + i] = allones;
         }
         java.util.Arrays.fill(quot, posQuot + blockCount, (posQuot + blockCount)+(blockCount), (short)0);
         // copy AMidHigh to temp
@@ -4479,6 +4486,48 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
       }
     }
 
+     /*
+    // alt. implementation, but no performance advantage in testing
+    private static int AddInternalNew(
+      short[] c,
+      int cstart,
+      short[] words1,
+      int astart,
+      short[] words2,
+      int bstart,
+      int n) {
+      {
+        int carry;
+        int SMask = ShortMask;
+        carry = 0;
+        long la, lb;
+        int i = 0;
+        while (n - i >= 3) {
+         la = (((long)words1[astart++]) & SMask);
+         la |= (((long)words1[astart++]) & SMask) << 16;
+         la |= (((long)words1[astart++]) & SMask) << 32;
+         lb = (((long)words2[bstart++]) & SMask);
+         lb |= (((long)words2[bstart++]) & SMask) << 16;
+         lb |= (((long)words2[bstart++]) & SMask) << 32;
+         la += lb + carry;
+         c[cstart++] = (short)la;
+         c[cstart++] = (short)(la >> 16);
+         c[cstart++] = (short)(la >> 32);
+         carry=(int)(la >> 48);
+         i+=3;
+        }
+        while (i < n) {
+          carry += (((int)words1[astart++]) & SMask) +
+            (((int)words2[bstart++]) & SMask);
+          c[cstart++] = (short)carry;
+          carry>>= 16;
+          ++i;
+        }
+        return carry;
+      }
+    }
+     */
+
     private static int AddUnevenSize(
       short[] c,
       int cstart,
@@ -5037,135 +5086,6 @@ ShortMask);
         p += d;
         result[rstart + 2] = (short)p;
         result[rstart + 3] = (short)(p >> 16);
-      }
-    }
-
-    // Multiplies four words by four words with overflow checking
-    private static void BaselineMultiplyOld(
-      short[] result,
-      int rstart,
-      short[] words1,
-      int astart,
-      short[] words2,
-      int bstart) {
-      {
-        int SMask = ShortMask;
-//short[] r2 = new short[8];
-//BaselineMultiply4Alt(r2, 0, words1, astart, words2, bstart);
-        int p;
-        short c;
-        int d;
-        int a0 = ((int)words1[astart]) & SMask;
-        int b0 = ((int)words2[bstart]) & SMask;
-        p = a0 * b0;
-        c = (short)p;
-        d = ((int)p >> 16) & SMask;
-        result[rstart] = c;
-        c = (short)d;
-        d = ((int)d >> 16) & SMask;
-        p = a0 * (((int)words2[bstart + 1]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 1]) & SMask) * b0;
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        result[rstart + 1] = c;
-        c = (short)d;
-        d = ((int)d >> 16) & SMask;
-        p = a0 * (((int)words2[bstart + 2]) & SMask);
-
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                1]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 2]) & SMask) * b0;
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        result[rstart + 2] = c;
-        c = (short)d;
-        d = ((int)d >> 16) & SMask;
-        p = a0 * (((int)words2[bstart + 3]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                2]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-
-        p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                1]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 3]) & SMask) * b0;
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        result[rstart + 3] = c;
-        c = (short)d;
-        d = ((int)d >> 16) & SMask;
-        p = (((int)words1[astart + 1]) & SMask) * (((int)words2[bstart +
-                3]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                2]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                1]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        result[rstart + 4] = c;
-        c =
-          (short)d;
-        d = ((int)d >> 16) & SMask;
-        p = (((int)words1[astart + 2]) & SMask) * (((int)words2[bstart +
-                3]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                2]) & SMask);
-        p += ((int)c) & SMask;
-        c = (short)p;
-        d += ((int)p >> 16) & SMask;
-        result[rstart + 5] = c;
-        p = (((int)words1[astart + 3]) & SMask) * (((int)words2[bstart +
-                3]) & SMask);
-        p += d;
-        result[rstart + 6] = (short)p;
-        result[rstart + 7] = (short)(p >>
-            16);
-/*
-if (r2[0]!=result[rstart]||
-r2[1]!=result[rstart + 1]||
-r2[2]!=result[rstart + 2]||
-r2[3]!=result[rstart + 3]||
-r2[4]!=result[rstart + 4]||
-r2[5]!=result[rstart + 5]||
-r2[6]!=result[rstart + 6]||
-r2[7]!=result[rstart + 7]) {
-DebugUtility.Log("exp {0:X4} {1:X4} {2:X4} {3:X4} {4:X4} {5:X4} {6:X4} {7:X4}",
-
-  result[rstart], result[rstart + 1], result[rstart + 2], result[rstart + 3], result[rstart + 4]
-, result[rstart + 5], result[rstart + 6], result[rstart + 7]);
-DebugUtility.Log("was {0:X4} {1:X4} {2:X4} {3:X4} {4:X4} {5:X4} {6:X4} {7:X4}",
-  r2[0], r2[1], r2[2], r2[3], r2[4], r2[5], r2[6], r2[7]);
-throw new IllegalStateException();
-}*/
       }
     }
 
@@ -6940,6 +6860,117 @@ ShortMask)) {
       }
     }
 
+    private static void SchoolbookMultiplySameLengthEven(
+      short[] resultArr,
+      int resultStart,
+      short[] words1,
+      int words1Start,
+      short[] words2,
+      int words2Start,
+      int count) {
+      int resultPos;
+      long carry = 0;
+      long p;
+      long valueBint;
+       {
+      valueBint = ((int)words2[words2Start]) & ShortMask;
+      valueBint |= (((long)words2[words2Start + 1]) & ShortMask) << 16;
+      for (int j = 0; j < count; j+=2) {
+          p = ((int)words1[words1Start + j]) & ShortMask;
+          p |= (((long)words1[words1Start + j + 1]) & ShortMask) << 16;
+          p *= valueBint + carry;
+          resultArr[resultStart + j] = (short)p;
+          resultArr[resultStart + j + 1] = (short)(p >> 16);
+          carry = (p >> 32) & 0xffffffffL;
+      }
+      resultArr[resultStart + count] = (short)carry;
+      resultArr[resultStart + count + 1] = (short)(carry >> 16);
+      for (int i = 2; i < count; i+=2) {
+          resultPos = resultStart + i;
+          carry = 0;
+          valueBint = ((int)words2[words2Start + i]) & ShortMask;
+          valueBint |= (((long)words2[words2Start + i + 1]) & ShortMask) << 16;
+          for (int j = 0; j < count; j+=2, resultPos+=2) {
+            p = ((int)words1[words1Start + j]) & ShortMask;
+            p |= (((long)words1[words1Start + j + 1]) & ShortMask) << 16;
+            p *= valueBint + carry;
+            p += ((int)resultArr[resultPos]) & ShortMask;
+            p += (((int)resultArr[resultPos + 1]) & ShortMask) << 16;
+            resultArr[resultPos] = (short)p;
+            resultArr[resultPos + 1] = (short)(p >> 16);
+            carry = (p >> 32) & 0xffffffffL;
+          }
+          resultArr[resultStart + i + count] = (short)carry;
+          resultArr[resultStart + i + count + 1] = (short)(carry >> 16);
+        }
+      }
+    }
+
+    private static void SchoolbookMultiplySameLengthOdd(
+      short[] resultArr,
+      int resultStart,
+      short[] words1,
+      int words1Start,
+      short[] words2,
+      int words2Start,
+      int count) {
+      int resultPos;
+      long carry = 0;
+      long p;
+      long valueBint;
+      {
+      valueBint = ((int)words2[words2Start]) & ShortMask;
+      valueBint |= (count>1) ? (((long)words2[words2Start + 1]) & ShortMask)<<
+16 : 0;
+      for (int j = 0; j < count; j+=2) {
+          p = ((int)words1[words1Start + j]) & ShortMask;
+if (j + 1 < count) {
+  p |= (((long)words1[words1Start + j + 1]) & ShortMask);
+}
+          p *= valueBint + carry;
+          resultArr[resultStart + j] = (short)p;
+if (j + 1 < count) {
+  resultArr[resultStart + j + 1] = (short)(p >> 16);
+}
+          carry = (p >> 32) & 0xffffffffL;
+      }
+      resultArr[resultStart + count] = (short)carry;
+if (count>1) {
+  resultArr[resultStart + count + 1] = (short)(carry >> 16);
+}
+      for (int i = 2; i < count; i+=2) {
+          resultPos = resultStart + i;
+          carry = 0;
+          valueBint = ((int)words2[words2Start + i]) & ShortMask;
+if (i + 1<count) {
+            valueBint |= (((long)words2[words2Start + i + 1]) & ShortMask)<<
+16;
+          }
+          for (int j = 0; j < count; j+=2, resultPos+=2) {
+            p = ((int)words1[words1Start + j]) & ShortMask;
+if (j + 1 < count) {
+  p |= (((long)words1[words1Start + j + 1]) & ShortMask) << 16;
+}
+            p *= valueBint + carry;
+            p += ((int)resultArr[resultPos]) & ShortMask;
+            if (j + 1 < count) {
+              p += (((int)resultArr[resultPos + 1]) & ShortMask) << 16;
+              resultArr[resultPos] = (short)p;
+              resultArr[resultPos + 1] = (short)(p >> 16);
+              carry = (p >> 32) & 0xffffffffL;
+            } else {
+              resultArr[resultPos] = (short)p;
+              carry = (p >> 16);
+            }
+          }
+          resultArr[resultStart + i + count] = (short)carry;
+if (i + 1<count) {
+  resultArr[resultStart + i + count + 1] = (short)(carry >> 16);
+}
+        }
+      }
+    }
+
     private static void SchoolbookMultiply(
       short[] resultArr,
       int resultStart,
@@ -6949,7 +6980,22 @@ ShortMask)) {
       short[] words2,
       int words2Start,
       int words2Count) {
-      int cstart, carry, valueBint;
+      if (words1Count == words2Count && (words1Count & 1) == 0) {
+///*
+       if ((words1Count & 1) == 0) {
+          SchoolbookMultiplySameLengthEven(resultArr, resultStart, words1,
+  words1Start, words2,
+             words2Start, words1Count);
+          return;
+        } else {
+          SchoolbookMultiplySameLengthOdd(resultArr, resultStart, words1,
+  words1Start, words2,
+             words2Start, words1Count);
+         return;
+       }
+//*/
+      }
+      int resultPos, carry, valueBint;
       if (words1Count < words2Count) {
         // words1 is shorter than words2, so put words2 on top
         carry = 0;
@@ -6958,25 +7004,25 @@ ShortMask)) {
           int p;
           p = ((((int)words2[words2Start + j]) & ShortMask) *
               valueBint);
-          p = (p + (((int)carry) & ShortMask));
+          p = (p + carry);
           resultArr[resultStart + j] = ((short)p);
           carry = (p >> 16) & ShortMask;
         }
         resultArr[resultStart + words2Count] = ((short)carry);
         for (int i = 1; i < words1Count; ++i) {
-          cstart = resultStart + i;
+          resultPos = resultStart + i;
           carry = 0;
           valueBint = ((int)words1[words1Start + i]) & ShortMask;
-          for (int j = 0; j < words2Count; ++j) {
+          for (int j = 0; j < words2Count; ++j, ++resultPos) {
             int p;
             p = ((((int)words2[words2Start + j]) & ShortMask) *
                 valueBint);
-            p = (p + (((int)carry) & ShortMask));
-            p = (p + (((int)resultArr[cstart + j]) & ShortMask));
-            resultArr[cstart + j] = ((short)p);
+            p = (p + carry);
+            p = (p + (((int)resultArr[resultPos]) & ShortMask));
+            resultArr[resultPos] = ((short)p);
             carry = (p >> 16) & ShortMask;
           }
-          resultArr[cstart + words2Count] = ((short)carry);
+          resultArr[resultStart + i + words2Count] = ((short)carry);
         }
       } else {
         // words2 is shorter or the same length as words1
@@ -6986,25 +7032,25 @@ ShortMask)) {
           int p;
           p = ((((int)words1[words1Start + j]) & ShortMask) *
               valueBint);
-          p = (p + (((int)carry) & ShortMask));
+          p = (p + carry);
           resultArr[resultStart + j] = ((short)p);
           carry = (p >> 16) & ShortMask;
         }
         resultArr[resultStart + words1Count] = ((short)carry);
         for (int i = 1; i < words2Count; ++i) {
-          cstart = resultStart + i;
+          resultPos = resultStart + i;
           carry = 0;
           valueBint = ((int)words2[words2Start + i]) & ShortMask;
-          for (int j = 0; j < words1Count; ++j) {
+          for (int j = 0; j < words1Count; ++j, ++resultPos) {
             int p;
             p = ((((int)words1[words1Start + j]) & ShortMask) *
                 valueBint);
-            p = (p + (((int)carry) & ShortMask));
-            p = (p + (((int)resultArr[cstart + j]) & ShortMask));
-            resultArr[cstart + j] = ((short)p);
+            p = (p + carry);
+            p = (p + (((int)resultArr[resultPos]) & ShortMask));
+            resultArr[resultPos] = ((short)p);
             carry = (p >> 16) & ShortMask;
           }
-          resultArr[cstart + words1Count] = ((short)carry);
+          resultArr[resultStart + i + words1Count] = ((short)carry);
         }
       }
     }
