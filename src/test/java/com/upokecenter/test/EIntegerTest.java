@@ -2840,8 +2840,8 @@ import com.upokecenter.numbers.*;
 @Test
 public void TestMultiplyDivideASpecific() {
 EInteger eia =
-EInteger.FromRadixString("8B7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",16);
-EInteger eib = EInteger.FromRadixString("8B7BFFFFFFFFFFFF",16);
+EInteger.FromRadixString("8B7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16);
+EInteger eib = EInteger.FromRadixString("8B7BFFFFFFFFFFFF", 16);
 EInteger eic =
 
   EInteger.FromRadixString("4bffe40fffffffff7483ffffffffffffffffffffffff7484000000000001",
@@ -2850,8 +2850,8 @@ Assert.assertEquals(eic, eia.Multiply(eib));
 Assert.assertEquals(eic, eib.Multiply(eia));
 TestMultiplyDivideOne(eia, eib);
 TestMultiplyDivideOne(
-  EInteger.FromRadixString("A0C3FFFFFFFFFFFFFFFFFFFFFFFF",16),
-  EInteger.FromRadixString("A0C3FFFFFFFFFFFF",16));
+  EInteger.FromRadixString("A0C3FFFFFFFFFFFFFFFFFFFFFFFF", 16),
+  EInteger.FromRadixString("A0C3FFFFFFFFFFFF", 16));
 }
 
     @Test
@@ -3330,8 +3330,10 @@ EInteger.FromRadixString("23084f676940b7915149bd08b30d", 16);
             bigintRem = divrem[1];
           }
           if (!bigintD.equals(bigintA)) {
-            TestCommon.CompareTestEqualAndConsistent(bigintD, bigintA,
-               "bigintC = " + bigintC);
+            TestCommon.CompareTestEqualAndConsistent(
+              bigintD,
+              bigintA,
+              "bigintC = " + bigintC);
           }
           TestCommon.CompareTestEqual(EInteger.FromInt32(0), bigintRem);
           bigintE = bigintC.Divide(bigintB);
