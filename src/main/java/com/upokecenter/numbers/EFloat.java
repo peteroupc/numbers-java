@@ -843,11 +843,18 @@ at: http://peteroupc.github.io/
         }
         return ef.RoundToPrecision(ctx);
       } else if (decimalDigitStart != decimalDigitEnd) {
+if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
+          mant = EInteger.FromSubstring(
+            str,
+            decimalDigitStart,
+            decimalDigitEnd);
+} else {
         String tmpstr = str.substring(digitStart, (digitStart)+(digitEnd - digitStart)) +
           str.substring(
              decimalDigitStart, (
              decimalDigitStart)+(decimalDigitEnd - decimalDigitStart));
         mant = EInteger.FromString(tmpstr);
+}
       } else {
         mant = EInteger.FromSubstring(str, digitStart, digitEnd);
       }

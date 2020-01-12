@@ -1,18 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.peteroupc</groupId>
-  <artifactId>numbers</artifactId>
+  <groupId>com.upokecenter</groupId>
+  <artifactId>cbor</artifactId>
   <packaging>jar</packaging>
-  <version>1.5.1</version>
-  <name>Arbitrary-Precision Number Library</name>
-  <description>A Java library that supports arbitrary-precision binary and decimal floating-point numbers and rational numbers with arbitrary-precision components, and supports arithmetic with these numbers.</description>
-  <url>https://github.com/peteroupc/Numbers-Java</url>
+  <version>4.1.0-SNAPSHOT</version>
+  <name>CBOR (Concise Binary Object Representation)</name>
+  <description>A Java implementation of Concise Binary Object Representation (CBOR), a general-purpose binary data format defined in RFC 7049. </description>
+  <url>https://github.com/peteroupc/CBOR-Java</url>
   <profiles>
     <profile>
       <id>release</id>
       <build>
         <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.7.0</version>
+            <configuration>
+                <compilerArgs>
+                   <arg>-Xlint:deprecation</arg>
+                </compilerArgs>
+            </configuration>
+        </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
@@ -36,6 +46,7 @@
               <additionalJOptions>
               <additionalJOption>-html5</additionalJOption>
               </additionalJOptions>
+
             </configuration>
             <executions>
               <execution>
@@ -64,12 +75,13 @@
     </profile>
   </profiles>
   <scm>
-    <connection>scm:git:https://github.com/peteroupc/Numbers-Java</connection>
-    <developerConnection>scm:git:https://github.com/peteroupc/Numbers-Java.git</developerConnection>
-    <url>https://github.com/peteroupc/Numbers-Java</url>
+    <connection>scm:git:https://github.com/peteroupc/CBOR-Java</connection>
+    <developerConnection>scm:git:https://github.com/peteroupc/CBOR-Java.git</developerConnection>
+    <url>https://github.com/peteroupc/CBOR-Java</url>
   </scm>
   <contributors>
     <contributor>
+      <name>Anders Gustaffson</name>
     </contributor>
   </contributors>
   <developers>
@@ -92,16 +104,24 @@
   </licenses>
   <build>
    <plugins>
-            <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.7.0</version>
-            <configuration>
-              <compilerArgs>
-              <arg>-Xlint:all</arg>
-              </compilerArgs>
-            </configuration>
-          </plugin>
+<!--
+    <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+      <properties>
+        <property>
+          <name>listener</name>
+          <value>org.spf4j.junit.Spf4jRunListener</value>
+        </property>
+        <property>
+          <name>spf4j.junit.sampleTimeMillis</name>
+          <value>10</value>
+        </property>
+      </properties>
+    </configuration>
+  </plugin>
+-->
     <plugin>
       <groupId>org.sonatype.plugins</groupId>
       <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -122,6 +142,29 @@
     </snapshotRepository>
   </distributionManagement>
   <dependencies>
+<dependency>
+  <groupId>org.spf4j</groupId>
+  <artifactId>spf4j-junit</artifactId>
+  <version>8.6.28</version>
+  <scope>test</scope>
+</dependency>
+<dependency>
+  <groupId>org.spf4j</groupId>
+  <artifactId>spf4j-ui</artifactId>
+  <version>8.6.28</version>
+  <scope>test</scope>
+</dependency>
+
+    <dependency>
+      <groupId>org.jscience</groupId>
+      <artifactId>jscience</artifactId>
+      <version>4.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apfloat</groupId>
+      <artifactId>apfloat</artifactId>
+      <version>1.9.1</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

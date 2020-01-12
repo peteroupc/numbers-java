@@ -5104,7 +5104,7 @@ ShortMask);
         // DebugUtility.Log("ops={0:X4}{1:X4}{2:X4}{3:X4} {4:X4}{5:X4}{6:X4}{7:X4}",
   // words1[astart + 3], words1[astart + 2], words1[astart + 1], words1[astart],
   // words2[bstart + 3], words2[bstart + 2], words2[bstart + 1],
-  //words2[bstart]);
+  // words2[bstart]);
         long a0 = ((long)words1[astart]) & 0xffffL;
         a0 |= (((long)words1[astart + 1]) & 0xffffL) << 16;
         long a1 = ((long)words1[astart + 2]) & 0xffffL;
@@ -6891,7 +6891,7 @@ ShortMask)) {
           carry = 0;
           valueBint = ((int)words2[words2Start + i]) & ShortMask;
           valueBint |= (((long)words2[words2Start + i + 1]) & ShortMask) << 16;
-          for (int j = 0; j < count; j += 2, resultPos+=2) {
+          for (int j = 0; j < count; j += 2, resultPos += 2) {
             p = ((int)words1[words1Start + j]) & ShortMask;
             p |= (((long)words1[words1Start + j + 1]) & ShortMask) << 16;
             p *= valueBint + carry;
@@ -6948,7 +6948,7 @@ ShortMask) <<
             valueBint |= (((long)words2[words2Start + i + 1]) & ShortMask) <<
 16;
           }
-          for (int j = 0; j < count; j += 2, resultPos+=2) {
+          for (int j = 0; j < count; j += 2, resultPos += 2) {
             p = ((int)words1[words1Start + j]) & ShortMask;
             if (j + 1 < count) {
               p |= (((long)words1[words1Start + j + 1]) & ShortMask) << 16;
@@ -6983,7 +6983,7 @@ ShortMask) <<
       int words2Start,
       int words2Count) {
       if (words1Count == words2Count && (words1Count & 1) == 0) {
-/// *
+/*
        if ((words1Count & 1) == 0) {
           SchoolbookMultiplySameLengthEven(
             resultArr,
@@ -7005,8 +7005,7 @@ ShortMask) <<
             words1Count);
   return;
        }
-// */
-      }
+ */ }
       int resultPos, carry, valueBint;
       if (words1Count < words2Count) {
         // words1 is shorter than words2, so put words2 on top
