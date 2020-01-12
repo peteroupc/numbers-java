@@ -1013,20 +1013,23 @@ TrappableRadixMath<EDecimal>(
       }
       boolean negative = false;
       int endStr = tmpoffset + length;
-      if (str.charAt(tmpoffset) == '-') {
+      char c = str.charAt(tmpoffset);
+      if (c == '-') {
         negative = true;
         ++tmpoffset;
         if (tmpoffset >= endStr) {
           throw new NumberFormatException();
         }
+        c = str.charAt(tmpoffset);
       } else if (str.charAt(tmpoffset) == '+') {
         ++tmpoffset;
         if (tmpoffset >= endStr) {
           throw new NumberFormatException();
         }
+        c = str.charAt(tmpoffset);
       }
       int i = tmpoffset;
-      if (str.charAt(tmpoffset) < '0' || str.charAt(tmpoffset) > '9') {
+      if (c < '0' || c > '9') {
         EDecimal ed = ParseSpecialValue(str, i, endStr, negative, ctx);
         if (ed != null) {
           return ed;
