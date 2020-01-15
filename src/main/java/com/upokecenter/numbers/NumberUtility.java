@@ -358,7 +358,7 @@ FindPowerOfTenFromBig(EInteger.FromInt64(diffLong));
           int icurexp = intcurexp.AsInt32();
           int halficurexp = icurexp / 2;
           bigpow = FindPowerOfFive(halficurexp);
-          bigpow = bigpow.Multiply (
+          bigpow = bigpow.Multiply(
               FindPowerOfFive(icurexp - halficurexp));
           mantissa = mantissa.Multiply(bigpow);
           break;

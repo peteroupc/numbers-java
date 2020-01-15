@@ -8,7 +8,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestConstructor() {
       try {
-        Assert.assertEquals (
+        Assert.assertEquals(
           null,
           new EContext(-1, ERounding.HalfEven, 0, 0, false));
         Assert.fail("Should have failed");
@@ -19,7 +19,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        Assert.assertEquals (
+        Assert.assertEquals(
           null,
           new EContext(0, ERounding.HalfEven, 0, -1, false));
         Assert.fail("Should have failed");
@@ -59,11 +59,11 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestExponentWithinRange() {
       if (!(EContext.Unlimited.ExponentWithinRange(
-  EInteger.FromString (
+  EInteger.FromString(
             "-9999999"))))Assert.fail();
 
       if (!(EContext.Unlimited.ExponentWithinRange(
-  EInteger.FromString (
+  EInteger.FromString(
             "9999999"))))Assert.fail();
       try {
         EContext.Unlimited.ExponentWithinRange(null);
@@ -109,13 +109,13 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestCliDecimal() {
       EDecimal valueEdTmp;
-      valueEdTmp = EDecimal.FromString (
+      valueEdTmp = EDecimal.FromString(
           "-79228162514264337593543950336")
         .RoundToPrecision(EContext.CliDecimal);
       Assert.assertEquals(
         EDecimal.NegativeInfinity,
         valueEdTmp);
-      valueEdTmp = EDecimal.FromString (
+      valueEdTmp = EDecimal.FromString(
           "8.782580686213340724E+28")
         .RoundToPrecision(EContext.CliDecimal);
       Assert.assertEquals(
@@ -123,14 +123,14 @@ import com.upokecenter.numbers.*;
         valueEdTmp);
       {
         Object objectTemp = EDecimal.NegativeInfinity;
-        Object objectTemp2 = EDecimal.FromString (
+        Object objectTemp2 = EDecimal.FromString(
             "-9.3168444507547E+28").RoundToPrecision(EContext.CliDecimal);
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       {
         String stringTemp =
 
-          EDecimal.FromString (
+          EDecimal.FromString(
             "-9344285899206687626894794544.04982268810272216796875")
           .RoundToPrecision(EContext.CliDecimal).ToPlainString();
         Assert.assertEquals(
@@ -139,14 +139,14 @@ import com.upokecenter.numbers.*;
       }
       {
         Object objectTemp = EDecimal.PositiveInfinity;
-        Object objectTemp2 = EDecimal.FromString (
+        Object objectTemp2 = EDecimal.FromString(
             "96148154858060747311034406200").RoundToPrecision(
   EContext.CliDecimal);
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       {
         Object objectTemp = EDecimal.PositiveInfinity;
-        Object objectTemp2 = EDecimal.FromString (
+        Object objectTemp2 = EDecimal.FromString(
             "90246605365627217170000000000").RoundToPrecision(
   EContext.CliDecimal);
         Assert.assertEquals(objectTemp, objectTemp2);

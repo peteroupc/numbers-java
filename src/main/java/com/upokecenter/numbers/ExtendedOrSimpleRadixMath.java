@@ -72,7 +72,7 @@ at: http://peteroupc.github.io/
 
     public T Power(T thisValue, T pow, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Power (
+          ctx == null || !ctx.isSimplified()) ? this.ext.Power(
           thisValue,
           pow,
           ctx) : this.simp.Power(thisValue, pow, ctx);
@@ -80,7 +80,7 @@ at: http://peteroupc.github.io/
 
     public T Log10(T thisValue, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Log10 (
+          ctx == null || !ctx.isSimplified()) ? this.ext.Log10(
           thisValue,
           ctx) : this.simp.Log10(thisValue, ctx);
     }
@@ -99,7 +99,7 @@ at: http://peteroupc.github.io/
       return (ctx == null || !ctx.isSimplified()) ?
         this.ext.SquareRoot(
           thisValue,
-          ctx) : this.simp.SquareRoot (
+          ctx) : this.simp.SquareRoot(
           thisValue,
           ctx);
     }
@@ -134,7 +134,7 @@ at: http://peteroupc.github.io/
     }
     public T Divide(T thisValue, T divisor, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Divide (
+          ctx == null || !ctx.isSimplified()) ? this.ext.Divide(
           thisValue,
           divisor,
           ctx) : this.simp.Divide(thisValue, divisor, ctx);
@@ -142,7 +142,7 @@ at: http://peteroupc.github.io/
 
     public T MinMagnitude(T a, T b, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.MinMagnitude (
+          ctx == null || !ctx.isSimplified()) ? this.ext.MinMagnitude(
           a,
           b,
           ctx) : this.simp.MinMagnitude(a, b, ctx);
@@ -150,7 +150,7 @@ at: http://peteroupc.github.io/
 
     public T MaxMagnitude(T a, T b, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.MaxMagnitude (
+          ctx == null || !ctx.isSimplified()) ? this.ext.MaxMagnitude(
           a,
           b,
           ctx) : this.simp.MaxMagnitude(a, b, ctx);
@@ -184,7 +184,7 @@ at: http://peteroupc.github.io/
 
     public T Plus(T thisValue, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Plus (
+          ctx == null || !ctx.isSimplified()) ? this.ext.Plus(
           thisValue,
           ctx) : this.simp.Plus(thisValue, ctx);
     }
@@ -241,14 +241,14 @@ at: http://peteroupc.github.io/
 
     public T Reduce(T thisValue, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Reduce (
+          ctx == null || !ctx.isSimplified()) ? this.ext.Reduce(
           thisValue,
           ctx) : this.simp.Reduce(thisValue, ctx);
     }
 
     public T Add(T thisValue, T other, EContext ctx) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Add (
+          ctx == null || !ctx.isSimplified()) ? this.ext.Add(
           thisValue,
           other,
           ctx) : this.simp.Add(thisValue, other, ctx);
@@ -260,7 +260,7 @@ at: http://peteroupc.github.io/
       EContext ctx,
       boolean roundToOperandPrecision) {
       return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.AddEx (
+          ctx == null || !ctx.isSimplified()) ? this.ext.AddEx(
           thisValue,
           other,
           ctx,
@@ -278,7 +278,7 @@ at: http://peteroupc.github.io/
           thisValue,
           otherValue,
           treatQuietNansAsSignaling,
-          ctx) : this.simp.CompareToWithContext (
+          ctx) : this.simp.CompareToWithContext(
           thisValue,
           otherValue,
           treatQuietNansAsSignaling,

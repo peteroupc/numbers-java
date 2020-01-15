@@ -85,10 +85,10 @@ at: http://peteroupc.github.io/
       }
       EInteger mant = this.GetHelper().GetMantissa(thisValue).Abs();
       if (mant.isZero()) {
-        return afterQuantize ? this.GetHelper().CreateNewWithFlags (
+        return afterQuantize ? this.GetHelper().CreateNewWithFlags(
             mant,
             this.GetHelper().GetExponent(thisValue),
-            0) : this.wrapper.RoundToPrecision (
+            0) : this.wrapper.RoundToPrecision(
             this.GetHelper().ValueOf(0),
             ctxDest);
       }
@@ -127,7 +127,7 @@ at: http://peteroupc.github.io/
             null,
             null,
             null);
-          thisValue = this.GetHelper().CreateNewWithFlags (
+          thisValue = this.GetHelper().CreateNewWithFlags(
               mant,
               fastExp.AsEInteger(),
               thisFlags);
@@ -135,9 +135,9 @@ at: http://peteroupc.github.io/
       } else if (afterDivision && exp.signum() < 0) {
         FastInteger fastExp = FastInteger.FromBig(exp);
         int radix = this.GetHelper().GetRadix();
-        mant = NumberUtility.ReduceTrailingZeros (
+        mant = NumberUtility.ReduceTrailingZeros(
             mant, fastExp, radix, null, null, new FastInteger(0));
-        thisValue = this.GetHelper().CreateNewWithFlags (
+        thisValue = this.GetHelper().CreateNewWithFlags(
             mant,
             fastExp.AsEInteger(),
             thisFlags);
@@ -149,7 +149,7 @@ at: http://peteroupc.github.io/
       EInteger mant = this.GetHelper().GetMantissa(thisValue).Abs();
       boolean mantChanged = false;
       if (!mant.isZero() && ctx != null && ctx.getHasMaxPrecision()) {
-        EInteger limit = this.GetHelper().MultiplyByRadixPower (
+        EInteger limit = this.GetHelper().MultiplyByRadixPower(
             EInteger.FromInt32(1),
             FastInteger.FromBig(ctx.getPrecision()));
         if (mant.compareTo(limit) >= 0) {
@@ -402,7 +402,7 @@ at: http://peteroupc.github.io/
           overflowMant = overflowMant.Subtract(EInteger.FromInt32(1));
           FastInteger clamp =
             FastInteger.FromBig(pc.getEMax()).Increment().Subtract(fastPrecision);
-          return this.GetHelper().CreateNewWithFlags (
+          return this.GetHelper().CreateNewWithFlags(
               overflowMant,
               clamp.AsEInteger(),
               neg ? BigNumberFlags.FlagNegative : 0);
