@@ -2911,7 +2911,9 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
      * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating decimal expansion.
+     * exact because it would have a nonterminating decimal expansion;
+     * examples include 1 divided by any multiple of 3, such as 1/3 or
+     * 1/12.
      */
     public EDecimal Divide(EDecimal divisor) {
       return this.Divide(
@@ -2934,8 +2936,9 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * Signals FlagInvalid and returns not-a-number (NaN) if the divisor
      * and the dividend are 0; or, either {@code ctx} is null or {@code
      * ctx} 's precision is 0, and the result would have a nonterminating
-     * decimal expansion; or, the rounding mode is ERounding.None and the
-     * result is not exact.
+     * decimal expansion (examples include 1 divided by any multiple of 3,
+     * such as 1/3 or 1/12); or, the rounding mode is ERounding.None and
+     * the result is not exact.
      */
     public EDecimal Divide(
       EDecimal divisor,
@@ -3777,7 +3780,9 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
      * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating decimal expansion.
+     * exact because it would have a nonterminating decimal expansion;
+     * examples include 1 divided by any multiple of 3, such as 1/3 or
+     * 1/12.
      */
     public EDecimal Divide(int intValue) {
       return this.Divide(EDecimal.FromInt32(intValue));

@@ -1753,7 +1753,9 @@ Divides this object by another decimal number and returns the result. When
 * The quotient of the two numbers. Returns infinity if the divisor is
  0 and the dividend is nonzero. Returns not-a-number (NaN) if the
  divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating decimal expansion.
+ exact because it would have a nonterminating decimal expansion;
+ examples include 1 divided by any multiple of 3, such as 1/3 or
+ 1/12.
 
 ### Divide
     public EDecimal Divide​(EDecimal divisor, EContext ctx)
@@ -1778,8 +1780,9 @@ Divides this arbitrary-precision decimal number by another
  Signals FlagInvalid and returns not-a-number (NaN) if the divisor
  and the dividend are 0; or, either <code>ctx</code> is null or <code>
  ctx</code> 's precision is 0, and the result would have a nonterminating
- decimal expansion; or, the rounding mode is ERounding.None and the
- result is not exact.
+ decimal expansion (examples include 1 divided by any multiple of 3,
+ such as 1/3 or 1/12); or, the rounding mode is ERounding.None and
+ the result is not exact.
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
@@ -2621,7 +2624,9 @@ Divides this object by an 32-bit signed integer and returns the result. When
 * The quotient of the two numbers. Returns infinity if the divisor is
  0 and the dividend is nonzero. Returns not-a-number (NaN) if the
  divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating decimal expansion.
+ exact because it would have a nonterminating decimal expansion;
+ examples include 1 divided by any multiple of 3, such as 1/3 or
+ 1/12.
 
 ### MultiplyAndAdd
     public EDecimal MultiplyAndAdd​(EDecimal multiplicand, EDecimal augend)
