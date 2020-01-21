@@ -1221,6 +1221,74 @@ EInteger(this.wordCount, this.words, false);
       return ((size > tempSize) ^ (sa <= 0)) ? 1 : -1;
     }
 
+  /**
+   * Not documented yet.
+   * @param first Not documented yet.
+   * @param second Not documented yet.
+   * @throws NullPointerException The parameter {@code first} or {@code second}
+   * is null.
+   */
+  public static EInteger Max(EInteger first, EInteger second) {
+ if (first == null) {
+   throw new NullPointerException("first");
+ }
+ if (second == null) {
+   throw new NullPointerException("second");
+ }
+ return first.compareTo(second) > 0 ? first : second;
+}
+
+  /**
+   * Not documented yet.
+   * @param first Not documented yet.
+   * @param second Not documented yet.
+   * @throws NullPointerException The parameter {@code first} or {@code second}
+   * is null.
+   */
+  public static EInteger Min(EInteger first, EInteger second) {
+ if (first == null) {
+   throw new NullPointerException("first");
+ }
+ if (second == null) {
+   throw new NullPointerException("second");
+ }
+ return first.compareTo(second) < 0 ? first : second;
+}
+
+  /**
+   * Not documented yet.
+   * @param first Not documented yet.
+   * @param second Not documented yet.
+   * @throws NullPointerException The parameter {@code first} or {@code second}
+   * is null.
+   */
+  public static EInteger MaxMagnitude(EInteger first, EInteger second) {
+ if (first == null) {
+   throw new NullPointerException("first");
+ }
+ if (second == null) {
+   throw new NullPointerException("second");
+ }
+ return first.Abs().compareTo(second.Abs()) > 0 ? first : second;
+}
+
+  /**
+   * Not documented yet.
+   * @param first Not documented yet.
+   * @param second Not documented yet.
+   * @throws NullPointerException The parameter {@code first} or {@code second}
+   * is null.
+   */
+  public static EInteger MinMagnitude(EInteger first, EInteger second) {
+ if (first == null) {
+   throw new NullPointerException("first");
+ }
+ if (second == null) {
+   throw new NullPointerException("second");
+ }
+ return first.Abs().compareTo(second.Abs()) < 0 ? first : second;
+}
+
     /**
      * Adds this object and another object.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.

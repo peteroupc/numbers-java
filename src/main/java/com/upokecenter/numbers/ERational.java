@@ -966,6 +966,118 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Gets the greater value between two rational numbers.
+     * @param first An arbitrary-precision rational number.
+     * @param second Another arbitrary-precision rational number.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the larger denominator. If the two numbers are negative and have the
+     * same value, returns the one with the smaller denominator.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
+    public static ERational Max(
+      ERational first,
+      ERational second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
+  int cmp = first.CompareToValue(second);
+  if (cmp == 0) {
+    if (first.isNegative()) {
+return (!second.isNegative()) ? second :
+(first.getDenominator().compareTo(second.getDenominator()) > 0 ? first : second);
+    } else {
+return second.isNegative() ? first :
+(first.getDenominator().compareTo(second.getDenominator()) < 0 ? first : second);
+    }
+  }
+  return cmp > 0 ? first : second;
+    }
+
+    /**
+     * Gets the greater value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Max.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
+    public static ERational MaxMagnitude(
+      ERational first,
+      ERational second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
+  int cmp = first.Abs().CompareToValue(second.Abs());
+return (cmp == 0) ? Max(first, second) : (cmp > 0 ? first : second);
+    }
+
+    /**
+     * Gets the lesser value between two rational numbers.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The smaller value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the negative zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the smaller denominator. If the two numbers are negative and have
+     * the same value, returns the one with the larger denominator.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
+    public static ERational Min(
+      ERational first,
+      ERational second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
+  int cmp = first.CompareToValue(second);
+  if (cmp == 0) {
+    if (first.isNegative()) {
+return (!second.isNegative()) ? first :
+(first.getDenominator().compareTo(second.getDenominator()) < 0 ? first : second);
+    } else {
+return second.isNegative() ? second :
+(first.getDenominator().compareTo(second.getDenominator()) > 0 ? first : second);
+    }
+  }
+  return cmp < 0 ? first : second;
+    }
+
+    /**
+     * Gets the lesser value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Min.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
+    public static ERational MinMagnitude(
+      ERational first,
+      ERational second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
+  int cmp = first.Abs().CompareToValue(second.Abs());
+return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
+    }
+
+    /**
      * Compares the mathematical value of an arbitrary-precision rational number
      * with that of this instance. This method currently uses the rules
      * given in the CompareToValue method, so that it it is not consistent

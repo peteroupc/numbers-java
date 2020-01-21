@@ -155,6 +155,18 @@ This method may overflow.
  greater than 0.
 * `boolean isZero()`<br>
  Gets a value indicating whether this value is 0.
+* `static EInteger Max​(EInteger first,
+   EInteger second)`<br>
+ Not documented yet.
+* `static EInteger MaxMagnitude​(EInteger first,
+            EInteger second)`<br>
+ Not documented yet.
+* `static EInteger Min​(EInteger first,
+   EInteger second)`<br>
+ Not documented yet.
+* `static EInteger MinMagnitude​(EInteger first,
+            EInteger second)`<br>
+ Not documented yet.
 * `EInteger Mod​(int smallDivisor)`<br>
  Finds the modulus remainder that results when this instance is divided by
  the value of another integer.
@@ -596,6 +608,66 @@ Compares an arbitrary-precision integer with this instance.
 * Zero if the values are equal; a negative number if this instance is
  less, or a positive number if this instance is greater. This
  implementation returns a positive number if.
+
+### Max
+    public static EInteger Max​(EInteger first, EInteger second)
+Not documented yet.
+
+**Parameters:**
+
+* <code>first</code> - Not documented yet.
+
+* <code>second</code> - Not documented yet.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
+### Min
+    public static EInteger Min​(EInteger first, EInteger second)
+Not documented yet.
+
+**Parameters:**
+
+* <code>first</code> - Not documented yet.
+
+* <code>second</code> - Not documented yet.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
+### MaxMagnitude
+    public static EInteger MaxMagnitude​(EInteger first, EInteger second)
+Not documented yet.
+
+**Parameters:**
+
+* <code>first</code> - Not documented yet.
+
+* <code>second</code> - Not documented yet.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
+### MinMagnitude
+    public static EInteger MinMagnitude​(EInteger first, EInteger second)
+Not documented yet.
+
+**Parameters:**
+
+* <code>first</code> - Not documented yet.
+
+* <code>second</code> - Not documented yet.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Add
     public EInteger Add​(int intValue)

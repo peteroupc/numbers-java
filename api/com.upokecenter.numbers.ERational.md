@@ -173,6 +173,18 @@ Renamed to FromEFloat.
  class).
 * `boolean isZero()`<br>
  Gets a value indicating whether this object's value equals 0.
+* `static ERational Max​(ERational first,
+   ERational second)`<br>
+ Gets the greater value between two rational numbers.
+* `static ERational MaxMagnitude​(ERational first,
+            ERational second)`<br>
+ Gets the greater value between two values, ignoring their signs.
+* `static ERational Min​(ERational first,
+   ERational second)`<br>
+ Gets the lesser value between two rational numbers.
+* `static ERational MinMagnitude​(ERational first,
+            ERational second)`<br>
+ Gets the lesser value between two values, ignoring their signs.
 * `ERational Multiply​(int v)`<br>
  Returns the value of this instance multiplied by a 32-bit signed integer.
 * `ERational Multiply​(ERational otherValue)`<br>
@@ -786,6 +798,92 @@ Compares the mathematical value of an arbitrary-precision rational number
 * Zero if the values are equal; a negative number if this instance is
  less, or a positive number if this instance is greater. This
  implementation returns a positive number if.
+
+### Max
+    public static ERational Max​(ERational first, ERational second)
+Gets the greater value between two rational numbers.
+
+**Parameters:**
+
+* <code>first</code> - An arbitrary-precision rational number.
+
+* <code>second</code> - Another arbitrary-precision rational number.
+
+**Returns:**
+
+* The larger value of the two numbers. If one is positive zero and the
+ other is negative zero, returns the positive zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the larger denominator. If the two numbers are negative and have the
+ same value, returns the one with the smaller denominator.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
+### MaxMagnitude
+    public static ERational MaxMagnitude​(ERational first, ERational second)
+Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.
+
+**Parameters:**
+
+* <code>first</code> - The first value to compare.
+
+* <code>second</code> - The second value to compare.
+
+**Returns:**
+
+* The larger value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
+### Min
+    public static ERational Min​(ERational first, ERational second)
+Gets the lesser value between two rational numbers.
+
+**Parameters:**
+
+* <code>first</code> - The first value to compare.
+
+* <code>second</code> - The second value to compare.
+
+**Returns:**
+
+* The smaller value of the two numbers. If one is positive zero and
+ the other is negative zero, returns the negative zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the smaller denominator. If the two numbers are negative and have
+ the same value, returns the one with the larger denominator.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
+
+### MinMagnitude
+    public static ERational MinMagnitude​(ERational first, ERational second)
+Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.
+
+**Parameters:**
+
+* <code>first</code> - The first value to compare.
+
+* <code>second</code> - The second value to compare.
+
+**Returns:**
+
+* The smaller value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### compareTo
     public int compareTo​(int intOther)

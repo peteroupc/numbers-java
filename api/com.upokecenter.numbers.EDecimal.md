@@ -1255,7 +1255,16 @@ Gets the greater value between two decimal numbers.
 
 **Returns:**
 
-* The larger value of the two numbers.
+* The larger value of the two numbers. If one is positive zero and the
+ other is negative zero, returns the positive zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the larger exponent. If the two numbers are negative and have the
+ same value, returns the one with the smaller exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Max
     public static EDecimal Max​(EDecimal first, EDecimal second)
@@ -1269,7 +1278,16 @@ Gets the greater value between two decimal numbers.
 
 **Returns:**
 
-* The larger value of the two numbers.
+* The larger value of the two numbers. If one is positive zero and the
+ other is negative zero, returns the positive zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the larger exponent. If the two numbers are negative and have the
+ same value, returns the one with the smaller exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MaxMagnitude
     public static EDecimal MaxMagnitude​(EDecimal first, EDecimal second, EContext ctx)
@@ -1290,7 +1308,12 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* The larger value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MaxMagnitude
     public static EDecimal MaxMagnitude​(EDecimal first, EDecimal second)
@@ -1305,7 +1328,12 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* The larger value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Min
     public static EDecimal Min​(EDecimal first, EDecimal second, EContext ctx)
@@ -1325,7 +1353,16 @@ Gets the lesser value between two decimal numbers.
 
 **Returns:**
 
-* The smaller value of the two numbers.
+* The smaller value of the two numbers. If one is positive zero and
+ the other is negative zero, returns the negative zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the smaller exponent. If the two numbers are negative and have the
+ same value, returns the one with the larger exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Min
     public static EDecimal Min​(EDecimal first, EDecimal second)
@@ -1339,7 +1376,16 @@ Gets the lesser value between two decimal numbers.
 
 **Returns:**
 
-* The smaller value of the two numbers.
+* The smaller value of the two numbers. If one is positive zero and
+ the other is negative zero, returns the negative zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the smaller exponent. If the two numbers are negative and have the
+ same value, returns the one with the larger exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MinMagnitude
     public static EDecimal MinMagnitude​(EDecimal first, EDecimal second, EContext ctx)
@@ -1360,7 +1406,12 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* The smaller value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MinMagnitude
     public static EDecimal MinMagnitude​(EDecimal first, EDecimal second)
@@ -1375,7 +1426,12 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* The smaller value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### PI
     public static EDecimal PI​(EContext ctx)

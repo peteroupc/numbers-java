@@ -944,24 +944,48 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return The larger value of the two numbers.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the larger exponent. If the two numbers are negative and have the
+     * same value, returns the one with the smaller exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Max(
       EFloat first,
       EFloat second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MathValue.Max(first, second, ctx);
     }
 
     /**
      * Gets the greater value between two binary floating-point numbers.
-     * @param first An arbitrary-precision binary floating-point number.
-     * @param second Another arbitrary-precision binary floating-point number.
-     * @return The greater of the two arbitrary-precision numbers.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the larger exponent. If the two numbers are negative and have the
+     * same value, returns the one with the smaller exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Max(
       EFloat first,
       EFloat second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return Max(first, second, null);
     }
 
@@ -975,12 +999,20 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MaxMagnitude(
       EFloat first,
       EFloat second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MathValue.MaxMagnitude(first, second, ctx);
     }
 
@@ -989,11 +1021,19 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * absolute values are equal, has the same effect as Max.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MaxMagnitude(
       EFloat first,
       EFloat second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MaxMagnitude(first, second, null);
     }
 
@@ -1006,12 +1046,24 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return The smaller value of the two numbers.
+     * @return The smaller value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the negative zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the smaller exponent. If the two numbers are negative and have the
+     * same value, returns the one with the larger exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Min(
       EFloat first,
       EFloat second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MathValue.Min(first, second, ctx);
     }
 
@@ -1019,11 +1071,23 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * Gets the lesser value between two binary floating-point numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The smaller value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the negative zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the smaller exponent. If the two numbers are negative and have the
+     * same value, returns the one with the larger exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Min(
       EFloat first,
       EFloat second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return Min(first, second, null);
     }
 
@@ -1037,12 +1101,20 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MinMagnitude(
       EFloat first,
       EFloat second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MathValue.MinMagnitude(first, second, ctx);
     }
 
@@ -1051,11 +1123,19 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * absolute values are equal, has the same effect as Min.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MinMagnitude(
       EFloat first,
       EFloat second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MinMagnitude(first, second, null);
     }
 

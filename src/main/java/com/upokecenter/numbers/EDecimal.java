@@ -2197,12 +2197,24 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return The larger value of the two numbers.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the larger exponent. If the two numbers are negative and have the
+     * same value, returns the one with the smaller exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal Max(
       EDecimal first,
       EDecimal second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return GetMathValue(ctx).Max(first, second, ctx);
     }
 
@@ -2210,11 +2222,23 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * Gets the greater value between two decimal numbers.
      * @param first An arbitrary-precision decimal number.
      * @param second Another arbitrary-precision decimal number.
-     * @return The larger value of the two numbers.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the larger exponent. If the two numbers are negative and have the
+     * same value, returns the one with the smaller exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal Max(
       EDecimal first,
       EDecimal second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return Max(first, second, null);
     }
 
@@ -2228,12 +2252,20 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision decimal number.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal MaxMagnitude(
       EDecimal first,
       EDecimal second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return GetMathValue(ctx).MaxMagnitude(first, second, ctx);
     }
 
@@ -2242,11 +2274,19 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * absolute values are equal, has the same effect as Max.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @return An arbitrary-precision decimal number.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal MaxMagnitude(
       EDecimal first,
       EDecimal second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MaxMagnitude(first, second, null);
     }
 
@@ -2259,12 +2299,24 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return The smaller value of the two numbers.
+     * @return The smaller value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the negative zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the smaller exponent. If the two numbers are negative and have the
+     * same value, returns the one with the larger exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal Min(
       EDecimal first,
       EDecimal second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return GetMathValue(ctx).Min(first, second, ctx);
     }
 
@@ -2272,11 +2324,23 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * Gets the lesser value between two decimal numbers.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @return The smaller value of the two numbers.
+     * @return The smaller value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the negative zero. If the two
+     * numbers are positive and have the same value, returns the one with
+     * the smaller exponent. If the two numbers are negative and have the
+     * same value, returns the one with the larger exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal Min(
       EDecimal first,
       EDecimal second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return Min(first, second, null);
     }
 
@@ -2290,12 +2354,20 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision decimal number.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal MinMagnitude(
       EDecimal first,
       EDecimal second,
       EContext ctx) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return GetMathValue(ctx).MinMagnitude(first, second, ctx);
     }
 
@@ -2304,11 +2376,19 @@ if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
      * absolute values are equal, has the same effect as Min.
      * @param first The first value to compare.
      * @param second The second value to compare.
-     * @return An arbitrary-precision decimal number.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EDecimal MinMagnitude(
       EDecimal first,
       EDecimal second) {
+if (first == null) {
+  throw new NullPointerException("first");
+}
+if (second == null) {
+  throw new NullPointerException("second");
+}
       return MinMagnitude(first, second, null);
     }
 

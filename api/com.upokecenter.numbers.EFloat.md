@@ -1011,7 +1011,16 @@ Gets the greater value between two binary floating-point numbers.
 
 **Returns:**
 
-* The larger value of the two numbers.
+* The larger value of the two numbers. If one is positive zero and the
+ other is negative zero, returns the positive zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the larger exponent. If the two numbers are negative and have the
+ same value, returns the one with the smaller exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Max
     public static EFloat Max​(EFloat first, EFloat second)
@@ -1019,13 +1028,22 @@ Gets the greater value between two binary floating-point numbers.
 
 **Parameters:**
 
-* <code>first</code> - An arbitrary-precision binary floating-point number.
+* <code>first</code> - The first value to compare.
 
-* <code>second</code> - Another arbitrary-precision binary floating-point number.
+* <code>second</code> - The second value to compare.
 
 **Returns:**
 
-* The greater of the two arbitrary-precision numbers.
+* The larger value of the two numbers. If one is positive zero and the
+ other is negative zero, returns the positive zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the larger exponent. If the two numbers are negative and have the
+ same value, returns the one with the smaller exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MaxMagnitude
     public static EFloat MaxMagnitude​(EFloat first, EFloat second, EContext ctx)
@@ -1046,7 +1064,12 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The larger value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MaxMagnitude
     public static EFloat MaxMagnitude​(EFloat first, EFloat second)
@@ -1061,7 +1084,12 @@ Gets the greater value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The larger value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Min
     public static EFloat Min​(EFloat first, EFloat second, EContext ctx)
@@ -1081,7 +1109,16 @@ Gets the lesser value between two binary floating-point numbers.
 
 **Returns:**
 
-* The smaller value of the two numbers.
+* The smaller value of the two numbers. If one is positive zero and
+ the other is negative zero, returns the negative zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the smaller exponent. If the two numbers are negative and have the
+ same value, returns the one with the larger exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### Min
     public static EFloat Min​(EFloat first, EFloat second)
@@ -1095,7 +1132,16 @@ Gets the lesser value between two binary floating-point numbers.
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The smaller value of the two numbers. If one is positive zero and
+ the other is negative zero, returns the negative zero. If the two
+ numbers are positive and have the same value, returns the one with
+ the smaller exponent. If the two numbers are negative and have the
+ same value, returns the one with the larger exponent.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MinMagnitude
     public static EFloat MinMagnitude​(EFloat first, EFloat second, EContext ctx)
@@ -1116,7 +1162,12 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The smaller value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### MinMagnitude
     public static EFloat MinMagnitude​(EFloat first, EFloat second)
@@ -1131,7 +1182,12 @@ Gets the lesser value between two values, ignoring their signs. If the
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The smaller value of the two numbers, ignoring their signs.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
+ is null.
 
 ### PI
     public static EFloat PI​(EContext ctx)
