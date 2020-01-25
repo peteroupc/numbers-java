@@ -3203,7 +3203,11 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger y2y0 = y2.Add(y0);
   EInteger wt1 = x2x0.Add(x1).Multiply(y2y0.Add(y1));
   EInteger wt2 = x2x0.Subtract(x1).Multiply(y2y0.Subtract(y1));
-  EInteger wt3 =(x2.ShiftLeft(2).Add(x1.ShiftLeft(
+  EInteger wt3
+=(
+  x2.ShiftLeft(
+  2).Add(
+  x1.ShiftLeft(
   1)).Add(x0)).Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
   EInteger w4mul2 = w4.ShiftLeft(2);
   EInteger w4mul12 = w4mul2.Multiply(6);
