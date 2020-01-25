@@ -51,6 +51,8 @@ at: http://peteroupc.github.io/
 
     private static final int RecursiveDivisionLimit = 200;
 
+    private static final int Toom3Threshold = 500;
+
     private static final int RecursionLimit = 10;
 
     private static final int CacheFirst = -24;
@@ -1223,8 +1225,9 @@ EInteger(this.wordCount, this.words, false);
 
   /**
    * Not documented yet.
-   * @param first Not documented yet.
-   * @param second Not documented yet.
+   * @param first The parameter {@code first} is a Numbers.EInteger object.
+   * @param second The parameter {@code second} is a Numbers.EInteger object.
+   * @return The return value is not documented yet.
    * @throws NullPointerException The parameter {@code first} or {@code second}
    * is null.
    */
@@ -1240,8 +1243,9 @@ EInteger(this.wordCount, this.words, false);
 
   /**
    * Not documented yet.
-   * @param first Not documented yet.
-   * @param second Not documented yet.
+   * @param first The parameter {@code first} is a Numbers.EInteger object.
+   * @param second The parameter {@code second} is a Numbers.EInteger object.
+   * @return The return value is not documented yet.
    * @throws NullPointerException The parameter {@code first} or {@code second}
    * is null.
    */
@@ -1257,8 +1261,9 @@ EInteger(this.wordCount, this.words, false);
 
   /**
    * Not documented yet.
-   * @param first Not documented yet.
-   * @param second Not documented yet.
+   * @param first The parameter {@code first} is a Numbers.EInteger object.
+   * @param second The parameter {@code second} is a Numbers.EInteger object.
+   * @return The return value is not documented yet.
    * @throws NullPointerException The parameter {@code first} or {@code second}
    * is null.
    */
@@ -1274,8 +1279,9 @@ EInteger(this.wordCount, this.words, false);
 
   /**
    * Not documented yet.
-   * @param first Not documented yet.
-   * @param second Not documented yet.
+   * @param first The parameter {@code first} is a Numbers.EInteger object.
+   * @param second The parameter {@code second} is a Numbers.EInteger object.
+   * @return The return value is not documented yet.
    * @throws NullPointerException The parameter {@code first} or {@code second}
    * is null.
    */
@@ -3113,6 +3119,13 @@ maxDigitEstimate : retval +
             wc);
         productwordCount = productreg.length;
         needShorten = false;
+      } else if (bigintMult.wordCount >= Toom3Threshold &&
+           this.wordCount >= Toom3Threshold) {
+        EInteger er = Toom3(this.Abs(), bigintMult.Abs());
+        if (this.negative != bigintMult.negative) {
+          er = er.Abs();
+        }
+        return er;
       } else if (this.equals(bigintMult)) {
         int words1Size = this.wordCount;
         productreg = new short[words1Size + words1Size];
@@ -3170,6 +3183,45 @@ maxDigitEstimate : retval +
           productreg,
           this.negative ^ bigintMult.negative);
     }
+
+private static EInteger Toom3(EInteger eia, EInteger eib) {
+  EInteger alimbs = EInteger.FromInt32(eia.wordCount);
+  EInteger blimbs = EInteger.FromInt32(eib.wordCount);
+  EInteger mal = alimbs.compareTo(blimbs) > 0 ? alimbs : blimbs;
+  EInteger m3 = mal.Add(2).Divide(3);
+  EInteger m3mul16 = m3.ShiftLeft(4);
+  EInteger mask = EInteger.FromInt32(1).ShiftLeft(m3mul16).Subtract(1);
+  EInteger x0 = eia.And(mask);
+  EInteger x1 = eia.ShiftRight(m3mul16).And(mask);
+  EInteger x2 = eia.ShiftRight(m3mul16.Multiply(2)).And(mask);
+  EInteger y0 = eib.And(mask);
+  EInteger y1 = eib.ShiftRight(m3mul16).And(mask);
+  EInteger y2 = eib.ShiftRight(m3mul16.Multiply(2)).And(mask);
+  EInteger w0 = x0.Multiply(y0);
+  EInteger w4 = x2.Multiply(y2);
+  EInteger x2x0 = x2.Add(x0);
+  EInteger y2y0 = y2.Add(y0);
+  EInteger wt1 = x2x0.Add(x1).Multiply(y2y0.Add(y1));
+  EInteger wt2 = x2x0.Subtract(x1).Multiply(y2y0.Subtract(y1));
+  EInteger wt3 =(x2.ShiftLeft(2).Add(x1.ShiftLeft(
+  1)).Add(x0)).Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
+  EInteger w4mul2 = w4.ShiftLeft(2);
+  EInteger w4mul12 = w4mul2.Multiply(6);
+  EInteger w0mul3 = w0.Multiply(3);
+  EInteger w3 = w0mul3.Subtract(w4mul12).Subtract(wt1.Multiply(3))
+     .Subtract(wt2)
+     .Add(wt3).Divide(6);
+  EInteger
+w2 = wt1.Add(wt2).Subtract(w0.ShiftLeft(1)).Subtract(w4mul2).ShiftRight(1);
+  EInteger
+w1 = wt1.Multiply(6).Add(w4mul12).Subtract(wt3).Subtract(wt2).Subtract(wt2)
+     .Subtract(w0mul3).Divide(6);
+  w0 = w0.Add(w1.ShiftLeft(m3mul16));
+  w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
+  w0 = w0.Add(w3.ShiftLeft(m3mul16.Multiply(3)));
+  w0 = w0.Add(w4.ShiftLeft(m3mul16.Multiply(4)));
+  return w0;
+}
 
     /**
      * Gets the value of this object with the sign reversed.

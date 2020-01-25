@@ -242,6 +242,12 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
       long exponentLong) exponent*10^significand`<br>
  Creates a number with the value exponent*10^significand.
 * `static EDecimal Create​(EInteger mantissa,
+      int exponentSmall) exponent*10^significand`<br>
+ Creates a number with the value exponent*10^significand.
+* `static EDecimal Create​(EInteger mantissa,
+      long exponentLong) exponent*10^significand`<br>
+ Creates a number with the value exponent*10^significand.
+* `static EDecimal Create​(EInteger mantissa,
       EInteger exponent) exponent*10^significand`<br>
  Creates a number with the value exponent*10^significand.
 * `static EDecimal CreateNaN​(EInteger diag)`<br>
@@ -869,6 +875,42 @@ Returns a number with the value <code>exponent*10^significand</code>.
 **Returns:**
 
 * An arbitrary-precision decimal number.
+
+### Create
+    public static EDecimal Create​(EInteger mantissa, int exponentSmall)
+Creates a number with the value <code>exponent*10^significand</code>.
+
+**Parameters:**
+
+* <code>mantissa</code> - Desired value for the significand.
+
+* <code>exponentSmall</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision decimal number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.
+
+### Create
+    public static EDecimal Create​(EInteger mantissa, long exponentLong)
+Creates a number with the value <code>exponent*10^significand</code>.
+
+**Parameters:**
+
+* <code>mantissa</code> - Desired value for the significand.
+
+* <code>exponentLong</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision decimal number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.
 
 ### Create
     public static EDecimal Create​(EInteger mantissa, EInteger exponent)

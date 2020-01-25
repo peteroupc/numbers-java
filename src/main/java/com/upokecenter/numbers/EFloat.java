@@ -272,6 +272,26 @@ at: http://peteroupc.github.io/
     /**
      * Returns a number with the value exponent*2^significand.
      * @param mantissa Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary floating-point number.
+     */
+    public static EFloat Create(EInteger mantissa, int exponentSmall) {
+      return Create(mantissa, EInteger.FromInt32(exponentSmall));
+    }
+
+    /**
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissa Desired value for the significand.
+     * @param exponentLong Desired value for the exponent.
+     * @return An arbitrary-precision binary floating-point number.
+     */
+    public static EFloat Create(EInteger mantissa, long exponentLong) {
+      return Create(mantissa, EInteger.FromInt64(exponentLong));
+    }
+
+    /**
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissa Desired value for the significand.
      * @param exponent Desired value for the exponent.
      * @return An arbitrary-precision binary floating-point number.
      * @throws NullPointerException The parameter {@code mantissa} or {@code

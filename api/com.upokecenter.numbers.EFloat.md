@@ -145,6 +145,12 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
       long exponentLong)`<br>
  Returns a number with the value exponent*2^significand.
 * `static EFloat Create​(EInteger mantissa,
+      int exponentSmall)`<br>
+ Returns a number with the value exponent*2^significand.
+* `static EFloat Create​(EInteger mantissa,
+      long exponentLong)`<br>
+ Returns a number with the value exponent*2^significand.
+* `static EFloat Create​(EInteger mantissa,
       EInteger exponent)`<br>
  Returns a number with the value exponent*2^significand.
 * `static EFloat CreateNaN​(EInteger diag)`<br>
@@ -734,6 +740,34 @@ Returns a number with the value exponent*2^significand.
 **Parameters:**
 
 * <code>mantissaLong</code> - Desired value for the significand.
+
+* <code>exponentLong</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+### Create
+    public static EFloat Create​(EInteger mantissa, int exponentSmall)
+Returns a number with the value exponent*2^significand.
+
+**Parameters:**
+
+* <code>mantissa</code> - Desired value for the significand.
+
+* <code>exponentSmall</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+### Create
+    public static EFloat Create​(EInteger mantissa, long exponentLong)
+Returns a number with the value exponent*2^significand.
+
+**Parameters:**
+
+* <code>mantissa</code> - Desired value for the significand.
 
 * <code>exponentLong</code> - Desired value for the exponent.
 

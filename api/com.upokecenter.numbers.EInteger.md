@@ -615,9 +615,13 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 **Throws:**
 
@@ -630,9 +634,13 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 **Throws:**
 
@@ -645,9 +653,13 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 **Throws:**
 
@@ -660,9 +672,13 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>first</code> - Not documented yet.
+* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 **Throws:**
 

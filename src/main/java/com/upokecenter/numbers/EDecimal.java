@@ -7,6 +7,8 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
+// TODO: Add Create*(long, int)
+
   /**
    * Represents an arbitrary-precision decimal floating-point number. (The "E"
    *  stands for "extended", meaning that instances of this class can be
@@ -420,6 +422,56 @@ TrappableRadixMath<EDecimal>(
             FastIntegerFixed.FromInt32(exponentSmall),
             (byte)0);
       }
+    }
+
+    /**
+     * Creates a number with the value <code>exponent*10^significand</code>.
+     * @param mantissa Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision decimal number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
+     */
+    public static EDecimal Create(
+      EInteger mantissa,
+      int exponentSmall) {
+      if (mantissa == null) {
+        throw new NullPointerException("mantissa");
+      }
+      if (mantissa.CanFitInInt32()) {
+        int mantissaSmall = mantissa.ToInt32Checked();
+        return Create(mantissaSmall, exponentSmall);
+      }
+      FastIntegerFixed fi = FastIntegerFixed.FromBig(mantissa);
+      int sign = fi.signum();
+      return new EDecimal(
+          sign < 0 ? fi.Negate() : fi,
+          FastIntegerFixed.FromInt32(exponentSmall),
+          (byte)((sign < 0) ? BigNumberFlags.FlagNegative : 0));
+    }
+
+    /**
+     * Creates a number with the value <code>exponent*10^significand</code>.
+     * @param mantissa Desired value for the significand.
+     * @param exponentLong Desired value for the exponent.
+     * @return An arbitrary-precision decimal number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
+     */
+    public static EDecimal Create(
+      EInteger mantissa,
+      long exponentLong) {
+      if (mantissa == null) {
+        throw new NullPointerException("mantissa");
+      }
+      if (mantissa.CanFitInInt64()) {
+        long mantissaLong = mantissa.ToInt64Checked();
+        return Create(mantissaLong, exponentLong);
+      }
+      FastIntegerFixed fi = FastIntegerFixed.FromBig(mantissa);
+      int sign = fi.signum();
+      return new EDecimal(
+          sign < 0 ? fi.Negate() : fi,
+          FastIntegerFixed.FromLong(exponentLong),
+          (byte)((sign < 0) ? BigNumberFlags.FlagNegative : 0));
     }
 
     /**
@@ -1629,7 +1681,7 @@ TrappableRadixMath<EDecimal>(
   lv = -lv;
 }
         if (!negative || lv != 0) {
-          ret = EDecimal.Create(lv, expo);
+          ret = EDecimal.Create(lv, (long)expo);
           return ret;
         }
       }
@@ -2062,7 +2114,7 @@ if (digitEnd - digitStart == 1 && firstdigit == 0) {
   lv = -lv;
 }
         if (!negative || lv != 0) {
-          ret = EDecimal.Create(lv, expo);
+          ret = EDecimal.Create(lv, (long)expo);
           if (ctx != null) {
             ret = GetMathValue(ctx).RoundAfterConversion(ret, ctx);
           }
@@ -2614,8 +2666,8 @@ if (second == null) {
       // have the same sign
 
       if (ef.getExponent().compareTo(EInteger.FromInt64(-1000)) < 0) {
-        // For very low exponents, the conversion to decimal can take
-        // very long, so try this approach
+        // For very low exponents (less than 1000), the conversion to
+        // decimal can take very long, so try this approach
         if (ef.Abs(null).compareTo(EFloat.One) < 0) {
           // Abs less than 1
           if (ed.Abs(null).compareTo(EDecimal.One) >= 0) {
@@ -2629,7 +2681,8 @@ if (second == null) {
         EInteger absexp = ef.getExponent().Abs();
         if (absexp.compareTo(bitCount) > 0) {
           // Float's absolute value is less than 1, so do a trial comparison
-          // using exponent closer to 0
+          // using a different EFloat with the same significand but
+          // with an exponent changed to be closer to 0
           EFloat trial = EFloat.Create(ef.getMantissa(), EInteger.FromInt32(
                 -1000));
           int trialcmp = CompareEDecimalToEFloat(ed, trial);
@@ -2668,21 +2721,22 @@ if (second == null) {
           // DebugUtility.Log("taexp={0}, oaexp={1} ratio={2}"
           // , thisAdjExp, otherAdjExp, ratio);
           // Check the ratio of the negative binary exponent to
-          // negative the decimal exponent.
+          // the negative decimal exponent.
           // If the ratio times 1000, rounded down, is less than 3321, the
           // binary's absolute value is
-          // greater. If it's 3322 or greater, the decimal's absolute value is
+          // greater. If it's greater than 3322, the decimal's absolute value is
           // greater.
           // (If the two absolute values are equal, the ratio will approach
           // ln(10)/ln(2), or about 3.32193, as the exponents get higher and
-          // higher.) This check assumes that both exponents are 1000 or
-          // greater, when the ratio between exponents of equal values is
+          // higher.) If it's 3321 or 3322, the two numbers being compared may or may
+          // not be equal. This check assumes that both exponents are less than
+          // -1000, when the ratio between exponents of equal values is
           // close to ln(10)/ln(2).
           if (ratio.compareTo(EInteger.FromInt64(3321)) < 0) {
             // Binary abs. value is greater
             return (signA > 0) ? -1 : 1;
           }
-          if (ratio.compareTo(EInteger.FromInt64(3322)) >= 0) {
+          if (ratio.compareTo(EInteger.FromInt64(3322)) > 0) {
             return (signA > 0) ? 1 : -1;
           }
         }
