@@ -2666,7 +2666,7 @@ if (second == null) {
       // have the same sign
 
       if (ef.getExponent().compareTo(EInteger.FromInt64(-1000)) < 0) {
-        // For very low exponents (less than 1000), the conversion to
+        // For very low exponents (less than -1000), the conversion to
         // decimal can take very long, so try this approach
         if (ef.Abs(null).compareTo(EFloat.One) < 0) {
           // Abs less than 1
