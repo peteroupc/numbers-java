@@ -51,9 +51,9 @@ at: http://peteroupc.github.io/
 
     private static final int RecursiveDivisionLimit = 200;
 
-    private static final int Toom3Threshold = 500;
+    private static final int Toom3Threshold = 10;
 
-    private static final int RecursionLimit = 10;
+    private static final int MultRecursionThreshold = 10;
 
     private static final int CacheFirst = -24;
     private static final int CacheLast = 128;
@@ -1822,7 +1822,7 @@ EInteger(this.wordCount, this.words, false);
       }
       short[] words = new short[len];
       System.arraycopy(a, pos, words, 0, len);
-      return "\"" + new EInteger(len, words, false).ToUnoptString() + "\"";
+      return "\"" + new EInteger(len, words, false).toString() + "\"";
     }
     private static String WordsToStringHex(short[] a, int pos, int len) {
       while (len != 0 && a[pos + len - 1] == 0) {
@@ -1853,7 +1853,7 @@ EInteger(this.wordCount, this.words, false);
       return (len == 0) ? "\"0\"" : ("\"" + new EInteger(
             len,
             words,
-            false).ToUnoptString() + "\"");
+            false).toString() + "\"");
     }
 
     private static void GeneralDivide(
@@ -3139,7 +3139,8 @@ maxDigitEstimate : retval +
           this.words,
           0,
           words1Size);
-      } else if (this.wordCount <= 10 && bigintMult.wordCount <= 10) {
+      } else if (this.wordCount <= MultRecursionThreshold &&
+bigintMult.wordCount <= MultRecursionThreshold) {
         int wc = this.wordCount + bigintMult.wordCount;
         productreg = new short[wc];
         productwordCount = productreg.length;
@@ -3203,20 +3204,18 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger y2y0 = y2.Add(y0);
   EInteger wt1 = x2x0.Add(x1).Multiply(y2y0.Add(y1));
   EInteger wt2 = x2x0.Subtract(x1).Multiply(y2y0.Subtract(y1));
-  EInteger wt3
-=(x2.ShiftLeft(2).Add(
-  x1.ShiftLeft(
-  1)).Add(x0)).Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
+  EInteger wt3 = x2.ShiftLeft(2).Add(x1.ShiftLeft(1)).Add(x0)
+      .Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
   EInteger w4mul2 = w4.ShiftLeft(2);
   EInteger w4mul12 = w4mul2.Multiply(6);
   EInteger w0mul3 = w0.Multiply(3);
   EInteger w3 = w0mul3.Subtract(w4mul12).Subtract(wt1.Multiply(3))
      .Subtract(wt2)
      .Add(wt3).Divide(6);
-  EInteger
-w2 = wt1.Add(wt2).Subtract(w0.ShiftLeft(1)).Subtract(w4mul2).ShiftRight(1);
-  EInteger
-w1 = wt1.Multiply(6).Add(w4mul12).Subtract(wt3).Subtract(wt2).Subtract(wt2)
+  EInteger w2 = wt1.Add(wt2).Subtract(w0.ShiftLeft(1))
+     .Subtract(w4mul2).ShiftRight(1);
+  EInteger w1 = wt1.Multiply(6).Add(w4mul12)
+     .Subtract(wt3).Subtract(wt2).Subtract(wt2)
      .Subtract(w0mul3).Divide(6);
   w0 = w0.Add(w1.ShiftLeft(m3mul16));
   w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
@@ -4312,90 +4311,21 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
         outputSB.append(rightBuilder.toString());
         return;
       }
-      short[] tempReg = new short[this.wordCount];
-      System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
-      int numWordCount = tempReg.length;
-      while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
-        --numWordCount;
-      }
-      i = 0;
-      char[] s = new char[(numWordCount << 4) + 1];
-      while (numWordCount != 0) {
-        if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
-          int rest = tempReg[0];
-          while (rest != 0) {
-            int newrest = rest / radix;
-            s[i++] = Digits.charAt(rest - (newrest * radix));
-            rest = newrest;
-          }
-          break;
-        }
-        if (numWordCount == 2 && tempReg[1] > 0 && tempReg[1] <= 0x7fff) {
-          int rest = ((int)tempReg[0]) & ShortMask;
-          rest |= (((int)tempReg[1]) & ShortMask) << 16;
-          while (rest != 0) {
-            int newrest = rest / radix;
-            s[i++] = Digits.charAt(rest - (newrest * radix));
-            rest = newrest;
-          }
-          break;
-        } else {
-          int wci = numWordCount;
-          short remainderShort = 0;
-          int quo, rem;
-          // Divide by radix
-          while ((wci--) > 0) {
-            int currentDividend = ((int)((((int)tempReg[wci]) &
-                    0xffff) | ((int)remainderShort << 16)));
-            quo = currentDividend / radix;
-            tempReg[wci] = ((short)quo);
-            rem = currentDividend - (radix * quo);
-            remainderShort = ((short)rem);
-          }
-          int remainderSmall = remainderShort;
-          // Recalculate word count
-          while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
-            --numWordCount;
-          }
-          s[i++] = Digits.charAt(remainderSmall);
-        }
-      }
-      ReverseChars(s, 0, i);
-      outputSB.append(s, 0, i);
-    }
-
-    private void ToRadixStringDecimal(
-      StringBuilder outputSB,
-      boolean optimize) {
-      int i = 0;
-      if (this.wordCount >= 100 && optimize) {
-        StringBuilder rightBuilder = new StringBuilder();
-        long digits = this.wordCount * 3;
-        EInteger pow = NumberUtility.FindPowerOfTen(digits);
-        // DebugUtility.Log("---divrem " + (this.wordCount));
-        EInteger[] divrem = this.DivRem(pow);
-        // DebugUtility.Log("" +
-        // (divrem[0].GetUnsignedBitLengthAsEInteger()) + "," +
-        // (divrem[1].GetUnsignedBitLengthAsEInteger()));
-        divrem[0].ToRadixStringDecimal(outputSB, optimize);
-        divrem[1].ToRadixStringDecimal(rightBuilder, optimize);
-        for (i = rightBuilder.length(); i < digits; ++i) {
-          outputSB.append('0');
-        }
-        outputSB.append(rightBuilder.toString());
-        return;
-      }
-      if (this.HasSmallValue()) {
+char[] s;
+short[] tempReg;
+int numWordCount;
+      if (radix == 10) {
+        if (this.HasSmallValue()) {
         outputSB.append(this.SmallValueToString());
         return;
       }
-      short[] tempReg = new short[this.wordCount];
+      tempReg = new short[this.wordCount];
       System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
-      int numWordCount = tempReg.length;
+      numWordCount = tempReg.length;
       while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
         --numWordCount;
       }
-      char[] s = new char[(numWordCount << 4) + 1];
+      s = new char[(numWordCount << 4) + 1];
       while (numWordCount != 0) {
         if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
           int rest = tempReg[0];
@@ -4452,18 +4382,58 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
       }
       ReverseChars(s, 0, i);
       outputSB.append(s, 0, i);
-    }
-
-    private String ToUnoptString() {
-      if (this.HasSmallValue()) {
-        return this.SmallValueToString();
+      return;
       }
-      StringBuilder sb = new StringBuilder();
-      if (this.negative) {
-        sb.append('-');
+      tempReg = new short[this.wordCount];
+      System.arraycopy(this.words, 0, tempReg, 0, tempReg.length);
+      numWordCount = tempReg.length;
+      while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
+        --numWordCount;
       }
-      this.Abs().ToRadixStringDecimal(sb, false);
-      return sb.toString();
+      i = 0;
+      s = new char[(numWordCount << 4) + 1];
+      while (numWordCount != 0) {
+        if (numWordCount == 1 && tempReg[0] > 0 && tempReg[0] <= 0x7fff) {
+          int rest = tempReg[0];
+          while (rest != 0) {
+            int newrest = rest / radix;
+            s[i++] = Digits.charAt(rest - (newrest * radix));
+            rest = newrest;
+          }
+          break;
+        }
+        if (numWordCount == 2 && tempReg[1] > 0 && tempReg[1] <= 0x7fff) {
+          int rest = ((int)tempReg[0]) & ShortMask;
+          rest |= (((int)tempReg[1]) & ShortMask) << 16;
+          while (rest != 0) {
+            int newrest = rest / radix;
+            s[i++] = Digits.charAt(rest - (newrest * radix));
+            rest = newrest;
+          }
+          break;
+        } else {
+          int wci = numWordCount;
+          short remainderShort = 0;
+          int quo, rem;
+          // Divide by radix
+          while ((wci--) > 0) {
+            int currentDividend = ((int)((((int)tempReg[wci]) &
+                    0xffff) | ((int)remainderShort << 16)));
+            quo = currentDividend / radix;
+            tempReg[wci] = ((short)quo);
+            rem = currentDividend - (radix * quo);
+            remainderShort = ((short)rem);
+          }
+          int remainderSmall = remainderShort;
+          // Recalculate word count
+          while (numWordCount != 0 && tempReg[numWordCount - 1] == 0) {
+            --numWordCount;
+          }
+          s[i++] = Digits.charAt(remainderSmall);
+        }
+      }
+      ReverseChars(s, 0, i);
+      outputSB.append(s, 0, i);
     }
 
     /**
@@ -4500,7 +4470,7 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
         if (this.negative) {
           sb.append('-');
         }
-        this.Abs().ToRadixStringDecimal(sb, true);
+        this.Abs().ToRadixStringGeneral(sb, radix);
         return sb.toString();
       }
       if (radix == 16) {
@@ -4838,7 +4808,8 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
           words2Count);
         return;
       }
-      if (words1Count <= 10 && words2Count <= 10) {
+      if (words1Count <= MultRecursionThreshold && words2Count <=
+MultRecursionThreshold) {
         SchoolbookMultiply(
           resultArr,
           resultStart,
@@ -6464,7 +6435,7 @@ ShortMask)) {
       short[] words1,
       int words1Start,
       int count) {
-      if (count <= RecursionLimit) {
+      if (count <= MultRecursionThreshold) {
         switch (count) {
           case 2:
             BaselineSquare2(resultArr, resultStart, words1, words1Start);
@@ -6582,7 +6553,7 @@ ShortMask)) {
       // " [r=" + resultStart + " t=" + tempStart + " a=" + words1Start +
       // " b=" + words2Start + "]");
 
-      if (count <= RecursionLimit) {
+      if (count <= MultRecursionThreshold) {
         switch (count) {
           case 2:
             BaselineMultiply2(
