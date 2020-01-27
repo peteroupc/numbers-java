@@ -3197,7 +3197,7 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger y0 = eib.And(mask);
   EInteger y1 = eib.ShiftRight(m3mul16).And(mask);
   EInteger y2 = eib.ShiftRight(m3mul16.Multiply(2));
-  // Assert no need to AND x2 and y2 with mask
+//
 
   EInteger w0 = x0.Multiply(y0);
   EInteger w4 = x2.Multiply(y2);
@@ -3218,6 +3218,8 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger w1 = wt1.Multiply(6).Add(w4mul12)
      .Subtract(wt3).Subtract(wt2).Subtract(wt2)
      .Subtract(w0mul3).Divide(6);
+//
+
   w0 = w0.Add(w1.ShiftLeft(m3mul16));
   w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
   w0 = w0.Add(w3.ShiftLeft(m3mul16.Multiply(3)));
