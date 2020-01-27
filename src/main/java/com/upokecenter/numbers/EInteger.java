@@ -51,7 +51,7 @@ at: http://peteroupc.github.io/
 
     private static final int RecursiveDivisionLimit = 200;
 
-    private static final int Toom3Threshold = 10;
+    private static final int Toom3Threshold = 100;
     private static final int MultRecursionThreshold = 10;
 
     private static final int CacheFirst = -24;
@@ -3122,7 +3122,7 @@ maxDigitEstimate : retval +
            this.wordCount >= Toom3Threshold) {
         EInteger er = Toom3(this.Abs(), bigintMult.Abs());
         if (this.negative != bigintMult.negative) {
-          er = er.Abs();
+          er = er.Negate();
         }
         return er;
       } else if (this.equals(bigintMult)) {
@@ -3197,7 +3197,6 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger y0 = eib.And(mask);
   EInteger y1 = eib.ShiftRight(m3mul16).And(mask);
   EInteger y2 = eib.ShiftRight(m3mul16.Multiply(2));
-//
 
   EInteger w0 = x0.Multiply(y0);
   EInteger w4 = x2.Multiply(y2);
@@ -3207,7 +3206,7 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger wt2 = x2x0.Subtract(x1).Multiply(y2y0.Subtract(y1));
   EInteger wt3 = x2.ShiftLeft(2).Add(x1.ShiftLeft(1)).Add(x0)
       .Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
-  EInteger w4mul2 = w4.ShiftLeft(2);
+  EInteger w4mul2 = w4.ShiftLeft(1);
   EInteger w4mul12 = w4mul2.Multiply(6);
   EInteger w0mul3 = w0.Multiply(3);
   EInteger w3 = w0mul3.Subtract(w4mul12).Subtract(wt1.Multiply(3))
@@ -3218,7 +3217,6 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger w1 = wt1.Multiply(6).Add(w4mul12)
      .Subtract(wt3).Subtract(wt2).Subtract(wt2)
      .Subtract(w0mul3).Divide(6);
-//
 
   w0 = w0.Add(w1.ShiftLeft(m3mul16));
   w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
