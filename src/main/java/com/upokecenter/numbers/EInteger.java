@@ -52,7 +52,6 @@ at: http://peteroupc.github.io/
     private static final int RecursiveDivisionLimit = 200;
 
     private static final int Toom3Threshold = 10;
-
     private static final int MultRecursionThreshold = 10;
 
     private static final int CacheFirst = -24;
@@ -3194,10 +3193,12 @@ private static EInteger Toom3(EInteger eia, EInteger eib) {
   EInteger mask = EInteger.FromInt32(1).ShiftLeft(m3mul16).Subtract(1);
   EInteger x0 = eia.And(mask);
   EInteger x1 = eia.ShiftRight(m3mul16).And(mask);
-  EInteger x2 = eia.ShiftRight(m3mul16.Multiply(2)).And(mask);
+  EInteger x2 = eia.ShiftRight(m3mul16.Multiply(2));
   EInteger y0 = eib.And(mask);
   EInteger y1 = eib.ShiftRight(m3mul16).And(mask);
-  EInteger y2 = eib.ShiftRight(m3mul16.Multiply(2)).And(mask);
+  EInteger y2 = eib.ShiftRight(m3mul16.Multiply(2));
+  // Assert no need to AND x2 and y2 with mask
+
   EInteger w0 = x0.Multiply(y0);
   EInteger w4 = x2.Multiply(y2);
   EInteger x2x0 = x2.Add(x0);
