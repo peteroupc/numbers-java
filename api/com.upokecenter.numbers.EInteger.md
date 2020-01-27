@@ -157,16 +157,18 @@ This method may overflow.
  Gets a value indicating whether this value is 0.
 * `static EInteger Max​(EInteger first,
    EInteger second)`<br>
- Not documented yet.
+ Returns the greater of two arbitrary-precision integers.
 * `static EInteger MaxMagnitude​(EInteger first,
             EInteger second)`<br>
- Not documented yet.
+ Of two arbitrary-precision integers, returns the one with the greater
+ absolute value.
 * `static EInteger Min​(EInteger first,
    EInteger second)`<br>
- Not documented yet.
+ Returns the smaller of two arbitrary-precision integers.
 * `static EInteger MinMagnitude​(EInteger first,
             EInteger second)`<br>
- Not documented yet.
+ Of two arbitrary-precision integers, returns the one with the smaller
+ absolute value.
 * `EInteger Mod​(int smallDivisor)`<br>
  Finds the modulus remainder that results when this instance is divided by
  the value of another integer.
@@ -611,17 +613,17 @@ Compares an arbitrary-precision integer with this instance.
 
 ### Max
     public static EInteger Max​(EInteger first, EInteger second)
-Not documented yet.
+Returns the greater of two arbitrary-precision integers.
 
 **Parameters:**
 
-* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
+* <code>first</code> - The first integer to compare.
 
-* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+* <code>second</code> - The second integer to compare.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The greater of the two integers.
 
 **Throws:**
 
@@ -630,17 +632,17 @@ Not documented yet.
 
 ### Min
     public static EInteger Min​(EInteger first, EInteger second)
-Not documented yet.
+Returns the smaller of two arbitrary-precision integers.
 
 **Parameters:**
 
-* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
+* <code>first</code> - The first integer to compare.
 
-* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+* <code>second</code> - The second integer to compare.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The smaller of the two integers.
 
 **Throws:**
 
@@ -649,17 +651,19 @@ Not documented yet.
 
 ### MaxMagnitude
     public static EInteger MaxMagnitude​(EInteger first, EInteger second)
-Not documented yet.
+Of two arbitrary-precision integers, returns the one with the greater
+ absolute value. If both integers have the same absolute value, this
+ method has the same effect as Max.
 
 **Parameters:**
 
-* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
+* <code>first</code> - The first integer to compare.
 
-* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+* <code>second</code> - The second integer to compare.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The integer with the greater absolute value.
 
 **Throws:**
 
@@ -668,17 +672,19 @@ Not documented yet.
 
 ### MinMagnitude
     public static EInteger MinMagnitude​(EInteger first, EInteger second)
-Not documented yet.
+Of two arbitrary-precision integers, returns the one with the smaller
+ absolute value. If both integers have the same absolute value, this
+ method has the same effect as Min.
 
 **Parameters:**
 
-* <code>first</code> - The parameter <code>first</code> is a Numbers.EInteger object.
+* <code>first</code> - The first integer to compare.
 
-* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
+* <code>second</code> - The second integer to compare.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The integer with the smaller absolute value.
 
 **Throws:**
 

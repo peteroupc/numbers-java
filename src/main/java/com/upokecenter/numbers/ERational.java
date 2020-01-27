@@ -52,7 +52,7 @@ at: http://peteroupc.github.io/
      * The rational number one.
      */
 
-    public static final ERational One = FromEInteger(EInteger.FromInt32(1));
+    public static final ERational One = FromEInteger (EInteger.FromInt32(1));
 
     /**
      * Positive infinity, greater than any other number.
@@ -78,20 +78,20 @@ at: http://peteroupc.github.io/
      * The rational number ten.
      */
 
-    public static final ERational Ten = FromEInteger(EInteger.FromInt32(10));
+    public static final ERational Ten = FromEInteger (EInteger.FromInt32(10));
 
     /**
      * A rational number for zero.
      */
 
-    public static final ERational Zero = FromEInteger(EInteger.FromInt32(0));
+    public static final ERational Zero = FromEInteger (EInteger.FromInt32(0));
 
     private final EInteger denominator;
 
     private final int flags;
     private final EInteger unsignedNumerator;
 
-    private ERational(EInteger numerator, EInteger denominator, int flags) {
+    private ERational (EInteger numerator, EInteger denominator, int flags) {
       this.unsignedNumerator = numerator;
       this.denominator = denominator;
       this.flags = flags;
@@ -221,7 +221,7 @@ at: http://peteroupc.github.io/
     public static ERational Create(
       int numeratorSmall,
       int denominatorSmall) {
-      return Create(EInteger.FromInt32(numeratorSmall), EInteger.FromInt32(denominatorSmall));
+      return Create (EInteger.FromInt32(numeratorSmall), EInteger.FromInt32(denominatorSmall));
     }
 
     /**
@@ -234,7 +234,7 @@ at: http://peteroupc.github.io/
     public static ERational Create(
       long numeratorLong,
       long denominatorLong) {
-      return Create(EInteger.FromInt64(numeratorLong), EInteger.FromInt64(denominatorLong));
+      return Create (EInteger.FromInt64(numeratorLong), EInteger.FromInt64(denominatorLong));
     }
 
     /**
@@ -261,7 +261,7 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
     public static ERational CreateNaN(EInteger diag) {
-      return CreateNaN(diag, false, false);
+      return CreateNaN (diag, false, false);
     }
 
     /**
@@ -286,8 +286,7 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("diag");
       }
       if (diag.signum() < 0) {
-        throw new
-        IllegalArgumentException("Diagnostic information must be 0 or greater," +
+        throw new IllegalArgumentException("Diagnostic information must be 0 or greater," +
           "\u0020 was: " + diag);
       }
       if (diag.isZero() && !negative) {
@@ -311,7 +310,7 @@ at: http://peteroupc.github.io/
      * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromDouble(double flt) {
-      return FromEFloat(EFloat.FromDouble(flt));
+      return FromEFloat (EFloat.FromDouble (flt));
     }
 
     /**
@@ -322,7 +321,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public static ERational FromExtendedDecimal(EDecimal ef) {
-      return FromEDecimal(ef);
+      return FromEDecimal (ef);
     }
 
     /**
@@ -335,7 +334,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public static ERational FromExtendedFloat(EFloat ef) {
-      return FromEFloat(ef);
+      return FromEFloat (ef);
     }
 
     /**
@@ -367,22 +366,22 @@ at: http://peteroupc.github.io/
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
       if (exp.isZero()) {
-        return FromEInteger(num);
+        return FromEInteger (num);
       }
       boolean neg = num.signum() < 0;
       num = num.Abs();
       EInteger den = EInteger.FromInt32(1);
       if (exp.signum() < 0) {
         exp=(exp).Negate();
-        den = NumberUtility.FindPowerOfTenFromBig(exp);
+        den = NumberUtility.FindPowerOfTenFromBig (exp);
       } else {
-        EInteger powerOfTen = NumberUtility.FindPowerOfTenFromBig(exp);
+        EInteger powerOfTen = NumberUtility.FindPowerOfTenFromBig (exp);
         num = num.Multiply(powerOfTen);
       }
       if (neg) {
         num=(num).Negate();
       }
-      return ERational.Create(num, den);
+      return ERational.Create (num, den);
     }
 
     /**
@@ -416,21 +415,21 @@ at: http://peteroupc.github.io/
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
       if (exp.isZero()) {
-        return FromEInteger(num);
+        return FromEInteger (num);
       }
       boolean neg = num.signum() < 0;
       num = num.Abs();
       EInteger den = EInteger.FromInt32(1);
       if (exp.signum() < 0) {
         exp=(exp).Negate();
-        den = den.ShiftLeft(exp);
+        den = den.ShiftLeft (exp);
       } else {
-        num = num.ShiftLeft(exp);
+        num = num.ShiftLeft (exp);
       }
       if (neg) {
         num=(num).Negate();
       }
-      return ERational.Create(num, den);
+      return ERational.Create (num, den);
     }
 
     /**
@@ -439,7 +438,7 @@ at: http://peteroupc.github.io/
      * @return The exact value of the integer as a rational number.
      */
     public static ERational FromEInteger(EInteger bigint) {
-      return ERational.Create(bigint, EInteger.FromInt32(1));
+      return ERational.Create (bigint, EInteger.FromInt32(1));
     }
 
     /**
@@ -452,7 +451,7 @@ at: http://peteroupc.github.io/
      * @return A rational number with the same value as {@code flt}.
      */
     public static ERational FromSingle(float flt) {
-      return FromEFloat(EFloat.FromSingle(flt));
+      return FromEFloat (EFloat.FromSingle (flt));
     }
 
     /**
@@ -465,7 +464,7 @@ at: http://peteroupc.github.io/
      * formatted number string.
      */
     public static ERational FromString(String str) {
-      return FromString(str, 0, str == null ? 0 : str.length());
+      return FromString (str, 0, str == null ? 0 : str.length());
     }
 
     /**
@@ -582,10 +581,10 @@ at: http://peteroupc.github.io/
             }
           }
           if (numerInt > MaxSafeInt) {
-            numer = EInteger.FromSubstring(str, numerStart, endStr);
-            return CreateNaN(numer, false, negative);
+            numer = EInteger.FromSubstring (str, numerStart, endStr);
+            return CreateNaN (numer, false, negative);
           } else {
-            return CreateNaN(EInteger.FromInt32(numerInt), false, negative);
+            return CreateNaN (EInteger.FromInt32 (numerInt), false, negative);
           }
         }
       }
@@ -614,12 +613,12 @@ at: http://peteroupc.github.io/
           int flags3 = (negative ? BigNumberFlags.FlagNegative : 0) |
             BigNumberFlags.FlagSignalingNaN;
           if (numerInt > MaxSafeInt) {
-            numer = EInteger.FromSubstring(str, numerStart, endStr);
+            numer = EInteger.FromSubstring (str, numerStart, endStr);
             return new ERational(numer,
                 EInteger.FromInt32(1),
                 flags3);
           } else {
-            return new ERational(EInteger.FromInt32(numerInt),
+            return new ERational(EInteger.FromInt32 (numerInt),
                 EInteger.FromInt32(1),
                 flags3);
           }
@@ -649,7 +648,7 @@ at: http://peteroupc.github.io/
         throw new NumberFormatException();
       }
       if (numerInt > MaxSafeInt) {
-        numer = EInteger.FromSubstring(str, numerStart, numerEnd);
+        numer = EInteger.FromSubstring (str, numerStart, numerEnd);
       }
       if (haveDenominator) {
         EInteger denom = null;
@@ -677,7 +676,7 @@ at: http://peteroupc.github.io/
           throw new NumberFormatException();
         }
         if (denomInt > MaxSafeInt) {
-          denom = EInteger.FromSubstring(str, numerStart, numerEnd);
+          denom = EInteger.FromSubstring (str, numerStart, numerEnd);
         }
         if (denom == null) {
           ndenomInt = denomInt;
@@ -750,7 +749,7 @@ at: http://peteroupc.github.io/
       } else if (valueIThis == 1) {
         return 0;
       } else {
-        cmp = this.Abs().compareTo(other.Abs());
+        cmp = this.Abs().compareTo (other.Abs());
         if (cmp == 0) {
           cmp = this.denominator.compareTo(
               other.denominator);
@@ -816,7 +815,7 @@ at: http://peteroupc.github.io/
       } else if (valueIThis == 1) {
         return 0;
       } else {
-        cmp = this.compareTo(other);
+        cmp = this.compareTo (other);
         if (cmp == 0) {
           cmp = this.denominator.compareTo(
               other.denominator);
@@ -853,7 +852,7 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN (this.unsignedNumerator, false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
@@ -878,7 +877,7 @@ at: http://peteroupc.github.io/
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       ad = ad.Add(bc);
-      return ERational.Create(ad, bd);
+      return ERational.Create (ad, bd);
     }
 
     /**
@@ -893,7 +892,7 @@ at: http://peteroupc.github.io/
      * implementation returns a positive number if.
      */
     public int compareTo(ERational other) {
-      return this.CompareToValue(other);
+      return this.CompareToValue (other);
     }
 
     /**
@@ -944,10 +943,10 @@ at: http://peteroupc.github.io/
       // At this point, both numbers are finite and
       // have the same sign
 
-      int dencmp = this.denominator.compareTo(other.denominator);
+      int dencmp = this.denominator.compareTo (other.denominator);
       // At this point, the signs are equal so we can compare
       // their absolute values instead
-      int numcmp = this.unsignedNumerator.compareTo(other.unsignedNumerator);
+      int numcmp = this.unsignedNumerator.compareTo (other.unsignedNumerator);
       if (signA < 0) {
         numcmp = -numcmp;
       }
@@ -962,7 +961,7 @@ at: http://peteroupc.github.io/
       }
       EInteger ad = this.getNumerator().Multiply(other.getDenominator());
       EInteger bc = this.getDenominator().Multiply(other.getNumerator());
-      return ad.compareTo(bc);
+      return ad.compareTo (bc);
     }
 
     /**
@@ -980,23 +979,25 @@ at: http://peteroupc.github.io/
     public static ERational Max(
       ERational first,
       ERational second) {
-if (first == null) {
-  throw new NullPointerException("first");
-}
-if (second == null) {
-  throw new NullPointerException("second");
-}
-  int cmp = first.CompareToValue(second);
-  if (cmp == 0) {
-    if (first.isNegative()) {
-return (!second.isNegative()) ? second :
-(first.getDenominator().compareTo(second.getDenominator()) > 0 ? first : second);
-    } else {
-return second.isNegative() ? first :
-(first.getDenominator().compareTo(second.getDenominator()) < 0 ? first : second);
-    }
-  }
-  return cmp > 0 ? first : second;
+      if (first == null) {
+        throw new NullPointerException("first");
+      }
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      int cmp = first.CompareToValue (second);
+      if (cmp == 0) {
+        if (first.isNegative()) {
+          return (!second.isNegative()) ? second :
+            (first.getDenominator().compareTo (second.getDenominator()) > 0 ? first :
+second);
+        } else {
+          return second.isNegative() ? first :
+            (first.getDenominator().compareTo (second.getDenominator()) < 0 ? first :
+second);
+        }
+      }
+      return cmp > 0 ? first : second;
     }
 
     /**
@@ -1011,14 +1012,14 @@ return second.isNegative() ? first :
     public static ERational MaxMagnitude(
       ERational first,
       ERational second) {
-if (first == null) {
-  throw new NullPointerException("first");
-}
-if (second == null) {
-  throw new NullPointerException("second");
-}
-  int cmp = first.Abs().CompareToValue(second.Abs());
-return (cmp == 0) ? Max(first, second) : (cmp > 0 ? first : second);
+      if (first == null) {
+        throw new NullPointerException("first");
+      }
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      int cmp = first.Abs().CompareToValue (second.Abs());
+      return (cmp == 0) ? Max (first, second) : (cmp > 0 ? first : second);
     }
 
     /**
@@ -1036,23 +1037,25 @@ return (cmp == 0) ? Max(first, second) : (cmp > 0 ? first : second);
     public static ERational Min(
       ERational first,
       ERational second) {
-if (first == null) {
-  throw new NullPointerException("first");
-}
-if (second == null) {
-  throw new NullPointerException("second");
-}
-  int cmp = first.CompareToValue(second);
-  if (cmp == 0) {
-    if (first.isNegative()) {
-return (!second.isNegative()) ? first :
-(first.getDenominator().compareTo(second.getDenominator()) < 0 ? first : second);
-    } else {
-return second.isNegative() ? second :
-(first.getDenominator().compareTo(second.getDenominator()) > 0 ? first : second);
-    }
-  }
-  return cmp < 0 ? first : second;
+      if (first == null) {
+        throw new NullPointerException("first");
+      }
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      int cmp = first.CompareToValue (second);
+      if (cmp == 0) {
+        if (first.isNegative()) {
+          return (!second.isNegative()) ? first :
+            (first.getDenominator().compareTo (second.getDenominator()) < 0 ? first :
+second);
+        } else {
+          return second.isNegative() ? second :
+            (first.getDenominator().compareTo (second.getDenominator()) > 0 ? first :
+second);
+        }
+      }
+      return cmp < 0 ? first : second;
     }
 
     /**
@@ -1067,14 +1070,14 @@ return second.isNegative() ? second :
     public static ERational MinMagnitude(
       ERational first,
       ERational second) {
-if (first == null) {
-  throw new NullPointerException("first");
-}
-if (second == null) {
-  throw new NullPointerException("second");
-}
-  int cmp = first.Abs().CompareToValue(second.Abs());
-return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
+      if (first == null) {
+        throw new NullPointerException("first");
+      }
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      int cmp = first.Abs().CompareToValue (second.Abs());
+      return (cmp == 0) ? Min (first, second) : (cmp < 0 ? first : second);
     }
 
     /**
@@ -1088,7 +1091,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * less, or a positive number if this instance is greater.
      */
     public int compareTo(int intOther) {
-      return this.CompareToValue(ERational.FromInt32(intOther));
+      return this.CompareToValue (ERational.FromInt32 (intOther));
     }
 
     /**
@@ -1102,7 +1105,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * less, or a positive number if this instance is greater.
      */
     public int CompareToValue(int intOther) {
-      return this.CompareToValue(ERational.FromInt32(intOther));
+      return this.CompareToValue (ERational.FromInt32 (intOther));
     }
 
     /**
@@ -1151,46 +1154,46 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         // Special case: other has exponent 0
         EInteger otherMant = other.getMantissa();
         EInteger bcx = this.getDenominator().Multiply(otherMant);
-        return this.getNumerator().compareTo(bcx);
+        return this.getNumerator().compareTo (bcx);
       }
-      if (bigExponent.Abs().compareTo(EInteger.FromInt64(1000)) > 0) {
+      if (bigExponent.Abs().compareTo (EInteger.FromInt64(1000)) > 0) {
         // Other has a high absolute value of exponent, so try different
         // approaches to
         // comparison
         EInteger thisRem;
         EInteger thisInt;
         {
-          EInteger[] divrem = this.getUnsignedNumerator().DivRem(this.getDenominator());
+          EInteger[] divrem = this.getUnsignedNumerator().DivRem (this.getDenominator());
           thisInt = divrem[0];
           thisRem = divrem[1];
         }
         EFloat otherAbs = other.Abs();
-        EFloat thisIntDec = EFloat.FromEInteger(thisInt);
+        EFloat thisIntDec = EFloat.FromEInteger (thisInt);
         if (thisRem.isZero()) {
           // This Object's value is an integer
           // System.out.println("Shortcircuit IV");
-          int ret = thisIntDec.compareTo(otherAbs);
+          int ret = thisIntDec.compareTo (otherAbs);
           return this.isNegative() ? -ret : ret;
         }
-        if (thisIntDec.compareTo(otherAbs) > 0) {
+        if (thisIntDec.compareTo (otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
           // System.out.println("Shortcircuit I");
           return this.isNegative() ? -1 : 1;
         }
         // Round up
-        thisInt = thisInt.Add(EInteger.FromInt32(1));
-        thisIntDec = EFloat.FromEInteger(thisInt);
-        if (thisIntDec.compareTo(otherAbs) < 0) {
+        thisInt = thisInt.Add (EInteger.FromInt32(1));
+        thisIntDec = EFloat.FromEInteger (thisInt);
+        if (thisIntDec.compareTo (otherAbs) < 0) {
           // Absolute value rounded up is less than other's unrounded
           // absolute value
           // System.out.println("Shortcircuit II");
           return this.isNegative() ? 1 : -1;
         }
-        thisIntDec = EFloat.FromEInteger(this.getUnsignedNumerator()).Divide(
-            EFloat.FromEInteger(this.getDenominator()),
-            EContext.ForPrecisionAndRounding(256, ERounding.Down));
-        if (thisIntDec.compareTo(otherAbs) > 0) {
+        thisIntDec = EFloat.FromEInteger (this.getUnsignedNumerator()).Divide(
+            EFloat.FromEInteger (this.getDenominator()),
+            EContext.ForPrecisionAndRounding (256, ERounding.Down));
+        if (thisIntDec.compareTo (otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
           // System.out.println("Shortcircuit III");
@@ -1201,8 +1204,8 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
           // 0 instead of 1, but the possibility of 0 was already excluded
           EInteger bigDigitCount =
             this.getUnsignedNumerator().GetSignedBitLengthAsEInteger()
-            .Subtract(1);
-          if (bigDigitCount.compareTo(other.getExponent()) < 0) {
+            .Subtract (1);
+          if (bigDigitCount.compareTo (other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other's
             // exponent,
             // and other's exponent is positive, so this value's absolute
@@ -1216,10 +1219,10 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
       // System.out.println("no shortcircuit");
       // System.out.println(this);
       // System.out.println(other);
-      ERational otherRational = ERational.FromEFloat(other);
+      ERational otherRational = ERational.FromEFloat (other);
       EInteger ad = this.getNumerator().Multiply(otherRational.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherRational.getNumerator());
-      return ad.compareTo(bc);
+      return ad.compareTo (bc);
     }
 
     /**
@@ -1264,37 +1267,37 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         // Special case: other has exponent 0
         EInteger otherMant = other.getMantissa();
         EInteger bcx = this.getDenominator().Multiply(otherMant);
-        return this.getNumerator().compareTo(bcx);
+        return this.getNumerator().compareTo (bcx);
       }
-      if (other.getExponent().Abs().compareTo(EInteger.FromInt64(50)) > 0) {
+      if (other.getExponent().Abs().compareTo (EInteger.FromInt64(50)) > 0) {
         // Other has a high absolute value of exponent, so try different
         // approaches to
         // comparison
         EInteger thisRem;
         EInteger thisInt;
         {
-          EInteger[] divrem = this.getUnsignedNumerator().DivRem(this.getDenominator());
+          EInteger[] divrem = this.getUnsignedNumerator().DivRem (this.getDenominator());
           thisInt = divrem[0];
           thisRem = divrem[1];
         }
         EDecimal otherAbs = other.Abs();
-        EDecimal thisIntDec = EDecimal.FromEInteger(thisInt);
+        EDecimal thisIntDec = EDecimal.FromEInteger (thisInt);
         if (thisRem.isZero()) {
           // This Object's value is an integer
           // System.out.println("Shortcircuit IV");
-          int ret = thisIntDec.compareTo(otherAbs);
+          int ret = thisIntDec.compareTo (otherAbs);
           return this.isNegative() ? -ret : ret;
         }
-        if (thisIntDec.compareTo(otherAbs) > 0) {
+        if (thisIntDec.compareTo (otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
           // System.out.println("Shortcircuit I");
           return this.isNegative() ? -1 : 1;
         }
         // Round up
-        thisInt = thisInt.Add(EInteger.FromInt32(1));
-        thisIntDec = EDecimal.FromEInteger(thisInt);
-        if (thisIntDec.compareTo(otherAbs) < 0) {
+        thisInt = thisInt.Add (EInteger.FromInt32(1));
+        thisIntDec = EDecimal.FromEInteger (thisInt);
+        if (thisIntDec.compareTo (otherAbs) < 0) {
           // Absolute value rounded up is less than other's unrounded
           // absolute value
           // System.out.println("Shortcircuit II");
@@ -1302,10 +1305,10 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         }
         // Conservative approximation of this rational number's absolute value,
         // as a decimal number. The true value will be greater or equal.
-        thisIntDec = EDecimal.FromEInteger(this.getUnsignedNumerator()).Divide(
-            EDecimal.FromEInteger(this.getDenominator()),
-            EContext.ForPrecisionAndRounding(20, ERounding.Down));
-        if (thisIntDec.compareTo(otherAbs) > 0) {
+        thisIntDec = EDecimal.FromEInteger (this.getUnsignedNumerator()).Divide(
+            EDecimal.FromEInteger (this.getDenominator()),
+            EContext.ForPrecisionAndRounding (20, ERounding.Down));
+        if (thisIntDec.compareTo (otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
           // System.out.println("Shortcircuit III");
@@ -1315,8 +1318,8 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         if (other.getExponent().signum() > 0) {
           EInteger bigDigitCount =
             this.getUnsignedNumerator().GetDigitCountAsEInteger()
-            .Subtract(1);
-          if (bigDigitCount.compareTo(other.getExponent()) < 0) {
+            .Subtract (1);
+          if (bigDigitCount.compareTo (other.getExponent()) < 0) {
             // Numerator's digit count minus 1 is less than the other's
             // exponent,
             // and other's exponent is positive, so this value's absolute
@@ -1330,10 +1333,10 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
       // System.out.println("no shortcircuit");
       // System.out.println(this);
       // System.out.println(other);
-      ERational otherRational = ERational.FromEDecimal(other);
+      ERational otherRational = ERational.FromEDecimal (other);
       EInteger ad = this.getNumerator().Multiply(otherRational.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherRational.getNumerator());
-      return ad.compareTo(bc);
+      return ad.compareTo (bc);
     }
 
     /**
@@ -1366,7 +1369,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN (this.unsignedNumerator, false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
@@ -1432,7 +1435,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return Either {@code true} or {@code false}.
      */
     public boolean equals(ERational other) {
-      return this.equals((Object)other);
+      return this.equals ((Object)other);
     }
 
     /**
@@ -1526,7 +1529,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN (this.unsignedNumerator, false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
@@ -1582,7 +1585,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN (this.unsignedNumerator, false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
@@ -1636,7 +1639,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN (this.unsignedNumerator, false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
@@ -1664,7 +1667,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       ad = ad.Subtract(bc);
-      return ERational.Create(ad, bd);
+      return ERational.Create (ad, bd);
     }
 
     /**
@@ -1676,13 +1679,13 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      */
     public double ToDouble() {
       if (!this.isFinite()) {
-        return this.ToEFloat(EContext.Binary64).ToDouble();
+        return this.ToEFloat (EContext.Binary64).ToDouble();
       }
       if (this.isNegative() && this.isZero()) {
         return EFloat.NegativeZero.ToDouble();
       }
-      return EFloat.FromEInteger(this.getNumerator())
-        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary64)
+      return EFloat.FromEInteger (this.getNumerator())
+        .Divide (EFloat.FromEInteger (this.denominator), EContext.Binary64)
         .ToDouble();
     }
 
@@ -1728,7 +1731,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
       EInteger rem;
       EInteger quo;
       {
-        EInteger[] divrem = this.getNumerator().DivRem(this.denominator);
+        EInteger[] divrem = this.getNumerator().DivRem (this.denominator);
         quo = divrem[0];
         rem = divrem[1];
       }
@@ -1745,7 +1748,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * expansion.
      */
     public EDecimal ToEDecimal() {
-      return this.ToEDecimal(null);
+      return this.ToEDecimal (null);
     }
 
     /**
@@ -1769,14 +1772,14 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
             ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
+        return EDecimal.PositiveInfinity.RoundToPrecision (ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
+        return EDecimal.NegativeInfinity.RoundToPrecision (ctx);
       }
       EDecimal ef = (this.isNegative() && this.isZero()) ?
-        EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
-      return ef.Divide(EDecimal.FromEInteger(this.getDenominator()), ctx);
+        EDecimal.NegativeZero : EDecimal.FromEInteger (this.getNumerator());
+      return ef.Divide (EDecimal.FromEInteger (this.getDenominator()), ctx);
     }
 
     /**
@@ -1798,7 +1801,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
     public EDecimal ToEDecimalExactIfPossible(EContext
       ctx) {
       if (ctx == null) {
-        return this.ToEDecimal(null);
+        return this.ToEDecimal (null);
       }
       if (this.IsNaN()) {
         return EDecimal.CreateNaN(
@@ -1808,21 +1811,21 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
             ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EDecimal.PositiveInfinity.RoundToPrecision(ctx);
+        return EDecimal.PositiveInfinity.RoundToPrecision (ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EDecimal.NegativeInfinity.RoundToPrecision(ctx);
+        return EDecimal.NegativeInfinity.RoundToPrecision (ctx);
       }
       if (this.isNegative() && this.isZero()) {
         return EDecimal.NegativeZero;
       }
       EDecimal valueEdNum = (this.isNegative() && this.isZero()) ?
-        EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
-      EDecimal valueEdDen = EDecimal.FromEInteger(this.getDenominator());
-      EDecimal ed = valueEdNum.Divide(valueEdDen, null);
+        EDecimal.NegativeZero : EDecimal.FromEInteger (this.getNumerator());
+      EDecimal valueEdDen = EDecimal.FromEInteger (this.getDenominator());
+      EDecimal ed = valueEdNum.Divide (valueEdDen, null);
       if (ed.IsNaN()) {
         // Result would be inexact, try again using the precision context
-        ed = valueEdNum.Divide(valueEdDen, ctx);
+        ed = valueEdNum.Divide (valueEdDen, ctx);
       }
       return ed;
     }
@@ -1854,7 +1857,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
  */
 @Deprecated
     public EDecimal ToExtendedDecimal(EContext ctx) {
-      return this.ToEDecimal(ctx);
+      return this.ToEDecimal (ctx);
     }
 
     /**
@@ -1876,7 +1879,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
  */
 @Deprecated
     public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx) {
-      return this.ToEDecimalExactIfPossible(ctx);
+      return this.ToEDecimalExactIfPossible (ctx);
     }
 
     /**
@@ -1886,7 +1889,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * expansion.
      */
     public EFloat ToEFloat() {
-      return this.ToEFloat(null);
+      return this.ToEFloat (null);
     }
 
     /**
@@ -1910,14 +1913,14 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
             ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity.RoundToPrecision(ctx);
+        return EFloat.PositiveInfinity.RoundToPrecision (ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity.RoundToPrecision(ctx);
+        return EFloat.NegativeInfinity.RoundToPrecision (ctx);
       }
       EFloat ef = (this.isNegative() && this.isZero()) ?
-        EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
-      return ef.Divide(EFloat.FromEInteger(this.getDenominator()), ctx);
+        EFloat.NegativeZero : EFloat.FromEInteger (this.getNumerator());
+      return ef.Divide (EFloat.FromEInteger (this.getDenominator()), ctx);
     }
 
     /**
@@ -1938,7 +1941,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {
       if (ctx == null) {
-        return this.ToEFloat(null);
+        return this.ToEFloat (null);
       }
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
@@ -1948,22 +1951,22 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
             ctx);
       }
       if (this.IsPositiveInfinity()) {
-        return EFloat.PositiveInfinity.RoundToPrecision(ctx);
+        return EFloat.PositiveInfinity.RoundToPrecision (ctx);
       }
       if (this.IsNegativeInfinity()) {
-        return EFloat.NegativeInfinity.RoundToPrecision(ctx);
+        return EFloat.NegativeInfinity.RoundToPrecision (ctx);
       }
       if (this.isZero()) {
         return this.isNegative() ? EFloat.NegativeZero :
           EFloat.Zero;
       }
       EFloat valueEdNum = (this.isNegative() && this.isZero()) ?
-        EFloat.NegativeZero : EFloat.FromEInteger(this.getNumerator());
-      EFloat valueEdDen = EFloat.FromEInteger(this.getDenominator());
-      EFloat ed = valueEdNum.Divide(valueEdDen, null);
+        EFloat.NegativeZero : EFloat.FromEInteger (this.getNumerator());
+      EFloat valueEdDen = EFloat.FromEInteger (this.getDenominator());
+      EFloat ed = valueEdNum.Divide (valueEdDen, null);
       if (ed.IsNaN()) {
         // Result would be inexact, try again using the precision context
-        ed = valueEdNum.Divide(valueEdDen, ctx);
+        ed = valueEdNum.Divide (valueEdDen, ctx);
       }
       return ed;
     }
@@ -1995,7 +1998,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
  */
 @Deprecated
     public EFloat ToExtendedFloat(EContext ctx) {
-      return this.ToEFloat(ctx);
+      return this.ToEFloat (ctx);
     }
 
     /**
@@ -2017,7 +2020,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
  */
 @Deprecated
     public EFloat ToExtendedFloatExactIfPossible(EContext ctx) {
-      return this.ToEFloatExactIfPossible(ctx);
+      return this.ToEFloatExactIfPossible (ctx);
     }
 
     /**
@@ -2029,13 +2032,13 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      */
     public float ToSingle() {
       if (!this.isFinite()) {
-        return this.ToEFloat(EContext.Binary32).ToSingle();
+        return this.ToEFloat (EContext.Binary32).ToSingle();
       }
       if (this.isNegative() && this.isZero()) {
         return EFloat.NegativeZero.ToSingle();
       }
-      return EFloat.FromEInteger(this.getNumerator())
-        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary32)
+      return EFloat.FromEInteger (this.getNumerator())
+        .Divide (EFloat.FromEInteger (this.denominator), EContext.Binary32)
         .ToSingle();
     }
 
@@ -2075,7 +2078,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return The given arbitrary-precision rational number plus one.
      */
     public ERational Increment() {
-      return this.Add(FromInt32(1));
+      return this.Add (FromInt32 (1));
     }
 
     /**
@@ -2083,7 +2086,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return The given arbitrary-precision rational number minus one.
      */
     public ERational Decrement() {
-      return this.Subtract(FromInt32(1));
+      return this.Subtract (FromInt32 (1));
     }
 
     /**
@@ -2093,7 +2096,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * object is NaN.
      */
     public ERational Add(int v) {
-      return this.Add(FromInt32(v));
+      return this.Add (FromInt32 (v));
     }
 
     /**
@@ -2103,7 +2106,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return The difference of the two objects.
      */
     public ERational Subtract(int v) {
-      return this.Subtract(FromInt32(v));
+      return this.Subtract (FromInt32 (v));
     }
 
     /**
@@ -2112,7 +2115,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return The product of the two numbers.
      */
     public ERational Multiply(int v) {
-      return this.Multiply(FromInt32(v));
+      return this.Multiply (FromInt32 (v));
     }
 
     /**
@@ -2123,7 +2126,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @throws ArithmeticException The parameter {@code v} is zero.
      */
     public ERational Divide(int v) {
-      return this.Divide(FromInt32(v));
+      return this.Divide (FromInt32 (v));
     }
 
     /**
@@ -2134,7 +2137,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @throws IllegalArgumentException The parameter {@code v} is zero.
      */
     public ERational Remainder(int v) {
-      return this.Remainder(FromInt32(v));
+      return this.Remainder (FromInt32 (v));
     }
 
     // Begin integer conversions
@@ -2188,7 +2191,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      */
     public static ERational FromByte(byte inputByte) {
       int val = ((int)inputByte) & 0xff;
-      return FromInt32(val);
+      return FromInt32 (val);
     }
 
     /**
@@ -2241,7 +2244,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      */
     public static ERational FromInt16(short inputInt16) {
       int val = (int)inputInt16;
-      return FromInt32(val);
+      return FromInt32 (val);
     }
 
     /**
@@ -2294,7 +2297,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return The number 1 if {@code boolValue} is true; otherwise, 0.
      */
     public static ERational FromBoolean(boolean boolValue) {
-      return FromInt32(boolValue ? 1 : 0);
+      return FromInt32 (boolValue ? 1 : 0);
     }
 
     /**
@@ -2303,7 +2306,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return This number's value as an arbitrary-precision rational number.
      */
     public static ERational FromInt32(int inputInt32) {
-      return FromEInteger(EInteger.FromInt32(inputInt32));
+      return FromEInteger (EInteger.FromInt32 (inputInt32));
     }
 
     /**
@@ -2356,7 +2359,7 @@ return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
      * @return This number's value as an arbitrary-precision rational number.
      */
     public static ERational FromInt64(long inputInt64) {
-      return FromEInteger(EInteger.FromInt64(inputInt64));
+      return FromEInteger (EInteger.FromInt64 (inputInt64));
     }
 
     // End integer conversions
