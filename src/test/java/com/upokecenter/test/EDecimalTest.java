@@ -5388,6 +5388,21 @@ String str =
 TestStringContextOneEFloat(str, ec);
 }
 
+@Test
+public void TestStringContextUnderflow() {
+EContext ec = EContext.Binary64.WithRounding(
+  ERounding.HalfUp);
+for (int i = 0; i < 700; ++i) {
+String str =
+  "1111111" + (i==0 ? "" : ".") +
+  TestCommon.Repeat("0", i) + "E-383";
+TestStringContextOneEFloat(str, ec);
+if (!(EFloat.FromString(str, ec).isZero())) {
+ Assert.fail();
+ }
+}
+}
+
     @Test
     public void TestStringContextSpecific4() {
       EContext ec = EContext.Basic.WithExponentClamp(
@@ -5607,7 +5622,17 @@ TestStringContextOneEFloat(str, ec);
       return sb.toString();
     }
 
+    public static void TestStringContextOneEFloatSimple(String str, EContext
+ec) {
+TestStringContextOneEFloat(str, ec, true);
+    }
+
     public static void TestStringContextOneEFloat(String str, EContext ec) {
+TestStringContextOneEFloat(str, ec, false);
+    }
+
+    public static void TestStringContextOneEFloat(String str, EContext ec,
+  boolean noLeadingZerosTest) {
       if (ec == null) {
         throw new NullPointerException("ec");
       }
@@ -5628,7 +5653,7 @@ TestStringContextOneEFloat(str, ec);
         TestStringContextOneEFloatCore(
           leadingZeros.substring(0, counts[i]) + str,
           ec, ed, ef);
-        if (str.length() == 0 || str.charAt(0) == '-') {
+        if (noLeadingZerosTest || str.length() == 0 || str.charAt(0) == '-') {
           break;
         }
       }
@@ -5661,9 +5686,7 @@ TestStringContextOneEFloat(str, ec);
       EDecimal edef2 = (ec.getRounding() == ERounding.Down ?
           ef2 : EFloat.FromString (str, downRounding)).ToEDecimal();
       if ((ef3 != null && !ef3.IsNaN()) && ed != null &&
-        ed.compareTo (edef2) !=
-
-        0) {
+        ed.compareTo (edef2) != 0) {
         System.out.println ("# ERounding.None fails to detect rounding was" +
           "\u0020necessary");
         if (str == null) {
@@ -5690,21 +5713,7 @@ TestStringContextOneEFloat(str, ec);
       if (ef == null || ef2 == null) {
         return;
       }
-      /* unoptTime += swUnopt.getElapsedMilliseconds();
-      unoptRoundTime += swUnoptRound.getElapsedMilliseconds();
-      optTime += swOpt2.getElapsedMilliseconds();
-      if (false && swUnopt.getElapsedMilliseconds() > 100 &&
-         swUnopt.getElapsedMilliseconds() / 4 <= swOpt2.getElapsedMilliseconds()) {
-       String bstr = str.substring(0, Math.min(str.length(), 200)) +
-         (str.length() > 200 ? "..." : "");
-       String edstr = ef.toString();
-       edstr = edstr.substring(0, Math.min(edstr.length(), 200)) +
-         (edstr.length() > 200 ? "..." : "");
-       System.out.println(bstr + "\nresult=" + edstr + "\n" + ECString(ec) +
-      "\nunopt=" + swUnopt.getElapsedMilliseconds() + " ms; opt=" +
-      swOpt2.getElapsedMilliseconds());
-      }
-       */ if (ef.compareTo (ef2) != 0) {
+      if (ef.compareTo (ef2) != 0) {
         if (ec == null) {
           throw new NullPointerException("ec");
         }
@@ -5722,7 +5731,7 @@ TestStringContextOneEFloat(str, ec);
           bstr += "String str = \"" + str + "\";\n";
           bstr += "TestStringContextOneEFloat(str, ec);\n}\n";
           str = ef2.toString();
-          // bstr += "// expected: about " + Double.Parse (str) + "\n";
+          bstr += "// expected: about " + Double.Parse (str) + "\n";
           bstr += "// was: " + str.substring(0,Math.min (str.length(), 200)) +
             (str.length() > 200 ? "..." : "");
           } else {
@@ -5970,8 +5979,13 @@ TestStringContextOneEFloat(str, ec);
     }
 
 public static EContext RandomEFloatContext(IRandomGenExtended r) {
+  return RandomEFloatContext(r, 20000);
+}
+
+public static EContext RandomEFloatContext(IRandomGenExtended r, int
+maxExponent) {
   int prec = 1 + r.GetInt32(53);
-  int emax = 1 + r.GetInt32(20000);
+  int emax = 1 + r.GetInt32(maxExponent);
   int emin=-(emax-1);
   ERounding[] roundings = {
     ERounding.Down, ERounding.Up,
