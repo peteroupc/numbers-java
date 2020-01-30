@@ -5731,7 +5731,7 @@ TestStringContextOneEFloat(str, ec, false);
           bstr += "String str = \"" + str + "\";\n";
           bstr += "TestStringContextOneEFloat(str, ec);\n}\n";
           str = ef2.toString();
-          bstr += "// expected: about " + Double.Parse (str) + "\n";
+          //bstr += "// expected: about " + Double.Parse (str) + "\n";
           bstr += "// was: " + str.substring(0,Math.min (str.length(), 200)) +
             (str.length() > 200 ? "..." : "");
           } else {
