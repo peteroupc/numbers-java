@@ -162,7 +162,11 @@ private RandomObjects() {
         // it doesn't round-trip as well
       }
       String str = RandomDecimalString(r);
-      return EDecimal.FromString(str);
+      if (str.length() < 1000 || str.indexOf('E') < 0) {
+        return EDecimal.FromString(str);
+      } else {
+        return EDecimal.Create(RandomEInteger(r), RandomEInteger(r));
+      }
     }
 
     public static EInteger RandomEInteger(IRandomGenExtended r) {
@@ -174,7 +178,7 @@ private RandomObjects() {
         StringAndBigInt sabi = StringAndBigInt.Generate(
           r,
           16,
-          MaxStringNumDigits);
+          MaxNumberLength);
         return sabi.getBigIntValue();
       }
       if (selection < 50) {

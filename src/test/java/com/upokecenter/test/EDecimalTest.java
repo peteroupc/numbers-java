@@ -358,13 +358,17 @@ import com.upokecenter.numbers.*;
       // not implemented yet
     }
 
-    @Test
+    @Test(timeout = 100000)
     public void TestConversions() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {
+        EDecimal enumber = RandomObjects.RandomEDecimal (fr);
+        TestConversionsOne(enumber);
+      }
+    }
+    public static void TestConversionsOne(EDecimal enumber) {
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
-        EDecimal enumber = RandomObjects.RandomEDecimal (fr);
         if (!enumber.isFinite()) {
           try {
             enumber.ToByteChecked();
@@ -450,17 +454,17 @@ import com.upokecenter.numbers.*;
             Assert.fail (ex.toString());
             throw new IllegalStateException("", ex);
           }
-          continue;
+          return;
         }
-        EDecimal enumberInteger = EDecimal.FromEInteger (enumber.ToEInteger());
-        isInteger = enumberInteger.compareTo (enumber) == 0;
-        eint = enumber.ToEInteger();
-        isNum = enumber.compareTo(
-            EDecimal.FromString ("0")) >= 0 && enumber.compareTo(
-            EDecimal.FromString ("255")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString ("0")) >= 0 && enumber.ToEInteger().compareTo(
-            EInteger.FromString ("255")) <= 0;
+        try {
+          eint = enumber.ToEInteger();
+        } catch (OutOfMemoryError ex) {
+          eint = null;
+        }
+        isInteger = enumber.IsInteger();
+        isNum = enumber.compareTo(0) >= 0 && enumber.compareTo(255) <= 0;
+        isTruncated = eint != null && eint.compareTo(0) >= 0 &&
+eint.compareTo(255) <= 0;
         if (isNum) {
           TestCommon.AssertEqualsHashCode(
             eint,
@@ -540,9 +544,8 @@ import com.upokecenter.numbers.*;
         isNum = enumber.compareTo(
             EDecimal.FromString ("-32768")) >= 0 && enumber.compareTo(
             EDecimal.FromString ("32767")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString ("-32768")) >= 0 && enumber.ToEInteger()
-          .compareTo(
+        isTruncated = eint != null && eint.compareTo(
+            EInteger.FromString ("-32768")) >= 0 && eint.compareTo(
             EInteger.FromString ("32767")) <= 0;
         if (isNum) {
           TestCommon.AssertEqualsHashCode(
@@ -623,9 +626,9 @@ import com.upokecenter.numbers.*;
         isNum = enumber.compareTo(
             EDecimal.FromString ("-2147483648")) >= 0 && enumber.compareTo(
             EDecimal.FromString ("2147483647")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
             EInteger.FromString ("-2147483648")) >= 0 &&
-          enumber.ToEInteger().compareTo(
+          eint.compareTo(
             EInteger.FromString ("2147483647")) <= 0;
         if (isNum) {
           TestCommon.AssertEqualsHashCode(
@@ -703,9 +706,9 @@ import com.upokecenter.numbers.*;
             }
           }
         }
-        isTruncated = enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
             EInteger.FromString ("-9223372036854775808")) >= 0 &&
-          enumber.ToEInteger().compareTo(
+          eint.compareTo(
             EInteger.FromString ("9223372036854775807")) <= 0;
         isNum = isTruncated && enumber.compareTo(
             EDecimal.FromString ("-9223372036854775808")) >= 0 &&
@@ -787,7 +790,6 @@ import com.upokecenter.numbers.*;
             }
           }
         }
-      }
     }
 
     @Test

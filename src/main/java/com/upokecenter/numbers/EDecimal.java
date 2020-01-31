@@ -8,6 +8,9 @@ at: http://peteroupc.github.io/
  */
 
 // TODO: Add Create*(long, int)
+// TODO: Add ToEInteger method that restricts bit size of
+// outputs to EDecimal/EFloat/ERational
+// TODO: Add IsInteger method to EFloat and ERational
 
   /**
    * Represents an arbitrary-precision decimal floating-point number. (The "E"
@@ -354,6 +357,18 @@ TrappableRadixMath<EDecimal>(
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
           this.unsignedMantissa.isValueZero();
       }
+
+  /**
+   * Not documented yet.
+   */
+    public boolean IsInteger() {
+        if (this.exponent.CompareToInt(0) >= 0) {
+          return true;
+        } else {
+          EDecimal r = this.Reduce(null);
+          return r.exponent.CompareToInt(0) >= 0;
+        }
+    }
 
     /**
      * Gets this object's unscaled value, or significand, and makes it negative if
@@ -5081,6 +5096,9 @@ TrappableRadixMath<EDecimal>(
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
+     * @throws OutOfMemoryError There is not enough memory to store the value as an
+     * EInteger. In.NET, the derived exception OutOfMemoryError may be
+     * thrown if the method detects that the EInteger won't fit in memory.
      */
     public EInteger ToEInteger() {
       return this.ToEIntegerInternal(false);
@@ -5435,6 +5453,11 @@ TrappableRadixMath<EDecimal>(
         return bigmantissa;
       }
       if (sign > 0) {
+        EInteger exponent = this.getExponent();
+        EInteger exponentBitSize = exponent.GetUnsignedBitLengthAsEInteger();
+        if (exponentBitSize.compareTo(64) > 0) {
+          throw new OutOfMemoryError();
+        }
         EInteger bigmantissa = this.getMantissa();
         EInteger bigexponent =
           NumberUtility.FindPowerOfTenFromBig(this.getExponent());
@@ -6308,7 +6331,17 @@ TrappableRadixMath<EDecimal>(
      * value is infinity or not-a-number.
      */
     public byte ToByteUnchecked() {
-      return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
+      if (this.isFinite()) {
+        if (this.isZero()) {
+          return (byte)0;
+        }
+        if (this.exponent.CompareToInt(8) >= 0) {
+          /* Whether positive or negative, 10^x mod 256 is always 0
+              for x >= 8 */ return (byte)0;
+        }
+        return this.ToEInteger().ToByteUnchecked();
+      }
+      return (byte)0;
     }
 
     /**
@@ -6375,7 +6408,17 @@ TrappableRadixMath<EDecimal>(
      * value is infinity or not-a-number.
      */
     public short ToInt16Unchecked() {
-      return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
+      if (this.isFinite()) {
+        if (this.isZero()) {
+          return (short)0;
+        }
+        if (this.exponent.CompareToInt(16) >= 0) {
+          /* Whether positive or negative, 10^x mod 65536 is always 0
+              for x >= 16 */ return (short)0;
+        }
+        return this.ToEInteger().ToInt16Unchecked();
+      }
+      return (short)0;
     }
 
     /**
@@ -6439,7 +6482,17 @@ TrappableRadixMath<EDecimal>(
      * value is infinity or not-a-number.
      */
     public int ToInt32Unchecked() {
-      return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
+      if (this.isFinite()) {
+        if (this.isZero()) {
+          return 0;
+        }
+        if (this.exponent.CompareToInt(32) >= 0) {
+          /* Whether positive or negative, 10^x mod 2^32 is always 0
+              for x >= 32 */ return 0;
+        }
+        return this.ToEInteger().ToInt32Unchecked();
+      }
+      return 0;
     }
 
     /**
@@ -6495,7 +6548,17 @@ TrappableRadixMath<EDecimal>(
      * value is infinity or not-a-number.
      */
     public long ToInt64Unchecked() {
-      return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
+      if (this.isFinite()) {
+        if (this.isZero()) {
+          return 0L;
+        }
+        if (this.exponent.CompareToInt(64) >= 0) {
+          /* Whether positive or negative, 10^x mod 2^64 is always 0
+              for x >= 64 */ return 0L;
+        }
+        return this.ToEInteger().ToInt64Unchecked();
+      }
+      return 0L;
     }
 
     /**

@@ -1276,7 +1276,7 @@ EInteger(this.wordCount, this.words, false);
         throw new NullPointerException("second");
       }
       int cmp = first.Abs().compareTo(second.Abs());
-      return (cmp == 0) ?Max(first, second) :(cmp > 0 ? first : second);
+      return (cmp == 0) ? Max(first, second) : (cmp > 0 ? first : second);
     }
 
     /**
@@ -1297,7 +1297,7 @@ EInteger(this.wordCount, this.words, false);
         throw new NullPointerException("second");
       }
       int cmp = first.Abs().compareTo(second.Abs());
-      return (cmp == 0) ?Min(first, second) :(cmp < 0 ? first : second);
+      return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
     }
 
     /**
