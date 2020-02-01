@@ -49,10 +49,9 @@ at: http://peteroupc.github.io/
   public final class EInteger implements Comparable<EInteger> {
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private static final int RecursiveDivisionLimit = 200;
-
     private static final int Toom3Threshold = 100;
     private static final int MultRecursionThreshold = 10;
+    private static final int RecursiveDivisionLimit = MultRecursionThreshold * 2 + 4;
 
     private static final int CacheFirst = -24;
     private static final int CacheLast = 128;

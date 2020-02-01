@@ -197,7 +197,7 @@ at: http://peteroupc.github.io/
       if (this.isSmall) {
         this.ShiftRightSmall(digits);
       } else {
-        this.ShiftRightBig(digits, false);
+        this.ShiftRightBig(digits, false, false);
       }
     }
 
@@ -254,6 +254,21 @@ at: http://peteroupc.github.io/
       }
     }
 
+    public void TruncateRightSimple(FastInteger fastint) {
+      if (fastint == null) {
+        throw new NullPointerException("fastint");
+      }
+      if (fastint.CanFitInInt32()) {
+        if (fastint.signum() < 0) {
+          return;
+        }
+        if (!this.isSmall && !this.shiftedBigInt.CanFitInInt64()) {
+          this.ShiftRightBig(fastint.AsInt32(), true, true);
+        }
+      }
+      TruncateOrShiftRight(fastint, true);
+    }
+
     public void TruncateOrShiftRight(FastInteger fastint, boolean truncate) {
       // 'Truncate' is true if the caller doesn't care about the exact identity
       // of the last digit and the discarded digits.
@@ -269,7 +284,7 @@ at: http://peteroupc.github.io/
           if (this.shiftedBigInt.CanFitInInt64()) {
             this.TruncateRightLong(this.shiftedBigInt.ToInt64Checked(), fi);
           } else {
-            this.ShiftRightBig(fi, true);
+            this.ShiftRightBig(fi, true, false);
           }
         } else {
           this.TruncateRightSmall(fi);
@@ -358,7 +373,7 @@ at: http://peteroupc.github.io/
       }
     }
 
-    private void ShiftRightBig(int digits, boolean truncate) {
+    private void ShiftRightBig(int digits, boolean truncate, boolean simple) {
       if (digits <= 0) {
         return;
       }
@@ -399,10 +414,6 @@ at: http://peteroupc.github.io/
             FastInteger digitsUpperBound = OverestimateDigitLength();
             bigPower = digitsUpperBound.Copy().SubtractInt(digits)
               .CompareToInt(-2) < 0;
-            if (!bigPower) {
-              // DebugUtility.Log("digitlength {0} [todiscard: {1}]"
-              // , knownDigits, digits);
-            }
           }
           }
           if (bigPower) {
@@ -418,7 +429,7 @@ at: http://peteroupc.github.io/
             return;
           }
         }
-        if (this.shiftedBigInt.isEven() && this.bitLeftmost == 0) {
+        if (!simple && this.shiftedBigInt.isEven() && this.bitLeftmost == 0) {
           EInteger[] quorem = this.shiftedBigInt.DivRem(
               NumberUtility.FindPowerOfTen(digits));
           bigquo = quorem[0];
