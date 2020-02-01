@@ -264,6 +264,7 @@ at: http://peteroupc.github.io/
         }
         if (!this.isSmall && !this.shiftedBigInt.CanFitInInt64()) {
           this.ShiftRightBig(fastint.AsInt32(), true, true);
+          return;
         }
       }
       TruncateOrShiftRight(fastint, true);

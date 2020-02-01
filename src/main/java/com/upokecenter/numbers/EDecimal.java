@@ -6546,7 +6546,7 @@ this.ToEInteger().ToInt32Checked();
       }
 CheckTrivialOverflow(19);
       return this.IsIntegerPartZero() ? 0L :
-this.ToEInteger().ToInt32Checked();
+this.ToEInteger().ToInt64Checked();
     }
 
     /**

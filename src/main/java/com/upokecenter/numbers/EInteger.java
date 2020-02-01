@@ -51,7 +51,7 @@ at: http://peteroupc.github.io/
 
     private static final int Toom3Threshold = 100;
     private static final int MultRecursionThreshold = 10;
-    private static final int RecursiveDivisionLimit = MultRecursionThreshold * 2 + 4;
+    private static final int RecursiveDivisionLimit = Toom3Threshold * 2 + 1;
 
     private static final int CacheFirst = -24;
     private static final int CacheLast = 128;
@@ -3120,13 +3120,6 @@ ShortMask) !=
             wc);
         productwordCount = productreg.length;
         needShorten = false;
-      } else if (bigintMult.wordCount >= Toom3Threshold &&
-        this.wordCount >= Toom3Threshold) {
-        EInteger er = Toom3(this.Abs(), bigintMult.Abs());
-        if (this.negative != bigintMult.negative) {
-          er = er.Negate();
-        }
-        return er;
       } else if (this.equals(bigintMult)) {
         int words1Size = this.wordCount;
         productreg = new short[words1Size + words1Size];
@@ -3186,19 +3179,40 @@ ShortMask) !=
           this.negative ^ bigintMult.negative);
     }
 
-    private static EInteger Toom3(EInteger eia, EInteger eib) {
-      EInteger alimbs = EInteger.FromInt32(eia.wordCount);
-      EInteger blimbs = EInteger.FromInt32(eib.wordCount);
-      EInteger mal = alimbs.compareTo(blimbs) > 0 ? alimbs : blimbs;
-      EInteger m3 = mal.Add(2).Divide(3);
-      EInteger m3mul16 = m3.ShiftLeft(4);
-      EInteger mask = EInteger.FromInt32(1).ShiftLeft(m3mul16).Subtract(1);
-      EInteger x0 = eia.And(mask);
-      EInteger x1 = eia.ShiftRight(m3mul16).And(mask);
-      EInteger x2 = eia.ShiftRight(m3mul16.Multiply(2));
-      EInteger y0 = eib.And(mask);
-      EInteger y1 = eib.ShiftRight(m3mul16).And(mask);
-      EInteger y2 = eib.ShiftRight(m3mul16.Multiply(2));
+    private static EInteger MakeEInteger(short[] words, int offset, int count) {
+if (offset >= words.length) {
+  return EInteger.FromInt32(0);
+}
+      int ct = Math.min(count, words.length - offset);
+      while (ct != 0 && words[offset + ct - 1] == 0) {
+        --ct;
+      }
+if (ct == 0) {
+        return EInteger.FromInt32(0);
+      }
+      short[] newwords = new short[ct];
+      System.arraycopy(words, offset, newwords, 0, ct);
+      return new EInteger(ct, newwords, false);
+    }
+
+    private static void Toom3(
+          short[] resultArr,
+          int resultStart,
+          short[] wordsA,
+          int wordsAStart,
+          int countA,
+          short[] wordsB,
+          int wordsBStart,
+          int countB) {
+      int imal = Math.max(countA, countB);
+      int im3 = (imal/3)+(imal%3 > 0 ? 1 : 0);
+      EInteger m3mul16 = EInteger.FromInt32(im3).ShiftLeft(4);
+      EInteger x0 = MakeEInteger(wordsA, wordsAStart, im3);
+      EInteger x1 = MakeEInteger(wordsA, (wordsAStart + im3), im3);
+      EInteger x2 = MakeEInteger(wordsA, (wordsAStart + (im3 * 2)), im3);
+      EInteger y0 = MakeEInteger(wordsB, wordsBStart, im3);
+      EInteger y1 = MakeEInteger(wordsB, (wordsBStart + im3), im3);
+      EInteger y2 = MakeEInteger(wordsB, (wordsBStart + (im3 * 2)), im3);
 
       EInteger w0 = x0.Multiply(y0);
       EInteger w4 = x2.Multiply(y2);
@@ -3223,7 +3237,13 @@ ShortMask) !=
       w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
       w0 = w0.Add(w3.ShiftLeft(m3mul16.Multiply(3)));
       w0 = w0.Add(w4.ShiftLeft(m3mul16.Multiply(4)));
-      return w0;
+      java.util.Arrays.fill(resultArr, resultStart, (resultStart)+(countA + countB), (short)0);
+      System.arraycopy(
+            w0.words,
+            0,
+            resultArr,
+            resultStart,
+            Math.min(countA + countB, w0.wordCount));
     }
 
     /**
@@ -4813,6 +4833,17 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
       if (words1Count <= MultRecursionThreshold && words2Count <=
         MultRecursionThreshold) {
         SchoolbookMultiply(
+          resultArr,
+          resultStart,
+          words1,
+          words1Start,
+          words1Count,
+          words2,
+          words2Start,
+          words2Count);
+      } else if (words1Count >= Toom3Threshold && words2Count >=
+Toom3Threshold) {
+        Toom3(
           resultArr,
           resultStart,
           words1,
@@ -6456,6 +6487,16 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
               count);
             break;
         }
+      } else if (count >= Toom3Threshold) {
+        Toom3(
+              resultArr,
+              resultStart,
+              words1,
+              words1Start,
+              count,
+              words1,
+              words1Start,
+              count);
       } else if ((count & 1) == 0) {
         int count2 = count >> 1;
         RecursiveSquare(
@@ -6595,6 +6636,16 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
               count);
             break;
         }
+      } else if (count >= Toom3Threshold) {
+        Toom3(
+              resultArr,
+              resultStart,
+              words1,
+              words1Start,
+              count,
+              words1,
+              words1Start,
+              count);
       } else {
         int countA = count;
         while (countA != 0 && words1[words1Start + countA - 1] == 0) {
