@@ -396,8 +396,8 @@ at: http://peteroupc.github.io/
           if (bitLength < 160 || (digits > 100 && bitLength < 326)) {
             bigPower = true;
           } else {
-            FastInteger knownDigits = this.GetDigitLength();
-            bigPower = knownDigits.Copy().SubtractInt(digits)
+            FastInteger digitsUpperBound = OverestimateDigitLength();
+            bigPower = digitsUpperBound.Copy().SubtractInt(digits)
               .CompareToInt(-2) < 0;
             if (!bigPower) {
               // DebugUtility.Log("digitlength {0} [todiscard: {1}]"

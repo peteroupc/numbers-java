@@ -6310,6 +6310,23 @@ TrappableRadixMath<EDecimal>(
 
     // Begin integer conversions
 
+private void CheckTrivialOverflow(int maxDigits) {
+  if (this.exponent.signum() < 0) {
+   EInteger bigexponent = this.getExponent();
+   EInteger bigmantissa = this.getUnsignedMantissa();
+   bigexponent = bigexponent.Abs();
+   bigmantissa = bigmantissa.Abs();
+   EInteger lowerBound = DigitCountLowerBound(bigmantissa);
+   if (lowerBound.Subtract(bigexponent).compareTo(maxDigits) > 0) {
+    throw new ArithmeticException("Value out of range");
+   }
+  } else {
+   if (this.exponent.CompareToInt(maxDigits) >= 0) {
+    throw new ArithmeticException("Value out of range");
+   }
+  }
+}
+
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after converting it to an integer by discarding
@@ -6326,9 +6343,7 @@ TrappableRadixMath<EDecimal>(
       if (this.isZero()) {
         return (byte)0;
       }
-      if (this.exponent.CompareToInt(3) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(3);
       return this.IsIntegerPartZero() ? ((byte)0) :
 this.ToEInteger().ToByteChecked();
     }
@@ -6342,7 +6357,7 @@ this.ToEInteger().ToByteChecked();
      */
     public byte ToByteUnchecked() {
       if (this.isFinite()) {
-        if (this.isZero()) {
+        if (this.IsIntegerPartZero()) {
           return (byte)0;
         }
         if (this.exponent.CompareToInt(8) >= 0) {
@@ -6372,9 +6387,8 @@ this.ToEInteger().ToByteChecked();
       if (this.isNegative()) {
         throw new ArithmeticException("Value out of range");
       }
-      if (this.exponent.CompareToInt(3) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(3);
+
       return this.ToEIntegerIfExact().ToByteChecked();
     }
 
@@ -6404,9 +6418,8 @@ this.ToEInteger().ToByteChecked();
       if (this.isZero()) {
         return (short)0;
       }
-      if (this.exponent.CompareToInt(5) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(5);
+
       return this.IsIntegerPartZero() ? ((short)0) :
 this.ToEInteger().ToInt16Checked();
     }
@@ -6420,7 +6433,7 @@ this.ToEInteger().ToInt16Checked();
      */
     public short ToInt16Unchecked() {
       if (this.isFinite()) {
-        if (this.isZero()) {
+        if (this.IsIntegerPartZero()) {
           return (short)0;
         }
         if (this.exponent.CompareToInt(16) >= 0) {
@@ -6447,9 +6460,8 @@ this.ToEInteger().ToInt16Checked();
       if (this.isZero()) {
         return (short)0;
       }
-      if (this.exponent.CompareToInt(5) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(5);
+
       return this.ToEIntegerIfExact().ToInt16Checked();
     }
 
@@ -6479,9 +6491,8 @@ this.ToEInteger().ToInt16Checked();
       if (this.isZero()) {
         return (int)0;
       }
-      if (this.exponent.CompareToInt(10) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(10);
+
       return this.IsIntegerPartZero() ? ((int)0) :
 this.ToEInteger().ToInt32Checked();
     }
@@ -6495,7 +6506,7 @@ this.ToEInteger().ToInt32Checked();
      */
     public int ToInt32Unchecked() {
       if (this.isFinite()) {
-        if (this.isZero()) {
+        if (this.IsIntegerPartZero()) {
           return 0;
         }
         if (this.exponent.CompareToInt(32) >= 0) {
@@ -6520,12 +6531,11 @@ this.ToEInteger().ToInt32Checked();
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      if (this.isZero()) {
+      if (this.IsIntegerPartZero()) {
         return (int)0;
       }
-      if (this.exponent.CompareToInt(10) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(10);
+
       return this.ToEIntegerIfExact().ToInt32Checked();
     }
 
@@ -6546,9 +6556,8 @@ this.ToEInteger().ToInt32Checked();
       if (this.isZero()) {
         return 0L;
       }
-      if (this.exponent.CompareToInt(19) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(19);
+
       return this.IsIntegerPartZero() ? 0L :
 this.ToEInteger().ToInt64Checked();
     }
@@ -6562,7 +6571,7 @@ this.ToEInteger().ToInt64Checked();
      */
     public long ToInt64Unchecked() {
       if (this.isFinite()) {
-        if (this.isZero()) {
+        if (this.IsIntegerPartZero()) {
           return 0L;
         }
         if (this.exponent.CompareToInt(64) >= 0) {
@@ -6590,9 +6599,8 @@ this.ToEInteger().ToInt64Checked();
       if (this.isZero()) {
         return 0L;
       }
-      if (this.exponent.CompareToInt(19) >= 0) {
-        throw new ArithmeticException("Value out of range");
-      }
+CheckTrivialOverflow(19);
+
       return this.ToEIntegerIfExact().ToInt64Checked();
     }
     // End integer conversions
