@@ -457,7 +457,10 @@ import com.upokecenter.numbers.*;
           return;
         }
         try {
-          eint = enumber.ToEInteger();
+if (enumber.getExponent().compareTo(100) >= 0 && !enumber.isZero()) {
+ eint = null;
+ }
+else eint = enumber.ToEInteger();
         } catch (OutOfMemoryError ex) {
           eint = null;
         }

@@ -17,7 +17,6 @@ import com.upokecenter.numbers.*;
 private RandomObjects() {
 }
     private static final int MaxExclusiveStringLength = 0x2000;
-    private static final int MaxExclusiveExponentLength = 0x2000;
     private static final int MaxExclusiveShortStringLength = 50;
     private static final int MaxNumberLength = 100000;
     private static final int MaxShortNumberLength = 40;
@@ -174,12 +173,13 @@ private RandomObjects() {
         throw new NullPointerException("r");
       }
       int selection = r.GetInt32(100);
-      if (selection < 40) {
-        StringAndBigInt sabi = StringAndBigInt.Generate(
-          r,
-          16,
-          MaxNumberLength);
-        return sabi.getBigIntValue();
+      if (selection < 10) {
+        int count = r.GetInt32(MaxNumberLength) + 1;
+        byte[] bytes = new byte[count];
+        for (int i = 0; i < count; ++i) {
+          bytes[i] = (byte)((int)r.GetInt32(256));
+        }
+        return EInteger.FromBytes(bytes, true);
       }
       if (selection < 50) {
         StringAndBigInt sabi = StringAndBigInt.Generate(
@@ -260,8 +260,10 @@ private RandomObjects() {
       return RandomDecimalString(r, false, true);
     }
 
-    public static String RandomDecimalString(IRandomGenExtended r, boolean
-extended, boolean limitedExponent) {
+    public static String RandomDecimalString(
+      IRandomGenExtended r,
+      boolean extended,
+      boolean limitedExponent) {
       if (r == null) {
         throw new NullPointerException("r");
       }
@@ -290,7 +292,7 @@ r.GetInt32(MaxNumberLength)) / MaxNumberLength;
       }
       if (r.GetInt32(2) == 0) {
         int rr = r.GetInt32(3);
-if (rr == 0) {
+        if (rr == 0) {
           sb.append("E");
         } else if (rr == 1) {
    sb.append("E+");

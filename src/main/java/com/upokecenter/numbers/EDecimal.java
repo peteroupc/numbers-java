@@ -360,6 +360,7 @@ TrappableRadixMath<EDecimal>(
 
   /**
    * Not documented yet.
+   * @return The return value is not documented yet.
    */
     public boolean IsInteger() {
         if (this.exponent.CompareToInt(0) >= 0) {
@@ -5096,9 +5097,8 @@ TrappableRadixMath<EDecimal>(
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
-     * @throws OutOfMemoryError There is not enough memory to store the value as an
-     * EInteger. In.NET, the derived exception OutOfMemoryError may be
-     * thrown if the method detects that the EInteger won't fit in memory.
+     * @throws UnsupportedOperationException There is not enough memory to store the value
+     * as an EInteger.
      */
     public EInteger ToEInteger() {
       return this.ToEIntegerInternal(false);
@@ -5432,9 +5432,17 @@ TrappableRadixMath<EDecimal>(
       if (sign >= 0) {
         return false;
       } else {
+        EInteger umantissa = this.getUnsignedMantissa();
+        EInteger digitCountUpper = DigitCountUpperBound(umantissa);
+        EInteger digitCountLower = DigitCountLowerBound(umantissa);
         EInteger bigexponent = this.getExponent();
-        EInteger digitCount = this.getUnsignedMantissa()
-          .GetDigitCountAsEInteger();
+        if (digitCountUpper.compareTo(bigexponent.Abs()) < 0) {
+          return true;
+        }
+        if (digitCountLower.compareTo(bigexponent.Abs()) > 0) {
+          return false;
+        }
+        EInteger digitCount = umantissa.GetDigitCountAsEInteger();
         return (digitCount.compareTo(bigexponent) <= 0) ? true :
           false;
       }
@@ -5456,7 +5464,8 @@ TrappableRadixMath<EDecimal>(
         EInteger exponent = this.getExponent();
         EInteger exponentBitSize = exponent.GetUnsignedBitLengthAsEInteger();
         if (exponentBitSize.compareTo(64) > 0) {
-          throw new OutOfMemoryError();
+          throw new UnsupportedOperationException(
+            "Not enough memory to store as EInteger.");
         }
         EInteger bigmantissa = this.getMantissa();
         EInteger bigexponent =
@@ -6314,13 +6323,14 @@ TrappableRadixMath<EDecimal>(
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      if (this.IsIntegerPartZero()) {
+      if (this.isZero()) {
         return (byte)0;
       }
       if (this.exponent.CompareToInt(3) >= 0) {
         throw new ArithmeticException("Value out of range");
       }
-      return this.ToEInteger().ToByteChecked();
+      return this.IsIntegerPartZero() ? ((byte)0) :
+this.ToEInteger().ToByteChecked();
     }
 
     /**
@@ -6391,13 +6401,14 @@ TrappableRadixMath<EDecimal>(
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      if (this.IsIntegerPartZero()) {
+      if (this.isZero()) {
         return (short)0;
       }
       if (this.exponent.CompareToInt(5) >= 0) {
-        throw new ArithmeticException("Value out of range: ");
+        throw new ArithmeticException("Value out of range");
       }
-      return this.ToEInteger().ToInt16Checked();
+      return this.IsIntegerPartZero() ? ((short)0) :
+this.ToEInteger().ToInt16Checked();
     }
 
     /**
@@ -6465,13 +6476,14 @@ TrappableRadixMath<EDecimal>(
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      if (this.IsIntegerPartZero()) {
+      if (this.isZero()) {
         return (int)0;
       }
       if (this.exponent.CompareToInt(10) >= 0) {
-        throw new ArithmeticException("Value out of range: ");
+        throw new ArithmeticException("Value out of range");
       }
-      return this.ToEInteger().ToInt32Checked();
+      return this.IsIntegerPartZero() ? ((int)0) :
+this.ToEInteger().ToInt32Checked();
     }
 
     /**
@@ -6531,13 +6543,14 @@ TrappableRadixMath<EDecimal>(
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      if (this.IsIntegerPartZero()) {
+      if (this.isZero()) {
         return 0L;
       }
       if (this.exponent.CompareToInt(19) >= 0) {
-        throw new ArithmeticException("Value out of range: ");
+        throw new ArithmeticException("Value out of range");
       }
-      return this.ToEInteger().ToInt64Checked();
+      return this.IsIntegerPartZero() ? 0L :
+this.ToEInteger().ToInt64Checked();
     }
 
     /**

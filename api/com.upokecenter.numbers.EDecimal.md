@@ -837,6 +837,11 @@ Gets a value indicating whether this object's value equals 0.
 ### IsInteger
     public boolean IsInteger()
 Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
 ### getMantissa
     public final EInteger getMantissa()
 Gets this object's unscaled value, or significand, and makes it negative if
@@ -3840,9 +3845,8 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 * <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
 
-* <code>java.lang.OutOfMemoryError</code> - There is not enough memory to store the value as an
- EInteger. In.NET, the derived exception OutOfMemoryError may be
- thrown if the method detects that the EInteger won't fit in memory.
+* <code>java.lang.UnsupportedOperationException</code> - There is not enough memory to store the value
+ as an EInteger.
 
 ### ToEIntegerExact
     @Deprecated public EInteger ToEIntegerExact()
