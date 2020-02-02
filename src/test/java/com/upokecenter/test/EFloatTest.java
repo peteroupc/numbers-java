@@ -1772,13 +1772,20 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    @Test
+    @Test(timeout = 100000)
     public void TestConversions() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {
+        EFloat enumber = RandomObjects.RandomEFloat(fr);
+        TestConversionsOne(enumber);
+      }
+    }
+    public static void TestConversionsOne(EFloat enumber) {
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
-        EFloat enumber = RandomObjects.RandomEFloat(fr);
+        if (enumber == null) {
+          throw new NullPointerException("enumber");
+        }
         if (!enumber.isFinite()) {
           try {
             enumber.ToByteChecked();
@@ -1864,26 +1871,30 @@ import com.upokecenter.numbers.*;
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
           }
-          continue;
+          return;
         }
-        EFloat enumberInteger = EFloat.FromEInteger(enumber.ToEInteger());
-        isInteger = enumberInteger.compareTo(enumber) == 0;
-        eint = enumber.ToEInteger();
-        isNum = enumber.compareTo(
-            EFloat.FromString("0")) >= 0 && enumber.compareTo(
-            EFloat.FromString("255")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString("0")) >= 0 && enumber.ToEInteger().compareTo(
-            EInteger.FromString("255")) <= 0;
+        try {
+eint = (enumber.getExponent().compareTo(100) >= 0 && !enumber.isZero()) ? null :
+enumber.ToEInteger();
+        } catch (UnsupportedOperationException ex) {
+          eint = null;
+        }
+       // TODO:
+        isInteger = enumber.getExponent().signum() >= 0 &&
+EFloat.FromEInteger(enumber.ToEInteger()).CompareToValue(enumber) == 0;
+       // isInteger = enumber.IsInteger();
+        isNum = enumber.compareTo(0) >= 0 && enumber.compareTo(255) <= 0;
+        isTruncated = eint != null && eint.compareTo(0) >= 0 &&
+eint.compareTo(255) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromByte(enumber.ToByteUnchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals(
+            TestCommon.AssertEqualsHashCode(
               eint,
               EInteger.FromByte(enumber.ToByteIfExact()));
           } else {
@@ -1898,10 +1909,10 @@ import com.upokecenter.numbers.*;
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromByte(enumber.ToByteUnchecked()));
           try {
@@ -1954,19 +1965,18 @@ import com.upokecenter.numbers.*;
         isNum = enumber.compareTo(
             EFloat.FromString("-32768")) >= 0 && enumber.compareTo(
             EFloat.FromString("32767")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString("-32768")) >= 0 &&
-          enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
+            EInteger.FromString("-32768")) >= 0 && eint.compareTo(
             EInteger.FromString("32767")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals(
+            TestCommon.AssertEqualsHashCode(
               eint,
               EInteger.FromInt16(enumber.ToInt16IfExact()));
           } else {
@@ -1981,10 +1991,10 @@ import com.upokecenter.numbers.*;
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
           try {
@@ -2037,19 +2047,19 @@ import com.upokecenter.numbers.*;
         isNum = enumber.compareTo(
             EFloat.FromString("-2147483648")) >= 0 && enumber.compareTo(
             EFloat.FromString("2147483647")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
             EInteger.FromString("-2147483648")) >= 0 &&
-          enumber.ToEInteger().compareTo(
+          eint.compareTo(
             EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           if (isInteger) {
-            TestCommon.AssertEquals(
+            TestCommon.AssertEqualsHashCode(
               eint,
               EInteger.FromInt32(enumber.ToInt32IfExact()));
           } else {
@@ -2064,10 +2074,10 @@ import com.upokecenter.numbers.*;
             }
           }
         } else if (isTruncated) {
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals(
+          TestCommon.AssertEqualsHashCode(
             eint,
             EInteger.FromInt32(enumber.ToInt32Unchecked()));
           try {
@@ -2117,23 +2127,25 @@ import com.upokecenter.numbers.*;
             }
           }
         }
-        isNum = enumber.compareTo(
+        isTruncated = eint != null && eint.compareTo(
+            EInteger.FromString("-9223372036854775808")) >= 0 &&
+          eint.compareTo(
+            EInteger.FromString("9223372036854775807")) <= 0;
+        isNum = isTruncated && enumber.compareTo(
             EFloat.FromString("-9223372036854775808")) >= 0 &&
           enumber.compareTo(
             EFloat.FromString("9223372036854775807")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString("-9223372036854775808")) >= 0 &&
-          enumber.ToEInteger().compareTo(
-            EInteger.FromString("9223372036854775807")) <= 0;
-        EInteger eb;
         if (isNum) {
-          eb = EInteger.FromInt64(enumber.ToInt64Checked());
-          TestCommon.AssertEquals(eint, eb);
-          eb = EInteger.FromInt64(enumber.ToInt64Unchecked());
-          TestCommon.AssertEquals(eint, eb);
+          TestCommon.AssertEqualsHashCode(
+            eint,
+            EInteger.FromInt64(enumber.ToInt64Checked()));
+          TestCommon.AssertEqualsHashCode(
+            eint,
+            EInteger.FromInt64(enumber.ToInt64Unchecked()));
           if (isInteger) {
-            eb = EInteger.FromInt64(enumber.ToInt64IfExact());
-            TestCommon.AssertEquals(eint, eb);
+            TestCommon.AssertEqualsHashCode(
+              eint,
+              EInteger.FromInt64(enumber.ToInt64IfExact()));
           } else {
             try {
               enumber.ToInt64IfExact();
@@ -2146,10 +2158,12 @@ import com.upokecenter.numbers.*;
             }
           }
         } else if (isTruncated) {
-          eb = EInteger.FromInt64(enumber.ToInt64Checked());
-          TestCommon.AssertEquals(eint, eb);
-          eb = EInteger.FromInt64(enumber.ToInt64Unchecked());
-          TestCommon.AssertEquals(eint, eb);
+          TestCommon.AssertEqualsHashCode(
+            eint,
+            EInteger.FromInt64(enumber.ToInt64Checked()));
+          TestCommon.AssertEqualsHashCode(
+            eint,
+            EInteger.FromInt64(enumber.ToInt64Unchecked()));
           try {
             enumber.ToInt64IfExact();
             Assert.fail("Should have failed");
@@ -2197,7 +2211,6 @@ import com.upokecenter.numbers.*;
             }
           }
         }
-      }
     }
 
     @Test(timeout = 100000)
