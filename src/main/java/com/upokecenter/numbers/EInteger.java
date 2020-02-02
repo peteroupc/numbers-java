@@ -3205,23 +3205,36 @@ if (ct == 0) {
           int wordsBStart,
           int countB) {
       int imal = Math.max(countA, countB);
-      int im3 = (imal/3)+(imal%3 > 0 ? 1 : 0);
+      int im3 = (imal/3)+((imal%3) + 2) / imal;
       EInteger m3mul16 = EInteger.FromInt32(im3).ShiftLeft(4);
       EInteger x0 = MakeEInteger(wordsA, wordsAStart, im3);
       EInteger x1 = MakeEInteger(wordsA, (wordsAStart + im3), im3);
       EInteger x2 = MakeEInteger(wordsA, (wordsAStart + (im3 * 2)), im3);
-      EInteger y0 = MakeEInteger(wordsB, wordsBStart, im3);
-      EInteger y1 = MakeEInteger(wordsB, (wordsBStart + im3), im3);
-      EInteger y2 = MakeEInteger(wordsB, (wordsBStart + (im3 * 2)), im3);
-
-      EInteger w0 = x0.Multiply(y0);
-      EInteger w4 = x2.Multiply(y2);
-      EInteger x2x0 = x2.Add(x0);
-      EInteger y2y0 = y2.Add(y0);
-      EInteger wt1 = x2x0.Add(x1).Multiply(y2y0.Add(y1));
-      EInteger wt2 = x2x0.Subtract(x1).Multiply(y2y0.Subtract(y1));
-      EInteger wt3 = x2.ShiftLeft(2).Add(x1.ShiftLeft(1)).Add(x0)
-        .Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
+      EInteger w0, wt1, wt2, wt3, w4;
+      if (wordsA == wordsB && wordsAStart == wordsBStart &&
+          countA == countB) {
+        w0 = x0.Multiply(x0);
+        w4 = x2.Multiply(x2);
+        EInteger x2x0 = x2.Add(x0);
+        wt1 = x2x0.Add(x1);
+        wt2 = x2x0.Subtract(x1);
+        wt3 = x2.ShiftLeft(2).Add(x1.ShiftLeft(1)).Add(x0);
+        wt1 = wt1.Multiply(wt1);
+        wt2 = wt2.Multiply(wt2);
+        wt3 = wt3.Multiply(wt3);
+      } else {
+        EInteger y0 = MakeEInteger(wordsB, wordsBStart, im3);
+        EInteger y1 = MakeEInteger(wordsB, (wordsBStart + im3), im3);
+        EInteger y2 = MakeEInteger(wordsB, (wordsBStart + (im3 * 2)), im3);
+        w0 = x0.Multiply(y0);
+        w4 = x2.Multiply(y2);
+        EInteger x2x0 = x2.Add(x0);
+        EInteger y2y0 = y2.Add(y0);
+        wt1 = x2x0.Add(x1).Multiply(y2y0.Add(y1));
+        wt2 = x2x0.Subtract(x1).Multiply(y2y0.Subtract(y1));
+        wt3 = x2.ShiftLeft(2).Add(x1.ShiftLeft(1)).Add(x0)
+          .Multiply(y2.ShiftLeft(2).Add(y1.ShiftLeft(1)).Add(y0));
+      }
       EInteger w4mul2 = w4.ShiftLeft(1);
       EInteger w4mul12 = w4mul2.Multiply(6);
       EInteger w0mul3 = w0.Multiply(3);
@@ -3232,11 +3245,18 @@ if (ct == 0) {
       EInteger w1 = wt1.Multiply(6).Add(w4mul12)
         .Subtract(wt3).Subtract(wt2).Subtract(wt2)
         .Subtract(w0mul3).Divide(6);
-
-      w0 = w0.Add(w1.ShiftLeft(m3mul16));
-      w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
-      w0 = w0.Add(w3.ShiftLeft(m3mul16.Multiply(3)));
-      w0 = w0.Add(w4.ShiftLeft(m3mul16.Multiply(4)));
+      if (m3mul16.compareTo(0x20000000) < 0) {
+        im3 <<= 4; // multiply by 16
+        w0 = w0.Add(w1.ShiftLeft(im3));
+        w0 = w0.Add(w2.ShiftLeft(im3 * 2));
+        w0 = w0.Add(w3.ShiftLeft(im3 * 3));
+        w0 = w0.Add(w4.ShiftLeft(im3 * 4));
+      } else {
+        w0 = w0.Add(w1.ShiftLeft(m3mul16));
+        w0 = w0.Add(w2.ShiftLeft(m3mul16.Multiply(2)));
+        w0 = w0.Add(w3.ShiftLeft(m3mul16.Multiply(3)));
+        w0 = w0.Add(w4.ShiftLeft(m3mul16.Multiply(4)));
+      }
       java.util.Arrays.fill(resultArr, resultStart, (resultStart)+(countA + countB), (short)0);
       System.arraycopy(
             w0.words,
