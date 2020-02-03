@@ -344,11 +344,11 @@ at: http://peteroupc.github.io/
             if (borrow != 0) {
               for (int i = neededSize; i < this.wordCount; ++i) {
                 int a = this.data[i];
-                u = (a - other.data[i]) - borrow;
+                int b = i >= other.wordCount ? 0 : other.data[i];
+                u = (a - b) - borrow;
                 borrow = ((((a >> 31) == (u >> 31)) ? ((a & Integer.MAX_VALUE) <
                         (u & Integer.MAX_VALUE)) :
-                      ((a >> 31) == 0)) || (a == u && other.data[i] !=
-                      0)) ? 1 : 0;
+                      ((a >> 31) == 0)) || (a == u && b != 0)) ? 1 : 0;
                 this.data[i] = (int)u;
               }
             }

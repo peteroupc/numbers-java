@@ -358,20 +358,20 @@ TrappableRadixMath<EDecimal>(
           this.unsignedMantissa.isValueZero();
       }
 
-  /**
-   * Not documented yet.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Not documented yet.
+     * @return The return value is not documented yet.
+     */
     public boolean IsInteger() {
-if (!this.isFinite()) {
-  return false;
-}
-        if (this.exponent.CompareToInt(0) >= 0) {
-  return true;
-        } else {
-          EDecimal r = this.Reduce(null);
-          return r.exponent.CompareToInt(0) >= 0;
-        }
+      if (!this.isFinite()) {
+        return false;
+      }
+      if (this.exponent.CompareToInt(0) >= 0) {
+        return true;
+      } else {
+        EDecimal r = this.Reduce(null);
+        return r.exponent.CompareToInt(0) >= 0;
+      }
     }
 
     /**
@@ -5425,6 +5425,8 @@ if (!this.isFinite()) {
     }
 
     private boolean IsIntegerPartZero() {
+      // Returns whether the number, once its fractional part
+      // is discarded, is zero.
       if (!this.isFinite()) {
         return false;
       }
@@ -5442,12 +5444,8 @@ if (!this.isFinite()) {
         if (digitCountUpper.compareTo(bigexponent.Abs()) < 0) {
           return true;
         }
-        if (digitCountLower.compareTo(bigexponent.Abs()) > 0) {
-          return false;
-        }
-        EInteger digitCount = umantissa.GetDigitCountAsEInteger();
-        return (digitCount.compareTo(bigexponent) <= 0) ? true :
-          false;
+        return (digitCountLower.compareTo(bigexponent.Abs()) > 0) ? (false)
+:(this.compareTo(-1) > 0 && this.compareTo(1) < 0);
       }
     }
 
@@ -5485,15 +5483,15 @@ if (!this.isFinite()) {
         EInteger bigmantissa = this.unsignedMantissa.ToEInteger();
         DigitShiftAccumulator acc = new DigitShiftAccumulator(bigmantissa, 0, 0);
         if (exact) {
-        acc.TruncateOrShiftRight(
-          bigexponent,
-          true);
-        if (acc.getLastDiscardedDigit() != 0 || acc.getOlderDiscardedDigits() != 0) {
-          // Some digits were discarded
-          throw new ArithmeticException("Not an exact integer");
-        }
+          acc.TruncateOrShiftRight(
+            bigexponent,
+            true);
+          if (acc.getLastDiscardedDigit() != 0 || acc.getOlderDiscardedDigits() != 0) {
+            // Some digits were discarded
+            throw new ArithmeticException("Not an exact integer");
+          }
         } else {
-         acc.TruncateRightSimple(bigexponent);
+          acc.TruncateRightSimple(bigexponent);
         }
         bigmantissa = acc.getShiftedInt();
         if (this.isNegative()) {
@@ -5651,9 +5649,9 @@ if (!this.isFinite()) {
         // bigmantissa.GetDigitCountAsEInteger());
         EInteger divisor = NumberUtility.FindPowerOfTenFromBig(negscale);
         if (ec != null && ec.getHasMaxPrecision()) {
-           EFloat efNum = EFloat.FromEInteger(bigmantissa);
-           EFloat efDen = EFloat.FromEInteger(divisor);
-           return efNum.Divide(efDen, ec);
+          EFloat efNum = EFloat.FromEInteger(bigmantissa);
+          EFloat efDen = EFloat.FromEInteger(divisor);
+          return efNum.Divide(efDen, ec);
         }
         EInteger desiredHigh;
         EInteger desiredLow;
@@ -5663,16 +5661,16 @@ if (!this.isFinite()) {
         if (ec == null || !ec.getHasMaxPrecision()) {
           EInteger num = bigmantissa;
           EInteger den = divisor;
-          System.out.println("num=2^" + num.GetUnsignedBitLengthAsEInteger());
-          System.out.println("den=10^" + negscale);
+          // System.out.println("num=2^" + num.GetUnsignedBitLengthAsEInteger());
+          // System.out.println("den=10^" + negscale);
           if (num.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0 &&
-              den.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0) {
+            den.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0) {
             EInteger gcd = num.Gcd(den);
             if (gcd.compareTo(EInteger.FromInt32(1)) != 0) {
               den = den.Divide(gcd);
             }
-            //DebugUtility.Log("num=" + (num.Divide(gcd)));
-            //DebugUtility.Log("den=" + den);
+            // DebugUtility.Log("num=" + (num.Divide(gcd)));
+            // DebugUtility.Log("den=" + den);
             if (!HasTerminatingBinaryExpansion(den)) {
               // DebugUtility.Log("Approximate");
               // DebugUtility.Log("=>{0}\r\n->{1}", bigmantissa, divisor);
@@ -5686,8 +5684,8 @@ if (!this.isFinite()) {
         }
         // NOTE: Precision raised by 2 to accommodate rounding
         // to odd
-        EInteger valueEcPrec = ec.getHasMaxPrecision() ? ec.getPrecision().Add(2) :
-          ec.getPrecision();
+        EInteger valueEcPrec = ec == null ? EInteger.FromInt32(0) : (
+            ec.getHasMaxPrecision() ? ec.getPrecision().Add(2) : ec.getPrecision());
         desiredHigh = EInteger.FromInt32(1).ShiftLeft(valueEcPrec);
         desiredLow = EInteger.FromInt32(1).ShiftLeft(valueEcPrec.Subtract(1));
         // DebugUtility.Log("=>{0}\r\n->{1}", bigmantissa, divisor);
@@ -6301,7 +6299,7 @@ if (!this.isFinite()) {
        * @return An arbitrary-precision decimal number.
        */
       public EDecimal ValueOf(int val) {
-        return (val == 0) ? Zero : ((val == 1) ? One : FromInt64(val));
+        return (val == 0) ? Zero :((val == 1) ? One : FromInt64(val));
       }
     }
 
@@ -6323,24 +6321,24 @@ if (!this.isFinite()) {
 
     // Begin integer conversions
     private void CheckTrivialOverflow(int maxDigits) {
-  if (this.isZero()) {
-    return;
-  }
-  if (this.exponent.signum() < 0) {
-    EInteger bigexponent = this.getExponent();
-    EInteger bigmantissa = this.getUnsignedMantissa();
-    bigexponent = bigexponent.Abs();
-    bigmantissa = bigmantissa.Abs();
-    EInteger lowerBound = DigitCountLowerBound(bigmantissa);
-    if (lowerBound.Subtract(bigexponent).compareTo(maxDigits) > 0) {
-    throw new ArithmeticException("Value out of range");
-   }
-  } else {
-   if (this.exponent.CompareToInt(maxDigits) >= 0) {
-    throw new ArithmeticException("Value out of range");
-   }
-  }
-}
+      if (this.isZero()) {
+        return;
+      }
+      if (this.exponent.signum() < 0) {
+        EInteger bigexponent = this.getExponent();
+        EInteger bigmantissa = this.getUnsignedMantissa();
+        bigexponent = bigexponent.Abs();
+        bigmantissa = bigmantissa.Abs();
+        EInteger lowerBound = DigitCountLowerBound(bigmantissa);
+        if (lowerBound.Subtract(bigexponent).compareTo(maxDigits) > 0) {
+          throw new ArithmeticException("Value out of range");
+        }
+      } else {
+        if (this.exponent.CompareToInt(maxDigits) >= 0) {
+          throw new ArithmeticException("Value out of range");
+        }
+      }
+    }
 
     /**
      * Converts this number's value to a byte (from 0 to 255) if it can fit in a
@@ -6356,10 +6354,9 @@ if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
       this.CheckTrivialOverflow(3);
-    if (this.IsIntegerPartZero()) {
-      return (byte)0;
-    }
-if (this.isNegative()) {
+      if (this.IsIntegerPartZero()) {
+        return (byte)0;
+      } else if (this.isNegative()) {
         throw new ArithmeticException("Value out of range");
       }
       return this.ToEInteger().ToByteChecked();
@@ -6430,7 +6427,7 @@ if (this.isNegative()) {
       }
       this.CheckTrivialOverflow(5);
       return this.IsIntegerPartZero() ? ((short)0) :
-this.ToEInteger().ToInt16Checked();
+        this.ToEInteger().ToInt16Checked();
     }
 
     /**
@@ -6495,7 +6492,7 @@ this.ToEInteger().ToInt16Checked();
       }
       this.CheckTrivialOverflow(10);
       return this.IsIntegerPartZero() ? ((int)0) :
-this.ToEInteger().ToInt32Checked();
+        this.ToEInteger().ToInt32Checked();
     }
 
     /**
@@ -6554,8 +6551,7 @@ this.ToEInteger().ToInt32Checked();
         throw new ArithmeticException("Value is infinity or NaN");
       }
       this.CheckTrivialOverflow(19);
-      return this.IsIntegerPartZero() ? 0L :
-this.ToEInteger().ToInt64Checked();
+      return this.IsIntegerPartZero() ? 0L : this.ToEInteger().ToInt64Checked();
     }
 
     /**
