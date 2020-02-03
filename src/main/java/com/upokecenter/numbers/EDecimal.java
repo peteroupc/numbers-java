@@ -5559,9 +5559,9 @@ if (!this.isFinite()) {
      * binary floating-point number will be an approximation of this
      * decimal number's value.
      * @param ec An arithmetic context to control the precision, rounding, and
-     * exponent range of the result. Can be null.
+     * exponent range of the result. The precision is in bits, and an
+     * example of this parameter is {@code EContext.Binary64}. Can be null.
      * @return An arbitrary-precision float floating-point number.
-     * @throws NullPointerException The parameter {@code ec} is null.
      */
     public EFloat ToEFloat(EContext ec) {
       EInteger bigintExp = this.getExponent();
@@ -5650,28 +5650,38 @@ if (!this.isFinite()) {
         // DebugUtility.Log("scale=" + scale + " mantissaPrecision=" +
         // bigmantissa.GetDigitCountAsEInteger());
         EInteger divisor = NumberUtility.FindPowerOfTenFromBig(negscale);
+        if (ec != null && ec.getHasMaxPrecision()) {
+           EFloat efNum = EFloat.FromEInteger(bigmantissa);
+           EFloat efDen = EFloat.FromEInteger(divisor);
+           return efNum.Divide(efDen, ec);
+        }
         EInteger desiredHigh;
         EInteger desiredLow;
         boolean haveCopy = false;
         ec = (ec == null) ? (EContext.UnlimitedHalfEven) : ec;
         EContext originalEc = ec;
-        if (!ec.getHasMaxPrecision()) {
+        if (ec == null || !ec.getHasMaxPrecision()) {
           EInteger num = bigmantissa;
           EInteger den = divisor;
-          EInteger gcd = num.Gcd(den);
-          if (gcd.compareTo(EInteger.FromInt32(1)) != 0) {
-            den = den.Divide(gcd);
-          }
-          // DebugUtility.Log("num=" + (num.Divide(gcd)));
-          // DebugUtility.Log("den=" + den);
-          if (!HasTerminatingBinaryExpansion(den)) {
-            // DebugUtility.Log("Approximate");
-            // DebugUtility.Log("=>{0}\r\n->{1}", bigmantissa, divisor);
-            ec = ec.WithPrecision(53).WithBlankFlags();
-            haveCopy = true;
-          } else {
-            bigmantissa = bigmantissa.Divide(gcd);
-            divisor = den;
+          System.out.println("num=2^" + num.GetUnsignedBitLengthAsEInteger());
+          System.out.println("den=10^" + negscale);
+          if (num.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0 &&
+              den.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0) {
+            EInteger gcd = num.Gcd(den);
+            if (gcd.compareTo(EInteger.FromInt32(1)) != 0) {
+              den = den.Divide(gcd);
+            }
+            //DebugUtility.Log("num=" + (num.Divide(gcd)));
+            //DebugUtility.Log("den=" + den);
+            if (!HasTerminatingBinaryExpansion(den)) {
+              // DebugUtility.Log("Approximate");
+              // DebugUtility.Log("=>{0}\r\n->{1}", bigmantissa, divisor);
+              ec = ec.WithPrecision(53).WithBlankFlags();
+              haveCopy = true;
+            } else {
+              bigmantissa = bigmantissa.Divide(gcd);
+              divisor = den;
+            }
           }
         }
         // NOTE: Precision raised by 2 to accommodate rounding
@@ -5681,11 +5691,11 @@ if (!this.isFinite()) {
         desiredHigh = EInteger.FromInt32(1).ShiftLeft(valueEcPrec);
         desiredLow = EInteger.FromInt32(1).ShiftLeft(valueEcPrec.Subtract(1));
         // DebugUtility.Log("=>{0}\r\n->{1}", bigmantissa, divisor);
-        EInteger[] quorem = ec.getHasMaxPrecision() ?
+        EInteger[] quorem = (ec != null && ec.getHasMaxPrecision()) ?
           bigmantissa.DivRem(divisor) : null;
         // DebugUtility.Log("=>{0}\r\n->{1}", quorem[0], desiredHigh);
         FastInteger adjust = new FastInteger(0);
-        if (!ec.getHasMaxPrecision()) {
+        if (ec == null || !ec.getHasMaxPrecision()) {
           EInteger eterm = divisor.GetLowBitAsEInteger();
           bigmantissa = bigmantissa.ShiftLeft(eterm);
           adjust.SubtractBig(eterm);
@@ -5809,10 +5819,7 @@ if (!this.isFinite()) {
         // DebugUtility.Log("-->" + (efret.getMantissa().ToRadixString(2)) + " " +
         // efret.getExponent());
         efret = efret.RoundToPrecision(ec);
-        if (ec == null) {
-          throw new NullPointerException("ec");
-        }
-        if (haveCopy && originalEc.getHasFlags()) {
+        if (ec != null && haveCopy && originalEc.getHasFlags()) {
           originalEc.setFlags(originalEc.getFlags()|(ec.getFlags()));
         }
         return efret;

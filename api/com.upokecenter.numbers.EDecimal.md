@@ -3970,15 +3970,12 @@ Creates a binary floating-point number from this object's value. Note that
 **Parameters:**
 
 * <code>ec</code> - An arithmetic context to control the precision, rounding, and
- exponent range of the result. Can be null.
+ exponent range of the result. The precision is in bits, and an
+ example of this parameter is <code>EContext.Binary64</code>. Can be null.
 
 **Returns:**
 
 * An arbitrary-precision float floating-point number.
-
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>ec</code> is null.
 
 ### Increment
     public EDecimal Increment()
