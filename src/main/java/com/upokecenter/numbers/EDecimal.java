@@ -10,7 +10,6 @@ at: http://peteroupc.github.io/
 // TODO: Add Create*(long, int)
 // TODO: Add ToEInteger method that restricts bit size of
 // outputs to EDecimal/EFloat/ERational
-// TODO: Add IsInteger method to EFloat and ERational
 
   /**
    * Represents an arbitrary-precision decimal floating-point number. (The "E"
@@ -359,8 +358,9 @@ TrappableRadixMath<EDecimal>(
       }
 
     /**
-     * Not documented yet.
-     * @return The return value is not documented yet.
+     * Returns whether this object's value is an integer.
+     * @return {@code true} if this object's value is an integer; otherwise, {@code
+     * false}.
      */
     public boolean IsInteger() {
       if (!this.isFinite()) {
@@ -5441,11 +5441,9 @@ TrappableRadixMath<EDecimal>(
         EInteger digitCountUpper = DigitCountUpperBound(umantissa);
         EInteger digitCountLower = DigitCountLowerBound(umantissa);
         EInteger bigexponent = this.getExponent();
-        if (digitCountUpper.compareTo(bigexponent.Abs()) < 0) {
-          return true;
-        }
-        return (digitCountLower.compareTo(bigexponent.Abs()) > 0) ? (false)
-:(this.compareTo(-1) > 0 && this.compareTo(1) < 0);
+        return (digitCountUpper.compareTo(bigexponent.Abs()) < 0) ? (true) :
+((digitCountLower.compareTo(bigexponent.Abs()) > 0) ? false :
+(this.compareTo(-1) > 0 && this.compareTo(1) < 0));
       }
     }
 
@@ -6299,7 +6297,7 @@ TrappableRadixMath<EDecimal>(
        * @return An arbitrary-precision decimal number.
        */
       public EDecimal ValueOf(int val) {
-        return (val == 0) ? Zero :((val == 1) ? One : FromInt64(val));
+        return (val == 0) ? Zero : ((val == 1) ? One : FromInt64(val));
       }
     }
 

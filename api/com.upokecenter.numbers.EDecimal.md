@@ -417,7 +417,7 @@ Renamed to FromEFloat.
  Gets a value indicating whether this object is positive or negative
  infinity.
 * `boolean IsInteger()`<br>
- Not documented yet.
+ Returns whether this object's value is an integer.
 * `boolean IsNaN()`<br>
  Gets a value indicating whether this object is not a number (NaN).
 * `boolean isNegative()`<br>
@@ -836,11 +836,12 @@ Gets a value indicating whether this object's value equals 0.
 
 ### IsInteger
     public boolean IsInteger()
-Not documented yet.
+Returns whether this object's value is an integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* <code>true</code> if this object's value is an integer; otherwise, <code>
+ false</code>.
 
 ### getMantissa
     public final EInteger getMantissa()

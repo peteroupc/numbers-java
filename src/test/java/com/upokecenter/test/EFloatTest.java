@@ -921,6 +921,50 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
     }
+
+    @Test
+    public void TestIsInteger() {
+      EFloat ed = EFloat.NaN;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = EFloat.SignalingNaN;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = EFloat.PositiveInfinity;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = EFloat.NegativeInfinity;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = EFloat.NegativeZero;
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = EFloat.FromInt32(0);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = EFloat.FromInt32(999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = EFloat.Create(999, 999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = EFloat.Create(999, -999);
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = EFloat.Create(EInteger.FromInt32(999).ShiftLeft(999), -999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+    }
     @Test
     public void TestMovePointLeft() {
       EFloat ef;

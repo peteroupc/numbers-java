@@ -182,6 +182,16 @@ at: http://peteroupc.github.io/
       }
 
     /**
+     * Returns whether this object's value is an integer.
+     * @return {@code true} if this object's value is an integer; otherwise, {@code
+     * false}.
+     */
+    public boolean IsInteger() {
+      return this.isFinite() &&
+this.unsignedNumerator.Remainder(this.denominator).signum() == 0;
+    }
+
+    /**
      * Gets this object's numerator.
      * @return This object's numerator. If this object is a not-a-number value,
      * returns the diagnostic information (which will be negative if this

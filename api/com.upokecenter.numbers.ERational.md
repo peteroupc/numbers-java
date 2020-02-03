@@ -156,6 +156,8 @@ Renamed to FromEFloat.
  Gets a value indicating whether this object is finite (not infinity or NaN).
 * `boolean IsInfinity()`<br>
  Gets a value indicating whether this object's value is infinity.
+* `boolean IsInteger()`<br>
+ Returns whether this object's value is an integer.
 * `boolean IsNaN()`<br>
  Returns whether this object is a not-a-number value.
 * `boolean isNegative()`<br>
@@ -387,6 +389,15 @@ Gets a value indicating whether this object's value equals 0.
 * <code>true</code> if this object's value equals 0; otherwise, <code>
  false</code>. <code>true</code> if this object's value equals 0; otherwise,
  <code>false</code>.
+
+### IsInteger
+    public boolean IsInteger()
+Returns whether this object's value is an integer.
+
+**Returns:**
+
+* <code>true</code> if this object's value is an integer; otherwise, <code>
+ false</code>.
 
 ### getNumerator
     public final EInteger getNumerator()

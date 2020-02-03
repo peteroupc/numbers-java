@@ -294,6 +294,8 @@ Renamed to DivRemNaturalScale.
 * `boolean IsInfinity()`<br>
  Gets a value indicating whether this object is positive or negative
  infinity.
+* `boolean IsInteger()`<br>
+ Returns whether this object's value is an integer.
 * `boolean IsNaN()`<br>
  Gets a value indicating whether this object is not a number (NaN).
 * `boolean isNegative()`<br>
@@ -2597,6 +2599,15 @@ Finds the number of digits in this number's significand. Returns 1 if this
 **Returns:**
 
 * An arbitrary-precision integer.
+
+### IsInteger
+    public boolean IsInteger()
+Returns whether this object's value is an integer.
+
+**Returns:**
+
+* <code>true</code> if this object's value is an integer; otherwise, <code>
+ false</code>.
 
 ### Quantize
     public EFloat Quantize​(EInteger desiredExponent, EContext ctx)

@@ -11,6 +11,50 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(ERational.Zero, ERational.FromBoolean(false));
       Assert.assertEquals(ERational.One, ERational.FromBoolean(true));
     }
+
+    @Test
+    public void TestIsInteger() {
+      ERational ed = ERational.NaN;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = ERational.SignalingNaN;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = ERational.PositiveInfinity;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = ERational.NegativeInfinity;
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = ERational.NegativeZero;
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = ERational.FromInt32(0);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = ERational.FromInt32(999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = ERational.Create(1, 1);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+      ed = ERational.Create(4, 3);
+      if (ed.IsInteger()) {
+ Assert.fail();
+ }
+      ed = ERational.Create(1998, 999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
+    }
     @Test
     public void TestAbs() {
       // not implemented yet

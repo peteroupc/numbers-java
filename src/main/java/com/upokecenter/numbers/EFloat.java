@@ -2560,6 +2560,24 @@ TrappableRadixMath<EFloat>(
     }
 
     /**
+     * Returns whether this object's value is an integer.
+     * @return {@code true} if this object's value is an integer; otherwise, {@code
+     * false}.
+     */
+    public boolean IsInteger() {
+      if (!this.isFinite()) {
+        return false;
+      }
+      if (this.getExponent().compareTo(0) >= 0) {
+        return true;
+      } else {
+        EInteger absexp = this.getExponent().Abs();
+        EInteger mant = this.getUnsignedMantissa();
+        return mant.GetLowBitAsEInteger().compareTo(absexp) >= 0;
+      }
+    }
+
+    /**
      * Returns a binary floating-point number with the same value but a new
      * exponent. <p>Note that this is not always the same as rounding to a
      * given number of binary digit places, since it can fail if the
