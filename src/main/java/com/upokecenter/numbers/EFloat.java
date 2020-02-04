@@ -22,12 +22,15 @@ at: http://peteroupc.github.io/
    * zero, not-a-number (NaN) values, and infinity. <p>Passing a signaling
    * NaN to any arithmetic operation shown here will signal the flag
    * FlagInvalid and return a quiet NaN, even if another operand to that
-   * operation is a quiet NaN, unless noted otherwise.</p> <p>Passing a
-   * quiet NaN to any arithmetic operation shown here will return a quiet
-   * NaN, unless noted otherwise.</p> <p>Unless noted otherwise, passing a
-   * null arbitrary-precision binary floating-point number argument to any
-   * method here will throw an exception.</p> <p>When an arithmetic
-   * operation signals the flag FlagInvalid, FlagOverflow, or
+   * operation is a quiet NaN, unless the operation's documentation
+   * expressly states that another result happens when a signaling NaN is
+   * passed to that operation.</p> <p>Passing a quiet NaN to any arithmetic
+   * operation shown here will return a quiet NaN, unless the operation's
+   * documentation expressly states that another result happens when a
+   * quiet NaN is passed to that operation.</p> <p>Unless noted otherwise,
+   * passing a null arbitrary-precision binary floating-point number
+   * argument to any method here will throw an exception.</p> <p>When an
+   * arithmetic operation signals the flag FlagInvalid, FlagOverflow, or
    * FlagDivideByZero, it will not throw an exception too, unless the
    * operation's trap is enabled in the arithmetic context (see EContext's
    * Traps property).</p> <p>An arbitrary-precision binary floating-point
@@ -2478,13 +2481,16 @@ TrappableRadixMath<EFloat>(
     /**
      * Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent, and also converts negative zero to
-     * positive zero.
+     * positive zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is
+     * useful for triggering an invalid operation and returning
+     * not-a-number (NaN) for custom arithmetic operations.
      * @param ctx A context for controlling the precision, rounding mode, and
      * exponent range. Can be null, in which case the precision is
      * unlimited and rounding isn't needed.
      * @return The closest value to this object's value, rounded to the specified
-     * precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.
+     * precision. If {@code ctx} is null or the precision and exponent
+     * range are unlimited, returns the same value as this object (or a
+     * quiet NaN if this object is a signaling NaN).
      */
     public EFloat Plus(EContext ctx) {
       return MathValue.Plus(this, ctx);

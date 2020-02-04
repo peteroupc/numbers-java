@@ -63,49 +63,52 @@ at: http://peteroupc.github.io/
    * <p><b>Errors and Exceptions</b> </p> <p>Passing a signaling NaN to any
    * arithmetic operation shown here will signal the flag FlagInvalid and
    * return a quiet NaN, even if another operand to that operation is a
-   * quiet NaN, unless noted otherwise.</p> <p>Passing a quiet NaN to any
-   * arithmetic operation shown here will return a quiet NaN, unless noted
-   * otherwise. Invalid operations will also return a quiet NaN, as stated
-   * in the individual methods.</p> <p>Unless noted otherwise, passing a
-   * null arbitrary-precision decimal argument to any method here will
-   * throw an exception.</p> <p>When an arithmetic operation signals the
-   * flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw
-   * an exception too, unless the flag's trap is enabled in the arithmetic
-   * context (see EContext's Traps property).</p> <p>If an operation
-   * requires creating an intermediate value that might be too big to fit
-   * in memory (or might require more than 2 gigabytes of memory to store
-   * -- due to the current use of a 32-bit integer internally as a length),
-   * the operation may signal an invalid-operation flag and return
-   * not-a-number (NaN). In certain rare cases, the compareTo method may
-   * throw OutOfMemoryError (called OutOfMemoryError in Java) in the same
-   * circumstances.</p> <p><b>Serialization</b> </p> <p>An
-   * arbitrary-precision decimal value can be serialized (converted to a
-   * stable format) in one of the following ways:</p> <ul><li>By calling
-   * the toString() method, which will always return distinct strings for
-   * distinct arbitrary-precision decimal values.</li> <li>By calling the
-   * UnsignedMantissa, Exponent, and IsNegative properties, and calling the
-   * IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values
-   * combined will uniquely identify a particular arbitrary-precision
-   * decimal value.</li> </ul> <p><b>Thread safety</b> </p> <p>Instances of
-   * this class are immutable, so they are inherently safe for use by
-   * multiple threads. Multiple instances of this object with the same
-   * properties are interchangeable, so they should not be compared using
-   *  the "==" operator (which might only check if each side of the operator
-   * is the same instance).</p> <p><b>Comparison considerations</b> </p>
-   * <p>This class's natural ordering (under the compareTo method) is not
-   * consistent with the Equals method. This means that two values that
-   * compare as equal under the compareTo method might not be equal under
-   * the Equals method. The compareTo method compares the mathematical
-   * values of the two instances passed to it (and considers two different
-   * NaN values as equal), while two instances with the same mathematical
-   * value, but different exponents, will be considered unequal under the
-   * Equals method.</p> <p><b>Security note</b> </p> <p>It is not
-   * recommended to implement security-sensitive algorithms using the
-   * methods in this class, for several reasons:</p>
-   * <ul><li><code>EDecimal</code> objects are immutable, so they can't be
-   * modified, and the memory they occupy is not guaranteed to be cleared
-   * in a timely fashion due to garbage collection. This is relevant for
-   * applications that use many-digit-long numbers as secret
+   * quiet NaN, unless the operation's documentation expressly states that
+   * another result happens when a signaling NaN is passed to that
+   * operation.</p> <p>Passing a quiet NaN to any arithmetic operation
+   * shown here will return a quiet NaN, unless the operation's
+   * documentation expressly states that another result happens when a
+   * quiet NaN is passed to that operation. Invalid operations will also
+   * return a quiet NaN, as stated in the individual methods.</p> <p>Unless
+   * noted otherwise, passing a null arbitrary-precision decimal argument
+   * to any method here will throw an exception.</p> <p>When an arithmetic
+   * operation signals the flag FlagInvalid, FlagOverflow, or
+   * FlagDivideByZero, it will not throw an exception too, unless the
+   * flag's trap is enabled in the arithmetic context (see EContext's Traps
+   * property).</p> <p>If an operation requires creating an intermediate
+   * value that might be too big to fit in memory (or might require more
+   * than 2 gigabytes of memory to store -- due to the current use of a
+   * 32-bit integer internally as a length), the operation may signal an
+   * invalid-operation flag and return not-a-number (NaN). In certain rare
+   * cases, the compareTo method may throw OutOfMemoryError (called
+   * OutOfMemoryError in Java) in the same circumstances.</p>
+   * <p><b>Serialization</b> </p> <p>An arbitrary-precision decimal value
+   * can be serialized (converted to a stable format) in one of the
+   * following ways:</p> <ul><li>By calling the toString() method, which
+   * will always return distinct strings for distinct arbitrary-precision
+   * decimal values.</li> <li>By calling the UnsignedMantissa, Exponent,
+   * and IsNegative properties, and calling the IsInfinity, IsQuietNaN, and
+   * IsSignalingNaN methods. The return values combined will uniquely
+   * identify a particular arbitrary-precision decimal value.</li> </ul>
+   * <p><b>Thread safety</b> </p> <p>Instances of this class are immutable,
+   * so they are inherently safe for use by multiple threads. Multiple
+   * instances of this object with the same properties are interchangeable,
+   *  so they should not be compared using the "==" operator (which might
+   * only check if each side of the operator is the same instance).</p>
+   * <p><b>Comparison considerations</b> </p> <p>This class's natural
+   * ordering (under the compareTo method) is not consistent with the
+   * Equals method. This means that two values that compare as equal under
+   * the compareTo method might not be equal under the Equals method. The
+   * compareTo method compares the mathematical values of the two instances
+   * passed to it (and considers two different NaN values as equal), while
+   * two instances with the same mathematical value, but different
+   * exponents, will be considered unequal under the Equals method.</p>
+   * <p><b>Security note</b> </p> <p>It is not recommended to implement
+   * security-sensitive algorithms using the methods in this class, for
+   * several reasons:</p> <ul><li><code>EDecimal</code> objects are immutable, so
+   * they can't be modified, and the memory they occupy is not guaranteed
+   * to be cleared in a timely fashion due to garbage collection. This is
+   * relevant for applications that use many-digit-long numbers as secret
    * parameters.</li> <li>The methods in this class (especially those that
    *  involve arithmetic) are not guaranteed to be "constant-time"
    * (non-data-dependent) for all relevant inputs. Certain attacks that
@@ -4104,13 +4107,16 @@ TrappableRadixMath<EDecimal>(
     /**
      * Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent, and also converts negative zero to
-     * positive zero.
+     * positive zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is
+     * useful for triggering an invalid operation and returning
+     * not-a-number (NaN) for custom arithmetic operations.
      * @param ctx A context for controlling the precision, rounding mode, and
      * exponent range. Can be null, in which case the precision is
      * unlimited and rounding isn't needed.
      * @return The closest value to this object's value, rounded to the specified
-     * precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.
+     * precision. If {@code ctx} is null or the precision and exponent
+     * range are unlimited, returns the same value as this object (or a
+     * quiet NaN if this object is a signaling NaN).
      */
     public EDecimal Plus(EContext ctx) {
       return GetMathValue(ctx).Plus(this, ctx);
@@ -5441,7 +5447,7 @@ TrappableRadixMath<EDecimal>(
         EInteger digitCountUpper = DigitCountUpperBound(umantissa);
         EInteger digitCountLower = DigitCountLowerBound(umantissa);
         EInteger bigexponent = this.getExponent();
-        return (digitCountUpper.compareTo(bigexponent.Abs()) < 0) ? (true) :
+        return (digitCountUpper.compareTo(bigexponent.Abs()) < 0) ? true :
 ((digitCountLower.compareTo(bigexponent.Abs()) > 0) ? false :
 (this.compareTo(-1) > 0 && this.compareTo(1) < 0));
       }

@@ -947,4 +947,71 @@ this.simplified +
         this.simplified,
         this.traps);
     }
+
+  /**
+   * Not documented yet.
+   */
+    public EContext GetTrappable() {
+       return (this.getTraps() == 0) ? this : this.WithTraps(0).WithBlankFlags();
+    }
+
+  /**
+   * Not documented yet.
+   * @param result Not documented yet.
+   * @param trappableContext Not documented yet.
+   */
+    public <T> T TriggerTraps(
+      T result,
+      EContext trappableContext) {
+      if (trappableContext == null || trappableContext.getFlags() == 0) {
+        return result;
+      }
+      if (this.getHasFlags()) {
+        this.flags |= trappableContext.getFlags();
+      }
+      int traps = this.getTraps() & trappableContext.getFlags();
+      if (traps == 0) {
+        return result;
+      }
+      int mutexConditions = traps & (~(
+            EContext.FlagClamped | EContext.FlagInexact | EContext.FlagRounded |
+            EContext.FlagSubnormal));
+      if (mutexConditions != 0) {
+        for (int i = 0; i < 32; ++i) {
+          int flag = mutexConditions & (1 << i);
+          if (flag != 0) {
+            throw new ETrapException(traps, flag, this, result);
+          }
+        }
+      }
+      if ((traps & EContext.FlagSubnormal) != 0) {
+        throw new ETrapException(
+          traps,
+          traps & EContext.FlagSubnormal,
+          this,
+          result);
+      }
+      if ((traps & EContext.FlagInexact) != 0) {
+        throw new ETrapException(
+          traps,
+          traps & EContext.FlagInexact,
+          this,
+          result);
+      }
+      if ((traps & EContext.FlagRounded) != 0) {
+        throw new ETrapException(
+          traps,
+          traps & EContext.FlagRounded,
+          this,
+          result);
+      }
+      if ((traps & EContext.FlagClamped) != 0) {
+        throw new ETrapException(
+          traps,
+          traps & EContext.FlagClamped,
+          this,
+          result);
+      }
+      return result;
+    }
   }

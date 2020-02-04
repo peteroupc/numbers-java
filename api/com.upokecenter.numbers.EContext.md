@@ -142,6 +142,8 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `ERounding getRounding()`<br>
  Gets the desired rounding mode when converting numbers that can't be
  represented in the given precision and exponent range.
+* `EContext GetTrappable()`<br>
+ Not documented yet.
 * `int getTraps()`<br>
  Gets the traps that are set for each flag in the context.
 * `boolean isPrecisionInBits()`<br>
@@ -152,6 +154,9 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `void setFlags​(int value)`<br>
 * `java.lang.String toString()`<br>
  Returns this object in a text form intended to be read by humans.
+* `<T> T TriggerTraps​(T result,
+            EContext trappableContext)`<br>
+ Not documented yet.
 * `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
@@ -735,3 +740,16 @@ Copies this EContext with an unlimited exponent range.
 **Returns:**
 
 * A context object for arbitrary-precision arithmetic settings.
+
+### GetTrappable
+    public EContext GetTrappable()
+Not documented yet.
+### TriggerTraps
+    public <T> T TriggerTraps​(T result, EContext trappableContext)
+Not documented yet.
+
+**Parameters:**
+
+* <code>result</code> - Not documented yet.
+
+* <code>trappableContext</code> - Not documented yet.

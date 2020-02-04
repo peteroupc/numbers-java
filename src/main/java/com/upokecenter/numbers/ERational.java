@@ -970,8 +970,25 @@ this.unsignedNumerator.Remainder(this.denominator).signum() == 0;
         // denominators are equal
         return numcmp;
       }
-      EInteger ad = this.getNumerator().Multiply(other.getDenominator());
-      EInteger bc = this.getDenominator().Multiply(other.getNumerator());
+      EInteger ea = this.getNumerator();
+      EInteger eb = this.getDenominator();
+      EInteger ec = other.getNumerator();
+      EInteger ed = other.getDenominator();
+      // Compare the number of bits of the products
+      EInteger bitsADUpper = ea.GetUnsignedBitLengthAsEInteger().Add(
+        ed.GetUnsignedBitLengthAsEInteger());
+      EInteger bitsBCUpper = eb.GetUnsignedBitLengthAsEInteger().Add(
+        ec.GetUnsignedBitLengthAsEInteger());
+      EInteger bitsADLower = bitsADUpper.Subtract(1);
+      EInteger bitsBCLower = bitsBCUpper.Subtract(1);
+      if (bitsADLower.compareTo(bitsBCUpper) > 0) {
+        return signA < 0 ? -1 : 1;
+      }
+      if (bitsBCLower.compareTo(bitsADUpper) > 0) {
+        return signA < 0 ? 1 : -1;
+      }
+      EInteger ad = ea.Multiply(ed);
+      EInteger bc = eb.Multiply(ec);
       return ad.compareTo(bc);
     }
 
@@ -1000,14 +1017,12 @@ this.unsignedNumerator.Remainder(this.denominator).signum() == 0;
       if (cmp == 0) {
         if (first.isNegative()) {
           return (!second.isNegative()) ? second :
-(first.getDenominator().compareTo(second.getDenominator()) > 0 ? first :
-
-second);
+(first.getDenominator().compareTo(second.getDenominator()) > 0 ?
+   first : second);
         } else {
           return second.isNegative() ? first :
-(first.getDenominator().compareTo(second.getDenominator()) < 0 ? first :
-
-second);
+(first.getDenominator().compareTo(second.getDenominator()) < 0 ?
+    first : second);
         }
       }
       return cmp > 0 ? first : second;
@@ -1060,14 +1075,12 @@ second);
       if (cmp == 0) {
         if (first.isNegative()) {
           return (!second.isNegative()) ? first :
-(first.getDenominator().compareTo(second.getDenominator()) < 0 ? first :
-
-second);
+(first.getDenominator().compareTo(second.getDenominator()) < 0 ?
+    first : second);
         } else {
           return second.isNegative() ? second :
-(first.getDenominator().compareTo(second.getDenominator()) > 0 ? first :
-
-second);
+(first.getDenominator().compareTo(second.getDenominator()) > 0 ?
+   first : second);
         }
       }
       return cmp < 0 ? first : second;
@@ -1235,9 +1248,7 @@ second);
       // System.out.println(this);
       // System.out.println(other);
       ERational otherRational = ERational.FromEFloat(other);
-      EInteger ad = this.getNumerator().Multiply(otherRational.getDenominator());
-      EInteger bc = this.getDenominator().Multiply(otherRational.getNumerator());
-      return ad.compareTo(bc);
+      return this.CompareToValue(otherRational);
     }
 
     /**
@@ -1345,13 +1356,8 @@ second);
       }
       // Convert to rational number and use usual rational number
       // comparison
-      // System.out.println("no shortcircuit");
-      // System.out.println(this);
-      // System.out.println(other);
       ERational otherRational = ERational.FromEDecimal(other);
-      EInteger ad = this.getNumerator().Multiply(otherRational.getDenominator());
-      EInteger bc = this.getDenominator().Multiply(otherRational.getNumerator());
-      return ad.compareTo(bc);
+      return this.CompareToValue(otherRational);
     }
 
     /**
