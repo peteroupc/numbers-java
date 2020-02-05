@@ -445,6 +445,11 @@ Renamed to FromEFloat.
  Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
  value.
+* `EDecimal LogN​(EDecimal baseValue,
+    EContext ctx)`<br>
+ Finds the base-N logarithm of this object, that is, the power (exponent)
+ that the number N must be raised to in order to equal this object's
+ value.
 * `static EDecimal Max​(EDecimal first,
    EDecimal second)`<br>
  Gets the greater value between two decimal numbers.
@@ -550,6 +555,7 @@ Renamed to FromEFloat.
  Raises this object's value to the given exponent.
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's significand.
+* `EDecimal PreRound​(EContext ctx)`<br>
 * `EDecimal Quantize​(int desiredExponentInt,
         EContext ctx)`<br>
  Returns an arbitrary-precision decimal number with the same value but a new
@@ -2494,6 +2500,24 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
 
+### LogN
+    public EDecimal LogN​(EDecimal baseValue, EContext ctx)
+Finds the base-N logarithm of this object, that is, the power (exponent)
+ that the number N must be raised to in order to equal this object's
+ value.
+
+**Returns:**
+
+* Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
+ returns not-a-number (NaN) if this object is less than 0. Signals
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ ctx</code> is null or the precision is unlimited (the context's Precision
+ property is 0).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>baseValue</code> is null.
+
 ### MovePointLeft
     public EDecimal MovePointLeft​(int places)
 Returns a number similar to this number but with the decimal point moved to
@@ -3674,6 +3698,8 @@ Rounds this object's value to a given precision, using the given rounding
  precision. Returns the same value as this object if <code>ctx</code> is
  null or the precision and exponent range are unlimited.
 
+### PreRound
+    public EDecimal PreRound​(EContext ctx)
 ### ScaleByPowerOfTen
     public EDecimal ScaleByPowerOfTen​(int places)
 Returns a number similar to this number but with the scale adjusted.

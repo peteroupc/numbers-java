@@ -7,8 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-// TODO: Consider adding a logb (floor of log2) operation,
-  // as well as a Log2 method here and in EDecimal
 // TODO: Consider adding byte[] equivalent of FromString
 // here and in EDecimal
 
@@ -2125,8 +2123,92 @@ TrappableRadixMath<EFloat>(
      * property is 0).
      */
     public EFloat Log10(EContext ctx) {
-      return MathValue.Log10(this, ctx);
+return LogN(EFloat.FromInt32(10), ctx);
     }
+
+    /**
+     * Finds the base-N logarithm of this object, that is, the power (exponent)
+     * that the number N must be raised to in order to equal this object's
+     * value.
+     * @return Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
+     * returns not-a-number (NaN) if this object is less than 0. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
+     * ctx} is null or the precision is unlimited (the context's Precision
+     * property is 0).
+     * @throws NullPointerException The parameter {@code baseValue} is null.
+     */
+public EFloat LogN(EFloat baseValue, EContext ctx) {
+  EFloat value = this;
+  if ((baseValue) == null) {
+    throw new NullPointerException("baseValue");
+  }
+  if (value.IsNaN()) {
+    return value.Plus(ctx);
+  }
+  if (baseValue.IsNaN()) {
+    return baseValue.Plus(ctx);
+  }
+  if (ctx == null || !ctx.getHasMaxPrecision() ||
+     (value.isNegative() && !value.isZero()) ||
+     (baseValue.isNegative() && !baseValue.isZero())) {
+    return EFloat.SignalingNaN.Plus(ctx);
+  }
+  if (ctx.getTraps() != 0) {
+    EContext tctx = ctx.GetTrappable();
+    EFloat ret = value.LogN(baseValue, tctx);
+    return ctx.TriggerTraps(ret, tctx);
+  } else if (ctx.isSimplified()) {
+    EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
+    EFloat ret = value.PreRound(ctx).LogN(baseValue.PreRound(ctx), tmpctx);
+    if (ctx.getHasFlags()) {
+      int flags = ctx.getFlags();
+      ctx.setFlags(flags | tmpctx.getFlags());
+    }
+    //System.out.println("{0} {1} [{4} {5}] -> {2}
+    //[{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
+    // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
+    return ret.RoundToPrecision(ctx);
+  } else {
+    if (value.isZero()) {
+      return baseValue.compareTo(1)<0 ? EFloat.PositiveInfinity :
+EFloat.NegativeInfinity;
+    } else if (value.IsPositiveInfinity()) {
+      return baseValue.compareTo(1)<0 ? EFloat.NegativeInfinity :
+EFloat.PositiveInfinity;
+    }
+    if (baseValue.compareTo(2) == 0) {
+      EFloat ev = value.Reduce(null);
+      if (ev.getUnsignedMantissa().compareTo(1) == 0) {
+        return EFloat.FromEInteger(ev.getExponent()).Plus(ctx);
+      }
+    } else if (value.compareTo(1) == 0) {
+      return EFloat.FromInt32(0).Plus(ctx);
+    } else if (value.compareTo(baseValue) == 0) {
+      return EFloat.FromInt32(1).Plus(ctx);
+    }
+    int flags = ctx.getFlags();
+    EContext tmpctx =
+ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
+    EFloat ret = value.Log(tmpctx).Divide(baseValue.Log(tmpctx), ctx);
+    if (ret.IsInteger() && !ret.isZero()) {
+      flags|=(EContext.FlagRounded|EContext.FlagInexact);
+      if (baseValue.Pow(ret).CompareToValue(value) == 0) {
+        EFloat rtmp = ret.Quantize(EFloat.FromInt32(1), ctx.WithNoFlags());
+        if (!rtmp.IsNaN()) {
+          flags &=~(EContext.FlagRounded|EContext.FlagInexact);
+          ret = rtmp;
+        }
+      }
+    } else {
+      flags|=tmpctx.getFlags();
+    }
+    if (ctx.getHasFlags()) {
+      flags |= ctx.getFlags();
+      ctx.setFlags(flags);
+    }
+    return ret;
+  }
+}
 
     /**
      * Returns a number similar to this number but with the radix point moved to
@@ -3087,6 +3169,10 @@ TrappableRadixMath<EFloat>(
      */
     public EFloat RoundToPrecision(EContext ctx) {
       return MathValue.RoundToPrecision(this, ctx);
+    }
+
+    public EFloat PreRound(EContext ctx) {
+      return NumberUtility.PreRound(this, ctx, MathValue);
     }
 
     /**

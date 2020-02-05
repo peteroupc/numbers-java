@@ -78,13 +78,6 @@ at: http://peteroupc.github.io/
           ctx) : this.simp.Power(thisValue, pow, ctx);
     }
 
-    public T Log10(T thisValue, EContext ctx) {
-      return (
-          ctx == null || !ctx.isSimplified()) ? this.ext.Log10(
-          thisValue,
-          ctx) : this.simp.Log10(thisValue, ctx);
-    }
-
     public T Ln(T thisValue, EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ? this.ext.Ln(thisValue, ctx) :
         this.simp.Ln(thisValue, ctx);

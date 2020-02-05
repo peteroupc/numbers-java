@@ -26,8 +26,6 @@ at: http://peteroupc.github.io/
 
     T Power(T thisValue, T pow, EContext ctx);
 
-    T Log10(T thisValue, EContext ctx);
-
     T Ln(T thisValue, EContext ctx);
 
     T Exp(T thisValue, EContext ctx);

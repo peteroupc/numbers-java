@@ -620,6 +620,65 @@ FindPowerOfTenFromBig(EInteger.FromInt64(diffLong));
       return ret;
     }
 
+    public static <THelper> THelper PreRound(THelper val, EContext ctx,
+          IRadixMath<THelper> wrapper) {
+      if (ctx == null || !ctx.getHasMaxPrecision()) {
+        return val;
+      }
+      IRadixMathHelper<THelper> helper = wrapper.GetHelper();
+      int thisFlags = helper.GetFlags(val);
+      if ((thisFlags & BigNumberFlags.FlagSpecial) != 0) {
+        // Infinity or NaN
+        return val;
+      }
+      FastInteger fastPrecision = FastInteger.FromBig(ctx.getPrecision());
+      EInteger mant = helper.GetMantissa(val).Abs();
+      // Rounding is only to be done if the digit count is
+      // too big (distinguishing this case is material
+      // if the value also has an exponent that's out of range)
+      FastInteger[] digitBounds = NumberUtility.DigitLengthBounds(
+        helper,
+        mant);
+      if (digitBounds[1].compareTo(fastPrecision) <= 0) {
+        // Upper bound is less than or equal to precision
+        return val;
+      }
+      EContext ctx2 = ctx;
+      if (digitBounds[0].compareTo(fastPrecision) <= 0) {
+        // Lower bound is less than or equal to precision, so
+        // calculate digit length more precisely
+        FastInteger digits = helper.GetDigitLength(mant);
+        ctx2 = ctx.WithBlankFlags().WithTraps(0);
+        if (digits.compareTo(fastPrecision) <= 0) {
+          return val;
+        }
+      }
+      val = wrapper.RoundToPrecision(val, ctx2);
+      // the only time rounding can signal an invalid
+      // operation is if an operand is a signaling NaN, but
+      // this was already checked beforehand
+
+      if ((ctx2.getFlags() & EContext.FlagInexact) != 0) {
+        if (ctx.getHasFlags()) {
+          ctx.setFlags(ctx.getFlags()|(BigNumberFlags.LostDigitsFlags));
+        }
+      }
+      if ((ctx2.getFlags() & EContext.FlagRounded) != 0) {
+        if (ctx.getHasFlags()) {
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagRounded));
+        }
+      }
+      if ((ctx2.getFlags() & EContext.FlagOverflow) != 0) {
+        boolean neg = (thisFlags & BigNumberFlags.FlagNegative) != 0;
+        if (ctx.getHasFlags()) {
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagLostDigits));
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagOverflow |
+            EContext.FlagInexact | EContext.FlagRounded));
+        }
+      }
+      return val;
+    }
+
     public static <THelper> FastInteger[] DigitLengthBounds(
        IRadixMathHelper<THelper> helper,
        EInteger ei) {
