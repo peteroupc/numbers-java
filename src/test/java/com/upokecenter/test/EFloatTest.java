@@ -1634,7 +1634,7 @@ import com.upokecenter.numbers.*;
     private static EFloat half = EFloat.FromString("0.5");
     private static EFloat threequarter = EFloat.FromString("0.75");
 
-    private static void TestToFloatRoundingOne(EFloat efa, boolean dbl) {
+    public static void TestToFloatRoundingOne(EFloat efa, boolean dbl) {
       boolean isEven = efa.getUnsignedMantissa().isEven();
       EFloat efprev = efa.NextMinus(dbl ? EContext.Binary64 :
           EContext.Binary32);
@@ -1796,6 +1796,10 @@ import com.upokecenter.numbers.*;
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
         EFloat efa = RandomDoubleEFloat(fr);
+        TestShortestStringOne(efa);
+      }
+    }
+public static void TestShortestStringOne(EFloat efa) {
         String shortestStr = efa.ToShortestString(EContext.Binary64);
         EFloat shortest = EFloat.FromString(
             shortestStr,
@@ -1808,9 +1812,7 @@ import com.upokecenter.numbers.*;
             shortest,
             msg);
         }
-      }
-      System.out.println("End TestToShortestString");
-    }
+}
     @Test
     public void TestToSingleRounding() {
       RandomGenerator fr = new RandomGenerator();
