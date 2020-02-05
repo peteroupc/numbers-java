@@ -227,25 +227,44 @@ at: http://peteroupc.github.io/
       return this.HandleNotANumber(val, val2, ctx);
     }
 
-    private T RoundBeforeOp(T val, EContext ctx) {
+    private T PreRound(T val, EContext ctx) {
+      return PreRound(val, ctx, this.GetHelper(), this.wrapper);
+    }
+
+    // TODO: Have something like this as public method in EDecimal/EFloat
+    private static <THelper> THelper PreRound(THelper val, EContext ctx,
+          IRadixMathHelper<THelper> helper, IRadixMath<THelper> wrapper) {
       if (ctx == null || !ctx.getHasMaxPrecision()) {
         return val;
       }
-      int thisFlags = this.GetHelper().GetFlags(val);
+      int thisFlags = helper.GetFlags(val);
       if ((thisFlags & BigNumberFlags.FlagSpecial) != 0) {
+        // Infinity or NaN
         return val;
       }
       FastInteger fastPrecision = FastInteger.FromBig(ctx.getPrecision());
-      EInteger mant = this.GetHelper().GetMantissa(val).Abs();
-      FastInteger digits = this.GetHelper().GetDigitLength(mant);
-      EContext ctx2 = ctx.WithBlankFlags().WithTraps(0);
-      if (digits.compareTo(fastPrecision) <= 0) {
-        // Rounding is only to be done if the digit count is
-        // too big (distinguishing this case is material
-        // if the value also has an exponent that's out of range)
+      EInteger mant = helper.GetMantissa(val).Abs();
+      // Rounding is only to be done if the digit count is
+      // too big (distinguishing this case is material
+      // if the value also has an exponent that's out of range)
+      FastInteger[] digitBounds = NumberUtility.DigitLengthBounds(
+        helper,
+        mant);
+      if (digitBounds[1].compareTo(fastPrecision) <= 0) {
+        // Upper bound is less than or equal to precision
         return val;
       }
-      val = this.wrapper.RoundToPrecision(val, ctx2);
+      EContext ctx2 = ctx;
+      if (digitBounds[0].compareTo(fastPrecision) <= 0) {
+        // Lower bound is less than or equal to precision, so
+        // calculate digit length more precisely
+        FastInteger digits = helper.GetDigitLength(mant);
+        ctx2 = ctx.WithBlankFlags().WithTraps(0);
+        if (digits.compareTo(fastPrecision) <= 0) {
+          return val;
+        }
+      }
+      val = wrapper.RoundToPrecision(val, ctx2);
       // the only time rounding can signal an invalid
       // operation is if an operand is a signaling NaN, but
       // this was already checked beforehand
@@ -260,16 +279,13 @@ at: http://peteroupc.github.io/
           ctx.setFlags(ctx.getFlags()|(EContext.FlagRounded));
         }
       }
-      if ((ctx2.getFlags() & EContext.FlagSubnormal) != 0) {
-        // System.out.println("Subnormal input: " + val);
-      }
-      if ((ctx2.getFlags() & EContext.FlagUnderflow) != 0) {
-        // System.out.println("Underflow");
-      }
       if ((ctx2.getFlags() & EContext.FlagOverflow) != 0) {
         boolean neg = (thisFlags & BigNumberFlags.FlagNegative) != 0;
-        ctx.setFlags(ctx.getFlags()|(EContext.FlagLostDigits));
-        return this.SignalOverflow2(ctx, neg);
+        if (ctx.getHasFlags()) {
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagLostDigits));
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagOverflow |
+            EContext.FlagInexact | EContext.FlagRounded));
+        }
       }
       return val;
     }
@@ -283,8 +299,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      divisor = this.RoundBeforeOp(divisor, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.DivideToIntegerNaturalScale(
         thisValue,
         divisor,
@@ -301,8 +317,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      divisor = this.RoundBeforeOp(divisor, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.DivideToIntegerZeroScale(
         thisValue,
         divisor,
@@ -316,7 +332,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      value = this.RoundBeforeOp(value, ctx2);
+      value = this.PreRound(value, ctx2);
       value = this.wrapper.Abs(value, ctx2);
       return this.PostProcess(value, ctx, ctx2);
     }
@@ -327,20 +343,11 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      value = this.RoundBeforeOp(value, ctx2);
+      value = this.PreRound(value, ctx2);
       value = this.wrapper.Negate(value, ctx2);
       return this.PostProcess(value, ctx, ctx2);
     }
 
-    // <summary>Finds the remainder that results when dividing two T
-    // objects.</summary>
-    // <param name='thisValue'></param>
-    // <summary>Finds the remainder that results when dividing two T
-    // objects.</summary>
-    // <param name='thisValue'></param>
-    // <param name='divisor'></param>
-    // <param name='ctx'> (3).</param>
-    // <returns>The remainder of the two objects.</returns>
     public T Remainder(
       T thisValue,
       T divisor,
@@ -351,8 +358,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      divisor = this.RoundBeforeOp(divisor, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.Remainder(
         thisValue,
         divisor,
@@ -367,54 +374,14 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      divisor = this.RoundBeforeOp(divisor, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.RemainderNear(thisValue, divisor, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
 
     public T Pi(EContext ctx) {
       return this.wrapper.Pi(ctx);
-    }
-
-@SuppressWarnings("deprecation") // certain ERounding values are obsolete
-    private T SignalOverflow2(EContext pc, boolean neg) {
-      if (pc != null) {
-        ERounding roundingOnOverflow = pc.getRounding();
-        if (pc.getHasFlags()) {
-          pc.setFlags(pc.getFlags()|(EContext.FlagOverflow |
-            EContext.FlagInexact | EContext.FlagRounded));
-        }
-        if (pc.getHasMaxPrecision() && pc.getHasExponentRange() &&
-          (roundingOnOverflow == ERounding.Down ||
-            roundingOnOverflow == ERounding.ZeroFiveUp ||
-            roundingOnOverflow == ERounding.OddOrZeroFiveUp ||
-            roundingOnOverflow == ERounding.Odd ||
-            (roundingOnOverflow == ERounding.Ceiling && neg) ||
-            (roundingOnOverflow == ERounding.Floor && !neg))) {
-          // Set to the highest possible value for
-          // the given precision
-          EInteger overflowMant = EInteger.FromInt32(0);
-          FastInteger fastPrecision = FastInteger.FromBig(pc.getPrecision());
-          overflowMant = this.GetHelper().MultiplyByRadixPower(
-            EInteger.FromInt32(1),
-            fastPrecision);
-          overflowMant = overflowMant.Subtract(EInteger.FromInt32(1));
-          FastInteger clamp =
-            FastInteger.FromBig(pc.getEMax()).Increment().Subtract(fastPrecision);
-          return this.GetHelper().CreateNewWithFlags(
-              overflowMant,
-              clamp.AsEInteger(),
-              neg ? BigNumberFlags.FlagNegative : 0);
-        }
-      }
-      int flagneg = neg ? BigNumberFlags.FlagNegative : 0;
-      return this.GetHelper().GetArithmeticSupport() ==
-        BigNumberFlags.FiniteOnly ?
-        null : this.GetHelper().CreateNewWithFlags(
-          EInteger.FromInt32(0),
-          EInteger.FromInt32(0),
-          flagneg | BigNumberFlags.FlagInfinity);
     }
 
     public T Power(T thisValue, T pow, EContext ctx) {
@@ -424,8 +391,8 @@ at: http://peteroupc.github.io/
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       // System.out.println("op was " + thisValue + ", "+pow);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      pow = this.RoundBeforeOp(pow, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      pow = this.PreRound(pow, ctx2);
       // System.out.println("op now " + thisValue + ", "+pow);
       int powSign = this.GetHelper().GetSign(pow);
       thisValue = (powSign == 0 && this.GetHelper().GetSign(thisValue) == 0) ?
@@ -443,7 +410,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.Log10(thisValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -455,7 +422,7 @@ at: http://peteroupc.github.io/
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       // System.out.println("was: " + thisValue);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       // System.out.println("now: " + thisValue);
       thisValue = this.wrapper.Ln(thisValue, ctx2);
       // System.out.println("result: " + thisValue);
@@ -472,7 +439,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.Exp(thisValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -484,7 +451,7 @@ at: http://peteroupc.github.io/
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       // System.out.println("op was " + thisValue);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       // System.out.println("op now " + thisValue);
       thisValue = this.wrapper.SquareRoot(thisValue, ctx2);
       // System.out.println("result was " + thisValue);
@@ -497,7 +464,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.NextMinus(thisValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -508,8 +475,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      otherValue = this.RoundBeforeOp(otherValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      otherValue = this.PreRound(otherValue, ctx2);
       thisValue = this.wrapper.NextToward(thisValue, otherValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -520,7 +487,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.NextPlus(thisValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -535,8 +502,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      divisor = this.RoundBeforeOp(divisor, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.DivideToExponent(
         thisValue,
         divisor,
@@ -558,8 +525,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      divisor = this.RoundBeforeOp(divisor, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.Divide(thisValue, divisor, ctx2);
       return this.PostProcessAfterDivision(thisValue, ctx, ctx2);
     }
@@ -570,8 +537,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      a = this.RoundBeforeOp(a, ctx2);
-      b = this.RoundBeforeOp(b, ctx2);
+      a = this.PreRound(a, ctx2);
+      b = this.PreRound(b, ctx2);
       a = this.wrapper.MinMagnitude(a, b, ctx2);
       return this.PostProcess(a, ctx, ctx2);
     }
@@ -582,8 +549,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      a = this.RoundBeforeOp(a, ctx2);
-      b = this.RoundBeforeOp(b, ctx2);
+      a = this.PreRound(a, ctx2);
+      b = this.PreRound(b, ctx2);
       a = this.wrapper.MaxMagnitude(a, b, ctx2);
       return this.PostProcess(a, ctx, ctx2);
     }
@@ -594,8 +561,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      a = this.RoundBeforeOp(a, ctx2);
-      b = this.RoundBeforeOp(b, ctx2);
+      a = this.PreRound(a, ctx2);
+      b = this.PreRound(b, ctx2);
       // choose the left operand if both are equal
       a = (this.compareTo(a, b) >= 0) ? a : b;
       return this.PostProcess(a, ctx, ctx2);
@@ -607,8 +574,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      a = this.RoundBeforeOp(a, ctx2);
-      b = this.RoundBeforeOp(b, ctx2);
+      a = this.PreRound(a, ctx2);
+      b = this.PreRound(b, ctx2);
       // choose the left operand if both are equal
       a = (this.compareTo(a, b) <= 0) ? a : b;
       return this.PostProcess(a, ctx, ctx2);
@@ -620,8 +587,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      other = this.RoundBeforeOp(other, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      other = this.PreRound(other, ctx2);
       thisValue = this.wrapper.Multiply(thisValue, other, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -636,9 +603,9 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      multiplicand = this.RoundBeforeOp(multiplicand, ctx2);
-      augend = this.RoundBeforeOp(augend, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      multiplicand = this.PreRound(multiplicand, ctx2);
+      augend = this.PreRound(augend, ctx2);
       // the only time the first operand to the addition can be
       // 0 is if either thisValue rounded or multiplicand
       // rounded is 0
@@ -666,7 +633,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.Plus(thisValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -677,7 +644,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.RoundToPrecision(thisValue, ctx2);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -689,9 +656,9 @@ at: http://peteroupc.github.io/
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       // System.out.println("was: "+thisValue+", "+otherValue);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       // System.out.println("now: "+thisValue+", "+otherValue);
-      otherValue = this.RoundBeforeOp(otherValue, ctx2);
+      otherValue = this.PreRound(otherValue, ctx2);
       // Apparently, subnormal values of "otherValue" raise
       // an invalid operation flag, according to the test cases
       EContext ctx3 = ctx2 == null ? null : ctx2.WithBlankFlags();
@@ -713,7 +680,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.RoundToExponentExact(thisValue, expOther, ctx);
       return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
     }
@@ -727,7 +694,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.RoundToExponentSimple(
         thisValue,
         expOther,
@@ -744,7 +711,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.RoundToExponentNoRoundedFlag(
         thisValue,
         exponent,
@@ -758,7 +725,7 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.Reduce(thisValue, ctx);
       return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
     }
@@ -769,8 +736,8 @@ at: http://peteroupc.github.io/
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      thisValue = this.RoundBeforeOp(thisValue, ctx2);
-      other = this.RoundBeforeOp(other, ctx2);
+      thisValue = this.PreRound(thisValue, ctx2);
+      other = this.PreRound(other, ctx2);
       boolean zeroA = this.GetHelper().GetSign(thisValue) == 0;
       boolean zeroB = this.GetHelper().GetSign(other) == 0;
       if (zeroA) {
@@ -798,14 +765,6 @@ at: http://peteroupc.github.io/
       return this.Add(thisValue, other, ctx);
     }
 
-    // <summary>Compares a T Object with this instance.</summary>
-    // <param name='thisValue'></param>
-    // <param name='otherValue'>A T Object.</param>
-    // <param name='treatQuietNansAsSignaling'>A Boolean Object.</param>
-    // <param name='ctx'>A PrecisionContext Object.</param>
-    // <returns>Zero if the values are equal; a negative number if this
-    // instance is less, or a positive number if this instance is
-    // greater.</returns>
     public T CompareToWithContext(
       T thisValue,
       T otherValue,
@@ -815,8 +774,8 @@ at: http://peteroupc.github.io/
       if ((Object)ret != (Object)null) {
         return ret;
       }
-      thisValue = this.RoundBeforeOp(thisValue, ctx);
-      otherValue = this.RoundBeforeOp(otherValue, ctx);
+      thisValue = this.PreRound(thisValue, ctx);
+      otherValue = this.PreRound(otherValue, ctx);
       return this.wrapper.CompareToWithContext(
         thisValue,
         otherValue,
@@ -824,18 +783,13 @@ at: http://peteroupc.github.io/
         ctx);
     }
 
-    // <summary>Compares a T Object with this instance.</summary>
-    // <param name='thisValue'></param>
-    // <returns>Zero if the values are equal; a negative number if this
-    // instance is less, or a positive number if this instance is
-    // greater.</returns>
     public int compareTo(T thisValue, T otherValue) {
       return this.wrapper.compareTo(thisValue, otherValue);
     }
 
     public T SignalOverflow(EContext ctx, boolean neg) {
       EContext ctx2 = GetContextWithFlags(ctx);
-      T thisValue = this.SignalOverflow2(ctx2, neg);
+      T thisValue = this.wrapper.SignalOverflow(ctx, neg);
       return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
     }
 
