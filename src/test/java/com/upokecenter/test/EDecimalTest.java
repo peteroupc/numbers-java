@@ -392,6 +392,10 @@ import com.upokecenter.numbers.*;
       if (!(ed.IsInteger())) {
  Assert.fail();
  }
+      ed = EDecimal.Create(0, -999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
       ed = EDecimal.Create(999, -999);
       if (ed.IsInteger()) {
  Assert.fail();

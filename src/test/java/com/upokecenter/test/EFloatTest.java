@@ -960,6 +960,10 @@ import com.upokecenter.numbers.*;
       if (ed.IsInteger()) {
  Assert.fail();
  }
+      ed = EFloat.Create(0, -999);
+      if (!(ed.IsInteger())) {
+ Assert.fail();
+ }
       ed = EFloat.Create(EInteger.FromInt32(999).ShiftLeft(999), -999);
       if (!(ed.IsInteger())) {
  Assert.fail();
@@ -1923,10 +1927,7 @@ enumber.ToEInteger();
         } catch (UnsupportedOperationException ex) {
           eint = null;
         }
-       // TODO:
-        isInteger = enumber.getExponent().signum() >= 0 &&
-EFloat.FromEInteger(enumber.ToEInteger()).CompareToValue(enumber) == 0;
-       // isInteger = enumber.IsInteger();
+        isInteger = enumber.IsInteger();
         isNum = enumber.compareTo(0) >= 0 && enumber.compareTo(255) <= 0;
         isTruncated = eint != null && eint.compareTo(0) >= 0 &&
 eint.compareTo(255) <= 0;

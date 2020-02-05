@@ -7,7 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-// TODO: Add Create*(long, int)
 // TODO: Add ToEInteger method that restricts bit size of
 // outputs to EDecimal/EFloat/ERational
 
@@ -369,7 +368,7 @@ TrappableRadixMath<EDecimal>(
       if (!this.isFinite()) {
         return false;
       }
-      if (this.exponent.CompareToInt(0) >= 0) {
+      if (this.isZero() || this.exponent.CompareToInt(0) >= 0) {
         return true;
       } else {
         EDecimal r = this.Reduce(null);
@@ -523,6 +522,20 @@ TrappableRadixMath<EDecimal>(
           sign < 0 ? fi.Negate() : fi,
           FastIntegerFixed.FromBig(exponent),
           (byte)((sign < 0) ? BigNumberFlags.FlagNegative : 0));
+    }
+
+    /**
+     * Creates a number with the value <code>exponent*10^significand</code>.
+     * @param mantissaLong Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision decimal number.
+     * @throws NullPointerException The parameter {@code mantissaLong} or {@code
+     * exponentLong} is null.
+     */
+    public static EDecimal Create(
+      long mantissaLong,
+      int exponentSmall) {
+      return Create(mantissaLong, (long)exponentSmall);
     }
 
     /**
@@ -3696,6 +3709,8 @@ return LogN(EDecimal.FromInt32(10), ctx);
      * Finds the base-N logarithm of this object, that is, the power (exponent)
      * that the number N must be raised to in order to equal this object's
      * value.
+     * @param baseValue Not documented yet.
+     * @param ctx Not documented yet.
      * @return Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
      * returns not-a-number (NaN) if this object is less than 0. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code

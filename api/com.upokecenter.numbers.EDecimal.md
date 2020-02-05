@@ -242,6 +242,9 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
       int exponentSmall) exponent*10^significand`<br>
  Returns a number with the value exponent*10^significand.
 * `static EDecimal Create​(long mantissaLong,
+      int exponentSmall) exponent*10^significand`<br>
+ Creates a number with the value exponent*10^significand.
+* `static EDecimal Create​(long mantissaLong,
       long exponentLong) exponent*10^significand`<br>
  Creates a number with the value exponent*10^significand.
 * `static EDecimal Create​(EInteger mantissa,
@@ -950,6 +953,25 @@ Creates a number with the value <code>exponent*10^significand</code>.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or <code>
  exponent</code> is null.
+
+### Create
+    public static EDecimal Create​(long mantissaLong, int exponentSmall)
+Creates a number with the value <code>exponent*10^significand</code>.
+
+**Parameters:**
+
+* <code>mantissaLong</code> - Desired value for the significand.
+
+* <code>exponentSmall</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision decimal number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
+ exponentLong</code> is null.
 
 ### Create
     public static EDecimal Create​(long mantissaLong, long exponentLong)
@@ -2505,6 +2527,12 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
 Finds the base-N logarithm of this object, that is, the power (exponent)
  that the number N must be raised to in order to equal this object's
  value.
+
+**Parameters:**
+
+* <code>baseValue</code> - Not documented yet.
+
+* <code>ctx</code> - Not documented yet.
 
 **Returns:**
 

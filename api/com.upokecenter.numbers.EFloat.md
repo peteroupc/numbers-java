@@ -145,6 +145,9 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
       int exponentSmall)`<br>
  Returns a number with the value exponent*2^significand.
 * `static EFloat Create​(long mantissaLong,
+      int exponentSmall)`<br>
+ Returns a number with the value exponent*2^significand.
+* `static EFloat Create​(long mantissaLong,
       long exponentLong)`<br>
  Returns a number with the value exponent*2^significand.
 * `static EFloat Create​(EInteger mantissa,
@@ -753,6 +756,20 @@ Returns a number with the value exponent*2^significand.
 * <code>mantissaLong</code> - Desired value for the significand.
 
 * <code>exponentLong</code> - Desired value for the exponent.
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+### Create
+    public static EFloat Create​(long mantissaLong, int exponentSmall)
+Returns a number with the value exponent*2^significand.
+
+**Parameters:**
+
+* <code>mantissaLong</code> - Desired value for the significand.
+
+* <code>exponentSmall</code> - Desired value for the exponent.
 
 **Returns:**
 
@@ -2166,6 +2183,12 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
 Finds the base-N logarithm of this object, that is, the power (exponent)
  that the number N must be raised to in order to equal this object's
  value.
+
+**Parameters:**
+
+* <code>baseValue</code> - Not documented yet.
+
+* <code>ctx</code> - Not documented yet.
 
 **Returns:**
 

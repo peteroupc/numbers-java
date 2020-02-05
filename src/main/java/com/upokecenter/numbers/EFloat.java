@@ -272,6 +272,16 @@ TrappableRadixMath<EFloat>(
 
     /**
      * Returns a number with the value exponent*2^significand.
+     * @param mantissaLong Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary floating-point number.
+     */
+    public static EFloat Create(long mantissaLong, int exponentSmall) {
+      return Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall));
+    }
+
+    /**
+     * Returns a number with the value exponent*2^significand.
      * @param mantissa Desired value for the significand.
      * @param exponentSmall Desired value for the exponent.
      * @return An arbitrary-precision binary floating-point number.
@@ -2130,6 +2140,8 @@ return LogN(EFloat.FromInt32(10), ctx);
      * Finds the base-N logarithm of this object, that is, the power (exponent)
      * that the number N must be raised to in order to equal this object's
      * value.
+     * @param baseValue Not documented yet.
+     * @param ctx Not documented yet.
      * @return Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
      * returns not-a-number (NaN) if this object is less than 0. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
@@ -2656,7 +2668,7 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
       if (!this.isFinite()) {
         return false;
       }
-      if (this.getExponent().compareTo(0) >= 0) {
+      if (this.isZero() || this.getExponent().compareTo(0) >= 0) {
         return true;
       } else {
         EInteger absexp = this.getExponent().Abs();
