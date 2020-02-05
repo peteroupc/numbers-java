@@ -1555,7 +1555,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    private static void TestStringToDoubleSingleOne(String str) {
+    public static void TestStringToDoubleSingleOne(String str) {
       TestStringToDoubleOne(str);
       TestStringToSingleOne(str);
     }
