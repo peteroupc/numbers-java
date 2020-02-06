@@ -559,6 +559,7 @@ Renamed to FromEFloat.
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's significand.
 * `EDecimal PreRound​(EContext ctx)`<br>
+ Not documented yet.
 * `EDecimal Quantize​(int desiredExponentInt,
         EContext ctx)`<br>
  Returns an arbitrary-precision decimal number with the same value but a new
@@ -968,11 +969,6 @@ Creates a number with the value <code>exponent*10^significand</code>.
 
 * An arbitrary-precision decimal number.
 
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
- exponentLong</code> is null.
-
 ### Create
     public static EDecimal Create​(long mantissaLong, long exponentLong)
 Creates a number with the value <code>exponent*10^significand</code>.
@@ -986,11 +982,6 @@ Creates a number with the value <code>exponent*10^significand</code>.
 **Returns:**
 
 * An arbitrary-precision decimal number.
-
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>mantissaLong</code> or <code>
- exponentLong</code> is null.
 
 ### CreateNaN
     public static EDecimal CreateNaN​(EInteger diag)
@@ -2530,9 +2521,10 @@ Finds the base-N logarithm of this object, that is, the power (exponent)
 
 **Parameters:**
 
-* <code>baseValue</code> - Not documented yet.
+* <code>baseValue</code> - The parameter <code>baseValue</code> is a Numbers.EDecimal
+ object.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is a Numbers.EContext object.
 
 **Returns:**
 
@@ -3728,6 +3720,12 @@ Rounds this object's value to a given precision, using the given rounding
 
 ### PreRound
     public EDecimal PreRound​(EContext ctx)
+Not documented yet.
+
+**Parameters:**
+
+* <code>ctx</code> - Not documented yet.
+
 ### ScaleByPowerOfTen
     public EDecimal ScaleByPowerOfTen​(int places)
 Returns a number similar to this number but with the scale adjusted.

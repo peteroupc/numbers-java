@@ -439,6 +439,7 @@ Renamed to DivRemNaturalScale.
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's significand.
 * `EFloat PreRound​(EContext ctx)`<br>
+ Not documented yet.
 * `EFloat Quantize​(int desiredExponentInt,
         EContext ctx)`<br>
  Returns a binary floating-point number with the same value but a new
@@ -2186,9 +2187,9 @@ Finds the base-N logarithm of this object, that is, the power (exponent)
 
 **Parameters:**
 
-* <code>baseValue</code> - Not documented yet.
+* <code>baseValue</code> - The parameter <code>baseValue</code> is a Numbers.EFloat object.
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - The parameter <code>ctx</code> is a Numbers.EContext object.
 
 **Returns:**
 
@@ -3199,6 +3200,12 @@ Rounds this object's value to a given precision, using the given rounding
 
 ### PreRound
     public EFloat PreRound​(EContext ctx)
+Not documented yet.
+
+**Parameters:**
+
+* <code>ctx</code> - Not documented yet.
+
 ### ScaleByPowerOfTwo
     public EFloat ScaleByPowerOfTwo​(int places)
 Returns a number similar to this number but with the scale adjusted.

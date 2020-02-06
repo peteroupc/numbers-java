@@ -748,8 +748,17 @@ Not documented yet.
     public <T> T TriggerTraps​(T result, EContext trappableContext)
 Not documented yet.
 
+**Type Parameters:**
+
+* <code>T</code> - Type parameter not documented yet.
+
 **Parameters:**
 
-* <code>result</code> - Not documented yet.
+* <code>result</code> - The parameter <code>result</code> is a ``0 object.
 
-* <code>trappableContext</code> - Not documented yet.
+* <code>trappableContext</code> - The parameter <code>trappableContext</code> is a
+ Numbers.EContext object.
+
+**Returns:**
+
+* The return value is not documented yet.

@@ -2133,15 +2133,15 @@ TrappableRadixMath<EFloat>(
      * property is 0).
      */
     public EFloat Log10(EContext ctx) {
-return LogN(EFloat.FromInt32(10), ctx);
+return this.LogN(EFloat.FromInt32(10), ctx);
     }
 
     /**
      * Finds the base-N logarithm of this object, that is, the power (exponent)
      * that the number N must be raised to in order to equal this object's
      * value.
-     * @param baseValue Not documented yet.
-     * @param ctx Not documented yet.
+     * @param baseValue The parameter {@code baseValue} is a Numbers.EFloat object.
+     * @param ctx The parameter {@code ctx} is a Numbers.EContext object.
      * @return Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
      * returns not-a-number (NaN) if this object is less than 0. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code
@@ -2149,9 +2149,9 @@ return LogN(EFloat.FromInt32(10), ctx);
      * property is 0).
      * @throws NullPointerException The parameter {@code baseValue} is null.
      */
-public EFloat LogN(EFloat baseValue, EContext ctx) {
+    public EFloat LogN(EFloat baseValue, EContext ctx) {
   EFloat value = this;
-  if ((baseValue) == null) {
+  if (baseValue == null) {
     throw new NullPointerException("baseValue");
   }
   if (value.IsNaN()) {
@@ -2176,16 +2176,16 @@ public EFloat LogN(EFloat baseValue, EContext ctx) {
       int flags = ctx.getFlags();
       ctx.setFlags(flags | tmpctx.getFlags());
     }
-    //System.out.println("{0} {1} [{4} {5}] -> {2}
-    //[{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
+    // System.out.println("{0} {1} [{4} {5}] -> {2}
+    // [{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
     // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
     return ret.RoundToPrecision(ctx);
   } else {
     if (value.isZero()) {
-      return baseValue.compareTo(1)<0 ? EFloat.PositiveInfinity :
+      return baseValue.compareTo(1) < 0 ? EFloat.PositiveInfinity :
 EFloat.NegativeInfinity;
     } else if (value.IsPositiveInfinity()) {
-      return baseValue.compareTo(1)<0 ? EFloat.NegativeInfinity :
+      return baseValue.compareTo(1) < 0 ? EFloat.NegativeInfinity :
 EFloat.PositiveInfinity;
     }
     if (baseValue.compareTo(2) == 0) {
@@ -2203,16 +2203,16 @@ EFloat.PositiveInfinity;
 ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
     EFloat ret = value.Log(tmpctx).Divide(baseValue.Log(tmpctx), ctx);
     if (ret.IsInteger() && !ret.isZero()) {
-      flags|=(EContext.FlagRounded|EContext.FlagInexact);
+      flags |= EContext.FlagRounded |EContext.FlagInexact;
       if (baseValue.Pow(ret).CompareToValue(value) == 0) {
         EFloat rtmp = ret.Quantize(EFloat.FromInt32(1), ctx.WithNoFlags());
         if (!rtmp.IsNaN()) {
-          flags &=~(EContext.FlagRounded|EContext.FlagInexact);
+          flags &= ~(EContext.FlagRounded | EContext.FlagInexact);
           ret = rtmp;
         }
       }
     } else {
-      flags|=tmpctx.getFlags();
+      flags |= tmpctx.getFlags();
     }
     if (ctx.getHasFlags()) {
       flags |= ctx.getFlags();
@@ -3183,6 +3183,10 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
       return MathValue.RoundToPrecision(this, ctx);
     }
 
+  /**
+   * Not documented yet.
+   * @param ctx Not documented yet.
+   */
     public EFloat PreRound(EContext ctx) {
       return NumberUtility.PreRound(this, ctx, MathValue);
     }

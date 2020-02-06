@@ -1636,6 +1636,9 @@ import com.upokecenter.numbers.*;
 
     public static void TestToFloatRoundingOne(EFloat efa, boolean dbl) {
       int bitCount = dbl ? 53 : 24;
+      if (efa == null) {
+        throw new NullPointerException("efa");
+      }
       EInteger emant = efa.getMantissa();
       boolean fullPrecision =
 emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
@@ -1803,7 +1806,10 @@ emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
         TestShortestStringOne(efa);
       }
     }
-public static void TestShortestStringOne(EFloat efa) {
+    public static void TestShortestStringOne(EFloat efa) {
+        if (efa == null) {
+          throw new NullPointerException("efa");
+        }
         String shortestStr = efa.ToShortestString(EContext.Binary64);
         EFloat shortest = EFloat.FromString(
             shortestStr,
