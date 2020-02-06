@@ -1635,7 +1635,11 @@ import com.upokecenter.numbers.*;
     private static EFloat threequarter = EFloat.FromString("0.75");
 
     public static void TestToFloatRoundingOne(EFloat efa, boolean dbl) {
-      boolean isEven = efa.getUnsignedMantissa().isEven();
+      int bitCount = dbl ? 53 : 24;
+      EInteger emant = efa.getMantissa();
+      boolean fullPrecision =
+emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
+      boolean isEven = !fullPrecision || efa.getUnsignedMantissa().isEven();
       EFloat efprev = efa.NextMinus(dbl ? EContext.Binary64 :
           EContext.Binary32);
       EFloat efnext = efa.NextPlus(dbl ? EContext.Binary64 :

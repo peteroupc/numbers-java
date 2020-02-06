@@ -5748,14 +5748,13 @@ DigitCountLowerBound(bigUnsignedMantissa.Abs());
         // DebugUtility.Log("Fractional");
         EInteger scale = bigintExp;
         EInteger bigmantissa = bigUnsignedMantissa;
-        boolean neg = this.signum() < 0;
         EInteger negscale = scale.Negate();
         // DebugUtility.Log("scale=" + scale + " mantissaPrecision=" +
         // bigmantissa.GetDigitCountAsEInteger());
         EInteger divisor = NumberUtility.FindPowerOfTenFromBig(negscale);
         if (ec != null && ec.getHasMaxPrecision()) {
           EFloat efNum = EFloat.FromEInteger(bigmantissa);
-if (neg) {
+if (this.signum() < 0) {
   efNum = efNum.Negate();
 }
           EFloat efDen = EFloat.FromEInteger(divisor);
