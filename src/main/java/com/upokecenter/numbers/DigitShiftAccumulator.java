@@ -185,6 +185,7 @@ this.shiftedBigInt.GetUnsignedBitLengthAsEInteger().compareTo(digitsToShift) <
             // DebugUtility.Log("digits="+digitsToShift);
             //
             //
+            //
             //  DebugUtility.Log("bits="+this.shiftedBigInt.GetUnsignedBitLengthAsEInteger());
             this.discardedBitCount = (this.discardedBitCount == null) ? (new
 FastInteger(0)) : this.discardedBitCount;
@@ -435,9 +436,6 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
         this.knownDigitLength = new FastInteger(1);
         return;
       }
-      // if (digits > 50) {
-      // DebugUtility.Log("ShiftRightBig(" + digits + ")");
-      // }
       if (truncate) {
         EInteger bigquo;
         {
@@ -447,7 +445,8 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
           EInteger bigBitLength =
             this.shiftedBigInt.GetUnsignedBitLengthAsEInteger();
           boolean bigPower = false;
-          if (bigBitLength.compareTo(100) > 0 &&
+          if (digits > 50 &&
+              bigBitLength.compareTo(100) > 0 &&
               bigBitLength.Add(5).compareTo(digits) < 0) {
             // Has much fewer bits than digits to shift, so all of them
             // will be shifted to the right
@@ -459,7 +458,8 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
             bigBitLength.ToInt32Checked() : Integer.MAX_VALUE;
           // 10^48 has 160 bits; 10^98 has 326; bit length is cheaper
           // to calculate than base-10 digit length
-          if (bitLength < 160 || (digits > 100 && bitLength < 326)) {
+          if ((digits > 50 && bitLength < 160) ||
+              (digits > 100 && bitLength < 326)) {
             bigPower = true;
           } else {
             FastInteger digitsUpperBound = this.OverestimateDigitLength();
@@ -550,16 +550,6 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
         }
         return;
       }
-      if (this.shiftedBigInt.CanFitInInt32()) {
-        this.isSmall = true;
-        this.shiftedSmall = this.shiftedBigInt.ToInt32Checked();
-        this.ShiftRightSmall(digits);
-        return;
-      }
-      if (this.shiftedBigInt.CanFitInInt64()) {
-        this.ShiftRightLong(this.shiftedBigInt.ToInt64Unchecked(), digits);
-        return;
-      }
       this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
       if (new FastInteger(digits).Decrement().compareTo(this.knownDigitLength)
         >= 0) {
@@ -572,6 +562,16 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
         this.discardedBitCount.AddInt(digits);
         this.bitsAfterLeftmost |= this.bitLeftmost;
         this.bitLeftmost = 0;
+        return;
+      }
+      if (this.shiftedBigInt.CanFitInInt32()) {
+        this.isSmall = true;
+        this.shiftedSmall = this.shiftedBigInt.ToInt32Checked();
+        this.ShiftRightSmall(digits);
+        return;
+      }
+      if (this.shiftedBigInt.CanFitInInt64()) {
+        this.ShiftRightLong(this.shiftedBigInt.ToInt64Unchecked(), digits);
         return;
       }
       String str = this.shiftedBigInt.toString();

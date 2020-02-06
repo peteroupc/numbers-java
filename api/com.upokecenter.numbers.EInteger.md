@@ -107,13 +107,19 @@ This method may overflow.
 * `EInteger GetDigitCountAsEInteger()`<br>
  Returns the number of decimal digits used by this integer, in the form of an
  arbitrary-precision integer.
+* `long GetDigitCountAsInt64()`<br>
+ Returns the number of decimal digits used by this integer, in the form of a
+ 64-bit signed integer.
 * `int GetLowBit()`<br>
  Deprecated.
 This method may overflow.
  This method may overflow.
 * `EInteger GetLowBitAsEInteger()`<br>
- Gets the lowest set bit in this number's absolute value, in the form of an
- arbitrary-precision integer.
+ Gets the bit position of the lowest set bit in this number's absolute value,
+ in the form of an arbitrary-precision integer.
+* `long GetLowBitAsInt64()`<br>
+ Gets the bit position of the lowest set bit in this number's absolute value,
+ in the form of a 64-bit signed integer.
 * `static EInteger getOne()`<br>
  Gets the number 1 as an arbitrary-precision integer.
 * `boolean GetSignedBit​(int index) "Forms of numbers"`<br>
@@ -129,6 +135,9 @@ This method may overflow.
 * `EInteger GetSignedBitLengthAsEInteger()`<br>
  Finds the minimum number of bits needed to represent this object's value,
  except for its sign, in the form of an arbitrary-precision integer.
+* `long GetSignedBitLengthAsInt64()`<br>
+ Finds the minimum number of bits needed to represent this object's value,
+ except for its sign, in the form of a 64-bit signed integer.
 * `static EInteger getTen()`<br>
  Gets the number 10 as an arbitrary-precision integer.
 * `boolean GetUnsignedBit​(int index)`<br>
@@ -141,7 +150,10 @@ This method may overflow.
  This method may overflow.
 * `EInteger GetUnsignedBitLengthAsEInteger()`<br>
  Finds the minimum number of bits needed to represent this number's absolute
- value.
+ value, in the form of an arbitrary-precision integer.
+* `long GetUnsignedBitLengthAsInt64()`<br>
+ Finds the minimum number of bits needed to represent this number's absolute
+ value, in the form of a 64-bit signed integer.
 * `static EInteger getZero()`<br>
  Gets the number zero as an arbitrary-precision integer.
 * `int hashCode()`<br>
@@ -887,6 +899,20 @@ This method may overflow. Use GetDigitCountAsEInteger instead.
 * <code>java.lang.ArithmeticException</code> - The return value would exceed the range of a
  32-bit signed integer.
 
+### GetDigitCountAsInt64
+    public long GetDigitCountAsInt64()
+Returns the number of decimal digits used by this integer, in the form of a
+ 64-bit signed integer.
+
+**Returns:**
+
+* The number of digits in the decimal form of this integer. Returns 1
+ if this number is 0. Returns 2^63 - 1 (<code>Long.MAX_VALUE</code>
+ in.NET or <code>Long.MAX_VALUE</code> in Java) if the number of decimal
+ digits is 2^63 - 1 or greater. (Use <code>GetDigitCountAsEInteger</code>
+ instead if the application relies on the exact number of decimal
+ digits.)
+
 ### hashCode
     public int hashCode()
 Returns the hash code for this instance. No application or process IDs are
@@ -907,19 +933,38 @@ This method may overflow. Use GetLowBitAsEInteger instead.
 
 **Returns:**
 
-* The lowest bit set in the number, starting at 0. Returns -1 if this
- value is 0.
+* The bit position of the lowest bit set in the number, starting at 0.
+ Returns -1 if this value is 0.
 
-### GetLowBitAsEInteger
-    public EInteger GetLowBitAsEInteger()
-Gets the lowest set bit in this number's absolute value, in the form of an
- arbitrary-precision integer. (This will also be the lowest set bit
- in the number's two's-complement form (see <code>"Forms of numbers"</code>).).
+### GetLowBitAsInt64
+    public long GetLowBitAsInt64()
+Gets the bit position of the lowest set bit in this number's absolute value,
+ in the form of a 64-bit signed integer. (This will also be the
+ position of the lowest set bit in the number's two's-complement form
+  (see <code>"Forms of numbers"</code>
+).).
 
 **Returns:**
 
-* The lowest bit set in the number, starting at 0. Returns -1 if this
- value is 0 or odd.
+* The bit position of the lowest bit set in the number, starting at 0.
+ Returns -1 if this value is 0 or odd. Returns 2^63 - 1 (<code>
+ Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java) if this
+ number is other than zero but the lowest set bit is at 2^63 - 1 or
+ greater. (Use <code>GetLowBitAsEInteger</code> instead if the application
+ relies on the exact value of the lowest set bit position.)
+
+### GetLowBitAsEInteger
+    public EInteger GetLowBitAsEInteger()
+Gets the bit position of the lowest set bit in this number's absolute value,
+ in the form of an arbitrary-precision integer. (This will also be
+ the position of the lowest set bit in the number's two's-complement
+  form (see <code>"Forms of
+  numbers"</code>).).
+
+**Returns:**
+
+* The bit position of the lowest bit set in the number, starting at 0.
+ Returns -1 if this value is 0 or odd.
 
 ### GetSignedBit
     public boolean GetSignedBit​(EInteger bigIndex)
@@ -972,8 +1017,28 @@ Finds the minimum number of bits needed to represent this object's value,
 
 **Returns:**
 
-* The number of bits in this object's value. Returns 0 if this
- object's value is 0 or negative 1.
+* The number of bits in this object's value, except for its sign.
+ Returns 0 if this object's value is 0 or negative 1.
+
+### GetSignedBitLengthAsInt64
+    public long GetSignedBitLengthAsInt64()
+Finds the minimum number of bits needed to represent this object's value,
+ except for its sign, in the form of a 64-bit signed integer. If the
+ value is negative, finds the number of bits in the value equal to
+ this object's absolute value minus 1. For example, all integers in
+ the interval [-(2^63), (2^63) - 1], which is the same as the range
+ of integers in Java's and.getNET()'s <code>long</code> type, have a signed bit
+ length of 63 or less, and all other integers have a signed bit
+ length of greater than 63.
+
+**Returns:**
+
+* The number of bits in this object's value, except for its sign.
+ Returns 0 if this object's value is 0 or negative 1. Returns 2^63 -
+ 1 (<code>Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java)
+ if the number of bits is 2^63 - 1 or greater. (Use <code>
+ GetUnsignedBitLengthAsEInteger</code> instead if the application relies on
+ the exact number of bits.)
 
 ### GetSignedBitLength
     @Deprecated public int GetSignedBitLength()
@@ -982,8 +1047,8 @@ This method may overflow. Use GetSignedBitLengthAsEInteger instead.
 
 **Returns:**
 
-* The number of bits in this object's value. Returns 0 if this
- object's value is 0 or negative 1.
+* The number of bits in this object's value, except for its sign.
+ Returns 0 if this object's value is 0 or negative 1.
 
 **Throws:**
 
@@ -1027,16 +1092,34 @@ Returns whether a bit is set in this number's absolute value.
 ### GetUnsignedBitLengthAsEInteger
     public EInteger GetUnsignedBitLengthAsEInteger()
 Finds the minimum number of bits needed to represent this number's absolute
- value. For example, all integers in the interval [-((2^63) - 1),
- (2^63) - 1] have an unsigned bit length of 63 or less, and all other
- integers have an unsigned bit length of greater than 63. This
- interval is not the same as the range of integers in Java's
- and.getNET()'s <code>long</code> type.
+ value, in the form of an arbitrary-precision integer. For example,
+ all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
+ unsigned bit length of 63 or less, and all other integers have an
+ unsigned bit length of greater than 63. This interval is not the
+ same as the range of integers in Java's and.getNET()'s <code>long</code> type.
 
 **Returns:**
 
-* The number of bits in this object's value. Returns 0 if this
- object's value is 0, and returns 1 if the value is negative 1.
+* The number of bits in this object's absolute value. Returns 0 if
+ this object's value is 0, and returns 1 if the value is negative 1.
+
+### GetUnsignedBitLengthAsInt64
+    public long GetUnsignedBitLengthAsInt64()
+Finds the minimum number of bits needed to represent this number's absolute
+ value, in the form of a 64-bit signed integer. For example, all
+ integers in the interval [-((2^63) - 1), (2^63) - 1] have an
+ unsigned bit length of 63 or less, and all other integers have an
+ unsigned bit length of greater than 63. This interval is not the
+ same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+
+**Returns:**
+
+* The number of bits in this object's absolute value. Returns 0 if
+ this object's value is 0, and returns 1 if the value is negative 1.
+ Returns 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET or <code>
+ Long.MAX_VALUE</code> in Java) if the number of bits is 2^63 - 1 or
+ greater. (Use <code>GetUnsignedBitLengthAsEInteger</code> instead if the
+ application relies on the exact number of bits.)
 
 ### GetUnsignedBitLength
     @Deprecated public int GetUnsignedBitLength()
@@ -1045,8 +1128,8 @@ This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
 
 **Returns:**
 
-* The number of bits in this object's value. Returns 0 if this
- object's value is 0, and returns 1 if the value is negative 1.
+* The number of bits in this object's absolute value. Returns 0 if
+ this object's value is 0, and returns 1 if the value is negative 1.
 
 **Throws:**
 

@@ -19,8 +19,6 @@ at: http://peteroupc.github.io/
 // to return MaxValue on overflow
 // TODO: In next major version, perhaps change GetLowBit/GetDigitCount
 // to return MaxValue on overflow
-// TODO: Add GetSigned/UnsignedBitLengthAsInt64
-// TODO: Add GetLowBitAsInt64/GetDigitCountAsInt64
 
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
@@ -2414,7 +2412,18 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
       return (int)dc;
     }
 
-    private long GetDigitCountAsInt64() {
+    /**
+     * Returns the number of decimal digits used by this integer, in the form of a
+     * 64-bit signed integer.
+     * @return The number of digits in the decimal form of this integer. Returns 1
+     * if this number is 0. Returns 2^63 - 1 ({@code Long.MAX_VALUE}
+     * in.NET or {@code Long.MAX_VALUE} in Java) if the number of decimal
+     * digits is 2^63 - 1 or greater. (Use {@code GetDigitCountAsEInteger}
+     * instead if the application relies on the exact number of decimal
+     * digits.)
+     */
+    public long GetDigitCountAsInt64() {
+      // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       EInteger ei = this;
       long retval;
       if (ei.isZero()) {
@@ -2657,11 +2666,12 @@ maxDigitEstimate : retval +
     }
 
     /**
-     * Gets the lowest set bit in this number's absolute value. (This will also be
-     * the lowest set bit in the number's two's-complement form (see {@link
+     * Gets the bit position of the lowest set bit in this number's absolute value.
+     * (This will also be the position of the lowest set bit in the
+     * number's two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
-     * @return The lowest bit set in the number, starting at 0. Returns -1 if this
-     * value is 0.
+     * @return The bit position of the lowest bit set in the number, starting at 0.
+     * Returns -1 if this value is 0.
      * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
  */
 @Deprecated
@@ -2670,14 +2680,20 @@ maxDigitEstimate : retval +
     }
 
     /**
-     * Gets the lowest set bit in this number's absolute value, in the form of an
-     * arbitrary-precision integer. (This will also be the lowest set bit
-     * in the number's two's-complement form (see {@link
-     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
-     * @return The lowest bit set in the number, starting at 0. Returns -1 if this
-     * value is 0 or odd.
+     * Gets the bit position of the lowest set bit in this number's absolute value,
+     * in the form of a 64-bit signed integer. (This will also be the
+     * position of the lowest set bit in the number's two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}
+     *).).
+     * @return The bit position of the lowest bit set in the number, starting at 0.
+     * Returns -1 if this value is 0 or odd. Returns 2^63 - 1 ({@code
+     * Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java) if this
+     * number is other than zero but the lowest set bit is at 2^63 - 1 or
+     * greater. (Use {@code GetLowBitAsEInteger} instead if the application
+     * relies on the exact value of the lowest set bit position.)
      */
-    public EInteger GetLowBitAsEInteger() {
+    public long GetLowBitAsInt64() {
+      // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       long retSetBitLong = 0;
       for (int i = 0; i < this.wordCount; ++i) {
         int c = ((int)this.words[i]) & ShortMask;
@@ -2693,16 +2709,28 @@ maxDigitEstimate : retval +
                                 8) & ShortMask) != 0) ? 7 : ((((c << 7) &
                 ShortMask) != 0) ? 8 : ((((c << 6) & ShortMask) != 0) ? 9 :
                               ((((c << 5) & ShortMask) != 0) ? 10 : ((((c <<
-                                        4) & ShortMask) != 0) ? 11 : ((((c <<
-3) &
+                              4) & ShortMask) != 0) ? 11 : ((((c << 3) &
                                         0xffff) != 0) ? 12 : ((((c << 2) &
                                           0xffff) != 0) ? 13 : ((((c << 1) &
                 ShortMask) != 0) ? 14 : 15))))))))))))));
-          return EInteger.FromInt64(retSetBitLong).Add(
-              EInteger.FromInt32(rsb));
+          retSetBitLong += rsb;
+          return retSetBitLong;
         }
       }
-      return EInteger.FromInt32(-1);
+      return -1;
+    }
+
+    /**
+     * Gets the bit position of the lowest set bit in this number's absolute value,
+     * in the form of an arbitrary-precision integer. (This will also be
+     * the position of the lowest set bit in the number's two's-complement
+     *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of
+     *  numbers"}).).
+     * @return The bit position of the lowest bit set in the number, starting at 0.
+     * Returns -1 if this value is 0 or odd.
+     */
+    public EInteger GetLowBitAsEInteger() {
+       return EInteger.FromInt64(GetLowBitAsInt64());
     }
 
     /**
@@ -2803,10 +2831,32 @@ maxDigitEstimate : retval +
      * the range of integers in Java's and.getNET()'s <code>long</code> type, have a
      * signed bit length of 63 or less, and all other integers have a
      * signed bit length of greater than 63.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0 or negative 1.
+     * @return The number of bits in this object's value, except for its sign.
+     * Returns 0 if this object's value is 0 or negative 1.
      */
     public EInteger GetSignedBitLengthAsEInteger() {
+      // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
+      return EInteger.FromInt64(GetSignedBitLengthAsInt64());
+    }
+
+    /**
+     * Finds the minimum number of bits needed to represent this object's value,
+     * except for its sign, in the form of a 64-bit signed integer. If the
+     * value is negative, finds the number of bits in the value equal to
+     * this object's absolute value minus 1. For example, all integers in
+     * the interval [-(2^63), (2^63) - 1], which is the same as the range
+     * of integers in Java's and.getNET()'s <code>long</code> type, have a signed bit
+     * length of 63 or less, and all other integers have a signed bit
+     * length of greater than 63.
+     * @return The number of bits in this object's value, except for its sign.
+     * Returns 0 if this object's value is 0 or negative 1. Returns 2^63 -
+     * 1 ({@code Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java)
+     * if the number of bits is 2^63 - 1 or greater. (Use {@code
+     * GetUnsignedBitLengthAsEInteger} instead if the application relies on
+     * the exact number of bits.)
+     */
+    public long GetSignedBitLengthAsInt64() {
+      // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       int wc = this.wordCount;
       if (wc != 0) {
         if (this.negative) {
@@ -2815,9 +2865,9 @@ maxDigitEstimate : retval +
           if (wc > 1 && eiabs.words[0] != 0) {
             // No need to subtract by 1; the signed bit length will
             // be the same in either case
-            return eiabs.GetSignedBitLengthAsEInteger();
+            return eiabs.GetSignedBitLengthAsInt64();
           } else {
-            return eiabs.Subtract(EInteger.FromInt32(1)).GetSignedBitLengthAsEInteger();
+            return eiabs.Subtract(EInteger.FromInt32(1)).GetSignedBitLengthAsInt64();
           }
         }
         int numberValue = ((int)this.words[wc - 1]) & ShortMask;
@@ -2840,15 +2890,9 @@ maxDigitEstimate : retval +
             wcextra = ((numberValue >> 15) == 0) ? wcextra - 1 : wcextra;
           }
         }
-        if (wc < 0xffffff0) {
-          wc = (((wc - 1) << 4) + wcextra);
-          return EInteger.FromInt32(wc);
-        } else {
-          EInteger eiwc = EInteger.FromInt32(wc).Subtract(1)
-            .Multiply(16).Add(wcextra);
-        }
+        return (((long)wc - 1) * 16) + wcextra;
       }
-      return EInteger.FromInt32(0);
+      return 0;
     }
 
     /**
@@ -2859,8 +2903,8 @@ maxDigitEstimate : retval +
      * is the same as the range of integers in Java's and.getNET()'s <code>long</code>
      * type, have a signed bit length of 63 or less, and all other integers
      * have a signed bit length of greater than 63.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0 or negative 1.
+     * @return The number of bits in this object's value, except for its sign.
+     * Returns 0 if this object's value is 0 or negative 1.
      * @throws ArithmeticException The return value would exceed the range of a
      * 32-bit signed integer.
      * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
@@ -2916,21 +2960,41 @@ maxDigitEstimate : retval +
 
     /**
      * Finds the minimum number of bits needed to represent this number's absolute
-     * value. For example, all integers in the interval [-((2^63) - 1),
-     * (2^63) - 1] have an unsigned bit length of 63 or less, and all other
-     * integers have an unsigned bit length of greater than 63. This
-     * interval is not the same as the range of integers in Java's
-     * and.getNET()'s <code>long</code> type.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0, and returns 1 if the value is negative 1.
+     * value, in the form of an arbitrary-precision integer. For example,
+     * all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
+     * unsigned bit length of 63 or less, and all other integers have an
+     * unsigned bit length of greater than 63. This interval is not the
+     * same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+     * @return The number of bits in this object's absolute value. Returns 0 if
+     * this object's value is 0, and returns 1 if the value is negative 1.
      */
     public EInteger GetUnsignedBitLengthAsEInteger() {
+      // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
+      return EInteger.FromInt64(GetUnsignedBitLengthAsInt64());
+    }
+
+    /**
+     * Finds the minimum number of bits needed to represent this number's absolute
+     * value, in the form of a 64-bit signed integer. For example, all
+     * integers in the interval [-((2^63) - 1), (2^63) - 1] have an
+     * unsigned bit length of 63 or less, and all other integers have an
+     * unsigned bit length of greater than 63. This interval is not the
+     * same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+     * @return The number of bits in this object's absolute value. Returns 0 if
+     * this object's value is 0, and returns 1 if the value is negative 1.
+     * Returns 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code
+     * Long.MAX_VALUE} in Java) if the number of bits is 2^63 - 1 or
+     * greater. (Use {@code GetUnsignedBitLengthAsEInteger} instead if the
+     * application relies on the exact number of bits.)
+     */
+    public long GetUnsignedBitLengthAsInt64() {
+      // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       int wc = this.wordCount;
       if (wc != 0) {
         int numberValue = ((int)this.words[wc - 1]) & ShortMask;
-        EInteger ebase = EInteger.FromInt32(wc - 1).ShiftLeft(4);
+        long longBase=((long)wc - 1) << 4;
         if (numberValue == 0) {
-          return ebase;
+          return longBase;
         }
         wc = 16;
         {
@@ -2950,9 +3014,9 @@ maxDigitEstimate : retval +
             --wc;
           }
         }
-        return ebase.Add(EInteger.FromInt32(wc));
+        return longBase + wc;
       }
-      return EInteger.FromInt32(0);
+      return 0;
     }
 
     /**
@@ -2962,8 +3026,8 @@ maxDigitEstimate : retval +
      * integers have an unsigned bit length of greater than 63. This
      * interval is not the same as the range of integers in Java's
      * and.getNET()'s <code>long</code> type.
-     * @return The number of bits in this object's value. Returns 0 if this
-     * object's value is 0, and returns 1 if the value is negative 1.
+     * @return The number of bits in this object's absolute value. Returns 0 if
+     * this object's value is 0, and returns 1 if the value is negative 1.
      * @throws ArithmeticException The return value would exceed the range of a
      * 32-bit signed integer.
      * @deprecated This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
