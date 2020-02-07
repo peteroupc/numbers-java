@@ -123,8 +123,6 @@ at: http://peteroupc.github.io/
           throw new IllegalArgumentException("multiplicand(" + multiplicand +
             ") is less than " + "0 ");
         }
-        System.out.println("multiplier="+this.ToEInteger());
-        System.out.println("multiplicand="+multiplicand);
         if (multiplicand != 0) {
           int carry = 0;
           if (this.wordCount == 0) {
@@ -251,7 +249,6 @@ at: http://peteroupc.github.io/
           }
           this.wordCount = 0;
         }
-        System.out.println("result="+this.ToEInteger());
         return this;
       }
 

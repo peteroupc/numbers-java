@@ -1197,10 +1197,21 @@ import com.upokecenter.numbers.*;
           "0.00390625",
           stringTemp);
       }
+
+EDecimal ed1 = EDecimal.FromString(
+  "-4.283595962816029891509990043176592129349E-265444677156");
+EDecimal ed2 = EDecimal.FromString(
+  "1.154883492783088701967E+230940250505264307520");
+EDecimalTest.TestDivideOne(ed1, ed2);
+ed1 = EDecimal.FromString(
+  "-3.77339248640695614E-16962706853");
+ed2 = EDecimal.FromString(
+  "-8.801467625870877584114178689458325778E+19649240327");
+EDecimalTest.TestDivideOne(ed1, ed2);
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
-        EDecimal ed1 = RandomObjects.RandomEDecimal (fr);
-        EDecimal ed2 = RandomObjects.RandomEDecimal (fr);
+        ed1 = RandomObjects.RandomEDecimal (fr);
+        ed2 = RandomObjects.RandomEDecimal (fr);
 TestDivideOne(ed1, ed2);
       }
       try {
