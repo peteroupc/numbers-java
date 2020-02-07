@@ -180,13 +180,7 @@ at: http://peteroupc.github.io/
 this.shiftedBigInt.GetUnsignedBitLengthAsEInteger().compareTo(digitsToShift) <
 0)) {
             // Bit length is less than digits to shift, and digits to shift is >= 1000000,
-            // so
-            // whole number would be shifted
-            // DebugUtility.Log("digits="+digitsToShift);
-            //
-            //
-            //
-            //  DebugUtility.Log("bits="+this.shiftedBigInt.GetUnsignedBitLengthAsEInteger());
+            // so whole number would be shifted
             this.discardedBitCount = (this.discardedBitCount == null) ? (new
 FastInteger(0)) : this.discardedBitCount;
             this.discardedBitCount.AddBig(digitsToShift);
@@ -200,14 +194,14 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
             return;
           }
           int count = 1000000;
-          if (digitsToShift.compareTo(EInteger.FromInt64(1000000)) < 0) {
+          if (digitsToShift.compareTo(1000000) < 0) {
             count = digitsToShift.ToInt32Checked();
           }
           this.ShiftRightInt(count);
           digitsToShift = digitsToShift.Subtract(EInteger.FromInt32(count));
           if (this.isSmall ? this.shiftedSmall == 0 :
             this.shiftedBigInt.isZero()) {
-            break;
+            return;
           }
         }
       }
