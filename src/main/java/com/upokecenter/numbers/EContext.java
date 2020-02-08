@@ -950,6 +950,7 @@ this.simplified +
 
   /**
    * Not documented yet.
+   * @return The return value is not documented yet.
    */
     public EContext GetTrappable() {
        return (this.getTraps() == 0) ? this : this.WithTraps(0).WithBlankFlags();

@@ -2185,7 +2185,6 @@ if (this.isZero()) {
     }
 
     // Begin integer conversions
-
     private void CheckTrivialOverflow(int maxBits) {
       if (this.isZero()) {
         return;
@@ -2215,11 +2214,11 @@ if (this.isZero()) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-if (this.isNegative() && !this.isZero() &&
+      if (this.isNegative() && !this.isZero() &&
 this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
         throw new ArithmeticException("Value out of range");
       }
-      CheckTrivialOverflow(8);
+      this.CheckTrivialOverflow(8);
       return this.isZero() ? ((byte)0) : this.ToEInteger().ToByteChecked();
     }
 
@@ -2246,11 +2245,11 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-if (this.isNegative() && !this.isZero() &&
+      if (this.isNegative() && !this.isZero() &&
 this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
         throw new ArithmeticException("Value out of range");
       }
-      CheckTrivialOverflow(8);
+      this.CheckTrivialOverflow(8);
       return this.isZero() ? ((byte)0) : this.ToEIntegerIfExact().ToByteChecked();
     }
 
@@ -2277,7 +2276,7 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      CheckTrivialOverflow(15);
+      this.CheckTrivialOverflow(15);
       return this.isZero() ? ((short)0) : this.ToEInteger().ToInt16Checked();
     }
 
@@ -2304,7 +2303,7 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      CheckTrivialOverflow(15);
+      this.CheckTrivialOverflow(15);
       return this.isZero() ? ((short)0) :
         this.ToEIntegerIfExact().ToInt16Checked();
     }
@@ -2332,7 +2331,7 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      CheckTrivialOverflow(31);
+      this.CheckTrivialOverflow(31);
       return this.isZero() ? ((int)0) : this.ToEInteger().ToInt32Checked();
     }
 
@@ -2360,7 +2359,7 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      CheckTrivialOverflow(31);
+      this.CheckTrivialOverflow(31);
       return this.isZero() ? ((int)0) : this.ToEIntegerIfExact().ToInt32Checked();
     }
 
@@ -2397,7 +2396,7 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      CheckTrivialOverflow(63);
+      this.CheckTrivialOverflow(63);
       return this.isZero() ? 0L : this.ToEInteger().ToInt64Checked();
     }
 
@@ -2425,7 +2424,7 @@ this.getUnsignedNumerator().compareTo(this.getDenominator()) >= 0) {
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      CheckTrivialOverflow(63);
+      this.CheckTrivialOverflow(63);
       return this.isZero() ? 0L : this.ToEIntegerIfExact().ToInt64Checked();
     }
 

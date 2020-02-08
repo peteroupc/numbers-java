@@ -2416,11 +2416,10 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
      * Returns the number of decimal digits used by this integer, in the form of a
      * 64-bit signed integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
-     * if this number is 0. Returns 2^63 - 1 ({@code Long.MAX_VALUE}
-     * in.NET or {@code Long.MAX_VALUE} in Java) if the number of decimal
-     * digits is 2^63 - 1 or greater. (Use {@code GetDigitCountAsEInteger}
-     * instead if the application relies on the exact number of decimal
-     * digits.)
+     * if this number is 0. Returns 2^63 - 1({@code Long.MAX_VALUE} in.getNET()
+     * or {@code Long.MAX_VALUE} in Java) if the number of decimal digits
+     * is 2^63 - 1 or greater. (Use {@code GetDigitCountAsEInteger} instead
+     * if the application relies on the exact number of decimal digits.)
      */
     public long GetDigitCountAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -2730,7 +2729,7 @@ maxDigitEstimate : retval +
      * Returns -1 if this value is 0 or odd.
      */
     public EInteger GetLowBitAsEInteger() {
-       return EInteger.FromInt64(GetLowBitAsInt64());
+       return EInteger.FromInt64(this.GetLowBitAsInt64());
     }
 
     /**
@@ -2836,7 +2835,7 @@ maxDigitEstimate : retval +
      */
     public EInteger GetSignedBitLengthAsEInteger() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
-      return EInteger.FromInt64(GetSignedBitLengthAsInt64());
+      return EInteger.FromInt64(this.GetSignedBitLengthAsInt64());
     }
 
     /**
@@ -2970,7 +2969,7 @@ maxDigitEstimate : retval +
      */
     public EInteger GetUnsignedBitLengthAsEInteger() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
-      return EInteger.FromInt64(GetUnsignedBitLengthAsInt64());
+      return EInteger.FromInt64(this.GetUnsignedBitLengthAsInt64());
     }
 
     /**
@@ -2992,7 +2991,7 @@ maxDigitEstimate : retval +
       int wc = this.wordCount;
       if (wc != 0) {
         int numberValue = ((int)this.words[wc - 1]) & ShortMask;
-        long longBase=((long)wc - 1) << 4;
+        long longBase = ((long)wc - 1) << 4;
         if (numberValue == 0) {
           return longBase;
         }

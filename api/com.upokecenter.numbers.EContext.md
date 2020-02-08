@@ -744,6 +744,11 @@ Copies this EContext with an unlimited exponent range.
 ### GetTrappable
     public EContext GetTrappable()
 Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
 ### TriggerTraps
     public <T> T TriggerTraps​(T result, EContext trappableContext)
 Not documented yet.

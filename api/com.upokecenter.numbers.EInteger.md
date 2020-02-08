@@ -907,11 +907,10 @@ Returns the number of decimal digits used by this integer, in the form of a
 **Returns:**
 
 * The number of digits in the decimal form of this integer. Returns 1
- if this number is 0. Returns 2^63 - 1 (<code>Long.MAX_VALUE</code>
- in.NET or <code>Long.MAX_VALUE</code> in Java) if the number of decimal
- digits is 2^63 - 1 or greater. (Use <code>GetDigitCountAsEInteger</code>
- instead if the application relies on the exact number of decimal
- digits.)
+ if this number is 0. Returns 2^63 - 1(<code>Long.MAX_VALUE</code> in.getNET()
+ or <code>Long.MAX_VALUE</code> in Java) if the number of decimal digits
+ is 2^63 - 1 or greater. (Use <code>GetDigitCountAsEInteger</code> instead
+ if the application relies on the exact number of decimal digits.)
 
 ### hashCode
     public int hashCode()

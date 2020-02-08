@@ -217,9 +217,9 @@ Renamed to FromEFloat.
  byte (from 0 to 255) without rounding to a different numerical
  value.
 * `byte ToByteUnchecked()`<br>
- Converts this number's value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two's-complement
- form as a byte (from 0 to 255).
+ Converts this number's value to an integer (using ToEInteger), and returns
+ the least-significant bits of that integer's two's-complement form
+ as a byte (from 0 to 255).
 * `double ToDouble()`<br>
  Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
@@ -311,6 +311,8 @@ Renamed to ToEFloatExactIfPossible.
  Converts this number's value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two's-complement
  form as a 64-bit signed integer.
+* `ERational ToLowestTerms()`<br>
+ Converts this value to its form in lowest terms.
 * `float ToSingle()`<br>
  Converts this value to a 32-bit binary floating-point number.
 * `java.lang.String toString()`<br>
@@ -1170,6 +1172,23 @@ Converts this value to a 64-bit floating-point number. The half-even
  value can be positive infinity or negative infinity if this value
  exceeds the range of a 64-bit floating point number.
 
+### ToLowestTerms
+    public ERational ToLowestTerms()
+Converts this value to its form in lowest terms. For example, (8/4) becomes
+ (4/1).
+
+**Returns:**
+
+* An arbitrary-precision rational with the same value as this one but
+ in lowest terms. Returns this object if it is infinity or NaN.
+ Returns ERational.NegativeZero if this object is a negative zero.
+ Returns ERational.Zero if this object is a positive zero.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN).
+
 ### ToEInteger
     public EInteger ToEInteger()
 Converts this value to an arbitrary-precision integer by dividing the
@@ -1553,9 +1572,9 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 
 ### ToByteUnchecked
     public byte ToByteUnchecked()
-Converts this number's value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two's-complement
- form as a byte (from 0 to 255).
+Converts this number's value to an integer (using ToEInteger), and returns
+ the least-significant bits of that integer's two's-complement form
+ as a byte (from 0 to 255).
 
 **Returns:**
 

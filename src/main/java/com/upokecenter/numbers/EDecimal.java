@@ -3769,7 +3769,7 @@ EDecimal.PositiveInfinity;
 ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
     EDecimal ret = value.Log(tmpctx).Divide(baseValue.Log(tmpctx), ctx);
     if (ret.IsInteger() && !ret.isZero()) {
-      flags |= EContext.FlagRounded |EContext.FlagInexact;
+      flags |= EContext.FlagRounded | EContext.FlagInexact;
       if (baseValue.Pow(ret).CompareToValue(value) == 0) {
         EDecimal rtmp = ret.Quantize(EDecimal.FromInt32(1), ctx.WithNoFlags());
         if (!rtmp.IsNaN()) {
@@ -4968,6 +4968,7 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
   /**
    * Not documented yet.
    * @param ctx Not documented yet.
+   * @return The return value is not documented yet.
    */
     public EDecimal PreRound(EContext ctx) {
       return NumberUtility.PreRound(this, ctx, GetMathValue(ctx));
@@ -5629,11 +5630,19 @@ private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
   return e.Abs().Multiply(333).Divide(100).Add(1);
 }
 
-public EInteger ToSizedEInteger(int maxBitLength) {
+  /**
+   * Not documented yet.
+   * @param maxBitLength Not documented yet.
+   */
+  public EInteger ToSizedEInteger(int maxBitLength) {
   return this.ToSizedEInteger(maxBitLength, false);
 }
 
-public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
+  /**
+   * Not documented yet.
+   * @param maxBitLength Not documented yet.
+   */
+  public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
   return this.ToSizedEInteger(maxBitLength, true);
 }
 
@@ -5650,12 +5659,12 @@ private EInteger ToSizedEInteger(int maxBitLength, boolean exact) {
    if (exp.signum() > 0) {
      // x * 10^y
      long imantbits = mant.GetSignedBitLengthAsInt64();
-if (imantbits >= maxBitLength) {
+     if (imantbits >= maxBitLength) {
        throw new ArithmeticException("Value out of range");
      }
      if (exp.compareTo(0x100000) < 0 && imantbits < 0x100000) {
        // Lower bound of bit count in 10^exp based on ln(10^exp)/ln(2)
-       long expBitsLowerBound = (exp.ToInt64Checked()*332/100)+1;
+       long expBitsLowerBound = (exp.ToInt64Checked() * 332 / 100) + 1;
        if ((imantbits - 1) + expBitsLowerBound > maxBitLength) {
          throw new ArithmeticException("Value out of range");
        }
@@ -5664,7 +5673,7 @@ if (imantbits >= maxBitLength) {
       throw new ArithmeticException("Value out of range");
     } else {
        EInteger mantbits = mant.GetSignedBitLengthAsEInteger();
-       if (mantbits.Subtract(1) .Add(PowerOfRadixBitsLowerBound(exp))
+       if (mantbits.Subtract(1).Add(PowerOfRadixBitsLowerBound(exp))
            .compareTo(maxBitLength) > 0) {
          throw new ArithmeticException("Value out of range");
        }
@@ -5676,8 +5685,8 @@ if (imantbits >= maxBitLength) {
      exp = exp.Abs();
      long imantbits = mant.GetSignedBitLengthAsInt64();
      if (exp.compareTo(0x100000) < 0 && imantbits < 0x100000) {
-       long expBitsUpperBound = (exp.ToInt64Checked()*333/100)+1;
-       long expBitsLowerBound = (exp.ToInt64Checked()*332/100)+1;
+       long expBitsUpperBound = (exp.ToInt64Checked() * 333 / 100) + 1;
+       long expBitsLowerBound = (exp.ToInt64Checked() * 332 / 100) + 1;
        if (imantbits - 1 - expBitsUpperBound > maxBitLength) {
          throw new ArithmeticException("Value out of range");
        }
@@ -5698,7 +5707,7 @@ if (exact) {
 }
      } else {
        EInteger mantbits = mant.GetSignedBitLengthAsEInteger();
-       if (mantbits.Subtract(1) .Subtract(PowerOfRadixBitsUpperBound(exp))
+       if (mantbits.Subtract(1).Subtract(PowerOfRadixBitsUpperBound(exp))
            .compareTo(maxBitLength) > 0) {
          throw new ArithmeticException("Value out of range");
        }

@@ -622,6 +622,10 @@ Renamed to ToEDecimal.
 * `float ToSingle()`<br>
  Converts this value to its closest equivalent as 32-bit floating-point
  number.
+* `EInteger ToSizedEInteger​(int maxBitLength)`<br>
+ Not documented yet.
+* `EInteger ToSizedEIntegerIfExact​(int maxBitLength)`<br>
+ Not documented yet.
 * `java.lang.String toString()`<br>
  Converts this number's value to a text string.
 * `EFloat Ulp()`<br>
@@ -3206,6 +3210,10 @@ Not documented yet.
 
 * <code>ctx</code> - Not documented yet.
 
+**Returns:**
+
+* The return value is not documented yet.
+
 ### ScaleByPowerOfTwo
     public EFloat ScaleByPowerOfTwo​(int places)
 Returns a number similar to this number but with the scale adjusted.
@@ -3369,7 +3377,11 @@ Converts this value to an arbitrary-precision decimal number.
     public EInteger ToEInteger()
 Converts this value to an arbitrary-precision integer. Any fractional part
  of this value will be discarded when converting to an
- arbitrary-precision integer.
+ arbitrary-precision integer. Note that depending on the value,
+ especially the exponent, generating the arbitrary-precision integer
+ may require a huge amount of memory. Use the ToSizedEInteger method
+ to convert a number to an EInteger only if the integer fits in a
+ bounded bit range; that method will throw an exception on overflow.
 
 **Returns:**
 
@@ -3394,10 +3406,17 @@ Renamed to ToEIntegerIfExact.
 * <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
 
+* <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
+
 ### ToEIntegerIfExact
     public EInteger ToEIntegerIfExact()
 Converts this value to an arbitrary-precision integer, checking whether the
- value contains a fractional part.
+ value contains a fractional part. Note that depending on the value,
+ especially the exponent, generating the arbitrary-precision integer
+ may require a huge amount of memory. Use the ToSizedEIntegerIfExact
+ method to convert a number to an EInteger only if the integer fits
+ in a bounded bit range; that method will throw an exception on
+ overflow.
 
 **Returns:**
 
@@ -3407,6 +3426,8 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 * <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
+
+* <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
 
 ### ToEngineeringString
     public java.lang.String ToEngineeringString()
@@ -3511,6 +3532,22 @@ Returns the unit in the last place. The significand will be 1 and the
 **Returns:**
 
 * An arbitrary-precision binary floating-point number.
+
+### ToSizedEInteger
+    public EInteger ToSizedEInteger​(int maxBitLength)
+Not documented yet.
+
+**Parameters:**
+
+* <code>maxBitLength</code> - Not documented yet.
+
+### ToSizedEIntegerIfExact
+    public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
+Not documented yet.
+
+**Parameters:**
+
+* <code>maxBitLength</code> - Not documented yet.
 
 ### Increment
     public EFloat Increment()
