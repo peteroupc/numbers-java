@@ -6061,16 +6061,40 @@ DigitCountLowerBound(bigUnsignedMantissa.Abs());
         }
       }
       int scaleSign = -this.exponent.signum();
-      String mantissaString = this.unsignedMantissa.toString();
+      String mantissaString;
       if (scaleSign == 0) {
+        mantissaString = this.unsignedMantissa.toString();
         return negative ? "-" + mantissaString : mantissaString;
       }
       boolean iszero = this.unsignedMantissa.isValueZero();
       if (mode == 2 && iszero && scaleSign < 0) {
         // special case for zero in plain
+        mantissaString = this.unsignedMantissa.toString();
         return negative ? "-" + mantissaString : mantissaString;
       }
       StringBuilder builder = null;
+      if (mode == 0 && this.unsignedMantissa.CanFitInInt32() &&
+         this.exponent.CanFitInInt32()) {
+        int intExp = this.exponent.AsInt32();
+        int intMant = this.unsignedMantissa.AsInt32();
+        if (intMant < 1000 && intExp == -2) {
+          int a, b, c;
+          a = intMant%10;intMant/=10;
+          b = intMant%10;intMant/=10;
+          c = intMant;
+          int clength=(negative ? 1 : 0) + 4;
+          char[] chars = new char[clength];
+if (negative) {
+  chars[i++]='-';
+}
+          chars[i++]=(char)(0x30 + c);
+          chars[i++]='.';
+          chars[i++]=(char)(0x30 + b);
+          chars[i++]=(char)(0x30 + a);
+          return new String(chars, 0, clength);
+        }
+      }
+      mantissaString = this.unsignedMantissa.toString();
       if (mode == 0 && mantissaString.length() < 100 &&
         this.exponent.CanFitInInt32()) {
         int intExp = this.exponent.AsInt32();
@@ -6078,31 +6102,41 @@ DigitCountLowerBound(bigUnsignedMantissa.Abs());
           int adj = (intExp + mantissaString.length()) - 1;
           if (scaleSign >= 0 && adj >= -6) {
             if (scaleSign > 0) {
-              int dp = intExp + mantissaString.length();
+              int ms = mantissaString.length();
+              int dp = intExp + ms;
               if (dp < 0) {
-                builder = new StringBuilder(mantissaString.length() + 6);
-                if (negative) {
-                  builder.append("-0.");
-                } else {
-                  builder.append("0.");
-                }
                 dp = -dp;
+                int clength = 2 + dp + (negative ? 1 : 0) + ms;
+                char[] chars = new char[clength];
+                int i = 0;
+if (negative) {
+  chars[i++]='-';
+}
+                chars[i++]='0';
+                chars[i++]='.';
                 for (int j = 0; j < dp; ++j) {
-                  builder.append('0');
+                  chars[i++]='0';
                 }
-                builder.append(mantissaString);
-                return builder.toString();
+                for (int j = 0; j < ms; ++j) {
+                  chars[i++]=mantissaString.charAt(j);
+                }
+                return new String(chars, 0, clength);
               } else if (dp == 0) {
-                builder = new StringBuilder(mantissaString.length() + 6);
-                if (negative) {
-                  builder.append("-0.");
-                } else {
-                  builder.append("0.");
+                int clength = 2 + (negative ? 1 : 0) + ms;
+                char[] chars = new char[clength];
+                int i = 0;
+if (negative) {
+  chars[i++]='-';
+}
+                chars[i++]='0';
+                chars[i++]='.';
+                for (int j = 0; j < ms; ++j) {
+                  chars[i++]=mantissaString.charAt(j);
                 }
-                builder.append(mantissaString);
-                return builder.toString();
-              } else if (dp > 0 && dp <= mantissaString.length()) {
-                builder = new StringBuilder(mantissaString.length() + 6);
+                return new String(chars, 0, clength);
+              } else if (dp > 0 && dp <= ms) {
+                int clength = 1 + (negative ? 1 : 0) + ms;
+                builder = new StringBuilder(clength);
                 if (negative) {
                   builder.append('-');
                 }
