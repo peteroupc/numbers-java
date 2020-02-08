@@ -3426,7 +3426,11 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
     /**
      * Converts this value to an arbitrary-precision integer. Any fractional part
      * of this value will be discarded when converting to an
-     * arbitrary-precision integer.
+     * arbitrary-precision integer. Note that depending on the value,
+     * especially the exponent, generating the arbitrary-precision integer
+     * may require a huge amount of memory. Use the ToSizedEInteger method
+     * to convert a number to an EInteger only if the integer fits in a
+     * bounded bit range; that method will throw an exception on overflow.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
@@ -3437,10 +3441,16 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
 
     /**
      * Converts this value to an arbitrary-precision integer, checking whether the
-     * value contains a fractional part.
+     * value contains a fractional part. Note that depending on the value,
+     * especially the exponent, generating the arbitrary-precision integer
+     * may require a huge amount of memory. Use the ToSizedEIntegerIfExact
+     * method to convert a number to an EInteger only if the integer fits
+     * in a bounded bit range; that method will throw an exception on
+     * overflow.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
+     * @throws ArithmeticException This object's value is not an exact integer.
      * @deprecated Renamed to ToEIntegerIfExact.
  */
 @Deprecated
@@ -3450,10 +3460,16 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
 
     /**
      * Converts this value to an arbitrary-precision integer, checking whether the
-     * value contains a fractional part.
+     * value contains a fractional part. Note that depending on the value,
+     * especially the exponent, generating the arbitrary-precision integer
+     * may require a huge amount of memory. Use the ToSizedEIntegerIfExact
+     * method to convert a number to an EInteger only if the integer fits
+     * in a bounded bit range; that method will throw an exception on
+     * overflow.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
+     * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToEIntegerIfExact() {
       return this.ToEIntegerInternal(true);
@@ -3768,6 +3784,95 @@ ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
         return bigmantissa;
       }
     }
+
+private static EInteger PowerOfRadixBitsLowerBound(EInteger e) {
+  return e.Abs();
+}
+private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
+  return e.Abs().Add(1);
+}
+
+public EInteger ToSizedEInteger(int maxBitLength) {
+  return this.ToSizedEInteger(maxBitLength, false);
+}
+
+public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
+  return this.ToSizedEInteger(maxBitLength, true);
+}
+
+private EInteger ToSizedEInteger(int maxBitLength, boolean exact) {
+   if (maxBitLength < 1) {
+     throw new IllegalArgumentException("maxBitLength (" + maxBitLength +
+") is not greater or equal to 1");
+   }
+   if (!this.isFinite() || this.isZero()) {
+     return exact ? this.ToEIntegerIfExact() : this.ToEInteger();
+   }
+   EInteger mant = this.getMantissa();
+   EInteger exp = this.getExponent();
+   if (exp.signum() > 0) {
+     // x * 2^y
+     long imantbits = mant.GetSignedBitLengthAsInt64();
+if (imantbits >= maxBitLength) {
+       throw new ArithmeticException("Value out of range");
+     }
+     if (exp.compareTo(0x100000) < 0 && imantbits < 0x100000) {
+       // Lower bound of bit count in 2^exp based on ln(2^exp)/ln(2)
+       long expBitsLowerBound = exp.ToInt64Checked();
+       if ((imantbits - 1) + expBitsLowerBound > maxBitLength) {
+         throw new ArithmeticException("Value out of range");
+       }
+     } else if (exp.compareTo(maxBitLength) > 0) {
+      // Digits in exp is more than max bit length, so out of range
+      throw new ArithmeticException("Value out of range");
+    } else {
+       EInteger mantbits = mant.GetSignedBitLengthAsEInteger();
+       if (mantbits.Subtract(1) .Add(PowerOfRadixBitsLowerBound(exp))
+           .compareTo(maxBitLength) > 0) {
+         throw new ArithmeticException("Value out of range");
+       }
+     }
+     mant = exact ? this.ToEIntegerIfExact() : this.ToEInteger();
+   } else if (exp.signum() < 0) {
+     // x * 2^-y. Check for trivial overflow cases before
+     // running ToEInteger.
+     exp = exp.Abs();
+     long imantbits = mant.GetSignedBitLengthAsInt64();
+     if (exp.compareTo(0x100000) < 0 && imantbits < 0x100000) {
+       long expBitsUpperBound = exp.ToInt64Checked()+1;
+       long expBitsLowerBound = exp.ToInt64Checked();
+       if (imantbits - 1 - expBitsUpperBound > maxBitLength) {
+         throw new ArithmeticException("Value out of range");
+       }
+       if (imantbits + 1 < expBitsLowerBound) {
+         // Less than one, so not exact
+if (exact) {
+           throw new ArithmeticException("Not an exact integer");
+         } else {
+ return EInteger.FromInt32(0);
+}
+       }
+     } else if (imantbits < 0x100000 && exp.compareTo(0x200000) >= 0) {
+       // (mant / 2^exp) would be less than one, so not exact
+if (exact) {
+         throw new ArithmeticException("Not an exact integer");
+       } else {
+ return EInteger.FromInt32(0);
+}
+     } else {
+       EInteger mantbits = mant.GetSignedBitLengthAsEInteger();
+       if (mantbits.Subtract(1) .Subtract(PowerOfRadixBitsUpperBound(exp))
+           .compareTo(maxBitLength) > 0) {
+         throw new ArithmeticException("Value out of range");
+       }
+     }
+     mant = exact ? this.ToEIntegerIfExact() : this.ToEInteger();
+   }
+   if (mant.GetSignedBitLengthAsEInteger().compareTo(maxBitLength) > 0) {
+       throw new ArithmeticException("Value out of range");
+   }
+   return mant;
+}
 
     private static final class BinaryMathHelper implements IRadixMathHelper<EFloat> {
       /**

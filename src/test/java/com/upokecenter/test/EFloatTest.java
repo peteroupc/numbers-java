@@ -1934,9 +1934,8 @@ emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
           return;
         }
         try {
-eint = (enumber.getExponent().compareTo(100) >= 0 && !enumber.isZero()) ? null :
-enumber.ToEInteger();
-        } catch (UnsupportedOperationException ex) {
+          eint = enumber.ToSizedEInteger(128);
+        } catch (ArithmeticException ex) {
           eint = null;
         }
         isInteger = enumber.IsInteger();

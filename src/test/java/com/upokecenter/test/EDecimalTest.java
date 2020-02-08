@@ -506,9 +506,8 @@ import com.upokecenter.numbers.*;
         return;
       }
       try {
-        eint = (enumber.getExponent().compareTo (100) >= 0 && !enumber.isZero()) ?
-          null : enumber.ToEInteger();
-      } catch (UnsupportedOperationException ex) {
+        eint = enumber.ToSizedEInteger(128);
+      } catch (ArithmeticException ex) {
         eint = null;
       }
       isInteger = enumber.IsInteger();
@@ -1198,21 +1197,21 @@ import com.upokecenter.numbers.*;
           stringTemp);
       }
 
-EDecimal ed1 = EDecimal.FromString(
-  "-4.283595962816029891509990043176592129349E-265444677156");
-EDecimal ed2 = EDecimal.FromString(
-  "1.154883492783088701967E+230940250505264307520");
-EDecimalTest.TestDivideOne(ed1, ed2);
-ed1 = EDecimal.FromString(
-  "-3.77339248640695614E-16962706853");
-ed2 = EDecimal.FromString(
-  "-8.801467625870877584114178689458325778E+19649240327");
-EDecimalTest.TestDivideOne(ed1, ed2);
+      EDecimal ed1 = EDecimal.FromString(
+          "-4.283595962816029891509990043176592129349E-265444677156");
+      EDecimal ed2 = EDecimal.FromString(
+          "1.154883492783088701967E+230940250505264307520");
+      EDecimalTest.TestDivideOne (ed1, ed2);
+      ed1 = EDecimal.FromString(
+          "-3.77339248640695614E-16962706853");
+      ed2 = EDecimal.FromString(
+          "-8.801467625870877584114178689458325778E+19649240327");
+      EDecimalTest.TestDivideOne (ed1, ed2);
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
         ed1 = RandomObjects.RandomEDecimal (fr);
         ed2 = RandomObjects.RandomEDecimal (fr);
-TestDivideOne(ed1, ed2);
+        TestDivideOne (ed1, ed2);
       }
       try {
         EDecimal.FromString ("1").Divide (EDecimal.FromString ("3"), null);
@@ -1222,36 +1221,36 @@ TestDivideOne(ed1, ed2);
       }
     }
 
-public static void TestDivideOne(EDecimal ed1, EDecimal ed2) {
-        if (!ed1.isFinite() || !ed2.isFinite()) {
-          return;
-        }
-        EDecimal ed3 = ed1.Multiply (ed2);
-        if (!(ed3.isFinite())) {
+    public static void TestDivideOne(EDecimal ed1, EDecimal ed2) {
+      if (!ed1.isFinite() || !ed2.isFinite()) {
+        return;
+      }
+      EDecimal ed3 = ed1.Multiply (ed2);
+      if (!(ed3.isFinite())) {
  Assert.fail();
  }
-        EDecimal ed4;
-        ed4 = ed3.Divide (ed1);
-        if (!ed1.isZero()) {
-          if (ed4.compareTo(ed2) != 0) {
-            TestCommon.CompareTestEqual (ed4, ed2, "ed1="+ed1+"\ned2="+ed2);
-          }
-        } else {
-          if (!(ed4.IsNaN())) {
+      EDecimal ed4;
+      ed4 = ed3.Divide (ed1);
+      if (!ed1.isZero()) {
+        if (ed4.compareTo (ed2) != 0) {
+          TestCommon.CompareTestEqual (ed4, ed2, "ed1=" + ed1 + "\ned2=" + ed2);
+        }
+      } else {
+        if (!(ed4.IsNaN())) {
  Assert.fail();
  }
+      }
+      ed4 = ed3.Divide (ed2);
+      if (!ed2.isZero()) {
+        if (ed4.compareTo (ed1) != 0) {
+          TestCommon.CompareTestEqual (ed4, ed1, "ed1=" + ed1 + "\ned2=" + ed2);
         }
-        ed4 = ed3.Divide (ed2);
-        if (!ed2.isZero()) {
-          if (ed4.compareTo(ed1) != 0) {
-            TestCommon.CompareTestEqual (ed4, ed1, "ed1="+ed1+"\ned2="+ed2);
-          }
-        } else {
-          if (!(ed4.IsNaN())) {
+      } else {
+        if (!(ed4.IsNaN())) {
  Assert.fail();
  }
-        }
-}
+      }
+    }
 
     @Test
     public void TestDivideToExponent() {
@@ -5939,7 +5938,7 @@ public static void TestDivideOne(EDecimal ed1, EDecimal ed2) {
     @Test
     public void TestStringContextSpecific6b() {
       EContext ec = EContext.Unlimited.WithPrecision (19).WithExponentRange
-(-353,
+        (-353,
           354).WithRounding(
           ERounding.Down).WithAdjustExponent(
           true).WithExponentClamp (false).WithSimplified (false);
