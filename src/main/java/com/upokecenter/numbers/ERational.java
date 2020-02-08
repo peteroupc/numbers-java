@@ -1733,6 +1733,67 @@ if (this.isZero()) {
       return Create(num.Divide(gcd), den.Divide(gcd));
     }
 
+  /**
+   * Not documented yet.
+   * @param maxBitLength Not documented yet.
+   */
+    public EInteger ToSizedEInteger(int maxBitLength) {
+      if (maxBitLength < 1) {
+        throw new IllegalArgumentException("maxBitLength (" + maxBitLength + ") is" +
+"\u0020not greater or equal to 1");
+      }
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      EInteger unum = this.getUnsignedNumerator();
+      EInteger uden = this.denominator;
+      if (unum.compareTo(uden) < 0) {
+        return EInteger.FromInt32(0);
+      }
+      EInteger numBits = unum.GetUnsignedBitLengthAsEInteger();
+      EInteger denBits = uden.GetUnsignedBitLengthAsEInteger();
+      if (numBits.Subtract(2).Subtract(denBits).compareTo(maxBitLength) > 0) {
+         throw new ArithmeticException("Value out of range");
+      }
+      unum = this.ToEInteger();
+      if (unum.GetSignedBitLengthAsInt64() > maxBitLength) {
+         throw new ArithmeticException("Value out of range");
+      }
+      return unum;
+    }
+
+  /**
+   * Not documented yet.
+   * @param maxBitLength Not documented yet.
+   */
+    public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
+      if (maxBitLength < 1) {
+        throw new IllegalArgumentException("maxBitLength (" + maxBitLength + ") is" +
+"\u0020not greater or equal to 1");
+      }
+      if (!this.isFinite()) {
+        throw new ArithmeticException("Value is infinity or NaN");
+      }
+      EInteger unum = this.getUnsignedNumerator();
+      EInteger uden = this.denominator;
+      if (unum.isZero()) {
+        return EInteger.FromInt32(0);
+      }
+      if (unum.compareTo(uden) < 0) {
+        throw new ArithmeticException("Value is not an integer");
+      }
+      EInteger numBits = unum.GetUnsignedBitLengthAsEInteger();
+      EInteger denBits = uden.GetUnsignedBitLengthAsEInteger();
+      if (numBits.Subtract(2).Subtract(denBits).compareTo(maxBitLength) > 0) {
+         throw new ArithmeticException("Value out of range");
+      }
+      unum = this.ToEIntegerIfExact();
+      if (unum.GetSignedBitLengthAsInt64() > maxBitLength) {
+         throw new ArithmeticException("Value out of range");
+      }
+      return unum;
+    }
+
     /**
      * Converts this value to an arbitrary-precision integer by dividing the
      * numerator by the denominator and discarding the fractional part of
@@ -1774,13 +1835,11 @@ if (this.isZero()) {
       }
       EInteger rem;
       EInteger quo;
-      {
-        EInteger[] divrem = this.getNumerator().DivRem(this.denominator);
-        quo = divrem[0];
-        rem = divrem[1];
-      }
+      EInteger[] divrem = this.getNumerator().DivRem(this.denominator);
+      quo = divrem[0];
+      rem = divrem[1];
       if (!rem.isZero()) {
-        throw new ArithmeticException("Value is not an integral value");
+        throw new ArithmeticException("Value is not an integer");
       }
       return quo;
     }

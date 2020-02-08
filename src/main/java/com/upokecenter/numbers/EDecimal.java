@@ -7,9 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-// TODO: Add ToEInteger method that restricts bit size of
-// outputs to ERational
-
   /**
    * Represents an arbitrary-precision decimal floating-point number. (The "E"
    *  stands for "extended", meaning that instances of this class can be
@@ -5633,6 +5630,7 @@ private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
   /**
    * Not documented yet.
    * @param maxBitLength Not documented yet.
+   * @return The return value is not documented yet.
    */
   public EInteger ToSizedEInteger(int maxBitLength) {
   return this.ToSizedEInteger(maxBitLength, false);
@@ -5641,6 +5639,7 @@ private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
   /**
    * Not documented yet.
    * @param maxBitLength Not documented yet.
+   * @return The return value is not documented yet.
    */
   public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
   return this.ToSizedEInteger(maxBitLength, true);

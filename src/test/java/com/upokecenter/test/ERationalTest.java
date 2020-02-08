@@ -385,7 +385,11 @@ import com.upokecenter.numbers.*;
         ERational enumberInteger = ERational.FromEInteger(
   enumber.ToEInteger());
         isInteger = enumberInteger.compareTo(enumber) == 0;
-        eint = enumber.ToEInteger();
+        try {
+        eint = enumber.ToSizedEInteger(128);
+} catch (ArithmeticException ex) {
+        eint = null;
+}
         isNum = enumber.compareTo(
             ERational.FromString("0")) >= 0 && enumber.compareTo(
             ERational.FromString("255")) <= 0;

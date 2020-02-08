@@ -3796,6 +3796,7 @@ private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
   /**
    * Not documented yet.
    * @param maxBitLength Not documented yet.
+   * @return The return value is not documented yet.
    */
   public EInteger ToSizedEInteger(int maxBitLength) {
   return this.ToSizedEInteger(maxBitLength, false);
@@ -3804,6 +3805,7 @@ private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
   /**
    * Not documented yet.
    * @param maxBitLength Not documented yet.
+   * @return The return value is not documented yet.
    */
   public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
   return this.ToSizedEInteger(maxBitLength, true);
