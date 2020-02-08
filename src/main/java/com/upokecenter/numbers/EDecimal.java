@@ -6079,18 +6079,36 @@ DigitCountLowerBound(bigUnsignedMantissa.Abs());
         int intMant = this.unsignedMantissa.AsInt32();
         if (intMant < 1000 && intExp == -2) {
           int a, b, c;
-          a = intMant%10;intMant/=10;
-          b = intMant%10;intMant/=10;
+          int i = 0;
+          a = intMant % 10;
+          intMant /= 10;
+          b = intMant % 10;
+          intMant /= 10;
           c = intMant;
-          int clength=(negative ? 1 : 0) + 4;
+          int clength = (negative ? 1 : 0) + 4;
           char[] chars = new char[clength];
-if (negative) {
-  chars[i++]='-';
-}
-          chars[i++]=(char)(0x30 + c);
-          chars[i++]='.';
-          chars[i++]=(char)(0x30 + b);
-          chars[i++]=(char)(0x30 + a);
+          if (negative) {
+            chars[i++] = '-';
+          }
+          chars[i++] = (char)(0x30 + c);
+          chars[i++] = '.';
+          chars[i++] = (char)(0x30 + b);
+          chars[i++] = (char)(0x30 + a);
+          return new String(chars, 0, clength);
+        } else if (intMant < 100 && intExp == -1) {
+          int a, b, c;
+          int i = 0;
+          a = intMant % 10;
+          intMant /= 10;
+          b = intMant;
+          int clength = (negative ? 1 : 0) + 3;
+          char[] chars = new char[clength];
+          if (negative) {
+            chars[i++] = '-';
+          }
+          chars[i++] = (char)(0x30 + b);
+          chars[i++] = '.';
+          chars[i++] = (char)(0x30 + a);
           return new String(chars, 0, clength);
         }
       }
@@ -6109,29 +6127,29 @@ if (negative) {
                 int clength = 2 + dp + (negative ? 1 : 0) + ms;
                 char[] chars = new char[clength];
                 int i = 0;
-if (negative) {
-  chars[i++]='-';
-}
-                chars[i++]='0';
-                chars[i++]='.';
+                if (negative) {
+                  chars[i++] = '-';
+                }
+                chars[i++] = '0';
+                chars[i++] = '.';
                 for (int j = 0; j < dp; ++j) {
-                  chars[i++]='0';
+                  chars[i++] = '0';
                 }
                 for (int j = 0; j < ms; ++j) {
-                  chars[i++]=mantissaString.charAt(j);
+                  chars[i++] = mantissaString.charAt(j);
                 }
                 return new String(chars, 0, clength);
               } else if (dp == 0) {
                 int clength = 2 + (negative ? 1 : 0) + ms;
                 char[] chars = new char[clength];
                 int i = 0;
-if (negative) {
-  chars[i++]='-';
-}
-                chars[i++]='0';
-                chars[i++]='.';
+                if (negative) {
+                  chars[i++] = '-';
+                }
+                chars[i++] = '0';
+                chars[i++] = '.';
                 for (int j = 0; j < ms; ++j) {
-                  chars[i++]=mantissaString.charAt(j);
+                  chars[i++] = mantissaString.charAt(j);
                 }
                 return new String(chars, 0, clength);
               } else if (dp > 0 && dp <= ms) {

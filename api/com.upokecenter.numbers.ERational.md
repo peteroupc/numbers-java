@@ -315,6 +315,10 @@ Renamed to ToEFloatExactIfPossible.
  Converts this value to its form in lowest terms.
 * `float ToSingle()`<br>
  Converts this value to a 32-bit binary floating-point number.
+* `EInteger ToSizedEInteger​(int maxBitLength)`<br>
+ Not documented yet.
+* `EInteger ToSizedEIntegerIfExact​(int maxBitLength)`<br>
+ Not documented yet.
 * `java.lang.String toString()`<br>
  Converts this object to a text string.
 
@@ -1188,6 +1192,30 @@ Converts this value to its form in lowest terms. For example, (8/4) becomes
 
 * <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
+
+### ToSizedEInteger
+    public EInteger ToSizedEInteger​(int maxBitLength)
+Not documented yet.
+
+**Parameters:**
+
+* <code>maxBitLength</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### ToSizedEIntegerIfExact
+    public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
+Not documented yet.
+
+**Parameters:**
+
+* <code>maxBitLength</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 ### ToEInteger
     public EInteger ToEInteger()

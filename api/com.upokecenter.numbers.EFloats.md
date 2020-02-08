@@ -88,7 +88,7 @@ A class that implements additional operations on arbitrary-precision binary
  digit before the radix point).
 * `static int NumberClass​(EFloat ed,
            EContext ec)`<br>
- Finds the number class for an arbitrary-precision decimal number object.
+ Finds the number class for an arbitrary-precision binary number object.
 * `static java.lang.String NumberClassString​(int nc)`<br>
  Converts a number class identifier (ranging from 0 through 9) to a text
  string.
@@ -185,7 +185,7 @@ Converts a boolean value (either true or false) to an arbitrary-precision
 ### IsCanonical
     public static boolean IsCanonical​(EFloat ed)
 Returns whether the given arbitrary-precision number object is in a
- canonical form. For the current version of EDecimal, all EDecimal
+ canonical form. For the current version of EFloat, all EFloat
  objects are in a canonical form.
 
 **Parameters:**
@@ -333,11 +333,11 @@ Converts a number class identifier (ranging from 0 through 9) to a text
 
 ### NumberClass
     public static int NumberClass​(EFloat ed, EContext ec)
-Finds the number class for an arbitrary-precision decimal number object.
+Finds the number class for an arbitrary-precision binary number object.
 
 **Parameters:**
 
-* <code>ed</code> - An arbitrary-precision decimal number object.
+* <code>ed</code> - An arbitrary-precision binary number object.
 
 * <code>ec</code> - A context object that specifies the precision and exponent range
  of arbitrary-precision numbers. This is used only to distinguish
@@ -483,7 +483,7 @@ Shifts the bits of an arbitrary-precision binary floating point number's
 
 **Returns:**
 
-* An arbitrary-precision decimal number whose significand is shifted
+* An arbitrary-precision binary number whose significand is shifted
  the given number of bits. Signals an invalid operation and returns
  NaN (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>
  ed2</code> is not an integer, is negative, has an exponent other than 0,
@@ -676,7 +676,7 @@ Returns an arbitrary-precision number object with the same value as the
 * <code>ed</code> - An arbitrary-precision number object with the value the result
  will have.
 
-* <code>other</code> - The parameter <code>other</code> is an arbitrary-precision decimal
+* <code>other</code> - The parameter <code>other</code> is an arbitrary-precision binary
  floating-point number.
 
 **Returns:**

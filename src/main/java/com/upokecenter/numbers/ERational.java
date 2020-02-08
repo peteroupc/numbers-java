@@ -1736,6 +1736,7 @@ if (this.isZero()) {
   /**
    * Not documented yet.
    * @param maxBitLength Not documented yet.
+   * @return The return value is not documented yet.
    */
     public EInteger ToSizedEInteger(int maxBitLength) {
       if (maxBitLength < 1) {
@@ -1765,6 +1766,7 @@ if (this.isZero()) {
   /**
    * Not documented yet.
    * @param maxBitLength Not documented yet.
+   * @return The return value is not documented yet.
    */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
       if (maxBitLength < 1) {

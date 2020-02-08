@@ -3541,6 +3541,10 @@ Not documented yet.
 
 * <code>maxBitLength</code> - Not documented yet.
 
+**Returns:**
+
+* The return value is not documented yet.
+
 ### ToSizedEIntegerIfExact
     public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
 Not documented yet.
@@ -3548,6 +3552,10 @@ Not documented yet.
 **Parameters:**
 
 * <code>maxBitLength</code> - Not documented yet.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 ### Increment
     public EFloat Increment()
