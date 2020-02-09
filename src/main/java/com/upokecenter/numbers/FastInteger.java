@@ -1021,15 +1021,32 @@ switch (this.integerMode) {
     }
 
     static String IntToString(int value) {
-      if (value == Integer.MIN_VALUE) {
-        return "-2147483648";
-      }
       if (value == 0) {
         return "0";
       }
+      if (value == Integer.MIN_VALUE) {
+        return "-2147483648";
+      }
+      char[] chars;
+      int count;
+      if ((value >> 15) == 0) {
+        chars = new char[5];
+        count = 4;
+        while (value > 9) {
+          int intdivvalue = (value * 26215) >> 18;
+          char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+          chars[count--] = digit;
+          value = intdivvalue;
+        }
+        if (value != 0) {
+          chars[count--] = HexAlphabet.charAt((int)value);
+        }
+        ++count;
+        return new String(chars, count, 5 - count);
+      }
       boolean neg = value < 0;
-      char[] chars = new char[12];
-      int count = 11;
+      chars = new char[12];
+      count = 11;
       if (neg) {
         value = -value;
       }

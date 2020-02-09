@@ -271,6 +271,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
+    @Test
     public void TestCompareToBinarySpecific1() {
       EFloat ef;
       EDecimal ed;
@@ -5737,7 +5738,9 @@ import com.upokecenter.numbers.*;
         // even if the String has leading zeros)
         TestStringContextOneEFloatCore(
           leadingZeros.substring(0, counts[i]) + str,
-          ec, ed, ef);
+          ec,
+          ed,
+          ef);
         if (noLeadingZerosTest || str.length() == 0 || str.charAt(0) == '-') {
           break;
         }

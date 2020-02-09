@@ -382,9 +382,7 @@ import com.upokecenter.numbers.*;
           }
           continue;
         }
-        ERational enumberInteger = ERational.FromEInteger(
-  enumber.ToEInteger());
-        isInteger = enumberInteger.compareTo(enumber) == 0;
+        isInteger = enumber.IsInteger();
         try {
         eint = enumber.ToSizedEInteger(128);
 } catch (ArithmeticException ex) {

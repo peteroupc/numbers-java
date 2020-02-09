@@ -1641,8 +1641,11 @@ import com.upokecenter.numbers.*;
       }
       EInteger emant = efa.getMantissa();
       boolean fullPrecision =
-emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
-      boolean isEven = !fullPrecision || efa.getUnsignedMantissa().isEven();
+         emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
+      boolean isSubnormal = EFloats.IsSubnormal(efa, dbl ? EContext.Binary64 :
+          EContext.Binary32);
+      boolean isEven = (!fullPrecision && !isSubnormal) ||
+          efa.getUnsignedMantissa().isEven();
       EFloat efprev = efa.NextMinus(dbl ? EContext.Binary64 :
           EContext.Binary32);
       EFloat efnext = efa.NextPlus(dbl ? EContext.Binary64 :
