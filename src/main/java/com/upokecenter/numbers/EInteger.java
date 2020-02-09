@@ -7599,12 +7599,12 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
         count = 4;
         while (intvalue > 9) {
           int intdivvalue = (intvalue * 26215) >> 18;
-          char digit = HexAlphabet.get((int)(intvalue - (intdivvalue * 10)));
+          char digit = Digits.charAt((int)(intvalue - (intdivvalue * 10)));
           chars[count--] = digit;
           intvalue = intdivvalue;
         }
         if (intvalue != 0) {
-          chars[count--] = HexAlphabet.get(intvalue);
+          chars[count--] = Digits.charAt(intvalue);
         }
         ++count;
         return new String(chars, count, 5 - count);

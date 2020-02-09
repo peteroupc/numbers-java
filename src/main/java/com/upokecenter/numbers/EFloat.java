@@ -111,7 +111,7 @@ at: http://peteroupc.github.io/
      */
 
     public static final EFloat One =
-      EFloat.Create (EInteger.FromInt32(1), EInteger.FromInt32(0));
+      EFloat.Create(EInteger.FromInt32(1), EInteger.FromInt32(0));
 
     /**
      * Positive infinity, greater than any other number.
@@ -138,16 +138,17 @@ at: http://peteroupc.github.io/
      */
 
     public static final EFloat Ten =
-      EFloat.Create (EInteger.FromInt32(10), EInteger.FromInt32(0));
+      EFloat.Create(EInteger.FromInt32(10), EInteger.FromInt32(0));
 
     /**
      * Represents the number 0.
      */
 
     public static final EFloat Zero =
-      EFloat.Create (EInteger.FromInt32(0), EInteger.FromInt32(0));
+      EFloat.Create(EInteger.FromInt32(0), EInteger.FromInt32(0));
     //----------------------------------------------------------------
-    private static final IRadixMath<EFloat> MathValue = new TrappableRadixMath<EFloat>(
+    private static final IRadixMath<EFloat> MathValue = new
+TrappableRadixMath<EFloat>(
       new ExtendedOrSimpleRadixMath<EFloat>(new BinaryMathHelper()));
 
     static IRadixMath<EFloat> GetMathValue() {
@@ -256,7 +257,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
-      return Create (EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
+      return Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
     }
 
     /**
@@ -266,7 +267,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(long mantissaLong, long exponentLong) {
-      return Create (EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong));
+      return Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong));
     }
 
     /**
@@ -276,7 +277,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(long mantissaLong, int exponentSmall) {
-      return Create (EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall));
+      return Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall));
     }
 
     /**
@@ -286,7 +287,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(EInteger mantissa, int exponentSmall) {
-      return Create (mantissa, EInteger.FromInt32 (exponentSmall));
+      return Create(mantissa, EInteger.FromInt32(exponentSmall));
     }
 
     /**
@@ -296,7 +297,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(EInteger mantissa, long exponentLong) {
-      return Create (mantissa, EInteger.FromInt64 (exponentLong));
+      return Create(mantissa, EInteger.FromInt64(exponentLong));
     }
 
     /**
@@ -334,7 +335,7 @@ at: http://peteroupc.github.io/
      * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
      */
     public static EFloat CreateNaN(EInteger diag) {
-      return CreateNaN (diag, false, false, null);
+      return CreateNaN(diag, false, false, null);
     }
 
     /**
@@ -380,7 +381,7 @@ at: http://peteroupc.github.io/
         EFloat ef = CreateWithFlags(
             diag,
             EInteger.FromInt32(0),
-            flags).RoundToPrecision (ctx);
+            flags).RoundToPrecision(ctx);
         int newFlags = ef.flags;
         newFlags &= ~BigNumberFlags.FlagQuietNaN;
         newFlags |= signaling ? BigNumberFlags.FlagSignalingNaN :
@@ -389,7 +390,7 @@ at: http://peteroupc.github.io/
       }
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
-      return CreateWithFlags (diag, EInteger.FromInt32(0), flags);
+      return CreateWithFlags(diag, EInteger.FromInt32(0), flags);
     }
 
     /**
@@ -401,7 +402,7 @@ at: http://peteroupc.github.io/
      * @return A binary floating-point number with the same value as {@code dbl}.
      */
     public static EFloat FromDouble(double dbl) {
-      int[] value = Extras.DoubleToIntegers (dbl);
+      int[] value = Extras.DoubleToIntegers(dbl);
       int floatExponent = (int)((value[1] >> 20) & 0x7ff);
       boolean neg = (value[1] >> 31) != 0;
       long lvalue;
@@ -420,7 +421,7 @@ at: http://peteroupc.github.io/
           (quiet ? BigNumberFlags.FlagQuietNaN :
             BigNumberFlags.FlagSignalingNaN);
         return CreateWithFlags(
-            EInteger.FromInt64 (lvalue),
+            EInteger.FromInt64(lvalue),
             EInteger.FromInt32(0),
             value[0]);
       }
@@ -438,7 +439,7 @@ at: http://peteroupc.github.io/
       }
       lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
       return CreateWithFlags(
-          EInteger.FromInt64 (lvalue),
+          EInteger.FromInt64(lvalue),
           EInteger.FromInt64(floatExponent - 1075),
           neg ? BigNumberFlags.FlagNegative : 0);
     }
@@ -450,7 +451,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat FromEInteger(EInteger bigint) {
-      return EFloat.Create (bigint, EInteger.FromInt32(0));
+      return EFloat.Create(bigint, EInteger.FromInt32(0));
     }
 
     /**
@@ -582,9 +583,9 @@ at: http://peteroupc.github.io/
       }
       EContext b64 = EContext.Binary64;
       if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
-        !ctx.isSimplified() && ctx.getEMax().compareTo (b64.getEMax()) <= 0 &&
-        ctx.getEMin().compareTo (b64.getEMin()) >= 0 &&
-        ctx.getPrecision().compareTo (b64.getPrecision()) <= 0) {
+        !ctx.isSimplified() && ctx.getEMax().compareTo(b64.getEMax()) <= 0 &&
+        ctx.getEMin().compareTo(b64.getEMin()) >= 0 &&
+        ctx.getPrecision().compareTo(b64.getPrecision()) <= 0) {
         int tmpoffset = offset;
         int endpos = offset + length;
         if (length == 0) {
@@ -595,7 +596,7 @@ at: http://peteroupc.github.io/
         }
         if (tmpoffset < endpos && ((str.charAt(tmpoffset) >= '0' &&
               str.charAt(tmpoffset) <= '9') || str.charAt(tmpoffset) == '.')) {
-          EFloat ef = DoubleEFloatFromString (str, offset, length, ctx);
+          EFloat ef = DoubleEFloatFromString(str, offset, length, ctx);
           if (ef != null) {
             return ef;
           }
@@ -605,14 +606,14 @@ at: http://peteroupc.github.io/
           str,
           offset,
           length,
-          EContext.Unlimited.WithSimplified (ctx != null && ctx.isSimplified()))
-        .ToEFloat (ctx);
+          EContext.Unlimited.WithSimplified(ctx != null && ctx.isSimplified()))
+        .ToEFloat(ctx);
     }
 
     private static EFloat SignalUnderflow(EContext ec, boolean negative, boolean
       zeroSignificand) {
-      EInteger eTiny = ec.getEMin().Subtract (ec.getPrecision().Subtract (1));
-      eTiny = eTiny.Subtract (2); // subtract 2 from proper eTiny to
+      EInteger eTiny = ec.getEMin().Subtract(ec.getPrecision().Subtract(1));
+      eTiny = eTiny.Subtract(2); // subtract 2 from proper eTiny to
       // trigger underflow (2, rather than 1, because of HalfUp mode)
       EFloat ret = EFloat.Create(
           zeroSignificand ? EInteger.FromInt32(0) : EInteger.FromInt32(1),
@@ -620,19 +621,19 @@ at: http://peteroupc.github.io/
       if (negative) {
         ret = ret.Negate();
       }
-      return ret.RoundToPrecision (ec);
+      return ret.RoundToPrecision(ec);
     }
 
     private static EFloat SignalOverflow(EContext ec, boolean negative, boolean
       zeroSignificand) {
       if (zeroSignificand) {
-        EFloat ret = EFloat.Create (EInteger.FromInt32(0), ec.getEMax());
+        EFloat ret = EFloat.Create(EInteger.FromInt32(0), ec.getEMax());
         if (negative) {
           ret = ret.Negate();
         }
-        return ret.RoundToPrecision (ec);
+        return ret.RoundToPrecision(ec);
       } else {
-        return MathValue.SignalOverflow (ec, negative);
+        return MathValue.SignalOverflow(ec, negative);
       }
     }
 
@@ -778,9 +779,9 @@ at: http://peteroupc.github.io/
           // Exponent that can't be compensated by digit
           // length without remaining higher than Integer.MAX_VALUE
           if (expoffset < 0) {
-            return SignalUnderflow (ctx, negative, zeroMantissa);
+            return SignalUnderflow(ctx, negative, zeroMantissa);
           } else {
-            return SignalOverflow (ctx, negative, zeroMantissa);
+            return SignalOverflow(ctx, negative, zeroMantissa);
           }
         }
       }
@@ -793,11 +794,11 @@ at: http://peteroupc.github.io/
         if (mantissaLong == 0) {
           EFloat ef = EFloat.Create(
               EInteger.FromInt32(0),
-              EInteger.FromInt32 (expInt));
+              EInteger.FromInt32(expInt));
           if (negative) {
             ef = ef.Negate();
           }
-          return ef.RoundToPrecision (ctx);
+          return ef.RoundToPrecision(ctx);
         }
         long finalexp = (long)expInt + (long)newScaleInt;
         long ml = mantissaLong;
@@ -807,61 +808,61 @@ at: http://peteroupc.github.io/
             ml *= 10;
             --iexp;
           }
-          int iabsexp = Math.abs (iexp);
+          int iabsexp = Math.abs(iexp);
           if (ml < 9007199254740992L && iabsexp == 0) {
-            return EFloat.FromInt64 (negative ?
-                -mantissaLong : mantissaLong).RoundToPrecision (ctx);
+            return EFloat.FromInt64(negative ?
+                -mantissaLong : mantissaLong).RoundToPrecision(ctx);
           } else if (ml < 9007199254740992L && iabsexp <= 22) {
             EFloat efn =
-              EFloat.FromEInteger (NumberUtility.FindPowerOfTen (iabsexp));
+              EFloat.FromEInteger(NumberUtility.FindPowerOfTen(iabsexp));
             if (negative) {
               ml = -ml;
             }
-            EFloat efml = EFloat.FromInt64 (ml);
+            EFloat efml = EFloat.FromInt64(ml);
             if (iexp < 0) {
-              return efml.Divide (efn, ctx);
+              return efml.Divide(efn, ctx);
             } else {
-              return efml.Multiply (efn, ctx);
+              return efml.Multiply(efn, ctx);
             }
           }
         }
         long adjexpUpperBound = finalexp + (decimalPrec - 1);
         long adjexpLowerBound = finalexp;
         if (adjexpUpperBound < -326) {
-          return SignalUnderflow (ctx, negative, zeroMantissa);
+          return SignalUnderflow(ctx, negative, zeroMantissa);
         } else if (adjexpLowerBound > 309) {
-          return SignalOverflow (ctx, negative, zeroMantissa);
+          return SignalOverflow(ctx, negative, zeroMantissa);
         }
         if (negative) {
           mantissaLong = -mantissaLong;
         }
-        long absfinalexp = Math.abs (finalexp);
-        ef1 = EFloat.Create (EInteger.FromInt64 (mantissaLong), EInteger.FromInt32(0));
-        ef2 = EFloat.FromEInteger (NumberUtility.FindPowerOfTen (absfinalexp));
+        long absfinalexp = Math.abs(finalexp);
+        ef1 = EFloat.Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(0));
+        ef2 = EFloat.FromEInteger(NumberUtility.FindPowerOfTen(absfinalexp));
         if (finalexp < 0) {
-          return ef1.Divide (ef2, ctx);
+          return ef1.Divide(ef2, ctx);
         } else {
-          return ef1.Multiply (ef2, ctx);
+          return ef1.Multiply(ef2, ctx);
         }
       }
       EInteger mant = null;
       EInteger exp = (!haveExponent) ? EInteger.FromInt32(0) :
-        EInteger.FromSubstring (str, expDigitStart, endStr);
+        EInteger.FromSubstring(str, expDigitStart, endStr);
       if (expoffset < 0) {
         exp = exp.Negate();
       }
-      exp = exp.Add (newScaleInt);
+      exp = exp.Add(newScaleInt);
       if (nonzeroBeyondMax) {
-        exp = exp.Subtract (1);
+        exp = exp.Subtract(1);
         ++decimalPrec;
       }
-      EInteger adjExpUpperBound = exp.Add (decimalPrec).Subtract (1);
+      EInteger adjExpUpperBound = exp.Add(decimalPrec).Subtract(1);
       EInteger adjExpLowerBound = exp;
       // DebugUtility.Log("exp=" + adjExpLowerBound + "~" + (adjExpUpperBound));
-      if (adjExpUpperBound.compareTo (-326) < 0) {
-        return SignalUnderflow (ctx, negative, zeroMantissa);
-      } else if (adjExpLowerBound.compareTo (309) > 0) {
-        return SignalOverflow (ctx, negative, zeroMantissa);
+      if (adjExpUpperBound.compareTo(-326) < 0) {
+        return SignalUnderflow(ctx, negative, zeroMantissa);
+      } else if (adjExpLowerBound.compareTo(309) > 0) {
+        return SignalOverflow(ctx, negative, zeroMantissa);
       }
       if (zeroMantissa) {
         EFloat ef = EFloat.Create(
@@ -870,7 +871,7 @@ at: http://peteroupc.github.io/
         if (negative) {
           ef = ef.Negate();
         }
-        return ef.RoundToPrecision (ctx);
+        return ef.RoundToPrecision(ctx);
       } else if (decimalDigitStart != decimalDigitEnd) {
         if (digitEnd - digitStart == 1 && str.charAt(digitStart) == '0') {
           mant = EInteger.FromSubstring(
@@ -882,13 +883,13 @@ at: http://peteroupc.github.io/
             str.substring(
               decimalDigitStart, (
               decimalDigitStart)+(decimalDigitEnd - decimalDigitStart));
-          mant = EInteger.FromString (tmpstr);
+          mant = EInteger.FromString(tmpstr);
         }
       } else {
-        mant = EInteger.FromSubstring (str, digitStart, digitEnd);
+        mant = EInteger.FromSubstring(str, digitStart, digitEnd);
       }
       if (nonzeroBeyondMax) {
-        mant = mant.Multiply (10).Add (1);
+        mant = mant.Multiply(10).Add(1);
       }
       if (negative) {
         mant = mant.Negate();
@@ -896,13 +897,13 @@ at: http://peteroupc.github.io/
       // DebugUtility.Log("c " + ((mant.signum()<0 && negative) || (mant.signum()>= 0
       // && !negative)) + " mant=" + (mant));
       EInteger absexp = exp.Abs();
-      ef1 = EFloat.Create (mant, EInteger.FromInt32(0));
-      ef2 = EFloat.FromEInteger (NumberUtility.FindPowerOfTenFromBig (absexp));
+      ef1 = EFloat.Create(mant, EInteger.FromInt32(0));
+      ef2 = EFloat.FromEInteger(NumberUtility.FindPowerOfTenFromBig(absexp));
       // DebugUtility.Log("c ef1=" + ef1 + " ef2=" + (ef2));
       if (exp.signum() < 0) {
-        return ef1.Divide (ef2, ctx);
+        return ef1.Divide(ef2, ctx);
       } else {
-        return ef1.Multiply (ef2, ctx);
+        return ef1.Multiply(ef2, ctx);
       }
     }
 
@@ -918,7 +919,7 @@ at: http://peteroupc.github.io/
      * formatted number string.
      */
     public static EFloat FromString(String str) {
-      return FromString (str, 0, str == null ? 0 : str.length(), null);
+      return FromString(str, 0, str == null ? 0 : str.length(), null);
     }
 
     /**
@@ -939,7 +940,7 @@ at: http://peteroupc.github.io/
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, EContext ctx) {
-      return FromString (str, 0, str == null ? 0 : str.length(), ctx);
+      return FromString(str, 0, str == null ? 0 : str.length(), ctx);
     }
 
     /**
@@ -961,7 +962,7 @@ at: http://peteroupc.github.io/
      * length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(String str, int offset, int length) {
-      return FromString (str, offset, length, null);
+      return FromString(str, offset, length, null);
     }
 
     /**
@@ -991,7 +992,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return MathValue.Max (first, second, ctx);
+      return MathValue.Max(first, second, ctx);
     }
 
     /**
@@ -1015,7 +1016,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return Max (first, second, null);
+      return Max(first, second, null);
     }
 
     /**
@@ -1042,7 +1043,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return MathValue.MaxMagnitude (first, second, ctx);
+      return MathValue.MaxMagnitude(first, second, ctx);
     }
 
     /**
@@ -1063,7 +1064,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return MaxMagnitude (first, second, null);
+      return MaxMagnitude(first, second, null);
     }
 
     /**
@@ -1093,7 +1094,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return MathValue.Min (first, second, ctx);
+      return MathValue.Min(first, second, ctx);
     }
 
     /**
@@ -1117,7 +1118,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return Min (first, second, null);
+      return Min(first, second, null);
     }
 
     /**
@@ -1144,7 +1145,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return MathValue.MinMagnitude (first, second, ctx);
+      return MathValue.MinMagnitude(first, second, ctx);
     }
 
     /**
@@ -1165,7 +1166,7 @@ at: http://peteroupc.github.io/
       if (second == null) {
         throw new NullPointerException("second");
       }
-      return MinMagnitude (first, second, null);
+      return MinMagnitude(first, second, null);
     }
 
     /**
@@ -1181,7 +1182,7 @@ at: http://peteroupc.github.io/
      * 0).
      */
     public static EFloat PI(EContext ctx) {
-      return MathValue.Pi (ctx);
+      return MathValue.Pi(ctx);
     }
 
     /**
@@ -1216,7 +1217,7 @@ at: http://peteroupc.github.io/
      * quiet NaN if this value is signaling NaN.
      */
     public EFloat Abs(EContext context) {
-      return MathValue.Abs (this, context);
+      return MathValue.Abs(this, context);
     }
 
     /**
@@ -1225,7 +1226,7 @@ at: http://peteroupc.github.io/
      * @return The sum of the two objects.
      */
     public EFloat Add(int intValue) {
-      return this.Add (EFloat.FromInt32 (intValue));
+      return this.Add(EFloat.FromInt32(intValue));
     }
 
     /**
@@ -1236,7 +1237,7 @@ at: http://peteroupc.github.io/
      */
     public EFloat Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
-        this.Subtract (EFloat.FromInt32 (intValue)) : this.Add (-intValue);
+        this.Subtract(EFloat.FromInt32(intValue)) : this.Add(-intValue);
     }
 
     /**
@@ -1246,7 +1247,7 @@ at: http://peteroupc.github.io/
      * @return The product of the two numbers.
      */
     public EFloat Multiply(int intValue) {
-      return this.Multiply (EFloat.FromInt32 (intValue));
+      return this.Multiply(EFloat.FromInt32(intValue));
     }
 
     /**
@@ -1260,7 +1261,7 @@ at: http://peteroupc.github.io/
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(int intValue) {
-      return this.Divide (EFloat.FromInt32 (intValue));
+      return this.Divide(EFloat.FromInt32(intValue));
     }
 
     /**
@@ -1270,7 +1271,7 @@ at: http://peteroupc.github.io/
      * @return The sum of the two objects.
      */
     public EFloat Add(EFloat otherValue) {
-      return this.Add (otherValue, EContext.UnlimitedHalfEven);
+      return this.Add(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -1287,7 +1288,7 @@ at: http://peteroupc.github.io/
     public EFloat Add(
       EFloat otherValue,
       EContext ctx) {
-      return MathValue.Add (this, otherValue, ctx);
+      return MathValue.Add(this, otherValue, ctx);
     }
 
     /**
@@ -1302,7 +1303,7 @@ at: http://peteroupc.github.io/
      * value or if {@code other} is null, or 0 if both values are equal.
      */
     public int compareTo(EFloat other) {
-      return MathValue.compareTo (this, other);
+      return MathValue.compareTo(this, other);
     }
 
     /**
@@ -1321,7 +1322,7 @@ at: http://peteroupc.github.io/
      * value or if {@code other} is null, or 0 if both values are equal.
      */
     public int CompareToValue(EFloat other) {
-      return MathValue.compareTo (this, other);
+      return MathValue.compareTo(this, other);
     }
 
     /**
@@ -1336,7 +1337,7 @@ at: http://peteroupc.github.io/
      * value, or 0 if both values are equal.
      */
     public int compareTo(int intOther) {
-      return this.CompareToValue (EFloat.FromInt32 (intOther));
+      return this.CompareToValue(EFloat.FromInt32(intOther));
     }
 
     /**
@@ -1354,7 +1355,7 @@ at: http://peteroupc.github.io/
      * value, or 0 if both values are equal.
      */
     public int CompareToValue(int intOther) {
-      return this.CompareToValue (EFloat.FromInt32 (intOther));
+      return this.CompareToValue(EFloat.FromInt32(intOther));
     }
 
     /**
@@ -1376,7 +1377,7 @@ at: http://peteroupc.github.io/
     public EFloat CompareToSignal(
       EFloat other,
       EContext ctx) {
-      return MathValue.CompareToWithContext (this, other, true, ctx);
+      return MathValue.CompareToWithContext(this, other, true, ctx);
     }
 
     /**
@@ -1407,13 +1408,13 @@ at: http://peteroupc.github.io/
         return 1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
-        return this.CompareToTotal (other);
+        return this.CompareToTotal(other);
       }
       if (ctx != null && ctx.isSimplified()) {
-        return this.RoundToPrecision (ctx)
-          .CompareToTotal (other.RoundToPrecision (ctx));
+        return this.RoundToPrecision(ctx)
+          .CompareToTotal(other.RoundToPrecision(ctx));
         } else {
-        return this.CompareToTotal (other);
+        return this.CompareToTotal(other);
       }
     }
 
@@ -1446,13 +1447,13 @@ at: http://peteroupc.github.io/
         return 1;
       }
       if (this.IsSignalingNaN() || other.IsSignalingNaN()) {
-        return this.CompareToTotalMagnitude (other);
+        return this.CompareToTotalMagnitude(other);
       }
       if (ctx != null && ctx.isSimplified()) {
-        return this.RoundToPrecision (ctx)
-          .CompareToTotalMagnitude (other.RoundToPrecision (ctx));
+        return this.RoundToPrecision(ctx)
+          .CompareToTotalMagnitude(other.RoundToPrecision(ctx));
         } else {
-        return this.CompareToTotalMagnitude (other);
+        return this.CompareToTotalMagnitude(other);
       }
     }
 
@@ -1512,7 +1513,7 @@ at: http://peteroupc.github.io/
       } else if (valueIThis == 1) {
         return 0;
       } else {
-        cmp = this.compareTo (other);
+        cmp = this.compareTo(other);
         if (cmp == 0) {
           cmp = this.exponent.compareTo(
               other.exponent);
@@ -1573,7 +1574,7 @@ at: http://peteroupc.github.io/
       } else if (valueIThis == 1) {
         return 0;
       } else {
-        cmp = this.Abs().compareTo (other.Abs());
+        cmp = this.Abs().compareTo(other.Abs());
         if (cmp == 0) {
           cmp = this.exponent.compareTo(
               other.exponent);
@@ -1602,7 +1603,7 @@ at: http://peteroupc.github.io/
     public EFloat CompareToWithContext(
       EFloat other,
       EContext ctx) {
-      return MathValue.CompareToWithContext (this, other, false, ctx);
+      return MathValue.CompareToWithContext(this, other, false, ctx);
     }
 
     /**
@@ -1638,7 +1639,7 @@ at: http://peteroupc.github.io/
     public EFloat Divide(EFloat divisor) {
       return this.Divide(
           divisor,
-          EContext.ForRounding (ERounding.None));
+          EContext.ForRounding(ERounding.None));
     }
 
     /**
@@ -1663,7 +1664,7 @@ at: http://peteroupc.github.io/
     public EFloat Divide(
       EFloat divisor,
       EContext ctx) {
-      return MathValue.Divide (this, divisor, ctx);
+      return MathValue.Divide(this, divisor, ctx);
     }
 
     /**
@@ -1677,7 +1678,7 @@ at: http://peteroupc.github.io/
 @Deprecated
     public EFloat[] DivideAndRemainderNaturalScale(EFloat
       divisor) {
-      return this.DivRemNaturalScale (divisor, null);
+      return this.DivRemNaturalScale(divisor, null);
     }
 
     /**
@@ -1702,7 +1703,7 @@ at: http://peteroupc.github.io/
     public EFloat[] DivideAndRemainderNaturalScale(
       EFloat divisor,
       EContext ctx) {
-      return this.DivRemNaturalScale (divisor, ctx);
+      return this.DivRemNaturalScale(divisor, ctx);
     }
 
     /**
@@ -1738,7 +1739,7 @@ at: http://peteroupc.github.io/
       EContext ctx) {
       return this.DivideToExponent(
           divisor,
-          EInteger.FromInt64 (desiredExponentSmall),
+          EInteger.FromInt64(desiredExponentSmall),
           ctx);
     }
 
@@ -1766,8 +1767,8 @@ at: http://peteroupc.github.io/
       ERounding rounding) {
       return this.DivideToExponent(
           divisor,
-          EInteger.FromInt64 (desiredExponentSmall),
-          EContext.ForRounding (rounding));
+          EInteger.FromInt64(desiredExponentSmall),
+          EContext.ForRounding(rounding));
     }
 
     /**
@@ -1800,7 +1801,7 @@ at: http://peteroupc.github.io/
       EFloat divisor,
       EInteger exponent,
       EContext ctx) {
-      return MathValue.DivideToExponent (this, divisor, exponent, ctx);
+      return MathValue.DivideToExponent(this, divisor, exponent, ctx);
     }
 
     /**
@@ -1827,7 +1828,7 @@ at: http://peteroupc.github.io/
       return this.DivideToExponent(
           divisor,
           desiredExponent,
-          EContext.ForRounding (rounding));
+          EContext.ForRounding(rounding));
     }
 
     /**
@@ -1844,7 +1845,7 @@ at: http://peteroupc.github.io/
       EFloat divisor) {
       return this.DivideToIntegerNaturalScale(
           divisor,
-          EContext.ForRounding (ERounding.Down));
+          EContext.ForRounding(ERounding.Down));
     }
 
     /**
@@ -1864,7 +1865,7 @@ at: http://peteroupc.github.io/
     public EFloat DivideToIntegerNaturalScale(
       EFloat divisor,
       EContext ctx) {
-      return MathValue.DivideToIntegerNaturalScale (this, divisor, ctx);
+      return MathValue.DivideToIntegerNaturalScale(this, divisor, ctx);
     }
 
     /**
@@ -1886,7 +1887,7 @@ at: http://peteroupc.github.io/
     public EFloat DivideToIntegerZeroScale(
       EFloat divisor,
       EContext ctx) {
-      return MathValue.DivideToIntegerZeroScale (this, divisor, ctx);
+      return MathValue.DivideToIntegerZeroScale(this, divisor, ctx);
     }
 
     /**
@@ -1908,7 +1909,7 @@ at: http://peteroupc.github.io/
       return this.DivideToExponent(
           divisor,
           this.exponent,
-          EContext.ForRounding (rounding));
+          EContext.ForRounding(rounding));
     }
 
     /**
@@ -1919,7 +1920,7 @@ at: http://peteroupc.github.io/
      * order.
      */
     public EFloat[] DivRemNaturalScale(EFloat divisor) {
-      return this.DivRemNaturalScale (divisor, null);
+      return this.DivRemNaturalScale(divisor, null);
     }
 
     /**
@@ -1943,11 +1944,11 @@ at: http://peteroupc.github.io/
       EFloat divisor,
       EContext ctx) {
       EFloat[] result = new EFloat[2];
-      result[0] = this.DivideToIntegerNaturalScale (divisor, null);
+      result[0] = this.DivideToIntegerNaturalScale(divisor, null);
       result[1] = this.Subtract(
-          result[0].Multiply (divisor, null),
+          result[0].Multiply(divisor, null),
           ctx);
-      result[0] = result[0].RoundToPrecision (ctx);
+      result[0] = result[0].RoundToPrecision(ctx);
       return result;
     }
 
@@ -1960,7 +1961,7 @@ at: http://peteroupc.github.io/
      * those of another object; otherwise, {@code false}.
      */
     public boolean equals(EFloat other) {
-      return this.EqualsInternal (other);
+      return this.EqualsInternal(other);
     }
 
     /**
@@ -1975,7 +1976,7 @@ at: http://peteroupc.github.io/
      * type or if one is null and the other isn't.
      */
     @Override public boolean equals(Object obj) {
-      return this.EqualsInternal (((obj instanceof EFloat) ? (EFloat)obj : null));
+      return this.EqualsInternal(((obj instanceof EFloat) ? (EFloat)obj : null));
     }
 
     /**
@@ -1989,8 +1990,8 @@ at: http://peteroupc.github.io/
       if (otherValue == null) {
         return false;
       }
-      return this.exponent.equals (otherValue.exponent) &&
-        this.unsignedMantissa.equals (otherValue.unsignedMantissa) &&
+      return this.exponent.equals(otherValue.exponent) &&
+        this.unsignedMantissa.equals(otherValue.unsignedMantissa) &&
         this.flags == otherValue.flags;
     }
 
@@ -2011,7 +2012,7 @@ at: http://peteroupc.github.io/
      * property is 0).
      */
     public EFloat Exp(EContext ctx) {
-      return MathValue.Exp (this, ctx);
+      return MathValue.Exp(this, ctx);
     }
 
     /**
@@ -2110,7 +2111,7 @@ at: http://peteroupc.github.io/
      * infinity if this object's value is 0.
      */
     public EFloat Log(EContext ctx) {
-      return MathValue.Ln (this, ctx);
+      return MathValue.Ln(this, ctx);
     }
 
     /**
@@ -2131,7 +2132,7 @@ at: http://peteroupc.github.io/
      * property is 0).
      */
     public EFloat Log10(EContext ctx) {
-      return this.LogN (EFloat.FromInt32 (10), ctx);
+      return this.LogN(EFloat.FromInt32(10), ctx);
     }
 
     /**
@@ -2153,23 +2154,23 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("baseValue");
       }
       if (value.IsNaN()) {
-        return value.Plus (ctx);
+        return value.Plus(ctx);
       }
       if (baseValue.IsNaN()) {
-        return baseValue.Plus (ctx);
+        return baseValue.Plus(ctx);
       }
       if (ctx == null || !ctx.getHasMaxPrecision() ||
         (value.isNegative() && !value.isZero()) ||
         (baseValue.isNegative() && !baseValue.isZero())) {
-        return EFloat.SignalingNaN.Plus (ctx);
+        return EFloat.SignalingNaN.Plus(ctx);
       }
       if (ctx.getTraps() != 0) {
         EContext tctx = ctx.GetTrappable();
-        EFloat ret = value.LogN (baseValue, tctx);
-        return ctx.TriggerTraps (ret, tctx);
+        EFloat ret = value.LogN(baseValue, tctx);
+        return ctx.TriggerTraps(ret, tctx);
       } else if (ctx.isSimplified()) {
-        EContext tmpctx = ctx.WithSimplified (false).WithBlankFlags();
-        EFloat ret = value.PreRound (ctx).LogN (baseValue.PreRound (ctx),
+        EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
+        EFloat ret = value.PreRound(ctx).LogN(baseValue.PreRound(ctx),
   tmpctx);
         if (ctx.getHasFlags()) {
           int flags = ctx.getFlags();
@@ -2178,36 +2179,36 @@ at: http://peteroupc.github.io/
         // System.out.println("{0} {1} [{4} {5}] -> {2}
         // [{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
         // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
-        return ret.RoundToPrecision (ctx);
+        return ret.RoundToPrecision(ctx);
       } else {
         if (value.isZero()) {
-          return baseValue.compareTo (1) < 0 ? EFloat.PositiveInfinity :
+          return baseValue.compareTo(1) < 0 ? EFloat.PositiveInfinity :
             EFloat.NegativeInfinity;
           } else if (value.IsPositiveInfinity()) {
-          return baseValue.compareTo (1) < 0 ? EFloat.NegativeInfinity :
+          return baseValue.compareTo(1) < 0 ? EFloat.NegativeInfinity :
             EFloat.PositiveInfinity;
         }
-        if (baseValue.compareTo (2) == 0) {
-          EFloat ev = value.Reduce (null);
-          if (ev.getUnsignedMantissa().compareTo (1) == 0) {
-            return EFloat.FromEInteger (ev.getExponent()).Plus (ctx);
+        if (baseValue.compareTo(2) == 0) {
+          EFloat ev = value.Reduce(null);
+          if (ev.getUnsignedMantissa().compareTo(1) == 0) {
+            return EFloat.FromEInteger(ev.getExponent()).Plus(ctx);
           }
-        } else if (value.compareTo (1) == 0) {
-          return EFloat.FromInt32 (0).Plus (ctx);
-        } else if (value.compareTo (baseValue) == 0) {
-          return EFloat.FromInt32 (1).Plus (ctx);
+        } else if (value.compareTo(1) == 0) {
+          return EFloat.FromInt32(0).Plus(ctx);
+        } else if (value.compareTo(baseValue) == 0) {
+          return EFloat.FromInt32(1).Plus(ctx);
         }
         int flags = ctx.getFlags();
         EContext tmpctx =
-          ctx.WithBigPrecision (ctx.getPrecision().Add (3)).WithBlankFlags();
-        EFloat ret = value.Log (tmpctx).Divide (baseValue.Log (tmpctx), ctx);
+          ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
+        EFloat ret = value.Log(tmpctx).Divide(baseValue.Log(tmpctx), ctx);
         if (ret.IsInteger() && !ret.isZero()) {
           flags |= EContext.FlagRounded | EContext.FlagInexact;
-          if (baseValue.Pow (ret).CompareToValue (value) == 0) {
-            EFloat rtmp = ret.Quantize (EFloat.FromInt32 (1),
+          if (baseValue.Pow(ret).CompareToValue(value) == 0) {
+            EFloat rtmp = ret.Quantize(EFloat.FromInt32(1),
   ctx.WithNoFlags());
             if (!rtmp.IsNaN()) {
-              flags &= ~ (EContext.FlagRounded | EContext.FlagInexact);
+              flags &= ~(EContext.FlagRounded | EContext.FlagInexact);
               ret = rtmp;
             }
           }
@@ -2232,7 +2233,7 @@ at: http://peteroupc.github.io/
      * more than 0.
      */
     public EFloat MovePointLeft(int places) {
-      return this.MovePointLeft (EInteger.FromInt32(places), null);
+      return this.MovePointLeft(EInteger.FromInt32(places), null);
     }
 
     /**
@@ -2250,7 +2251,7 @@ at: http://peteroupc.github.io/
      * more than 0.
      */
     public EFloat MovePointLeft(int places, EContext ctx) {
-      return this.MovePointLeft (EInteger.FromInt32(places), ctx);
+      return this.MovePointLeft(EInteger.FromInt32(places), ctx);
     }
 
     /**
@@ -2263,7 +2264,7 @@ at: http://peteroupc.github.io/
      * to more than 0.
      */
     public EFloat MovePointLeft(EInteger bigPlaces) {
-      return this.MovePointLeft (bigPlaces, null);
+      return this.MovePointLeft(bigPlaces, null);
     }
 
     /**
@@ -2283,8 +2284,8 @@ at: http://peteroupc.github.io/
     public EFloat MovePointLeft(
       EInteger bigPlaces,
       EContext ctx) {
-      return (!this.isFinite()) ? this.RoundToPrecision (ctx) :
-        this.MovePointRight ((bigPlaces).Negate(), ctx);
+      return (!this.isFinite()) ? this.RoundToPrecision(ctx) :
+        this.MovePointRight((bigPlaces).Negate(), ctx);
     }
 
     /**
@@ -2297,7 +2298,7 @@ at: http://peteroupc.github.io/
      * more than 0.
      */
     public EFloat MovePointRight(int places) {
-      return this.MovePointRight (EInteger.FromInt32(places), null);
+      return this.MovePointRight(EInteger.FromInt32(places), null);
     }
 
     /**
@@ -2315,7 +2316,7 @@ at: http://peteroupc.github.io/
      * more than 0.
      */
     public EFloat MovePointRight(int places, EContext ctx) {
-      return this.MovePointRight (EInteger.FromInt32(places), ctx);
+      return this.MovePointRight(EInteger.FromInt32(places), ctx);
     }
 
     /**
@@ -2328,7 +2329,7 @@ at: http://peteroupc.github.io/
      * to more than 0.
      */
     public EFloat MovePointRight(EInteger bigPlaces) {
-      return this.MovePointRight (bigPlaces, null);
+      return this.MovePointRight(bigPlaces, null);
     }
 
     /**
@@ -2349,21 +2350,21 @@ at: http://peteroupc.github.io/
       EInteger bigPlaces,
       EContext ctx) {
       if (!this.isFinite()) {
-        return this.RoundToPrecision (ctx);
+        return this.RoundToPrecision(ctx);
       }
       EInteger bigExp = this.getExponent();
       bigExp = bigExp.Add(bigPlaces);
       if (bigExp.signum() > 0) {
-        EInteger mant = this.unsignedMantissa.ShiftLeft (bigExp);
+        EInteger mant = this.unsignedMantissa.ShiftLeft(bigExp);
         return CreateWithFlags(
             mant,
             EInteger.FromInt32(0),
-            this.flags).RoundToPrecision (ctx);
+            this.flags).RoundToPrecision(ctx);
       }
       return CreateWithFlags(
           this.unsignedMantissa,
           bigExp,
-          this.flags).RoundToPrecision (ctx);
+          this.flags).RoundToPrecision(ctx);
     }
 
     /**
@@ -2378,21 +2379,21 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.isFinite() && otherValue.isFinite()) {
-        EInteger exp = this.exponent.Add (otherValue.exponent);
+        EInteger exp = this.exponent.Add(otherValue.exponent);
         int newflags = otherValue.flags ^ this.flags;
         if (this.unsignedMantissa.CanFitInInt32() &&
           otherValue.unsignedMantissa.CanFitInInt32()) {
           int integerA = this.unsignedMantissa.ToInt32Unchecked();
           int integerB = otherValue.unsignedMantissa.ToInt32Unchecked();
           long longA = ((long)integerA) * ((long)integerB);
-          return CreateWithFlags (EInteger.FromInt64(longA), exp, newflags);
+          return CreateWithFlags(EInteger.FromInt64(longA), exp, newflags);
         } else {
           EInteger eintA = this.unsignedMantissa.Multiply(
               otherValue.unsignedMantissa);
-          return CreateWithFlags (eintA, exp, newflags);
+          return CreateWithFlags(eintA, exp, newflags);
         }
       }
-      return this.Multiply (otherValue, EContext.UnlimitedHalfEven);
+      return this.Multiply(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
@@ -2411,7 +2412,7 @@ at: http://peteroupc.github.io/
     public EFloat Multiply(
       EFloat op,
       EContext ctx) {
-      return MathValue.Multiply (this, op, ctx);
+      return MathValue.Multiply(this, op, ctx);
     }
 
     /**
@@ -2424,7 +2425,7 @@ at: http://peteroupc.github.io/
     public EFloat MultiplyAndAdd(
       EFloat multiplicand,
       EFloat augend) {
-      return this.MultiplyAndAdd (multiplicand, augend, null);
+      return this.MultiplyAndAdd(multiplicand, augend, null);
     }
 
     /**
@@ -2445,7 +2446,7 @@ at: http://peteroupc.github.io/
       EFloat op,
       EFloat augend,
       EContext ctx) {
-      return MathValue.MultiplyAndAdd (this, op, augend, ctx);
+      return MathValue.MultiplyAndAdd(this, op, augend, ctx);
     }
 
     /**
@@ -2482,7 +2483,7 @@ at: http://peteroupc.github.io/
             subtrahend.exponent,
             newflags);
       }
-      return MathValue.MultiplyAndAdd (this, op, negated, ctx);
+      return MathValue.MultiplyAndAdd(this, op, negated, ctx);
     }
 
     /**
@@ -2514,7 +2515,7 @@ at: http://peteroupc.github.io/
      * returns quiet NaN if this value is signaling NaN.
      */
     public EFloat Negate(EContext context) {
-      return MathValue.Negate (this, context);
+      return MathValue.Negate(this, context);
     }
 
     /**
@@ -2531,7 +2532,7 @@ at: http://peteroupc.github.io/
      * exponent range.
      */
     public EFloat NextMinus(EContext ctx) {
-      return MathValue.NextMinus (this, ctx);
+      return MathValue.NextMinus(this, ctx);
     }
 
     /**
@@ -2547,7 +2548,7 @@ at: http://peteroupc.github.io/
      * has an unlimited exponent range.
      */
     public EFloat NextPlus(EContext ctx) {
-      return MathValue.NextPlus (this, ctx);
+      return MathValue.NextPlus(this, ctx);
     }
 
     /**
@@ -2569,7 +2570,7 @@ at: http://peteroupc.github.io/
     public EFloat NextToward(
       EFloat otherValue,
       EContext ctx) {
-      return MathValue.NextToward (this, otherValue, ctx);
+      return MathValue.NextToward(this, otherValue, ctx);
     }
 
     /**
@@ -2587,7 +2588,7 @@ at: http://peteroupc.github.io/
      * quiet NaN if this object is a signaling NaN).
      */
     public EFloat Plus(EContext ctx) {
-      return MathValue.Plus (this, ctx);
+      return MathValue.Plus(this, ctx);
     }
 
     /**
@@ -2598,7 +2599,7 @@ at: http://peteroupc.github.io/
      * fractional part.
      */
     public EFloat Pow(EFloat exponent) {
-      return this.Pow (exponent, null);
+      return this.Pow(exponent, null);
     }
 
     /**
@@ -2618,7 +2619,7 @@ at: http://peteroupc.github.io/
      * property is 0), and the exponent has a fractional part.
      */
     public EFloat Pow(EFloat exponent, EContext ctx) {
-      return MathValue.Power (this, exponent, ctx);
+      return MathValue.Power(this, exponent, ctx);
     }
 
     /**
@@ -2633,7 +2634,7 @@ at: http://peteroupc.github.io/
      * object and exponent are both 0.
      */
     public EFloat Pow(int exponentSmall, EContext ctx) {
-      return this.Pow (EFloat.FromInt64 (exponentSmall), ctx);
+      return this.Pow(EFloat.FromInt64(exponentSmall), ctx);
     }
 
     /**
@@ -2643,7 +2644,7 @@ at: http://peteroupc.github.io/
      * exponent are both 0.
      */
     public EFloat Pow(int exponentSmall) {
-      return this.Pow (EFloat.FromInt64 (exponentSmall), null);
+      return this.Pow(EFloat.FromInt64(exponentSmall), null);
     }
 
     /**
@@ -2668,12 +2669,12 @@ at: http://peteroupc.github.io/
       if (!this.isFinite()) {
         return false;
       }
-      if (this.isZero() || this.getExponent().compareTo (0) >= 0) {
+      if (this.isZero() || this.getExponent().compareTo(0) >= 0) {
         return true;
       } else {
         EInteger absexp = this.getExponent().Abs();
         EInteger mant = this.getUnsignedMantissa();
-        return mant.GetLowBitAsEInteger().compareTo (absexp) >= 0;
+        return mant.GetLowBitAsEInteger().compareTo(absexp) >= 0;
       }
     }
 
@@ -2713,7 +2714,7 @@ at: http://peteroupc.github.io/
       EInteger desiredExponent,
       EContext ctx) {
       return this.Quantize(
-          EFloat.Create (EInteger.FromInt32(1), desiredExponent),
+          EFloat.Create(EInteger.FromInt32(1), desiredExponent),
           ctx);
     }
 
@@ -2753,7 +2754,7 @@ at: http://peteroupc.github.io/
       int desiredExponentInt,
       EContext ctx) {
       return this.Quantize(
-          EFloat.Create (EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
+          EFloat.Create(EInteger.FromInt32(1), EInteger.FromInt32(desiredExponentInt)),
           ctx);
     }
 
@@ -2792,7 +2793,7 @@ at: http://peteroupc.github.io/
     public EFloat Quantize(
       EFloat otherValue,
       EContext ctx) {
-      return MathValue.Quantize (this, otherValue, ctx);
+      return MathValue.Quantize(this, otherValue, ctx);
     }
 
     /**
@@ -2810,7 +2811,7 @@ at: http://peteroupc.github.io/
      * there may still be some trailing zeros in the significand.
      */
     public EFloat Reduce(EContext ctx) {
-      return MathValue.Reduce (this, ctx);
+      return MathValue.Reduce(this, ctx);
     }
 
     /**
@@ -2828,7 +2829,7 @@ at: http://peteroupc.github.io/
     public EFloat Remainder(
       EFloat divisor,
       EContext ctx) {
-      return MathValue.Remainder (this, divisor, ctx, true);
+      return MathValue.Remainder(this, divisor, ctx, true);
     }
 
     /**
@@ -2846,7 +2847,7 @@ at: http://peteroupc.github.io/
     public EFloat RemainderNoRoundAfterDivide(
       EFloat divisor,
       EContext ctx) {
-      return MathValue.Remainder (this, divisor, ctx, false);
+      return MathValue.Remainder(this, divisor, ctx, false);
     }
 
     /**
@@ -2857,7 +2858,7 @@ at: http://peteroupc.github.io/
      */
     public EFloat RemainderNaturalScale(
       EFloat divisor) {
-      return this.RemainderNaturalScale (divisor, null);
+      return this.RemainderNaturalScale(divisor, null);
     }
 
     /**
@@ -2880,7 +2881,7 @@ at: http://peteroupc.github.io/
       EFloat divisor,
       EContext ctx) {
       return this.Subtract(
-        this.DivideToIntegerNaturalScale (divisor, null).Multiply (divisor, null),
+        this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
         ctx);
     }
 
@@ -2917,7 +2918,7 @@ at: http://peteroupc.github.io/
     public EFloat RemainderNear(
       EFloat divisor,
       EContext ctx) {
-      return MathValue.RemainderNear (this, divisor, ctx);
+      return MathValue.RemainderNear(this, divisor, ctx);
     }
 
     /**
@@ -2948,7 +2949,7 @@ at: http://peteroupc.github.io/
     public EFloat RoundToExponent(
       EInteger exponent,
       EContext ctx) {
-      return MathValue.RoundToExponentSimple (this, exponent, ctx);
+      return MathValue.RoundToExponentSimple(this, exponent, ctx);
     }
 
     /**
@@ -2979,7 +2980,7 @@ at: http://peteroupc.github.io/
     public EFloat RoundToExponent(
       int exponentSmall,
       EContext ctx) {
-      return this.RoundToExponent (EInteger.FromInt32(exponentSmall), ctx);
+      return this.RoundToExponent(EInteger.FromInt32(exponentSmall), ctx);
     }
 
     /**
@@ -3011,7 +3012,7 @@ at: http://peteroupc.github.io/
     public EFloat RoundToExponentExact(
       EInteger exponent,
       EContext ctx) {
-      return MathValue.RoundToExponentExact (this, exponent, ctx);
+      return MathValue.RoundToExponentExact(this, exponent, ctx);
     }
 
     /**
@@ -3035,7 +3036,7 @@ at: http://peteroupc.github.io/
       return MathValue.RoundToExponentExact(
           this,
           exponent,
-          EContext.Unlimited.WithRounding (rounding));
+          EContext.Unlimited.WithRounding(rounding));
     }
 
     /**
@@ -3068,7 +3069,7 @@ at: http://peteroupc.github.io/
     public EFloat RoundToExponentExact(
       int exponentSmall,
       EContext ctx) {
-      return this.RoundToExponentExact (EInteger.FromInt32(exponentSmall), ctx);
+      return this.RoundToExponentExact(EInteger.FromInt32(exponentSmall), ctx);
     }
 
     /**
@@ -3091,7 +3092,7 @@ at: http://peteroupc.github.io/
      * outside of the valid range of the arithmetic context.
      */
     public EFloat RoundToIntegerExact(EContext ctx) {
-      return MathValue.RoundToExponentExact (this, EInteger.FromInt32(0), ctx);
+      return MathValue.RoundToExponentExact(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
@@ -3116,7 +3117,7 @@ at: http://peteroupc.github.io/
      * context.
      */
     public EFloat RoundToIntegerNoRoundedFlag(EContext ctx) {
-      return MathValue.RoundToExponentNoRoundedFlag (this, EInteger.FromInt32(0), ctx);
+      return MathValue.RoundToExponentNoRoundedFlag(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
@@ -3139,7 +3140,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public EFloat RoundToIntegralExact(EContext ctx) {
-      return MathValue.RoundToExponentExact (this, EInteger.FromInt32(0), ctx);
+      return MathValue.RoundToExponentExact(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
@@ -3164,7 +3165,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public EFloat RoundToIntegralNoRoundedFlag(EContext ctx) {
-      return MathValue.RoundToExponentNoRoundedFlag (this, EInteger.FromInt32(0), ctx);
+      return MathValue.RoundToExponentNoRoundedFlag(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
@@ -3180,7 +3181,7 @@ at: http://peteroupc.github.io/
      * null or the precision and exponent range are unlimited.
      */
     public EFloat RoundToPrecision(EContext ctx) {
-      return MathValue.RoundToPrecision (this, ctx);
+      return MathValue.RoundToPrecision(this, ctx);
     }
 
     /**
@@ -3189,7 +3190,7 @@ at: http://peteroupc.github.io/
      * @return The return value is not documented yet.
      */
     public EFloat PreRound(EContext ctx) {
-      return NumberUtility.PreRound (this, ctx, MathValue);
+      return NumberUtility.PreRound(this, ctx, MathValue);
     }
 
     /**
@@ -3198,7 +3199,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(int places) {
-      return this.ScaleByPowerOfTwo (EInteger.FromInt32(places), null);
+      return this.ScaleByPowerOfTwo(EInteger.FromInt32(places), null);
     }
 
     /**
@@ -3211,7 +3212,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(int places, EContext ctx) {
-      return this.ScaleByPowerOfTwo (EInteger.FromInt32(places), ctx);
+      return this.ScaleByPowerOfTwo(EInteger.FromInt32(places), ctx);
     }
 
     /**
@@ -3220,7 +3221,7 @@ at: http://peteroupc.github.io/
      * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) {
-      return this.ScaleByPowerOfTwo (bigPlaces, null);
+      return this.ScaleByPowerOfTwo(bigPlaces, null);
     }
 
     /**
@@ -3240,17 +3241,17 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("bigPlaces");
       }
       if (bigPlaces.isZero()) {
-        return this.RoundToPrecision (ctx);
+        return this.RoundToPrecision(ctx);
       }
       if (!this.isFinite()) {
-        return this.RoundToPrecision (ctx);
+        return this.RoundToPrecision(ctx);
       }
       EInteger bigExp = this.getExponent();
       bigExp = bigExp.Add(bigPlaces);
       return CreateWithFlags(
           this.unsignedMantissa,
           bigExp,
-          this.flags).RoundToPrecision (ctx);
+          this.flags).RoundToPrecision(ctx);
     }
 
     /**
@@ -3269,7 +3270,7 @@ at: http://peteroupc.github.io/
      * the precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Sqrt(EContext ctx) {
-      return MathValue.SquareRoot (this, ctx);
+      return MathValue.SquareRoot(this, ctx);
     }
 
     /**
@@ -3290,7 +3291,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public EFloat SquareRoot(EContext ctx) {
-      return MathValue.SquareRoot (this, ctx);
+      return MathValue.SquareRoot(this, ctx);
     }
 
     /**
@@ -3300,7 +3301,7 @@ at: http://peteroupc.github.io/
      * @return The difference of the two objects.
      */
     public EFloat Subtract(EFloat otherValue) {
-      return this.Subtract (otherValue, null);
+      return this.Subtract(otherValue, null);
     }
 
     /**
@@ -3329,7 +3330,7 @@ at: http://peteroupc.github.io/
             otherValue.exponent,
             newflags);
       }
-      return this.Add (negated, ctx);
+      return this.Add(negated, ctx);
     }
 
     /**
@@ -3359,7 +3360,7 @@ at: http://peteroupc.github.io/
         }
         if (!this.getUnsignedMantissa().isZero()) {
           // Copy diagnostic information
-          int[] words = FastInteger.GetLastWords (this.getUnsignedMantissa(), 2);
+          int[] words = FastInteger.GetLastWords(this.getUnsignedMantissa(), 2);
           nan[0] = words[0];
           nan[1] |= words[1] & 0x7ffff;
           if ((words[0] | (words[1] & 0x7ffff)) == 0 && !this.IsQuietNaN()) {
@@ -3368,16 +3369,16 @@ at: http://peteroupc.github.io/
             nan[1] |= 0x40000;
           }
         }
-        return Extras.IntegersToDouble (nan);
+        return Extras.IntegersToDouble(nan);
       }
-      EFloat thisValue = this.RoundToPrecision (EContext.Binary64);
+      EFloat thisValue = this.RoundToPrecision(EContext.Binary64);
       if (!thisValue.isFinite()) {
         return thisValue.ToDouble();
       }
       EInteger mant = thisValue.unsignedMantissa;
       if (thisValue.isNegative() && mant.isZero()) {
         int highbit = ((int)(1 << 31));
-        return Extras.IntegersToDouble (new int[] { 0, highbit,
+        return Extras.IntegersToDouble(new int[] { 0, highbit,
         });
       } else if (mant.isZero()) {
         return 0.0;
@@ -3386,7 +3387,7 @@ at: http://peteroupc.github.io/
       EInteger bitLength = mant.GetUnsignedBitLengthAsEInteger();
       int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
-      if (bitLength.compareTo (53) < 0) {
+      if (bitLength.compareTo(53) < 0) {
         int diff = 53 - bitLength.ToInt32Checked();
         expo -= diff;
         if (expo < -1074) {
@@ -3401,7 +3402,7 @@ at: http://peteroupc.github.io/
       }
       // DebugUtility.Log("2->" + (mant.ToRadixString(2)) + ", " + expo);
       int[] mantissaBits;
-      mantissaBits = FastInteger.GetLastWords (mant, 2);
+      mantissaBits = FastInteger.GetLastWords(mant, 2);
       // Clear the high bits where the exponent and sign are
       mantissaBits[1] &= 0xfffff;
       if (!subnormal) {
@@ -3413,7 +3414,7 @@ at: http://peteroupc.github.io/
       }
       // DebugUtility.Log("todouble ret -->" +
       // Extras.IntegersToDouble(mantissaBits));
-      return Extras.IntegersToDouble (mantissaBits);
+      return Extras.IntegersToDouble(mantissaBits);
     }
 
     /**
@@ -3421,7 +3422,7 @@ at: http://peteroupc.github.io/
      * @return This number, converted to an arbitrary-precision decimal number.
      */
     public EDecimal ToEDecimal() {
-      return EDecimal.FromEFloat (this);
+      return EDecimal.FromEFloat(this);
     }
 
     /**
@@ -3437,7 +3438,7 @@ at: http://peteroupc.github.io/
      * (NaN).
      */
     public EInteger ToEInteger() {
-      return this.ToEIntegerInternal (false);
+      return this.ToEIntegerInternal(false);
     }
 
     /**
@@ -3456,7 +3457,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public EInteger ToEIntegerExact() {
-      return this.ToEIntegerInternal (true);
+      return this.ToEIntegerInternal(true);
     }
 
     /**
@@ -3473,7 +3474,7 @@ at: http://peteroupc.github.io/
      * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToEIntegerIfExact() {
-      return this.ToEIntegerInternal (true);
+      return this.ToEIntegerInternal(true);
     }
 
     /**
@@ -3492,7 +3493,7 @@ at: http://peteroupc.github.io/
  */
 @Deprecated
     public EDecimal ToExtendedDecimal() {
-      return EDecimal.FromEFloat (this);
+      return EDecimal.FromEFloat(this);
     }
 
     /**
@@ -3504,7 +3505,7 @@ at: http://peteroupc.github.io/
     }
 
     private String ToDebugString() {
-      return "[" + this.getMantissa().ToRadixString (2) +
+      return "[" + this.getMantissa().ToRadixString(2) +
         "," + this.getMantissa().GetUnsignedBitLengthAsEInteger() +
         "," + this.getExponent() + "]";
     }
@@ -3546,38 +3547,38 @@ at: http://peteroupc.github.io/
             ctx).toString();
       }
       if (this.IsInfinity()) {
-        return this.RoundToPrecision (ctx).toString();
+        return this.RoundToPrecision(ctx).toString();
       }
       EContext ctx2 = ctx.WithNoFlags();
-      EFloat valueEfRnd = this.RoundToPrecision (ctx);
+      EFloat valueEfRnd = this.RoundToPrecision(ctx);
       if (valueEfRnd.IsInfinity()) {
         return valueEfRnd.toString();
       }
       if (this.isZero()) {
-        return this.RoundToPrecision (ctx).toString();
+        return this.RoundToPrecision(ctx).toString();
       }
       // NOTE: The original EFloat is converted to decimal,
       // not the rounded version, to avoid double rounding issues
       EDecimal dec = this.ToEDecimal();
-      if (ctx.getPrecision().compareTo (10) >= 0) {
+      if (ctx.getPrecision().compareTo(10) >= 0) {
         // Preround the decimal so the significand has closer to the
         // number of decimal digits of the maximum possible
         // decimal significand, to speed up further rounding
-        EInteger roundedPrec = ctx.getPrecision().ShiftRight (1).Add(
-            EInteger.FromInt32 (3));
+        EInteger roundedPrec = ctx.getPrecision().ShiftRight(1).Add(
+            EInteger.FromInt32(3));
         EInteger dmant = dec.getUnsignedMantissa();
         EInteger dexp = dec.getExponent();
         boolean dneg = dec.isNegative();
         DigitShiftAccumulator dsa = new DigitShiftAccumulator(dmant, 0, 0);
-        dsa.ShiftToDigits (FastInteger.FromBig (roundedPrec), null, false);
+        dsa.ShiftToDigits(FastInteger.FromBig(roundedPrec), null, false);
         dmant = dsa.getShiftedInt();
-        dexp = dexp.Add (dsa.getDiscardedDigitCount().AsEInteger());
+        dexp = dexp.Add(dsa.getDiscardedDigitCount().AsEInteger());
         if (dsa.getLastDiscardedDigit() != 0 || dsa.getOlderDiscardedDigits() != 0) {
-          if (dmant.Remainder (10).ToInt32Checked() != 9) {
-            dmant = dmant.Add (1);
+          if (dmant.Remainder(10).ToInt32Checked() != 9) {
+            dmant = dmant.Add(1);
           }
         }
-        dec = EDecimal.Create (dmant, dexp);
+        dec = EDecimal.Create(dmant, dexp);
         if (dneg) {
           dec = dec.Negate();
         }
@@ -3585,24 +3586,24 @@ at: http://peteroupc.github.io/
       boolean mantissaIsPowerOfTwo = this.unsignedMantissa.isPowerOfTwo();
       EInteger eprecision = EInteger.FromInt32(0);
       while (true) {
-        EInteger nextPrecision = eprecision.Add (EInteger.FromInt32(1));
-        EContext nextCtx = ctx2.WithBigPrecision (nextPrecision);
-        EDecimal nextDec = dec.RoundToPrecision (nextCtx);
-        EFloat newFloat = nextDec.ToEFloat (ctx2);
-        if (newFloat.compareTo (valueEfRnd) == 0) {
+        EInteger nextPrecision = eprecision.Add(EInteger.FromInt32(1));
+        EContext nextCtx = ctx2.WithBigPrecision(nextPrecision);
+        EDecimal nextDec = dec.RoundToPrecision(nextCtx);
+        EFloat newFloat = nextDec.ToEFloat(ctx2);
+        if (newFloat.compareTo(valueEfRnd) == 0) {
           if (mantissaIsPowerOfTwo && eprecision.signum() > 0) {
             nextPrecision = eprecision;
-            nextCtx = ctx2.WithBigPrecision (nextPrecision);
+            nextCtx = ctx2.WithBigPrecision(nextPrecision);
 
-            EDecimal nextDec2 = dec.RoundToPrecision (nextCtx);
-            nextDec2 = nextDec2.NextPlus (nextCtx);
-            newFloat = nextDec2.ToEFloat (ctx2);
-            if (newFloat.compareTo (valueEfRnd) == 0) {
+            EDecimal nextDec2 = dec.RoundToPrecision(nextCtx);
+            nextDec2 = nextDec2.NextPlus(nextCtx);
+            newFloat = nextDec2.ToEFloat(ctx2);
+            if (newFloat.compareTo(valueEfRnd) == 0) {
               nextDec = nextDec2;
             }
           }
           return (nextDec.getExponent().signum() > 0 &&
-              nextDec.Abs().compareTo (EDecimal.FromInt32 (10000000)) < 0) ?
+              nextDec.Abs().compareTo(EDecimal.FromInt32(10000000)) < 0) ?
             nextDec.ToPlainString() : nextDec.toString();
         }
         eprecision = nextPrecision;
@@ -3655,7 +3656,7 @@ at: http://peteroupc.github.io/
         }
         return Float.intBitsToFloat(nan);
       }
-      EFloat thisValue = this.RoundToPrecision (EContext.Binary32);
+      EFloat thisValue = this.RoundToPrecision(EContext.Binary32);
       if (!thisValue.isFinite()) {
         return thisValue.ToSingle();
       }
@@ -3671,7 +3672,7 @@ at: http://peteroupc.github.io/
       EInteger bitLength = mant.GetUnsignedBitLengthAsEInteger();
       int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
-      if (bitLength.compareTo (24) < 0) {
+      if (bitLength.compareTo(24) < 0) {
         int diff = 24 - bitLength.ToInt32Checked();
         expo -= diff;
         if (expo < -149) {
@@ -3704,7 +3705,7 @@ at: http://peteroupc.github.io/
      * digit is more than five digits after the decimal point.
      */
     @Override public String toString() {
-      return EDecimal.FromEFloat (this).toString();
+      return EDecimal.FromEFloat(this).toString();
     }
 
     /**
@@ -3715,7 +3716,7 @@ at: http://peteroupc.github.io/
      */
     public EFloat Ulp() {
       return (!this.isFinite()) ? EFloat.One :
-        EFloat.Create (EInteger.FromInt32(1), this.exponent);
+        EFloat.Create(EInteger.FromInt32(1), this.exponent);
     }
 
     static EFloat CreateWithFlags(
@@ -3758,7 +3759,7 @@ at: http://peteroupc.github.io/
         if (neg) {
           bigmantissa = bigmantissa.Negate();
         }
-        bigmantissa = bigmantissa.ShiftLeft (curexp);
+        bigmantissa = bigmantissa.ShiftLeft(curexp);
         if (neg) {
           bigmantissa = bigmantissa.Negate();
         }
@@ -3769,10 +3770,10 @@ at: http://peteroupc.github.io/
           // number of bits, so can't be an exact integer
           throw new ArithmeticException("Not an exact integer");
         }
-        FastInteger bigexponent = FastInteger.FromBig (this.getExponent()).Negate();
+        FastInteger bigexponent = FastInteger.FromBig(this.getExponent()).Negate();
         EInteger bigmantissa = this.unsignedMantissa;
         BitShiftAccumulator acc = new BitShiftAccumulator(bigmantissa, 0, 0);
-        acc.ShiftRight (bigexponent);
+        acc.ShiftRight(bigexponent);
         if (exact && (acc.getLastDiscardedDigit() != 0 || acc.getOlderDiscardedDigits() !=
             0)) {
           // Some digits were discarded
@@ -3790,7 +3791,7 @@ at: http://peteroupc.github.io/
       return e.Abs();
     }
     private static EInteger PowerOfRadixBitsUpperBound(EInteger e) {
-      return e.Abs().Add (1);
+      return e.Abs().Add(1);
     }
 
     /**
@@ -3799,7 +3800,7 @@ at: http://peteroupc.github.io/
      * @return The return value is not documented yet.
      */
     public EInteger ToSizedEInteger(int maxBitLength) {
-      return this.ToSizedEInteger (maxBitLength, false);
+      return this.ToSizedEInteger(maxBitLength, false);
     }
 
     /**
@@ -3808,7 +3809,7 @@ at: http://peteroupc.github.io/
      * @return The return value is not documented yet.
      */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
-      return this.ToSizedEInteger (maxBitLength, true);
+      return this.ToSizedEInteger(maxBitLength, true);
     }
 
     private EInteger ToSizedEInteger(int maxBitLength, boolean exact) {
@@ -3827,19 +3828,19 @@ at: http://peteroupc.github.io/
         if (imantbits >= maxBitLength) {
           throw new ArithmeticException("Value out of range");
         }
-        if (exp.compareTo (0x100000) < 0 && imantbits < 0x100000) {
+        if (exp.compareTo(0x100000) < 0 && imantbits < 0x100000) {
           // Lower bound of bit count in 2^exp based on ln(2^exp)/ln(2)
           long expBitsLowerBound = exp.ToInt64Checked();
           if ((imantbits - 1) + expBitsLowerBound > maxBitLength) {
             throw new ArithmeticException("Value out of range");
           }
-        } else if (exp.compareTo (maxBitLength) > 0) {
+        } else if (exp.compareTo(maxBitLength) > 0) {
           // Digits in exp is more than max bit length, so out of range
           throw new ArithmeticException("Value out of range");
         } else {
           EInteger mantbits = mant.GetSignedBitLengthAsEInteger();
-          if (mantbits.Subtract (1).Add (PowerOfRadixBitsLowerBound (exp))
-            .compareTo (maxBitLength) > 0) {
+          if (mantbits.Subtract(1).Add(PowerOfRadixBitsLowerBound(exp))
+            .compareTo(maxBitLength) > 0) {
             throw new ArithmeticException("Value out of range");
           }
         }
@@ -3849,7 +3850,7 @@ at: http://peteroupc.github.io/
         // running ToEInteger.
         exp = exp.Abs();
         long imantbits = mant.GetSignedBitLengthAsInt64();
-        if (exp.compareTo (0x100000) < 0 && imantbits < 0x100000) {
+        if (exp.compareTo(0x100000) < 0 && imantbits < 0x100000) {
           long expBitsUpperBound = exp.ToInt64Checked() + 1;
           long expBitsLowerBound = exp.ToInt64Checked();
           if (imantbits - 1 - expBitsUpperBound > maxBitLength) {
@@ -3860,26 +3861,26 @@ at: http://peteroupc.github.io/
             if (exact) {
               throw new ArithmeticException("Not an exact integer");
             } else {
-              return EInteger.FromInt32 (0);
+              return EInteger.FromInt32(0);
             }
           }
-        } else if (imantbits < 0x100000 && exp.compareTo (0x200000) >= 0) {
+        } else if (imantbits < 0x100000 && exp.compareTo(0x200000) >= 0) {
           // (mant / 2^exp) would be less than one, so not exact
           if (exact) {
             throw new ArithmeticException("Not an exact integer");
           } else {
-            return EInteger.FromInt32 (0);
+            return EInteger.FromInt32(0);
           }
         } else {
           EInteger mantbits = mant.GetSignedBitLengthAsEInteger();
-          if (mantbits.Subtract (1).Subtract (PowerOfRadixBitsUpperBound (exp))
-            .compareTo (maxBitLength) > 0) {
+          if (mantbits.Subtract(1).Subtract(PowerOfRadixBitsUpperBound(exp))
+            .compareTo(maxBitLength) > 0) {
             throw new ArithmeticException("Value out of range");
           }
         }
         mant = exact ? this.ToEIntegerIfExact() : this.ToEInteger();
       }
-      if (mant.GetSignedBitLengthAsEInteger().compareTo (maxBitLength) > 0) {
+      if (mant.GetSignedBitLengthAsEInteger().compareTo(maxBitLength) > 0) {
         throw new ArithmeticException("Value out of range");
       }
       return mant;
@@ -3922,15 +3923,15 @@ at: http://peteroupc.github.io/
       }
 
       public FastInteger GetDigitLength(EInteger ei) {
-        return FastInteger.FromBig (ei.GetUnsignedBitLengthAsEInteger());
+        return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
       }
 
       public FastIntegerFixed GetMantissaFastInt(EFloat value) {
-        return FastIntegerFixed.FromBig (value.unsignedMantissa);
+        return FastIntegerFixed.FromBig(value.unsignedMantissa);
       }
 
       public FastIntegerFixed GetExponentFastInt(EFloat value) {
-        return FastIntegerFixed.FromBig (value.exponent);
+        return FastIntegerFixed.FromBig(value.exponent);
       }
 
       /**
@@ -3975,13 +3976,13 @@ at: http://peteroupc.github.io/
         if (den.isZero()) {
           return null;
         }
-        if (den.GetUnsignedBit (0) && den.compareTo (EInteger.FromInt32(1)) != 0) {
+        if (den.GetUnsignedBit(0) && den.compareTo(EInteger.FromInt32(1)) != 0) {
           return null;
         }
         EInteger valueELowBit = den.GetLowBitAsEInteger();
         return
-          den.GetUnsignedBitLengthAsEInteger().equals (valueELowBit.Add (1)) ?
-          FastInteger.FromBig (valueELowBit) : null;
+          den.GetUnsignedBitLengthAsEInteger().equals(valueELowBit.Add(1)) ?
+          FastInteger.FromBig(valueELowBit) : null;
       }
 
       /**
@@ -3999,11 +4000,11 @@ at: http://peteroupc.github.io/
         }
         if (tmpbigint.signum() < 0) {
           tmpbigint = tmpbigint.Negate();
-          tmpbigint = power.ShiftEIntegerLeftByThis (tmpbigint);
+          tmpbigint = power.ShiftEIntegerLeftByThis(tmpbigint);
           tmpbigint = tmpbigint.Negate();
           return tmpbigint;
         }
-        return power.ShiftEIntegerLeftByThis (tmpbigint);
+        return power.ShiftEIntegerLeftByThis(tmpbigint);
       }
 
       /**
@@ -4026,7 +4027,7 @@ at: http://peteroupc.github.io/
         EInteger mantissa,
         EInteger exponent,
         int flags) {
-        return EFloat.CreateWithFlags (mantissa, exponent, flags);
+        return EFloat.CreateWithFlags(mantissa, exponent, flags);
       }
 
       public EFloat CreateNewWithFlagsFastInt(
@@ -4053,7 +4054,7 @@ at: http://peteroupc.github.io/
        * @return An arbitrary-precision binary floating-point number.
        */
       public EFloat ValueOf(int val) {
-        return FromInt64 (val);
+        return FromInt64(val);
       }
     }
 
@@ -4062,7 +4063,7 @@ at: http://peteroupc.github.io/
      * @return The given arbitrary-precision binary floating-point number plus one.
      */
     public EFloat Increment() {
-      return this.Add (1);
+      return this.Add(1);
     }
 
     /**
@@ -4072,7 +4073,7 @@ at: http://peteroupc.github.io/
      * one.
      */
     public EFloat Decrement() {
-      return this.Subtract (1);
+      return this.Subtract(1);
     }
 
     // Begin integer conversions
@@ -4129,7 +4130,7 @@ at: http://peteroupc.github.io/
      */
     public static EFloat FromByte(byte inputByte) {
       int val = ((int)inputByte) & 0xff;
-      return FromInt32 (val);
+      return FromInt32(val);
     }
 
     /**
@@ -4185,7 +4186,7 @@ at: http://peteroupc.github.io/
      */
     public static EFloat FromInt16(short inputInt16) {
       int val = (int)inputInt16;
-      return FromInt32 (val);
+      return FromInt32(val);
     }
 
     /**
@@ -4250,7 +4251,7 @@ at: http://peteroupc.github.io/
      * number.
      */
     public static EFloat FromInt32(int inputInt32) {
-      return FromEInteger (EInteger.FromInt32 (inputInt32));
+      return FromEInteger(EInteger.FromInt32(inputInt32));
     }
 
     /**
@@ -4306,7 +4307,7 @@ at: http://peteroupc.github.io/
      * number.
      */
     public static EFloat FromInt64(long inputInt64) {
-      return FromEInteger (EInteger.FromInt64 (inputInt64));
+      return FromEInteger(EInteger.FromInt64(inputInt64));
     }
 
     // End integer conversions
