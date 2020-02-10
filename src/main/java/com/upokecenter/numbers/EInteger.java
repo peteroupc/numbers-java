@@ -2419,7 +2419,7 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
      * if this number is 0. Returns 2^63 - 1({@code Long.MAX_VALUE} in.getNET()
      * or {@code Long.MAX_VALUE} in Java) if the number of decimal digits
      * is 2^63 - 1 or greater. (Use {@code GetDigitCountAsEInteger} instead
-     * if the application relies on the exact number of decimal digits.)
+     * if the application relies on the exact number of decimal digits.).
      */
     public long GetDigitCountAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -2689,7 +2689,7 @@ maxDigitEstimate : retval +
      * Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java) if this
      * number is other than zero but the lowest set bit is at 2^63 - 1 or
      * greater. (Use {@code GetLowBitAsEInteger} instead if the application
-     * relies on the exact value of the lowest set bit position.)
+     * relies on the exact value of the lowest set bit position.).
      */
     public long GetLowBitAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -2852,7 +2852,7 @@ maxDigitEstimate : retval +
      * 1 ({@code Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java)
      * if the number of bits is 2^63 - 1 or greater. (Use {@code
      * GetUnsignedBitLengthAsEInteger} instead if the application relies on
-     * the exact number of bits.)
+     * the exact number of bits.).
      */
     public long GetSignedBitLengthAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -2984,7 +2984,7 @@ maxDigitEstimate : retval +
      * Returns 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code
      * Long.MAX_VALUE} in Java) if the number of bits is 2^63 - 1 or
      * greater. (Use {@code GetUnsignedBitLengthAsEInteger} instead if the
-     * application relies on the exact number of bits.)
+     * application relies on the exact number of bits.).
      */
     public long GetUnsignedBitLengthAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts

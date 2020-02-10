@@ -3185,8 +3185,8 @@ TrappableRadixMath<EFloat>(
     }
 
     /**
-     * Not documented yet.
-     * @param ctx Not documented yet.
+     *
+     * @param ctx The parameter {@code ctx} is a Numbers.EContext object.
      * @return The return value is not documented yet.
      */
     public EFloat PreRound(EContext ctx) {
@@ -3795,8 +3795,9 @@ TrappableRadixMath<EFloat>(
     }
 
     /**
-     * Not documented yet.
-     * @param maxBitLength Not documented yet.
+     *
+     * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
+     * integer.
      * @return The return value is not documented yet.
      */
     public EInteger ToSizedEInteger(int maxBitLength) {
@@ -3804,8 +3805,9 @@ TrappableRadixMath<EFloat>(
     }
 
     /**
-     * Not documented yet.
-     * @param maxBitLength Not documented yet.
+     *
+     * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
+     * integer.
      * @return The return value is not documented yet.
      */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
@@ -3813,9 +3815,9 @@ TrappableRadixMath<EFloat>(
     }
 
     private EInteger ToSizedEInteger(int maxBitLength, boolean exact) {
-      if (maxBitLength < 1) {
+      if (maxBitLength < 0) {
         throw new IllegalArgumentException("maxBitLength (" + maxBitLength +
-          ") is not greater or equal to 1");
+          ") is not greater or equal to 0");
       }
       if (!this.isFinite() || this.isZero()) {
         return exact ? this.ToEIntegerIfExact() : this.ToEInteger();

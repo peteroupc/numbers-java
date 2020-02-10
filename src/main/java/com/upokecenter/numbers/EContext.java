@@ -949,7 +949,7 @@ this.simplified +
     }
 
   /**
-   * Not documented yet.
+   *
    * @return The return value is not documented yet.
    */
     public EContext GetTrappable() {
@@ -957,12 +957,10 @@ this.simplified +
     }
 
   /**
-   * Not documented yet.
+   *
    * @param result The parameter {@code result} is a ``0 object.
    * @param trappableContext The parameter {@code trappableContext} is a
    * Numbers.EContext object.
-   * @param <T> Type parameter not documented yet.
-   * @return The return value is not documented yet.
    */
     public <T> T TriggerTraps(
       T result,

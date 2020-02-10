@@ -1737,14 +1737,15 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param maxBitLength Not documented yet.
+     *
+     * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
+     * integer.
      * @return The return value is not documented yet.
      */
     public EInteger ToSizedEInteger(int maxBitLength) {
-      if (maxBitLength < 1) {
+      if (maxBitLength < 0) {
         throw new IllegalArgumentException("maxBitLength (" + maxBitLength + ") is" +
-          "\u0020not greater or equal to 1");
+          "\u0020not greater or equal to 0");
       }
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
@@ -1768,14 +1769,15 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param maxBitLength Not documented yet.
+     *
+     * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
+     * integer.
      * @return The return value is not documented yet.
      */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
-      if (maxBitLength < 1) {
+      if (maxBitLength < 0) {
         throw new IllegalArgumentException("maxBitLength (" + maxBitLength + ") is" +
-          "\u0020not greater or equal to 1");
+          "\u0020not greater or equal to 0");
       }
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
