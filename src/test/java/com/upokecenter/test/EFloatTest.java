@@ -1394,7 +1394,7 @@ import com.upokecenter.numbers.*;
           OutputSingle(input.ToSingle()) + "\nsrc-----=" + OutputEF(src) +
           "\nexpected=" + OutputEF(expected) + "\ninput---=" +
           OutputEF(input);
-        Assert.fail(msg);
+        throw new IllegalStateException(msg);
       }
       float inputSingle = EFloat.FromString(str, EContext.Binary32).ToSingle();
       if (inputSingle != expectedSingle) {
@@ -1403,7 +1403,7 @@ import com.upokecenter.numbers.*;
           OutputSingle(inputSingle) + "\nsrc-----=" + OutputEF(src) +
           "\nexpected=" + OutputEF(expected) + "\ninput---=" +
           OutputEF(input);
-        Assert.fail(msg);
+         throw new IllegalStateException(msg);
       }
     }
 
@@ -1640,12 +1640,18 @@ import com.upokecenter.numbers.*;
         throw new NullPointerException("efa");
       }
       EInteger emant = efa.getMantissa();
-      boolean fullPrecision =
-         emant.GetUnsignedBitLengthAsEInteger().compareTo(bitCount) == 0;
+      int mantBits = emant.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
+      boolean fullPrecision = mantBits == bitCount;
       boolean isSubnormal = EFloats.IsSubnormal(efa, dbl ? EContext.Binary64 :
           EContext.Binary32);
-      boolean isEven = (!fullPrecision && !isSubnormal) ||
-          efa.getUnsignedMantissa().isEven();
+      boolean isEven = efa.getUnsignedMantissa().isEven();
+      if (isSubnormal) {
+        int minExponent = dbl ? -1074 : -149;
+        EInteger eexp = efa.getExponent();
+        if (eexp.compareTo(minExponent) > 0) {
+          isEven = true;
+        }
+      }
       EFloat efprev = efa.NextMinus(dbl ? EContext.Binary64 :
           EContext.Binary32);
       EFloat efnext = efa.NextPlus(dbl ? EContext.Binary64 :
@@ -1684,7 +1690,8 @@ import com.upokecenter.numbers.*;
         TestSingleRounding(efnext, efnext, efa);
       }
    } catch (Exception ex) {
-String msg="" + ("dbl_____="+dbl) + "\n" +
+String msg="" + ("dbl_____="+dbl+", full="+
+fullPrecision+",sub="+isSubnormal) + "\n" +
 ("efprev__="+OutputEF(efprev)) +"\n" +
 ("efprev1q="+OutputEF(efprev1q)) +"\n" +
 ("efprev2q="+OutputEF(efprev2q)) +"\n" +
@@ -2307,6 +2314,14 @@ eint.compareTo(255) <= 0;
         EFloat objectTemp = EFloat.Create(
           EInteger.FromRadixString("-10000000000000000000000000000000000000000000000000000", 2),
           EInteger.FromInt32(-1074));
+        TestToFloatRoundingOne(objectTemp, true);
+objectTemp = EFloat.Create(
+          EInteger.FromRadixString("1010011", 2),
+          EInteger.FromInt32(-1034));
+        TestToFloatRoundingOne(objectTemp, true);
+objectTemp = EFloat.Create(
+  EInteger.FromRadixString("100110100000000011000010111000111111101", 2),
+          EInteger.FromInt32(-1073));
         TestToFloatRoundingOne(objectTemp, true);
       }
     }
