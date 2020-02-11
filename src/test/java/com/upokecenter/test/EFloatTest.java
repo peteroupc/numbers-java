@@ -1651,6 +1651,8 @@ import com.upokecenter.numbers.*;
         if (eexp.compareTo(minExponent) > 0) {
           isEven = true;
         }
+      } else if (!fullPrecision) {
+        isEven = true;
       }
       EFloat efprev = efa.NextMinus(dbl ? EContext.Binary64 :
           EContext.Binary32);
