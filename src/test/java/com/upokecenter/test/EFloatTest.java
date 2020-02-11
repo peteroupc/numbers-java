@@ -1684,15 +1684,15 @@ import com.upokecenter.numbers.*;
         TestSingleRounding(efnext, efnext, efa);
       }
    } catch (Exception ex) {
-String msg="" + ("dbl_____="+dbl) +
-("efprev__="+OutputEF(efprev)) +
-("efprev1q="+OutputEF(efprev1q)) +
-("efprev2q="+OutputEF(efprev2q)) +
-("efprev3q="+OutputEF(efprev3q)) +
-("efa_____="+OutputEF(efa)) +
-("efnext1q="+OutputEF(efnext1q)) +
-("efnext2q="+OutputEF(efnext2q)) +
-("efnext3q="+OutputEF(efnext3q)) +
+String msg="" + ("dbl_____="+dbl) + "\n" +
+("efprev__="+OutputEF(efprev)) +"\n" +
+("efprev1q="+OutputEF(efprev1q)) +"\n" +
+("efprev2q="+OutputEF(efprev2q)) +"\n" +
+("efprev3q="+OutputEF(efprev3q)) +"\n" +
+("efa_____="+OutputEF(efa)) +"\n" +
+("efnext1q="+OutputEF(efnext1q)) +"\n" +
+("efnext2q="+OutputEF(efnext2q)) +"\n" +
+("efnext3q="+OutputEF(efnext3q)) +"\n" +
 ("efnext__="+OutputEF(efnext));
      throw new IllegalStateException(ex.getMessage()  + "\n" + msg, ex);
    }
