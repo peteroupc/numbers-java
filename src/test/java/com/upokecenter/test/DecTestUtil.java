@@ -12,7 +12,7 @@ import com.upokecenter.numbers.*;
 private DecTestUtil() {
 }
     private static final Pattern ValuePropertyLine = Pattern.compile(
-      "^(\\w+)\\:\\s*(\\S+)");
+      "^(\\w+)\\:\\s*(\\S+).*");
 
     private static final Pattern ValueQuotes = Pattern.compile(
       "^[\\'\\\"]|[\\'\\\"]$");
@@ -271,6 +271,9 @@ private DecTestUtil() {
       if (ln == null) {
         throw new NullPointerException("ln");
       }
+      if (context == null) {
+        throw new NullPointerException("context");
+      }
       if (ln.contains("-- ")) {
         ln = ln.substring(0,ln.indexOf("-- "));
       }
@@ -278,9 +281,6 @@ private DecTestUtil() {
       if (match != null && match.matches()) {
         String paramName = ToLowerCaseAscii(
             match.group(1));
-        if (context == null) {
-          throw new NullPointerException("context");
-        }
         context.put(paramName, match.group(2));
         return;
       }
