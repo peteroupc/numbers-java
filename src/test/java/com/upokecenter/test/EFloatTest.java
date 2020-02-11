@@ -1661,6 +1661,7 @@ import com.upokecenter.numbers.*;
       EFloat efnext1q = efa.Add(efnextgap.Multiply(quarter));
       EFloat efnext2q = efa.Add(efnextgap.Multiply(half));
       EFloat efnext3q = efa.Add(efnextgap.Multiply(threequarter));
+   try {
       if (dbl) {
         TestDoubleRounding(efprev, efprev, efa);
         TestDoubleRounding(efprev, efprev1q, efa);
@@ -1682,6 +1683,19 @@ import com.upokecenter.numbers.*;
         TestSingleRounding(efnext, efnext3q, efa);
         TestSingleRounding(efnext, efnext, efa);
       }
+   } catch (Exception ex) {
+String msg="" + ("dbl_____="+dbl) +
+("efprev__="+OutputEF(efprev)) +
+("efprev1q="+OutputEF(efprev1q)) +
+("efprev2q="+OutputEF(efprev2q)) +
+("efprev3q="+OutputEF(efprev3q)) +
+("efa_____="+OutputEF(efa)) +
+("efnext1q="+OutputEF(efnext1q)) +
+("efnext2q="+OutputEF(efnext2q)) +
+("efnext3q="+OutputEF(efnext3q)) +
+("efnext__="+OutputEF(efnext));
+     throw new IllegalStateException(ex.getMessage()  + "\n" + msg, ex);
+   }
     }
 
     private static String EFToString(EFloat ef) {
