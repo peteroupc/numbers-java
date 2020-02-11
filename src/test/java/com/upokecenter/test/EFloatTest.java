@@ -1354,7 +1354,7 @@ import com.upokecenter.numbers.*;
           ",\ngot----- " + OutputDouble(input.ToDouble()) +
           "\nsrc-----=" + OutputEF(src) + "\nexpected=" +
           OutputEF(expected) + "\ninput---=" + OutputEF(input);
-        Assert.fail(msg);
+        throw new IllegalStateException(msg);
       }
       String str = input.toString();
       double inputDouble = EFloat.FromString(str,
@@ -1366,7 +1366,7 @@ import com.upokecenter.numbers.*;
           "\nsrc-----=" + OutputEF(src) + "\nstr------=" + str +
           "\nexpected=" + OutputEF(expected) + "\ninput---=" + OutputEF(
   input);
-        Assert.fail(msg);
+        throw new IllegalStateException(msg);
       }
     }
 
