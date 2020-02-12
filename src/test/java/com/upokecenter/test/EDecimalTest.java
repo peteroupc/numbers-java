@@ -193,11 +193,13 @@ import com.upokecenter.numbers.*;
           .Add(EDecimal.FromEInteger(bigintB));
         EDecimal ba2 = EDecimal.FromEInteger(bigintC);
         Assert.assertEquals(ba1.signum(), ba2.signum());
-        Assert.assertEquals(ba1.toString(), ba2.toString());
-        TestCommon.CompareTestEqual(
-          ba1,
-          ba2,
-          bigintA.toString() + "/" + bigintB.toString());
+        if (!ba1.equals(ba2)) {
+          Assert.assertEquals(ba1.toString(), ba2.toString());
+          TestCommon.CompareTestEqual(
+            ba1,
+            ba2,
+            bigintA.toString() + "/" + bigintB.toString());
+        }
       }
       TestCommon.CompareTestEqual(
         EDecimal.FromString("-1.603074425947290000E+2147483671"),

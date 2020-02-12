@@ -1164,6 +1164,12 @@ at: http://peteroupc.github.io/
                   ctxdiv.WithUnlimitedExponents());
               roots.Increment();
             }
+            for (int i = 0; i < 6; ++i) {
+              thisValue = this.SquareRoot(
+                  thisValue,
+                  ctxdiv.WithUnlimitedExponents());
+              roots.Increment();
+            }
             // DebugUtility.Log("LnInternal AA " +(thisValue as
             // EDecimal)?.ToDouble());
             thisValue = this.LnInternal(thisValue, ctxdiv.getPrecision(), ctxdiv);
@@ -1294,9 +1300,10 @@ at: http://peteroupc.github.io/
               thisValue = this.Divide(one, thisValue, ctxdiv);
               // DebugUtility.Log("LnInternal B " +(thisValue as
               // EDecimal)?.ToDouble());
-              // thisValue = this.LnInternal(
+              /* // thisValue = this.LnInternal(
                 // thisValue, // ctxdiv.getPrecision()
-                //, ctxCopy);
+                //,
+                ctxCopy); */
               thisValue = this.Ln(thisValue, ctxCopy);
               thisValue = this.NegateRaw(thisValue);
             }
