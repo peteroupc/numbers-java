@@ -1151,13 +1151,14 @@ at: http://peteroupc.github.io/
           ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
             .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
           T quarter = this.Divide(one, this.helper.ValueOf(4), ctxCopy);
-          if (this.compareTo(thisValue, quarter) <= 0) {
-            // One quarter or less
-            T half = this.Multiply(quarter, this.helper.ValueOf(2), null);
+          T threeQuarters = this.Multiply(quarter, this.helper.ValueOf(3),
+  null);
+          if (this.compareTo(thisValue, threeQuarters) <= 0) {
+            // Three quarters or less
             FastInteger roots = new FastInteger(0);
             // Take square root until this value
-            // is one half or more
-            while (this.compareTo(thisValue, half) < 0) {
+            // is 3/4 or more
+            while (this.compareTo(thisValue, threeQuarters) < 0) {
               thisValue = this.SquareRoot(
                   thisValue,
                   ctxdiv.WithUnlimitedExponents());
@@ -1293,10 +1294,10 @@ at: http://peteroupc.github.io/
               thisValue = this.Divide(one, thisValue, ctxdiv);
               // DebugUtility.Log("LnInternal B " +(thisValue as
               // EDecimal)?.ToDouble());
-              thisValue = this.LnInternal(
-                  thisValue,
-                  ctxdiv.getPrecision(),
-                  ctxCopy);
+              // thisValue = this.LnInternal(
+                // thisValue, // ctxdiv.getPrecision()
+                //, ctxCopy);
+              thisValue = this.Ln(thisValue, ctxCopy);
               thisValue = this.NegateRaw(thisValue);
             }
           }

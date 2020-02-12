@@ -263,6 +263,12 @@ private DecTestUtil() {
       ParseDecTest(ln, context, true);
     }
 
+    private static String TrimQuotes(String str) {
+      return (str == null || str.length() == 0 || (
+         str.charAt(0)!='\'' && str.charAt(0)!='\"' && str.charAt(str.length()-1)!='\'' &&
+str.charAt(str.length()-1)!='\"')) ? (str) : (ValueQuotes.matcher(str).replaceAll(""));
+    }
+
     public static void ParseDecTest(
       String ln,
       Map<String, String> context,
@@ -300,10 +306,10 @@ private DecTestUtil() {
         input3 = (input3 == null) ? ("") : input3;
         output = (output == null) ? ("") : output;
         flags = (flags == null) ? ("") : flags;
-        input1 = ValueQuotes.matcher(input1).replaceAll("");
-        input2 = ValueQuotes.matcher(input2).replaceAll("");
-        input3 = ValueQuotes.matcher(input3).replaceAll("");
-        output = ValueQuotes.matcher(output).replaceAll("");
+        input1 = TrimQuotes(input1);
+        input2 = TrimQuotes(input2);
+        input3 = TrimQuotes(input3);
+        output = TrimQuotes(output);
         if (context == null) {
           throw new NullPointerException("context");
         }

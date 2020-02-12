@@ -3185,9 +3185,26 @@ TrappableRadixMath<EFloat>(
     }
 
     /**
-     *
-     * @param ctx The parameter {@code ctx} is a Numbers.EContext object.
-     * @return The return value is not documented yet.
+     * Returns a number in which the value of this object is rounded to fit the
+     * maximum precision allowed if it has more significant digits than the
+     * maximum precision. The maximum precision allowed is given in an
+     * arithmetic context. This method is designed for preparing operands
+     *  to a custom arithmetic operation in accordance with the "simplified"
+     * arithmetic given in Appendix A of the General Decimal Arithmetic
+     * Specification.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). Can be null, in
+     * which case the precision is unlimited. Signals the flag LostDigits
+     * if the input number has greater precision than allowed and was
+     * rounded to a different numerical value in order to fit the
+     * precision.
+     * @return This object rounded to the given precision. Returns this object and
+     *  signals no flags if "ctx" is null or specifies an unlimited
+     * precision, if this object is infinity or not-a-number (including
+     * signaling NaN), or if the number's value has no more significant
+     *  digits than the maximum precision given in "ctx".
      */
     public EFloat PreRound(EContext ctx) {
       return NumberUtility.PreRound(this, ctx, MathValue);
@@ -3795,20 +3812,35 @@ TrappableRadixMath<EFloat>(
     }
 
     /**
-     *
-     * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
-     * integer.
-     * @return The return value is not documented yet.
+     * Converts this value to an arbitrary-precision integer by discarding its
+     * fractional part and checking whether the resulting integer overflows
+     * the given signed bit count.
+     * @param maxBitLength The maximum number of signed bits the integer can have.
+     * The integer's value may not be less than -(2^maxBitLength) or
+     * greater than (2^maxBitLength) - 1.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN), or this number's value, once converted to an integer by
+     * discarding its fractional part, is less than -(2^maxBitLength) or
+     * greater than (2^maxBitLength) - 1.
      */
     public EInteger ToSizedEInteger(int maxBitLength) {
       return this.ToSizedEInteger(maxBitLength, false);
     }
 
     /**
-     *
-     * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
-     * integer.
-     * @return The return value is not documented yet.
+     * Converts this value to an arbitrary-precision integer, only if this number's
+     * value is an exact integer and that integer does not overflow the
+     * given signed bit count.
+     * @param maxBitLength The maximum number of signed bits the integer can have.
+     * The integer's value may not be less than -(2^maxBitLength) or
+     * greater than (2^maxBitLength) - 1.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN), or this number's value, once converted to an integer by
+     * discarding its fractional part, is less than -(2^maxBitLength) or
+     * greater than (2^maxBitLength) - 1.
+     * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
       return this.ToSizedEInteger(maxBitLength, true);
