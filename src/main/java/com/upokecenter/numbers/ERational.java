@@ -1048,7 +1048,7 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("second");
       }
       int cmp = first.Abs().CompareToValue(second.Abs());
-      return (cmp == 0) ? Max(first, second) :(cmp > 0 ? first : second);
+      return (cmp == 0) ? Max(first, second) : (cmp > 0 ? first : second);
     }
 
     /**
@@ -1108,7 +1108,7 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("second");
       }
       int cmp = first.Abs().CompareToValue(second.Abs());
-      return (cmp == 0) ? Min(first, second) :(cmp < 0 ? first : second);
+      return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
     }
 
     /**
@@ -1737,7 +1737,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Not documented yet.
      * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
      * integer.
      * @return The return value is not documented yet.
@@ -1769,7 +1769,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     *
+     * Not documented yet.
      * @param maxBitLength The parameter {@code maxBitLength} is a 32-bit signed
      * integer.
      * @return The return value is not documented yet.

@@ -6599,7 +6599,7 @@ TrappableRadixMath<EDecimal>(
        * @return An arbitrary-precision decimal number.
        */
       public EDecimal ValueOf(int val) {
-        return (val == 0) ? Zero :((val == 1) ? One : FromInt64(val));
+        return (val == 0) ? Zero : ((val == 1) ? One : FromInt64(val));
       }
     }
 
