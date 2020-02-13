@@ -1303,8 +1303,7 @@ at: http://peteroupc.github.io/
               /* // thisValue = this.LnInternal(
                 // thisValue, // ctxdiv.getPrecision()
                 //,
-                ctxCopy); */
-              thisValue = this.Ln(thisValue, ctxCopy);
+                ctxCopy); */ thisValue = this.Ln(thisValue, ctxCopy);
               thisValue = this.NegateRaw(thisValue);
             }
           }

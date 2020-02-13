@@ -3646,19 +3646,8 @@ import com.upokecenter.numbers.*;
  }
       for (int i = 0; i < 100000; ++i) {
         EDecimal edec;
-        String edecstr;
-        if (fr.UniformInt(100) < 10) {
-          String decimals = RandomObjects.RandomBigIntString(fr);
-          if (decimals.charAt(0) == '-') {
-            decimals = decimals.substring(1);
-          }
-          edecstr = RandomObjects.RandomBigIntString(fr) +
-            "." + decimals + "e" + RandomObjects.RandomBigIntString(fr);
-          edec = EDecimal.FromString(edecstr);
-        } else {
-          edec = RandomObjects.RandomEDecimal(fr);
-          edecstr = edec.toString();
-        }
+        String[] edecstr = new String[1];
+        edec = RandomObjects.RandomEDecimal(fr, edecstr);
         if (edec.isFinite()) {
           dbl = edec.ToDouble();
           if (((dbl) == Double.NEGATIVE_INFINITY)) {
@@ -3668,7 +3657,7 @@ import com.upokecenter.numbers.*;
             TestCommon.CompareTestGreaterEqual(
               edec.Abs(),
               DoubleOverflowToInfinity,
-              edecstr);
+              edecstr[0]);
           } else if (((dbl) == Double.POSITIVE_INFINITY)) {
             if (!(!edec.isNegative())) {
  Assert.fail();
@@ -3676,13 +3665,13 @@ import com.upokecenter.numbers.*;
             TestCommon.CompareTestGreaterEqual(
               edec.Abs(),
               DoubleOverflowToInfinity,
-              edecstr);
+              edecstr[0]);
           } else if (dbl == 0.0) {
             TestCommon.CompareTestLessEqual(
               edec.Abs(),
               DoubleUnderflowToZero,
-              edecstr);
-            Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
+              edecstr[0]);
+            Assert.assertEquals(edecstr[0], edec.isNegative(), EDecimal.FromDouble(dbl).isNegative());
           } else {
             if (!(!Double.isNaN(dbl))) {
  Assert.fail();
@@ -3691,18 +3680,18 @@ import com.upokecenter.numbers.*;
             TestCommon.CompareTestGreater(
               edec,
               DoubleUnderflowToZero,
-              edecstr);
+              edecstr[0]);
             TestCommon.CompareTestLess(
               edec,
               DoubleOverflowToInfinity,
-              edecstr);
+              edecstr[0]);
             EDecimal halfUlp = GetHalfUlp(dbl);
             EDecimal difference = EDecimal.FromDouble(dbl).Abs()
               .Subtract(edec).Abs();
             TestCommon.CompareTestLessEqual(
               difference,
               halfUlp,
-              edecstr);
+              edecstr[0]);
           }
         }
       }
@@ -5182,19 +5171,8 @@ import com.upokecenter.numbers.*;
  }
       for (int i = 0; i < 100000; ++i) {
         EDecimal edec;
-        String edecstr;
-        if (fr.UniformInt(100) < 10) {
-          String decimals = RandomObjects.RandomBigIntString(fr);
-          if (decimals.charAt(0) == '-') {
-            decimals = decimals.substring(1);
-          }
-          edecstr = RandomObjects.RandomBigIntString(fr) +
-            "." + decimals + "e" + RandomObjects.RandomBigIntString(fr);
-          edec = EDecimal.FromString(edecstr);
-        } else {
-          edec = RandomObjects.RandomEDecimal(fr);
-          edecstr = edec.toString();
-        }
+        String[] edecstr = new String[1];
+        edec = RandomObjects.RandomEDecimal(fr, edecstr);
         if (edec.isFinite()) {
           sng = edec.ToSingle();
           if (((sng) == Float.NEGATIVE_INFINITY)) {
@@ -5204,7 +5182,7 @@ import com.upokecenter.numbers.*;
             TestCommon.CompareTestGreaterEqual(
               edec.Abs(),
               SingleOverflowToInfinity,
-              edecstr);
+              edecstr[0]);
           } else if (((sng) == Float.POSITIVE_INFINITY)) {
             if (!(!edec.isNegative())) {
  Assert.fail();
@@ -5212,13 +5190,13 @@ import com.upokecenter.numbers.*;
             TestCommon.CompareTestGreaterEqual(
               edec.Abs(),
               SingleOverflowToInfinity,
-              edecstr);
+              edecstr[0]);
           } else if (sng == 0.0f) {
             TestCommon.CompareTestLessEqual(
               edec.Abs(),
               SingleUnderflowToZero,
-              edecstr);
-            Assert.assertEquals(edecstr, edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
+              edecstr[0]);
+            Assert.assertEquals(edecstr[0], edec.isNegative(), EDecimal.FromSingle(sng).isNegative());
           } else {
             if (!(!Float.isNaN(sng))) {
  Assert.fail();
@@ -5227,15 +5205,15 @@ import com.upokecenter.numbers.*;
             TestCommon.CompareTestGreater(
               edec,
               SingleUnderflowToZero,
-              edecstr);
+              edecstr[0]);
             TestCommon.CompareTestLess(
               edec,
               SingleOverflowToInfinity,
-              edecstr);
+              edecstr[0]);
             EDecimal halfUlp = GetHalfUlp(sng);
             EDecimal difference = EDecimal.FromSingle(sng).Abs()
               .Subtract(edec).Abs();
-            TestCommon.CompareTestLessEqual(difference, halfUlp, edecstr);
+            TestCommon.CompareTestLessEqual(difference, halfUlp, edecstr[0]);
           }
         }
       }

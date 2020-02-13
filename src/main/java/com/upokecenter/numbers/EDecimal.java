@@ -6399,19 +6399,7 @@ TrappableRadixMath<EDecimal>(
         if (adjustedExponent.signum() != 0) {
           builder.append(adjustedExponent.signum() < 0 ? "E-" : "E+");
           adjustedExponent.Abs();
-          StringBuilder builderReversed = new StringBuilder();
-          while (adjustedExponent.signum() != 0) {
-            int digit =
-              adjustedExponent.Copy().Remainder(10).AsInt32();
-            // Each digit is retrieved from right to left
-            builderReversed.append((char)('0' + digit));
-            adjustedExponent.Divide(10);
-          }
-          int count = builderReversed.length();
-          String builderReversedString = builderReversed.toString();
-          for (int i = 0; i < count; ++i) {
-            builder.append(builderReversedString.charAt(count - 1 - i));
-          }
+          builder.append(adjustedExponent.toString());
         }
         return builder.toString();
       }
