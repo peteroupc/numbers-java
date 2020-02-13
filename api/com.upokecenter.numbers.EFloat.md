@@ -439,7 +439,9 @@ Renamed to DivRemNaturalScale.
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's significand.
 * `EFloat PreRound​(EContext ctx)`<br>
- Not documented yet.
+ Returns a number in which the value of this object is rounded to fit the
+ maximum precision allowed if it has more significant digits than the
+ maximum precision.
 * `EFloat Quantize​(int desiredExponentInt,
         EContext ctx)`<br>
  Returns a binary floating-point number with the same value but a new
@@ -623,9 +625,13 @@ Renamed to ToEDecimal.
  Converts this value to its closest equivalent as 32-bit floating-point
  number.
 * `EInteger ToSizedEInteger​(int maxBitLength)`<br>
- Not documented yet.
+ Converts this value to an arbitrary-precision integer by discarding its
+ fractional part and checking whether the resulting integer overflows
+ the given signed bit count.
 * `EInteger ToSizedEIntegerIfExact​(int maxBitLength)`<br>
- Not documented yet.
+ Converts this value to an arbitrary-precision integer, only if this number's
+ value is an exact integer and that integer does not overflow the
+ given signed bit count.
 * `java.lang.String toString()`<br>
  Converts this number's value to a text string.
 * `EFloat Ulp()`<br>
@@ -3204,15 +3210,32 @@ Rounds this object's value to a given precision, using the given rounding
 
 ### PreRound
     public EFloat PreRound​(EContext ctx)
-Not documented yet.
+Returns a number in which the value of this object is rounded to fit the
+ maximum precision allowed if it has more significant digits than the
+ maximum precision. The maximum precision allowed is given in an
+ arithmetic context. This method is designed for preparing operands
+  to a custom arithmetic operation in accordance with the "simplified"
+ arithmetic given in Appendix A of the General Decimal Arithmetic
+ Specification.
 
 **Parameters:**
 
-* <code>ctx</code> - Not documented yet.
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited. Signals the flag LostDigits
+ if the input number has greater precision than allowed and was
+ rounded to a different numerical value in order to fit the
+ precision.
 
 **Returns:**
 
-* The return value is not documented yet.
+* This object rounded to the given precision. Returns this object and
+  signals no flags if "ctx" is null or specifies an unlimited
+ precision, if this object is infinity or not-a-number (including
+ signaling NaN), or if the number's value has no more significant
+  digits than the maximum precision given in "ctx".
 
 ### ScaleByPowerOfTwo
     public EFloat ScaleByPowerOfTwo​(int places)
@@ -3535,27 +3558,51 @@ Returns the unit in the last place. The significand will be 1 and the
 
 ### ToSizedEInteger
     public EInteger ToSizedEInteger​(int maxBitLength)
-Not documented yet.
+Converts this value to an arbitrary-precision integer by discarding its
+ fractional part and checking whether the resulting integer overflows
+ the given signed bit count.
 
 **Parameters:**
 
-* <code>maxBitLength</code> - Not documented yet.
+* <code>maxBitLength</code> - The maximum number of signed bits the integer can have.
+ The integer's value may not be less than -(2^maxBitLength) or
+ greater than (2^maxBitLength) - 1.
 
 **Returns:**
 
-* The return value is not documented yet.
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN), or this number's value, once converted to an integer by
+ discarding its fractional part, is less than -(2^maxBitLength) or
+ greater than (2^maxBitLength) - 1.
 
 ### ToSizedEIntegerIfExact
     public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
-Not documented yet.
+Converts this value to an arbitrary-precision integer, only if this number's
+ value is an exact integer and that integer does not overflow the
+ given signed bit count.
 
 **Parameters:**
 
-* <code>maxBitLength</code> - Not documented yet.
+* <code>maxBitLength</code> - The maximum number of signed bits the integer can have.
+ The integer's value may not be less than -(2^maxBitLength) or
+ greater than (2^maxBitLength) - 1.
 
 **Returns:**
 
-* The return value is not documented yet.
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN), or this number's value, once converted to an integer by
+ discarding its fractional part, is less than -(2^maxBitLength) or
+ greater than (2^maxBitLength) - 1.
+
+* <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
 
 ### Increment
     public EFloat Increment()

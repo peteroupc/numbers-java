@@ -910,7 +910,7 @@ Returns the number of decimal digits used by this integer, in the form of a
  if this number is 0. Returns 2^63 - 1(<code>Long.MAX_VALUE</code> in.getNET()
  or <code>Long.MAX_VALUE</code> in Java) if the number of decimal digits
  is 2^63 - 1 or greater. (Use <code>GetDigitCountAsEInteger</code> instead
- if the application relies on the exact number of decimal digits.)
+ if the application relies on the exact number of decimal digits.).
 
 ### hashCode
     public int hashCode()
@@ -950,7 +950,7 @@ Gets the bit position of the lowest set bit in this number's absolute value,
  Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java) if this
  number is other than zero but the lowest set bit is at 2^63 - 1 or
  greater. (Use <code>GetLowBitAsEInteger</code> instead if the application
- relies on the exact value of the lowest set bit position.)
+ relies on the exact value of the lowest set bit position.).
 
 ### GetLowBitAsEInteger
     public EInteger GetLowBitAsEInteger()
@@ -1037,7 +1037,7 @@ Finds the minimum number of bits needed to represent this object's value,
  1 (<code>Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java)
  if the number of bits is 2^63 - 1 or greater. (Use <code>
  GetUnsignedBitLengthAsEInteger</code> instead if the application relies on
- the exact number of bits.)
+ the exact number of bits.).
 
 ### GetSignedBitLength
     @Deprecated public int GetSignedBitLength()
@@ -1118,7 +1118,7 @@ Finds the minimum number of bits needed to represent this number's absolute
  Returns 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET or <code>
  Long.MAX_VALUE</code> in Java) if the number of bits is 2^63 - 1 or
  greater. (Use <code>GetUnsignedBitLengthAsEInteger</code> instead if the
- application relies on the exact number of bits.)
+ application relies on the exact number of bits.).
 
 ### GetUnsignedBitLength
     @Deprecated public int GetUnsignedBitLength()

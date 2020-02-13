@@ -143,7 +143,6 @@ Contains parameters for controlling the precision, rounding, and exponent
  Gets the desired rounding mode when converting numbers that can't be
  represented in the given precision and exponent range.
 * `EContext GetTrappable()`<br>
- Not documented yet.
 * `int getTraps()`<br>
  Gets the traps that are set for each flag in the context.
 * `boolean isPrecisionInBits()`<br>
@@ -156,7 +155,6 @@ Contains parameters for controlling the precision, rounding, and exponent
  Returns this object in a text form intended to be read by humans.
 * `<T> T TriggerTraps​(T result,
             EContext trappableContext)`<br>
- Not documented yet.
 * `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
@@ -743,7 +741,6 @@ Copies this EContext with an unlimited exponent range.
 
 ### GetTrappable
     public EContext GetTrappable()
-Not documented yet.
 
 **Returns:**
 
@@ -751,11 +748,6 @@ Not documented yet.
 
 ### TriggerTraps
     public <T> T TriggerTraps​(T result, EContext trappableContext)
-Not documented yet.
-
-**Type Parameters:**
-
-* <code>T</code> - Type parameter not documented yet.
 
 **Parameters:**
 
@@ -763,7 +755,3 @@ Not documented yet.
 
 * <code>trappableContext</code> - The parameter <code>trappableContext</code> is a
  Numbers.EContext object.
-
-**Returns:**
-
-* The return value is not documented yet.

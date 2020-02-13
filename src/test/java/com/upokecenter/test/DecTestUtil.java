@@ -265,8 +265,8 @@ private DecTestUtil() {
 
     private static String TrimQuotes(String str) {
       return (str == null || str.length() == 0 || (
-         str.charAt(0)!='\'' && str.charAt(0)!='\"' && str.charAt(str.length()-1)!='\'' &&
-str.charAt(str.length()-1)!='\"')) ? (str) : (ValueQuotes.matcher(str).replaceAll(""));
+         str.charAt(0) != '\'' && str.charAt(0)!='\"' && str.charAt(str.length() - 1)!='\'' &&
+str.charAt(str.length() - 1) != '\"')) ? str : (ValueQuotes.matcher(str).replaceAll(""));
     }
 
     public static void ParseDecTest(
