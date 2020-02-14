@@ -391,8 +391,8 @@ import com.upokecenter.numbers.*;
         isNum = enumber.compareTo(
             ERational.FromString("0")) >= 0 && enumber.compareTo(
             ERational.FromString("255")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString("0")) >= 0 && enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
+            EInteger.FromString("0")) >= 0 && eint.compareTo(
             EInteger.FromString("255")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(
@@ -473,9 +473,8 @@ import com.upokecenter.numbers.*;
         isNum = enumber.compareTo(
             ERational.FromString("-32768")) >= 0 && enumber.compareTo(
             ERational.FromString("32767")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
-            EInteger.FromString("-32768")) >= 0 &&
-enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
+            EInteger.FromString("-32768")) >= 0 && eint.compareTo(
             EInteger.FromString("32767")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(
@@ -556,9 +555,9 @@ enumber.ToEInteger().compareTo(
         isNum = enumber.compareTo(
             ERational.FromString("-2147483648")) >= 0 && enumber.compareTo(
             ERational.FromString("2147483647")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
             EInteger.FromString("-2147483648")) >= 0 &&
-          enumber.ToEInteger().compareTo(
+          eint.compareTo(
             EInteger.FromString("2147483647")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(
@@ -640,9 +639,9 @@ enumber.ToEInteger().compareTo(
             ERational.FromString("-9223372036854775808")) >= 0 &&
 enumber.compareTo(
             ERational.FromString("9223372036854775807")) <= 0;
-        isTruncated = enumber.ToEInteger().compareTo(
+        isTruncated = eint != null && eint.compareTo(
             EInteger.FromString("-9223372036854775808")) >= 0 &&
-          enumber.ToEInteger().compareTo(
+          eint.compareTo(
             EInteger.FromString("9223372036854775807")) <= 0;
         if (isNum) {
           TestCommon.AssertEquals(
@@ -732,11 +731,22 @@ enumber.compareTo(
     }
     @Test
     public void TestFromInt32() {
-      // not implemented yet
+      RandomGenerator rg = new RandomGenerator();
+      for (int i = 0; i < 100000; ++i) {
+        int x = ((int)rg.UniformLong(0x100000000L));
+        ERational er = ERational.FromInt32(x);
+        Assert.assertEquals(x, er.ToInt32Checked());
+      }
     }
     @Test
     public void TestFromInt64() {
-      // not implemented yet
+      RandomGenerator rg = new RandomGenerator();
+      for (int i = 0; i < 100000; ++i) {
+        long lx = rg.UniformLong(0x100000000L);
+        lx |= rg.UniformLong(0x100000000L) << 32;
+        ERational er = ERational.FromInt64(lx);
+        Assert.assertEquals(lx, er.ToInt64Checked());
+      }
     }
     @Test
     public void TestFromSingle() {

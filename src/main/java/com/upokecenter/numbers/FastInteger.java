@@ -479,7 +479,9 @@ at: http://peteroupc.github.io/
       if (bigintVal.CanFitInInt32()) {
         return new FastInteger(bigintVal.ToInt32Unchecked());
       }
-      if (bigintVal.signum() > 0) {
+      if (bigintVal.signum() > 0 && bigintVal.GetUnsignedBitLengthAsInt64() < 2048) {
+        // Limit bit length because of the overhead of copying
+        // to a mutable number
         FastInteger fi = new FastInteger(0);
         fi.integerMode = 1;
         fi.mnum = MutableNumber.FromEInteger(bigintVal);
@@ -568,11 +570,10 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
-     * @return A FastInteger object.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <param name='val'>The parameter <paramref name='val'/> is an
+    /// internal value.</param>
+    /// <returns>A FastInteger Object.</returns>
     FastInteger Multiply(int val) {
       if (val == 0) {
         this.smallValue = 0;
@@ -619,10 +620,8 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @return A FastInteger object.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <returns>A FastInteger Object.</returns>
     FastInteger Negate() {
       switch (this.integerMode) {
         case 0:
@@ -649,11 +648,10 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
-     * @return A FastInteger object.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <param name='val'>The parameter <paramref name='val'/> is an
+    /// internal value.</param>
+    /// <returns>A FastInteger Object.</returns>
     FastInteger Subtract(FastInteger val) {
       EInteger valValue;
       switch (this.integerMode) {
@@ -699,11 +697,10 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
-     * @return A FastInteger object.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <param name='val'>The parameter <paramref name='val'/> is an
+    /// internal value.</param>
+    /// <returns>A FastInteger Object.</returns>
     FastInteger SubtractInt(int val) {
       if (val == Integer.MIN_VALUE) {
         return this.AddBig(ValueNegativeInt32MinValue);
@@ -723,11 +720,10 @@ switch (this.integerMode) {
       return this.AddInt(-val);
     }
 
-    /**
-     * This is an internal API.
-     * @param bigintVal The parameter {@code bigintVal} is an internal value.
-     * @return A FastInteger object.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <param name='bigintVal'>The parameter <paramref name='bigintVal'/>
+    /// is an internal value.</param>
+    /// <returns>A FastInteger Object.</returns>
     FastInteger AddBig(EInteger bigintVal) {
       switch (this.integerMode) {
         case 0: {
@@ -748,11 +744,10 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param bigintVal The parameter {@code bigintVal} is an internal value.
-     * @return A FastInteger object.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <param name='bigintVal'>The parameter <paramref name='bigintVal'/>
+    /// is an internal value.</param>
+    /// <returns>A FastInteger Object.</returns>
     FastInteger SubtractBig(EInteger bigintVal) {
       if (this.integerMode == 2) {
         this.largeValue = this.largeValue.Subtract(bigintVal);
@@ -1073,10 +1068,8 @@ switch (this.integerMode) {
       return new String(chars, count, 12 - count);
     }
 
-    /**
-     * This is an internal API.
-     * @return A text string.
-     */
+    /// <summary>This is an internal API.</summary>
+    /// <returns>A text String.</returns>
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:
@@ -1089,10 +1082,8 @@ switch (this.integerMode) {
       }
     }
 
-    /**
-     * Gets an internal value.
-     * @return An internal value.
-     */
+    /// <summary>Gets an internal value.</summary>
+    /// <value>An internal value.</value>
     final int signum() {
         switch (this.integerMode) {
           case 0:

@@ -20,9 +20,11 @@ private ExtraTest() {
       }
       String str = obj.toString();
       EDecimal newobj = EDecimal.FromString(str);
-      String str2 = newobj.toString();
-      TestCommon.AssertEqualsHashCode(obj, newobj);
-      TestCommon.AssertEqualsHashCode(str, str2);
+      if (str.length() < 100 || !obj.equals(newobj)) {
+        TestCommon.AssertEqualsHashCode(obj, newobj);
+        String str2 = newobj.toString();
+        TestCommon.AssertEqualsHashCode(str, str2);
+      }
     }
 
     public static void TestStringEqualRoundTrip(ERational obj) {
@@ -31,9 +33,11 @@ private ExtraTest() {
       }
       String str = obj.toString();
       ERational newobj = ERational.FromString(str);
-      String str2 = newobj.toString();
-      TestCommon.AssertEqualsHashCode(obj, newobj);
-      TestCommon.AssertEqualsHashCode(str, str2);
+      if (str.length() < 100 || !obj.equals(newobj)) {
+        TestCommon.AssertEqualsHashCode(obj, newobj);
+        String str2 = newobj.toString();
+        TestCommon.AssertEqualsHashCode(str, str2);
+      }
     }
     public static void TestStringEqualRoundTrip(EInteger obj) {
       if (obj == null) {
@@ -41,8 +45,10 @@ private ExtraTest() {
       }
       String str = obj.toString();
       EInteger newobj = EInteger.FromString(str);
-      String str2 = newobj.toString();
-      TestCommon.AssertEqualsHashCode(obj, newobj);
-      TestCommon.AssertEqualsHashCode(str, str2);
+      if (str.length() < 100 || !obj.equals(newobj)) {
+        TestCommon.AssertEqualsHashCode(obj, newobj);
+        String str2 = newobj.toString();
+        TestCommon.AssertEqualsHashCode(str, str2);
+      }
     }
   }

@@ -2698,6 +2698,27 @@ this.RoundToPrecision(b, ctx)));
       EInteger op2Mantissa,
       IRadixMathHelper<TMath> helper,
       boolean reportOOM) {
+      long bitExp1 = op1Exponent.GetUnsignedBitLengthAsInt64();
+      long bitExp2 = op2Exponent.GetUnsignedBitLengthAsInt64();
+      if (bitExp1<Long.MAX_VALUE && bitExp2<Long.MAX_VALUE &&
+         helper.GetRadix() <= 10 && op1Exponent.signum() == op2Exponent.signum() && (
+         (bitExp2 > bitExp1 && (bitExp2 - bitExp1) > 128) ||
+         (bitExp1 > bitExp2 && (bitExp1 - bitExp2) > 128))) {
+        // Bit difference in two exponents means exponent difference
+        // is so big that the digit counts of the two significands
+        // can't keep up (that is, exponent difference is greater than 2^128,
+        // which is more than the maximum number of bits that
+        // a significand can currently have).
+        boolean op2bigger = op1Exponent.signum() < 0 ? (bitExp2 < bitExp1) :
+           (bitExp2 > bitExp1);
+        if (op2bigger) {
+          // operand 2 has greater magnitude
+          return signA < 0 ? 1 : -1;
+        } else {
+          // operand 1 has greater magnitude
+          return signA < 0 ? -1 : 1;
+        }
+      }
       FastInteger fastOp1Exp = FastInteger.FromBig(op1Exponent);
       FastInteger fastOp2Exp = FastInteger.FromBig(op2Exponent);
       FastInteger expdiff = fastOp1Exp.Copy().Subtract(fastOp2Exp).Abs();

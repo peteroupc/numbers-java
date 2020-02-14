@@ -1692,16 +1692,16 @@ import com.upokecenter.numbers.*;
         TestSingleRounding(efnext, efnext, efa);
       }
    } catch (Exception ex) {
-String msg ="" + ("dbl_____="+dbl+", full="+
-fullPrecision+",sub=" + isSubnormal) + "\n" +
-("efprev__=" +OutputEF(efprev)) + "\n" +
-("efprev1q=" +OutputEF(efprev1q)) + "\n" +
-("efprev2q=" +OutputEF(efprev2q)) + "\n" +
-("efprev3q=" +OutputEF(efprev3q)) + "\n" +
-("efa_____=" +OutputEF(efa)) + "\n" +
-("efnext1q=" +OutputEF(efnext1q)) + "\n" +
-("efnext2q=" +OutputEF(efnext2q)) + "\n" +
-("efnext3q=" +OutputEF(efnext3q)) + "\n" +
+String msg = "" + ("dbl_____="+dbl+", full=" +
+fullPrecision + ",sub=" + isSubnormal) + "\n" +
+("efprev__=" + OutputEF(efprev)) + "\n" +
+("efprev1q=" + OutputEF(efprev1q)) + "\n" +
+("efprev2q=" + OutputEF(efprev2q)) + "\n" +
+("efprev3q=" + OutputEF(efprev3q)) + "\n" +
+("efa_____=" + OutputEF(efa)) + "\n" +
+("efnext1q=" + OutputEF(efnext1q)) + "\n" +
+("efnext2q=" + OutputEF(efnext2q)) + "\n" +
+("efnext3q=" + OutputEF(efnext3q)) + "\n" +
      ("efnext__=" + OutputEF(efnext));
      throw new IllegalStateException(ex.getMessage() + "\n" + msg, ex);
    }
@@ -2341,6 +2341,148 @@ eint.compareTo(255) <= 0;
         throw new IllegalStateException("", ex);
       }
     }
+
+@Test
+public void TestToSizedEInteger() {
+      try {
+        EFloat.PositiveInfinity.ToSizedEInteger(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NegativeInfinity.ToSizedEInteger(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.PositiveInfinity.ToSizedEInteger(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NegativeInfinity.ToSizedEInteger(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NaN.ToSizedEInteger(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.PositiveInfinity.ToSizedEIntegerIfExact(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NegativeInfinity.ToSizedEIntegerIfExact(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.PositiveInfinity.ToSizedEIntegerIfExact(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NegativeInfinity.ToSizedEIntegerIfExact(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EFloat.NaN.ToSizedEIntegerIfExact(32);
+        Assert.fail("Should have failed");
+      } catch (ArithmeticException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      RandomGenerator rg = new RandomGenerator();
+      for (int i = 0; i < 100000; ++i) {
+ TestSizedEIntegerOne(RandomObjects.RandomEFloat(rg), rg.UniformInt(2) == 0,
+  rg.UniformInt(129));
+}
+}
+
+public static boolean TestSizedEIntegerOne(EFloat ed, boolean isExact, int
+maxSignedBits) {
+  if (ed == null) {
+    throw new NullPointerException("ed");
+  }
+  if (!ed.isFinite() || ed.isZero()) { return false;
+}
+  EInteger ei = null;
+  EInteger ei2 = null;
+  try {
+    ei = ed.getExponent().compareTo(maxSignedBits + 6) > 0 ? null : (isExact ?
+ed.ToEIntegerIfExact() : ed.ToEInteger());
+    if (ei != null &&
+ei.GetSignedBitLengthAsEInteger().compareTo(maxSignedBits) > 0) {
+      ei = null;
+    }
+  } catch (ArithmeticException ex) {
+    ei = null;
+  } catch (UnsupportedOperationException ex) {
+    ei = null;
+  }
+  try {
+    ei2 = isExact ? ed.ToSizedEIntegerIfExact(maxSignedBits) :
+ed.ToSizedEInteger(maxSignedBits);
+  } catch (UnsupportedOperationException ex) {
+    Assert.fail(ed.toString());
+  } catch (ArithmeticException exc) {
+    ei2 = null;
+  }
+  if (ei == null) {
+    if (!(ei2 == null)) {
+ Assert.fail();
+ }
+  } else {
+    Assert.assertEquals(ei, ei2);
+    if (!(ei.GetSignedBitLengthAsEInteger().compareTo(maxSignedBits)
+<= 0)) {
+ Assert.fail();
+ }
+  }
+  return true;
+}
 
     @Test
     public void TestInfinities() {

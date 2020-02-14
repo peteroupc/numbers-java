@@ -1278,6 +1278,39 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(EInteger.FromInt32(1), (EInteger.FromInt64(13)).Mod(EInteger.FromInt64(4)));
       Assert.assertEquals(EInteger.FromInt64(3), (EInteger.FromInt64(-13)).Mod(EInteger.FromInt64(4)));
     }
+
+public static boolean TestEIntegerFromBytes(byte[] bytes, boolean littleEndian) {
+  if (bytes == null) {
+    throw new NullPointerException("bytes");
+  }
+  if (bytes.length > 0) {
+{ return false;
+} }
+  if (littleEndian) {
+    if (!(bytes.length == 1 || (
+      !(bytes[bytes.length - 1] == 0x00 && ((int)bytes[bytes.length - 2] &
+0x80) == 0) &&
+      !(bytes[bytes.length - 1] == (byte)0xff && ((int)bytes[bytes.length -
+2] & 0x80) != 0)
+))) { return false;
+}
+  } else {
+    if (!(bytes.length == 1 || (
+      !(bytes[0] == 0x00 && ((int)bytes[1] & 0x80) == 0) &&
+      !(bytes[0] == (byte)0xff && ((int)bytes[1] & 0x80) != 0)
+))) { return false;
+}
+  }
+  boolean negative = false;
+  negative = (littleEndian) ? ((bytes[0] & 0x80) != 0) :
+((bytes[bytes.length - 1] & 0x80) != 0);
+  EInteger ei = EInteger.FromBytes(bytes, littleEndian);
+  Assert.assertEquals(negative, ei.signum() < 0);
+  byte[] ba = ei.ToBytes(littleEndian);
+  TestCommon.AssertByteArraysEqual(bytes, ba);
+  return true;
+}
+
     @Test
     public void TestFromBytes() {
       Assert.assertEquals(
@@ -1291,6 +1324,11 @@ import com.upokecenter.numbers.*;
       } catch (Exception ex) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
+      }
+      RandomGenerator rg = new RandomGenerator();
+      for (int i = 0; i < 1000; ++i) {
+byte[] bytes = RandomObjects.RandomByteString(rg);
+TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
       }
     }
     @Test
@@ -3455,6 +3493,36 @@ import com.upokecenter.numbers.*;
           testLine,
           ex);
       }
+
+     if (!bigintA.isZero() && !bigintB.isZero()) {
+        EInteger prod = bigintA.Multiply(bigintB);
+     // Assuming a and b are nonzero:
+     // If a and b are both positive or both negative, then prod must be positive
+     // If a is negative and b is positive, or vice versa, then prod must be
+     //negative
+     Assert.assertTrue(((bigintA.signum() < 0) == (bigintB.signum() < 0)) == (prod.signum()>
+0));
+     // abs(Prod) must be greater or equal to abs(a) and greater or equal to abs(b)
+     if (!(prod.Abs().compareTo(bigintA.Abs()) >= 0))Assert.fail();
+     if (!(prod.Abs().compareTo(bigintB.Abs()) >= 0))Assert.fail();
+     // If abs(b)>1 and abs(a)>1, abs(Prod) must be greater than abs(a) and abs(b)
+     if (bigintA.Abs().compareTo(1) > 0 && bigintB.Abs().compareTo(1)>0) {
+       if (!(prod.Abs().compareTo(bigintA.Abs()) > 0))Assert.fail();
+       if (!(prod.Abs().compareTo(bigintB.Abs()) > 0))Assert.fail();
+     }
+     EInteger prod2 = bigintB.Multiply(bigintA);
+     if (!prod.equals(prod2)) {
+       Assert.assertEquals(prod, prod2);
+     }
+     EInteger d1 = prod.Divide(bigintB);
+     EInteger d2 = prod.Divide(bigintA);
+     if (!d1.equals(bigintA)) {
+       Assert.assertEquals(bigintA, d1);
+     }
+     if (!d2.equals(bigintB)) {
+       Assert.assertEquals(bigintB, d2);
+     }
+     }
     }
 
     /*
