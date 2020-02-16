@@ -3549,7 +3549,9 @@ maxSignedBits) {
   if (ed == null) {
     throw new NullPointerException("ed");
   }
-  if (!ed.isFinite() || ed.isZero()) { return false;
+if (!ed.isFinite() || ed.isZero()) {
+     { return false;
+  }
 }
   EInteger ei = null;
   EInteger ei2 = null;

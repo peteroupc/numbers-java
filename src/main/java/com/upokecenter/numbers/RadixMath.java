@@ -2700,7 +2700,7 @@ this.RoundToPrecision(b, ctx)));
       boolean reportOOM) {
       long bitExp1 = op1Exponent.GetUnsignedBitLengthAsInt64();
       long bitExp2 = op2Exponent.GetUnsignedBitLengthAsInt64();
-      if (bitExp1<Long.MAX_VALUE && bitExp2<Long.MAX_VALUE &&
+      if (bitExp1 < Long.MAX_VALUE && bitExp2<Long.MAX_VALUE &&
          helper.GetRadix() <= 10 && op1Exponent.signum() == op2Exponent.signum() && (
          (bitExp2 > bitExp1 && (bitExp2 - bitExp1) > 128) ||
          (bitExp1 > bitExp2 && (bitExp1 - bitExp2) > 128))) {
