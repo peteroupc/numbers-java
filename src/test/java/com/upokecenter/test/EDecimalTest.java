@@ -2567,12 +2567,8 @@ import com.upokecenter.numbers.*;
       RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 3000; ++i) {
         String r = RandomObjects.RandomDecimalString(rand);
-        try {
-          EDecimal.FromString(r);
-        } catch (Exception ex) {
-          Assert.fail(ex.toString());
-          throw new IllegalStateException("", ex);
-        }
+        System.out.println(r.length());
+        EDecimal.FromString(r);
       }
     }
 
@@ -3549,7 +3545,7 @@ maxSignedBits) {
   if (ed == null) {
     throw new NullPointerException("ed");
   }
-if (!ed.isFinite() || ed.isZero()) {
+  if (!ed.isFinite() || ed.isZero()) {
      { return false;
   }
 }

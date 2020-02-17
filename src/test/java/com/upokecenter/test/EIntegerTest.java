@@ -3366,17 +3366,17 @@ TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
         if (!bigintA.isZero() && !bigintB.isZero()) {
      // Assuming a and b are nonzero:
      // If a and b are both positive or both negative, then product must be
-     //positive
+     // positive
      // If a is negative and b is positive, or vice versa, then product must be
      // negative
      Assert.assertTrue(((bigintA.signum() < 0) == (bigintB.signum() < 0)) ==
           (bigintC.signum() > 0));
      // abs(product) must be greater or equal to abs(a) and greater or equal to
-     //abs(b)
+     // abs(b)
      if (!(bigintC.Abs().compareTo(bigintA.Abs()) >= 0))Assert.fail();
      if (!(bigintC.Abs().compareTo(bigintB.Abs()) >= 0))Assert.fail();
      // If abs(b)>1 and abs(a)>1, abs(product) must be greater than abs(a) and
-     //abs(b)
+     // abs(b)
      if (bigintA.Abs().compareTo(1) > 0 && bigintB.Abs().compareTo(1) > 0) {
        if (!(bigintC.Abs().compareTo(bigintA.Abs()) > 0))Assert.fail();
        if (!(bigintC.Abs().compareTo(bigintB.Abs()) > 0))Assert.fail();
@@ -3384,9 +3384,9 @@ TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
    }
         if (!bigintB.isZero()) {
      EInteger[] divrem = bigintC.DivRem(bigintB);
-            bigintD = divrem[0];
-            bigintRem = divrem[1];
-            if (!bigintD.equals(bigintA)) {
+     bigintD = divrem[0];
+     bigintRem = divrem[1];
+     if (!bigintD.equals(bigintA)) {
             TestCommon.CompareTestEqualAndConsistent(
               bigintD,
               bigintA,

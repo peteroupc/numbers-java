@@ -5854,7 +5854,7 @@ TrappableRadixMath<EDecimal>(
         if (bigintExp.signum() >= 0 &&
 digitCountLower.Subtract(2).compareTo(309) > 0) {
           return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
-        } else if (digitCountLower.Add(bigintExp).Subtract(2).compareTo(309)>
+        } else if (digitCountLower.Add(bigintExp).Subtract(2).compareTo(309) >
 0) {
           return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
         }
