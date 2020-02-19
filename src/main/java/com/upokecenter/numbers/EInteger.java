@@ -239,7 +239,7 @@ at: http://peteroupc.github.io/
         return EInteger.FromInt32(0);
       } else if (bytes.length == 1) {
         return (((int)bytes[0] & 0x80) == 0) ? FromInt32((int)bytes[0]) :
-          FromInt32(-1 -((~bytes[0]) & 0x7f));
+          FromInt32(-1 - ((~bytes[0]) & 0x7f));
       }
       int len = bytes.length;
       int wordLength = (len >> 1) + (len & 1);
@@ -2337,7 +2337,7 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
             buc = WordsShiftRightOne(bu, buc);
             bvc = WordsShiftRightOne(bv, bvc);
           } else if (eu && !ev) {
-            buc =(Math.abs(buc - bvc) > 1 && (bu[0] & 0x0f) == 0) ?
+            buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x0f) == 0) ?
               WordsShiftRightFour(bu, buc) : WordsShiftRightOne(bu, buc);
             } else if (!eu && ev) {
             if ((bv[0] & 0xff) == 0 && Math.abs(buc - bvc) > 1) {
@@ -2351,7 +2351,7 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
             }
           } else if (WordsCompare(bu, buc, bv, bvc) >= 0) {
             buc = WordsSubtract(bu, buc, bv, bvc);
-            buc =(Math.abs(buc - bvc) > 1 && (bu[0] & 0x02) == 0) ?
+            buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x02) == 0) ?
               WordsShiftRightTwo(bu, buc) : WordsShiftRightOne(bu, buc);
             } else {
             short[] butmp = bv;
@@ -3485,10 +3485,11 @@ ret.Add(wts[i].Multiply(v)));
               y3.ShiftLeft(3)).Add(y2.ShiftLeft(2)).Add(y1.ShiftLeft(1)));
       }
       EInteger[] wts = { w0, wt1, wt2, wt3, wt4, wt5, w6 };
-      EInteger w1 = Interpolate(wts, new int[] {
-        -90, 5, -3, -60, 20, 2,
-        -90,
-      },
+      EInteger w1 = Interpolate(wts,
+ new int[] {
+   -90, 5, -3, -60, 20, 2,
+   -90,
+ },
  180);
       EInteger w2 = Interpolate(
         wts,
@@ -3501,7 +3502,7 @@ ret.Add(wts[i].Multiply(v)));
           0,
           6,
         },
- 24);
+        24);
       EInteger w3 = Interpolate(
         wts,
         new int[] {
@@ -3513,7 +3514,7 @@ ret.Add(wts[i].Multiply(v)));
           -1,
           45,
         },
- 18);
+        18);
       EInteger w4 = Interpolate(
         wts,
         new int[] {
@@ -3525,11 +3526,12 @@ ret.Add(wts[i].Multiply(v)));
           0,
           -30,
         },
- 24);
-      EInteger w5 = Interpolate(wts, new int[] {
-        -360, 5, 3, -120, -40, 8,
-        -360,
-      },
+        24);
+      EInteger w5 = Interpolate(wts,
+ new int[] {
+   -360, 5, 3, -120, -40, 8,
+   -360,
+ },
  180);
       if (m3mul16.compareTo(0x70000000) < 0) {
         im3 <<= 4; // multiply by 16
@@ -3605,7 +3607,7 @@ ret.Add(wts[i].Multiply(v)));
         bp = bp.Subtract(Integer.MAX_VALUE);
       }
       int lastp = bp.ToInt32Checked();
-      ret =(lastp == Integer.MAX_VALUE) ? ret.Multiply(rmax) :
+      ret = (lastp == Integer.MAX_VALUE) ? ret.Multiply(rmax) :
         ret.Multiply(this.Pow(lastp));
       return ret;
     }
@@ -4634,9 +4636,9 @@ EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
         if (radix == 10) {
           pow = NumberUtility.FindPowerOfTen(digits);
         } else {
-          pow = (radix == 5)?
+          pow = (radix == 5) ?
 NumberUtility.FindPowerOfFiveFromBig(EInteger.FromInt64(digits)) :
-(EInteger.FromInt32(radix).Pow(EInteger.FromInt64(digits)));
+EInteger.FromInt32(radix).Pow(EInteger.FromInt64(digits));
         }
         EInteger[] divrem = this.DivRem(pow);
         // DebugUtility.Log("divrem wc=" + divrem[0].wordCount + " wc=" + (//

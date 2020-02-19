@@ -168,7 +168,7 @@ TrappableRadixMath<EDecimal>(
       }
       if (mantissaSmall < 0) {
         if (mantissaSmall == Integer.MIN_VALUE) {
-          FastIntegerFixed fi = FastIntegerFixed.FromLong(Integer.MIN_VALUE);
+          FastIntegerFixed fi = FastIntegerFixed.FromInt64(Integer.MIN_VALUE);
           return new EDecimal(
               fi.Negate(),
               FastIntegerFixed.FromInt32(exponentSmall),
@@ -223,7 +223,7 @@ TrappableRadixMath<EDecimal>(
       int sign = fi.signum();
       return new EDecimal(
           sign < 0 ? fi.Negate() : fi,
-          FastIntegerFixed.FromLong(exponentLong),
+          FastIntegerFixed.FromInt64(exponentLong),
           (byte)((sign < 0) ? BigNumberFlags.FlagNegative : 0));
     }
 
@@ -261,17 +261,17 @@ TrappableRadixMath<EDecimal>(
         exponentLong >= Integer.MIN_VALUE && exponentLong <= Integer.MAX_VALUE) {
         return Create((int)mantissaLong, (int)exponentLong);
       } else if (mantissaLong == Long.MIN_VALUE) {
-        FastIntegerFixed fi = FastIntegerFixed.FromLong(mantissaLong);
+        FastIntegerFixed fi = FastIntegerFixed.FromInt64(mantissaLong);
         return new EDecimal(
             fi.Negate(),
-            FastIntegerFixed.FromLong(exponentLong),
+            FastIntegerFixed.FromInt64(exponentLong),
             (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
       } else {
-        FastIntegerFixed fi = FastIntegerFixed.FromLong(Math.abs(
+        FastIntegerFixed fi = FastIntegerFixed.FromInt64(Math.abs(
               mantissaLong));
         return new EDecimal(
             fi,
-            FastIntegerFixed.FromLong(exponentLong),
+            FastIntegerFixed.FromInt64(exponentLong),
             (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
       }
     }
@@ -340,7 +340,7 @@ TrappableRadixMath<EDecimal>(
             BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
         return lvalue == 0 ? (quiet ? NaN : SignalingNaN) :
           new EDecimal(
-            FastIntegerFixed.FromLong(lvalue),
+            FastIntegerFixed.FromInt64(lvalue),
             FastIntegerFixed.Zero,
             (byte)flags);
       }

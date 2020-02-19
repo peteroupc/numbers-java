@@ -1576,7 +1576,7 @@ import com.upokecenter.numbers.*;
             String msg = "str=" + str + "\nef=" + OutputEF(ef) +
               "\nmant=" + lmant + "\nexp=" + exp +
               "\nnegQuarter=" + negQuarter + "\n" +
-              "\ndiffValue="+ diffValue + "\n" + "\nhalf=" + half + "\n";
+              "\ndiffValue=" + diffValue + "\n" + "\nhalf=" + half + "\n";
             Assert.fail(msg);
           }
         } else {
@@ -1762,8 +1762,8 @@ import com.upokecenter.numbers.*;
       EInteger emant = efa.getMantissa();
       int mantBits = emant.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
       boolean fullPrecision = mantBits == bitCount;
-      boolean isSubnormal = EFloats.IsSubnormal(efa, dbl ? EContext.Binary64 :
-          EContext.Binary32);
+      boolean isSubnormal = EFloats.IsSubnormal(efa,
+ dbl ? EContext.Binary64 : EContext.Binary32);
       boolean isEven = efa.getUnsignedMantissa().isEven();
       if (isSubnormal) {
         int minExponent = dbl ? -1074 : -149;
@@ -2640,9 +2640,10 @@ OutputEF(efprev)) + "\n" +
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 100000; ++i) {
-        TestSizedEIntegerOne(RandomObjects.RandomEFloat(rg), rg.UniformInt(
+        TestSizedEIntegerOne(RandomObjects.RandomEFloat(rg),
+ rg.UniformInt(
   2) == 0,
-          rg.UniformInt(129));
+  rg.UniformInt(129));
       }
     }
 

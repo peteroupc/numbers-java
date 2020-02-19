@@ -94,7 +94,7 @@ at: http://peteroupc.github.io/
       int ToInt32() {
         return this.wordCount == 0 ? 0 : this.data[0];
       }
-      public static MutableNumber FromLong(long longVal) {
+      public static MutableNumber FromInt64(long longVal) {
         if (longVal < 0) {
           throw new IllegalArgumentException("longVal");
         }
@@ -587,7 +587,7 @@ switch (this.integerMode) {
                 // if both operands are nonnegative
                 // convert to mutable big integer
                 this.integerMode = 1;
-                this.mnum = MutableNumber.FromLong(amult);
+                this.mnum = MutableNumber.FromInt64(amult);
               } else {
                 // if either operand is negative
                 // convert to big integer

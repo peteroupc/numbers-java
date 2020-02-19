@@ -94,7 +94,7 @@ Cache[intVal - CacheFirst] :
       new FastIntegerFixed((byte)0, intVal, null);
     }
 
-    static FastIntegerFixed FromLong(long longVal) {
+    static FastIntegerFixed FromInt64(long longVal) {
       return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ?
 FromInt32((int)longVal) : new FastIntegerFixed(
           (byte)2,
