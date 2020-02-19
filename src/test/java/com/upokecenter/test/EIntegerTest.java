@@ -1297,7 +1297,7 @@ import com.upokecenter.numbers.*;
         }
       } else {
         if (!(bytes.length == 1 || (
-              !(bytes[0] == 0x00 &&((int)bytes[1] & 0x80) == 0) &&
+              !(bytes[0] == 0x00 && ((int)bytes[1] & 0x80) == 0) &&
               !(bytes[0] == (byte)0xff && ((int)bytes[1] & 0x80) != 0)
 ))) {
           return false;

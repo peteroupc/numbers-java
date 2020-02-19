@@ -5808,7 +5808,7 @@ import com.upokecenter.numbers.*;
           "false") + ")");
       sb.append(".WithExponentClamp(" + (ec.getClampNormalExponents() ? "true" :
           "false") + ")");
-      sb.append(".WithSimplified(" +(ec.isSimplified() ? "true" : "false") +
+      sb.append(".WithSimplified(" + (ec.isSimplified() ? "true" : "false") +
         ")");
       if (ec.getHasFlags()) {
         sb.append(".WithBlankFlags()");
@@ -6331,11 +6331,11 @@ import com.upokecenter.numbers.*;
         int precRange = rand.UniformInt(precisionRanges.length / 2) * 2;
         int exponent = exponents[rand.UniformInt(exponents.length)];
         int prec = precisionRanges[precRange] +
-          rand.UniformInt(1 +(precisionRanges[precRange + 1] -
+          rand.UniformInt(1 + (precisionRanges[precRange + 1] -
               precisionRanges[precRange]));
         precRange = rand.UniformInt(precisionRanges.length / 2) * 2;
         int eprec = precisionRanges[precRange] +
-          rand.UniformInt(1 +(precisionRanges[precRange + 1] -
+          rand.UniformInt(1 + (precisionRanges[precRange + 1] -
               precisionRanges[precRange]));
         int point = -1;
         if (rand.UniformInt(2) == 0) {

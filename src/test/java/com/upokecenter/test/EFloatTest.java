@@ -401,24 +401,24 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    public void TestEFloatDoubleCoreExact(double d, String s) {
+    public static void TestEFloatDoubleCoreExact(double d, String s) {
       Assert.assertEquals(s, EFloat.FromDouble(d).toString());
       TestEFloatDoubleCore(d, s);
     }
 
-    public void TestEFloatSingleCoreExact(float d, String s) {
+    public static void TestEFloatSingleCoreExact(float d, String s) {
       Assert.assertEquals(s, EFloat.FromSingle(d).toString());
       TestEFloatSingleCore(d, s);
     }
 
     @Test
     public void TestEFloatDouble() {
-      this.TestEFloatDoubleCoreExact(3.5, "3.5");
-      this.TestEFloatDoubleCoreExact(7, "7");
-      this.TestEFloatDoubleCoreExact(1.75, "1.75");
-      this.TestEFloatDoubleCoreExact(3.5, "3.5");
-      this.TestEFloatDoubleCoreExact((double)Integer.MIN_VALUE, "-2147483648");
-      this.TestEFloatDoubleCoreExact(
+      TestEFloatDoubleCoreExact(3.5, "3.5");
+      TestEFloatDoubleCoreExact(7, "7");
+      TestEFloatDoubleCoreExact(1.75, "1.75");
+      TestEFloatDoubleCoreExact(3.5, "3.5");
+      TestEFloatDoubleCoreExact((double)Integer.MIN_VALUE, "-2147483648");
+      TestEFloatDoubleCoreExact(
         (double)Long.MIN_VALUE,
         "-9223372036854775808");
       RandomGenerator rand = new RandomGenerator();
@@ -1558,7 +1558,7 @@ import com.upokecenter.numbers.*;
           ++exp;
           lmant >>= 1;
         }
-        if (!(lmant <(1 << 24))) {
+        if (!(lmant < (1 << 24))) {
  Assert.fail();
  }
         ERational ulp = PowerOfTwo(exp);
@@ -1575,8 +1575,8 @@ import com.upokecenter.numbers.*;
             diffValue.compareTo(half) > 0) {
             String msg = "str=" + str + "\nef=" + OutputEF(ef) +
               "\nmant=" + lmant + "\nexp=" + exp +
-              "\nnegQuarter="+negQuarter + "\n" +
-              "\ndiffValue="+diffValue + "\n" + "\nhalf="+half + "\n";
+              "\nnegQuarter=" + negQuarter + "\n" +
+              "\ndiffValue="+ diffValue + "\n" + "\nhalf=" + half + "\n";
             Assert.fail(msg);
           }
         } else {
@@ -1639,7 +1639,7 @@ import com.upokecenter.numbers.*;
           ++exp;
           lmant >>= 1;
         }
-        if (!(lmant <(1L << 53))) {
+        if (!(lmant < (1L << 53))) {
  Assert.fail();
  }
         ERational ulp = PowerOfTwo(exp);

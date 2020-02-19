@@ -226,7 +226,7 @@ at: http://peteroupc.github.io/
               // One of the discarded bits after
               // the last one is set
               this.bitsAfterLeftmost |= 1;
-              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1:
+              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
 0;
             } else if (lowestSetBit.compareTo(bs - 1) > 0) {
               // Means all discarded bits are zero
@@ -240,7 +240,7 @@ at: http://peteroupc.github.io/
               // One of the discarded bits after
               // the last one is set
               this.bitsAfterLeftmost |= 1;
-              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1:
+              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
 0;
             } else if (lowestSet > bs - 1) {
               // Means all discarded bits are zero
@@ -277,11 +277,13 @@ at: http://peteroupc.github.io/
         }
         return new FastInteger(kb);
       }
-      if (this.shiftedBigInt.isZero()) { return new FastInteger(1);
+      if (this.shiftedBigInt.isZero()) {
+         { return new FastInteger(1);
+      }
 }
       long sbe = this.shiftedBigInt.GetSignedBitLengthAsInt64();
-      return (sbe < Integer.MAX_VALUE) ? (new FastInteger((int)sbe)) :
-(FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger()));
+      return (sbe < Integer.MAX_VALUE) ? new FastInteger((int)sbe) :
+FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
     }
 
     private void ShiftBigToBits(int bits) {
@@ -329,7 +331,7 @@ at: http://peteroupc.github.io/
               // One of the discarded bits after
               // the last one is set
               this.bitsAfterLeftmost |= 1;
-              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1:
+              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
 0;
             } else if (lowestSetBit.compareTo(bs - 1) > 0) {
               // Means all discarded bits are zero
@@ -343,7 +345,7 @@ at: http://peteroupc.github.io/
               // One of the discarded bits after
               // the last one is set
               this.bitsAfterLeftmost |= 1;
-              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1:
+              this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
 0;
             } else if (lowestSet > bs - 1) {
               // Means all discarded bits are zero
