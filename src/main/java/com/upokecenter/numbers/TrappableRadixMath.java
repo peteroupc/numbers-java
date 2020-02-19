@@ -22,7 +22,7 @@ at: http://peteroupc.github.io/
       T thisValue,
       T divisor,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.DivideToIntegerNaturalScale(
         thisValue,
         divisor,
@@ -34,19 +34,19 @@ at: http://peteroupc.github.io/
       T thisValue,
       T divisor,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.DivideToIntegerZeroScale(thisValue, divisor, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Abs(T value, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Abs(value, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Negate(T value, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Negate(value, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -56,7 +56,7 @@ at: http://peteroupc.github.io/
       T divisor,
       EContext ctx,
       boolean roundAfterDivide) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Remainder(
         thisValue,
         divisor,
@@ -70,55 +70,55 @@ at: http://peteroupc.github.io/
     }
 
     public T RemainderNear(T thisValue, T divisor, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.RemainderNear(thisValue, divisor, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Pi(EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Pi(tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Power(T thisValue, T pow, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Power(thisValue, pow, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Ln(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Ln(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Exp(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Exp(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T SquareRoot(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.SquareRoot(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T NextMinus(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.NextMinus(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T NextToward(T thisValue, T otherValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.NextToward(thisValue, otherValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T NextPlus(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.NextPlus(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -128,7 +128,7 @@ at: http://peteroupc.github.io/
       T divisor,
       EInteger desiredExponent,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.DivideToExponent(
         thisValue,
         divisor,
@@ -138,37 +138,37 @@ at: http://peteroupc.github.io/
     }
 
     public T Divide(T thisValue, T divisor, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Divide(thisValue, divisor, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T MinMagnitude(T a, T b, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.MinMagnitude(a, b, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T MaxMagnitude(T a, T b, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.MaxMagnitude(a, b, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Max(T a, T b, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Max(a, b, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Min(T a, T b, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Min(a, b, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Multiply(T thisValue, T other, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Multiply(thisValue, other, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -178,7 +178,7 @@ at: http://peteroupc.github.io/
       T multiplicand,
       T augend,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.MultiplyAndAdd(
         thisValue,
         multiplicand,
@@ -188,19 +188,19 @@ at: http://peteroupc.github.io/
     }
 
     public T Plus(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Plus(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T RoundToPrecision(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.RoundToPrecision(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Quantize(T thisValue, T otherValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Quantize(thisValue, otherValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -209,7 +209,7 @@ at: http://peteroupc.github.io/
       T thisValue,
       EInteger expOther,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.RoundToExponentExact(thisValue, expOther, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -218,7 +218,7 @@ at: http://peteroupc.github.io/
       T thisValue,
       EInteger expOther,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.RoundToExponentSimple(thisValue, expOther, ctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -227,7 +227,7 @@ at: http://peteroupc.github.io/
       T thisValue,
       EInteger exponent,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.RoundToExponentNoRoundedFlag(
         thisValue,
         exponent,
@@ -236,13 +236,13 @@ at: http://peteroupc.github.io/
     }
 
     public T Reduce(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Reduce(thisValue, ctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T Add(T thisValue, T other, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.Add(thisValue, other, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -252,7 +252,7 @@ at: http://peteroupc.github.io/
       T otherValue,
       boolean treatQuietNansAsSignaling,
       EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.CompareToWithContext(
         thisValue,
         otherValue,
@@ -271,13 +271,13 @@ at: http://peteroupc.github.io/
     }
 
     public T RoundAfterConversion(T thisValue, EContext ctx) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.RoundAfterConversion(thisValue, tctx);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
 
     public T SignalOverflow(EContext ctx, boolean neg) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.SignalOverflow(tctx, neg);
       return ctx == null ? result : ctx.TriggerTraps(result, tctx);
     }
@@ -287,7 +287,7 @@ at: http://peteroupc.github.io/
       T other,
       EContext ctx,
       boolean roundToOperandPrecision) {
-      EContext tctx = (ctx == null) ? ctx : ctx.GetTrappable();
+      EContext tctx = (ctx == null) ? ctx : ctx.GetNontrapping();
       T result = this.math.AddEx(
         thisValue,
         other,

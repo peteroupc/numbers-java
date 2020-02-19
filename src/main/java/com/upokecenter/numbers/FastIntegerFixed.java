@@ -192,6 +192,16 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       return FastIntegerFixed.FromBig(bigA.Subtract(bigB));
     }
 
+    public int compareTo(EInteger evalue) {
+      switch (this.integerMode) {
+        case 0:
+          return -evalue.compareTo(this.smallValue);
+        case 2:
+          return this.largeValue.compareTo(evalue);
+        default: throw new IllegalStateException();
+      }
+    }
+
     public int compareTo(FastIntegerFixed val) {
       switch ((this.integerMode << 2) | val.integerMode) {
         case (0 << 2) | 0: {
@@ -200,7 +210,7 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
               1);
         }
         case (0 << 2) | 2:
-          return this.ToEInteger().compareTo(val.largeValue);
+          return -val.largeValue.compareTo(this.smallValue);
         case (2 << 2) | 0:
         case (2 << 2) | 2:
           return this.largeValue.compareTo(val.ToEInteger());
@@ -218,10 +228,6 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       }
     }
 
-    /**
-     * This is an internal API.
-     * @return A FastIntegerFixed object.
-     */
     FastIntegerFixed Negate() {
       switch (this.integerMode) {
         case 0:
@@ -251,10 +257,6 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       return this.integerMode == 0 || this.largeValue.CanFitInInt32();
     }
 
-    /**
-     * This is an internal API.
-     * @return A text string.
-     */
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:

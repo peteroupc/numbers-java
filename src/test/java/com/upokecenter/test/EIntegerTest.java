@@ -1279,37 +1279,39 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(EInteger.FromInt64(3), (EInteger.FromInt64(-13)).Mod(EInteger.FromInt64(4)));
     }
 
-public static boolean TestEIntegerFromBytes(byte[] bytes, boolean littleEndian) {
-  if (bytes == null) {
-    throw new NullPointerException("bytes");
-  }
-  if (bytes.length == 0) {
-    return false;
-  }
-  if (littleEndian) {
-    if (!(bytes.length == 1 || (
-      !(bytes[bytes.length - 1] == 0x00 && ((int)bytes[bytes.length - 2] &
-0x80) == 0) &&
-      !(bytes[bytes.length - 1] == (byte)0xff && ((int)bytes[bytes.length -
-2] & 0x80) != 0)
-))) { return false;
-}
-  } else {
-    if (!(bytes.length == 1 || (
-      !(bytes[0] == 0x00 && ((int)bytes[1] & 0x80) == 0) &&
-      !(bytes[0] == (byte)0xff && ((int)bytes[1] & 0x80) != 0)
-))) { return false;
-}
-  }
-  boolean negative = false;
-  negative = (!littleEndian) ? ((bytes[0] & 0x80) != 0) :
-((bytes[bytes.length - 1] & 0x80) != 0);
-  EInteger ei = EInteger.FromBytes(bytes, littleEndian);
-  Assert.assertEquals(negative, ei.signum() < 0);
-  byte[] ba = ei.ToBytes(littleEndian);
-  TestCommon.AssertByteArraysEqual(bytes, ba);
-  return true;
-}
+    public static boolean TestEIntegerFromBytes(byte[] bytes, boolean littleEndian) {
+      if (bytes == null) {
+        throw new NullPointerException("bytes");
+      }
+      if (bytes.length == 0) {
+        return false;
+      }
+      if (littleEndian) {
+        if (!(bytes.length == 1 || (
+              !(bytes[bytes.length - 1] == 0x00 && ((int)bytes[bytes.length
+- 2] &
+                0x80) == 0) && !(bytes[bytes.length - 1] == (byte)0xff &&
+((int)bytes[bytes.length -
+                2] & 0x80) != 0)))) {
+          return false;
+        }
+      } else {
+        if (!(bytes.length == 1 || (
+              !(bytes[0] == 0x00 &&((int)bytes[1] & 0x80) == 0) &&
+              !(bytes[0] == (byte)0xff && ((int)bytes[1] & 0x80) != 0)
+))) {
+          return false;
+        }
+      }
+      boolean negative = false;
+      negative = (!littleEndian) ? ((bytes[0] & 0x80) != 0) :
+        ((bytes[bytes.length - 1] & 0x80) != 0);
+      EInteger ei = EInteger.FromBytes(bytes, littleEndian);
+      Assert.assertEquals(negative, ei.signum() < 0);
+      byte[] ba = ei.ToBytes(littleEndian);
+      TestCommon.AssertByteArraysEqual(bytes, ba);
+      return true;
+    }
 
     @Test
     public void TestFromBytes() {
@@ -1327,8 +1329,8 @@ public static boolean TestEIntegerFromBytes(byte[] bytes, boolean littleEndian) 
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-byte[] bytes = RandomObjects.RandomByteString(rg);
-TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
+        byte[] bytes = RandomObjects.RandomByteString(rg);
+        TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
       }
     }
     @Test
@@ -2791,7 +2793,7 @@ TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
     private static EInteger ZerosAndOnesInteger(int size) {
       EInteger ei = EInteger.FromInt32(0xffff);
       for (int i = 1; i < size; ++i) {
-        ei = (i % 2 == 0) ? ei.ShiftLeft(16).Add(EInteger.FromInt32(
+        ei =(i % 2 == 0) ? ei.ShiftLeft(16).Add(EInteger.FromInt32(
               0xffff)) : ei.ShiftLeft(16);
       }
       return ei;
@@ -2878,8 +2880,8 @@ TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
     @Test
     public void TestMultiplyDivideASpecific() {
       EInteger eia = EInteger.FromRadixString(
-        "8B7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-        16);
+          "8B7BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          16);
       EInteger eib = EInteger.FromRadixString("8B7BFFFFFFFFFFFF", 16);
       EInteger eic =
 
@@ -3364,42 +3366,43 @@ TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
           bigintC,
           bigintB.Multiply(bigintA));
         if (!bigintA.isZero() && !bigintB.isZero()) {
-     // Assuming a and b are nonzero:
-     // If a and b are both positive or both negative, then product must be
-     // positive
-     // If a is negative and b is positive, or vice versa, then product must be
-     // negative
-     Assert.assertTrue(((bigintA.signum() < 0) == (bigintB.signum() < 0)) ==
-          (bigintC.signum() > 0));
-     // abs(product) must be greater or equal to abs(a) and greater or equal to
-     // abs(b)
-     if (!(bigintC.Abs().compareTo(bigintA.Abs()) >= 0))Assert.fail();
-     if (!(bigintC.Abs().compareTo(bigintB.Abs()) >= 0))Assert.fail();
-     // If abs(b)>1 and abs(a)>1, abs(product) must be greater than abs(a) and
-     // abs(b)
-     if (bigintA.Abs().compareTo(1) > 0 && bigintB.Abs().compareTo(1) > 0) {
-       if (!(bigintC.Abs().compareTo(bigintA.Abs()) > 0))Assert.fail();
-       if (!(bigintC.Abs().compareTo(bigintB.Abs()) > 0))Assert.fail();
-     }
-   }
+          // Assuming a and b are nonzero:
+          // If a and b are both positive or both negative, then product must be
+          // positive
+          // If a is negative and b is positive, or vice versa, then product must be
+          // negative
+          Assert.assertTrue(((bigintA.signum() < 0) == (bigintB.signum() < 0)) ==
+            (bigintC.signum() > 0));
+          // abs(product) must be greater or equal to abs(a) and greater or equal to
+          // abs(b)
+          if (!(bigintC.Abs().compareTo(bigintA.Abs()) >= 0))Assert.fail();
+          if (!(bigintC.Abs().compareTo(bigintB.Abs()) >= 0))Assert.fail();
+          // If abs(b)>1 and abs(a)>1, abs(product) must be greater than abs(a) and
+          // abs(b)
+          if (bigintA.Abs().compareTo(1) > 0 && bigintB.Abs().compareTo(1) >
+0) {
+            if (!(bigintC.Abs().compareTo(bigintA.Abs()) > 0))Assert.fail();
+            if (!(bigintC.Abs().compareTo(bigintB.Abs()) > 0))Assert.fail();
+          }
+        }
         if (!bigintB.isZero()) {
-     EInteger[] divrem = bigintC.DivRem(bigintB);
-     bigintD = divrem[0];
-     bigintRem = divrem[1];
-     if (!bigintD.equals(bigintA)) {
+          EInteger[] divrem = bigintC.DivRem(bigintB);
+          bigintD = divrem[0];
+          bigintRem = divrem[1];
+          if (!bigintD.equals(bigintA)) {
             TestCommon.CompareTestEqualAndConsistent(
               bigintD,
               bigintA,
               "bigintC = " + bigintC);
           }
           TestCommon.CompareTestEqual(EInteger.FromInt32(0), bigintRem);
-        bigintE = bigintC.Divide(bigintB);
+          bigintE = bigintC.Divide(bigintB);
           // Testing that DivRem and division method return
           // the same value
           TestCommon.CompareTestEqualAndConsistent(bigintD, bigintE);
-        bigintE = bigintC.Remainder(bigintB);
-        TestCommon.CompareTestEqualAndConsistent(bigintRem, bigintE);
-      if (bigintE.signum() > 0 && !bigintC.Mod(bigintB).equals(bigintE)) {
+          bigintE = bigintC.Remainder(bigintB);
+          TestCommon.CompareTestEqualAndConsistent(bigintRem, bigintE);
+          if (bigintE.signum() > 0 && !bigintC.Mod(bigintB).equals(bigintE)) {
             TestCommon.CompareTestEqualAndConsistent(
               bigintE,
               bigintC.Mod(bigintB));

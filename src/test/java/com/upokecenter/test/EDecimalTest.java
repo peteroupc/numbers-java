@@ -3441,8 +3441,8 @@ import com.upokecenter.numbers.*;
       }
     }
 
-@Test
-public void TestToSizedEInteger() {
+    @Test
+    public void TestToSizedEInteger() {
       try {
         EDecimal.PositiveInfinity.ToSizedEInteger(32);
         Assert.fail("Should have failed");
@@ -3535,55 +3535,56 @@ public void TestToSizedEInteger() {
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 100000; ++i) {
- TestSizedEIntegerOne(RandomObjects.RandomEDecimal(rg), rg.UniformInt(2) ==
-0, rg.UniformInt(129));
-}
-}
-
-public static boolean TestSizedEIntegerOne(EDecimal ed, boolean isExact, int
-maxSignedBits) {
-  if (ed == null) {
-    throw new NullPointerException("ed");
-  }
-  if (!ed.isFinite() || ed.isZero()) {
-     { return false;
-  }
-}
-  EInteger ei = null;
-  EInteger ei2 = null;
-  try {
-    ei = ed.getExponent().compareTo(maxSignedBits + 6) > 0 ? null : (isExact ?
-ed.ToEIntegerIfExact() : ed.ToEInteger());
-    if (ei != null &&
-ei.GetSignedBitLengthAsEInteger().compareTo(maxSignedBits) > 0) {
-      ei = null;
+        TestSizedEIntegerOne(RandomObjects.RandomEDecimal(rg),
+  rg.UniformInt(2) == 0,
+  rg.UniformInt(129));
+      }
     }
-  } catch (ArithmeticException ex) {
-    ei = null;
-  } catch (UnsupportedOperationException ex) {
-    ei = null;
-  }
-  try {
-    ei2 = isExact ? ed.ToSizedEIntegerIfExact(maxSignedBits) :
-ed.ToSizedEInteger(maxSignedBits);
-  } catch (UnsupportedOperationException ex) {
-    Assert.fail(ed.toString());
-  } catch (ArithmeticException exc) {
-    ei2 = null;
-  }
-  if (ei == null) {
-    if (!(ei2 == null)) {
+
+    public static boolean TestSizedEIntegerOne(EDecimal ed, boolean isExact, int
+      maxSignedBits) {
+      if (ed == null) {
+        throw new NullPointerException("ed");
+      }
+      if (!ed.isFinite() || ed.isZero()) {
+        { return false;
+        }
+      }
+      EInteger ei = null;
+      EInteger ei2 = null;
+      try {
+        ei = ed.getExponent().compareTo(maxSignedBits + 6) > 0 ? null : (isExact ?
+            ed.ToEIntegerIfExact() : ed.ToEInteger());
+        if (ei != null &&
+          ei.GetSignedBitLengthAsEInteger().compareTo(maxSignedBits) > 0) {
+          ei = null;
+        }
+      } catch (ArithmeticException ex) {
+        ei = null;
+      } catch (UnsupportedOperationException ex) {
+        ei = null;
+      }
+      try {
+        ei2 = isExact ? ed.ToSizedEIntegerIfExact(maxSignedBits) :
+          ed.ToSizedEInteger(maxSignedBits);
+      } catch (UnsupportedOperationException ex) {
+        Assert.fail(ed.toString());
+      } catch (ArithmeticException ex) {
+        ei2 = null;
+      }
+      if (ei == null) {
+        if (!(ei2 == null)) {
  Assert.fail();
  }
-  } else {
-    Assert.assertEquals(ei, ei2);
-    if (!(ei.GetSignedBitLengthAsEInteger().compareTo(maxSignedBits)
-<= 0)) {
+      } else {
+        Assert.assertEquals(ei, ei2);
+        if (!(ei.GetSignedBitLengthAsEInteger().compareTo(
+  maxSignedBits) <= 0)) {
  Assert.fail();
  }
-  }
-  return true;
-}
+      }
+      return true;
+    }
 
     @Test
     public void TestToEInteger() {
@@ -5807,7 +5808,7 @@ ed.ToSizedEInteger(maxSignedBits);
           "false") + ")");
       sb.append(".WithExponentClamp(" + (ec.getClampNormalExponents() ? "true" :
           "false") + ")");
-      sb.append(".WithSimplified(" + (ec.isSimplified() ? "true" : "false") +
+      sb.append(".WithSimplified(" +(ec.isSimplified() ? "true" : "false") +
         ")");
       if (ec.getHasFlags()) {
         sb.append(".WithBlankFlags()");
@@ -6059,8 +6060,8 @@ ed.ToSizedEInteger(maxSignedBits);
     @Test
     public void TestStringContextSpecific6b() {
       EContext ec = EContext.Unlimited.WithPrecision(19).WithExponentRange(
-        -353,
-        354).WithRounding(
+          -353,
+          354).WithRounding(
           ERounding.Down).WithAdjustExponent(
           true).WithExponentClamp(false).WithSimplified(false);
       String str =
@@ -6330,11 +6331,11 @@ ed.ToSizedEInteger(maxSignedBits);
         int precRange = rand.UniformInt(precisionRanges.length / 2) * 2;
         int exponent = exponents[rand.UniformInt(exponents.length)];
         int prec = precisionRanges[precRange] +
-          rand.UniformInt(1 + (precisionRanges[precRange + 1] -
+          rand.UniformInt(1 +(precisionRanges[precRange + 1] -
               precisionRanges[precRange]));
         precRange = rand.UniformInt(precisionRanges.length / 2) * 2;
         int eprec = precisionRanges[precRange] +
-          rand.UniformInt(1 + (precisionRanges[precRange + 1] -
+          rand.UniformInt(1 +(precisionRanges[precRange + 1] -
               precisionRanges[precRange]));
         int point = -1;
         if (rand.UniformInt(2) == 0) {

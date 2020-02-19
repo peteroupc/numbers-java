@@ -1,25 +1,20 @@
 # API Documentation
 
-* [com.upokecenter.numbers.EContext](com.upokecenter.numbers.EContext.md) -
-Contains parameters for controlling the precision, rounding, and exponent
-  range of arbitrary-precision numbers.
+* [com.upokecenter.numbers.EContext](com.upokecenter.numbers.EContext.md) -  
 
-* [com.upokecenter.numbers.EDecimal](com.upokecenter.numbers.EDecimal.md) -
-Represents an arbitrary-precision decimal floating-point number.
+* [com.upokecenter.numbers.EDecimal](com.upokecenter.numbers.EDecimal.md) -  
 
 * [com.upokecenter.numbers.EDecimals](com.upokecenter.numbers.EDecimals.md) -
 A class that implements additional operations on arbitrary-precision decimal
  numbers.
 
-* [com.upokecenter.numbers.EFloat](com.upokecenter.numbers.EFloat.md) -
-Represents an arbitrary-precision binary floating-point number.
+* [com.upokecenter.numbers.EFloat](com.upokecenter.numbers.EFloat.md) -  
 
 * [com.upokecenter.numbers.EFloats](com.upokecenter.numbers.EFloats.md) -
 A class that implements additional operations on arbitrary-precision binary
  floating-point numbers.
 
-* [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -
-Represents an arbitrary-precision integer.
+* [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -  
 
 * [com.upokecenter.numbers.ERational](com.upokecenter.numbers.ERational.md) -  
 

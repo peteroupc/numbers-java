@@ -437,7 +437,8 @@ at: http://peteroupc.github.io/
       }
     }
 
-    private static final String HexAlphabet = "0123456789ABCDEF";
+    // Hexadecimal digits
+    private static final String Digits = "0123456789ABCDEF";
     private int smallValue; // if integerMode is 0
     private MutableNumber mnum; // if integerMode is 1
     private EInteger largeValue; // if integerMode is 2
@@ -570,10 +571,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <param name='val'>The parameter <paramref name='val'/> is an
-    /// internal value.</param>
-    /// <returns>A FastInteger Object.</returns>
     FastInteger Multiply(int val) {
       if (val == 0) {
         this.smallValue = 0;
@@ -620,8 +617,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <returns>A FastInteger Object.</returns>
     FastInteger Negate() {
       switch (this.integerMode) {
         case 0:
@@ -648,10 +643,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <param name='val'>The parameter <paramref name='val'/> is an
-    /// internal value.</param>
-    /// <returns>A FastInteger Object.</returns>
     FastInteger Subtract(FastInteger val) {
       EInteger valValue;
       switch (this.integerMode) {
@@ -697,10 +688,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <param name='val'>The parameter <paramref name='val'/> is an
-    /// internal value.</param>
-    /// <returns>A FastInteger Object.</returns>
     FastInteger SubtractInt(int val) {
       if (val == Integer.MIN_VALUE) {
         return this.AddBig(ValueNegativeInt32MinValue);
@@ -720,10 +707,6 @@ switch (this.integerMode) {
       return this.AddInt(-val);
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <param name='bigintVal'>The parameter <paramref name='bigintVal'/>
-    /// is an internal value.</param>
-    /// <returns>A FastInteger Object.</returns>
     FastInteger AddBig(EInteger bigintVal) {
       switch (this.integerMode) {
         case 0: {
@@ -744,10 +727,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <param name='bigintVal'>The parameter <paramref name='bigintVal'/>
-    /// is an internal value.</param>
-    /// <returns>A FastInteger Object.</returns>
     FastInteger SubtractBig(EInteger bigintVal) {
       if (this.integerMode == 2) {
         this.largeValue = this.largeValue.Subtract(bigintVal);
@@ -1015,50 +994,59 @@ switch (this.integerMode) {
       }
     }
 
-    static String IntToString(int value) {
+    public static String IntToString(int value) {
       if (value == 0) {
         return "0";
       }
       if (value == Integer.MIN_VALUE) {
         return "-2147483648";
       }
+      boolean neg = value < 0;
+      if (neg) {
+        value = -value;
+      }
       char[] chars;
       int count;
-      if ((value >> 15) == 0) {
-        chars = new char[5];
-        count = 4;
+      if (value < 100000) {
+        if (neg) {
+         chars = new char[6];
+         count = 5;
+       } else {
+         chars = new char[5];
+         count = 4;
+        }
         while (value > 9) {
-          int intdivvalue = (value * 26215) >> 18;
-          char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+          int intdivvalue = ((((value >> 1) * 52429) >> 18) & 16383);
+          char digit = Digits.charAt((int)(value - (intdivvalue * 10)));
           chars[count--] = digit;
           value = intdivvalue;
         }
         if (value != 0) {
-          chars[count--] = HexAlphabet.charAt((int)value);
+          chars[count--] = Digits.charAt((int)value);
         }
-        ++count;
-        return new String(chars, count, 5 - count);
+        if (neg) {
+          chars[count] = '-';
+        } else {
+          ++count;
+        }
+        return new String(chars, count, chars.length - count);
       }
-      boolean neg = value < 0;
       chars = new char[12];
       count = 11;
-      if (neg) {
-        value = -value;
-      }
-      while (value > 43698) {
+      while (value >= 163840) {
         int intdivvalue = value / 10;
-        char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+        char digit = Digits.charAt((int)(value - (intdivvalue * 10)));
         chars[count--] = digit;
         value = intdivvalue;
       }
       while (value > 9) {
-        int intdivvalue = (value * 26215) >> 18;
-        char digit = HexAlphabet.charAt((int)(value - (intdivvalue * 10)));
+        int intdivvalue = ((((value >> 1) * 52429) >> 18) & 16383);
+        char digit = Digits.charAt((int)(value - (intdivvalue * 10)));
         chars[count--] = digit;
         value = intdivvalue;
       }
       if (value != 0) {
-        chars[count--] = HexAlphabet.charAt((int)value);
+        chars[count--] = Digits.charAt((int)value);
       }
       if (neg) {
         chars[count] = '-';
@@ -1068,8 +1056,49 @@ switch (this.integerMode) {
       return new String(chars, count, 12 - count);
     }
 
-    /// <summary>This is an internal API.</summary>
-    /// <returns>A text String.</returns>
+    public static String LongToString(long longValue) {
+      if (longValue == Long.MIN_VALUE) {
+        return "-9223372036854775808";
+      }
+      if (longValue == 0L) {
+        return "0";
+      }
+      boolean neg = longValue < 0;
+      int count = 0;
+      char[] chars;
+      int intlongValue = ((int)longValue);
+      if ((long)intlongValue == longValue) {
+        return IntToString(intlongValue);
+      } else {
+        chars = new char[24];
+        count = 23;
+        if (neg) {
+          longValue = -longValue;
+        }
+        while (longValue >= 163840) {
+          long divValue = longValue / 10;
+          char digit = Digits.charAt((int)(longValue - (divValue * 10)));
+          chars[count--] = digit;
+          longValue = divValue;
+        }
+        while (longValue > 9) {
+          long divValue = ((((longValue >> 1) * 52429) >> 18) & 16383);
+          char digit = Digits.charAt((int)(longValue - (divValue * 10)));
+          chars[count--] = digit;
+          longValue = divValue;
+        }
+        if (longValue != 0) {
+          chars[count--] = Digits.charAt((int)longValue);
+        }
+        if (neg) {
+          chars[count] = '-';
+        } else {
+          ++count;
+        }
+        return new String(chars, count, 24 - count);
+      }
+    }
+
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:
@@ -1082,8 +1111,6 @@ switch (this.integerMode) {
       }
     }
 
-    /// <summary>Gets an internal value.</summary>
-    /// <value>An internal value.</value>
     final int signum() {
         switch (this.integerMode) {
           case 0:
