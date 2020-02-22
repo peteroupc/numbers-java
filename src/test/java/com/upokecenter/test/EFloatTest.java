@@ -1763,7 +1763,7 @@ import com.upokecenter.numbers.*;
       int mantBits = emant.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
       boolean fullPrecision = mantBits == bitCount;
       boolean isSubnormal = EFloats.IsSubnormal(efa,
- dbl ? EContext.Binary64 : EContext.Binary32);
+          dbl ? EContext.Binary64 : EContext.Binary32);
       boolean isEven = efa.getUnsignedMantissa().isEven();
       if (isSubnormal) {
         int minExponent = dbl ? -1074 : -149;
@@ -1814,8 +1814,8 @@ import com.upokecenter.numbers.*;
       } catch (Exception ex) {
         String msg = "" + ("dbl_____=" + dbl + ", full=" +
             fullPrecision + ",sub=" + isSubnormal) + "\n" + ("efprev__=" +
-OutputEF(efprev)) + "\n" +
-          ("efprev1q=" + OutputEF(efprev1q)) + "\n" +
+            OutputEF(efprev)) + "\n" + ("efprev1q=" + OutputEF(efprev1q)) +
+"\n" +
           ("efprev2q=" + OutputEF(efprev2q)) + "\n" +
           ("efprev3q=" + OutputEF(efprev3q)) + "\n" +
           ("efa_____=" + OutputEF(efa)) + "\n" +
@@ -2641,9 +2641,9 @@ OutputEF(efprev)) + "\n" +
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 100000; ++i) {
         TestSizedEIntegerOne(RandomObjects.RandomEFloat(rg),
- rg.UniformInt(
-  2) == 0,
-  rg.UniformInt(129));
+          rg.UniformInt(
+            2) == 0,
+          rg.UniformInt(129));
       }
     }
 
@@ -2685,7 +2685,7 @@ OutputEF(efprev)) + "\n" +
       } else {
         Assert.assertEquals(ei, ei2);
         if (!(ei.GetSignedBitLengthAsEInteger().compareTo(
-  maxSignedBits) <= 0)) {
+            maxSignedBits) <= 0)) {
  Assert.fail();
  }
       }

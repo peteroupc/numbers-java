@@ -64,6 +64,9 @@ Renamed to ToInt64Unchecked.
  Divides this instance by the value of an arbitrary-precision integer.
 * `EInteger Divide​(EInteger bigintDivisor)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
+* `EInteger[] DivRem​(int intDivisor)`<br>
+ Divides this object by a 32-bit signed integer and returns the quotient and
+ remainder.
 * `EInteger[] DivRem​(EInteger divisor)`<br>
  Divides this object by another arbitrary-precision integer and returns the
  quotient and remainder.
@@ -819,6 +822,24 @@ Divides this instance by the value of an arbitrary-precision integer. The
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
 ### DivRem
+    public EInteger[] DivRem​(int intDivisor)
+Divides this object by a 32-bit signed integer and returns the quotient and
+ remainder.
+
+**Parameters:**
+
+* <code>intDivisor</code> - The number to divide by.
+
+**Returns:**
+
+* An array with two arbitrary-precision integers: the first is the
+ quotient, and the second is the remainder.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - The parameter "intDivisor" is 0.
+
+### DivRem
     public EInteger[] DivRem​(EInteger divisor)
 Divides this object by another arbitrary-precision integer and returns the
  quotient and remainder.
@@ -834,7 +855,7 @@ Divides this object by another arbitrary-precision integer and returns the
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - The parameter divisor is 0.
+* <code>java.lang.ArithmeticException</code> - The parameter "divisor" is 0.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 
