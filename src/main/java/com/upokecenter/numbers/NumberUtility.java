@@ -684,8 +684,8 @@ idealExp.AsEInteger().Subtract(exponentMutable.AsEInteger());
           }
         }
         bigmant = (lowbit <= Integer.MAX_VALUE) ?
-(bigmant.ShiftRight((int)lowbit)) :
-(bigmant.ShiftRight(EInteger.FromInt64(lowbit)));
+bigmant.ShiftRight((int)lowbit) :
+bigmant.ShiftRight(EInteger.FromInt64(lowbit));
 if (digits != null) {
   digits.SubtractInt64(lowbit);
 }

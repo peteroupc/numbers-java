@@ -3646,9 +3646,10 @@ EInteger.FromInt32(0) : ctx.getPrecision();
            int divdCount = (int)absdivd.GetUnsignedBitLengthAsInt64();
            int divsCount = (int)mantissaDivisor.GetUnsignedBitLengthAsInt64();
            int dividendShift = (divdCount <= divsCount) ? ((divsCount -
-divdCount)+ maxprec + 1) : (Math.max(0, (maxprec +
-1)-(divdCount-divsCount))); absdivd = absdivd.ShiftLeft(dividendShift);
-EInteger[] divrem3 = absdivd.DivRem(absdivs);
+divdCount) + maxprec + 1) : (Math.max(0,
+ (maxprec + 1)-(divdCount-divsCount))); absdivd =
+absdivd.ShiftLeft(dividendShift);
+ EInteger[] divrem3 = absdivd.DivRem(absdivs);
            quo = divrem3[0];
            rem = divrem3[1];
            natexp = new FastInteger(-dividendShift);
@@ -3767,7 +3768,7 @@ EInteger[] divrem3 = absdivd.DivRem(absdivs);
                 if (ctx.getHasFlags()) {
                   ctx.setFlags(ctx.getFlags()|(ctxcopy.getFlags()));
                 }
-              return retval2;
+                return retval2;
             }
             if (ctx.getHasFlags()) {
               ctx.setFlags(ctx.getFlags()|(ctxcopy.getFlags() & ~EContext.FlagRounded));
@@ -5460,7 +5461,7 @@ explong;
         }
       }
       int cmp = bigLeft.compareTo(toCompareWith.ShiftRight(1));
-      return (cmp == 0 && !toCompareWith.isEven()) ? (cmp =-1) : cmp;
+      return (cmp == 0 && !toCompareWith.isEven()) ? (cmp = -1) : cmp;
     }
 
     private T RoundToScale(
