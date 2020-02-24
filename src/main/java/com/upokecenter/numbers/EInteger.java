@@ -2079,7 +2079,7 @@ EInteger(this.wordCount, this.words, false);
      * @param intDivisor The number to divide by.
      * @return An array with two arbitrary-precision integers: the first is the
      * quotient, and the second is the remainder.
-     * @throws ArithmeticException The parameter "intDivisor" is 0.
+     * @throws ArithmeticException The parameter {@code intDivisor} is 0.
      */
     public EInteger[] DivRem(int intDivisor) {
       return this.DivRem(EInteger.FromInt32(intDivisor));
@@ -2091,7 +2091,7 @@ EInteger(this.wordCount, this.words, false);
      * @param divisor The number to divide by.
      * @return An array with two arbitrary-precision integers: the first is the
      * quotient, and the second is the remainder.
-     * @throws ArithmeticException The parameter "divisor" is 0.
+     * @throws ArithmeticException The parameter {@code divisor} is 0.
      * @throws NullPointerException The parameter {@code divisor} is null.
      */
     public EInteger[] DivRem(EInteger divisor) {
@@ -3499,53 +3499,52 @@ maxDigitEstimate : retval +
               y3.ShiftLeft(3)).Add(y2.ShiftLeft(2)).Add(y1.ShiftLeft(1)));
       }
       EInteger[] wts = { w0, wt1, wt2, wt3, wt4, wt5, w6 };
-      EInteger w1 = Interpolate(wts,
-      new int[] {
+      int[] wts2 = new int[] {
         -90, 5, -3, -60, 20, 2,
         -90,
-      },
-      180);
-      EInteger w2 = Interpolate(
-          wts,
-          new int[] {
-            -120,
-            1,
-            1,
-            -4,
-            -4,
-            0,
-            6,
-          },
-          24);
-      EInteger w3 = Interpolate(
-          wts,
-          new int[] {
-            45,
-            -1,
-            0,
-            27,
-            -7,
-            -1,
-            45,
-          },
+      };
+      EInteger w1 = Interpolate(wts, wts2, 180);
+      wts2 = new int[] {
+        -120,
+        1,
+        1,
+        -4,
+        -4,
+        0,
+        6,
+      };
+      EInteger w2 = Interpolate(wts, wts2, 24);
+      wts2 = new int[] {
+        45,
+        -1,
+        0,
+        27,
+        -7,
+        -1,
+        45,
+      };
+      EInteger w3 = Interpolate(wts,
+          wts2,
           18);
+      wts2 = new int[] {
+        96,
+        -1,
+        -1,
+        16,
+        16,
+        0,
+        -30,
+      };
       EInteger w4 = Interpolate(
           wts,
-          new int[] {
-            96,
-            -1,
-            -1,
-            16,
-            16,
-            0,
-            -30,
-          },
+          wts2,
           24);
-      EInteger w5 = Interpolate(wts,
-      new int[] {
+      wts2 = new int[] {
         -360, 5, 3, -120, -40, 8,
         -360,
-      },
+      };
+      EInteger w5 = Interpolate(wts,
+      wts2,
       180);
       if (m3mul16.compareTo(0x70000000) < 0) {
         im3 <<= 4; // multiply by 16

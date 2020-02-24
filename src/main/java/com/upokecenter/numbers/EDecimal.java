@@ -174,28 +174,29 @@ at: http://peteroupc.github.io/
    * 754 format):</p> <pre>|C|BBB...BBB|AAAAAA...AAAAAA|</pre> <ul><li>A.
    * Low 52 bits (Precision minus 1 bits): Lowest bits of the
    * significand.</li> <li>B. Next 11 bits: Exponent area: <ul><li>If all
-   * bits are ones, this value is infinity (positive or negative depending
-   * on the C bit) if all bits in area A are zeros, or not-a-number (NaN)
-   * otherwise.</li> <li>If all bits are zeros, this is a subnormal number.
-   * The exponent is EMin and the highest bit of the significand is
-   * zero.</li> <li>If any other number, the exponent is this value reduced
-   * by 1, then raised by EMin, and the highest bit of the significand is
-   * one.</li> </ul> </li> <li>C. Highest bit: If one, this is a negative
-   * number.</li> </ul> <p>The elements described above are in the same
-   * order as the order of each bit of each element, that is, either most
-   * significant first or least significant first.</p> <p><b>32-bit binary
-   * floating-point number</b> : A 32-bit binary number which is stored
-   * similarly to a <i>64-bit floating-point number</i> , except that:</p>
-   * <ul><li>Precision is 24 bits.</li> <li>EMin is -149.</li> <li>EMax is
-   * 104.</li> <li>A. The low 23 bits (Precision minus 1 bits) are the
-   * lowest bits of the significand.</li> <li>B. The next 8 bits are the
-   * exponent area.</li> <li>C. If the highest bit is one, this is a
-   * negative number.</li> </ul> <p><b>.NET Framework decimal</b> : A
-   * 128-bit decimal floating-point number, in the form <i>significand</i>
-   * * 10 <sup>- <i>scale</i> </sup> , where the scale ranges from 0 to 28.
-   * The number is stored in the following format:</p> <ul><li>Low 96 bits
-   * are the significand, as a 96-bit unsigned integer (all 96-bit values
-   * are allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16 bits are
+   * bits are ones, the final stored value is infinity (positive or
+   * negative depending on the C bit) if all bits in area A are zeros, or
+   * not-a-number (NaN) otherwise.</li> <li>If all bits are zeros, the
+   * final stored value is a subnormal number, the exponent is EMin, and
+   * the highest bit of the significand is zero.</li> <li>If any other
+   * number, the exponent is this value reduced by 1, then raised by EMin,
+   * and the highest bit of the significand is one.</li> </ul> </li> <li>C.
+   * Highest bit: If one, this is a negative number.</li> </ul> <p>The
+   * elements described above are in the same order as the order of each
+   * bit of each element, that is, either most significant first or least
+   * significant first.</p> <p><b>32-bit binary floating-point number</b> :
+   * A 32-bit binary number which is stored similarly to a <i>64-bit
+   * floating-point number</i> , except that:</p> <ul><li>Precision is 24
+   * bits.</li> <li>EMin is -149.</li> <li>EMax is 104.</li> <li>A. The low
+   * 23 bits (Precision minus 1 bits) are the lowest bits of the
+   * significand.</li> <li>B. The next 8 bits are the exponent area.</li>
+   * <li>C. If the highest bit is one, this is a negative number.</li>
+   * </ul> <p><b>.NET Framework decimal</b> : A 128-bit decimal
+   * floating-point number, in the form <i>significand</i> * 10 <sup>-
+   * <i>scale</i> </sup> , where the scale ranges from 0 to 28. The number
+   * is stored in the following format:</p> <ul><li>Low 96 bits are the
+   * significand, as a 96-bit unsigned integer (all 96-bit values are
+   * allowed, up to (2 <sup>96</sup> -1)).</li> <li>Next 16 bits are
    * unused.</li> <li>Next 8 bits are the scale, stored as an 8-bit
    * unsigned integer.</li> <li>Next 7 bits are unused.</li> <li>If the
    * highest bit is one, it's a negative number.</li> </ul> <p>The elements
@@ -5169,19 +5170,6 @@ TrappableRadixMath<EDecimal>(
       return this.Add(negated, ctx);
     }
 
-    private static final double[] ExactDoublePowersOfTen = {
-      1, 10, 100, 1000, 10000,
-      1e5, 1e6, 1e7, 1e8, 1e9,
-      1e10, 1e11, 1e12, 1e13, 1e14,
-      1e15, 1e16, 1e17, 1e18, 1e19,
-      1e20, 1e21, 1e22,
-    };
-
-    private static final float[] ExactSinglePowersOfTen = {
-      1f, 10f, 100f, 1000f, 10000f,
-      1e5f, 1e6f, 1e7f, 1e8f, 1e9f, 1e10f,
-    };
-
     /**
      * Converts this value to its closest equivalent as a 64-bit floating-point
      * number. The half-even rounding mode is used. <p>If this value is a
@@ -5213,13 +5201,39 @@ TrappableRadixMath<EDecimal>(
         return 0.0;
       }
       if (this.isFinite()) {
-        if (this.exponent.CompareToInt(0) > 0 &&
+        if (this.exponent.CompareToInt(0) == 0 &&
 this.unsignedMantissa.CanFitInInt64()) {
           long v = this.unsignedMantissa.AsInt64();
           if (v <= (1L << 53)) {
             // This integer fits exactly in double
             return this.isNegative() ? (double)(-v) : (double)v;
           }
+        }
+        if (this.exponent.CompareToInt(0) < 0 &&
+           this.exponent.CompareToInt(-8) >= 0 &&
+           this.unsignedMantissa.CanFitInInt32()) {
+          int m = this.unsignedMantissa.AsInt32();
+          int iex = -this.exponent.AsInt32();
+          int vtp = ValueTenPowers[iex];
+          if (m != Integer.MIN_VALUE) {
+            if (m % vtp == 0) {
+            double dn = (double)(m / vtp);
+            return this.isNegative() ? -dn : dn;
+          }
+          // Shift significand to be a 53-bit number (which
+          // can fit exactly in a double)
+          long am = Math.abs(m);
+          while (am < (1 << 52)) {
+            am <<= 1;
+          }
+          if (am % vtp == 0) {
+          // Converting to double and doing floating-point
+          // division will be exact and will not require
+          // rounding
+          double dn = (double)m / (double)vtp;
+          return this.isNegative() ? -dn : dn;
+         }
+        }
         }
         if (this.exponent.CompareToInt(309) > 0) {
           // Very high exponent, treat as infinity
@@ -5356,13 +5370,39 @@ this.unsignedMantissa.CanFitInInt64()) {
         return 0.0f;
       }
       if (this.isFinite()) {
-        if (this.exponent.CompareToInt(0) > 0 &&
+        if (this.exponent.CompareToInt(0) == 0 &&
 this.unsignedMantissa.CanFitInInt32()) {
           int v = this.unsignedMantissa.AsInt32();
           if (v <= (1 << 24)) {
             // This integer fits exactly in float
             return this.isNegative() ? (float)(-v) : (float)v;
           }
+        }
+        if (this.exponent.CompareToInt(0) < 0 &&
+           this.exponent.CompareToInt(-6) >= 0 &&
+           this.unsignedMantissa.CanFitInInt32()) {
+          int m = this.unsignedMantissa.AsInt32();
+          int iex = -this.exponent.AsInt32();
+          int vtp = ValueTenPowers[iex];
+          if (m >= -(1 << 23) && m < (1 << 23)) {
+            if (m % vtp == 0) {
+            float dn = (float)(m / vtp);
+            return this.isNegative() ? -dn : dn;
+          }
+          // Shift significand to be a 24-bit number (which
+          // can fit exactly in a single)
+          long am = Math.abs(m);
+          while (am < (1 << 23)) {
+            am <<= 1;
+          }
+          if (am % vtp == 0) {
+          // Converting to double and doing floating-point
+          // division will be exact and will not require
+          // rounding
+          float dn = (float)m / (float)vtp;
+          return this.isNegative() ? -dn : dn;
+         }
+        }
         }
         if (this.exponent.CompareToInt(39) > 0) {
           // Very high exponent, treat as infinity
@@ -5848,10 +5888,6 @@ digitCountLower.Subtract(2).compareTo(309) > 0) {
 0) {
           return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
         }
-        // if (digitCountLower.compareTo(800) > 0) {
-        // String estr = this.toString();
-        // return EFloat.FromString(estr, ec);
-        // }
       }
       if (bigintExp.signum() > 0) {
         // Scaled integer

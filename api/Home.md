@@ -1,6 +1,8 @@
 # API Documentation
 
-* [com.upokecenter.numbers.EContext](com.upokecenter.numbers.EContext.md) -  
+* [com.upokecenter.numbers.EContext](com.upokecenter.numbers.EContext.md) -
+Contains parameters for controlling the precision, rounding, and exponent
+  range of arbitrary-precision numbers.
 
 * [com.upokecenter.numbers.EDecimal](com.upokecenter.numbers.EDecimal.md) -
 Represents an arbitrary-precision decimal floating-point number.

@@ -837,7 +837,7 @@ Divides this object by a 32-bit signed integer and returns the quotient and
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - The parameter "intDivisor" is 0.
+* <code>java.lang.ArithmeticException</code> - The parameter <code>intDivisor</code> is 0.
 
 ### DivRem
     public EInteger[] DivRem​(EInteger divisor)
@@ -855,7 +855,7 @@ Divides this object by another arbitrary-precision integer and returns the
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - The parameter "divisor" is 0.
+* <code>java.lang.ArithmeticException</code> - The parameter <code>divisor</code> is 0.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.
 

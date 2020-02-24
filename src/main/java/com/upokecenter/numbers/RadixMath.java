@@ -101,24 +101,6 @@ at: http://peteroupc.github.io/
       this.thisRadix = helper.GetRadix();
     }
 
-    public T Abs(T value, EContext ctx) {
-      int flags = this.helper.GetFlags(value);
-      return ((flags & BigNumberFlags.FlagSignalingNaN) != 0) ?
-        this.SignalingNaNInvalid(value, ctx) : (
-          ((flags & BigNumberFlags.FlagQuietNaN) != 0) ?
-          this.ReturnQuietNaN(
-            value,
-            ctx) : (((flags & BigNumberFlags.FlagNegative) != 0) ?
-            this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(
-                this.helper.GetMantissa(value),
-                this.helper.GetExponent(value),
-                flags & ~BigNumberFlags.FlagNegative),
-              ctx) : this.RoundToPrecision(
-                value,
-                ctx)));
-    }
-
     public T Add(T thisValue, T other, EContext ctx) {
       if ((Object)thisValue == null) {
         throw new NullPointerException("thisValue");
@@ -1562,12 +1544,11 @@ at: http://peteroupc.github.io/
         return this.RoundToPrecision(zero, ctx);
       }
       flags ^= BigNumberFlags.FlagNegative;
-      return this.RoundToPrecision(
-          this.helper.CreateNewWithFlags(
+      T ret = this.helper.CreateNewWithFlags(
             mant,
             this.helper.GetExponent(value),
-            flags),
-          ctx);
+            flags);
+      return this.RoundToPrecision(ret, ctx);
     }
 
     public T NextMinus(T thisValue, EContext ctx) {
@@ -2751,11 +2732,14 @@ at: http://peteroupc.github.io/
           // meaning operand 2 has a greater magnitude
           return signA < 0 ? 1 : -1;
         }
-        // DebugUtility.Log("op1 digits=({0}, {1})," +
-        // "exp={2}",op1DigitBounds[0],op1DigitBounds[1],fastOp1Exp);
-        // DebugUtility.Log("op2 digits=({0}, {1})," +
-        // "exp={2}",op2DigitBounds[0],op2DigitBounds[1],fastOp2Exp);
-        FastInteger precision1 =
+        /* System.out.println(
+              "op1 digits=("+op1DigitBounds[0]+"/"+op1DigitBounds[1]+
+              ") exp="+fastOp1Exp+" bits="+
+              op1MantAbs.GetUnsignedBitLengthAsInt64());
+        System.out.println(
+              "op2 digits=("+op2DigitBounds[0]+"/"+op2DigitBounds[1]+
+              ") exp="+fastOp2Exp+ op2MantAbs.GetUnsignedBitLengthAsInt64());
+        */ FastInteger precision1 =
           op1DigitBounds[0].compareTo(op1DigitBounds[1]) == 0 ?
           op1DigitBounds[0] : helper.GetDigitLength(op1MantAbs);
         FastInteger precision2 =
@@ -2931,6 +2915,24 @@ at: http://peteroupc.github.io/
           ctxDst.setFlags(ctxDst.getFlags()|(ctxSrc.getFlags()));
         }
       }
+    }
+
+    public T Abs(T value, EContext ctx) {
+      int flags = this.helper.GetFlags(value);
+      if ((flags & BigNumberFlags.FlagSignalingNaN) != 0) {
+        return this.SignalingNaNInvalid(value, ctx);
+      } else if ((flags & BigNumberFlags.FlagQuietNaN) != 0) {
+        return this.ReturnQuietNaN(
+            value,
+            ctx);
+      }
+      T ret = ((flags & BigNumberFlags.FlagNegative) != 0) ?
+        this.helper.CreateNewWithFlags(
+                this.helper.GetMantissa(value),
+                this.helper.GetExponent(value),
+                flags & ~BigNumberFlags.FlagNegative) :
+        value;
+      return this.RoundToPrecision(ret, ctx);
     }
 
     private T AbsRaw(T value) {
@@ -3543,13 +3545,11 @@ FastInteger(2);
           int newflags = (this.helper.GetFlags(thisValue) &
               BigNumberFlags.FlagNegative) ^ (this.helper.GetFlags(divisor) &
               BigNumberFlags.FlagNegative);
-          retval =
-            this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(
+          retval = this.helper.CreateNewWithFlags(
                 EInteger.FromInt32(0),
                 dividendExp.Subtract(divisorExp),
-                newflags),
-              ctx);
+                newflags);
+          retval = this.RoundToPrecision(retval, ctx);
         }
         return retval;
       } else {
@@ -3648,7 +3648,7 @@ EInteger.FromInt32(0) : ctx.getPrecision();
            int dividendShift = (divdCount <= divsCount) ? ((divsCount -
 divdCount) + maxprec + 1) : (Math.max(0,
  (maxprec + 1)-(divdCount-divsCount))); absdivd =
-absdivd.ShiftLeft(dividendShift);
+ absdivd.ShiftLeft(dividendShift);
  EInteger[] divrem3 = absdivd.DivRem(absdivs);
            quo = divrem3[0];
            rem = divrem3[1];
@@ -3911,11 +3911,12 @@ absdivd.ShiftLeft(dividendShift);
                 thisFlags);
           }
           thisFlags = (thisFlags ^ otherFlags) & BigNumberFlags.FlagNegative;
+          result = this.helper.CreateNewWithFlags(
+                EInteger.FromInt32(0),
+                EInteger.FromInt32(0),
+                thisFlags);
           return this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(
-                EInteger.FromInt32(0),
-                EInteger.FromInt32(0),
-                thisFlags),
+              result,
               ctx);
         }
       }
@@ -5607,10 +5608,12 @@ explong;
       if (this.support == BigNumberFlags.FiniteOnly) {
         throw new ArithmeticException("Division by zero");
       }
+      int flags = BigNumberFlags.FlagInfinity |
+        (neg ? BigNumberFlags.FlagNegative : 0);
       return this.helper.CreateNewWithFlags(
         EInteger.FromInt32(0),
         EInteger.FromInt32(0),
-        BigNumberFlags.FlagInfinity | (neg ? BigNumberFlags.FlagNegative : 0));
+        flags);
     }
 
     private T SignalingNaNInvalid(T value, EContext ctx) {
