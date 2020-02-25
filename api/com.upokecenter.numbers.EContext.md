@@ -137,7 +137,9 @@ Contains parameters for controlling the precision, rounding, and exponent
 * `boolean getHasMaxPrecision()`<br>
  Gets a value indicating whether this context defines a maximum precision.
 * `EContext GetNontrapping()`<br>
- Not documented yet.
+ Returns this context if it doesn't set traps, or a context without traps and
+ with blank flags if it does, so that the resulting context does not
+ cause trap exceptions to occur.
 * `EInteger getPrecision()`<br>
  Gets the maximum length of a converted number in digits, ignoring the radix
  point and exponent.
@@ -743,14 +745,16 @@ Copies this EContext with an unlimited exponent range.
 
 ### GetNontrapping
     public EContext GetNontrapping()
-Not documented yet.
+Returns this context if it doesn't set traps, or a context without traps and
+ with blank flags if it does, so that the resulting context does not
+ cause trap exceptions to occur. This is not a general-purpose method;
+ it is intended to support custom implementations of arithmetic
+ operations.
 
 **Returns:**
 
-* Returns this context if it doesn't set traps, or a context without
- traps and with blank flags if it does. This is not a general-purpose
- method; it is intended to support custom implementations of arithmetic
- operations.
+* This context if it doesn't set traps, or a context without traps and
+ with blank flags if it does.
 
 ### TriggerTraps
     public <T> T TriggerTraps​(T result, EContext trappableContext)

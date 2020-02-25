@@ -2647,8 +2647,10 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    public static boolean TestSizedEIntegerOne(EFloat ed, boolean isExact, int
-      maxSignedBits) {
+    public static boolean TestSizedEIntegerOne(
+      EFloat ed,
+      boolean isExact,
+      int maxSignedBits) {
       if (ed == null) {
         throw new NullPointerException("ed");
       }

@@ -20,6 +20,32 @@ private DecTestUtil() {
     private static final Pattern ValueTestLine = Pattern.compile(
   "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)");
 
+    public static String[] SplitAtFast(String str, char c, int minChunks,
+  int maxChunks) {
+      int[] chunks = new int[maxChunks];
+      String[] ret;
+      int chunk = 0;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      for (int i = 0;i < str.length() && chunk < maxChunks; ++i) {
+        if (str.charAt(i) == c) {
+          chunks[chunk++] = i;
+        }
+      }
+      if (chunk >= minChunks - 1 && chunk < maxChunks) {
+        chunks[chunk++] = str.length();
+      } else if (chunk < minChunks) {
+        return null;
+      }
+      ret = new String[chunk];
+      for (int i = 0; i < chunk; ++i) {
+        int st = (i == 0) ? 0 : chunks[i - 1] + 1;
+        ret[i] = str.substring(st, (st)+(chunks[i] - st));
+      }
+      return ret;
+    }
+
     public static String[] SplitAt(String str, String delimiter) {
       if (delimiter == null) {
         throw new NullPointerException("delimiter");
@@ -272,8 +298,10 @@ private DecTestUtil() {
       return null;
     }
 
-    public static void AssertFlagsRestricted(int expected, int actual,
-  String str) {
+    public static void AssertFlagsRestricted(
+      int expected,
+      int actual,
+      String str) {
       actual &= EContext.FlagInexact | EContext.FlagUnderflow |
         EContext.FlagOverflow | EContext.FlagInvalid |
         EContext.FlagDivideByZero;
@@ -289,7 +317,7 @@ private DecTestUtil() {
 
     private static boolean Contains(String str, String sub) {
       return (sub.length() == 1) ? (str.indexOf(sub.charAt(0)) >= 0) :
-(str.indexOf(sub) >= 0);
+        (str.indexOf(sub) >= 0);
     }
 
     private static boolean StartsWith(String str, String sub) {
@@ -320,7 +348,7 @@ private DecTestUtil() {
         ctx = ctx.WithRounding(ERounding.HalfEven);
       }
       if (round.equals("h>") ||
-         round.equals("=^")) {
+        round.equals("=^")) {
         ctx = ctx.WithRounding(ERounding.HalfUp);
       }
       if (round.equals("h<")) {
@@ -331,7 +359,7 @@ private DecTestUtil() {
 
     private static String ConvertOp(String s) {
       return s.equals("S") ? "sNaN" :
-((s.equals("Q") || s.equals("#")) ? "NaN" : s);
+        ((s.equals("Q") || s.equals("#")) ? "NaN" : s);
     }
 
     private interface IExtendedNumber extends Comparable<IExtendedNumber> {
@@ -441,9 +469,9 @@ private DecTestUtil() {
         IExtendedNumber c,
         EContext ctx) {
         return Create(this.ed.MultiplyAndSubtract(
-            ToValue(b),
-            ToValue(c),
-            ctx));
+              ToValue(b),
+              ToValue(c),
+              ctx));
       }
 
       public boolean IsQuietNaN() {
@@ -696,7 +724,7 @@ private DecTestUtil() {
           if (exponent == 2047) {
             return (mantissaNonzero == 0) ? Create(neg ?
                 EFloat.NegativeInfinity : EFloat.PositiveInfinity) :
-(((mantissa & 0x00080000) != 0) ? Create(EFloat.NaN) :
+              (((mantissa & 0x00080000) != 0) ? Create(EFloat.NaN) :
 
                 Create(EFloat.SignalingNaN));
           }
@@ -737,7 +765,7 @@ private DecTestUtil() {
           if (exponent == 0x7fff) {
             return (mantissaNonzero == 0) ? Create(neg ?
                 EFloat.NegativeInfinity : EFloat.PositiveInfinity) :
-(((mantissa & 0x00008000) != 0) ? Create(EFloat.NaN) :
+              (((mantissa & 0x00008000) != 0) ? Create(EFloat.NaN) :
 
                 Create(EFloat.SignalingNaN));
           }
@@ -860,7 +888,7 @@ private DecTestUtil() {
             EInteger.FromInt64(2),
             ToValue(this).getExponent());
         return ToValue(this).Subtract(ToValue(bn)).Abs().compareTo(
-  ulpdiff) <= 0;
+            ulpdiff) <= 0;
       }
 
       public void ComparePrint(IExtendedNumber bn) {
@@ -909,13 +937,14 @@ private DecTestUtil() {
       }
     }
 
-    static int ParseLineInput(String ln, Object sw) {
+    static int ParseLineInput(String ln) {
       if (ln.length() == 0) {
-{ return 0;
-} }
+        { return 0;
+        }
+      }
       int ix = ln.indexOf(' ');
       // NOTE: ix < 2 includes cases where space is not found
-      if (ix < 2 || (ln.charAt(ix-1) != 'd' && ln.charAt(ix-1)!='s' && ln.charAt(ix-1)!='q')) {
+      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix-1)!='s' && ln.charAt(ix-1)!='q')) {
         return 0;
       }
       String[] chunks = SplitAtSpaceRuns(ln);
@@ -943,10 +972,10 @@ private DecTestUtil() {
         return 0;
       }
       String round = chunks[1];
-if (round.length() != 1) {
-         { return 0;
+      if (round.length() != 1) {
+        { return 0;
+        }
       }
-}
       String flags = chunks[3];
       String compareOp = chunks[2];
       // sw.Start();
@@ -1277,13 +1306,13 @@ if (round.length() != 1) {
       return 0;
     }
 
-    static int ParseLine(String ln, Object sw) {
-        return ParseLine(ln, sw, false);
+    static int ParseLine(String ln) {
+      return ParseLine(ln, false);
     }
 
-    static int ParseLine(String ln, Object sw, boolean exactResultCheck) {
-      String[] chunks = SplitAt(ln, " ");
-      if (chunks.length < 4) {
+    static int ParseLine(String ln, boolean exactResultCheck) {
+      String[] chunks = SplitAtFast(ln, (char)0x20, 4, 8);
+      if (chunks == null) {
         return 0;
       }
       String type = chunks[0];
@@ -1340,14 +1369,12 @@ if (round.length() != 1) {
       if (Contains(traps, "u") || Contains(traps, "o")) {
         // skip tests that trap underflow or overflow,
         // the results there may be wrong
-/*
-try {
-  throw new IllegalStateException();
- } catch (IllegalStateException ex) {
-  System.out.print(ln+"\n"+ex);
-}
-*/
-        return 0;
+        /* try {
+          throw new IllegalStateException();
+         } catch (IllegalStateException ex) {
+          System.out.print(ln+"\n"+ex);
+        }
+        */ return 0;
       }
       String op1str = ConvertOp(chunks[2 + offset]);
       String op2str = ConvertOp(chunks[3 + offset]);
@@ -1446,8 +1473,7 @@ try {
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-EContext.FlagInvalid)) ==
-            0) {
+                EContext.FlagInvalid)) == 0) {
             d3 = op1.Subtract(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1465,8 +1491,7 @@ EContext.FlagInvalid)) ==
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-EContext.FlagInvalid)) ==
-            0) {
+                EContext.FlagInvalid)) == 0) {
             d3 = op1.Multiply(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1484,8 +1509,7 @@ EContext.FlagInvalid)) ==
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-EContext.FlagInvalid)) ==
-            0) {
+                EContext.FlagInvalid)) == 0) {
             d3 = op1.Divide(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1504,7 +1528,7 @@ EContext.FlagInvalid)) ==
         }
         if (binaryFP && (
             (op1.IsQuietNaN() && (op2.IsSignalingNaN() ||
-op3.IsSignalingNaN())) ||
+                op3.IsSignalingNaN())) ||
             (op2.IsQuietNaN() && op3.IsSignalingNaN()))) {
           // Don't check flags for binary test cases involving quiet
           // NaN followed by signaling NaN, as the semantics for
@@ -1512,8 +1536,7 @@ op3.IsSignalingNaN())) ||
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-EContext.FlagInvalid)) ==
-            0) {
+                EContext.FlagInvalid)) == 0) {
             d3 = op1.MultiplyAndAdd(op2, op3, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1531,8 +1554,7 @@ EContext.FlagInvalid)) ==
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-EContext.FlagInvalid)) ==
-            0) {
+                EContext.FlagInvalid)) == 0) {
             d3 = op1.MultiplyAndSubtract(op2, op3, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1568,9 +1590,9 @@ EContext.FlagInvalid)) ==
 
     private static String TrimQuotes(String str) {
       return (str == null || str.length() == 0 || (
-         str.charAt(0) != '\'' && str.charAt(0) != '\"' && str.charAt(str.length() - 1) != '\'' &&
-str.charAt(str.length() - 1) != '\"')) ? str :
-   ValueQuotes.matcher(str).replaceAll("");
+            str.charAt(0) != '\'' && str.charAt(0) != '\"' && str.charAt(str.length() - 1) != '\'' &&
+            str.charAt(str.length() - 1) != '\"')) ? str :
+        ValueQuotes.matcher(str).replaceAll("");
     }
 
     public static void ParseDecTest(
@@ -1584,10 +1606,10 @@ str.charAt(str.length() - 1) != '\"')) ? str :
       if (context == null) {
         throw new NullPointerException("context");
       }
-      if (ParseLineInput(ln, null) != 0) {
+      if (ParseLineInput(ln) != 0) {
         return;
       }
-      if (ParseLine(ln, null) != 0) {
+      if (ParseLine(ln) != 0) {
         return;
       }
       if (ln.contains("-- ")) {
@@ -1653,22 +1675,22 @@ str.charAt(str.length() - 1) != '\"')) ? str :
         if (name.equals("S")) {
           return;
         }
-      if (name.equals("Q")) {
+        if (name.equals("Q")) {
           return;
         }
 
-      if (StartsWith(name, "d32")) {
-        return;
-      }
-      if (StartsWith(name, "d64")) {
-        return;
-      }
-      if (StartsWith(name, "b32")) {
-        return;
-      }
-      if (StartsWith(name, "d128")) {
-        return;
-      }
+        if (StartsWith(name, "d32")) {
+          return;
+        }
+        if (StartsWith(name, "d64")) {
+          return;
+        }
+        if (StartsWith(name, "b32")) {
+          return;
+        }
+        if (StartsWith(name, "d128")) {
+          return;
+        }
         // Skip some tests that assume a maximum
         // supported precision of 999999999
         if (name.equals("pow250") ||
@@ -1805,16 +1827,16 @@ str.charAt(str.length() - 1) != '\"')) ? str :
           !op.equals("toeng") &&
           !op.equals("class") &&
           !op.equals("format")) {
-try {
-          d1 = ((input1) == null || (input1).length() == 0) ? EDecimal.Zero :
-            EDecimal.FromString(input1);
-          d2 = ((input2) == null || (input2).length() == 0) ? null :
-            EDecimal.FromString(input2);
-          d2a = ((input3) == null || (input3).length() == 0) ? null :
-            EDecimal.FromString(input3);
-} catch (NumberFormatException ex) {
-throw new IllegalStateException(ln, ex);
-}
+          try {
+            d1 = ((input1) == null || (input1).length() == 0) ? EDecimal.Zero :
+              EDecimal.FromString(input1);
+            d2 = ((input2) == null || (input2).length() == 0) ? null :
+              EDecimal.FromString(input2);
+            d2a = ((input3) == null || (input3).length() == 0) ? null :
+              EDecimal.FromString(input3);
+          } catch (NumberFormatException ex) {
+            throw new IllegalStateException(ln, ex);
+          }
         }
         EDecimal d3 = null;
         if (op.equals("fma") && !extended) {

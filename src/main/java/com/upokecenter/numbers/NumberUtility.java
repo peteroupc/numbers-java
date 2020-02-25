@@ -163,7 +163,7 @@ private NumberUtility() {
           for (int i = 0; i < this.size; ++i) {
             if (this.inputs[i].compareTo(bi) <= 0 && (minValue == null ||
                 this.inputs[i].compareTo(minValue) >= 0)) {
-              // DebugUtility.Log("Have cached power (" + inputs[i] + "," + bi + ") ");
+              // System.out.println("Have cached power (" + inputs[i] + "," + bi + ") ");
               ret = new EInteger[2];
               ret[0] = this.inputs[i];
               ret[1] = this.outputs[i];
@@ -182,7 +182,7 @@ private NumberUtility() {
             if (this.inputsInts[i] >= 0 &&
               this.inputsInts[i] <= precision && (integerMinValue == -1 ||
                 this.inputsInts[i] >= integerMinValue)) {
-              // DebugUtility.Log("Have cached power (" + inputs[i] + "," + bi + ") ");
+              // System.out.println("Have cached power (" + inputs[i] + "," + bi + ") ");
               ret = new EInteger[2];
               ret[0] = this.inputs[i];
               ret[1] = this.outputs[i];
@@ -233,10 +233,18 @@ private NumberUtility() {
         return null;
       }
 
-      public EInteger GetCachedPowerInt(int bi) {
+      public EInteger GetCachedPowerInt(int ibi) {
         synchronized (this.outputs) {
+          if (ibi > 0 && this.size < 64) {
+            for (int i = 0; i < this.size; ++i) {
+              if (this.inputsInts[i] == ibi) {
+                return this.outputs[i];
+              }
+            }
+            return null;
+          }
           for (int i = 0; i < this.size; ++i) {
-            if (this.inputsInts[i] >= 0 && this.inputsInts[i] == bi) {
+            if (this.inputsInts[i] >= 0 && this.inputsInts[i] == ibi) {
               if (i != 0) {
                 EInteger tmp;
                 // Move to head of cache if it isn't already
@@ -355,7 +363,7 @@ private NumberUtility() {
       epower) {
       return epower.CanFitInInt32() ? MultiplyByPowerOfFive(v,
           epower.ToInt32Checked()) : v.Multiply(FindPowerOfFiveFromBig(
-  epower));
+            epower));
     }
     static EInteger FindPowerOfFiveFromBig(EInteger diff) {
       int sign = diff.signum();
@@ -376,7 +384,7 @@ private NumberUtility() {
           if (otherPower == null) {
             // NOTE: Assumes powprec is 2 or greater and is a power of 2
             EInteger prevPower = FindPowerOfFiveFromBig(epowprec.ShiftRight(
-  1));
+                  1));
             otherPower = prevPower.Multiply(prevPower);
             ValuePowerOfFiveCache.AddPower(epowprec, otherPower);
           }
@@ -423,7 +431,7 @@ private NumberUtility() {
         return bigpow;
       }
       EInteger origPrecision = EInteger.FromInt32(precision);
-      // DebugUtility.Log("Getting power of five "+precision);
+      // System.out.println("Getting power of five "+precision);
       if (precision <= 54) {
         if ((precision & 1) == 0) {
           ret = ValueBigIntPowersOfFive[(int)(precision >> 1)];
@@ -480,6 +488,7 @@ private NumberUtility() {
       if (bigpow != null) {
         return bigpow;
       }
+      // System.out.println("power="+precision);
       if (precision <= 27) {
         ret = ValueBigIntPowersOfFive[precision];
         ret = ret.ShiftLeft(precision);
@@ -507,26 +516,26 @@ private NumberUtility() {
       }
       int wcextra = 64;
       if ((mantlong >> 32) == 0) {
-              mantlong <<= 32;
-              wcextra -= 32;
-            }
-            if ((mantlong >> 48) == 0) {
-              mantlong <<= 16;
-              wcextra -= 16;
-            }
-            if ((mantlong >> 56) == 0) {
-              mantlong <<= 8;
-              wcextra -= 8;
-            }
-            if ((mantlong >> 60) == 0) {
-              mantlong <<= 4;
-              wcextra -= 4;
-            }
-            if ((mantlong >> 62) == 0) {
-              mantlong <<= 2;
-              wcextra -= 2;
-            }
-            return ((mantlong >> 63) == 0) ? wcextra - 1 : wcextra;
+        mantlong <<= 32;
+        wcextra -= 32;
+      }
+      if ((mantlong >> 48) == 0) {
+        mantlong <<= 16;
+        wcextra -= 16;
+      }
+      if ((mantlong >> 56) == 0) {
+        mantlong <<= 8;
+        wcextra -= 8;
+      }
+      if ((mantlong >> 60) == 0) {
+        mantlong <<= 4;
+        wcextra -= 4;
+      }
+      if ((mantlong >> 62) == 0) {
+        mantlong <<= 2;
+        wcextra -= 2;
+      }
+      return ((mantlong >> 63) == 0) ? wcextra - 1 : wcextra;
     }
 
     public static <THelper> THelper PreRound(
@@ -669,30 +678,30 @@ private NumberUtility() {
         long lowbit = bigmant.GetLowBitAsInt64();
         if (lowbit != Long.MAX_VALUE) {
           if (precision != null && digits.compareTo(precision) >= 0) {
-          // Limit by digits minus precision
-          EInteger tmp = digits.AsEInteger().Subtract(precision.AsEInteger());
-          if (tmp.compareTo(EInteger.FromInt64(lowbit)) < 0) {
-            lowbit = tmp.ToInt64Checked();
+            // Limit by digits minus precision
+            EInteger tmp = digits.AsEInteger().Subtract(precision.AsEInteger());
+            if (tmp.compareTo(EInteger.FromInt64(lowbit)) < 0) {
+              lowbit = tmp.ToInt64Checked();
+            }
           }
-        }
-        if (idealExp != null && exponentMutable.compareTo(idealExp) <= 0) {
-          // Limit by idealExp minus exponentMutable
-          EInteger tmp =
-idealExp.AsEInteger().Subtract(exponentMutable.AsEInteger());
-          if (tmp.compareTo(EInteger.FromInt64(lowbit)) < 0) {
-            lowbit = tmp.ToInt64Checked();
+          if (idealExp != null && exponentMutable.compareTo(idealExp) <= 0) {
+            // Limit by idealExp minus exponentMutable
+            EInteger tmp =
+              idealExp.AsEInteger().Subtract(exponentMutable.AsEInteger());
+            if (tmp.compareTo(EInteger.FromInt64(lowbit)) < 0) {
+              lowbit = tmp.ToInt64Checked();
+            }
           }
-        }
-        bigmant = (lowbit <= Integer.MAX_VALUE) ?
-bigmant.ShiftRight((int)lowbit) :
-bigmant.ShiftRight(EInteger.FromInt64(lowbit));
-if (digits != null) {
-  digits.SubtractInt64(lowbit);
-}
-if (exponentMutable != null) {
-  exponentMutable.AddInt64(lowbit);
-}
-        return bigmant;
+          bigmant = (lowbit <= Integer.MAX_VALUE) ?
+            bigmant.ShiftRight((int)lowbit) :
+            bigmant.ShiftRight(EInteger.FromInt64(lowbit));
+          if (digits != null) {
+            digits.SubtractInt64(lowbit);
+          }
+          if (exponentMutable != null) {
+            exponentMutable.AddInt64(lowbit);
+          }
+          return bigmant;
         }
       }
       EInteger bigradix = EInteger.FromInt32(radix);

@@ -949,11 +949,13 @@ this.simplified +
     }
 
   /**
-   * Not documented yet.
-   * @return Returns this context if it doesn't set traps, or a context without
-   * traps and with blank flags if it does. This is not a general-purpose
-   * method; it is intended to support custom implementations of arithmetic
+   * Returns this context if it doesn't set traps, or a context without traps and
+   * with blank flags if it does, so that the resulting context does not
+   * cause trap exceptions to occur. This is not a general-purpose method;
+   * it is intended to support custom implementations of arithmetic
    * operations.
+   * @return This context if it doesn't set traps, or a context without traps and
+   * with blank flags if it does.
    */
     public EContext GetNontrapping() {
        return (this.getTraps() == 0) ? this : this.WithTraps(0).WithBlankFlags();

@@ -46,7 +46,7 @@ at: http://peteroupc.github.io/
       }
       if (preShift != null && preShift.signum() > 0) {
         this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
-        // DebugUtility.Log("bits=" + bits + " pre=" + preShift + " known=" +
+        // System.out.println("bits=" + bits + " pre=" + preShift + " known=" +
         // (//kbl) + " [" + this.shiftedBigInt + "]");
         if (this.knownBitLength.compareTo(bits) <= 0) {
           // Known digit length is already small enough
@@ -58,7 +58,7 @@ at: http://peteroupc.github.io/
         } else {
           FastInteger bitDiff = this.knownBitLength.Copy()
             .Subtract(bits);
-          // DebugUtility.Log("bitDiff=" + bitDiff);
+          // System.out.println("bitDiff=" + bitDiff);
           int cmp = bitDiff.compareTo(preShift);
           if (cmp <= 0) {
             // NOTE: For BitShiftAccumulator, truncating and shifting
@@ -104,6 +104,21 @@ at: http://peteroupc.github.io/
         return this.isSmall ? new FastInteger(this.shiftedSmall) :
           FastInteger.FromBig(this.shiftedBigInt);
       }
+
+    public int ShiftedIntMod(int mod) {
+      /*
+
+      */ switch (mod) {
+        case 1:
+          return 0;
+        case 2:
+          return this.isSmall ? (this.shiftedSmall & 1) :
+            (this.shiftedBigInt.isEven() ? 0 : 1);
+        default:
+          return this.isSmall ? (this.shiftedSmall & 1) :
+            this.shiftedBigInt.Mod(mod).ToInt32Checked();
+      }
+    }
 
     private FastInteger discardedBitCount;
 
