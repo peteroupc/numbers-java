@@ -3648,8 +3648,8 @@ at: http://peteroupc.github.io/
             int divdCount = (int)absdivd.GetUnsignedBitLengthAsInt64();
             int divsCount = (int)mantissaDivisor.GetUnsignedBitLengthAsInt64();
             int dividendShift = (divdCount <= divsCount) ? ((divsCount -
-                  divdCount) + maxprec + 1) : (Math.max(0,
-                  (maxprec + 1) - (divdCount - divsCount)));
+                  divdCount) + maxprec + 1) : Math.max(0,
+                  (maxprec + 1) - (divdCount - divsCount));
             absdivd = absdivd.ShiftLeft(dividendShift);
             EInteger[] divrem3 = absdivd.DivRem(absdivs);
             quo = divrem3[0];
@@ -4958,8 +4958,9 @@ at: http://peteroupc.github.io/
                 intDiscardedBits += intExpDiff;
               }
               /* System.out.println("mantlong now {0}, ld={1}, od={2} [ed={3},
-
-  flags={4}]",EInteger.FromInt64(mantlong).ToRadixString(2),lastDiscarded,olderDiscarded,expdiff,flags);
+                 flags={4}]",EInteger.FromInt64(mantlong).ToRadixString(2),
+                 lastDiscarded,
+                 olderDiscarded, expdiff, flags);
               */
               boolean nonZeroDiscardedDigits = (lastDiscarded | olderDiscarded) !=
                 0;
@@ -5486,9 +5487,7 @@ at: http://peteroupc.github.io/
     // the need to compute half of toCompareWith in many cases.
     // Assumes both inputs are non-negative.
     private static int CompareToHalf(EInteger bigLeft, EInteger toCompareWith) {
-      /*
-
-      */ long a = bigLeft.GetUnsignedBitLengthAsInt64();
+      long a = bigLeft.GetUnsignedBitLengthAsInt64();
       long b = toCompareWith.GetUnsignedBitLengthAsInt64();
       if (a != Long.MAX_VALUE && b != Long.MAX_VALUE) {
         if (b - 1 > a) {
@@ -5499,7 +5498,7 @@ at: http://peteroupc.github.io/
         }
       }
       int cmp = bigLeft.compareTo(toCompareWith.ShiftRight(1));
-      return (cmp == 0 && !toCompareWith.isEven()) ? (cmp = -1) : cmp;
+      return (cmp == 0 && !toCompareWith.isEven()) ? -1 : cmp;
     }
 
     private T RoundToScale(

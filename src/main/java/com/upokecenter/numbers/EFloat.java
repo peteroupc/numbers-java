@@ -74,42 +74,8 @@ at: http://peteroupc.github.io/
    * aspects of such communications to derive keying material or cleartext
    * indirectly.</li></ul> <p>Applications should instead use dedicated
    * security libraries to handle big numbers in security-sensitive
-   * algorithms.</p> <p><b>Reproducibility note</b></p> <p>Some
-   * applications, such as simulations, care about results that are
-   * reproducible, bit for bit, across computers and across runs of the
-   * application. When it comes to floating-point numbers, results are
-   * often not reproducible because of differences in how floating-point
-   * number operations are implemented, including in terms of accuracy,
-   * rounding, and order of operations. EDecimal and EFloat are also
-   * floating-point number classes, but for these classes, many of these
-   * differences can be reduced by choosing one version of this library and
-   * sticking to it, and also by passing an EContext explicitly to this
-   * class's arithmetic methods (EContext specifies rules for precision and
-   * rounding, among other things). Also, the EDecimal and EFloat classes
-   *  avoid the use of "native" floating-point data types, where most of
-   * these differences can occur (except for methods that convert to or
-   * from <code>float</code>, <code>double</code>, or <code>System.Decimal</code>). In
-   * general, the operations defined in the General Decimal Arithmetic
-   * Specification require delivering the correctly rounded result, with
-   * the exception of square root, logarithm, exponential, and power. In
-   * addition, the pi constant generator in this class has not been
-   * verified to be correctly rounded in all cases.</p> <p>As for the
-   * ToDouble, ToSingle, FromDouble, and FromSingle methods, note that some
-   * implementations of Java and.NET may or may not support preserving the
-   * value of subnormal numbers (numbers with the lowest possible exponent,
-   * but are not zero) or the payloads held in a not-a-number (NaN) value
-   * of <code>float</code> or <code>double</code> ; thus these methods should not be
-   * considered reproducible across computers.</p> <p>EContext allows
-   * arithmetic operations in this class to return results rounded to a
-   * given precision and exponent range. Note, however, that by limiting
-   * the precision of floating-point numbers (including <code>EDecimal</code> and
-   * <code>EFloat</code>) in this way, operations such as addition and
-   * multiplication on three or more numbers can be <i>non-associative</i>,
-   * meaning the result can change depending on the order in which those
-   * numbers are added or multiplied. This property means that if an
-   * algorithm does not ensure such numbers are added or multiplied in the
-   * same order every time, its results may not be reproducible across
-   * computers or across runs of the application.</p>
+   * algorithms.</p> <p><b>Reproducibility note</b></p> <p>See the
+   * reproducibility note in the EDecimal class's documentation.</p>
    */
 
   public final class EFloat implements Comparable<EFloat> {
@@ -908,7 +874,7 @@ System.out.println("div " + ef1 + "/" + ef2 + " -> " + (efret));
       }
       EInteger adjExpUpperBound = exp.Add(decimalPrec).Subtract(1);
       EInteger adjExpLowerBound = exp;
-      // DebugUtility.Log("exp=" + adjExpLowerBound + "~" + (adjExpUpperBound));
+      // System.out.println("exp=" + adjExpLowerBound + "~" + (adjExpUpperBound));
       if (adjExpUpperBound.compareTo(-326) < 0) {
         return SignalUnderflow(ctx, negative, zeroMantissa);
       } else if (adjExpLowerBound.compareTo(309) > 0) {
@@ -944,12 +910,12 @@ System.out.println("div " + ef1 + "/" + ef2 + " -> " + (efret));
       if (negative) {
         mant = mant.Negate();
       }
-      // DebugUtility.Log("c " + ((mant.signum()<0 && negative) || (mant.signum()>= 0
+      // System.out.println("c " + ((mant.signum()<0 && negative) || (mant.signum()>= 0
       // && !negative)) + " mant=" + (mant));
       EInteger absexp = exp.Abs();
       ef1 = EFloat.Create(mant, EInteger.FromInt32(0));
       ef2 = EFloat.FromEInteger(NumberUtility.FindPowerOfTenFromBig(absexp));
-      // DebugUtility.Log("c ef1=" + ef1 + " ef2=" + (ef2));
+      // System.out.println("c ef1=" + ef1 + " ef2=" + (ef2));
       if (exp.signum() < 0) {
         return ef1.Divide(ef2, ctx);
       } else {
@@ -3460,7 +3426,7 @@ System.out.println("div " + ef1 + "/" + ef2 + " -> " + (efret));
       } else if (longmant == 0) {
         return 0.0;
       }
-      // DebugUtility.Log("todouble -->" + this);
+      // System.out.println("todouble -->" + this);
       long longBitLength = NumberUtility.BitLength(longmant);
       int expo = thisValue.exponent.ToInt32Checked();
       boolean subnormal = false;
@@ -3468,7 +3434,7 @@ System.out.println("div " + ef1 + "/" + ef2 + " -> " + (efret));
         int diff = 53 - (int)longBitLength;
         expo -= diff;
         if (expo < -1074) {
-          // DebugUtility.Log("Diff changed from " + diff + " to " + (diff -
+          // System.out.println("Diff changed from " + diff + " to " + (diff -
           // (-1074 - expo)));
           diff -= -1074 - expo;
           expo = -1074;
@@ -3747,7 +3713,7 @@ System.out.println("div " + ef1 + "/" + ef2 + " -> " + (efret));
       } else if (intmant == 0) {
         return 0.0f;
       }
-      // DebugUtility.Log("-->" + (//
+      // System.out.println("-->" + (//
       // thisValue.unsignedMantissa.ToRadixString(2)) + ", " + (//
       // thisValue.exponent));
       int intBitLength = NumberUtility.BitLength(intmant);
@@ -3757,7 +3723,7 @@ System.out.println("div " + ef1 + "/" + ef2 + " -> " + (efret));
         int diff = 24 - intBitLength;
         expo -= diff;
         if (expo < -149) {
-          // DebugUtility.Log("Diff changed from " + diff + " to " + (diff -
+          // System.out.println("Diff changed from " + diff + " to " + (diff -
           // (-149 - expo)));
           diff -= -149 - expo;
           expo = -149;
