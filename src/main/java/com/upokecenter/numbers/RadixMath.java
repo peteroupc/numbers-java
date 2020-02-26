@@ -1128,11 +1128,13 @@ at: http://peteroupc.github.io/
               ctxCopy);
         } else if (cmpOne < 0) {
           // Less than 1
-          FastInteger error = new FastInteger(10);
+          T quarter = this.Divide(one, this.helper.ValueOf(4), ctxCopy);
+          FastInteger error;
+          error = (this.compareTo(thisValue, quarter) < 0) ? (new
+FastInteger(20)) : (new FastInteger(10));
           EInteger bigError = error.AsEInteger();
           ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
             .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
-          T quarter = this.Divide(one, this.helper.ValueOf(4), ctxCopy);
           T threeQuarters = this.Multiply(
               quarter,
               this.helper.ValueOf(3),
@@ -1146,12 +1148,14 @@ at: http://peteroupc.github.io/
               thisValue = this.SquareRoot(
                   thisValue,
                   ctxdiv.WithUnlimitedExponents());
+              // System.out.println("--> " +thisValue);
               roots.Increment();
             }
             for (int i = 0; i < 6; ++i) {
               thisValue = this.SquareRoot(
                   thisValue,
                   ctxdiv.WithUnlimitedExponents());
+              // System.out.println("--> " +thisValue);
               roots.Increment();
             }
             // System.out.println("LnInternal AA " +(thisValue as
@@ -1202,7 +1206,9 @@ at: http://peteroupc.github.io/
             FastInteger roots = new FastInteger(0);
             FastInteger error;
             EInteger bigError;
-            error = new FastInteger(10);
+            error = (this.compareTo(thisValue,
+  this.helper.ValueOf(Integer.MAX_VALUE)) >= 0) ? (new FastInteger(16)) : (new
+FastInteger(10));
             bigError = error.AsEInteger();
             ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
               .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
@@ -2502,7 +2508,7 @@ at: http://peteroupc.github.io/
         inexact = true;
       }
       EInteger oldexp = currentExp;
-      currentExp = currentExp.Divide(EInteger.FromInt64(2));
+      currentExp = currentExp.ShiftRight(1);
       if (oldexp.signum() < 0 && !oldexp.isEven()) {
         // Round towards negative infinity; BigInteger's
         // division operation rounds towards zero

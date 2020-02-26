@@ -20,15 +20,18 @@ private DecTestUtil() {
     private static final Pattern ValueTestLine = Pattern.compile(
   "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)");
 
-    public static String[] SplitAtFast(String str, char c, int minChunks,
-  int maxChunks) {
+    public static String[] SplitAtFast(
+      String str,
+      char c,
+      int minChunks,
+      int maxChunks) {
       int[] chunks = new int[maxChunks];
       String[] ret;
       int chunk = 0;
       if (str == null) {
         throw new NullPointerException("str");
       }
-      for (int i = 0;i < str.length() && chunk < maxChunks; ++i) {
+      for (int i = 0; i < str.length() && chunk < maxChunks; ++i) {
         if (str.charAt(i) == c) {
           chunks[chunk++] = i;
         }
@@ -944,7 +947,7 @@ private DecTestUtil() {
       }
       int ix = ln.indexOf(' ');
       // NOTE: ix < 2 includes cases where space is not found
-      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix-1)!='s' && ln.charAt(ix-1)!='q')) {
+      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix -1) != 's' && ln.charAt(ix- 1)!='q')) {
         return 0;
       }
       String[] chunks = SplitAtSpaceRuns(ln);

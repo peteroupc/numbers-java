@@ -70,8 +70,7 @@ import com.upokecenter.numbers.*;
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite() || ef.signum() == 0) {
-        { return false;
-        }
+        return false;
       }
       ef = ef.Abs();
       int cmp;
@@ -840,6 +839,42 @@ import com.upokecenter.numbers.*;
       if (!(EFloat.One.Log(EContext.Unlimited).IsNaN())) {
  Assert.fail();
  }
+    {
+      EFloat efa = EFloat.Create(
+  EInteger.FromString("7692406748247399"),
+  EInteger.FromString("-465")).Log(EContext.Binary64);
+EFloat efb = EFloat.Create(
+  EInteger.FromString("-5026693231795637"),
+  EInteger.FromString("-44"));
+Assert.assertEquals(efb, efa);
+}
+{
+EFloat efa = EFloat.Create(
+  EInteger.FromString("5591241150794165"),
+  EInteger.FromString("-944")).Log(EContext.Binary64);
+EFloat efb = EFloat.Create(
+  EInteger.FromString("-339788104073483"),
+  EInteger.FromString("-39"));
+Assert.assertEquals(efb, efa);
+}
+{
+EFloat efa = EFloat.Create(
+  EInteger.FromString("5309985732671123"),
+  EInteger.FromString("276")).Log(EContext.Binary64);
+EFloat efb = EFloat.Create(
+  EInteger.FromString("1000630292553943"),
+  EInteger.FromString("-42"));
+Assert.assertEquals(efb, efa);
+}
+{
+EFloat efa = EFloat.Create(
+  EInteger.FromString("8242379924809039"),
+  EInteger.FromString("-234")).Log(EContext.Binary64);
+EFloat efb = EFloat.Create(
+  EInteger.FromString("-276083795723785"),
+  EInteger.FromString("-41"));
+Assert.assertEquals(efb, efa);
+}
     }
     @Test
     public void TestLog10() {
