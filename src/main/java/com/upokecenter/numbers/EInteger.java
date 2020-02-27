@@ -726,9 +726,8 @@ at: http://peteroupc.github.io/
       }
       long lsize = ((long)(endIndex - index) * 100 / DigitsInWord[radix]) + 1;
       lsize = Math.min(lsize, Integer.MAX_VALUE);
-      lsize = Math.max(lsize, 4);
+      lsize = Math.max(lsize, 5);
       short[] bigint = new short[(int)lsize];
-      int maxShortPlusOneMinusRadix = 65536 - 10;
       if (radix == 10) {
          long rv = 0;
          int ei = endIndex - index <= 18 ? endIndex : index + 18;
@@ -808,6 +807,7 @@ at: http://peteroupc.github.io/
       } else {
       boolean haveSmallInt = true;
       int maxSafeInt = ValueMaxSafeInts[radix - 2];
+      int maxShortPlusOneMinusRadix = 65536 - radix;
       int smallInt = 0;
       for (int i = index; i < endIndex; ++i) {
         char c = str.charAt(i);
@@ -2416,6 +2416,73 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
         long v = bigintSecond.ToInt64Unchecked();
         return GcdLong(u, v);
       } else {
+boolean bigger = thisValue.compareTo(bigintSecond) >= 0;
+if (!bigger) {
+  EInteger ta = thisValue;
+  thisValue = bigintSecond;
+  bigintSecond = ta;
+}
+EInteger eia = thisValue;
+EInteger eib = bigintSecond;
+        // System.out.println("wc="+eia.wordCount+"/"+eib.wordCount);
+        while (eib.wordCount > 3) {
+// Lehmer's algorithm
+EInteger eiaa, eibb, eicc, eidd;
+EInteger eish = eia.GetUnsignedBitLengthAsEInteger().Subtract(48);
+EInteger eiee = eia.ShiftRight(eish);
+EInteger eiff = eib.ShiftRight(eish);
+eiaa = eidd = EInteger.FromInt32(1);
+eibb = eicc = EInteger.FromInt32(0);
+while (true) {
+  EInteger eifc = eiff.Add(eicc);
+  EInteger eifd = eiff.Add(eidd);
+  if (eifc.isZero() || eifd.isZero()) {
+    EInteger ta = eibb.isZero() ? eib :
+       eia.Multiply(eiaa).Add(eib.Multiply(eibb));
+    EInteger tb = eibb.isZero() ? eia.Remainder(eib) :
+       eia.Multiply(eicc).Add(eib.Multiply(eidd));
+    eia = ta;
+    eib = tb;
+    // System.out.println("z tawc="+eia.wordCount+"/"+eib.wordCount);
+    break;
+  }
+  EInteger eiq = eiee.Add(eiaa).Divide(eifc);
+  EInteger eiq2 = eiee.Add(eibb).Divide(eifd);
+  if (!eiq.equals(eiq2)) {
+    EInteger ta = eibb.isZero() ? eib :
+       eia.Multiply(eiaa).Add(eib.Multiply(eibb));
+    EInteger tb = eibb.isZero() ? eia.Remainder(eib) :
+       eia.Multiply(eicc).Add(eib.Multiply(eidd));
+    eia = ta;
+    eib = tb;
+// System.out.println("q tawc="+eia.wordCount+"/"+eib.wordCount);
+    break;
+  } else {
+    EInteger t = eiff;
+    eiff = eiee.Subtract(eiff.Multiply(eiq));
+    eiee = t;
+    t = eicc;
+    eicc = eiaa.Subtract(eicc.Multiply(eiq));
+    eiaa = t;
+    t = eidd;
+    eidd = eibb.Subtract(eidd.Multiply(eiq));
+    eibb = t;
+  }
+}
+        }
+if (eib.isZero()) {
+{ return eia;
+} }
+while (!eib.isZero()) {
+  if (eia.wordCount <= 3 && eib.wordCount <= 3) {
+    return GcdLong(eia.ToInt64Checked(), eib.ToInt64Checked());
+  }
+  EInteger ta = eib;
+  eib = eia.Remainder(eib);
+  eia = ta;
+}
+return eia;
+/*
         // Big integer version of code above
         int bshl = 0;
         EInteger ebshl = null;
@@ -2498,6 +2565,7 @@ EInteger(quoCount, quotientreg, this.negative ^ divisor.negative);
               ebshl);
         }
         return valueBuVar;
+*/
       }
     }
 

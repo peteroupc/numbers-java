@@ -104,16 +104,14 @@ FastInteger(0)) : this.discardedDigitCount;
       }
 
     public int ShiftedIntMod(int mod) {
-      /*
-
-      */ switch (mod) {
+      switch (mod) {
         case 1:
           return 0;
         case 2:
           return this.isSmall ? (this.shiftedSmall & 1) :
             (this.shiftedBigInt.isEven() ? 0 : 1);
         default:
-          return this.isSmall ? (this.shiftedSmall & 1) :
+          return this.isSmall ? (this.shiftedSmall % mod) :
             this.shiftedBigInt.Mod(mod).ToInt32Checked();
       }
     }

@@ -106,16 +106,18 @@ at: http://peteroupc.github.io/
       }
 
     public int ShiftedIntMod(int mod) {
-      /*
-
-      */ switch (mod) {
+      if (mod < 1) {
+        throw new IllegalArgumentException("mod (" + mod +
+           ") is not greater or equal to 1");
+      }
+      switch (mod) {
         case 1:
           return 0;
         case 2:
           return this.isSmall ? (this.shiftedSmall & 1) :
             (this.shiftedBigInt.isEven() ? 0 : 1);
         default:
-          return this.isSmall ? (this.shiftedSmall & 1) :
+          return this.isSmall ? (this.shiftedSmall % mod) :
             this.shiftedBigInt.Mod(mod).ToInt32Checked();
       }
     }

@@ -1338,6 +1338,10 @@ at: http://peteroupc.github.io/
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
+      if (this.denominator.isEven() && !this.unsignedNumerator.isEven()) {
+        // Even denominator, odd numerator, so not an integer
+        throw new ArithmeticException("Value is not an integer");
+      }
       EInteger rem;
       EInteger quo;
       EInteger[] divrem = this.getNumerator().DivRem(this.denominator);

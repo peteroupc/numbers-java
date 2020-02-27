@@ -947,7 +947,8 @@ private DecTestUtil() {
       }
       int ix = ln.indexOf(' ');
       // NOTE: ix < 2 includes cases where space is not found
-      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix -1) != 's' && ln.charAt(ix- 1)!='q')) {
+      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix - 1) != 's' && ln.charAt(ix- 1)
+!='q')) {
         return 0;
       }
       String[] chunks = SplitAtSpaceRuns(ln);
@@ -2099,7 +2100,7 @@ private DecTestUtil() {
                 String messageTemp = name + ": expected: [" +
                   d4.getUnsignedMantissa() + " " + d4.getExponent() +
                   "]\n" + "but was: [" + d3.getUnsignedMantissa() + " " +
-                  d3.getExponent() + "]\n" + ln;
+                  d3.getExponent() + "]\n" + ln + "\n" + ctx;
                 Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
               }
             }

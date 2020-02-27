@@ -1130,8 +1130,8 @@ at: http://peteroupc.github.io/
           // Less than 1
           T quarter = this.Divide(one, this.helper.ValueOf(4), ctxCopy);
           FastInteger error;
-          error = (this.compareTo(thisValue, quarter) < 0) ? (new
-FastInteger(20)) : (new FastInteger(10));
+          error = (this.compareTo(thisValue, quarter) < 0) ? new
+FastInteger(20) : (new FastInteger(10));
           EInteger bigError = error.AsEInteger();
           ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
             .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
@@ -1208,8 +1208,7 @@ FastInteger(20)) : (new FastInteger(10));
             EInteger bigError;
             error = (this.compareTo(thisValue,
   this.helper.ValueOf(Integer.MAX_VALUE)) >= 0) ? (new FastInteger(16)) : (new
-FastInteger(10));
-            bigError = error.AsEInteger();
+FastInteger(10)); bigError = error.AsEInteger();
             ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
               .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
             T smallfrac = (ctxdiv.getPrecision().compareTo(400) > 0) ?
