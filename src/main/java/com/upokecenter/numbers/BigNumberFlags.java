@@ -16,14 +16,9 @@ private BigNumberFlags() {
     static final int FlagInfinity = 2;
     static final int FlagSpecial = FlagQuietNaN | FlagSignalingNaN |
       FlagInfinity;
-
     static final int FlagNaN = FlagQuietNaN | FlagSignalingNaN;
-    static final int UnderflowFlags = EContext.FlagInexact |
-      EContext.FlagSubnormal | EContext.FlagUnderflow | EContext.FlagRounded;
-
     static final int LostDigitsFlags = EContext.FlagLostDigits |
       EContext.FlagInexact | EContext.FlagRounded;
-
     static final int FiniteOnly = 0;
     static final int FiniteAndNonFinite = 1;
   }

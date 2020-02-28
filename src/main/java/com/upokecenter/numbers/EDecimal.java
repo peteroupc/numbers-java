@@ -3602,8 +3602,6 @@ at: http://peteroupc.github.io/
         EInteger scale = bigintExp;
         EInteger bigmantissa = bigUnsignedMantissa;
         EInteger negscale = scale.Negate();
-        // System.out.println("scale=" + scale + " mantissaPrecision=" +
-        // bigmantissa.GetDigitCountAsEInteger());
         EInteger divisor = NumberUtility.FindPowerOfTenFromBig(negscale);
         ec = (ec == null) ? (EContext.UnlimitedHalfEven) : ec;
         if (ec.getHasMaxPrecision()) {
@@ -3623,7 +3621,10 @@ at: http://peteroupc.github.io/
           if (!ret.IsNaN()) {
             return ret;
           }
-          return efNum.Divide(efDen, ec.WithPrecision(53));
+          EInteger bitprec = bigmantissa.GetUnsignedBitLengthAsEInteger();
+          return efNum.Divide(
+            efDen,
+            ec.WithBigPrecision(bitprec));
         } else if (ec.getTraps() != 0) {
           EContext tctx = ec.GetNontrapping();
           EFloat ret = this.ToEFloat(tctx);
@@ -3640,180 +3641,12 @@ at: http://peteroupc.github.io/
             ec.setFlags(ec.getFlags()|(tmpctx.getFlags()));
             return ret;
           }
-          tmpctx = ec.WithPrecision(53).WithBlankFlags();
+          EInteger bitprec = bigmantissa.GetUnsignedBitLengthAsEInteger();
+          tmpctx = ec.WithBigPrecision(bitprec).WithBlankFlags();
           ret = efNum.Divide(efDen, tmpctx);
           ec.setFlags(ec.getFlags()|(tmpctx.getFlags()));
           return ret;
         }
-        /*
-        EInteger desiredHigh;
-        EInteger desiredLow;
-        boolean haveCopy = false;
-        EContext originalEc = ec;
-        if (ec == null || !ec.getHasMaxPrecision()) {
-          EInteger num = bigmantissa;
-          EInteger den = divisor;
-          // System.out.println("num=2^" + num.GetUnsignedBitLengthAsEInteger());
-          // System.out.println("den=10^" + negscale);
-          if (num.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0 &&
-            den.GetUnsignedBitLengthAsEInteger().compareTo(10000) <= 0) {
-            EInteger gcd = num.Gcd(den);
-            if (gcd.compareTo(EInteger.FromInt32(1)) != 0) {
-              den = den.Divide(gcd);
-            }
-            // System.out.println("num=" + (num.Divide(gcd)));
-            // System.out.println("den=" + den);
-            if (!HasTerminatingBinaryExpansion(den)) {
-              // System.out.println("Approximate");
-              // System.out.println("=>{0}\r\n->{1}", bigmantissa, divisor);
-              ec = ec.WithPrecision(53).WithBlankFlags();
-              haveCopy = true;
-            } else {
-              bigmantissa = bigmantissa.Divide(gcd);
-              divisor = den;
-            }
-          }
-        }
-        // NOTE: Precision raised by 2 to accommodate rounding
-        // to odd
-        EInteger valueEcPrec = ec == null ? EInteger.FromInt32(0) : (
-            ec.getHasMaxPrecision() ? ec.getPrecision().Add(2) : ec.getPrecision());
-        desiredHigh = EInteger.FromInt32(1).ShiftLeft(valueEcPrec);
-        desiredLow = EInteger.FromInt32(1).ShiftLeft(valueEcPrec.Subtract(1));
-        // System.out.println("=>{0}\r\n->{1}", bigmantissa, divisor);
-        EInteger[] quorem = (ec != null && ec.getHasMaxPrecision()) ?
-          bigmantissa.DivRem(divisor) : null;
-        // System.out.println("=>{0}\r\n->{1}", quorem[0], desiredHigh);
-        FastInteger adjust = new FastInteger(0);
-        if (ec == null || !ec.getHasMaxPrecision()) {
-          EInteger eterm = divisor.GetLowBitAsEInteger();
-          bigmantissa = bigmantissa.ShiftLeft(eterm);
-          adjust.SubtractBig(eterm);
-          quorem = bigmantissa.DivRem(divisor);
-        } else if (quorem[0].compareTo(desiredHigh) >= 0) {
-          do {
-            boolean optimized = false;
-            if (ec.getClampNormalExponents() && valueEcPrec.signum() > 0) {
-              EInteger valueBmBits =
-                bigmantissa.GetUnsignedBitLengthAsEInteger();
-              EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
-              if (divisor.compareTo(bigmantissa) < 0) {
-                if (divBits.compareTo(valueBmBits) < 0) {
-                  EInteger bitdiff = valueBmBits.Subtract(divBits);
-                  if (bitdiff.compareTo(valueEcPrec.Add(1)) > 0) {
-                    bitdiff = bitdiff.Subtract(valueEcPrec).Subtract(1);
-                    divisor = divisor.ShiftLeft(bitdiff);
-                    adjust.AddBig(bitdiff);
-                    optimized = true;
-                  }
-                }
-              } else {
-                if (valueBmBits.compareTo(divBits) >= 0 &&
-                  valueEcPrec.compareTo(
-                    EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <=
-                  0) {
-                  EInteger vbb = divBits.Add(valueEcPrec);
-                  if (valueBmBits.compareTo(vbb) < 0) {
-                    valueBmBits = vbb.Subtract(valueBmBits);
-                    divisor = divisor.ShiftLeft(valueBmBits);
-                    adjust.AddBig(valueBmBits);
-                    optimized = true;
-                  }
-                }
-              }
-            }
-            if (!optimized) {
-              divisor = divisor.ShiftLeft(1);
-              adjust.Increment();
-            }
-            // System.out.println("deshigh\n==>" + (//
-            // bigmantissa) + "\n-->" + (//
-            // divisor));
-            // System.out.println("deshigh " + (//
-            // bigmantissa.GetUnsignedBitLengthAsEInteger()) + "/" + (//
-            // divisor.GetUnsignedBitLengthAsEInteger()));
-            quorem = bigmantissa.DivRem(divisor);
-            if (quorem[1].isZero()) {
-              EInteger valueBmBits = quorem[0].GetUnsignedBitLengthAsEInteger();
-              EInteger divBits = desiredLow.GetUnsignedBitLengthAsEInteger();
-              if (valueBmBits.compareTo(divBits) < 0) {
-                valueBmBits = divBits.Subtract(valueBmBits);
-                quorem[0] = quorem[0].ShiftLeft(valueBmBits);
-                adjust.AddBig(valueBmBits);
-              }
-            }
-            // System.out.println("quorem[0]="+quorem[0]);
-            // System.out.println("quorem[1]="+quorem[1]);
-            // System.out.println("desiredLow="+desiredLow);
-            // System.out.println("desiredHigh="+desiredHigh);
-          } while (quorem[0].compareTo(desiredHigh) >= 0);
-        } else if (quorem[0].compareTo(desiredLow) < 0) {
-          do {
-            boolean optimized = false;
-            if (bigmantissa.compareTo(divisor) < 0) {
-              EInteger valueBmBits =
-                bigmantissa.GetUnsignedBitLengthAsEInteger();
-              EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
-              if (valueBmBits.compareTo(divBits) < 0) {
-                valueBmBits = divBits.Subtract(valueBmBits);
-                bigmantissa = bigmantissa.ShiftLeft(valueBmBits);
-                adjust.SubtractBig(valueBmBits);
-                optimized = true;
-              }
-            } else {
-              if (ec.getClampNormalExponents() && valueEcPrec.signum() > 0) {
-                EInteger valueBmBits =
-                  bigmantissa.GetUnsignedBitLengthAsEInteger();
-                EInteger divBits = divisor.GetUnsignedBitLengthAsEInteger();
-                if (valueBmBits.compareTo(divBits) >= 0 &&
-                  valueEcPrec.compareTo(
-                    EInteger.FromInt32(Integer.MAX_VALUE).Subtract(divBits)) <=
-                  0) {
-                  EInteger vbb = divBits.Add(valueEcPrec);
-                  if (valueBmBits.compareTo(vbb) < 0) {
-                    valueBmBits = vbb.Subtract(valueBmBits);
-                    bigmantissa = bigmantissa.ShiftLeft(valueBmBits);
-                    adjust.SubtractBig(valueBmBits);
-                    optimized = true;
-                  }
-                }
-              }
-            }
-            if (!optimized) {
-              bigmantissa = bigmantissa.ShiftLeft(1);
-              adjust.Decrement();
-            }
-            // System.out.println("deslow " + (
-            // bigmantissa.GetUnsignedBitLengthAsEInteger()) + "/" + (
-            // divisor.GetUnsignedBitLengthAsEInteger()));
-            quorem = bigmantissa.DivRem(divisor);
-            if (quorem[1].isZero()) {
-              EInteger valueBmBits = quorem[0].GetUnsignedBitLengthAsEInteger();
-              EInteger divBits = desiredLow.GetUnsignedBitLengthAsEInteger();
-              if (valueBmBits.compareTo(divBits) < 0) {
-                valueBmBits = divBits.Subtract(valueBmBits);
-                quorem[0] = quorem[0].ShiftLeft(valueBmBits);
-                adjust.SubtractBig(valueBmBits);
-              }
-            }
-          } while (quorem[0].compareTo(desiredLow) < 0);
-        }
-        // Round to odd to avoid rounding errors
-        if (!quorem[1].isZero() && quorem[0].isEven()) {
-          quorem[0] = quorem[0].Add(EInteger.FromInt32(1));
-        }
-        EFloat efret = this.WithThisSign(
-            EFloat.Create(
-              quorem[0],
-              adjust.AsEInteger()));
-        // System.out.println("-->" + (efret.getMantissa().ToRadixString(2)) + " " +
-        // efret.getExponent());
-        efret = efret.RoundToPrecision(ec);
-        if (ec != null && haveCopy && originalEc.getHasFlags()) {
-          originalEc.setFlags(originalEc.getFlags()|(ec.getFlags()));
-        }
-        return efret;
-      */
       }
     }
 

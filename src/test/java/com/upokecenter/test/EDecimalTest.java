@@ -2567,7 +2567,6 @@ import com.upokecenter.numbers.*;
       RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 3000; ++i) {
         String r = RandomObjects.RandomDecimalString(rand);
-        System.out.println(r.length());
         EDecimal.FromString(r);
       }
     }
