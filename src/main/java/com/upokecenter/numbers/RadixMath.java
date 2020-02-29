@@ -118,6 +118,9 @@ at: http://peteroupc.github.io/
         if (this.thisRadix == 10 && prec.CompareToInt(2135) <= 0) {
           int value = (1 + (((prec.AsInt32() - 1) * 631305) >> 21));
           result = new FastInteger(value);
+        } else if (this.thisRadix == 10 && prec.CompareToInt(6432162) <= 0) {
+          int value = NumberUtility.ApproxLogTenOfTwo(prec.AsInt32());
+          result = new FastInteger(value);
         } else {
           return this.helper.GetDigitLength(ShiftedMask(prec).Subtract(1));
         }
@@ -1105,6 +1108,7 @@ at: http://peteroupc.github.io/
       }
       EContext ctxCopy = ctx.WithBlankFlags();
       T one = this.helper.ValueOf(1);
+      ERounding intermedRounding = ERounding.HalfEven;
       if (sign == 0) {
         return this.helper.CreateNewWithFlags(
             EInteger.FromInt32(0),
@@ -1126,7 +1130,7 @@ at: http://peteroupc.github.io/
             new FastInteger(20) : new FastInteger(10);
           EInteger bigError = error.AsEInteger();
           ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
-            .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
+            .WithRounding(intermedRounding).WithBlankFlags();
           T threeQuarters = this.Multiply(
               quarter,
               this.helper.ValueOf(3),
@@ -1173,7 +1177,7 @@ at: http://peteroupc.github.io/
               bigError = error.AsEInteger();
               // System.out.println("LnInternalCloseToOne B " +(thisValue as
               // EDecimal)?.ToDouble());
-              thisValue = this.LnInternalCloseToOne(
+              thisValue = this.LnInternalCloseToOne2(
                   thisValue,
                   error.AsEInteger(),
                   ctxCopy);
@@ -1199,10 +1203,11 @@ at: http://peteroupc.github.io/
             FastInteger error;
             EInteger bigError;
             error = (this.compareTo(thisValue,
-  this.helper.ValueOf(Integer.MAX_VALUE)) >= 0) ? (new FastInteger(16)) : (new
-FastInteger(10)); bigError = error.AsEInteger();
+  this.helper.ValueOf(Integer.MAX_VALUE)) >= 0) ?
+               new FastInteger(16) : new FastInteger(10);
+            bigError = error.AsEInteger();
             ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
-              .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
+              .WithRounding(intermedRounding).WithBlankFlags();
             T smallfrac = (ctxdiv.getPrecision().compareTo(400) > 0) ?
               this.Divide(one, this.helper.ValueOf(1000000), ctxdiv) :
               this.Divide(one, this.helper.ValueOf(20), ctxdiv);
@@ -1221,7 +1226,7 @@ FastInteger(10)); bigError = error.AsEInteger();
             thisValue = this.Divide(one, thisValue, ctxdiv);
             // System.out.println("LnInternalCloseToOne C " +(thisValue as
             // EDecimal)?.ToDouble());
-            thisValue = this.LnInternalCloseToOne(
+            thisValue = this.LnInternalCloseToOne2(
                 thisValue,
                 ctxdiv.getPrecision(),
                 ctxdiv);
@@ -1240,7 +1245,7 @@ FastInteger(10)); bigError = error.AsEInteger();
             T ei3 = this.Multiply(
                 thisValue,
                 this.helper.CreateNewWithFlags(bigintRoots, EInteger.FromInt32(0), 0),
-                ctxCopy.WithRounding(ERounding.OddOrZeroFiveUp));
+                ctxCopy.WithRounding(intermedRounding));
             // System.out.println("After LnInternal Mult<ei3> " +(ei3 as
             // EDecimal)?.ToDouble());
             thisValue = this.Multiply(
@@ -1256,7 +1261,7 @@ FastInteger(10)); bigError = error.AsEInteger();
             error = new FastInteger(10);
             bigError = error.AsEInteger();
             ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
-              .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
+              .WithRounding(intermedRounding).WithBlankFlags();
             T smallfrac = this.Divide(one, this.helper.ValueOf(16), ctxdiv);
             T closeToOne = this.Add(one, smallfrac, null);
             if (this.compareTo(thisValue, closeToOne) < 0) {
@@ -1272,7 +1277,7 @@ FastInteger(10)); bigError = error.AsEInteger();
               // precision
               // System.out.println("LnInternalCloseToOne D " +(thisValue as
               // EDecimal)?.ToDouble());
-              thisValue = this.LnInternalCloseToOne(
+              thisValue = this.LnInternalCloseToOne2(
                   thisValue,
                   error.AsEInteger(),
                   ctxCopy);
@@ -3674,20 +3679,42 @@ FastInteger(10)); bigError = error.AsEInteger();
             if (!binaryOpt) {
               EInteger divid = mantissaDividend;
               FastInteger shift = FastInteger.FromBig(ctx.getPrecision());
+              FastInteger[] dividBounds =
+                 NumberUtility.DigitLengthBounds(this.helper, mantissaDividend);
+              FastInteger[] divisBounds =
+                 NumberUtility.DigitLengthBounds(this.helper, mantissaDivisor);
+              if
+(dividBounds[0].Copy().Subtract(divisBounds[1]).compareTo(shift) > 0) {
+                 // Dividend is already bigger than divisor by at least
+                 // shift digits, so no need to shift
+                 shift.SetInt(0);
+              } else {
+                 FastInteger shiftCalc =
+divisBounds[0].Copy().Subtract(dividBounds[1])
+                     .AddInt(2).Add(shift);
+                 if (shiftCalc.CompareToInt(0) <= 0) {
+                    // No need to shift
+                    shift.SetInt(0);
+                 } else {
+                    shift = shiftCalc;
+                    divid = this.TryMultiplyByRadixPower(divid, shift);
+                    if (divid == null) {
+                      return this.SignalInvalidWithMessage(
+                          ctx,
+                          "Result requires too much memory");
+                    }
+                 }
+              }
+              /*
               dividendPrecision = this.helper.GetDigitLength(mantissaDividend);
               divisorPrecision = this.helper.GetDigitLength(mantissaDivisor);
-              FastInteger dividPrecision = dividendPrecision.Copy();
-              FastInteger divisPrecision = divisorPrecision.Copy();
-              // int status = 0;
               if (dividendPrecision.compareTo(divisorPrecision) <= 0) {
                 // Dividend has less precision than divisor
-                // status = 1;
                 divisorPrecision = divisorPrecision.Copy()
                   .Subtract(dividendPrecision);
                 divisorPrecision.Increment();
                 // Shift by the difference plus 1 plus the context's maximum precision
                 shift.Add(divisorPrecision);
-                dividPrecision.Add(shift);
                 divid = this.TryMultiplyByRadixPower(divid, shift);
                 if (divid == null) {
                   return this.SignalInvalidWithMessage(
@@ -3698,14 +3725,11 @@ FastInteger(10)); bigError = error.AsEInteger();
                 // Already greater than divisor precision
                 dividendPrecision = dividendPrecision.Copy()
                   .Subtract(divisorPrecision);
-                // status = 2;
                 if (dividendPrecision.compareTo(shift) <= 0) {
-                  // status = 3;
                   // Difference is less than or equal to
                   // the context's maximum precision
                   shift.Subtract(dividendPrecision);
                   shift.Increment();
-                  dividPrecision.Add(shift);
                   divid = this.TryMultiplyByRadixPower(divid, shift);
                   if (divid == null) {
                     return this.SignalInvalidWithMessage(
@@ -3717,6 +3741,7 @@ FastInteger(10)); bigError = error.AsEInteger();
                   shift.SetInt(0);
                 }
               }
+              */
               if (shift.signum() != 0 || quo == null) {
                 // if shift isn't zero, recalculate the quotient
                 // and remainder
@@ -4086,7 +4111,7 @@ FastInteger(10)); bigError = error.AsEInteger();
       return exp.compareTo(ctx.getEMin()) >= 0 && exp.compareTo(ctx.getEMax()) <= 0;
     }
 
-    private T LnInternalCloseToOne(
+    private T LnInternalCloseToOne2(
       T thisValue,
       EInteger workingPrecision,
       EContext ctx) {
@@ -4094,40 +4119,41 @@ FastInteger(10)); bigError = error.AsEInteger();
       boolean more = true;
       int lastCompare = 0;
       int vacillations = 0;
-      // System.out.println("start=" + thisValue);
+      String dbg = "";
+      // if (thisValue instanceof EDecimal) {
+      // dbg="" + ((EDecimal)thisValue).ToDouble();
+      // }
       // System.out.println("workingprec=" + workingPrecision);
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
-          workingPrecision.Add(EInteger.FromInt64(6)))
-        .WithRounding(ERounding.OddOrZeroFiveUp);
-      T rz = this.Add(thisValue, this.helper.ValueOf(-1), null);
-      T rzz = rz;
-      T guess = rz;
+          workingPrecision.Add(EInteger.FromInt64(6))).WithRounding(ERounding.HalfEven);
+      T rzlo = this.Add(thisValue, this.helper.ValueOf(-1), null);
+      T rzhi = this.Add(thisValue, this.helper.ValueOf(1), null);
+      // (thisValue - 1) / (thisValue + 1)
+      T rz = this.Divide(rzlo, rzhi, ctxdiv);
+      // (thisValue - 1) * 2 / (thisValue + 1)
+      T guess = this.Add(rz, rz, null);
+      T rzterm = rz;
       T lastGuess = null;
       T lastDiff = null;
       boolean haveLastDiff = false;
+      EInteger denom = EInteger.FromInt32(3);
       EInteger iterations = EInteger.FromInt32(0);
-      boolean sub = true;
-      EInteger denom = EInteger.FromInt64(2);
       while (more) {
         lastGuess = guess;
-        rzz = this.Multiply(rzz, rz, ctxdiv);
+        rzterm = this.Multiply(rzterm, rz, ctxdiv);
+        rzterm = this.Multiply(rzterm, rz, ctxdiv);
         T rd = this.Divide(
-            rzz,
+            this.Multiply(rzterm, this.helper.ValueOf(2), ctxdiv),
             this.helper.CreateNewWithFlags(denom, EInteger.FromInt32(0), 0),
             ctxdiv);
         if (haveLastDiff && this.compareTo(lastDiff, rd) == 0) {
           // iterate is the same as before, so break
           break;
         }
-        T newGuess = sub ? this.Add(guess, this.NegateRaw(rd), ctxdiv) :
-          this.Add(guess, rd, ctxdiv);
-        // System.out.println("rdiff "
-        // +this.Add(lastGuess, this.NegateRaw(newGuess), null));
+        T newGuess = this.Add(guess, rd, ctxdiv);
         int guessCmp = this.compareTo(lastGuess, newGuess);
-        // System.out.println("newGuess "+(((newGuess instanceof EDecimal) ? (EDecimal)newGuess : null))?.ToDouble());
         boolean overprec = iterations.compareTo(workingPrecision) >= 0;
-
         if (guessCmp == 0) {
           more = false;
         } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
@@ -4139,14 +4165,16 @@ FastInteger(10)); bigError = error.AsEInteger();
         lastCompare = guessCmp;
         lastDiff = this.AbsRaw(rd);
         haveLastDiff = true;
-        guess = newGuess;
         if (more) {
-          sub = !sub;
-          denom = denom.Add(EInteger.FromInt32(1));
+          denom = denom.Add(2);
           iterations = iterations.Add(EInteger.FromInt32(1));
+          guess = newGuess;
+        } else {
+          guess = this.Add(guess, rd, ctx);
         }
       }
-      return this.RoundToPrecision(guess, ctx);
+      // System.out.println("iterations="+iterations+", "+dbg);
+      return guess;
     }
 
     private T LnInternal(
@@ -4159,7 +4187,7 @@ FastInteger(10)); bigError = error.AsEInteger();
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           workingPrecision.Add(EInteger.FromInt64(6)))
-        .WithRounding(ERounding.OddOrZeroFiveUp);
+        .WithRounding(ERounding.HalfEven);
       T z = this.Add(
           this.NegateRaw(thisValue),
           this.helper.ValueOf(1),

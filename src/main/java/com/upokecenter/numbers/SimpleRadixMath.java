@@ -77,8 +77,7 @@ at: http://peteroupc.github.io/
           if ((ctxSrc.getFlags() & EContext.FlagSubnormal) != 0) {
             // Treat subnormal numbers as underflows
             ctxDest.setFlags(ctxDest.getFlags()|((EContext.FlagUnderflow |
-EContext.FlagSubnormal | EContext.FlagInexact |
-               EContext.FlagRounded)));
+EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded)));
           }
         }
       }
