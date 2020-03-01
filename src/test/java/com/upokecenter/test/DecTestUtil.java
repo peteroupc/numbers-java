@@ -118,12 +118,6 @@ private DecTestUtil() {
       return strings.toArray(new String[] { });
     }
 
-    /**
-     * Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
-     * converted to lower-case. Other characters remain unchanged.
-     * @param str The parameter {@code str} is a text string.
-     * @return The converted string, or null if {@code str} is null.
-     */
     public static String ToLowerCaseAscii(String str) {
       if (str == null) {
         return null;
@@ -947,8 +941,8 @@ private DecTestUtil() {
       }
       int ix = ln.indexOf(' ');
       // NOTE: ix < 2 includes cases where space is not found
-      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix - 1) != 's' && ln.charAt(ix - 1)!=
-'q')) {
+      if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix - 1) != 's' &&
+         ln.charAt(ix - 1) != 'q')) {
         return 0;
       }
       String[] chunks = SplitAtSpaceRuns(ln);
