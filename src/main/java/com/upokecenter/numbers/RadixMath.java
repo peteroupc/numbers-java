@@ -900,6 +900,14 @@ at: http://peteroupc.github.io/
       return ret;
     }
 
+    private EInteger WorkingDigits(EInteger workingBits) {
+      int radix = this.thisRadix;
+      if (radix <= 2) { return workingBits;
+}
+      int ibits = NumberUtility.BitLength(radix) - 1;
+      return workingBits.Divide(ibits).Add(1);
+    }
+
     public T Exp(T thisValue, EContext ctx) {
       if (ctx == null) {
         return this.SignalInvalidWithMessage(ctx, "ctx is null");
@@ -944,7 +952,7 @@ at: http://peteroupc.github.io/
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits))
-        .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
+        .WithRounding(ERounding.HalfEven).WithBlankFlags();
       if (sign == 0) {
         thisValue = this.RoundToPrecision(one, ctxCopy);
       } else if (sign > 0 && this.compareTo(thisValue, one) <= 0) {
@@ -1039,9 +1047,10 @@ at: http://peteroupc.github.io/
             null);
         ctxdiv.setFlags(0);
         // System.out.println("fracpart1=" + fracpart);
-        // System.out.println("intpart=" + intpart);
         EInteger workingPrec = ctxdiv.getPrecision();
-        workingPrec = workingPrec.Add(EInteger.FromInt64(17));
+        workingPrec = workingPrec.Add(
+            this.WorkingDigits(EInteger.FromInt32(20)));
+        // System.out.println("intpart=" + intpart + " wp=" + workingPrec);
         thisValue = this.ExpInternal(fracpart, workingPrec, ctxdiv);
         // System.out.println("thisValue=" + thisValue);
         if ((ctxdiv.getFlags() & EContext.FlagUnderflow) != 0) {
@@ -1228,8 +1237,8 @@ at: http://peteroupc.github.io/
                 ctxdiv.getPrecision(),
                 ctxdiv);
             thisValue = this.NegateRaw(thisValue);
-            System.out.println("After LnInternal " + thisValue +
-             " roots=" + roots);
+            // System.out.println("After LnInternal " +thisValue +
+            // " roots="+roots);
             EInteger bigintRoots = PowerOfTwo(roots);
             // Multiply back 2^X, where X is the number
             // of square root calls
@@ -2056,22 +2065,23 @@ at: http://peteroupc.github.io/
           return thisValue;
         }
       }
-      int guardDigitCount = this.thisRadix == 2 ? 32 : 10;
-      EInteger guardDigits = EInteger.FromInt32(guardDigitCount);
+      EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(17));
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits));
-      ctxdiv = ctxdiv.WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
+      ctxdiv = ctxdiv.WithRounding(ERounding.HalfEven).WithBlankFlags();
       T lnresult = this.Ln(thisValue, ctxdiv);
-      /*
-      System.out.println("guard= " + guardDigits + " prec=" +
-        ctx.getPrecision() + " newprec= " + ctxdiv.getPrecision());
-      // System.out.println("pwrIn " + pow);
-      // System.out.println("lnIn " + thisValue);
-      // System.out.println("lnOut " + lnresult);
-      // System.out.println("lnOut.get(n) "+this.NextPlus(lnresult,ctxdiv));
-      */ lnresult = this.Multiply(lnresult, pow, ctxdiv);
-      // System.out.println("expIn " + lnresult);
+      T lnresult2 = this.Multiply(lnresult, pow, ctxdiv);
+      if ((ctxdiv.getFlags() & EContext.FlagSubnormal) != 0) {
+        EContext ctxdivex = SetPrecisionIfLimited(
+            ctxdiv,
+            ctxdiv.getPrecision().Add(16)).WithUnlimitedExponents();
+        // System.out.println("expIn... " + lnresult);
+        lnresult = this.Multiply(lnresult, pow, ctxdivex);
+        // System.out.println("expInmul " + lnresult + " flags=" + ctxdiv.getFlags());
+      } else {
+        lnresult = lnresult2;
+      }
       // Now use original precision and rounding mode
       ctxdiv = ctx.WithBlankFlags();
       lnresult = this.Exp(lnresult, ctxdiv);
@@ -3911,13 +3921,13 @@ at: http://peteroupc.github.io/
       T guess = this.Add(one, thisValue, ctxdiv);
       // System.out.println(ctxdiv.toString());
       // System.out.println("tv="+(((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble());
-      // System.out.println("startguess="+(((guess instanceof EDecimal) ? (EDecimal)guess : null))?.ToDouble());
+      // System.out.println("startguess="+guess);
       T lastGuess = guess;
       T pow = thisValue;
       boolean more = true;
       int lastCompare = 0;
       int vacillations = 0;
-      while (more) {
+      while (true) {
         lastGuess = guess;
         // System.out.println("bigintN=" + bigintN);
         // Iterate by:
@@ -3931,10 +3941,7 @@ at: http://peteroupc.github.io/
             this.helper.CreateNewWithFlags(facto, EInteger.FromInt32(0), 0),
             ctxdiv);
         T newGuess = this.Add(guess, tmp, ctxdiv);
-        // System.out.println("newguess = " + (newGuess as
-        // EDecimal)?.ToDouble() +
-        // ", tmp = " + (((tmp instanceof EDecimal) ? (EDecimal)tmp : null))?.ToDouble());
-        // System.out.println("newguess " + newGuess);
+        // System.out.println("newguess " + this.helper.GetMantissa(newGuess));
         // System.out.println("newguessN " + NextPlus(newGuess,ctxdiv));
         {
           int guessCmp = this.compareTo(lastGuess, newGuess);
@@ -3949,13 +3956,13 @@ at: http://peteroupc.github.io/
           }
           lastCompare = guessCmp;
         }
-        guess = newGuess;
         if (more) {
           bigintN = bigintN.Add(EInteger.FromInt32(1));
+          guess = newGuess;
+        } else {
+          return this.Add(guess, tmp, ctx);
         }
       }
-      // System.out.println("return final guess");
-      return this.RoundToPrecision(guess, ctx);
     }
 
     private T ExtendPrecision(T thisValue, EContext ctx) {
@@ -4312,7 +4319,7 @@ at: http://peteroupc.github.io/
       EContext ctxdiv = ctx == null ? ctx : SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(bigError))
-        .WithRounding(ERounding.OddOrZeroFiveUp).WithBlankFlags();
+        .WithRounding(ERounding.HalfEven).WithBlankFlags();
       if (sign < 0) {
         // Use the reciprocal for negative powers
         thisValue = this.Divide(one, thisValue, ctxdiv);
