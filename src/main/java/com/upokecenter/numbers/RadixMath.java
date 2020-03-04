@@ -902,7 +902,9 @@ at: http://peteroupc.github.io/
 
     private EInteger WorkingDigits(EInteger workingBits) {
       int radix = this.thisRadix;
-      if (radix <= 2) { return workingBits;
+      if (radix <= 2) {
+         { return workingBits;
+      }
 }
       int ibits = NumberUtility.BitLength(radix) - 1;
       return workingBits.Divide(ibits).Add(1);
@@ -947,8 +949,8 @@ at: http://peteroupc.github.io/
       }
       int sign = this.helper.GetSign(thisValue);
       T one = this.helper.ValueOf(1);
-      EInteger guardDigits = this.thisRadix == 2 ? ctx.getPrecision().Add(10) :
-        EInteger.FromInt32(10);
+      EInteger guardDigits = this.thisRadix == 2 ?
+          ctx.getPrecision().Add(10) : EInteger.FromInt32(10);
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits))
@@ -956,12 +958,52 @@ at: http://peteroupc.github.io/
       if (sign == 0) {
         thisValue = this.RoundToPrecision(one, ctxCopy);
       } else if (sign > 0 && this.compareTo(thisValue, one) <= 0) {
-        thisValue = this.ExpInternal(thisValue, ctxdiv.getPrecision(), ctxCopy);
+        T closeToZero = this.Divide(
+          this.helper.ValueOf(1),
+          this.helper.ValueOf(0x1000),
+          null);
+        if (this.IsFinite(closeToZero) &&
+            this.compareTo(thisValue, closeToZero) <= 0) {
+          // Call ExpInternal for magnitudes close to 0, to avoid
+          // issues when thisValue's magnitude is extremely
+          // close to 0
+          thisValue = this.ExpInternalVeryCloseToZero(
+            thisValue,
+            ctxdiv.getPrecision(),
+            ctxCopy);
+          if (ctx.getHasFlags()) {
+           ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact |
+             EContext.FlagRounded | ctxCopy.getFlags()));
+          }
+          return thisValue;
+        }
+        thisValue = this.ExpInternal(
+          thisValue,
+          ctxdiv.getPrecision(),
+          ctxCopy);
         if (ctx.getHasFlags()) {
-          ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact |
-            EContext.FlagRounded));
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact | EContext.FlagRounded));
         }
       } else if (sign < 0) {
+        T closeToZero = this.Divide(
+          this.helper.ValueOf(-1),
+          this.helper.ValueOf(0x1000),
+          null);
+        if (this.IsFinite(closeToZero) &&
+            this.compareTo(thisValue, closeToZero) >= 0) {
+          // Call ExpInternal for magnitudes close to 0, to avoid
+          // issues when thisValue's magnitude is extremely
+          // close to 0
+          thisValue = this.ExpInternalVeryCloseToZero(
+            thisValue,
+            ctxdiv.getPrecision(),
+            ctxCopy);
+          if (ctx.getHasFlags()) {
+           ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact |
+             EContext.FlagRounded | ctxCopy.getFlags()));
+          }
+          return thisValue;
+        }
         // exp(x) = 1.Divide(exp)(-x) where x<0
         T val = this.Exp(this.NegateRaw(thisValue), ctxdiv);
         if ((ctxdiv.getFlags() & EContext.FlagOverflow) != 0 ||
@@ -983,8 +1025,7 @@ at: http://peteroupc.github.io/
           thisValue = val;
         }
         thisValue = this.Divide(one, thisValue, ctxCopy);
-        // System.out.println("end= " + thisValue);
-        // System.out.println("endbit "+this.BitMantissa(thisValue));
+       // System.out.println("end= " + thisValue);
         if (ctx.getHasFlags()) {
           ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact |
             EContext.FlagRounded));
@@ -1221,17 +1262,10 @@ at: http://peteroupc.github.io/
               // System.out.println("--> " +thisValue);
               roots.Increment();
             }
-            /* for (int i = 0; i < 6; ++i) {
-              thisValue = this.SquareRoot(
-                  thisValue,
-                  ctxdiv.WithUnlimitedExponents());
-              // System.out.println("--> " +thisValue);
-              roots.Increment();
-            }*/
             // Find -Ln(1/thisValue)
+            // System.out.println("LnInternalCloseToOne C " + thisValue);
             thisValue = this.Divide(one, thisValue, ctxdiv);
-            // System.out.println("LnInternalCloseToOne C " +(thisValue as
-            // EDecimal)?.ToDouble());
+            // System.out.println("LnInternalCloseToOne C " + thisValue);
             thisValue = this.LnInternalCloseToOne2(
                 thisValue,
                 ctxdiv.getPrecision(),
@@ -2069,22 +2103,23 @@ at: http://peteroupc.github.io/
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits));
-      ctxdiv = ctxdiv.WithRounding(ERounding.HalfEven).WithBlankFlags();
-      T lnresult = this.Ln(thisValue, ctxdiv);
-      T lnresult2 = this.Multiply(lnresult, pow, ctxdiv);
-      if ((ctxdiv.getFlags() & EContext.FlagSubnormal) != 0) {
-        EContext ctxdivex = SetPrecisionIfLimited(
-            ctxdiv,
-            ctxdiv.getPrecision().Add(16)).WithUnlimitedExponents();
-        // System.out.println("expIn... " + lnresult);
-        lnresult = this.Multiply(lnresult, pow, ctxdivex);
-        // System.out.println("expInmul " + lnresult + " flags=" + ctxdiv.getFlags());
+      if (ctx.getRounding() != ERounding.Ceiling &&
+          ctx.getRounding() != ERounding.Floor) {
+        ctxdiv = ctxdiv.WithRounding(ctx.getRounding())
+         .WithBlankFlags();
       } else {
-        lnresult = lnresult2;
+        ctxdiv = ctxdiv.WithRounding(ERounding.HalfEven)
+          .WithBlankFlags();
       }
+      T lnresult = this.Ln(thisValue, ctxdiv);
+      // System.out.println("rounding="+ctxdiv.getRounding());
+      // System.out.println("before mul="+lnresult);
+      lnresult = this.Multiply(lnresult, pow, ctxdiv);
       // Now use original precision and rounding mode
       ctxdiv = ctx.WithBlankFlags();
+      // System.out.println("before exp="+lnresult);
       lnresult = this.Exp(lnresult, ctxdiv);
+      // System.out.println("after exp.="+lnresult);
       if ((ctxdiv.getFlags() & (EContext.FlagClamped |
             EContext.FlagOverflow)) != 0) {
         if (!this.IsWithinExponentRangeForPow(thisValue, ctx)) {
@@ -3899,12 +3934,17 @@ at: http://peteroupc.github.io/
       return val;
     }
 
-    private T ExpInternal(
+    private T ExpInternalVeryCloseToZero(
       T thisValue,
       EInteger workingPrecision,
       EContext ctx) {
-      // System.out.println("ExpInternal " +(thisValue as
-      // EDecimal)?.ToDouble()+", wp=" +workingPrecision);
+      // System.out.println("ExpInternalVeryCloseToZero");
+      T zero = this.helper.ValueOf(0);
+      if (this.compareTo(thisValue, zero) == 0) {
+         // NOTE: Should not happen here, because
+         // the check for zero should have happened earlier
+         throw new IllegalStateException();
+      }
       T one = this.helper.ValueOf(1);
       int precisionAdd = this.thisRadix == 2 ? 18 : 12;
       EContext ctxdiv = SetPrecisionIfLimited(
@@ -3913,14 +3953,10 @@ at: http://peteroupc.github.io/
         .WithRounding(ERounding.HalfEven);
       EInteger bigintN = EInteger.FromInt64(2);
       EInteger facto = EInteger.FromInt32(1);
-      // Guess starts with 1 + thisValue
-      // NOTE: Specify ctxdiv rather than null here to avoid
-      // cases involving adding 1 to a number with a very high
-      // negative exponent, which could result in a number taking
-      // up lots of memory
-      T guess = this.Add(one, thisValue, ctxdiv);
-      // System.out.println(ctxdiv.toString());
-      // System.out.println("tv="+(((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble());
+
+      T guess;
+      // Guess starts with thisValue
+      guess = thisValue;
       // System.out.println("startguess="+guess);
       T lastGuess = guess;
       T pow = thisValue;
@@ -3929,7 +3965,6 @@ at: http://peteroupc.github.io/
       int vacillations = 0;
       while (true) {
         lastGuess = guess;
-        // System.out.println("bigintN=" + bigintN);
         // Iterate by:
         // newGuess = guess + (thisValue^n/factorial(n))
         // (n starts at 2 and increases by 1 after
@@ -3941,7 +3976,8 @@ at: http://peteroupc.github.io/
             this.helper.CreateNewWithFlags(facto, EInteger.FromInt32(0), 0),
             ctxdiv);
         T newGuess = this.Add(guess, tmp, ctxdiv);
-        // System.out.println("newguess " + this.helper.GetMantissa(newGuess));
+        // System.out.println("newguess " +
+        // this.helper.GetMantissa(newGuess));
         // System.out.println("newguessN " + NextPlus(newGuess,ctxdiv));
         {
           int guessCmp = this.compareTo(lastGuess, newGuess);
@@ -3960,7 +3996,85 @@ at: http://peteroupc.github.io/
           bigintN = bigintN.Add(EInteger.FromInt32(1));
           guess = newGuess;
         } else {
-          return this.Add(guess, tmp, ctx);
+          T ret = newGuess;
+          // Add 1 at end
+          ret = this.Add(one, ret, ctx);
+          return ret;
+        }
+      }
+    }
+
+    private T ExpInternal(
+      T thisValue,
+      EInteger workingPrecision,
+      EContext ctx) {
+      // System.out.println("ExpInternal " +(thisValue as
+      // EDecimal)?.ToDouble()+", wp=" +workingPrecision);
+      T zero = this.helper.ValueOf(0);
+      if (this.compareTo(thisValue, zero) == 0) {
+         // NOTE: Should not happen here, because
+         // the check for zero should have happened earlier
+         throw new IllegalStateException();
+      }
+      T one = this.helper.ValueOf(1);
+      int precisionAdd = this.thisRadix == 2 ? 18 : 12;
+      EContext ctxdiv = SetPrecisionIfLimited(
+          ctx,
+          workingPrecision.Add(EInteger.FromInt32(precisionAdd)))
+        .WithRounding(ERounding.HalfEven);
+      EInteger bigintN = EInteger.FromInt64(2);
+      EInteger facto = EInteger.FromInt32(1);
+
+      T guess;
+      // Guess starts with thisValue
+      // guess = thisValue;
+      // Guess starts with 1 + thisValue
+      guess = this.Add(one, thisValue, ctxdiv);
+      // System.out.println(ctxdiv.toString());
+      // System.out.println("tv="+(((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble());
+      // System.out.println("initial="+thisValue);
+      // System.out.println("startguess="+guess);
+      T lastGuess = guess;
+      T pow = thisValue;
+      boolean more = true;
+      int lastCompare = 0;
+      int vacillations = 0;
+      while (true) {
+        lastGuess = guess;
+        // Iterate by:
+        // newGuess = guess + (thisValue^n/factorial(n))
+        // (n starts at 2 and increases by 1 after
+        // each iteration)
+        pow = this.Multiply(pow, thisValue, ctxdiv);
+        facto = facto.Multiply(bigintN);
+        T tmp = this.Divide(
+            pow,
+            this.helper.CreateNewWithFlags(facto, EInteger.FromInt32(0), 0),
+            ctxdiv);
+        T newGuess = this.Add(guess, tmp, ctxdiv);
+        // System.out.println("newguess " +
+           // this.helper.GetMantissa(newGuess));
+        // System.out.println("newguessN " + NextPlus(newGuess,ctxdiv));
+        {
+          int guessCmp = this.compareTo(lastGuess, newGuess);
+          // System.out.println("guessCmp = " + guessCmp);
+          if (guessCmp == 0) {
+            more = false;
+          } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
+              guessCmp < 0)) {
+            // Guesses are vacillating
+            ++vacillations;
+            more &= vacillations <= 3 || guessCmp <= 0;
+          }
+          lastCompare = guessCmp;
+        }
+        if (more) {
+          bigintN = bigintN.Add(EInteger.FromInt32(1));
+          guess = newGuess;
+        } else {
+          T ret = this.Add(guess, tmp, ctx);
+          // System.out.println("final... " + ret);
+          return ret;
         }
       }
     }
@@ -4313,9 +4427,8 @@ at: http://peteroupc.github.io/
       error = error.Copy();
       error.AddInt(18);
       EInteger bigError = error.AsEInteger();
-      // if (ctx == null) {
-      // System.out.println("thisValue=" + thisValue + " powInt=" + (powIntBig));
-      // }
+       /*DUL("thisValue=" + thisValue +
+       " powInt=" + powIntBig);*/
       EContext ctxdiv = ctx == null ? ctx : SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(bigError))
@@ -4323,6 +4436,9 @@ at: http://peteroupc.github.io/
       if (sign < 0) {
         // Use the reciprocal for negative powers
         thisValue = this.Divide(one, thisValue, ctxdiv);
+         /*DUL("-->recip thisValue=" + thisValue +
+            " powInt=" + powIntBig + " flags=" + (ctxdiv == null ? -1 :
+ctxdiv.getFlags()));*/
         if ((ctxdiv.getFlags() & EContext.FlagOverflow) != 0) {
           return this.SignalOverflow(ctx, retvalNeg);
         }
@@ -4331,6 +4447,9 @@ at: http://peteroupc.github.io/
       T r = one;
       while (!powIntBig.isZero()) {
         if (!powIntBig.isEven()) {
+            /*DUL("-->thisValue=" + thisValue +
+            " powInt=" + powIntBig + " flags=" +
+           (ctxdiv == null ? -1 : ctxdiv.getFlags()));*/
           r = this.Multiply(r, thisValue, ctxdiv);
           if (ctxdiv != null && (ctxdiv.getFlags() & EContext.FlagOverflow) != 0) {
             return this.SignalOverflow(ctx, retvalNeg);
@@ -4339,7 +4458,7 @@ at: http://peteroupc.github.io/
         powIntBig = powIntBig.ShiftRight(1);
         if (!powIntBig.isZero()) {
           if (ctxdiv != null) {
-            ctxdiv.setFlags(0);
+            ctxdiv.setFlags(ctxdiv.getFlags()&~(EContext.FlagOverflow));
           }
           T tmp = this.Multiply(thisValue, thisValue, ctxdiv);
           if (ctxdiv != null && (ctxdiv.getFlags() & EContext.FlagOverflow) != 0) {
@@ -4350,6 +4469,12 @@ at: http://peteroupc.github.io/
           thisValue = tmp;
         }
         // System.out.println("r="+r);
+      }
+      if (ctx != null && ctx.getHasFlags()) {
+        ctx.setFlags(ctx.getFlags()|(ctxdiv.getFlags() & (
+            EContext.FlagUnderflow |
+            EContext.FlagSubnormal | EContext.FlagInexact |
+            EContext.FlagRounded | EContext.FlagClamped)));
       }
       return this.RoundToPrecision(r, ctx);
     }
