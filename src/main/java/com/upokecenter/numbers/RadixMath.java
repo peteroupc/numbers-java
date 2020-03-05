@@ -119,7 +119,8 @@ at: http://peteroupc.github.io/
           int value = (1 + ((prec.AsInt32() * 631305) >> 21));
           result = new FastInteger(value);
         } else if (this.thisRadix == 10 && prec.CompareToInt(6432162) <= 0) {
-          int value = NumberUtility.ApproxLogTenOfTwo(prec.AsInt32());
+          // Approximation of ln(2)/ln(10)
+          int value = 1 + (int)(((long)prec.AsInt32() * 661971961083L) >> 41);
           result = new FastInteger(value);
         } else {
           return this.helper.GetDigitLength(
@@ -911,6 +912,10 @@ at: http://peteroupc.github.io/
     }
 
     public T Exp(T thisValue, EContext ctx) {
+      return this.Exp(thisValue, ctx, ctx == null ? null : ctx.getPrecision());
+    }
+
+    private T Exp(T thisValue, EContext ctx, EInteger workingPrecision) {
       if (ctx == null) {
         return this.SignalInvalidWithMessage(ctx, "ctx is null");
       }
@@ -950,17 +955,17 @@ at: http://peteroupc.github.io/
       int sign = this.helper.GetSign(thisValue);
       T one = this.helper.ValueOf(1);
       EInteger guardDigits = this.thisRadix == 2 ?
-          ctx.getPrecision().Add(10) : EInteger.FromInt32(10);
+          workingPrecision.Add(10) : EInteger.FromInt32(10);
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
-          ctx.getPrecision().Add(guardDigits))
+          workingPrecision.Add(guardDigits))
         .WithRounding(ERounding.HalfEven).WithBlankFlags();
       if (sign == 0) {
         thisValue = this.RoundToPrecision(one, ctxCopy);
       } else if (sign > 0 && this.compareTo(thisValue, one) <= 0) {
         T closeToZero = this.Divide(
           this.helper.ValueOf(1),
-          this.helper.ValueOf(0x1000),
+          this.helper.ValueOf(0x800),
           null);
         if (this.IsFinite(closeToZero) &&
             this.compareTo(thisValue, closeToZero) <= 0) {
@@ -987,13 +992,17 @@ at: http://peteroupc.github.io/
       } else if (sign < 0) {
         T closeToZero = this.Divide(
           this.helper.ValueOf(-1),
-          this.helper.ValueOf(0x1000),
+          this.helper.ValueOf(0x800),
           null);
+        // System.out.println("ctz="+closeToZero+", wp="+
+        // workingPrecision+
+        // " ctxp="+ctx.getPrecision());
         if (this.IsFinite(closeToZero) &&
             this.compareTo(thisValue, closeToZero) >= 0) {
           // Call ExpInternal for magnitudes close to 0, to avoid
           // issues when thisValue's magnitude is extremely
           // close to 0
+          // System.out.println("very ctx: thisValue="+thisValue);
           thisValue = this.ExpInternalVeryCloseToZero(
             thisValue,
             ctxdiv.getPrecision(),
@@ -1004,6 +1013,7 @@ at: http://peteroupc.github.io/
           }
           return thisValue;
         }
+        // System.out.println("ordinary: thisValue="+thisValue);
         // exp(x) = 1.Divide(exp)(-x) where x<0
         T val = this.Exp(this.NegateRaw(thisValue), ctxdiv);
         if ((ctxdiv.getFlags() & EContext.FlagOverflow) != 0 ||
@@ -2141,6 +2151,7 @@ at: http://peteroupc.github.io/
       // System.out.println("rounding="+ctxdiv.getRounding());
       // System.out.println("before mul="+lnresult);
       lnresult = this.Multiply(lnresult, pow, ctxdiv);
+      EInteger workingPrecision = ctxdiv.getPrecision();
       // Now use original precision and rounding mode
       ctxdiv = ctx.WithBlankFlags();
       // System.out.println("before exp="+lnresult);
@@ -2758,6 +2769,13 @@ at: http://peteroupc.github.io/
             op2DigitBounds[1]);
         FastInteger op1ExpLowerBound = fastOp1Exp.Copy().Add(
             op1DigitBounds[0]);
+        /* System.out.println("bounds1="+op1DigitBounds[0]+" "+
+          op1DigitBounds[1]+ " bounds2="+op2DigitBounds[0]+" "+
+          op2DigitBounds[1]+" real1="+op1MantAbs.GetDigitCountAsEInteger()+
+          " real2="+op2MantAbs.GetDigitCountAsEInteger());
+        System.out.println("2ub="+op2ExpUpperBound +
+          " 1lb="+op1ExpLowerBound+" exp1="+fastOp1Exp+" exp2="+
+          fastOp2Exp); */
         if (op2ExpUpperBound.compareTo(op1ExpLowerBound) < 0) {
           // Operand 2's magnitude can't reach highest digit of operand 1,
           // meaning operand 1 has a greater magnitude
@@ -2767,6 +2785,8 @@ at: http://peteroupc.github.io/
             op1DigitBounds[1]);
         FastInteger op2ExpLowerBound = fastOp2Exp.Copy().Add(
             op2DigitBounds[0]);
+        // System.out.println("1ub="+op1ExpUpperBound +
+        // " 2lb="+op2ExpLowerBound);
         if (op1ExpUpperBound.compareTo(op2ExpLowerBound) < 0) {
           // Operand 1's magnitude can't reach highest digit of operand 2,
           // meaning operand 2 has a greater magnitude
@@ -2778,8 +2798,8 @@ at: http://peteroupc.github.io/
               op1MantAbs.GetUnsignedBitLengthAsInt64());
         System.out.println(
               "op2 digits=("+op2DigitBounds[0]+"/"+op2DigitBounds[1]+
-              ") exp="+fastOp2Exp+ op2MantAbs.GetUnsignedBitLengthAsInt64());
-        */ FastInteger precision1 =
+              ") exp="+fastOp2Exp+ op2MantAbs.GetUnsignedBitLengthAsInt64());*/
+        FastInteger precision1 =
           op1DigitBounds[0].compareTo(op1DigitBounds[1]) == 0 ?
           op1DigitBounds[0] : helper.GetDigitLength(op1MantAbs);
         FastInteger precision2 =
@@ -3964,9 +3984,12 @@ at: http://peteroupc.github.io/
       T thisValue,
       EInteger workingPrecision,
       EContext ctx) {
+      // NOTE: Assumes 'thisValue' is very close to zero
+      // and either positive or negative.
       // System.out.println("ExpInternalVeryCloseToZero");
       T zero = this.helper.ValueOf(0);
-      if (this.compareTo(thisValue, zero) == 0) {
+      int cmpZero = this.compareTo(thisValue, zero);
+      if (cmpZero == 0) {
          // NOTE: Should not happen here, because
          // the check for zero should have happened earlier
          throw new IllegalStateException();
@@ -3979,7 +4002,6 @@ at: http://peteroupc.github.io/
         .WithRounding(ERounding.HalfEven);
       EInteger bigintN = EInteger.FromInt64(2);
       EInteger facto = EInteger.FromInt32(1);
-
       T guess;
       // Guess starts with thisValue
       guess = thisValue;
@@ -3989,6 +4011,7 @@ at: http://peteroupc.github.io/
       boolean more = true;
       int lastCompare = 0;
       int vacillations = 0;
+      int maxvac = cmpZero < 0 ? 10 : 3;
       while (true) {
         lastGuess = guess;
         // Iterate by:
@@ -4002,19 +4025,19 @@ at: http://peteroupc.github.io/
             this.helper.CreateNewWithFlags(facto, EInteger.FromInt32(0), 0),
             ctxdiv);
         T newGuess = this.Add(guess, tmp, ctxdiv);
-        // System.out.println("newguess " +
-        // this.helper.GetMantissa(newGuess));
+        // System.out.println("newguess " + newGuess);
         // System.out.println("newguessN " + NextPlus(newGuess,ctxdiv));
         {
           int guessCmp = this.compareTo(lastGuess, newGuess);
-          // System.out.println("guessCmp = " + guessCmp);
+          // System.out.println("guessCmp = " + guessCmp + ", vac=" + vacillations);
           if (guessCmp == 0) {
             more = false;
           } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
               guessCmp < 0)) {
             // Guesses are vacillating
             ++vacillations;
-            more &= vacillations <= 3 || guessCmp <= 0;
+            more &= vacillations <= maxvac ||
+               (cmpZero < 0 ? guessCmp >= 0 : guessCmp <= 0);
           }
           lastCompare = guessCmp;
         }

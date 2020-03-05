@@ -599,50 +599,6 @@ private NumberUtility() {
       return val;
     }
 
-    static int ApproxLogTenOfTwo(int bitlen) {
-      int bitlenLow = bitlen & 0xffff;
-      int bitlenHigh = (bitlen >> 16) & 0xffff;
-      short resultLow = 0;
-      short resultHigh = 0;
-      {
-        int p;
-        short c;
-        int d;
-        p = bitlenLow * 0x84fb;
-        d = ((int)p >> 16) & 0xffff;
-        c = (short)d;
-        d = ((int)d >> 16) & 0xffff;
-        p = bitlenLow * 0x209a;
-        p += ((int)c) & 0xffff;
-        c = (short)p;
-        d += ((int)p >> 16) & 0xffff;
-        p = bitlenHigh * 0x84fb;
-        p += ((int)c) & 0xffff;
-        d += ((int)p >> 16) & 0xffff;
-        c = (short)d;
-        d = ((int)d >> 16) & 0xffff;
-        p = bitlenLow * 0x9a;
-        p += ((int)c) & 0xffff;
-        c = (short)p;
-        d += ((int)p >> 16) & 0xffff;
-        p = bitlenHigh * 0x209a;
-        p += ((int)c) & 0xffff;
-        c = (short)p;
-        d += ((int)p >> 16) & 0xffff;
-        p = ((int)c) & 0xffff;
-        c = (short)p;
-        resultLow = c;
-        c = (short)d;
-        d = ((int)d >> 16) & 0xffff;
-        p = bitlenHigh * 0x9a;
-        p += ((int)c) & 0xffff;
-        resultHigh = (short)p;
-        int result = ((int)resultLow) & 0xffff;
-        result |= (((int)resultHigh) & 0xffff) << 16;
-        return (result & 0x7fffffff) >> 9;
-      }
-    }
-
     public static EInteger[] DecimalDigitLengthBoundsAsEI(EInteger ei) {
         long longBitLength = ei.GetUnsignedBitLengthAsInt64();
         if (longBitLength < 33) {
@@ -651,6 +607,7 @@ private NumberUtility() {
           return new EInteger[] { eintcnt, eintcnt };
         } else if (longBitLength <= 2135) {
           int bitlen = (int)longBitLength;
+          // Approximation of ln(2)/ln(10)
           int minDigits = 1 + (((bitlen - 1) * 631305) >> 21);
           int maxDigits = 1 + ((bitlen * 631305) >> 21);
           if (minDigits == maxDigits) {
@@ -664,8 +621,9 @@ private NumberUtility() {
           }
         } else if (longBitLength <= 6432162) {
           int bitlen = (int)longBitLength;
-          int minDigits = ApproxLogTenOfTwo(bitlen - 1);
-          int maxDigits = ApproxLogTenOfTwo(bitlen);
+          // Approximation of ln(2)/ln(10)
+          int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
+          int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
           if (minDigits == maxDigits) {
             EInteger eintcnt = EInteger.FromInt32(minDigits);
             return new EInteger[] { eintcnt, eintcnt };
@@ -702,8 +660,9 @@ private NumberUtility() {
           }
         } else if (longBitLength <= 6432162) {
           int bitlen = (int)longBitLength;
-          int minDigits = ApproxLogTenOfTwo(bitlen - 1);
-          int maxDigits = ApproxLogTenOfTwo(bitlen);
+          // Approximation of ln(2)/ln(10)
+          int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
+          int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
           if (minDigits == maxDigits) {
             FastInteger fi = new FastInteger(minDigits);
             return new FastInteger[] { fi, fi };
