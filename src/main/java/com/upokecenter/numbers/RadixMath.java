@@ -1033,8 +1033,34 @@ at: http://peteroupc.github.io/
       } else {
         T intpart = null;
         boolean haveIntPart = false;
-        if (this.compareTo(thisValue, this.helper.ValueOf(50000)) > 0 &&
-          ctx.getHasExponentRange()) {
+        if (ctx.getHasExponentRange() && this.thisRadix >= 2 &&
+            this.thisRadix <= 12 &&
+            this.compareTo(thisValue, this.helper.ValueOf(10)) > 0) {
+          // FastInteger[] precBounds = NumberUtility.DigitLengthBounds(
+            // this.helper, // this.helper.GetMantissa(thisValue));
+          // Calculated with ceil(ln(radix))+1 (radixes 0 and 1 are
+          // not used and have entries of 1)
+          int[] upperDivisors = {
+            1, 1, 71, 111, 140, 162, 181, 196, 209, 221, 232, 241, 250,
+          };
+          // Calculate an upper bound on the overflow threshold
+          // for exp
+          EInteger maxexp = ctx.getEMax().Add(ctx.getPrecision());
+          maxexp = maxexp.Multiply(upperDivisors[this.thisRadix])
+            .Divide(100).Add(2);
+          maxexp = EInteger.Max(EInteger.FromInt32(10), maxexp);
+          T mxe = this.helper.CreateNewWithFlags(
+            maxexp,
+            EInteger.FromInt32(0),
+            0);
+          if (this.compareTo(thisValue, mxe) > 0) {
+             // Greater than overflow bound, so this is an overflow
+             // System.out.println("thisValue > mxe: " + thisValue + " " + mxe);
+             return this.SignalOverflow(ctx, false);
+          }
+        }
+        if (ctx.getHasExponentRange() &&
+          this.compareTo(thisValue, this.helper.ValueOf(50000)) > 0) {
           // Try to check for overflow quickly
           // Do a trial powering using a lower number than e,
           // and a power of 50000
@@ -2108,7 +2134,7 @@ at: http://peteroupc.github.io/
         ctxdiv = ctxdiv.WithRounding(ctx.getRounding())
          .WithBlankFlags();
       } else {
-        ctxdiv = ctxdiv.WithRounding(ERounding.HalfEven)
+        ctxdiv = ctxdiv.WithRounding(ERounding.Up)
           .WithBlankFlags();
       }
       T lnresult = this.Ln(thisValue, ctxdiv);
