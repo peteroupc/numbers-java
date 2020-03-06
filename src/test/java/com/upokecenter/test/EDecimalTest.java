@@ -389,10 +389,10 @@ public void TestBadCompare() {
  Assert.fail();
  }
       digits = r.GetInt32(400) + 1;
-      ds2 += "." +DigitString(r, digits);
+      ds2 += "." + DigitString(r, digits);
       ed2 = EDecimal.FromString(ds2);
       if (!(ed1.CompareToValue(ed2) < 0)) {
- Assert.fail(ds1+"\n" +ds2);
+ Assert.fail(ds1 + "\n" + ds2);
  }
     } else if (cmp == 0) {
       EDecimal ed1 = EDecimal.FromString(ds1);
@@ -401,10 +401,10 @@ public void TestBadCompare() {
  Assert.fail();
  }
       digits = r.GetInt32(400) + 1;
-      ds2 += "." +DigitString(r, digits);
+      ds2 += "." + DigitString(r, digits);
       ed2 = EDecimal.FromString(ds2);
       if (!(ed1.CompareToValue(ed2) < 0)) {
- Assert.fail(ds1+"\n" +ds2);
+ Assert.fail(ds1 + "\n" + ds2);
  }
     } else {
       EDecimal ed1 = EDecimal.FromString(ds1);
@@ -413,10 +413,10 @@ public void TestBadCompare() {
  Assert.fail();
  }
       digits = r.GetInt32(400) + 1;
-      ds1 += "." +DigitString(r, digits);
+      ds1 += "." + DigitString(r, digits);
       ed1 = EDecimal.FromString(ds1);
       if (!(ed1.CompareToValue(ed2) > 0)) {
- Assert.fail(ds1+"\n" +ds2);
+ Assert.fail(ds1 + "\n" + ds2);
  }
     }
   }
