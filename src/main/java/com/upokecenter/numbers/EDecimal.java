@@ -5891,7 +5891,8 @@ NumberUtility.DecimalDigitLengthBoundsAsEI(umantissa);
           .RoundToPrecision(ec);
       }
       EContext b64 = EContext.Binary64;
-      if (ec != null && ec.getHasMaxPrecision() && ec.getHasExponentRange() &&
+      if (ec != null && ec.getHasMaxPrecision() &&
+        ec.getHasExponentRange() &&
         !ec.isSimplified() && ec.getEMax().compareTo(b64.getEMax()) <= 0 &&
         ec.getEMin().compareTo(b64.getEMin()) >= 0 &&
         ec.getPrecision().compareTo(b64.getPrecision()) <= 0) {
