@@ -17,8 +17,7 @@ A class that implements additional operations on arbitrary-precision decimal
 A class that implements additional operations on arbitrary-precision binary
  floating-point numbers.
 
-* [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -
-Represents an arbitrary-precision integer.
+* [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -  
 
 * [com.upokecenter.numbers.ERational](com.upokecenter.numbers.ERational.md) -  
 
