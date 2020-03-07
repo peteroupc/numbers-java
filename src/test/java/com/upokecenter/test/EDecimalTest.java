@@ -6434,7 +6434,7 @@ EDecimalTest.TestStringContextOneEFloat(str, ec);
           }
         }
         String sbs;
-        if (rand.UniformInt(100) < 90) {
+        if (rand.UniformInt(100) < 98) {
           StringBuilder sb = new StringBuilder();
           AppendDigits(sb, rand, prec, point);
           sb.append(rand.UniformInt(2) == 0 ? "E+" : "E-");
@@ -6449,7 +6449,9 @@ EDecimalTest.TestStringContextOneEFloat(str, ec);
         }
         for (int j = 0; j < econtexts.length; ++j) {
           ERounding rounding = roundings[rand.UniformInt(roundings.length)];
-          EContext ec = econtexts[j].WithRounding(rounding);
+          EContext ec = econtexts[j];
+          ERounding thisrounding = ec.getRounding();
+          ec = (rounding == thisrounding) ? ec : ec.WithRounding(rounding);
           if (efloat) {
             TestStringContextOneEFloat(sbs, ec);
           }

@@ -1,6 +1,6 @@
 package com.upokecenter.numbers;
 /*
-Written by Peter O. in 2013.
+Written by Peter O.
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
@@ -477,10 +477,8 @@ at: http://peteroupc.github.io/
     }
 
     static FastInteger FromInt64(long longVal) {
-      if (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) {
-        return new FastInteger((int)longVal);
-      }
-      return FromBig(EInteger.FromInt64(longVal));
+      return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
+FastInteger((int)longVal) : (FromBig(EInteger.FromInt64(longVal)));
     }
 
     static FastInteger FromBig(EInteger bigintVal) {
@@ -579,6 +577,11 @@ switch (this.integerMode) {
       return this;
     }
 
+    /**
+     * This is an internal API.
+     * @param val The parameter {@code val} is an internal value.
+     * @return A FastInteger object.
+     */
     FastInteger Multiply(int val) {
       if (val == 0) {
         this.smallValue = 0;
@@ -625,6 +628,10 @@ switch (this.integerMode) {
       return this;
     }
 
+    /**
+     * This is an internal API.
+     * @return A FastInteger object.
+     */
     FastInteger Negate() {
       switch (this.integerMode) {
         case 0:
@@ -651,6 +658,11 @@ switch (this.integerMode) {
       return this;
     }
 
+    /**
+     * This is an internal API.
+     * @param val The parameter {@code val} is an internal value.
+     * @return A FastInteger object.
+     */
     FastInteger Subtract(FastInteger val) {
       EInteger valValue;
       switch (this.integerMode) {
@@ -696,6 +708,11 @@ switch (this.integerMode) {
       return this;
     }
 
+    /**
+     * This is an internal API.
+     * @param val The parameter {@code val} is an internal value.
+     * @return A FastInteger object.
+     */
     FastInteger SubtractInt(int val) {
       if (val == Integer.MIN_VALUE) {
         return this.AddBig(ValueNegativeInt32MinValue);
@@ -715,6 +732,11 @@ switch (this.integerMode) {
       return this.AddInt(-val);
     }
 
+    /**
+     * This is an internal API.
+     * @param bigintVal The parameter {@code bigintVal} is an internal value.
+     * @return A FastInteger object.
+     */
     FastInteger AddBig(EInteger bigintVal) {
       switch (this.integerMode) {
         case 0: {
@@ -735,6 +757,11 @@ switch (this.integerMode) {
       return this;
     }
 
+    /**
+     * This is an internal API.
+     * @param bigintVal The parameter {@code bigintVal} is an internal value.
+     * @return A FastInteger object.
+     */
     FastInteger SubtractBig(EInteger bigintVal) {
       if (this.integerMode == 2) {
         this.largeValue = this.largeValue.Subtract(bigintVal);
@@ -1118,6 +1145,10 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       }
     }
 
+    /**
+     * This is an internal API.
+     * @return A text string.
+     */
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:
@@ -1130,6 +1161,10 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       }
     }
 
+    /**
+     * Gets an internal value.
+     * @return An internal value.
+     */
     final int signum() {
         switch (this.integerMode) {
           case 0:

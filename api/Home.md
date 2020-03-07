@@ -4,8 +4,7 @@
 Contains parameters for controlling the precision, rounding, and exponent
   range of arbitrary-precision numbers.
 
-* [com.upokecenter.numbers.EDecimal](com.upokecenter.numbers.EDecimal.md) -
-Represents an arbitrary-precision decimal floating-point number.
+* [com.upokecenter.numbers.EDecimal](com.upokecenter.numbers.EDecimal.md) -  
 
 * [com.upokecenter.numbers.EDecimals](com.upokecenter.numbers.EDecimals.md) -
 A class that implements additional operations on arbitrary-precision decimal
@@ -20,7 +19,8 @@ A class that implements additional operations on arbitrary-precision binary
 
 * [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -  
 
-* [com.upokecenter.numbers.ERational](com.upokecenter.numbers.ERational.md) -  
+* [com.upokecenter.numbers.ERational](com.upokecenter.numbers.ERational.md) -
+Represents an arbitrary-precision rational number.
 
 * [com.upokecenter.numbers.ERounding](com.upokecenter.numbers.ERounding.md) -
 Specifies the mode to use when "shortening" numbers that otherwise can't fit

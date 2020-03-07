@@ -1,6 +1,6 @@
 package com.upokecenter.numbers;
 /*
-Written by Peter O. in 2013.
+Written by Peter O.
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
@@ -228,6 +228,10 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       }
     }
 
+    /**
+     * This is an internal API.
+     * @return A FastIntegerFixed object.
+     */
     FastIntegerFixed Negate() {
       switch (this.integerMode) {
         case 0:
@@ -257,6 +261,10 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       return this.integerMode == 0 || this.largeValue.CanFitInInt32();
     }
 
+    /**
+     * This is an internal API.
+     * @return A text string.
+     */
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:

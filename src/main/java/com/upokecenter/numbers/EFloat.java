@@ -79,13 +79,36 @@ at: http://peteroupc.github.io/
    */
 
   public final class EFloat implements Comparable<EFloat> {
-    //----------------------------------------------------------------
+    //-----------------------------------------------
+    private static final int CacheFirst = -24;
+    private static final int CacheLast = 128;
+
+    private static final EFloat[] Cache = EFloatCache(CacheFirst,
+        CacheLast);
+
+    private static EFloat[] EFloatCache(int first, int last) {
+      EFloat[] cache = new EFloat[(last - first) + 1];
+      int i;
+      for (i = first; i <= last; ++i) {
+        if (i == 0) {
+          cache[i - first] = Zero;
+        } else if (i == 1) {
+          cache[i - first] = One;
+        } else if (i == 10) {
+          cache[i - first] = Ten;
+        } else {
+          cache[i - first] = new EFloat(
+            EInteger.FromInt32(Math.abs(i)),
+            EInteger.FromInt32(0),
+            (i < 0 ? BigNumberFlags.FlagNegative : 0)); } }
+      return cache;
+    }
 
     /**
      * A not-a-number value.
      */
 
-    public static final EFloat NaN = CreateWithFlags(
+    public static final EFloat NaN = new EFloat(
         EInteger.FromInt32(0),
         EInteger.FromInt32(0),
         BigNumberFlags.FlagQuietNaN);
@@ -94,7 +117,7 @@ at: http://peteroupc.github.io/
      * Negative infinity, less than any other number.
      */
 
-    public static final EFloat NegativeInfinity = CreateWithFlags(
+    public static final EFloat NegativeInfinity = new EFloat(
         EInteger.FromInt32(0),
         EInteger.FromInt32(0),
         BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
@@ -103,7 +126,7 @@ at: http://peteroupc.github.io/
      * Represents the number negative zero.
      */
 
-    public static final EFloat NegativeZero = CreateWithFlags(
+    public static final EFloat NegativeZero = new EFloat(
         EInteger.FromInt32(0),
         EInteger.FromInt32(0),
         BigNumberFlags.FlagNegative);
@@ -112,14 +135,16 @@ at: http://peteroupc.github.io/
      * Represents the number 1.
      */
 
-    public static final EFloat One =
-      EFloat.Create(EInteger.FromInt32(1), EInteger.FromInt32(0));
+    public static final EFloat One = new EFloat(
+        EInteger.FromInt32(1),
+        EInteger.FromInt32(0),
+        BigNumberFlags.FlagNegative);
 
     /**
      * Positive infinity, greater than any other number.
      */
 
-    public static final EFloat PositiveInfinity = CreateWithFlags(
+    public static final EFloat PositiveInfinity = new EFloat(
         EInteger.FromInt32(0),
         EInteger.FromInt32(0),
         BigNumberFlags.FlagInfinity);
@@ -130,7 +155,7 @@ at: http://peteroupc.github.io/
      * binary floating-point number.
      */
 
-    public static final EFloat SignalingNaN = CreateWithFlags(
+    public static final EFloat SignalingNaN = new EFloat(
         EInteger.FromInt32(0),
         EInteger.FromInt32(0),
         BigNumberFlags.FlagSignalingNaN);
@@ -139,15 +164,19 @@ at: http://peteroupc.github.io/
      * Represents the number 10.
      */
 
-    public static final EFloat Ten =
-      EFloat.Create(EInteger.FromInt32(10), EInteger.FromInt32(0));
+    public static final EFloat Ten = new EFloat(
+        EInteger.FromInt32(10),
+        EInteger.FromInt32(0),
+        0);
 
     /**
      * Represents the number 0.
      */
 
-    public static final EFloat Zero =
-      EFloat.Create(EInteger.FromInt32(0), EInteger.FromInt32(0));
+    public static final EFloat Zero = new EFloat(
+        EInteger.FromInt32(0),
+        EInteger.FromInt32(0),
+        0);
     //----------------------------------------------------------------
     private static final IRadixMath<EFloat> MathValue = new
 TrappableRadixMath<EFloat>(
@@ -259,8 +288,9 @@ TrappableRadixMath<EFloat>(
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
-      return Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
-    }
+      return (exponentSmall == 0 && mantissaSmall >= CacheFirst &&
+        mantissaSmall <= CacheLast) ? (Cache[mantissaSmall - CacheFirst]) :
+(Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall))); }
 
     /**
      * Returns a number with the value exponent*2^significand.
@@ -269,8 +299,9 @@ TrappableRadixMath<EFloat>(
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(long mantissaLong, long exponentLong) {
-      return Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong));
-    }
+      return (exponentLong == 0 && mantissaLong >= CacheFirst &&
+        mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong - CacheFirst]):
+(Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong))); }
 
     /**
      * Returns a number with the value exponent*2^significand.
@@ -279,17 +310,25 @@ TrappableRadixMath<EFloat>(
      * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(long mantissaLong, int exponentSmall) {
-      return Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall));
-    }
+      return (exponentSmall == 0 && mantissaLong >= CacheFirst &&
+        mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong - CacheFirst]):
+(Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall))); }
 
     /**
      * Returns a number with the value exponent*2^significand.
      * @param mantissa Desired value for the significand.
      * @param exponentSmall Desired value for the exponent.
      * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
      */
     public static EFloat Create(EInteger mantissa, int exponentSmall) {
-      return Create(mantissa, EInteger.FromInt32(exponentSmall));
+      if (mantissa == null) {
+        throw new NullPointerException("mantissa");
+      }
+      return (exponentSmall == 0 && mantissa.compareTo(CacheFirst) >= 0 &&
+        mantissa.compareTo(CacheLast) <= 0) ?
+Cache[mantissa.ToInt32Checked() - CacheFirst] : (Create(mantissa,
+  EInteger.FromInt32(exponentSmall)));
     }
 
     /**
@@ -297,9 +336,16 @@ TrappableRadixMath<EFloat>(
      * @param mantissa Desired value for the significand.
      * @param exponentLong Desired value for the exponent.
      * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
      */
     public static EFloat Create(EInteger mantissa, long exponentLong) {
-      return Create(mantissa, EInteger.FromInt64(exponentLong));
+      if (mantissa == null) {
+        throw new NullPointerException("mantissa");
+      }
+      return (exponentLong == 0 && mantissa.compareTo(CacheFirst) >= 0 &&
+        mantissa.compareTo(CacheLast) <= 0) ?
+Cache[mantissa.ToInt32Checked() - CacheFirst] : (Create(mantissa,
+  EInteger.FromInt64(exponentLong)));
     }
 
     /**
@@ -318,6 +364,10 @@ TrappableRadixMath<EFloat>(
       }
       if (exponent == null) {
         throw new NullPointerException("exponent");
+      }
+      if (exponent.isZero() && mantissa.compareTo(CacheFirst) >= 0 &&
+        mantissa.compareTo(CacheLast) <= 0) {
+        return Cache[mantissa.ToInt32Checked() - CacheFirst];
       }
       int sign = mantissa.signum();
       return new EFloat(
@@ -4121,7 +4171,7 @@ TrappableRadixMath<EFloat>(
        * @return An arbitrary-precision binary floating-point number.
        */
       public EFloat ValueOf(int val) {
-        return FromInt64(val);
+        return FromInt32(val);
       }
     }
 
@@ -4318,7 +4368,9 @@ TrappableRadixMath<EFloat>(
      * number.
      */
     public static EFloat FromInt32(int inputInt32) {
-      return FromEInteger(EInteger.FromInt32(inputInt32));
+      return (inputInt32 >= CacheFirst && inputInt32 <= CacheLast) ?
+Cache[inputInt32 - CacheFirst] :
+FromEInteger(EInteger.FromInt32(inputInt32));
     }
 
     /**
@@ -4374,7 +4426,9 @@ TrappableRadixMath<EFloat>(
      * number.
      */
     public static EFloat FromInt64(long inputInt64) {
-      return FromEInteger(EInteger.FromInt64(inputInt64));
+      return (inputInt64 >= CacheFirst && inputInt64 <= CacheLast) ?
+Cache[(int)inputInt64 - CacheFirst] :
+FromEInteger(EInteger.FromInt64(inputInt64));
     }
 
     // End integer conversions

@@ -801,6 +801,10 @@ Returns a number with the value exponent*2^significand.
 
 * An arbitrary-precision binary floating-point number.
 
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.
+
 ### Create
     public static EFloat Create​(EInteger mantissa, long exponentLong)
 Returns a number with the value exponent*2^significand.
@@ -814,6 +818,10 @@ Returns a number with the value exponent*2^significand.
 **Returns:**
 
 * An arbitrary-precision binary floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.
 
 ### Create
     public static EFloat Create​(EInteger mantissa, EInteger exponent)

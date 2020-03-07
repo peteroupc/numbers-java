@@ -158,7 +158,9 @@ Contains parameters for controlling the precision, rounding, and exponent
  Returns this object in a text form intended to be read by humans.
 * `<T> T TriggerTraps​(T result,
             EContext trappableContext)`<br>
- Not documented yet.
+ Throws trap exceptions if the given context has flags set that also have
+ traps enabled for them in this context, and adds the given context's
+ flags to this context if HasFlags for this context is true.
 * `EContext WithAdjustExponent​(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
@@ -758,19 +760,23 @@ Returns this context if it doesn't set traps, or a context without traps and
 
 ### TriggerTraps
     public <T> T TriggerTraps​(T result, EContext trappableContext)
-Not documented yet.
+Throws trap exceptions if the given context has flags set that also have
+ traps enabled for them in this context, and adds the given context's
+ flags to this context if HasFlags for this context is true. This is
+ not a general-purpose method; it is intended to support custom
+ implementations of arithmetic operations.
 
 **Type Parameters:**
 
-* <code>T</code> - Type parameter not documented yet.
+* <code>T</code> - Data type for the result of the operation.
 
 **Parameters:**
 
-* <code>result</code> - The parameter <code>result</code> is a ``0 object.
+* <code>result</code> - The result of the operation.
 
-* <code>trappableContext</code> - The parameter <code>trappableContext</code> is a
- Numbers.EContext object.
+* <code>trappableContext</code> - An arithmetic context, usually a context returned by
+ the GetNontrapping method. Can be null.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The parameter "result" if no trap exceptions were thrown.
