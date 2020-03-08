@@ -478,7 +478,7 @@ at: http://peteroupc.github.io/
 
     static FastInteger FromInt64(long longVal) {
       return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
-FastInteger((int)longVal) : (FromBig(EInteger.FromInt64(longVal)));
+FastInteger((int)longVal) : FromBig(EInteger.FromInt64(longVal));
     }
 
     static FastInteger FromBig(EInteger bigintVal) {

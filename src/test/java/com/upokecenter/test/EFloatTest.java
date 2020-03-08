@@ -1664,9 +1664,11 @@ import com.upokecenter.numbers.*;
         String msg = "str=" + str + "\nef=" + OutputEF(ef);
         Assert.fail(msg);
       } else {
-        if (!(ed.isNegative() == ef.isNegative())) {
- Assert.fail();
- }
+        if (ed.isNegative() != ef.isNegative()) {
+          String msg = "not negative str=" + str +
+              "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
         EInteger eimant = ef.Abs().getMantissa();
         long lmant = eimant.ToInt64Checked();
         int exp = ef.getExponent().ToInt32Checked();
@@ -1678,9 +1680,8 @@ import com.upokecenter.numbers.*;
           ++exp;
           lmant >>= 1;
         }
-        if (!(lmant < (1L << 53))) {
- Assert.fail();
- }
+        if (lmant >= (1L << 53)) {
+        }
         ERational ulp = PowerOfTwo(exp);
         ERational half = ulp.Divide(2);
         ERational binValue = ERational.FromInt64(lmant).Multiply(ulp);
@@ -1756,9 +1757,11 @@ EContext ec = EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
   false).WithExponentClamp(true).WithSimplified(false);
 EInteger
   emant =
+
   EInteger.FromString("88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888");
 EInteger
   eexp =
+
   EInteger.FromString("1000000000000000000000000000000000000000000000000000000000000");
 EFloat efmant = EFloat.FromEInteger(emant);
 EFloat efexp = EFloat.FromEInteger(eexp);

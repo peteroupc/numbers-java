@@ -3710,9 +3710,8 @@ at: http://peteroupc.github.io/
             EInteger[] divrem3 = absdivd.DivRem(absdivs);
             quo = divrem3[0];
             rem = divrem3[1];
-            if (ctx == EContext.Binary64 &&
-                quo.GetUnsignedBitLengthAsInt64() < 63 &&
-                rem.GetUnsignedBitLengthAsInt64() < 63) {
+            if (ctx == EContext.Binary64 && quo.CanFitInInt64() &&
+                rem.CanFitInInt64()) {
               long lquo = quo.ToInt64Checked();
               long lrem = rem.ToInt64Checked();
               int nexp = -dividendShift;
@@ -3722,7 +3721,7 @@ at: http://peteroupc.github.io/
                   lquo >>= 1;
                   ++nexp;
                 }
-                if ((lquo & 3L) != 0 && lrem == 0) {
+                if ((lquo & 3L) == 3 && lrem == 0) {
                   lquo >>= 1;
                   ++lquo;
                   ++nexp;
@@ -3731,6 +3730,10 @@ at: http://peteroupc.github.io/
                   ++lquo;
                   ++nexp;
                 } else {
+                  lquo >>= 1;
+                  ++nexp;
+                }
+                while (lquo >= (1L << 53)) {
                   lquo >>= 1;
                   ++nexp;
                 }
@@ -3740,9 +3743,8 @@ at: http://peteroupc.github.io/
                    resultNeg ? BigNumberFlags.FlagNegative : 0);
               }
             }
-            if (ctx == EContext.Binary32 &&
-                quo.GetUnsignedBitLengthAsInt64() < 63 &&
-                rem.GetUnsignedBitLengthAsInt64() < 63) {
+            if (ctx == EContext.Binary32 && quo.CanFitInInt64() &&
+                rem.CanFitInInt64()) {
               long lquo = quo.ToInt64Checked();
               long lrem = rem.ToInt64Checked();
               int nexp = -dividendShift;
@@ -3752,7 +3754,7 @@ at: http://peteroupc.github.io/
                   lquo >>= 1;
                   ++nexp;
                 }
-                if ((lquo & 3L) != 0 && lrem == 0) {
+                if ((lquo & 3L) == 3 && lrem == 0) {
                   lquo >>= 1;
                   ++lquo;
                   ++nexp;
@@ -3761,6 +3763,10 @@ at: http://peteroupc.github.io/
                   ++lquo;
                   ++nexp;
                 } else {
+                  lquo >>= 1;
+                  ++nexp;
+                }
+                while (lquo >= (1L << 24)) {
                   lquo >>= 1;
                   ++nexp;
                 }
