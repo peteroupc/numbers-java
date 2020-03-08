@@ -88,45 +88,45 @@ at: http://peteroupc.github.io/
      */
 
     public static final EFloat NaN = new EFloat(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        BigNumberFlags.FlagQuietNaN);
+      EInteger.FromInt32(0),
+      EInteger.FromInt32(0),
+      BigNumberFlags.FlagQuietNaN);
 
     /**
      * Negative infinity, less than any other number.
      */
 
     public static final EFloat NegativeInfinity = new EFloat(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
+      EInteger.FromInt32(0),
+      EInteger.FromInt32(0),
+      BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
 
     /**
      * Represents the number negative zero.
      */
 
     public static final EFloat NegativeZero = new EFloat(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        BigNumberFlags.FlagNegative);
+      EInteger.FromInt32(0),
+      EInteger.FromInt32(0),
+      BigNumberFlags.FlagNegative);
 
     /**
      * Represents the number 1.
      */
 
     public static final EFloat One = new EFloat(
-        EInteger.FromInt32(1),
-        EInteger.FromInt32(0),
-        0);
+      EInteger.FromInt32(1),
+      EInteger.FromInt32(0),
+      0);
 
     /**
      * Positive infinity, greater than any other number.
      */
 
     public static final EFloat PositiveInfinity = new EFloat(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        BigNumberFlags.FlagInfinity);
+      EInteger.FromInt32(0),
+      EInteger.FromInt32(0),
+      BigNumberFlags.FlagInfinity);
 
     /**
      * A not-a-number value that signals an invalid operation flag when it's passed
@@ -135,27 +135,27 @@ at: http://peteroupc.github.io/
      */
 
     public static final EFloat SignalingNaN = new EFloat(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        BigNumberFlags.FlagSignalingNaN);
+      EInteger.FromInt32(0),
+      EInteger.FromInt32(0),
+      BigNumberFlags.FlagSignalingNaN);
 
     /**
      * Represents the number 10.
      */
 
     public static final EFloat Ten = new EFloat(
-        EInteger.FromInt32(10),
-        EInteger.FromInt32(0),
-        0);
+      EInteger.FromInt32(10),
+      EInteger.FromInt32(0),
+      0);
 
     /**
      * Represents the number 0.
      */
 
     public static final EFloat Zero = new EFloat(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(0),
-        0);
+      EInteger.FromInt32(0),
+      EInteger.FromInt32(0),
+      0);
 
     private static final EFloat[] Cache = EFloatCache(CacheFirst,
         CacheLast);
@@ -182,7 +182,7 @@ at: http://peteroupc.github.io/
 
     //----------------------------------------------------------------
     private static final IRadixMath<EFloat> MathValue = new
-TrappableRadixMath<EFloat>(
+    TrappableRadixMath<EFloat>(
       new ExtendedOrSimpleRadixMath<EFloat>(new BinaryMathHelper()));
 
     static IRadixMath<EFloat> GetMathValue() {
@@ -292,8 +292,9 @@ TrappableRadixMath<EFloat>(
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
       return (exponentSmall == 0 && mantissaSmall >= CacheFirst &&
-        mantissaSmall <= CacheLast) ? (Cache[mantissaSmall - CacheFirst]) :
-(Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall))); }
+          mantissaSmall <= CacheLast) ? Cache[mantissaSmall - CacheFirst]:
+Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
+    }
 
     /**
      * Returns a number with the value exponent*2^significand.
@@ -303,8 +304,8 @@ TrappableRadixMath<EFloat>(
      */
     public static EFloat Create(long mantissaLong, long exponentLong) {
       return (exponentLong == 0 && mantissaLong >= CacheFirst &&
-        mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong - CacheFirst]):
-(Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong))); }
+          mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong -
+CacheFirst]) : (Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong))); }
 
     /**
      * Returns a number with the value exponent*2^significand.
@@ -314,8 +315,8 @@ TrappableRadixMath<EFloat>(
      */
     public static EFloat Create(long mantissaLong, int exponentSmall) {
       return (exponentSmall == 0 && mantissaLong >= CacheFirst &&
-        mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong - CacheFirst]):
-(Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall))); }
+          mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong -
+CacheFirst]) : (Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall))); }
 
     /**
      * Returns a number with the value exponent*2^significand.
@@ -351,9 +352,9 @@ TrappableRadixMath<EFloat>(
         throw new NullPointerException("mantissa");
       }
       return (exponentLong == 0 && mantissa.compareTo(CacheFirst) >= 0 &&
-        mantissa.compareTo(CacheLast) <= 0) ?
-Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
-  EInteger.FromInt64(exponentLong));
+          mantissa.compareTo(CacheLast) <= 0) ?
+        Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
+          EInteger.FromInt64(exponentLong));
     }
 
     /**
@@ -1490,7 +1491,7 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
       if (ctx != null && ctx.isSimplified()) {
         return this.RoundToPrecision(ctx)
           .CompareToTotal(other.RoundToPrecision(ctx));
-        } else {
+      } else {
         return this.CompareToTotal(other);
       }
     }
@@ -1529,7 +1530,7 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
       if (ctx != null && ctx.isSimplified()) {
         return this.RoundToPrecision(ctx)
           .CompareToTotalMagnitude(other.RoundToPrecision(ctx));
-        } else {
+      } else {
         return this.CompareToTotalMagnitude(other);
       }
     }
@@ -2248,7 +2249,7 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
       } else if (ctx.isSimplified()) {
         EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
         EFloat ret = value.PreRound(ctx).LogN(baseValue.PreRound(ctx),
-  tmpctx);
+            tmpctx);
         if (ctx.getHasFlags()) {
           int flags = ctx.getFlags();
           ctx.setFlags(flags | tmpctx.getFlags());
@@ -2261,7 +2262,7 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
         if (value.isZero()) {
           return baseValue.compareTo(1) < 0 ? EFloat.PositiveInfinity :
             EFloat.NegativeInfinity;
-          } else if (value.IsPositiveInfinity()) {
+        } else if (value.IsPositiveInfinity()) {
           return baseValue.compareTo(1) < 0 ? EFloat.NegativeInfinity :
             EFloat.PositiveInfinity;
         }
@@ -2283,7 +2284,7 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
           flags |= EContext.FlagRounded | EContext.FlagInexact;
           if (baseValue.Pow(ret).CompareToValue(value) == 0) {
             EFloat rtmp = ret.Quantize(EFloat.FromInt32(1),
-  ctx.WithNoFlags());
+                ctx.WithNoFlags());
             if (!rtmp.IsNaN()) {
               flags &= ~(EContext.FlagRounded | EContext.FlagInexact);
               ret = rtmp;
@@ -3471,9 +3472,9 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
       // Check whether rounding can be avoided for common cases
       // where the value already fits a double
       if (!thisValue.isFinite() ||
-          thisValue.unsignedMantissa.GetUnsignedBitLengthAsInt64() > 53 ||
-          thisValue.exponent.compareTo(-900) < 0 ||
-          thisValue.exponent.compareTo(900) > 0) {
+        thisValue.unsignedMantissa.GetUnsignedBitLengthAsInt64() > 53 ||
+        thisValue.exponent.compareTo(-900) < 0 ||
+        thisValue.exponent.compareTo(900) > 0) {
         thisValue = this.RoundToPrecision(EContext.Binary64);
       }
       if (!thisValue.isFinite()) {
@@ -3761,9 +3762,9 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
       // Check whether rounding can be avoided for common cases
       // where the value already fits a single
       if (!thisValue.isFinite() ||
-          thisValue.unsignedMantissa.compareTo(0x1000000) >= 0 ||
-          thisValue.exponent.compareTo(-95) < 0 ||
-          thisValue.exponent.compareTo(95) > 0) {
+        thisValue.unsignedMantissa.compareTo(0x1000000) >= 0 ||
+        thisValue.exponent.compareTo(-95) < 0 ||
+        thisValue.exponent.compareTo(95) > 0) {
         thisValue = this.RoundToPrecision(EContext.Binary32);
       }
       if (!thisValue.isFinite()) {
@@ -4376,12 +4377,12 @@ Cache[mantissa.ToInt32Checked() - CacheFirst] : Create(mantissa,
      * number.
      */
     public static EFloat FromInt32(int inputInt32) {
-if (inputInt32 >= CacheFirst && inputInt32 <= CacheLast) {
-  return Cache[inputInt32 - CacheFirst];
-}
+      if (inputInt32 >= CacheFirst && inputInt32 <= CacheLast) {
+        return Cache[inputInt32 - CacheFirst];
+      }
       if (inputInt32 == Integer.MIN_VALUE) {
-  return FromEInteger(EInteger.FromInt32(inputInt32));
-}
+        return FromEInteger(EInteger.FromInt32(inputInt32));
+      }
       return new EFloat(
           EInteger.FromInt32(Math.abs(inputInt32)),
           EInteger.FromInt32(0),
@@ -4441,12 +4442,12 @@ if (inputInt32 >= CacheFirst && inputInt32 <= CacheLast) {
      * number.
      */
     public static EFloat FromInt64(long inputInt64) {
-if (inputInt64 >= CacheFirst && inputInt64 <= CacheLast) {
-  return Cache[(int)inputInt64 - CacheFirst];
-}
+      if (inputInt64 >= CacheFirst && inputInt64 <= CacheLast) {
+        return Cache[(int)inputInt64 - CacheFirst];
+      }
       if (inputInt64 == Long.MIN_VALUE) {
-  return FromEInteger(EInteger.FromInt64(inputInt64));
-}
+        return FromEInteger(EInteger.FromInt64(inputInt64));
+      }
       return new EFloat(
           EInteger.FromInt64(Math.abs(inputInt64)),
           EInteger.FromInt32(0),

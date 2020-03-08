@@ -2805,8 +2805,8 @@ at: http://peteroupc.github.io/
           return (signA > 0) ? 1 : -1;
         }
         if (thisAdjExpBounds[1].signum() < 0 &&
-            thisAdjExpBounds[1].compareTo(-1000) < 0 &&
-            otherAdjExp.compareTo(-1000) < 0) {
+          thisAdjExpBounds[1].compareTo(-1000) < 0 &&
+          otherAdjExp.compareTo(-1000) < 0) {
           // Check the ratio of the negative binary exponent to
           // the negative decimal exponent.
           // If the ratio times 1000, rounded down, is less than 3321, the
@@ -2852,7 +2852,7 @@ at: http://peteroupc.github.io/
         EInteger[] thisAdjExpBounds = GetAdjustedExponentDecimalBounds(ed);
         EInteger otherAdjExp = GetAdjustedExponentBinary(ef);
         if (thisAdjExpBounds[0].signum() > 0 &&
-            thisAdjExpBounds[0].compareTo(otherAdjExp) >= 0) {
+          thisAdjExpBounds[0].compareTo(otherAdjExp) >= 0) {
           // This Object's adjusted exponent lower bound
           // is greater and is positive;
           // so this (decimal) Object's absolute value is greater,
@@ -2860,15 +2860,15 @@ at: http://peteroupc.github.io/
           return (signA > 0) ? 1 : -1;
         }
         if (thisAdjExpBounds[1].signum() > 0 &&
-            thisAdjExpBounds[1].compareTo(1000) < 0 &&
-            otherAdjExp.compareTo(4000) >= 0) {
+          thisAdjExpBounds[1].compareTo(1000) < 0 &&
+          otherAdjExp.compareTo(4000) >= 0) {
           // With these exponent combinations (using the adjusted exponent
           // upper bound), the binary's absolute
           // value is greater than the decimal's
           return (signA > 0) ? -1 : 1;
         }
         if (thisAdjExpBounds[0].signum() > 0 &&
-            thisAdjExpBounds[0].compareTo(1000) >= 0 &&
+          thisAdjExpBounds[0].compareTo(1000) >= 0 &&
           otherAdjExp.compareTo(1000) >= 0) {
           // Check the ratio of the binary exponent to the decimal exponent.
           // If the ratio times 1000, rounded down, is less than 3321, the
@@ -5288,57 +5288,57 @@ at: http://peteroupc.github.io/
             int divsCount = NumberUtility.BitLength(vtp);
             int dividendShift = (divdCount <= divsCount) ? ((divsCount -
                   divdCount) + 53 + 1) : Math.max(0,
-                  (53 + 1) - (divdCount - divsCount));
-                long lquo = -1;
-                long lrem = -1;
-                if (divsCount + dividendShift > 63) {
-    EInteger eim = EInteger.FromInt32(m).ShiftLeft(dividendShift);
-    EInteger[] divrem3 = eim.DivRem(EInteger.FromInt32(vtp));
-    EInteger equo = divrem3[0];
-    EInteger erem = divrem3[1];
-    if (equo.CanFitInInt64() && erem.CanFitInInt64()) {
-      lquo = equo.ToInt64Checked();
-      lrem = erem.ToInt64Checked();
-    }
-  } else {
-    long ldividend = ((long)m) << dividendShift;
-    lquo = ldividend / vtp;
-    lrem = ldividend - (lquo * vtp);
-  }
-  int nexp = -dividendShift;
-  if (lquo >= (1L << 53)) {
-    while (lquo >= (1L << 54)) {
-                  lrem |= lquo & 1L;
-                  lquo >>= 1;
-                  ++nexp;
-                }
-                if ((lquo & 3L) == 3 && lrem == 0) {
-                  lquo >>= 1;
-                  ++lquo;
-                  ++nexp;
-                } else if ((lquo & 1L) != 0 && lrem != 0) {
-                  lquo >>= 1;
-                  ++lquo;
-                  ++nexp;
-                } else {
-                  lquo >>= 1;
-                  ++nexp;
-                }
-                while (lquo >= (1L << 53)) {
-                  lquo >>= 1;
-                  ++nexp;
-                }
-                int mb0 = ((int)(lquo & 0xffffffffL));
-                int mb1 = ((int)((lquo >> 32) & 0xffffffffL));
-      // Clear the high bits where the exponent and sign are
-      mb1 &= 0xfffff;
-      // NOTE: Assumed not to be subnormal
-      mb1 |= (nexp + 1075) << 20;
-      if (this.isNegative()) {
-        mb1 |= ((int)(1 << 31));
-      }
-      return Extras.IntegersToDouble(mb0, mb1);
+                (53 + 1) - (divdCount - divsCount));
+            long lquo = -1;
+            long lrem = -1;
+            if (divsCount + dividendShift > 63) {
+              EInteger eim = EInteger.FromInt32(m).ShiftLeft(dividendShift);
+              EInteger[] divrem3 = eim.DivRem(EInteger.FromInt32(vtp));
+              EInteger equo = divrem3[0];
+              EInteger erem = divrem3[1];
+              if (equo.CanFitInInt64() && erem.CanFitInInt64()) {
+                lquo = equo.ToInt64Checked();
+                lrem = erem.ToInt64Checked();
               }
+            } else {
+              long ldividend = ((long)m) << dividendShift;
+              lquo = ldividend / vtp;
+              lrem = ldividend - (lquo * vtp);
+            }
+            int nexp = -dividendShift;
+            if (lquo >= (1L << 53)) {
+              while (lquo >= (1L << 54)) {
+                lrem |= lquo & 1L;
+                lquo >>= 1;
+                ++nexp;
+              }
+              if ((lquo & 3L) == 3 && lrem == 0) {
+                lquo >>= 1;
+                ++lquo;
+                ++nexp;
+              } else if ((lquo & 1L) != 0 && lrem != 0) {
+                lquo >>= 1;
+                ++lquo;
+                ++nexp;
+              } else {
+                lquo >>= 1;
+                ++nexp;
+              }
+              while (lquo >= (1L << 53)) {
+                lquo >>= 1;
+                ++nexp;
+              }
+              int mb0 = ((int)(lquo & 0xffffffffL));
+              int mb1 = ((int)((lquo >> 32) & 0xffffffffL));
+              // Clear the high bits where the exponent and sign are
+              mb1 &= 0xfffff;
+              // NOTE: Assumed not to be subnormal
+              mb1 |= (nexp + 1075) << 20;
+              if (this.isNegative()) {
+                mb1 |= ((int)(1 << 31));
+              }
+              return Extras.IntegersToDouble(mb0, mb1);
+            }
           }
         }
         if (this.exponent.CompareToInt(309) > 0) {
@@ -5508,58 +5508,58 @@ at: http://peteroupc.github.io/
               return this.isNegative() ? -dn : dn;
             }
 
-       int divdCount = NumberUtility.BitLength(m);
-       int divsCount = NumberUtility.BitLength(vtp);
+            int divdCount = NumberUtility.BitLength(m);
+            int divsCount = NumberUtility.BitLength(vtp);
             int dividendShift = (divdCount <= divsCount) ? ((divsCount -
                   divdCount) + 24 + 1) : Math.max(0,
-                  (24 + 1) - (divdCount - divsCount));
-                long lquo = -1;
-                long lrem = -1;
-                if (divsCount + dividendShift > 63) {
-    EInteger eim = EInteger.FromInt32(m).ShiftLeft(dividendShift);
-    EInteger[] divrem3 = eim.DivRem(EInteger.FromInt32(vtp));
-    EInteger equo = divrem3[0];
-    EInteger erem = divrem3[1];
-    if (equo.CanFitInInt64() && erem.CanFitInInt64()) {
-      lquo = equo.ToInt64Checked();
-      lrem = erem.ToInt64Checked();
-    }
-  } else {
-    long ldividend = ((long)m) << dividendShift;
-    lquo = ldividend / vtp;
-    lrem = ldividend - (lquo * vtp);
-  }
-  int nexp = -dividendShift;
-  if (lquo >= (1L << 24)) {
-    while (lquo >= (1L << 25)) {
-                  lrem |= lquo & 1L;
-                  lquo >>= 1;
-                  ++nexp;
-                }
-                if ((lquo & 3L) == 3 && lrem == 0) {
-                  lquo >>= 1;
-                  ++lquo;
-                  ++nexp;
-                } else if ((lquo & 1L) != 0 && lrem != 0) {
-                  lquo >>= 1;
-                  ++lquo;
-                  ++nexp;
-                } else {
-                  lquo >>= 1;
-                  ++nexp;
-                }
-                while (lquo >= (1L << 24)) {
-                  lquo >>= 1;
-                  ++nexp;
-                }
-                int smallmantissa = (int)(lquo & 0x7fffff);
-      // NOTE: Assumed not to be subnormal
-      smallmantissa |= (nexp + 150) << 23;
-      if (this.isNegative()) {
-        smallmantissa |= 1 << 31;
-      }
-      return Float.intBitsToFloat(smallmantissa);
+                (24 + 1) - (divdCount - divsCount));
+            long lquo = -1;
+            long lrem = -1;
+            if (divsCount + dividendShift > 63) {
+              EInteger eim = EInteger.FromInt32(m).ShiftLeft(dividendShift);
+              EInteger[] divrem3 = eim.DivRem(EInteger.FromInt32(vtp));
+              EInteger equo = divrem3[0];
+              EInteger erem = divrem3[1];
+              if (equo.CanFitInInt64() && erem.CanFitInInt64()) {
+                lquo = equo.ToInt64Checked();
+                lrem = erem.ToInt64Checked();
               }
+            } else {
+              long ldividend = ((long)m) << dividendShift;
+              lquo = ldividend / vtp;
+              lrem = ldividend - (lquo * vtp);
+            }
+            int nexp = -dividendShift;
+            if (lquo >= (1L << 24)) {
+              while (lquo >= (1L << 25)) {
+                lrem |= lquo & 1L;
+                lquo >>= 1;
+                ++nexp;
+              }
+              if ((lquo & 3L) == 3 && lrem == 0) {
+                lquo >>= 1;
+                ++lquo;
+                ++nexp;
+              } else if ((lquo & 1L) != 0 && lrem != 0) {
+                lquo >>= 1;
+                ++lquo;
+                ++nexp;
+              } else {
+                lquo >>= 1;
+                ++nexp;
+              }
+              while (lquo >= (1L << 24)) {
+                lquo >>= 1;
+                ++nexp;
+              }
+              int smallmantissa = (int)(lquo & 0x7fffff);
+              // NOTE: Assumed not to be subnormal
+              smallmantissa |= (nexp + 150) << 23;
+              if (this.isNegative()) {
+                smallmantissa |= 1 << 31;
+              }
+              return Float.intBitsToFloat(smallmantissa);
+            }
           }
         }
         if (this.exponent.CompareToInt(39) > 0) {
@@ -5673,7 +5673,7 @@ at: http://peteroupc.github.io/
     }
 
     private static EInteger[] GetAdjustedExponentDecimalBounds(
-        EDecimal ed) {
+      EDecimal ed) {
       if (!ed.isFinite()) {
         return new EInteger[] { EInteger.FromInt32(0), EInteger.FromInt32(0) };
       }
@@ -5682,7 +5682,7 @@ at: http://peteroupc.github.io/
       }
       EInteger retEInt = ed.getExponent();
       EInteger[] sigPrecBounds = NumberUtility.DecimalDigitLengthBoundsAsEI(
-        ed.getUnsignedMantissa());
+          ed.getUnsignedMantissa());
       EInteger eia = retEInt.Add(sigPrecBounds[0].Subtract(1));
       EInteger eib = retEInt.Add(sigPrecBounds[1].Subtract(1));
       return new EInteger[] {
@@ -5768,7 +5768,7 @@ at: http://peteroupc.github.io/
       } else {
         EInteger umantissa = this.getUnsignedMantissa();
         EInteger[] bounds =
-NumberUtility.DecimalDigitLengthBoundsAsEI(umantissa);
+          NumberUtility.DecimalDigitLengthBoundsAsEI(umantissa);
         EInteger digitCountUpper = bounds[1];
         EInteger digitCountLower = bounds[0];
         EInteger bigexponent = this.getExponent();
@@ -6005,7 +6005,7 @@ NumberUtility.DecimalDigitLengthBoundsAsEI(umantissa);
         ec.getPrecision().compareTo(b64.getPrecision()) <= 0) {
         // Quick check for overflow or underflow
         EInteger[] bounds =
-NumberUtility.DecimalDigitLengthBoundsAsEI(bigUnsignedMantissa);
+          NumberUtility.DecimalDigitLengthBoundsAsEI(bigUnsignedMantissa);
         EInteger digitCountUpper = bounds[1];
         EInteger adjexpLowerBound = bigintExp;
         EInteger adjexpUpperBound = bigintExp.Add(
@@ -6080,8 +6080,8 @@ NumberUtility.DecimalDigitLengthBoundsAsEI(bigUnsignedMantissa);
           EInteger bitprec = bigmantissa.GetUnsignedBitLengthAsEInteger();
           bitprec = EInteger.Max(bitprec, EInteger.FromInt32(53));
           return efNum.Divide(
-            efDen,
-            ec.WithBigPrecision(bitprec));
+              efDen,
+              ec.WithBigPrecision(bitprec));
         } else if (ec.getTraps() != 0) {
           EContext tctx = ec.GetNontrapping();
           EFloat ret = this.ToEFloat(tctx);
@@ -6654,7 +6654,7 @@ NumberUtility.DecimalDigitLengthBoundsAsEI(bigUnsignedMantissa);
         bigexponent = bigexponent.Abs();
         bigmantissa = bigmantissa.Abs();
         EInteger lowerBound =
-NumberUtility.DecimalDigitLengthBoundsAsEI(bigmantissa)[0];
+          NumberUtility.DecimalDigitLengthBoundsAsEI(bigmantissa)[0];
         if (lowerBound.Subtract(bigexponent).compareTo(maxDigits) > 0) {
           throw new ArithmeticException("Value out of range");
         }

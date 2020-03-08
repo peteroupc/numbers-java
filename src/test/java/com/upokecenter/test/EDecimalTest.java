@@ -5663,17 +5663,17 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestStringContextSpecific4e() {
-EContext ec = EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+  EContext ec = EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
   1023).WithRounding(
   ERounding.Down).WithAdjustExponent(
   false).WithExponentClamp(true).WithSimplified(false);
-String str = TestCommon.Repeat("8", 257) + "." +
+  String str = TestCommon.Repeat("8", 257) + "." +
 TestCommon.Repeat("8",
   120) + "E+60";
-EFloat ef = EFloat.FromString(str, ec);
-EFloat ef2 = EDecimal.FromString(str).ToEFloat(ec);
-Assert.assertEquals(ef, ef2);
-EDecimalTest.TestStringContextOneEFloat(str, ec);
+  EFloat ef = EFloat.FromString(str, ec);
+  EFloat ef2 = EDecimal.FromString(str).ToEFloat(ec);
+  Assert.assertEquals(ef, ef2);
+  EDecimalTest.TestStringContextOneEFloat(str, ec);
     }
 
     @Test
@@ -5778,46 +5778,33 @@ EDecimalTest.TestStringContextOneEFloat(str, ec);
       }
     }
 
+    public static void TestStringContextOne(
+      String str,
+      EContext ec) {
+      TestStringContextOne(str, null, ec);
+    }
+
     // Test potential cases where FromString is implemented
     // to take context into account when building the EDecimal
-    public static void TestStringContextOne(String str, EContext ec) {
+    public static void TestStringContextOne(
+      String str,
+      EDecimal ed,
+      EContext ec) {
       if (ec == null) {
         throw new NullPointerException("ec");
       }
+      // System.out.println("TestStringContextOne length="+str.length());
       EContext noneRounding = ec.WithRounding(
           ERounding.None).WithTraps(EContext.FlagInvalid);
       EContext downRounding = ec.WithRounding(ERounding.Down);
-      EDecimal ed, ed2;
-      // System.out.print("TestStringContextOne ---- ec=" + (ec));
-      // swUnopt.Restart();
-      ed = EDecimal.FromString(str);
-      EDecimal edorig = ed;
-      // swUnoptRound.Restart();
-      ed = ed.RoundToPrecision(ec);
-      /*
-       swUnoptRound.Stop();
-       swUnopt.Stop();
-       swOpt2.Restart();
-      */
-      ed2 = EDecimal.FromString(str, ec);
-      /*
-      swOpt2.Stop();
-      unoptTime+=swUnopt.getElapsedMilliseconds();
-      unoptRoundTime+=swUnoptRound.getElapsedMilliseconds();
-      optTime+=swOpt2.getElapsedMilliseconds();
-      if (swUnopt.getElapsedMilliseconds()>100 &&
-         swUnopt.getElapsedMilliseconds()/4 <= swOpt2.getElapsedMilliseconds()) {
-       String bstr = str.substring(0, Math.min(str.length(), 200)) +
-         (str.length() > 200 ? "..." : "");
-       String edstr = ed.toString();
-       edstr = edstr.substring(0, Math.min(edstr.length(), 200)) +
-         (edstr.length() > 200 ? "..." : "");
-       System.out.println(bstr +"\nresult=" + edstr + "\n" + ECString(ec)
-      +"\nunopt="+
-            swUnopt.getElapsedMilliseconds()+" ms; opt="+swOpt2.getElapsedMilliseconds());
+      EDecimal ed2;
+      ed = (ed == null) ? (EDecimal.FromString(str)) : ed;
+      if (ed == null) {
+        Assert.fail();
       }
-      */
-
+      EDecimal edorig = ed;
+      ed = ed.RoundToPrecision(ec);
+      ed2 = EDecimal.FromString(str, ec);
       EDecimal ef3 = EDecimal.NaN;
       try {
         ef3 = EDecimal.FromString(str, noneRounding);
@@ -5911,15 +5898,23 @@ EDecimalTest.TestStringContextOneEFloat(str, ec);
 
     public static void TestStringContextOneEFloatSimple(String str, EContext
       ec) {
-      TestStringContextOneEFloat(str, ec, true);
+      TestStringContextOneEFloat(str, null, ec, true);
     }
 
     public static void TestStringContextOneEFloat(String str, EContext ec) {
-      TestStringContextOneEFloat(str, ec, false);
+      TestStringContextOneEFloat(str, null, ec, false);
     }
 
     public static void TestStringContextOneEFloat(
       String str,
+      EDecimal ed,
+      EContext ec) {
+      TestStringContextOneEFloat(str, ed, ec, false);
+    }
+
+    public static void TestStringContextOneEFloat(
+      String str,
+      EDecimal ed,
       EContext ec,
       boolean noLeadingZerosTest) {
       if (ec == null) {
@@ -5928,12 +5923,15 @@ EDecimalTest.TestStringContextOneEFloat(str, ec);
       if (str == null) {
         throw new NullPointerException("str");
       }
+      // System.out.println("EFloat size="+str.length());
       String leadingZeros = TestCommon.Repeat('0', 800);
       int[] counts = {
-        0, 1, 2, 4, 6, 8, 10, 50, 100, 200, 300, 400,
-        500, 600, 700, 800,
+        0, 1, 2, 50, 200, 600, 800,
       };
-      EDecimal ed = EDecimal.FromString("xyzxyz" + str, 6, str.length());
+      ed = (ed == null) ? (EDecimal.FromString("xyzxyz" + str, 6, str.length())) : ed;
+      if (ed == null) {
+        Assert.fail();
+      }
       EFloat ef = ed.ToEFloat(ec);
       for (int i = 0; i < counts.length; ++i) {
         // Parse a String with leading zeros (to test whether
@@ -6447,15 +6445,16 @@ EDecimalTest.TestStringContextOneEFloat(str, ec);
         } else {
           sbs = RandomObjects.RandomDecimalString(rand);
         }
+        EDecimal ed = EDecimal.FromString("xyzxyz" + sbs, 6, sbs.length());
         for (int j = 0; j < econtexts.length; ++j) {
           ERounding rounding = roundings[rand.UniformInt(roundings.length)];
           EContext ec = econtexts[j];
           ERounding thisrounding = ec.getRounding();
           ec = (rounding == thisrounding) ? ec : ec.WithRounding(rounding);
           if (efloat) {
-            TestStringContextOneEFloat(sbs, ec);
+            TestStringContextOneEFloat(sbs, ed, ec, false);
           }
-          TestStringContextOne(sbs, ec);
+          TestStringContextOne(sbs, ed, ec);
         }
       }
       TearDown();
