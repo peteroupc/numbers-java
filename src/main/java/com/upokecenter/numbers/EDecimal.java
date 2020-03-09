@@ -2241,7 +2241,7 @@ at: http://peteroupc.github.io/
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
           newScaleInt) : FastIntegerFixed.FromBig(newScale);
-      System.out.println("fim="+Chop(mant)+", exp=" + fastIntScale);
+      System.out.println("fim="+ Chop(mant) + ", exp=" + fastIntScale);
       if (mant == null) {
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);
       } else if (mant.CanFitInInt32()) {
@@ -2266,7 +2266,7 @@ at: http://peteroupc.github.io/
 
 private static String Chop(Object o) {
   String str = o == null ? "null" : o.toString();
-if (str.length() > 50) {
+  if (str.length() > 50) {
     str = str.substring(0,50) + "...";
   }
   return str;
