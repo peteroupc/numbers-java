@@ -2241,6 +2241,7 @@ at: http://peteroupc.github.io/
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
           newScaleInt) : FastIntegerFixed.FromBig(newScale);
+      System.out.println("fim="+Chop(mant)+", exp=" + fastIntScale);
       if (mant == null) {
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);
       } else if (mant.CanFitInInt32()) {
@@ -2253,11 +2254,23 @@ at: http://peteroupc.github.io/
         fastIntMant,
         fastIntScale,
         (byte)(negative ? BigNumberFlags.FlagNegative : 0));
+      // System.out.println("ret="+Chop(ret));
+      // System.out.println("ctx="+ctx+", "+(ctx != null));
       if (ctx != null) {
+        // System.out.println("rounding");
         ret = GetMathValue(ctx).RoundAfterConversion(ret, ctx);
+        // System.out.println("ret2="+Chop(ret));
       }
       return ret;
     }
+
+private static String Chop(Object o) {
+  String str = o == null ? "null" : o.toString();
+if (str.length() > 50) {
+    str = str.substring(0,50) + "...";
+  }
+  return str;
+}
 
     // 1 = Overflow; 2 = Underflow, adjust significand to 1; 0 = None;
     // 3 = Underflow, adjust significant to have precision

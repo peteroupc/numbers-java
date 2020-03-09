@@ -5793,7 +5793,10 @@ TestCommon.Repeat("8",
       if (ec == null) {
         throw new NullPointerException("ec");
       }
-      // System.out.println("TestStringContextOne length="+str.length());
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      System.out.println("TestStringContextOne length=" + str.length());
       EContext noneRounding = ec.WithRounding(
           ERounding.None).WithTraps(EContext.FlagInvalid);
       EContext downRounding = ec.WithRounding(ERounding.Down);
@@ -5805,6 +5808,8 @@ TestCommon.Repeat("8",
       EDecimal edorig = ed;
       ed = ed.RoundToPrecision(ec);
       ed2 = EDecimal.FromString(str, ec);
+      // System.out.println("exponent "+ed.getExponent()+
+      // " "+ed2.getExponent());
       EDecimal ef3 = EDecimal.NaN;
       try {
         ef3 = EDecimal.FromString(str, noneRounding);
@@ -5853,7 +5858,7 @@ TestCommon.Repeat("8",
           bstr += "# " + ecf.getPrecision() + " / " + ec.getPrecision() + "\r\n";
           bstr += DecTestUtil.ContextToDecTestForm(ecf);
           bstr += "untitled toSci " + str + " -> " + ed.toString() +
-            DecTestUtil.FlagsToString(ecf.getFlags()) + "\n";
+            " " + DecTestUtil.FlagsToString(ecf.getFlags()) + "\n";
           str = ed2.toString();
           bstr += "# exponent: actual " + ed2.getExponent() + ", expected " +
             ed.getExponent() + "\n";
@@ -5862,8 +5867,8 @@ TestCommon.Repeat("8",
         } else {
           bstr += "# " + str.substring(0,Math.min(str.length(), 200)) +
             (str.length() > 200 ? "..." : "");
-          bstr += "\n# " + ECString(ec);
         }
+        bstr += "\n# " + ECString(ec);
         throw new IllegalStateException(bstr);
       }
     }
@@ -6119,6 +6124,20 @@ TestCommon.Repeat("8",
       TestStringContextOne(sb.toString(), ec);
     }
 
+ @Test
+ public void TestStringContextSpecific7a() {
+  EContext ec =
+EContext.Unlimited.WithPrecision(
+  9).WithRounding(
+  ERounding.HalfEven).WithAdjustExponent(
+  true).WithExponentClamp(false).WithSimplified(false);
+  String str =
+  "-5488784432663500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+  EDecimal ed = EDecimal.FromString(str, ec);
+  Assert.assertEquals(EInteger.FromInt32(1567), ed.getExponent());
+  TestStringContextOne(str, ec);
+}
+
     @Test
     public void TestStringContextSpecific6() {
       StringBuilder sb = new StringBuilder();
@@ -6221,7 +6240,7 @@ TestCommon.Repeat("8",
           EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.Down).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
-        String str = "" + TestCommon.Repeat("6", 4605) + "." +
+        String str = TestCommon.Repeat("6", 4605) + "." +
           TestCommon.Repeat("6",
             1538) + "E-999";
         TestStringContextOneEFloat(str, ec);
@@ -6232,7 +6251,7 @@ TestCommon.Repeat("8",
           EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.Ceiling).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
-        String str = "" + TestCommon.Repeat("2", 6125) + "E-6143";
+        String str = TestCommon.Repeat("2", 6125) + "E-6143";
         TestStringContextOneEFloat(str, ec);
       }
       {
@@ -6240,7 +6259,7 @@ TestCommon.Repeat("8",
           EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
             1023).WithRounding(ERounding.Down).WithAdjustExponent(
             true).WithExponentClamp(true).WithSimplified(false);
-        String str = "" + TestCommon.Repeat("2", 6165) + "E-6144";
+        String str = TestCommon.Repeat("2", 6165) + "E-6144";
         TestStringContextOneEFloat(str, ec);
       }
       {
@@ -6330,6 +6349,7 @@ TestCommon.Repeat("8",
     public static void TestStringContextEDecimal() {
       EContext[] econtexts = {
         EContext.Basic,
+        /*
         EContext.Basic.WithExponentRange(-95, 96),
         EContext.Basic.WithAdjustExponent(false),
         EContext.Decimal32,
@@ -6346,6 +6366,7 @@ TestCommon.Repeat("8",
         EContext.Decimal64,
         EContext.Decimal64.WithAdjustExponent(false),
         EContext.Unlimited.WithExponentRange(-64, 64),
+        */
       };
       TestStringContextCore(econtexts, false);
     }
