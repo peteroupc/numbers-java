@@ -5465,6 +5465,9 @@ import com.upokecenter.numbers.*;
         // and mantissa
         EInteger mantBig = RandomObjects.RandomEInteger(fr);
         EInteger expBig = RandomObjects.RandomEInteger(fr);
+        // System.out.println("i="+i+" mant="+
+        // mantBig.GetUnsignedBitLengthAsInt64()+" expBig="+
+        // expBig.GetUnsignedBitLengthAsInt64());
         EDecimal dec = EDecimal.Create(mantBig, expBig);
         ExtraTest.TestStringEqualRoundTrip(dec);
       }
@@ -5663,17 +5666,18 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestStringContextSpecific4e() {
-  EContext ec = EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
-  1023).WithRounding(
-  ERounding.Down).WithAdjustExponent(
-  false).WithExponentClamp(true).WithSimplified(false);
-  String str = TestCommon.Repeat("8", 257) + "." +
-TestCommon.Repeat("8",
-  120) + "E+60";
-  EFloat ef = EFloat.FromString(str, ec);
-  EFloat ef2 = EDecimal.FromString(str).ToEFloat(ec);
-  Assert.assertEquals(ef, ef2);
-  EDecimalTest.TestStringContextOneEFloat(str, ec);
+      EContext ec =
+EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+          1023).WithRounding(
+          ERounding.Down).WithAdjustExponent(
+          false).WithExponentClamp(true).WithSimplified(false);
+      String str = TestCommon.Repeat("8", 257) + "." +
+        TestCommon.Repeat("8",
+          120) + "E+60";
+      EFloat ef = EFloat.FromString(str, ec);
+      EFloat ef2 = EDecimal.FromString(str).ToEFloat(ec);
+      Assert.assertEquals(ef, ef2);
+      EDecimalTest.TestStringContextOneEFloat(str, ec);
     }
 
     @Test
@@ -5796,7 +5800,7 @@ TestCommon.Repeat("8",
       if (str == null) {
         throw new NullPointerException("str");
       }
-      System.out.println("TestStringContextOne length=" + str.length());
+      // System.out.println("TestStringContextOne length=" + str.length());
       EContext noneRounding = ec.WithRounding(
           ERounding.None).WithTraps(EContext.FlagInvalid);
       EContext downRounding = ec.WithRounding(ERounding.Down);
@@ -6124,20 +6128,20 @@ TestCommon.Repeat("8",
       TestStringContextOne(sb.toString(), ec);
     }
 
- @Test
- public void TestStringContextSpecific7a() {
-  EContext ec =
-EContext.Unlimited.WithPrecision(
-  9).WithRounding(
-  ERounding.HalfEven).WithAdjustExponent(
-  true).WithExponentClamp(false).WithSimplified(false);
-  String str =
+    @Test
+    public void TestStringContextSpecific7a() {
+      EContext ec = EContext.Unlimited.WithPrecision(
+          9).WithRounding(
+          ERounding.HalfEven).WithAdjustExponent(
+          true).WithExponentClamp(false).WithSimplified(false);
+      String str =
 
-  "-5488784432663500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-  EDecimal ed = EDecimal.FromString(str, ec);
-  Assert.assertEquals(EInteger.FromInt32(1567), ed.getExponent());
-  TestStringContextOne(str, ec);
-}
+        "-54887844326635" + TestCommon.Repeat("0",
+          1562) + "." + TestCommon.Repeat("0", 613) + "";
+      EDecimal ed = EDecimal.FromString(str, ec);
+      Assert.assertEquals(EInteger.FromInt32(1567), ed.getExponent());
+      TestStringContextOne(str, ec);
+    }
 
     @Test
     public void TestStringContextSpecific6() {
