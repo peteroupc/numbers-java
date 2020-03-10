@@ -304,21 +304,28 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
      */
     public static EFloat Create(long mantissaLong, long exponentLong) {
       return (exponentLong == 0 && mantissaLong >= CacheFirst &&
-          mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong -
-CacheFirst]) : (Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong))); }
+          mantissaLong <= CacheLast) ? Cache[(int)mantissaLong - CacheFirst] :
+          Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt64(exponentLong));
+    }
 
-/// <summary>Returns a number with the value
     /**
-     *
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissaLong Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat Create(long mantissaLong, int exponentSmall) {
       return (exponentSmall == 0 && mantissaLong >= CacheFirst &&
-          mantissaLong <= CacheLast) ? (Cache[(int)mantissaLong -
-CacheFirst]) : (Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall))); }
+          mantissaLong <= CacheLast) ? Cache[(int)mantissaLong - CacheFirst] :
+          Create(EInteger.FromInt64(mantissaLong), EInteger.FromInt32(exponentSmall));
+    }
 
-/// <summary>Returns a number with the value
     /**
-     *
+     * Returns a number with the value exponent*2^significand.
+     * @param mantissa Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
      */
     public static EFloat Create(EInteger mantissa, int exponentSmall) {
       if (mantissa == null) {
