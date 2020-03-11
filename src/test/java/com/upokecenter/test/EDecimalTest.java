@@ -3765,17 +3765,30 @@ import com.upokecenter.numbers.*;
       return edecarr;
     }
 
-    private static final EDecimal[] UlpTable = MakeUlpTable();
+    private static final Object UlpSync = new Object();
+    private static EDecimal[] valueUlpTable = null;
 
     private static EDecimal GetHalfUlp(double dbl) {
-      long value = Double.doubleToRawLongBits(dbl);
-      int exponent = (int)((value >> 52) & 0x7ffL);
-      if (exponent == 0) {
-        return UlpTable[exponent];
-      } else if (exponent == 2047) {
-        throw new IllegalArgumentException("dbl is non-finite");
-      } else {
-        return UlpTable[exponent - 1];
+      synchronized (UlpSync) {
+        valueUlpTable = (valueUlpTable == null) ? ((new EDecimal[2048])) : valueUlpTable;
+        long value = Double.doubleToRawLongBits(dbl);
+        int exponent = (int)((value >> 52) & 0x7ffL);
+        if (exponent == 0) {
+          if (valueUlpTable[exponent] == null) {
+            valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
+               .ToEDecimal();
+          }
+          return valueUlpTable[exponent];
+        } else if (exponent == 2047) {
+          throw new IllegalArgumentException("dbl is non-finite");
+        } else {
+          int e1 = exponent - 1;
+          if (valueUlpTable[e1] == null) {
+            valueUlpTable[e1] = EFloat.Create(1, e1 - 1075)
+               .ToEDecimal();
+          }
+          return valueUlpTable[e1];
+        }
       }
     }
 
@@ -3783,11 +3796,11 @@ import com.upokecenter.numbers.*;
       int value = Float.floatToRawIntBits(sng);
       int exponent = (int)((value >> 23) & 0xff);
       if (exponent == 0) {
-        return UlpTable[exponent + 925];
+        return valueUlpTable[exponent + 925];
       } else if (exponent == 255) {
         throw new IllegalArgumentException("sng is non-finite");
       } else {
-        return UlpTable[exponent + 924];
+        return valueUlpTable[exponent + 924];
       }
     }
 
@@ -5446,6 +5459,13 @@ import com.upokecenter.numbers.*;
       }
     }
 
+    private static EInteger RandomEIntegerShort(
+      IRandomGenExtended rg) {
+      byte[] bytes = RandomObjects.RandomByteStringShort(rg);
+      return (bytes.length == 0) ? EInteger.FromInt32(0) :
+         EInteger.FromBytes(bytes, true);
+    }
+
     @Test
     public void TestToString() {
       for (int i = 0; i < ValueTestStrings.length; i += 4) {
@@ -5463,16 +5483,12 @@ import com.upokecenter.numbers.*;
       for (int i = 0; i < 1000; ++i) {
         // Generate arbitrary-precision integers for exponent
         // and mantissa
-        EInteger mantBig = RandomObjects.RandomEInteger(fr);
-        EInteger expBig = RandomObjects.RandomEInteger(fr);
-        // System.out.println("i="+i+" mant="+
-        // mantBig.GetUnsignedBitLengthAsInt64()+" expBig="+
-        // expBig.GetUnsignedBitLengthAsInt64());
+        EInteger mantBig = RandomEIntegerShort(fr);
+        EInteger expBig = RandomEIntegerShort(fr);
+        System.out.println("i=" + i + " mant=" +
+         mantBig.GetUnsignedBitLengthAsInt64() + " expBig=" +
+         expBig.GetUnsignedBitLengthAsInt64());
         EDecimal dec = EDecimal.Create(mantBig, expBig);
-        ExtraTest.TestStringEqualRoundTrip(dec);
-      }
-      for (int i = 0; i < 1000; ++i) {
-        EDecimal dec = RandomObjects.RandomEDecimal(fr);
         ExtraTest.TestStringEqualRoundTrip(dec);
       }
     }

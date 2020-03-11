@@ -2934,9 +2934,14 @@ import com.upokecenter.numbers.*;
         } while (bigA.compareTo(bigB) <= 0);
         TestMultiplyDivideOne(bigA, bigB);
       }
-      for (int i = 0; i < 10000; ++i) {
+      for (int i = 0; i < 100; ++i) {
         EInteger bigA = RandomObjects.RandomEInteger(r);
         EInteger bigB = RandomObjects.RandomEInteger(r);
+        TestMultiplyDivideOne(bigA, bigB);
+      }
+      for (int i = 0; i < 10000; ++i) {
+        EInteger bigA = RandomObjects.RandomEIntegerSmall(r);
+        EInteger bigB = RandomObjects.RandomEIntegerSmall(r);
         TestMultiplyDivideOne(bigA, bigB);
       }
       TestMultiplyDivideOne(EInteger.FromInt32(-985), EInteger.FromInt32(0));

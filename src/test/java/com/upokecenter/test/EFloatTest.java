@@ -1626,12 +1626,6 @@ import com.upokecenter.numbers.*;
             Assert.fail(msg);
           }
         }
-        /* if (diffValue.Abs().compareTo(half) < 0) {
-          String msg = "str=" + str + "\nef=" + OutputEF(ef) +
-            "\nmant=" + lmant + "\nexp=" + exp;
-          Assert.fail(msg);
-        }
-        */
       }
     }
 
