@@ -2759,12 +2759,13 @@ import com.upokecenter.numbers.*;
 
     private static EInteger WordAlignedInteger(RandomGenerator r) {
       int size = r.UniformInt(150) + 1;
-      EInteger ei = EInteger.FromInt32(0);
+      byte[] bytes = new byte[size * 2 + 1];
       for (int i = 0; i < size; ++i) {
-        ei = ei.ShiftLeft(16).Add(EInteger.FromInt32(r.UniformInt(0x10000) |
-              0x8000));
+        int ex = r.UniformInt(0x10000) | 0x8000;
+        bytes[2*i] = (byte)(ex & 0xff);
+        bytes[2*i + 1] = (byte)((ex >> 8) & 0xff);
       }
-      return ei;
+      return EInteger.FromBytes(bytes, true);
     }
 
     private static EInteger FuzzInteger(

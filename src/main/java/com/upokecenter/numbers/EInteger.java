@@ -1319,15 +1319,23 @@ at: http://peteroupc.github.io/
       int factor2Count) {
       int a = 0;
       int b = 0;
-      int cc = 0;
       int SMask = ShortMask;
+      int cc = 0;
+      if (factor1 == 0) {
+        for (int i = 0; i < factor2Count; ++i) {
+          b = ((int)minuendArr[minuendArrStart + i] & SMask) - cc;
+          resultArr[resultStart + i] = ((short)b);
+          cc = ((b >> 31) & 1);
+        }
+      } else {
       for (int i = 0; i < factor2Count; ++i) {
         a = ((((int)factor2[factor2Start + i]) & SMask) * factor1);
         a = (a + cc);
         b = ((int)minuendArr[minuendArrStart + i] & SMask) - (a & SMask);
         resultArr[resultStart + i] = ((short)b);
-        cc = ((a >> 16) & SMask) + ((b >> 31) & 1);
+        cc = (a >> 16) + ((b >> 31) & 1);
         cc &= SMask;
+      }
       }
       a = cc;
       b = ((int)minuendArr[minuendArrStart + factor2Count] & SMask) - a;
