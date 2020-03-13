@@ -501,7 +501,7 @@ FastInteger((int)longVal) : FromBig(EInteger.FromInt64(longVal));
       }
     }
 
-    int AsInt32() {
+    int ToInt32() {
       switch (this.integerMode) {
         case 0:
           return this.smallValue;
@@ -518,7 +518,7 @@ switch (this.integerMode) {
  case 0:
    return -ei.compareTo(this.smallValue);
  case 1:
-   return this.AsEInteger().compareTo(ei);
+   return this.ToEInteger().compareTo(ei);
  case 2:
    return this.largeValue.compareTo(ei);
  default: throw new IllegalStateException();
@@ -541,11 +541,11 @@ switch (this.integerMode) {
         case (1 << 2) | 1:
           return this.mnum.compareTo(val.mnum);
         case (1 << 2) | 2:
-          return this.AsEInteger().compareTo(val.largeValue);
+          return this.ToEInteger().compareTo(val.largeValue);
         case (2 << 2) | 0:
         case (2 << 2) | 1:
         case (2 << 2) | 2:
-          return this.largeValue.compareTo(val.AsEInteger());
+          return this.largeValue.compareTo(val.ToEInteger());
         default: throw new IllegalStateException();
       }
     }
@@ -577,11 +577,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
-     * @return A FastInteger object.
-     */
     FastInteger Multiply(int val) {
       if (val == 0) {
         this.smallValue = 0;
@@ -628,10 +623,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @return A FastInteger object.
-     */
     FastInteger Negate() {
       switch (this.integerMode) {
         case 0:
@@ -658,11 +649,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
-     * @return A FastInteger object.
-     */
     FastInteger Subtract(FastInteger val) {
       EInteger valValue;
       switch (this.integerMode) {
@@ -681,7 +667,7 @@ switch (this.integerMode) {
           } else {
             this.integerMode = 2;
             this.largeValue = EInteger.FromInt32(this.smallValue);
-            valValue = val.AsEInteger();
+            valValue = val.ToEInteger();
             this.largeValue = this.largeValue.Subtract(valValue);
           }
           break;
@@ -695,12 +681,12 @@ switch (this.integerMode) {
           } else {
             this.integerMode = 2;
             this.largeValue = this.mnum.ToEInteger();
-            valValue = val.AsEInteger();
+            valValue = val.ToEInteger();
             this.largeValue = this.largeValue.Subtract(valValue);
           }
           break;
         case 2:
-          valValue = val.AsEInteger();
+          valValue = val.ToEInteger();
           this.largeValue = this.largeValue.Subtract(valValue);
           break;
         default: throw new IllegalStateException();
@@ -708,11 +694,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param val The parameter {@code val} is an internal value.
-     * @return A FastInteger object.
-     */
     FastInteger SubtractInt(int val) {
       if (val == Integer.MIN_VALUE) {
         return this.AddBig(ValueNegativeInt32MinValue);
@@ -732,11 +713,6 @@ switch (this.integerMode) {
       return this.AddInt(-val);
     }
 
-    /**
-     * This is an internal API.
-     * @param bigintVal The parameter {@code bigintVal} is an internal value.
-     * @return A FastInteger object.
-     */
     FastInteger AddBig(EInteger bigintVal) {
       switch (this.integerMode) {
         case 0: {
@@ -757,11 +733,6 @@ switch (this.integerMode) {
       return this;
     }
 
-    /**
-     * This is an internal API.
-     * @param bigintVal The parameter {@code bigintVal} is an internal value.
-     * @return A FastInteger object.
-     */
     FastInteger SubtractBig(EInteger bigintVal) {
       if (this.integerMode == 2) {
         this.largeValue = this.largeValue.Subtract(bigintVal);
@@ -809,7 +780,7 @@ switch (this.integerMode) {
           } else {
             this.integerMode = 2;
             this.largeValue = EInteger.FromInt32(this.smallValue);
-            valValue = val.AsEInteger();
+            valValue = val.ToEInteger();
             this.largeValue = this.largeValue.Add(valValue);
           }
           break;
@@ -819,12 +790,12 @@ switch (this.integerMode) {
           } else {
             this.integerMode = 2;
             this.largeValue = this.mnum.ToEInteger();
-            valValue = val.AsEInteger();
+            valValue = val.ToEInteger();
             this.largeValue = this.largeValue.Add(valValue);
           }
           break;
         case 2:
-          valValue = val.AsEInteger();
+          valValue = val.ToEInteger();
           this.largeValue = this.largeValue.Add(valValue);
           break;
         default: throw new IllegalStateException();
@@ -1019,7 +990,7 @@ this.SubtractBig(EInteger.FromInt64(longVal));
         case 0:
           return true;
         case 1:
-          return this.AsEInteger().CanFitInInt64();
+          return this.ToEInteger().CanFitInInt64();
         case 2:
           return this.largeValue.CanFitInInt64();
 
@@ -1027,12 +998,12 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       }
     }
 
-    long AsInt64() {
+    long ToInt64() {
       switch (this.integerMode) {
         case 0:
           return (long)this.smallValue;
         case 1:
-          return this.AsEInteger().ToInt64Unchecked();
+          return this.ToEInteger().ToInt64Unchecked();
         case 2:
           return this.largeValue.ToInt64Unchecked();
 
@@ -1145,10 +1116,6 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       }
     }
 
-    /**
-     * This is an internal API.
-     * @return A text string.
-     */
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:
@@ -1161,10 +1128,6 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       }
     }
 
-    /**
-     * Gets an internal value.
-     * @return An internal value.
-     */
     final int signum() {
         switch (this.integerMode) {
           case 0:
@@ -1205,7 +1168,7 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       }
     }
 
-    EInteger AsEInteger() {
+    EInteger ToEInteger() {
       switch (this.integerMode) {
         case 0:
           return EInteger.FromInt32(this.smallValue);

@@ -3675,7 +3675,7 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
         DigitShiftAccumulator dsa = new DigitShiftAccumulator(dmant, 0, 0);
         dsa.ShiftToDigits(FastInteger.FromBig(roundedPrec), null, false);
         dmant = dsa.getShiftedInt();
-        dexp = dexp.Add(dsa.getDiscardedDigitCount().AsEInteger());
+        dexp = dexp.Add(dsa.getDiscardedDigitCount().ToEInteger());
         if (dsa.getLastDiscardedDigit() != 0 || dsa.getOlderDiscardedDigits() != 0) {
           if (dmant.Remainder(10).ToInt32Checked() != 9) {
             dmant = dmant.Add(1);
@@ -4083,7 +4083,7 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
         int olderDigits) {
         if (fastInt.CanFitInInt32()) {
           return new BitShiftAccumulator(
-              fastInt.AsInt32(),
+              fastInt.ToInt32(),
               lastDigit,
               olderDigits);
         } else {
@@ -4133,6 +4133,18 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
           return tmpbigint;
         }
         return power.ShiftEIntegerLeftByThis(tmpbigint);
+      }
+
+      public FastIntegerFixed MultiplyByRadixPowerFastInt(
+        FastIntegerFixed fbigint,
+        FastIntegerFixed fpower) {
+        if (fpower.signum() <= 0) {
+          return fbigint;
+        }
+        EInteger ei = this.MultiplyByRadixPower(
+          fbigint.ToEInteger(),
+          FastInteger.FromBig(fpower.ToEInteger()));
+        return FastIntegerFixed.FromBig(ei);
       }
 
       /**

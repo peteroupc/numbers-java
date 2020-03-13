@@ -1,6 +1,6 @@
 package com.upokecenter.numbers;
 /*
-Written by Peter O. in 2013.
+Written by Peter O.
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
@@ -78,7 +78,7 @@ private NumberUtility() {
       return i;
     }
 
-    static int BitPrecisionInt(int numberValue) {
+    static int BitLength(int numberValue) {
       if (numberValue == 0) {
         return 0;
       }
@@ -326,6 +326,24 @@ private NumberUtility() {
       }
       return (diffLong <= Integer.MAX_VALUE) ? FindPowerOfTen((int)diffLong) :
         FindPowerOfTenFromBig(EInteger.FromInt64(diffLong));
+    }
+
+    static EInteger MultiplyByPowerOfTen(EInteger v, int precision) {
+      if (precision < 0 || v.isZero()) {
+        return EInteger.FromInt32(0);
+      }
+      if (precision < ValueBigIntPowersOfTen.length) {
+        return v.Multiply(ValueBigIntPowersOfTen[precision]);
+      }
+      return (precision <= 94) ?
+v.Multiply(FindPowerOfFive(precision)).ShiftLeft(precision) :
+MultiplyByPowerOfFive(v, precision).ShiftLeft(precision);
+    }
+
+    static EInteger MultiplyByPowerOfTen(EInteger v, EInteger
+eprecision) {
+      return (eprecision.signum() < 0 || v.isZero()) ? EInteger.FromInt32(0) :
+MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
     }
 
     static EInteger MultiplyByPowerOfFive(EInteger v, int precision) {
@@ -599,6 +617,37 @@ private NumberUtility() {
       return val;
     }
 
+    public static int DecimalDigitLength(int v2) {
+        /*
+
+        */ if (v2 < 100000) {
+          return (v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
+                3 : ((v2 >= 10) ? 2 : 1)));
+        } else {
+          return (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
+                  10000000) ? 8 : ((v2 >= 1000000) ? 7 : 6)));
+        }
+    }
+
+    public static int DecimalDigitLength(long value) {
+      if (value >= 1000000000L) {
+        return (value >= 1000000000000000000L) ? 19 : ((value >=
+              100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
+              17 : ((value >= 1000000000000000L) ? 16 :
+                ((value >= 100000000000000L) ? 15 : ((value
+                      >= 10000000000000L) ?
+                    14 : ((value >= 1000000000000L) ? 13 : ((value
+                          >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+                          11 : ((value >= 1000000000L) ? 10 : 9)))))))));
+      } else {
+        int v2 = (int)value;
+        return (v2 >= 100000000) ? 9 : ((v2 >= 10000000) ? 8 : ((v2 >=
+                1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
+                    >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
+                      3 : ((v2 >= 10) ? 2 : 1)))))));
+      }
+    }
+
     public static EInteger[] DecimalDigitLengthBoundsAsEI(EInteger ei) {
         long longBitLength = ei.GetUnsignedBitLengthAsInt64();
         if (longBitLength < 33) {
@@ -635,7 +684,7 @@ private NumberUtility() {
           }
         } else {
           FastInteger[] fis = DecimalDigitLengthBounds(ei);
-          return new EInteger[] { fis[0].AsEInteger(), fis[1].AsEInteger() };
+          return new EInteger[] { fis[0].ToEInteger(), fis[1].ToEInteger() };
         }
     }
 
@@ -702,26 +751,92 @@ private NumberUtility() {
       }
     }
 
+    private static FastIntegerFixed FastPathDigitLength(
+      FastIntegerFixed fei,
+      int radix) {
+      if (fei.CanFitInInt32()) {
+        int ifei = fei.ToInt32();
+        if (ifei != Integer.MIN_VALUE) {
+          if (radix == 2) {
+            return FastIntegerFixed.FromInt32((int)BitLength(Math.abs(ifei)));
+          } else if (radix == 10) {
+              return FastIntegerFixed.FromInt32(
+                 (int)DecimalDigitLength(Math.abs(ifei)));
+           }
+        }
+      } else {
+        if (radix == 2) {
+          long i64 = fei.ToEInteger().GetUnsignedBitLengthAsInt64();
+          if (i64 != Long.MAX_VALUE) {
+            return FastIntegerFixed.FromInt64(i64);
+          }
+        } else if (radix == 10) {
+          EInteger ei = fei.ToEInteger();
+          long i64 = ei.GetUnsignedBitLengthAsInt64();
+          if (i64 < 33) {
+            // Can easily be calculated without estimation
+            return FastIntegerFixed.FromInt32(
+              (int)ei.GetDigitCountAsInt64());
+          } else if (i64 <= 2135) {
+            int bitlen = (int)i64;
+            // Approximation of ln(2)/ln(10)
+            int minDigits = 1 + (((bitlen - 1) * 631305) >> 21);
+            int maxDigits = 1 + ((bitlen * 631305) >> 21);
+            if (minDigits == maxDigits) {
+              return FastIntegerFixed.FromInt32(minDigits);
+            }
+          } else if (i64 <= 6432162) {
+            int bitlen = (int)i64;
+            // Approximation of ln(2)/ln(10)
+            int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >>
+41);
+            int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
+            if (minDigits == maxDigits) {
+              return FastIntegerFixed.FromInt32(minDigits);
+            }
+          }
+        }
+      }
+      return null;
+    }
+
+    public static <THelper> FastIntegerFixed[] DigitLengthBoundsFixed(
+      IRadixMathHelper<THelper> helper,
+      FastIntegerFixed fei) {
+      int radix = helper.GetRadix();
+      FastIntegerFixed fastpath = FastPathDigitLength(fei, radix);
+      if (fastpath != null) {
+        return new FastIntegerFixed[] { fastpath, fastpath };
+      }
+      if (radix == 10) {
+        EInteger[] fi = DecimalDigitLengthBoundsAsEI(fei.ToEInteger());
+        return new FastIntegerFixed[] {
+          FastIntegerFixed.FromBig(fi[0]),
+          FastIntegerFixed.FromBig(fi[1]),
+        };
+      } else {
+        FastInteger fi = helper.GetDigitLength(fei.ToEInteger());
+        FastIntegerFixed fif = FastIntegerFixed.FromFastInteger(fi);
+        return new FastIntegerFixed[] { fif, fif };
+      }
+    }
+
+    public static <THelper> FastIntegerFixed DigitLengthFixed(
+      IRadixMathHelper<THelper> helper,
+      FastIntegerFixed fei) {
+       FastIntegerFixed fastpath = FastPathDigitLength(fei, helper.GetRadix());
+       if (fastpath != null) {
+         return fastpath;
+       }
+       FastInteger fi = helper.GetDigitLength(fei.ToEInteger());
+       FastIntegerFixed fif = FastIntegerFixed.FromFastInteger(fi);
+       return fif;
+    }
+
     public static <THelper> FastInteger DigitLengthUpperBound(
       IRadixMathHelper<THelper> helper,
       EInteger ei) {
-      int radix = helper.GetRadix();
-      if (radix == 2) {
-        return FastInteger.FromBig(ei.GetUnsignedBitLengthAsEInteger());
-      } else if (radix == 10) {
-        EInteger bigBitLength = ei.GetUnsignedBitLengthAsEInteger();
-        if (bigBitLength.compareTo(2135) <= 0) {
-          // May overestimate by 1
-          return new FastInteger(1 + ((bigBitLength.ToInt32Checked() *
-                  631305) >> 21));
-        } else {
-          // Bit length is big enough that dividing it by 3 will not
-          // underestimate the true base-10 digit length.
-          return FastInteger.FromBig(bigBitLength.Divide(3));
-        }
-      } else {
-        return helper.GetDigitLength(ei);
-      }
+      return DigitLengthBounds(helper, ei)[1];
     }
 
     public static EInteger ReduceTrailingZeros(
@@ -745,7 +860,7 @@ private NumberUtility() {
         if (lowbit != Long.MAX_VALUE) {
           if (precision != null && digits.compareTo(precision) >= 0) {
             // Limit by digits minus precision
-            EInteger tmp = digits.AsEInteger().Subtract(precision.AsEInteger());
+            EInteger tmp = digits.ToEInteger().Subtract(precision.ToEInteger());
             if (tmp.compareTo(EInteger.FromInt64(lowbit)) < 0) {
               lowbit = tmp.ToInt64Checked();
             }
@@ -753,7 +868,7 @@ private NumberUtility() {
           if (idealExp != null && exponentMutable.compareTo(idealExp) <= 0) {
             // Limit by idealExp minus exponentMutable
             EInteger tmp =
-              idealExp.AsEInteger().Subtract(exponentMutable.AsEInteger());
+              idealExp.ToEInteger().Subtract(exponentMutable.ToEInteger());
             if (tmp.compareTo(EInteger.FromInt64(lowbit)) < 0) {
               lowbit = tmp.ToInt64Checked();
             }

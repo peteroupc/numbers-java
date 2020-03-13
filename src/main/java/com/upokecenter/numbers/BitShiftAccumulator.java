@@ -1,6 +1,6 @@
 package com.upokecenter.numbers;
 /*
-Written by Peter O. in 2013.
+Written by Peter O.
 Any copyright is dedicated to the Public Domain.
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
@@ -76,12 +76,12 @@ at: http://peteroupc.github.io/
         }
       }
       if (bits.CanFitInInt32()) {
-        this.ShiftToDigitsInt(bits.AsInt32());
+        this.ShiftToDigitsInt(bits.ToInt32());
         this.VerifyKnownLength();
       } else {
         this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
-        EInteger bigintDiff = this.knownBitLength.AsEInteger();
-        EInteger bitsBig = bits.AsEInteger();
+        EInteger bigintDiff = this.knownBitLength.ToEInteger();
+        EInteger bitsBig = bits.ToEInteger();
         bigintDiff = bigintDiff.Subtract(bitsBig);
         if (bigintDiff.signum() > 0) {
           // current length is greater than the
@@ -183,9 +183,9 @@ at: http://peteroupc.github.io/
         return;
       }
       if (fastint.CanFitInInt32()) {
-        this.ShiftRightInt(fastint.AsInt32());
+        this.ShiftRightInt(fastint.ToInt32());
       } else {
-        EInteger bi = fastint.AsEInteger();
+        EInteger bi = fastint.ToEInteger();
         while (bi.signum() > 0) {
           int count = 1000000;
           if (bi.compareTo(EInteger.FromInt64(1000000)) < 0) {
@@ -321,7 +321,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
       if (this.knownBitLength.CompareToInt(bits) > 0) {
         int bs = 0;
         if (this.knownBitLength.CanFitInInt32()) {
-          bs = this.knownBitLength.AsInt32();
+          bs = this.knownBitLength.ToInt32();
           bs -= bits;
         } else {
           FastInteger bitShift =
@@ -330,7 +330,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
             this.ShiftRight(bitShift);
             return;
           }
-          bs = bitShift.AsInt32();
+          bs = bitShift.ToInt32();
         }
         this.knownBitLength.SetInt(bits);
         this.discardedBitCount.AddInt(bs);
@@ -454,7 +454,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
       if (this.knownBitLength.CompareToInt(bits) <= 0) {
         return;
       }
-      int kbl = this.knownBitLength.AsInt32();
+      int kbl = this.knownBitLength.ToInt32();
       // Shift by the difference in bit length
       if (kbl > bits) {
         int bitShift = kbl - (int)bits;
