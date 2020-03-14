@@ -1643,6 +1643,7 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestEDecimalSingle() {
+      TestEDecimalSingleCore(-5.41868103E-41f, null);
       RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 255; ++i) {
         // Try a random float with a given
@@ -3769,16 +3770,20 @@ import com.upokecenter.numbers.*;
     private static EDecimal[] valueUlpTable = null;
 
     private static EDecimal GetHalfUlp(double dbl) {
-      synchronized (UlpSync) {
-        valueUlpTable = (valueUlpTable == null) ? ((new EDecimal[2048])) : valueUlpTable;
         long value = Double.doubleToRawLongBits(dbl);
         int exponent = (int)((value >> 52) & 0x7ffL);
+        synchronized (UlpSync) {
+        valueUlpTable = (valueUlpTable == null) ? (new EDecimal[2048]) : valueUlpTable;
         if (exponent == 0) {
           if (valueUlpTable[exponent] == null) {
             valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
                .ToEDecimal();
           }
-          return valueUlpTable[exponent];
+          EDecimal ed = valueUlpTable[exponent];
+          if (ed == null) {
+            Assert.fail();
+          }
+          return ed;
         } else if (exponent == 2047) {
           throw new IllegalArgumentException("dbl is non-finite");
         } else {
@@ -3787,7 +3792,11 @@ import com.upokecenter.numbers.*;
             valueUlpTable[e1] = EFloat.Create(1, e1 - 1075)
                .ToEDecimal();
           }
-          return valueUlpTable[e1];
+          EDecimal ed = valueUlpTable[e1];
+          if (ed == null) {
+            Assert.fail();
+          }
+          return ed;
         }
       }
     }
@@ -3795,12 +3804,35 @@ import com.upokecenter.numbers.*;
     private static EDecimal GetHalfUlp(float sng) {
       int value = Float.floatToRawIntBits(sng);
       int exponent = (int)((value >> 23) & 0xff);
-      if (exponent == 0) {
-        return valueUlpTable[exponent + 925];
+
+      synchronized (UlpSync) {
+        valueUlpTable = (valueUlpTable == null) ? (new EDecimal[2048]) : valueUlpTable;
+        if (exponent == 0) {
+        exponent += 925;
+
+          if (valueUlpTable[exponent] == null) {
+            valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
+               .ToEDecimal();
+          }
+          EDecimal ed = valueUlpTable[exponent];
+          if (ed == null) {
+            Assert.fail();
+          }
+          return ed;
       } else if (exponent == 255) {
         throw new IllegalArgumentException("sng is non-finite");
       } else {
-        return valueUlpTable[exponent + 924];
+        exponent += 924;
+        if (valueUlpTable[exponent] == null) {
+            valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
+               .ToEDecimal();
+          }
+          EDecimal ed = valueUlpTable[exponent];
+          if (ed == null) {
+            Assert.fail();
+          }
+          return ed;
+      }
       }
     }
 
@@ -5414,6 +5446,9 @@ import com.upokecenter.numbers.*;
               edec.Abs(),
               SingleOverflowToInfinity);
           } else if (sng == 0.0f) {
+            if ((SingleUnderflowToZero)==null) {
+ Assert.fail("ufZero");
+ }
             TestCommon.CompareTestLessEqual(
               edec.Abs(),
               SingleUnderflowToZero);
@@ -5434,6 +5469,12 @@ import com.upokecenter.numbers.*;
             EDecimal halfUlp = GetHalfUlp(sng);
             EDecimal difference = EDecimal.FromSingle(sng).Abs()
               .Subtract(edec).Abs();
+            if ((difference)==null) {
+ Assert.fail("difference");
+ }
+            if ((halfUlp)==null) {
+ Assert.fail("halfUlp");
+ }
             TestCommon.CompareTestLessEqual(difference, halfUlp);
           }
         }
@@ -5533,7 +5574,7 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals((double)oldd, d, 0);
     }
 
-    private static void TestEDecimalSingleCore(float d, String s) {
+    static void TestEDecimalSingleCore(float d, String s) {
       float oldd = d;
       EDecimal bf = EDecimal.FromSingle(d);
       if (s != null) {

@@ -86,7 +86,7 @@ private NumberUtility() {
       {
         if ((numberValue >> 16) == 0) {
           numberValue <<= 16;
-          i -= 8;
+          i -= 16;
         }
         if ((numberValue >> 24) == 0) {
           numberValue <<= 8;
@@ -618,9 +618,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
     }
 
     public static int DecimalDigitLength(int v2) {
-        /*
-
-        */ if (v2 < 100000) {
+        if (v2 < 100000) {
           return (v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
                 3 : ((v2 >= 10) ? 2 : 1)));
         } else {
@@ -846,9 +844,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
       FastInteger digits,
       FastInteger precision,
       FastInteger idealExp) {
-      /*
-
-      */ if (bigmant.isZero()) {
+      if (bigmant.isZero()) {
         exponentMutable.SetInt(0);
         return bigmant;
       }

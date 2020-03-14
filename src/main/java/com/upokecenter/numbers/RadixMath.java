@@ -3943,11 +3943,12 @@ this.helper.GetDigitLength(op2Mantissa.ToEInteger());
             if (ctx.getHasFlags()) {
               ctx.setFlags(ctx.getFlags()|(ctxcopy.getFlags() & ~EContext.FlagRounded));
             }
-            return this.ReduceToPrecisionAndIdealExponent(
+            retval2 = this.ReduceToPrecisionAndIdealExponent(
                 retval2,
                 ctx,
                 rem.isZero() ? null : FastInteger.FromBig(eintPrecision),
                 expdiff);
+            return retval2;
           }
         }
         // Rest of method assumes unlimited precision
