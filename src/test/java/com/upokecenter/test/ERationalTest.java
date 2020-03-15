@@ -468,6 +468,11 @@ import com.upokecenter.numbers.*;
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
         ERational enumber = RandomObjects.RandomERational(fr);
+        boolean numDenClose = !enumber.isFinite() ||
+          enumber.getNumerator().GetUnsignedBitLengthAsEInteger()
+            .Subtract(enumber.getDenominator().GetUnsignedBitLengthAsEInteger())
+            .Abs().compareTo(130) < 0 ||
+            enumber.getDenominator().compareTo(enumber.getUnsignedNumerator()) >= 0;
         if (!enumber.isFinite()) {
           try {
             enumber.ToByteChecked();
@@ -571,9 +576,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromByte(enumber.ToByteUnchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromByte(enumber.ToByteUnchecked()));
+          }
           if (isInteger) {
             TestCommon.AssertEquals(
               eint,
@@ -593,9 +600,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromByte(enumber.ToByteChecked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromByte(enumber.ToByteUnchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromByte(enumber.ToByteUnchecked()));
+          }
           try {
             enumber.ToByteIfExact();
             Assert.fail("Should have failed");
@@ -616,7 +625,9 @@ import com.upokecenter.numbers.*;
             throw new IllegalStateException("", ex);
           }
           try {
-            enumber.ToByteUnchecked();
+if (numDenClose) {
+  enumber.ToByteUnchecked();
+}
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -653,9 +664,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
+          if (numDenClose) {
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Unchecked()));
+          }
           if (isInteger) {
             TestCommon.AssertEquals(
               eint,
@@ -675,9 +688,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromInt16(enumber.ToInt16Unchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromInt16(enumber.ToInt16Unchecked()));
+          }
           try {
             enumber.ToInt16IfExact();
             Assert.fail("Should have failed");
@@ -698,7 +713,9 @@ import com.upokecenter.numbers.*;
             throw new IllegalStateException("", ex);
           }
           try {
-            enumber.ToInt16Unchecked();
+if (numDenClose) {
+  enumber.ToInt16Unchecked();
+}
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -736,9 +753,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          }
           if (isInteger) {
             TestCommon.AssertEquals(
               eint,
@@ -758,9 +777,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt32(enumber.ToInt32Checked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromInt32(enumber.ToInt32Unchecked()));
+          }
           try {
             enumber.ToInt32IfExact();
             Assert.fail("Should have failed");
@@ -781,7 +802,9 @@ import com.upokecenter.numbers.*;
             throw new IllegalStateException("", ex);
           }
           try {
-            enumber.ToInt32Unchecked();
+if (numDenClose) {
+  enumber.ToInt32Unchecked();
+}
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -820,9 +843,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt64(enumber.ToInt64Checked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          }
           if (isInteger) {
             TestCommon.AssertEquals(
               eint,
@@ -842,9 +867,11 @@ import com.upokecenter.numbers.*;
           TestCommon.AssertEquals(
             eint,
             EInteger.FromInt64(enumber.ToInt64Checked()));
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          if (numDenClose) {
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromInt64(enumber.ToInt64Unchecked()));
+          }
           try {
             enumber.ToInt64IfExact();
             Assert.fail("Should have failed");
@@ -865,7 +892,9 @@ import com.upokecenter.numbers.*;
             throw new IllegalStateException("", ex);
           }
           try {
-            enumber.ToInt64Unchecked();
+if (numDenClose) {
+  enumber.ToInt64Unchecked();
+}
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
