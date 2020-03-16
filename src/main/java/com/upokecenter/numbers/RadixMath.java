@@ -2057,7 +2057,8 @@ at: http://peteroupc.github.io/
       if (isPowIntegral) {
         EInteger signedMant;
         // Special case for 1 in certain cases
-        if (this.compareTo(thisValue, this.helper.ValueOf(1)) == 0) {
+        if (this.compareTo(thisValue, this.helper.ValueOf(1)) == 0 &&
+            isPowIntegral) {
           EInteger thisExponent = this.helper.GetExponent(thisValue);
           if (thisExponent.signum() == 0) {
             return (!this.IsWithinExponentRangeForPow(pow, ctx)) ?
@@ -2103,8 +2104,9 @@ at: http://peteroupc.github.io/
         return this.PowerIntegral(thisValue, signedMant, ctx);
       }
       // Special case for 1
-      if (this.compareTo(thisValue, this.helper.ValueOf(1)) == 0 && powSign >
-        0) {
+      if (this.compareTo(thisValue, this.helper.ValueOf(1)) == 0
+        // && powSign > 0
+) {
         // System.out.println("Special case 1B");
         return (!this.IsWithinExponentRangeForPow(pow, ctx)) ?
           this.SignalInvalid(ctx) :
