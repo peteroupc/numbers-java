@@ -2619,6 +2619,13 @@ if (!(ef2.isFinite())) {
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
+      for (int i = 0; i < 1000; ++i) {
+RandomGenerator rg = new RandomGenerator();
+EInteger ei = RandomObjects.RandomEInteger(rg);
+EFloat ed = EFloat.FromEInteger(ei).ScaleByPowerOfTwo(
+   rg.UniformInt(20));
+Assert.assertEquals(ei, ed.ToEIntegerIfExact());
+}
     }
 
     @Test

@@ -483,10 +483,17 @@ import com.upokecenter.numbers.*;
 
     @Test(timeout = 100000)
     public void TestConversions() {
+      TestConversionsOne(EDecimal.FromString("4766857907817990.0000000000"));
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {
         EDecimal enumber = RandomObjects.RandomEDecimal(fr);
+        try {
         TestConversionsOne(enumber);
+ } catch (Exception ex) {
+        throw new IllegalStateException(
+           enumber.toString(),
+           ex);
+ }
       }
       TestConversionsOne(EDecimal.FromString("-0.8995"));
       TestConversionsOne(EDecimal.FromString("-4.061532283038E+14"));
@@ -3738,6 +3745,13 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
+      RandomGenerator rg = new RandomGenerator();
+      for (int i = 0; i < 1000; ++i) {
+ EInteger ei = RandomObjects.RandomEInteger(rg);
+ EDecimal ed = EDecimal.FromEInteger(ei).ScaleByPowerOfTen(
+   rg.UniformInt(20));
+ Assert.assertEquals(ei, ed.ToEIntegerIfExact());
+ }
     }
 
     private static final EDecimal DoubleUnderflowToZero =
@@ -3770,14 +3784,14 @@ import com.upokecenter.numbers.*;
     private static EDecimal[] valueUlpTable = null;
 
     private static EDecimal GetHalfUlp(double dbl) {
-        long value = Double.doubleToRawLongBits(dbl);
-        int exponent = (int)((value >> 52) & 0x7ffL);
-        synchronized (UlpSync) {
+      long value = Double.doubleToRawLongBits(dbl);
+      int exponent = (int)((value >> 52) & 0x7ffL);
+      synchronized (UlpSync) {
         valueUlpTable = (valueUlpTable == null) ? (new EDecimal[2048]) : valueUlpTable;
         if (exponent == 0) {
           if (valueUlpTable[exponent] == null) {
             valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
-               .ToEDecimal();
+              .ToEDecimal();
           }
           EDecimal ed = valueUlpTable[exponent];
           if (ed == null) {
@@ -3790,7 +3804,7 @@ import com.upokecenter.numbers.*;
           int e1 = exponent - 1;
           if (valueUlpTable[e1] == null) {
             valueUlpTable[e1] = EFloat.Create(1, e1 - 1075)
-               .ToEDecimal();
+              .ToEDecimal();
           }
           EDecimal ed = valueUlpTable[e1];
           if (ed == null) {
@@ -3808,31 +3822,31 @@ import com.upokecenter.numbers.*;
       synchronized (UlpSync) {
         valueUlpTable = (valueUlpTable == null) ? (new EDecimal[2048]) : valueUlpTable;
         if (exponent == 0) {
-        exponent += 925;
+          exponent += 925;
 
           if (valueUlpTable[exponent] == null) {
             valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
-               .ToEDecimal();
+              .ToEDecimal();
           }
           EDecimal ed = valueUlpTable[exponent];
           if (ed == null) {
             Assert.fail();
           }
           return ed;
-      } else if (exponent == 255) {
-        throw new IllegalArgumentException("sng is non-finite");
-      } else {
-        exponent += 924;
-        if (valueUlpTable[exponent] == null) {
+        } else if (exponent == 255) {
+          throw new IllegalArgumentException("sng is non-finite");
+        } else {
+          exponent += 924;
+          if (valueUlpTable[exponent] == null) {
             valueUlpTable[exponent] = EFloat.Create(1, exponent - 1075)
-               .ToEDecimal();
+              .ToEDecimal();
           }
           EDecimal ed = valueUlpTable[exponent];
           if (ed == null) {
             Assert.fail();
           }
           return ed;
-      }
+        }
       }
     }
 
@@ -5504,7 +5518,7 @@ import com.upokecenter.numbers.*;
       IRandomGenExtended rg) {
       byte[] bytes = RandomObjects.RandomByteStringShort(rg);
       return (bytes.length == 0) ? EInteger.FromInt32(0) :
-         EInteger.FromBytes(bytes, true);
+        EInteger.FromBytes(bytes, true);
     }
 
     @Test
@@ -5527,8 +5541,8 @@ import com.upokecenter.numbers.*;
         EInteger mantBig = RandomEIntegerShort(fr);
         EInteger expBig = RandomEIntegerShort(fr);
         System.out.println("i=" + i + " mant=" +
-         mantBig.GetUnsignedBitLengthAsInt64() + " expBig=" +
-         expBig.GetUnsignedBitLengthAsInt64());
+          mantBig.GetUnsignedBitLengthAsInt64() + " expBig=" +
+          expBig.GetUnsignedBitLengthAsInt64());
         EDecimal dec = EDecimal.Create(mantBig, expBig);
         ExtraTest.TestStringEqualRoundTrip(dec);
       }
@@ -5724,7 +5738,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestStringContextSpecific4e() {
       EContext ec =
-EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+        EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
           1023).WithRounding(
           ERounding.Down).WithAdjustExponent(
           false).WithExponentClamp(true).WithSimplified(false);
@@ -6283,18 +6297,18 @@ EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
       }
     }
 
- @Test
- public void TestPowerOneExpNonInteger() {
-  // In the General Decimal Arithmetic Specification, power(1, noninteger)
-  // is ((specified instanceof inexact) ? (inexact)specified : null), perhaps due to an oversight
-  String str = "precision: 34\nrounding: half_even\nminexponent: " +
-   "-6143\nmaxexponent: 6144\nextended: 1\n" +
-   "untitled power 1.0 -268575.66 -> " +
-   "1." + TestCommon.Repeat("0", 33) + " Inexact Rounded";
-  DecTestUtil.ParseDecTests(
-    str,
-    false);
- }
+    @Test
+    public void TestPowerOneExpNonInteger() {
+      // In the General Decimal Arithmetic Specification, power(1, noninteger)
+      // is ((specified instanceof inexact) ? (inexact)specified : null), perhaps due to an oversight
+      String str = "precision: 34\nrounding: half_even\nminexponent: " +
+        "-6143\nmaxexponent: 6144\nextended: 1\n" +
+        "untitled power 1.0 -268575.66 -> " +
+        "1." + TestCommon.Repeat("0", 33) + " Inexact Rounded";
+      DecTestUtil.ParseDecTests(
+        str,
+        false);
+    }
 
     @Test
     public void TestStringContextSpecificMore() {

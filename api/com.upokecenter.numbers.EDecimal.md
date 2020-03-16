@@ -3828,7 +3828,9 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* A number whose exponent is increased by <code>places</code>. For example,
+  if <code>places</code> is 5, "78E-2" becomes "78E+3" and has a bigger
+ value.
 
 ### ScaleByPowerOfTen
     public EDecimal ScaleByPowerOfTen​(int places, EContext ctx)
@@ -3846,7 +3848,9 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* A number whose exponent is generally increased by <code>places</code>.
+  For example, in general, if <code>places</code> is 5, "78E-2" becomes
+  "78E+3" and has a bigger value.
 
 ### ScaleByPowerOfTen
     public EDecimal ScaleByPowerOfTen​(EInteger bigPlaces)
@@ -3858,7 +3862,9 @@ Returns a number similar to this number but with the scale adjusted.
 
 **Returns:**
 
-* An arbitrary-precision decimal number.
+* A number whose exponent is increased by <code>bigPlaces</code>. For
+  example, if <code>bigPlaces</code> is 5, "78E-2" becomes "78E+3" and has
+ a bigger value.
 
 ### ScaleByPowerOfTen
     public EDecimal ScaleByPowerOfTen​(EInteger bigPlaces, EContext ctx)
@@ -3876,7 +3882,9 @@ Returns a number similar to this number but with its scale adjusted.
 
 **Returns:**
 
-* A number whose exponent is increased by <code>bigPlaces</code>.
+* A number whose exponent is generally increased by <code>bigPlaces</code>.
+  For example, in general, if <code>bigPlaces</code> is 5, "78E-2" becomes
+  "78E+3" and has a bigger value.
 
 **Throws:**
 

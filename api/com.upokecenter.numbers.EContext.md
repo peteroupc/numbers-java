@@ -779,4 +779,4 @@ Throws trap exceptions if the given context has flags set that also have
 
 **Returns:**
 
-* The parameter "result" if no trap exceptions were thrown.
+* The parameter <code>result</code> if no trap exceptions were thrown.

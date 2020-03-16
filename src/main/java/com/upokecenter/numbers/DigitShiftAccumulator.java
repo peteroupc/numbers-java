@@ -170,8 +170,8 @@ FastInteger(0)) : this.discardedDigitCount;
         while (digitsToShift.signum() > 0) {
           if (digitsToShift.compareTo(1000000) >= 0 &&
              (this.isSmall ||
-this.shiftedBigInt.GetUnsignedBitLengthAsEInteger().compareTo(digitsToShift) <
-0)) {
+              this.shiftedBigInt.GetUnsignedBitLengthAsEInteger()
+               .compareTo(digitsToShift) < 0)) {
             // Bit length is less than digits to shift, and digits to shift is >= 1000000,
             // so whole number would be shifted
             this.discardedDigitCount = (this.discardedDigitCount == null) ? (new
@@ -397,6 +397,8 @@ FastInteger.FromBig(this.shiftedBigInt.GetDigitCountAsEInteger());
       if (digits <= 0) {
         return;
       }
+      // System.out.println("ShiftRightBig "+digits+" "+truncate+" "+
+      //  simple+" "+this);
       if (this.shiftedBigInt.isZero()) {
         this.discardedDigitCount = (this.discardedDigitCount == null) ? (new
 FastInteger(0)) : this.discardedDigitCount;
@@ -450,7 +452,7 @@ FastInteger(0)) : this.discardedDigitCount;
             return;
           }
         }
-        if (!simple && this.ShiftedIntMod(2) == 0 && this.bitLeftmost == 0) {
+        if (!simple || (this.ShiftedIntMod(2) == 0 && this.bitLeftmost == 0)) {
           EInteger[] quorem = this.shiftedBigInt.DivRem(
               NumberUtility.FindPowerOfTen(digits));
           bigquo = quorem[0];
@@ -522,8 +524,9 @@ FastInteger(0)) : this.discardedDigitCount;
         return;
       }
       this.knownDigitLength = (this.knownDigitLength == null) ? (this.CalcKnownDigitLength()) : this.knownDigitLength;
-      if (new FastInteger(digits).Decrement().compareTo(this.knownDigitLength)
-        >= 0) {
+      // System.out.println("kdl="+this.knownDigitLength);
+      if (new FastInteger(digits).Decrement().compareTo(
+         this.knownDigitLength) >= 0) {
         // Shifting more bits than available
         this.bitsAfterLeftmost |= this.shiftedBigInt.isZero() ? 0 : 1;
         this.isSmall = true;
@@ -547,8 +550,10 @@ FastInteger(0)) : this.discardedDigitCount;
         return;
       }
       EInteger sbi = this.shiftedBigInt;
-      EInteger[] divrem1 = sbi.DivRem(NumberUtility.FindPowerOfTen(digits - 1));
+      EInteger[] divrem1 = sbi.DivRem(NumberUtility.FindPowerOfTen(
+        digits - 1));
       EInteger[] divrem2 = divrem1[0].DivRem(10);
+      // System.out.println("divrem " + (// divrem1[0]) + " " + divrem1[1] + " / " + divrem2[0] + " " + (divrem2[1]));
       this.bitsAfterLeftmost |= this.bitLeftmost;
       this.bitsAfterLeftmost |= divrem1[1].isZero() ? 0 : 1;
       this.bitLeftmost = divrem2[1].ToInt32Checked();
@@ -562,48 +567,6 @@ FastInteger(0)) : this.discardedDigitCount;
         this.isSmall = false;
         this.shiftedBigInt = divrem2[0];
       }
-      /* String str = this.shiftedBigInt.toString();
-      System.out.println("srb=" + str + " digits="+digits);
-      // NOTE: Will be 1 if the value is 0
-      int digitLength = str.length();
-      int bitDiff = 0;
-      if (digits > digitLength) {
-        bitDiff = digits - digitLength;
-      }
-      this.discardedDigitCount = (this.discardedDigitCount == null) ? (new FastInteger(0)) : this.discardedDigitCount;
-      this.discardedDigitCount.AddInt(digits);
-      this.bitsAfterLeftmost |= this.bitLeftmost;
-      int digitShift = Math.min(digitLength, digits);
-      if (digits >= digitLength) {
-        this.isSmall = true;
-        this.shiftedSmall = 0;
-        this.knownDigitLength = new FastInteger(1);
-      } else {
-        int newLength = (int)(digitLength - digitShift);
-        if (newLength <= 9) {
-          // Fits in a small number
-          this.isSmall = true;
-          this.shiftedSmall = FastParseLong(str, 0, newLength);
-        } else {
-          this.shiftedBigInt = EInteger.FromSubstring(str, 0, newLength);
-        }
-        this.UpdateKnownLengthInt(digitShift);
-      }
-      for (int i = str.length() - 1; i >= 0; --i) {
-        this.bitsAfterLeftmost |= this.bitLeftmost;
-        this.bitLeftmost = (int)(str.charAt(i) - '0');
-        --digitShift;
-        if (digitShift <= 0) {
-          break;
-        }
-      }
-      this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;
-      if (bitDiff > 0) {
-        // Shifted more digits than the digit length
-        this.bitsAfterLeftmost |= this.bitLeftmost;
-        this.bitLeftmost = 0;
-      }
-      */
     }
 
     private void ShiftRightLong(long shiftedLong, int digits) {

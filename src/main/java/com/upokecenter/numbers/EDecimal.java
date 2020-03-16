@@ -5100,7 +5100,9 @@ private static String Chop(Object o) {
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param places The power of 10 to scale by.
-     * @return An arbitrary-precision decimal number.
+     * @return A number whose exponent is increased by {@code places}. For example,
+     *  if {@code places} is 5, "78E-2" becomes "78E+3" and has a bigger
+     * value.
      */
     public EDecimal ScaleByPowerOfTen(int places) {
       return this.ScaleByPowerOfTen(EInteger.FromInt32(places), null);
@@ -5114,7 +5116,9 @@ private static String Chop(Object o) {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return An arbitrary-precision decimal number.
+     * @return A number whose exponent is generally increased by {@code places}.
+     *  For example, in general, if {@code places} is 5, "78E-2" becomes
+     *  "78E+3" and has a bigger value.
      */
     public EDecimal ScaleByPowerOfTen(int places, EContext ctx) {
       return this.ScaleByPowerOfTen(EInteger.FromInt32(places), ctx);
@@ -5123,7 +5127,9 @@ private static String Chop(Object o) {
     /**
      * Returns a number similar to this number but with the scale adjusted.
      * @param bigPlaces The power of 10 to scale by.
-     * @return An arbitrary-precision decimal number.
+     * @return A number whose exponent is increased by {@code bigPlaces}. For
+     *  example, if {@code bigPlaces} is 5, "78E-2" becomes "78E+3" and has
+     * a bigger value.
      */
     public EDecimal ScaleByPowerOfTen(EInteger bigPlaces) {
       return this.ScaleByPowerOfTen(bigPlaces, null);
@@ -5137,7 +5143,9 @@ private static String Chop(Object o) {
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return A number whose exponent is increased by {@code bigPlaces}.
+     * @return A number whose exponent is generally increased by {@code bigPlaces}.
+     *  For example, in general, if {@code bigPlaces} is 5, "78E-2" becomes
+     *  "78E+3" and has a bigger value.
      * @throws NullPointerException The parameter {@code bigPlaces} is null.
      */
     public EDecimal ScaleByPowerOfTen(

@@ -971,7 +971,7 @@ this.simplified +
    * @param trappableContext An arithmetic context, usually a context returned by
    * the GetNontrapping method. Can be null.
    * @param <T> Data type for the result of the operation.
-   * @return The parameter "result" if no trap exceptions were thrown.
+   * @return The parameter {@code result} if no trap exceptions were thrown.
    */
     public <T> T TriggerTraps(
       T result,
