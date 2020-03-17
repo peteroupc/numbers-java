@@ -296,6 +296,16 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       }
     }
 
+    public int compareTo(FastInteger fint) {
+      switch (this.integerMode) {
+        case 0:
+          return -fint.CompareToInt(this.smallValue);
+        case 2:
+          return -fint.compareTo(this.largeValue);
+        default: throw new IllegalStateException();
+      }
+    }
+
     public int compareTo(FastIntegerFixed val) {
       switch ((this.integerMode << 2) | val.integerMode) {
         case (0 << 2) | 0: {
@@ -337,10 +347,6 @@ FromInt32(bigintVal.ToInt32Unchecked()) : new
       return this.integerMode == 0 || this.largeValue.CanFitInInt32();
     }
 
-    /**
-     * This is an internal API.
-     * @return A text string.
-     */
     @Override public String toString() {
       switch (this.integerMode) {
         case 0:

@@ -2620,12 +2620,13 @@ if (!(ef2.isFinite())) {
         throw new IllegalStateException("", ex);
       }
       for (int i = 0; i < 1000; ++i) {
-RandomGenerator rg = new RandomGenerator();
-EInteger ei = RandomObjects.RandomEInteger(rg);
-EFloat ed = EFloat.FromEInteger(ei).ScaleByPowerOfTwo(
-   rg.UniformInt(20));
-Assert.assertEquals(ei, ed.ToEIntegerIfExact());
-}
+ RandomGenerator rg = new RandomGenerator();
+ EInteger ei = RandomObjects.RandomEInteger(rg);
+ int expo = rg.UniformInt(20);
+ EFloat ed = EFloat.FromEInteger(ei).ScaleByPowerOfTwo(
+   expo).MovePointLeft(expo);
+ Assert.assertEquals(ei, ed.ToEIntegerIfExact());
+ }
     }
 
     @Test

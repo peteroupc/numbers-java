@@ -3748,8 +3748,9 @@ import com.upokecenter.numbers.*;
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
  EInteger ei = RandomObjects.RandomEInteger(rg);
- EDecimal ed = EDecimal.FromEInteger(ei).ScaleByPowerOfTen(
-   rg.UniformInt(20));
+ int expo = rg.UniformInt(20);
+ EDecimal ed = EDecimal.FromEInteger(ei)
+   .ScaleByPowerOfTen(expo).MovePointLeft(expo);
  Assert.assertEquals(ei, ed.ToEIntegerIfExact());
  }
     }

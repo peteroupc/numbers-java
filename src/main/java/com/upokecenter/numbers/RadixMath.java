@@ -110,7 +110,7 @@ at: http://peteroupc.github.io/
       }
       return this.AddEx(thisValue, other, ctx, false);
     }
-    private FastInteger MaxDigitLengthForBitLength(FastInteger prec) {
+    private FastInteger DigitLengthUpperBoundForBitPrecision(FastInteger prec) {
       FastInteger result;
       if (this.thisRadix == 2) {
         result = prec;
@@ -5354,9 +5354,11 @@ ctxdiv.getFlags()));*/
       FastInteger fastNormalMin;
       FastInteger fastEMin = null;
       FastInteger fastEMax = null;
+      FastIntegerFixed fastEMaxFixed = null;
       // get the exponent range
       if (ctx != null && ctx.getHasExponentRange()) {
         fastEMax = FastInteger.FromBig(ctx.getEMax());
+        fastEMaxFixed = FastIntegerFixed.FromBig(ctx.getEMax());
         fastEMin = FastInteger.FromBig(ctx.getEMin());
       }
       boolean unlimitedPrec = !ctx.getHasMaxPrecision();
@@ -5364,7 +5366,8 @@ ctxdiv.getFlags()));*/
         // Fast path to check if rounding is necessary at all
         // NOTE: At this point, the number won't be infinity or NaN
         if (!unlimitedPrec && (shift == null || shift.isValueZero())) {
-          FastIntegerFixed mantabs = this.helper.GetMantissaFastInt(thisValue);
+          FastIntegerFixed mantabs = this.helper.GetMantissaFastInt(
+             thisValue);
           if (adjustNegativeZero && (thisFlags & BigNumberFlags.FlagNegative) !=
             0 && mantabs.isValueZero() && (ctx.getRounding() != ERounding.Floor)) {
             // Change negative zero to positive zero
@@ -5459,8 +5462,8 @@ ctxdiv.getFlags()));*/
       FastIntegerFixed bigmantissa = this.helper.GetMantissaFastInt(thisValue);
       mantissaWasZero = bigmantissa.isValueZero() && (lastDiscarded |
           olderDiscarded) == 0;
-      FastInteger exp = this.helper.GetExponentFastInt(thisValue)
-        .ToFastInteger();
+      FastIntegerFixed expfixed = this.helper.GetExponentFastInt(thisValue);
+      FastInteger exp = expfixed.ToFastInteger();
       flags = 0;
       if (accum == null) {
         accum = this.helper.CreateShiftAccumulatorWithDigitsFastInt(
@@ -5471,10 +5474,54 @@ ctxdiv.getFlags()));*/
 
       FastInteger bitLength = fastPrecision;
       if (binaryPrec) {
-        fastPrecision = this.MaxDigitLengthForBitLength(fastPrecision);
+        fastPrecision =
+this.DigitLengthUpperBoundForBitPrecision(fastPrecision);
       }
       nonHalfRounding = rounding != ERounding.HalfEven &&
         rounding != ERounding.HalfUp && rounding != ERounding.HalfDown;
+      if (ctx != null && ctx.getHasMaxPrecision() &&
+          ctx.getHasExponentRange()) {
+      long estMantDigits = bigmantissa.CanFitInInt32() ?
+           10 : bigmantissa.ToEInteger().GetUnsignedBitLengthAsInt64();
+      if (estMantDigits > 128) {
+        // Get bounds on stored precision
+        FastIntegerFixed[] bounds = NumberUtility.DigitLengthBoundsFixed(
+          this.helper,
+          bigmantissa);
+        FastIntegerFixed lowExpBound = expfixed;
+        if (ctx.getAdjustExponent()) {
+          lowExpBound = lowExpBound.Add(bounds[0]).Subtract(2);
+        }
+        FastIntegerFixed highExpBound = expfixed;
+        if (ctx.getAdjustExponent()) {
+          highExpBound = highExpBound.Add(bounds[1]);
+        }
+        /*
+        String ch1=""+lowExpBound;ch1=ch1.substring(0,Math.min(12,ch1.length()));
+        String ch2=""+highExpBound;ch2=ch2.substring(0,Math.min(12,ch2.length()));
+        System.out.println("bounds="+ch1+"/"+ch2+"/"+fastEMax); */
+        if (lowExpBound.compareTo(fastEMax) > 0) {
+           // Overflow.
+           return this.SignalOverflow(ctx, neg);
+        }
+        FastIntegerFixed fpf = FastIntegerFixed.FromFastInteger(fastPrecision);
+        if (highExpBound.Add(fpf).Add(4).compareTo(
+            fastEMin) < 0) {
+           // Underflow.
+           // NOTE: Due to estMantDigits check
+           // above, we know significand is neither zero nor 1(
+           // SignalUnderflow will pass 0 or 1 significands to
+           // RoundToPrecision).
+           return this.SignalUnderflow(ctx, neg, false);
+        }
+        /*
+         System.out.println("mantbits=" +
+             bigmantissa.ToEInteger().GetUnsignedBitLengthAsInt64() +
+             " shift=" + shift + " fastprec=" + fastPrecision +
+             " expbits=" + exp.ToEInteger().GetUnsignedBitLengthAsInt64() +
+             " expsign=" + exp.ToEInteger().compareTo(0)); */
+      }
+      }
       if (!unlimitedPrec) {
         accum.ShiftToDigits(fastPrecision, shift, nonHalfRounding);
       } else {

@@ -1151,7 +1151,7 @@ this.SubtractBig(EInteger.FromInt64(longVal));
           case 2:
             return this.largeValue.isZero();
           default:
-            return false;
+            throw new IllegalStateException();
         }
       }
 
@@ -1164,7 +1164,7 @@ this.SubtractBig(EInteger.FromInt64(longVal));
           return this.mnum.ToEInteger().compareTo(EInteger.FromInt32(val));
         case 2:
           return this.largeValue.compareTo(EInteger.FromInt32(val));
-        default: return 0;
+        default: throw new IllegalStateException();
       }
     }
 
