@@ -4757,9 +4757,11 @@ ctxdiv.getFlags()));*/
 
     private boolean IsNullOrInt32FriendlyContext(EContext ctx) {
       return ctx == null || (
-          (!ctx.getHasFlags() && ctx.getTraps() == 0) && (!ctx.getHasExponentRange() ||
+          (!ctx.getHasFlags() && ctx.getTraps() == 0) &&
+          (!ctx.getHasExponentRange() ||
             (ctx.getEMin().compareTo(-10) < 0 && ctx.getEMax().signum() >= 0)) &&
-          ctx.getRounding() != ERounding.Floor && (!ctx.getHasMaxPrecision() ||
+          ctx.getRounding() != ERounding.Floor &&
+           (!ctx.getHasMaxPrecision() ||
             (this.thisRadix >= 10 && !ctx.isPrecisionInBits() &&
               ctx.getPrecision().compareTo(10) >= 0) ||
             ((this.thisRadix >= 2 || ctx.isPrecisionInBits()) &&
@@ -5002,12 +5004,11 @@ ctxdiv.getFlags()));*/
           }
         }
       }
-      if (this.IsNullOrInt32FriendlyContext(ctx) &&
-        (lastDiscarded | olderDiscarded) == 0 &&
+      if ((lastDiscarded | olderDiscarded) == 0 &&
         (shift == null || shift.isValueZero())) {
         // System.out.println("fastpath for "+ctx+", "+thisValue);
         FastIntegerFixed expabs = this.helper.GetExponentFastInt(thisValue);
-        if (expabs.isValueZero()) {
+        if (expabs.isValueZero() && this.IsNullOrInt32FriendlyContext(ctx)) {
           FastIntegerFixed mantabs = this.helper.GetMantissaFastInt(thisValue);
           if (mantabs.isValueZero() && adjustNegativeZero &&
             (thisFlags & BigNumberFlags.FlagNegative) != 0) {
@@ -5493,24 +5494,30 @@ this.DigitLengthUpperBoundForBitPrecision(fastPrecision);
           lowExpBound = lowExpBound.Add(bounds[0]).Subtract(2);
         }
         FastIntegerFixed highExpBound = expfixed;
-        if (ctx.getAdjustExponent()) {
-          highExpBound = highExpBound.Add(bounds[1]);
-        }
+        highExpBound = highExpBound.Add(bounds[1]);
+        FastIntegerFixed fpf = FastIntegerFixed.FromFastInteger(fastPrecision);
         /*
         String ch1=""+lowExpBound;ch1=ch1.substring(0,Math.min(12,ch1.length()));
         String ch2=""+highExpBound;ch2=ch2.substring(0,Math.min(12,ch2.length()));
-        System.out.println("bounds="+ch1+"/"+ch2+"/"+fastEMax); */
+        System.out.println("exp="+expfixed);
+        System.out.println("bounds="+ch1+"/"+ch2+"/"+fastEMax+
+          " fpf="+fastPrecision + " highexp=" +highExpBound.Add(fpf).Add(4));
+        */
         if (lowExpBound.compareTo(fastEMax) > 0) {
            // Overflow.
            return this.SignalOverflow(ctx, neg);
         }
-        FastIntegerFixed fpf = FastIntegerFixed.FromFastInteger(fastPrecision);
-        if (highExpBound.Add(fpf).Add(4).compareTo(
-            fastEMin) < 0) {
+        FastIntegerFixed underflowBound = highExpBound.Add(fpf).Add(4);
+        // FastIntegerFixed underflowBound2 = highExpBound.Add(bounds[1]).Add(4);
+        // if (underflowBound2.compareTo(underflowBound) > 0) {
+        // underflowBound = underflowBound2;
+        // }
+        // System.out.println("underflowBound="+underflowBound);
+        if (underflowBound.compareTo(fastEMin) < 0) {
            // Underflow.
            // NOTE: Due to estMantDigits check
            // above, we know significand is neither zero nor 1(
-           // SignalUnderflow will pass 0 or 1 significands to
+           // SignalUnderflow will pass significands of 0 or 1 to
            // RoundToPrecision).
            return this.SignalUnderflow(ctx, neg, false);
         }

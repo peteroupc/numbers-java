@@ -274,13 +274,20 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
           return (this.bitLeftmost | this.bitsAfterLeftmost) == 0;
         }
         if (!this.isSmall && !this.shiftedBigInt.CanFitInInt64()) {
+          if (this.shiftedBigInt == null) {
+ throw new IllegalStateException();
+ }
           int a = fastint.ToInt32();
           if (a > 10) {
             this.ShiftRightBig(10, true, true);
             if ((this.bitLeftmost | this.bitsAfterLeftmost) != 0) {
               return false;
             }
-            this.ShiftRightBig(a - 10, true, true);
+            if (this.isSmall) {
+              this.ShiftRightInt(a - 10);
+            } else {
+              this.ShiftRightBig(a - 10, true, true);
+            }
           } else {
             this.ShiftRightBig(a, true, true);
           }
@@ -394,6 +401,9 @@ FastInteger.FromBig(this.shiftedBigInt.GetDigitCountAsEInteger());
     }
 
     private void ShiftRightBig(int digits, boolean truncate, boolean simple) {
+      if (this.shiftedBigInt == null) {
+ throw new IllegalStateException();
+ }
       if (digits <= 0) {
         return;
       }
