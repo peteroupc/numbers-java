@@ -1601,14 +1601,14 @@ import com.upokecenter.numbers.*;
  Assert.fail();
  }
         ERational ulp = PowerOfTwo(exp);
-        ERational half = ulp.Divide(2);
+        ERational half = PowerOfTwo(exp - 1);
         ERational binValue = ERational.FromInt64(lmant).Multiply(ulp);
         ERational decValue = ERational.FromEDecimal(ed).Abs();
         ERational diffValue = decValue.Subtract(binValue);
         if (IsPowerOfTwo(lmant) && exp != -149) {
           // Different closeness check applies when approximate
           // binary number is a power of 2
-          ERational negQuarter = ulp.Divide(4).Negate();
+          ERational negQuarter = PowerOfTwo(exp - 2).Negate();
           // NOTE: Order of subtraction in diffValue is important here
           if (negQuarter.compareTo(diffValue) > 0 ||
             diffValue.compareTo(half) > 0) {
@@ -1674,17 +1674,15 @@ import com.upokecenter.numbers.*;
           ++exp;
           lmant >>= 1;
         }
-        if (lmant >= (1L << 53)) {
-        }
         ERational ulp = PowerOfTwo(exp);
-        ERational half = ulp.Divide(2);
+        ERational half = PowerOfTwo(exp - 1);
         ERational binValue = ERational.FromInt64(lmant).Multiply(ulp);
         ERational decValue = ERational.FromEDecimal(ed).Abs();
         ERational diffValue = decValue.Subtract(binValue);
         if (IsPowerOfTwo(lmant) && exp != -1074) {
           // Different closeness check applies when approximate
           // binary number is a power of 2
-          ERational negQuarter = ulp.Divide(4).Negate();
+          ERational negQuarter = PowerOfTwo(exp - 2).Negate();
           // NOTE: Order of subtraction in diffValue is important here
           if (negQuarter.compareTo(diffValue) > 0 ||
             diffValue.compareTo(half) > 0) {
@@ -1700,12 +1698,6 @@ import com.upokecenter.numbers.*;
             Assert.fail(msg);
           }
         }
-        /* if (diffValue.Abs().compareTo(half) < 0) {
-          String msg = "str=" + str + "\nef=" + OutputEF(ef) +
-            "\nmant=" + lmant + "\nexp=" + exp;
-          Assert.fail(msg);
-        }
-        */
       }
     }
 
