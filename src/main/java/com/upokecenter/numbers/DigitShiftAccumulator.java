@@ -274,9 +274,6 @@ this.shiftedBigInt.isZero()) ? 0 : 1;
           return (this.bitLeftmost | this.bitsAfterLeftmost) == 0;
         }
         if (!this.isSmall && !this.shiftedBigInt.CanFitInInt64()) {
-          if (this.shiftedBigInt == null) {
- throw new IllegalStateException();
- }
           int a = fastint.ToInt32();
           if (a > 10) {
             this.ShiftRightBig(10, true, true);
@@ -401,14 +398,11 @@ FastInteger.FromBig(this.shiftedBigInt.GetDigitCountAsEInteger());
     }
 
     private void ShiftRightBig(int digits, boolean truncate, boolean simple) {
-      if (this.shiftedBigInt == null) {
- throw new IllegalStateException();
- }
       if (digits <= 0) {
         return;
       }
       // System.out.println("ShiftRightBig "+digits+" "+truncate+" "+
-      //  simple+" "+this);
+      // simple+" "+this);
       if (this.shiftedBigInt.isZero()) {
         this.discardedDigitCount = (this.discardedDigitCount == null) ? (new
 FastInteger(0)) : this.discardedDigitCount;
@@ -563,7 +557,8 @@ FastInteger(0)) : this.discardedDigitCount;
       EInteger[] divrem1 = sbi.DivRem(NumberUtility.FindPowerOfTen(
         digits - 1));
       EInteger[] divrem2 = divrem1[0].DivRem(10);
-      // System.out.println("divrem " + (// divrem1[0]) + " " + divrem1[1] + " / " + divrem2[0] + " " + (divrem2[1]));
+      // System.out.println("divrem " + (// divrem1[0]) + " " + divrem1[1] + " / " +
+      // divrem2[0] + " " + (divrem2[1]));
       this.bitsAfterLeftmost |= this.bitLeftmost;
       this.bitsAfterLeftmost |= divrem1[1].isZero() ? 0 : 1;
       this.bitLeftmost = divrem2[1].ToInt32Checked();

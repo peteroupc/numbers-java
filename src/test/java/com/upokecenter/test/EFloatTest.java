@@ -2137,7 +2137,7 @@ if (!(ef2.isFinite())) {
       }
     }
 
-    @Test(timeout = 100000)
+    @Test
     public void TestConversions() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {

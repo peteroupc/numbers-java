@@ -1719,8 +1719,9 @@ import com.upokecenter.numbers.*;
         stringTemp = EDecimal.FromDouble(2.2936E-7).toString();
         {
           String stringTemp2 =
-"2.29360000000000010330982488752915582352898127282969653606414794921875E-7";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "2.29360000000000010330982488752915582352898127282969653606414794921875E-7";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -1758,8 +1759,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(1.9512E-6).toString();
         {
           String stringTemp2 =
-"0.0000019512000000000000548530838806460252499164198525249958038330078125";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "0.0000019512000000000000548530838806460252499164198525249958038330078125";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -1792,8 +1794,8 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(3.1035E-5).toString();
         {
           String stringTemp2 =
-"0.0000310349999999999967797807698399736864303122274577617645263671875";
-Assert.assertEquals(stringTemp2, stringTemp);
+  "0.0000310349999999999967797807698399736864303122274577617645263671875";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -1875,8 +1877,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(3.237E-6).toString();
         {
           String stringTemp2 =
-"0.00000323700000000000009386523676380154057596882921643555164337158203125";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "0.00000323700000000000009386523676380154057596882921643555164337158203125";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -2019,8 +2022,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(2.2818E-7).toString();
         {
           String stringTemp2 =
-"2.28179999999999995794237200343046456652018605382181704044342041015625E-7";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "2.28179999999999995794237200343046456652018605382181704044342041015625E-7";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -2083,8 +2087,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(3.8025E-6).toString();
         {
           String stringTemp2 =
-"0.00000380250000000000001586513038998038638283105683512985706329345703125";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "0.00000380250000000000001586513038998038638283105683512985706329345703125";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
 
@@ -2117,8 +2122,8 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(3.9116E-7).toString();
         {
           String stringTemp2 =
-"3.911600000000000165617541382501176627783934236504137516021728515625E-7";
-Assert.assertEquals(stringTemp2, stringTemp);
+  "3.911600000000000165617541382501176627783934236504137516021728515625E-7";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
 
@@ -2188,8 +2193,8 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(1.3414E-4).toString();
         {
           String stringTemp2 =
-"0.00013414000000000001334814203612921801322954706847667694091796875";
-Assert.assertEquals(stringTemp2, stringTemp);
+  "0.00013414000000000001334814203612921801322954706847667694091796875";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
 
@@ -2197,8 +2202,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(3.445E-7).toString();
         {
           String stringTemp2 =
-"3.4449999999999999446924077266263264363033158588223159313201904296875E-7";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "3.4449999999999999446924077266263264363033158588223159313201904296875E-7";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
 
@@ -2206,8 +2212,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(1.361E-7).toString();
         {
           String stringTemp2 =
-"1.3610000000000000771138253079228785935583800892345607280731201171875E-7";
-Assert.assertEquals(stringTemp2, stringTemp);
+
+  "1.3610000000000000771138253079228785935583800892345607280731201171875E-7";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -2227,8 +2234,8 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(6.0E-6).toString();
         {
           String stringTemp2 =
-"0.00000600000000000000015200514458246772164784488268196582794189453125";
-Assert.assertEquals(stringTemp2, stringTemp);
+  "0.00000600000000000000015200514458246772164784488268196582794189453125";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -2260,8 +2267,8 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(2.331E-4).toString();
         {
           String stringTemp2 =
-"0.00023310000000000000099260877295392901942250318825244903564453125";
-Assert.assertEquals(stringTemp2, stringTemp);
+  "0.00023310000000000000099260877295392901942250318825244903564453125";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -2320,8 +2327,8 @@ Assert.assertEquals(stringTemp2, stringTemp);
         stringTemp = EDecimal.FromDouble(1.83E-5).toString();
         {
           String stringTemp2 =
-"0.00001830000000000000097183545932910675446692039258778095245361328125";
-Assert.assertEquals(stringTemp2, stringTemp);
+  "0.00001830000000000000097183545932910675446692039258778095245361328125";
+          Assert.assertEquals(stringTemp2, stringTemp);
         }
       }
       {
@@ -3598,9 +3605,9 @@ Assert.assertEquals(stringTemp2, stringTemp);
         try {
           TestSizedEIntegerOne(ed, bv, msb);
         } catch (IllegalStateException ex) {
-           throw new IllegalStateException(
-             ed + " " + bv + " " + msb,
-             ex);
+          throw new IllegalStateException(
+            ed + " " + bv + " " + msb,
+            ex);
         }
       }
       for (int i = 0; i < 10000; ++i) {
@@ -3609,7 +3616,7 @@ Assert.assertEquals(stringTemp2, stringTemp);
         boolean bv = rg.UniformInt(2) == 0;
         int msb = rg.UniformInt(129);
         EDecimal ed = EDecimal.FromEInteger(ei)
-         .ScaleByPowerOfTen(expo).MovePointLeft(expo);
+          .ScaleByPowerOfTen(expo).MovePointLeft(expo);
         TestSizedEIntegerOne(ed, bv, msb);
       }
     }
@@ -3617,13 +3624,13 @@ Assert.assertEquals(stringTemp2, stringTemp);
     @Test
     public void TestSizedEIntegerSpecific1() {
       TestSizedEIntegerOne(
-         EDecimal.FromString("1478.0619950000000000"),
-         true,
-         105);
+        EDecimal.FromString("1478.0619950000000000"),
+        true,
+        105);
       TestSizedEIntegerOne(
-         EDecimal.FromString("1478.0619950000000000"),
-         false,
-         105);
+        EDecimal.FromString("1478.0619950000000000"),
+        false,
+        105);
     }
 
     public static boolean TestSizedEIntegerOne(EDecimal ed, boolean isExact, int
@@ -3749,12 +3756,12 @@ Assert.assertEquals(stringTemp2, stringTemp);
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
- EInteger ei = RandomObjects.RandomEInteger(rg);
- int expo = rg.UniformInt(20);
- EDecimal ed = EDecimal.FromEInteger(ei)
-   .ScaleByPowerOfTen(expo).MovePointLeft(expo);
- Assert.assertEquals(ei, ed.ToEIntegerIfExact());
- }
+        EInteger ei = RandomObjects.RandomEInteger(rg);
+        int expo = rg.UniformInt(20);
+        EDecimal ed = EDecimal.FromEInteger(ei)
+          .ScaleByPowerOfTen(expo).MovePointLeft(expo);
+        Assert.assertEquals(ei, ed.ToEIntegerIfExact());
+      }
     }
 
     private static final EDecimal DoubleUnderflowToZero =
@@ -6254,11 +6261,10 @@ Assert.assertEquals(stringTemp2, stringTemp);
 
     @Test
     public void TestStringContextSpecific6c() {
-      EContext ec =
-EContext.Unlimited.WithPrecision(11).WithExponentRange(-14,
-  15).WithRounding(
-  ERounding.Up).WithAdjustExponent(
-  false).WithExponentClamp(true).WithSimplified(false);
+      EContext ec = EContext.Unlimited.WithPrecision(11).WithExponentRange(-14,
+          15).WithRounding(
+          ERounding.Up).WithAdjustExponent(
+          false).WithExponentClamp(true).WithSimplified(false);
       String str = "111111111111111." + TestCommon.Repeat("1", 87) + "E+3";
       TestStringContextOneEFloat(str, ec);
     }
