@@ -38,7 +38,7 @@ Source code is available in the [project page](https://github.com/peteroupc/Numb
 About
 -----------
 
-Written by Peter O. in 2016.
+Written by Peter O.
 
 Any copyright is dedicated to the Public Domain.
 [http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/)

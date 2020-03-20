@@ -4038,8 +4038,7 @@ ShortMask) != 0) ? 9 :
         // unshifted word has less memory
         int lastWordBL = NumberUtility.BitLength(
            (int)(this.words[this.wordCount - 1]) & 0xffff);
-        lastWordBL += shiftBits;
-        int newWordCount = 0;
+           lastWordBL += shiftBits; int newWordCount = 0;
         if (lastWordBL <= 16) {
            // New bit count is such that an additional word
            // is not needed
