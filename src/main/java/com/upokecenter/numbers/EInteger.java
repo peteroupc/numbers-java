@@ -22,6 +22,8 @@ at: http://peteroupc.github.io/
 // TODO: In next version after 1.6, add long overloads in addition to int
 // overloads
 // in EDecimal/EFloat/EInteger/ERational (including compareTo and DivRem)
+// TODO: better document and/or/not/xor
+// TODO: AndNot, Implication (Imp/OrNot), Equivalence (Eqv/XorNot)
 
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
