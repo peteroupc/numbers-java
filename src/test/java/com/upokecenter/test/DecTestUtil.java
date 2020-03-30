@@ -118,6 +118,12 @@ private DecTestUtil() {
       return strings.toArray(new String[] { });
     }
 
+    /**
+     * Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
+     * converted to lower-case. Other characters remain unchanged.
+     * @param str The parameter {@code str} is a text string.
+     * @return The converted string, or null if {@code str} is null.
+     */
     public static String ToLowerCaseAscii(String str) {
       if (str == null) {
         return null;

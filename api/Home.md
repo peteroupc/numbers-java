@@ -11,7 +11,8 @@ Represents an arbitrary-precision decimal floating-point number.
 A class that implements additional operations on arbitrary-precision decimal
  numbers.
 
-* [com.upokecenter.numbers.EFloat](com.upokecenter.numbers.EFloat.md) -  
+* [com.upokecenter.numbers.EFloat](com.upokecenter.numbers.EFloat.md) -
+Represents an arbitrary-precision binary floating-point number.
 
 * [com.upokecenter.numbers.EFloats](com.upokecenter.numbers.EFloats.md) -
 A class that implements additional operations on arbitrary-precision binary
