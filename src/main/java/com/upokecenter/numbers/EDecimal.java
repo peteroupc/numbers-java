@@ -7,6 +7,14 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
+/*
+TODO: FromString(char[]) in E* classes
+TODO: FromString(char[], ..., ...) in E* classes
+TODO: add one/zero/ten to Java version; maybe change to fields in next major
+version
+TODO: Use FastIntegerFixed in EFloat and ERational
+*/
+
   /**
    * Represents an arbitrary-precision decimal floating-point number. (The "E"
    *  stands for "extended", meaning that instances of this class can be
