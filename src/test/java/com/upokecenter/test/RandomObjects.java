@@ -12,9 +12,6 @@ import java.io.*;
 import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
-  /**
-   * Description of RandomObjects.
-   */
   public final class RandomObjects {
 private RandomObjects() {
 }
@@ -36,6 +33,9 @@ public static byte[] RandomUtf8Bytes(
 try {
 ms = new java.io.ByteArrayOutputStream();
 
+      if (rg == null) {
+        throw new NullPointerException("rg");
+      }
       int length = 1 + rg.GetInt32(6);
       for (int i = 0; i < length; ++i) {
        int v = rg.GetInt32(4);
@@ -73,7 +73,7 @@ ms = new java.io.ByteArrayOutputStream();
          }
        } else {
          int ch = rg.GetInt32(0x80);
-         if (jsonSafe && (ch == (int)'\\' || ch== (int)'\"' || ch < 0x20)) {
+         if (jsonSafe && (ch == (int)'\\' || ch == (int)'\"' || ch < 0x20)) {
            ch = (int)'?';
          }
          ms.write((byte)ch);
