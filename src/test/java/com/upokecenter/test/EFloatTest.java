@@ -1205,7 +1205,49 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestPow() {
-      // not implemented yet
+      EContext[] ecs = new EContext[] {
+        EContext.Binary32,
+        EContext.Binary64,
+      };
+      EInteger[] powers = new EInteger[] {
+        EInteger.FromInt32(1).ShiftLeft(63).Subtract(2),
+        EInteger.FromInt32(1).ShiftLeft(63).Subtract(1),
+        EInteger.FromInt32(1).ShiftLeft(63),
+        EInteger.FromInt32(1).ShiftLeft(64).Subtract(2),
+        EInteger.FromInt32(1).ShiftLeft(64).Subtract(1),
+        EInteger.FromInt32(1).ShiftLeft(64),
+      };
+      EFloat efi = EFloat.PositiveInfinity;
+      ArrayList<EInteger> powerlist = new ArrayList<EInteger>();
+      for (EInteger ei : powers) {
+        powerlist.add(ei);
+      }
+      RandomGenerator rg = new RandomGenerator();
+      for (int i = 0; i < 500; ++i) {
+         EInteger ei = RandomObjects.RandomEInteger(rg);
+         EInteger thresh = EInteger.FromInt64(6999999999999999999L);
+         if (ei.Abs().compareTo(thresh) < 0) {
+           ei = ei.Add(ei.signum() < 0 ? thresh.Negate() : thresh);
+         }
+         powerlist.add(ei);
+      }
+      for (EContext ec : ecs) {
+        EFloat efa = EFloat.FromInt32(1).NextPlus(ec).Negate();
+        EFloat efb = EFloat.FromInt32(1).NextMinus(ec).Negate();
+        for (EInteger ei : powerlist) {
+          EFloat efp = efa.Pow(EFloat.FromEInteger(ei));
+          EFloat efexp = null;
+          efexp = (ei.isEven()) ? (ei.signum() >= 0 ? EFloat.PositiveInfinity :
+EFloat.Zero) : (ei.signum() >= 0 ? EFloat.NegativeInfinity :
+EFloat.NegativeZero);
+          Assert.assertEquals(efexp, efp);
+          efp = efb.Pow(EFloat.FromEInteger(ei));
+          efexp = (ei.isEven()) ? (ei.signum() < 0 ? EFloat.PositiveInfinity :
+EFloat.Zero) : (ei.signum() < 0 ? EFloat.NegativeInfinity :
+EFloat.NegativeZero);
+          Assert.assertEquals(efexp, efp);
+        }
+      }
     }
     @Test
     public void TestQuantize() {
