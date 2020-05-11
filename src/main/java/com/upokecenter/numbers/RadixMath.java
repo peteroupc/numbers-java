@@ -1157,6 +1157,79 @@ at: http://peteroupc.github.io/
       return this.helper;
     }
 
+    public T Ln1P(T thisValue, EContext ctx) {
+      if (ctx == null) {
+        return this.SignalInvalidWithMessage(ctx, "ctx is null");
+      }
+      if (!ctx.getHasMaxPrecision()) {
+        return this.SignalInvalidWithMessage(
+            ctx,
+            "ctx has unlimited precision");
+      }
+      int flags = this.helper.GetFlags(thisValue);
+      if ((flags & BigNumberFlags.FlagSignalingNaN) != 0) {
+        // NOTE: Returning a signaling NaN is independent of
+        // rounding mode
+        return this.SignalingNaNInvalid(thisValue, ctx);
+      }
+      if ((flags & BigNumberFlags.FlagQuietNaN) != 0) {
+        // NOTE: Returning a quiet NaN is independent of
+        // rounding mode
+        return this.ReturnQuietNaN(thisValue, ctx);
+      }
+      int sign = this.helper.GetSign(thisValue);
+      if (sign < 0) {
+        if ((flags & BigNumberFlags.FlagInfinity) != 0) {
+          return this.SignalInvalid(ctx);
+        }
+        T eabs = this.AbsRaw(thisValue);
+        int cmpOne = this.compareTo(eabs, this.helper.ValueOf(1));
+        if (cmpOne == 0) {
+           // ln(0), so negative infinity
+           return this.helper.CreateNewWithFlags(
+             EInteger.FromInt32(0),
+             EInteger.FromInt32(0),
+             BigNumberFlags.FlagNegative | BigNumberFlags.FlagInfinity);
+        } else if (cmpOne > 0) {
+           // ln(negative)
+           return this.SignalInvalid(ctx);
+        } else {
+           // TODO: ln(0 > x < 1)
+           throw new UnsupportedOperationException();
+        }
+      }
+      if ((flags & BigNumberFlags.FlagInfinity) != 0) {
+        return thisValue;
+      }
+      EContext ctxCopy = ctx.WithBlankFlags();
+      T one = this.helper.ValueOf(1);
+      ERounding intermedRounding = ERounding.HalfEven;
+      if (sign == 0) {
+        return this.RoundToPrecision(
+              this.helper.CreateNewWithFlags(EInteger.FromInt32(0), EInteger.FromInt32(0), 0),
+              ctxCopy);
+      } else {
+        int cmpOne = this.compareTo(thisValue, one);
+        EContext ctxdiv = null;
+        if (cmpOne == 0) {
+          // ln(2)
+          thisValue = this.RoundToPrecision(
+              this.helper.CreateNewWithFlags(EInteger.FromInt32(0), EInteger.FromInt32(0), 0),
+              ctxCopy);
+        } else if (cmpOne < 0) {
+          // TODO: ln(1 > x < 2)
+          throw new UnsupportedOperationException();
+        } else {
+          // TODO: ln(x > 2)
+          throw new UnsupportedOperationException();
+        }
+      }
+      if (ctx.getHasFlags()) {
+        ctx.setFlags(ctx.getFlags()|(ctxCopy.getFlags()));
+      }
+      return thisValue;
+    }
+
     public T Ln(T thisValue, EContext ctx) {
       if (ctx == null) {
         return this.SignalInvalidWithMessage(ctx, "ctx is null");
@@ -4760,8 +4833,7 @@ ctxdiv.getFlags()));*/
           (!ctx.getHasFlags() && ctx.getTraps() == 0) &&
           (!ctx.getHasExponentRange() ||
             (ctx.getEMin().compareTo(-10) < 0 && ctx.getEMax().signum() >= 0)) &&
-          ctx.getRounding() != ERounding.Floor &&
-           (!ctx.getHasMaxPrecision() ||
+          ctx.getRounding() != ERounding.Floor && (!ctx.getHasMaxPrecision() ||
             (this.thisRadix >= 10 && !ctx.isPrecisionInBits() &&
               ctx.getPrecision().compareTo(10) >= 0) ||
             ((this.thisRadix >= 2 || ctx.isPrecisionInBits()) &&
@@ -5502,8 +5574,7 @@ this.DigitLengthUpperBoundForBitPrecision(fastPrecision);
         System.out.println("exp="+expfixed);
         System.out.println("bounds="+ch1+"/"+ch2+"/"+fastEMax+
           " fpf="+fastPrecision + " highexp=" +highExpBound.Add(fpf).Add(4));
-        */
-        if (lowExpBound.compareTo(fastEMax) > 0) {
+        */ if (lowExpBound.compareTo(fastEMax) > 0) {
            // Overflow.
            return this.SignalOverflow(ctx, neg);
         }

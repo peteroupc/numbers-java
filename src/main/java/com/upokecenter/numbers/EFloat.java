@@ -457,6 +457,34 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
     }
 
     /**
+     * Creates a binary floating-point number from a 64-bit floating-point number
+     * encoded in the IEEE 754 binary64 format. This method computes the
+     * exact value of the floating point number, not an approximation, as
+     * is often the case by converting the floating point number to a
+     * string first.
+     * @param dblBits
+     * @return A binary floating-point number with the same value as {@code dbl}.
+     */
+    public static EFloat FromDoubleBits(long dblBits) {
+      // TODO
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Creates a binary floating-point number from a 32-bit floating-point number
+     * encoded in the IEEE 754 binary32 format. This method computes the
+     * exact value of the floating point number, not an approximation, as
+     * is often the case by converting the floating point number to a
+     * string first.
+     * @param singleBits
+     * @return A binary floating-point number with the same value as {@code dbl}.
+     */
+    public static EFloat FromSingleBits(int singleBits) {
+      // TODO
+      throw new UnsupportedOperationException();
+    }
+
+    /**
      * Creates a binary floating-point number from a 64-bit floating-point number.
      * This method computes the exact value of the floating point number,
      * not an approximation, as is often the case by converting the
@@ -3431,6 +3459,28 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
     }
 
     /**
+     * Converts this value to a 64-bit floating-point number encoded in the IEEE
+     * 754 binary64 format.
+     * @return This number, converted to a 64-bit floating-point number encoded in
+     * the IEEE 754 binary64 format.
+     */
+    public long ToDoubleBits() {
+      // TODO
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Converts this value to a 32-bit floating-point number encoded in the IEEE
+     * 754 binary32 format.
+     * @return This number, converted to a 32-bit floating-point number encoded in
+     * the IEEE 754 binary32 format.
+     */
+    public int ToSingleBits() {
+      // TODO
+      throw new UnsupportedOperationException();
+    }
+
+    /**
      * Converts this value to a 64-bit floating-point number.
      * @return This number, converted to a 64-bit floating-point number.
      */
@@ -3762,7 +3812,7 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
       }
       EFloat thisValue = this;
       // System.out.println("beforeround=" +thisValue + " ["+
-      //  thisValue.getMantissa() + " " + thisValue.getExponent());
+      // thisValue.getMantissa() + " " + thisValue.getExponent());
       // Check whether rounding can be avoided for common cases
       // where the value already fits a single
       if (!thisValue.isFinite() ||
@@ -3772,7 +3822,7 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
         thisValue = this.RoundToPrecision(EContext.Binary32);
       }
       // System.out.println("afterround=" +thisValue + " ["+
-      //  thisValue.getMantissa() + " " + thisValue.getExponent());
+      // thisValue.getMantissa() + " " + thisValue.getExponent());
       if (!thisValue.isFinite()) {
         return thisValue.ToSingle();
       }
@@ -3798,8 +3848,8 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
         intmant <<= diff;
       }
       // System.out.println("intmant=" + intmant + " " + intBitLength +
-      //  " expo=" + expo +
-      //  " subnormal=" + subnormal);
+      // " expo=" + expo +
+      // " subnormal=" + subnormal);
       int smallmantissa = intmant & 0x7fffff;
       if (!subnormal) {
         smallmantissa |= (expo + 150) << 23;

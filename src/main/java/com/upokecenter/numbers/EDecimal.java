@@ -14,6 +14,7 @@ TODO: add one/zero/ten to Java version; maybe change to fields in next major
 version
 TODO: Use FastIntegerFixed in EFloat and ERational
 TODO: Log1P and ExpM1 in EFloat and ERational
+TODO: Log-Real numbers
 */
 
   /**
@@ -715,20 +716,44 @@ TODO: Log1P and ExpM1 in EFloat and ERational
      * converting the floating point number to a string first. Remember,
      * though, that the exact value of a 64-bit binary floating-point
      * number is not always the value that results when passing a literal
-     * decimal number (for example, calling
-     * <code>ExtendedDecimal.FromDouble(0.1)</code>), since not all decimal
-     * numbers can be converted to exact binary numbers (in the example
-     * given, the resulting arbitrary-precision decimal will be the value
-     *  of the closest "double" to 0.1, not 0.1 exactly). To create an
-     * arbitrary-precision decimal number from a decimal value, use
-     * FromString instead in most cases (for example:
-     *  <code>ExtendedDecimal.FromString("0.1")</code>).
+     * decimal number (for example, calling <code>EDecimal.FromDouble(0.1)</code>
+     *), since not all decimal numbers can be converted to exact binary
+     * numbers (in the example given, the resulting arbitrary-precision
+     *  decimal will be the value of the closest "double" to 0.1, not 0.1
+     * exactly). To create an arbitrary-precision decimal number from a
+     * decimal value, use FromString instead in most cases (for example:
+     *  <code>EDecimal.FromString("0.1")</code>).
      * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
      * @return An arbitrary-precision decimal number with the same value as {@code
      * dbl}.
      */
     public static EDecimal FromDouble(double dbl) {
-      int[] value = Extras.DoubleToIntegers(dbl);
+      long value = Double.doubleToRawLongBits(dbl);
+      return FromDoubleBits(value);
+    }
+
+    /**
+     * Creates an arbitrary-precision decimal number from a 64-bit binary
+     * floating-point number, encoded in the IEEE 754 binary64 format. This
+     * method computes the exact value of the floating point number, not an
+     * approximation, as is often the case by converting the floating point
+     * number to a string first. Remember, though, that the exact value of
+     * a 64-bit binary floating-point number is not always the value that
+     * results when passing a literal decimal number, since not all decimal
+     * numbers can be converted to exact binary numbers (in the example
+     * given, the resulting arbitrary-precision decimal will be the value
+     *  of the closest "double" to 0.1, not 0.1 exactly). To create an
+     * arbitrary-precision decimal number from a decimal value, use
+     * FromString instead in most cases.
+     * @param dblBits
+     * @return An arbitrary-precision decimal number with the same value as {@code
+     * value}.
+     */
+    public static EDecimal FromDoubleBits(long dblBits) {
+      int[] value = new int[] {
+        ((int)(dblBits & 0xffffffffL)),
+        ((int)((dblBits >> 32) & 0xffffffffL)),
+      };
       int floatExponent = (int)((value[1] >> 20) & 0x7ff);
       boolean neg = (value[1] >> 31) != 0;
       long lvalue;
@@ -943,13 +968,13 @@ TODO: Log1P and ExpM1 in EFloat and ERational
      * though, that the exact value of a 32-bit binary floating-point
      * number is not always the value that results when passing a literal
      * decimal number (for example, calling
-     * <code>ExtendedDecimal.FromSingle(0.1f)</code>), since not all decimal
-     * numbers can be converted to exact binary numbers (in the example
-     * given, the resulting arbitrary-precision decimal will be the the
-     *  value of the closest "float" to 0.1, not 0.1 exactly). To create an
+     * <code>EDecimal.FromSingle(0.1f)</code>), since not all decimal numbers
+     * can be converted to exact binary numbers (in the example given, the
+     * resulting arbitrary-precision decimal will be the the value of the
+     *  closest "float" to 0.1, not 0.1 exactly). To create an
      * arbitrary-precision decimal number from a decimal value, use
      * FromString instead in most cases (for example:
-     *  <code>ExtendedDecimal.FromString("0.1")</code>).
+     *  <code>EDecimal.FromString("0.1")</code>).
      * @param flt The parameter {@code flt} is a 32-bit binary floating-point
      * number.
      * @return An arbitrary-precision decimal number with the same value as {@code
@@ -957,6 +982,28 @@ TODO: Log1P and ExpM1 in EFloat and ERational
      */
     public static EDecimal FromSingle(float flt) {
       int value = Float.floatToRawIntBits(flt);
+      return FromSingleBits(value);
+    }
+
+    /**
+     * Creates an arbitrary-precision decimal number from a 32-bit binary
+     * floating-point number encoded in the IEEE 754 binary32 format. This
+     * method computes the exact value of the floating point number, not an
+     * approximation, as is often the case by converting the floating point
+     * number to a string first. Remember, though, that the exact value of
+     * a 32-bit binary floating-point number is not always the value that
+     * results when passing a literal decimal number, since not all decimal
+     * numbers can be converted to exact binary numbers (in the example
+     * given, the resulting arbitrary-precision decimal will be the the
+     *  value of the closest "float" to 0.1, not 0.1 exactly). To create an
+     * arbitrary-precision decimal number from a decimal value, use
+     * FromString instead in most cases.
+     * @param value The parameter {@code flt} is a 32-bit binary floating-point
+     * number encoded in the IEEE 754 binary32 format.
+     * @return An arbitrary-precision decimal number with the same value as {@code
+     * value}.
+     */
+    public static EDecimal FromSingleBits(int value) {
       boolean neg = (value >> 31) != 0;
       int floatExponent = (int)((value >> 23) & 0xff);
       int valueFpMantissa = value & 0x7fffff;
@@ -2036,7 +2083,7 @@ TODO: Log1P and ExpM1 in EFloat and ERational
       // str.length()))) + "] " + (ctx.getRounding()));
       // }
       // System.out.println("digitRange="+digitStart+"-"+digitEnd+
-         //  "decdigitRange="+decimalDigitStart+"-"+decimalDigitEnd);
+         // "decdigitRange="+decimalDigitStart+"-"+decimalDigitEnd);
       if (
         roundUp && ctx != null &&
         ctx.getPrecision().compareTo(decimalPrec) < 0) {
@@ -2192,7 +2239,7 @@ TODO: Log1P and ExpM1 in EFloat and ERational
         }
       }
       // System.out.println("digitRange="+digitStart+"-"+digitEnd+
-         //  "decdigitRange="+decimalDigitStart+"-"+decimalDigitEnd);
+         // "decdigitRange="+decimalDigitStart+"-"+decimalDigitEnd);
       int de = digitEnd;
       int dde = decimalDigitEnd;
       if (!haveExponent && haveDecimalPoint &&
@@ -5257,33 +5304,31 @@ private static String Chop(Object o) {
 
     /**
      * Converts this value to its closest equivalent as a 64-bit floating-point
-     * number, using the half-even rounding mode. <p>If this value is a
-     * NaN, sets the high bit of the 64-bit floating point number's
-     * significand area for a quiet NaN, and clears it for a signaling NaN.
-     * Then the other bits of the significand area are set to the lowest
-     * bits of this object's unsigned significand, and the next-highest bit
-     * of the significand area is set if those bits are all zeros and this
-     * is a signaling NaN. Unfortunately, in the.NET implementation, the
-     * return value of this method may be a quiet NaN even if a signaling
-     * NaN would otherwise be generated.</p>
-     * @return The closest 64-bit floating-point number to this value. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 64-bit floating point number.
+     * number encoded in the IEEE 754 binary64 format, using the half-even
+     * rounding mode. <p>If this value is a NaN, sets the high bit of the
+     * binary64 value's significand area for a quiet NaN, and clears it for
+     * a signaling NaN. Then the other bits of the significand area are set
+     * to the lowest bits of this object's unsigned significand, and the
+     * next-highest bit of the significand area is set if those bits are
+     * all zeros and this is a signaling NaN.</p>
+     * @return The closest 64-bit floating-point number to this value, encoded in
+     * the IEEE 754 binary64 format. The return value can be positive
+     * infinity or negative infinity, encoded in the IEEE 754 binary64
+     * format, if this value exceeds the range of a 64-bit floating point
+     * number.
      */
-    public double ToDouble() {
+    public long ToDoubleBits() {
       if (this.IsPositiveInfinity()) {
-        return Double.POSITIVE_INFINITY;
+        return (long)0x7ff0000000000000L;
       }
       if (this.IsNegativeInfinity()) {
-        return Double.NEGATIVE_INFINITY;
+        return (long)0xfff0000000000000L;
       }
       if (this.isNegative() && this.isZero()) {
-        int highbit = ((int)(1 << 31));
-        return Extras.IntegersToDouble(new int[] { 0, highbit,
-        });
+        return 1L << 63;
       }
       if (this.isZero()) {
-        return 0.0;
+        return 0;
       }
       if (this.isFinite()) {
         if (this.exponent.CompareToInt(0) == 0 &&
@@ -5291,7 +5336,8 @@ private static String Chop(Object o) {
           long v = this.unsignedMantissa.ToInt64();
           if (v <= (1L << 53)) {
             // This integer fits exactly in double
-            return this.isNegative() ? (double)(-v) : (double)v;
+            double dbl = this.isNegative() ? (double)(-v) : (double)v;
+            throw new UnsupportedOperationException();
           }
         }
         if (this.exponent.CompareToInt(0) < 0 &&
@@ -5303,7 +5349,8 @@ private static String Chop(Object o) {
           if (m != Integer.MIN_VALUE) {
             if (m % vtp == 0) {
               double dn = (double)(m / vtp);
-              return this.isNegative() ? -dn : dn;
+              double dbl = this.isNegative() ? -dn : dn;
+              throw new UnsupportedOperationException();
             }
             // Shift significand to be a 53-bit number (which
             // can fit exactly in a double)
@@ -5316,7 +5363,8 @@ private static String Chop(Object o) {
               // division will be exact and will not require
               // rounding
               double dn = (double)m / (double)vtp;
-              return this.isNegative() ? -dn : dn;
+              double dbl = this.isNegative() ? -dn : dn;
+              throw new UnsupportedOperationException();
             }
             int divdCount = NumberUtility.BitLength(m);
             int divsCount = NumberUtility.BitLength(vtp);
@@ -5362,26 +5410,44 @@ private static String Chop(Object o) {
                 lquo >>= 1;
                 ++nexp;
               }
-              int mb0 = ((int)(lquo & 0xffffffffL));
-              int mb1 = ((int)((lquo >> 32) & 0xffffffffL));
               // Clear the high bits where the exponent and sign are
-              mb1 &= 0xfffff;
+              lquo &= 0xfffffffffffffL;
               // NOTE: Assumed not to be subnormal
-              mb1 |= (nexp + 1075) << 20;
+              lquo |= (long)(nexp + 1075) << 52;
               if (this.isNegative()) {
-                mb1 |= ((int)(1 << 31));
+                lquo |= ((int)(1L << 63));
               }
-              return Extras.IntegersToDouble(mb0, mb1);
+              return lquo;
             }
           }
         }
         if (this.exponent.CompareToInt(309) > 0) {
           // Very high exponent, treat as infinity
-          return this.isNegative() ? Double.NEGATIVE_INFINITY :
-            Double.POSITIVE_INFINITY;
+          return this.isNegative() ? ((long)0xfff0000000000000L) :
+            0x7ff0000000000000L;
         }
       }
-      return this.ToEFloat(EContext.Binary64).ToDouble();
+      return this.ToEFloat(EContext.Binary64).ToDoubleBits();
+    }
+
+    /**
+     * Converts this value to its closest equivalent as a 64-bit floating-point
+     * number, using the half-even rounding mode. <p>If this value is a
+     * NaN, sets the high bit of the 64-bit floating point number's
+     * significand area for a quiet NaN, and clears it for a signaling NaN.
+     * Then the other bits of the significand area are set to the lowest
+     * bits of this object's unsigned significand, and the next-highest bit
+     * of the significand area is set if those bits are all zeros and this
+     * is a signaling NaN. Unfortunately, in the.NET implementation, the
+     * return value of this method may be a quiet NaN even if a signaling
+     * NaN would otherwise be generated.</p>
+     * @return The closest 64-bit floating-point number to this value. The return
+     * value can be positive infinity or negative infinity if this value
+     * exceeds the range of a 64-bit floating point number.
+     */
+    public double ToDouble() {
+      long value = this.ToDoubleBits();
+      return Double.longBitsToDouble(value);
     }
 
     /**
@@ -5478,6 +5544,26 @@ private static String Chop(Object o) {
      */
     public String ToPlainString() {
       return this.ToStringInternal(2);
+    }
+
+    /**
+     * Converts this value to its closest equivalent as a 32-bit floating-point
+     * number encoded in the IEEE 754 binary32 format, using the half-even
+     * rounding mode. <p>If this value is a NaN, sets the high bit of the
+     * 32-bit floating point number's significand area for a quiet NaN, and
+     * clears it for a signaling NaN. Then the other bits of the
+     * significand area are set to the lowest bits of this object's
+     * unsigned significand, and the next-highest bit of the significand
+     * area is set if those bits are all zeros and this is a signaling
+     * NaN.</p>
+     * @return The closest 32-bit binary floating-point number to this value,
+     * encoded in the IEEE 754 binary32 format. The return value can be
+     * positive infinity or negative infinity if this value exceeds the
+     * range of a 32-bit floating point number.
+     */
+    public float ToSingleBits() {
+       // TODO
+       throw new UnsupportedOperationException();
     }
 
     /**

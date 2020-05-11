@@ -22,7 +22,6 @@ at: http://peteroupc.github.io/
 // TODO: In next version after 1.6, add long overloads in addition to int
 // overloads
 // in EDecimal/EFloat/EInteger/ERational (including compareTo and DivRem)
-// TODO: better document and/or/not/xor
 // TODO: AndNot, Implication (Imp/OrNot), Equivalence (Eqv/XorNot)
 
   /**
@@ -4112,8 +4111,17 @@ ShortMask) != 0) ? 9 :
     }
 
     /**
-     * Returns an arbitrary-precision integer with every bit flipped from this one.
-     * @return An arbitrary-precision integer.
+     * Returns an arbitrary-precision integer with every bit flipped from this one
+     * (also called an inversion or NOT operation).
+     * @return An arbitrary-precision integer in which each bit in its two's
+     * complement representation is set if the corresponding bit of this
+     * integer is clear, and vice versa. Returns -1 if this integer is 0.
+     * If this integer is positive, the return value is negative, and vice
+     * versa. This method uses the two's complement form of negative
+     * integers (see {@link com.upokecenter.numbers.EDecimal}). For
+     * example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
+     * -21). In binary, NOT...11100110 = 11001 (or in decimal, NOT -26 =
+     * 25).
      */
     public EInteger Not() {
       if (this.wordCount == 0) {
@@ -4140,14 +4148,19 @@ ShortMask) != 0) ? 9 :
     }
 
     /**
-     * Does an AND operation between two arbitrary-precision integer values.<p>Each
-     * arbitrary-precision integer is treated as a two's-complement form
-     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
-     * @param other An arbitrary-precision integer.
+     * Does an AND operation between this arbitrary-precision integer and another
+     * one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param other Another arbitrary-precision integer that participates in the
+     * operation.
      * @return An arbitrary-precision integer in which each bit is set if the
-     * corresponding bits of this integer and the other integer are both
-     * set.
+     * corresponding bits of this integer and the other integer (in their
+     * two's-complement representation) are both set. For example, in
+     * binary, 10110 AND 01100 = 00100 (or in decimal, 22 AND 12 = 4). This
+     * method uses the two's complement form of negative integers (see
+     * {@link com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11100111 AND 01100 = 00100 (or in decimal, -25 AND 12 = 4).
      * @throws NullPointerException The parameter {@code other} is null.
      */
     public EInteger And(EInteger other) {
@@ -4204,12 +4217,19 @@ ShortMask) != 0) ? 9 :
     }
 
     /**
-     * Does an OR operation between two arbitrary-precision integer
-     * instances.<p>Each arbitrary-precision integer is treated as a
+     * Does an OR operation between this arbitrary-precision integer and another
+     * one.<p>Each arbitrary-precision integer is treated as a
      * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
      *  "Forms of numbers"}) for the purposes of this operator.</p>
-     * @param second The second operand.
-     * @return An arbitrary-precision integer.
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, the other integer's
+     * corresponding bit is set, or both. For example, in binary, 10110 OR
+     * 11010 = 11110 (or in decimal, 22 OR 26 = 30). This method uses the
+     * two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 OR 01011 =...11101111 (or in decimal, -18 OR 11 = -17).
      * @throws NullPointerException The parameter {@code second} is null.
      */
     public EInteger Or(EInteger second) {
@@ -4275,13 +4295,17 @@ ShortMask) != 0) ? 9 :
     }
 
     /**
-     * Finds the exclusive "or" of two arbitrary-precision integer objects. <p>Each
-     * arbitrary-precision integer is treated as a two's-complement form
-     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
-     * @param other An arbitrary-precision integer.
+     * Does an exclusive OR (XOR) operation between this arbitrary-precision
+     * integer and another one.
+     * @param other Another arbitrary-precision integer that participates in the
+     * operation.
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bit is set in one input integer but not in the other.
+     * For example, in binary, 11010 XOR 01001 = 10011 (or in decimal, 26
+     * XOR 9 = 19). This method uses the two's complement form of negative
+     * integers (see {@link com.upokecenter.numbers.EDecimal}). For
+     * example, in binary, ...11101101 XOR 00011 =...11101110 (or in
+     * decimal, -19 XOR 3 = -18).
      * @throws NullPointerException The parameter {@code other} is null.
      */
     public EInteger Xor(EInteger other) {
