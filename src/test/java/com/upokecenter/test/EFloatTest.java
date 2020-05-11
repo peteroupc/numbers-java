@@ -1203,7 +1203,7 @@ import com.upokecenter.numbers.*;
         EFloat.Zero,
         EFloat.NegativeZero.Plus(null));
     }
-    @Test
+    @Test(timeout = 100000)
     public void TestPow() {
       EContext[] ecs = new EContext[] {
         EContext.Binary32,
