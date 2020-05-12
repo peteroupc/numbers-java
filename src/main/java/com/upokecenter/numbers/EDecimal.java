@@ -5415,7 +5415,7 @@ private static String Chop(Object o) {
               // NOTE: Assumed not to be subnormal
               lquo |= (long)(nexp + 1075) << 52;
               if (this.isNegative()) {
-                lquo |= ((int)(1L << 63));
+                lquo |= ((long)(1L << 63));
               }
               return lquo;
             }

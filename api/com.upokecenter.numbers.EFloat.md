@@ -270,7 +270,7 @@ Renamed to DivRemNaturalScale.
  floating-point number.
 * `static EFloat FromSingle​(float flt)`<br>
  Creates a binary floating-point number from a 32-bit floating-point number.
-* `static EFloat FromSingleBits​(int singleBits)`<br>
+* `static EFloat FromSingleBits​(int value)`<br>
  Creates a binary floating-point number from a 32-bit floating-point number
  encoded in the IEEE 754 binary32 format.
 * `static EFloat FromString​(java.lang.String str)`<br>
@@ -567,10 +567,10 @@ Renamed to Sqrt.
  part, and returns the least-significant bits of its two's-complement
  form as a byte (from 0 to 255).
 * `double ToDouble()`<br>
- Converts this value to a 64-bit floating-point number.
-* `long ToDoubleBits()`<br>
  Converts this value to a 64-bit floating-point number encoded in the IEEE
  754 binary64 format.
+* `long ToDoubleBits()`<br>
+ Converts this value to a 64-bit floating-point number.
 * `EDecimal ToEDecimal()`<br>
  Converts this value to an arbitrary-precision decimal number.
 * `EInteger ToEInteger()`<br>
@@ -922,21 +922,20 @@ Creates a binary floating-point number from a 64-bit floating-point number
 
 * A binary floating-point number with the same value as <code>dbl</code>.
 
-### FromSingleBits
-    public static EFloat FromSingleBits​(int singleBits)
-Creates a binary floating-point number from a 32-bit floating-point number
- encoded in the IEEE 754 binary32 format. This method computes the
- exact value of the floating point number, not an approximation, as
- is often the case by converting the floating point number to a
- string first.
+### FromSingle
+    public static EFloat FromSingle​(float flt)
+Creates a binary floating-point number from a 32-bit floating-point number.
+ This method computes the exact value of the floating point number,
+ not an approximation, as is often the case by converting the
+ floating point number to a string first.
 
 **Parameters:**
 
-* <code>singleBits</code> -
+* <code>flt</code> - The parameter <code>flt</code> is a 64-bit floating-point number.
 
 **Returns:**
 
-* A binary floating-point number with the same value as <code>dbl</code>.
+* A binary floating-point number with the same value as <code>flt</code>.
 
 ### FromDouble
     public static EFloat FromDouble​(double dbl)
@@ -966,21 +965,23 @@ Converts an arbitrary-precision integer to the same value as a binary
 
 * An arbitrary-precision binary floating-point number.
 
-### FromSingle
-    public static EFloat FromSingle​(float flt)
-Creates a binary floating-point number from a 32-bit floating-point number.
- This method computes the exact value of the floating point number,
- not an approximation, as is often the case by converting the
- floating point number to a string first.
+### FromSingleBits
+    public static EFloat FromSingleBits​(int value)
+Creates a binary floating-point number from a 32-bit floating-point number
+ encoded in the IEEE 754 binary32 format. This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.
 
 **Parameters:**
 
-* <code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
- number.
+* <code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
+ binary32 format.
 
 **Returns:**
 
-* A binary floating-point number with the same value as <code>flt</code>.
+* A binary floating-point number with the same floating-point value as
+ <code>flt</code>.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
@@ -3433,15 +3434,17 @@ Subtracts an arbitrary-precision binary floating-point number from this
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
-### ToDoubleBits
-    public long ToDoubleBits()
+### ToDouble
+    public double ToDouble()
 Converts this value to a 64-bit floating-point number encoded in the IEEE
  754 binary64 format.
 
 **Returns:**
 
 * This number, converted to a 64-bit floating-point number encoded in
- the IEEE 754 binary64 format.
+ the IEEE 754 binary64 format. The return value can be positive
+ infinity or negative infinity if this value exceeds the range of a
+ 64-bit floating point number.
 
 ### ToSingleBits
     public int ToSingleBits()
@@ -3453,13 +3456,15 @@ Converts this value to a 32-bit floating-point number encoded in the IEEE
 * This number, converted to a 32-bit floating-point number encoded in
  the IEEE 754 binary32 format.
 
-### ToDouble
-    public double ToDouble()
+### ToDoubleBits
+    public long ToDoubleBits()
 Converts this value to a 64-bit floating-point number.
 
 **Returns:**
 
-* This number, converted to a 64-bit floating-point number.
+* This number, converted to a 64-bit floating-point number. The return
+ value can express positive infinity or negative infinity if this
+ value exceeds the range of a 64-bit floating point number.
 
 ### ToEDecimal
     public EDecimal ToEDecimal()

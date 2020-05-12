@@ -7,6 +7,7 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
+// TODO: compareTo(long)
 // TODO: In next major version or earlier, consider adding byte[] equivalent
 // of FromString
 // here and in EDecimal
@@ -471,17 +472,16 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
     }
 
     /**
-     * Creates a binary floating-point number from a 32-bit floating-point number
-     * encoded in the IEEE 754 binary32 format. This method computes the
-     * exact value of the floating point number, not an approximation, as
-     * is often the case by converting the floating point number to a
-     * string first.
-     * @param singleBits
-     * @return A binary floating-point number with the same value as {@code dbl}.
+     * Creates a binary floating-point number from a 32-bit floating-point number.
+     * This method computes the exact value of the floating point number,
+     * not an approximation, as is often the case by converting the
+     * floating point number to a string first.
+     * @param flt The parameter {@code flt} is a 64-bit floating-point number.
+     * @return A binary floating-point number with the same value as {@code flt}.
      */
-    public static EFloat FromSingleBits(int singleBits) {
-      // TODO
-      throw new UnsupportedOperationException();
+    public static EFloat FromSingle(float flt) {
+      return
+FromSingleBits(Float.floatToRawIntBits(flt));
     }
 
     /**
@@ -546,16 +546,17 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
     }
 
     /**
-     * Creates a binary floating-point number from a 32-bit floating-point number.
-     * This method computes the exact value of the floating point number,
-     * not an approximation, as is often the case by converting the
-     * floating point number to a string first.
-     * @param flt The parameter {@code flt} is a 32-bit binary floating-point
-     * number.
-     * @return A binary floating-point number with the same value as {@code flt}.
+     * Creates a binary floating-point number from a 32-bit floating-point number
+     * encoded in the IEEE 754 binary32 format. This method computes the
+     * exact value of the floating point number, not an approximation, as
+     * is often the case by converting the floating point number to a
+     * string first.
+     * @param value A 32-bit binary floating-point number encoded in the IEEE 754
+     * binary32 format.
+     * @return A binary floating-point number with the same floating-point value as
+     * {@code flt}.
      */
-    public static EFloat FromSingle(float flt) {
-      int value = Float.floatToRawIntBits(flt);
+    public static EFloat FromSingleBits(int value) {
       boolean neg = (value >> 31) != 0;
       int floatExponent = (int)((value >> 23) & 0xff);
       int valueFpMantissa = value & 0x7fffff;
@@ -3462,11 +3463,13 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
      * Converts this value to a 64-bit floating-point number encoded in the IEEE
      * 754 binary64 format.
      * @return This number, converted to a 64-bit floating-point number encoded in
-     * the IEEE 754 binary64 format.
+     * the IEEE 754 binary64 format. The return value can be positive
+     * infinity or negative infinity if this value exceeds the range of a
+     * 64-bit floating point number.
      */
-    public long ToDoubleBits() {
-      // TODO
-      throw new UnsupportedOperationException();
+    public double ToDouble() {
+      long value = this.ToDoubleBits();
+      return Double.longBitsToDouble(value);
     }
 
     /**
@@ -3482,14 +3485,16 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
 
     /**
      * Converts this value to a 64-bit floating-point number.
-     * @return This number, converted to a 64-bit floating-point number.
+     * @return This number, converted to a 64-bit floating-point number. The return
+     * value can express positive infinity or negative infinity if this
+     * value exceeds the range of a 64-bit floating point number.
      */
-    public double ToDouble() {
+    public long ToDoubleBits() {
       if (this.IsPositiveInfinity()) {
-        return Double.POSITIVE_INFINITY;
+        return (long)0x7ff0000000000000L;
       }
       if (this.IsNegativeInfinity()) {
-        return Double.NEGATIVE_INFINITY;
+        return (long)0xfff0000000000000L;
       }
       if (this.IsNaN()) {
         int[] nan = { 0, 0x7ff00000 };
@@ -3516,7 +3521,9 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
             nan[1] |= 0x40000;
           }
         }
-        return Extras.IntegersToDouble(nan);
+        long lret = (((long)nan[0]) & 0xffffffffL);
+        lret = (((long)nan[1]) << 32);
+        return lret;
       }
       EFloat thisValue = this;
       // TODO: In next version after 1.6, use compareTo(long) instead
@@ -3530,15 +3537,13 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
         thisValue = this.RoundToPrecision(EContext.Binary64);
       }
       if (!thisValue.isFinite()) {
-        return thisValue.ToDouble();
+        return thisValue.ToDoubleBits();
       }
       long longmant = thisValue.unsignedMantissa.ToInt64Checked();
       if (thisValue.isNegative() && longmant == 0) {
-        int highbit = ((int)(1 << 31));
-        return Extras.IntegersToDouble(new int[] { 0, highbit,
-        });
+        return 1L << 63;
       } else if (longmant == 0) {
-        return 0.0;
+        return 0L;
       }
       // System.out.println("todouble -->" + this);
       long longBitLength = NumberUtility.BitLength(longmant);
@@ -3556,18 +3561,15 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
         }
         longmant <<= diff;
       }
-      int mb0 = ((int)(longmant & 0xffffffffL));
-      int mb1 = ((int)((longmant >> 32) & 0xffffffffL));
-      // Clear the high bits where the exponent and sign are
-      mb1 &= 0xfffff;
-      if (!subnormal) {
-        int smallexponent = (expo + 1075) << 20;
-        mb1 |= smallexponent;
-      }
-      if (this.isNegative()) {
-        mb1 |= ((int)(1 << 31));
-      }
-      return Extras.IntegersToDouble(mb0, mb1);
+              // Clear the high bits where the exponent and sign are
+              longmant &= 0xfffffffffffffL;
+              if (!subnormal) {
+                longmant |= (long)(expo + 1075) << 52;
+              }
+              if (this.isNegative()) {
+                longmant |= ((long)(1L << 63));
+              }
+              return longmant;
     }
 
     /**
