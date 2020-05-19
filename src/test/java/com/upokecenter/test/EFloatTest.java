@@ -453,6 +453,47 @@ import com.upokecenter.numbers.*;
         enumber);
     }
 
+@Test
+public static void TestDoubleSingleBitsSpecific() {
+{
+  String str = "-0.0230382307472970331019279655038189957849681377410888671875";
+  EFloat ed = EFloat.FromDoubleBits(-4641074497532188517L);
+  EFloat edExp = EFloat.FromString(str);
+  Assert.assertEquals(0, edExp.CompareToValue(ed));
+  Assert.assertEquals(-4641074497532188517L, ed.ToDoubleBits());
+}
+{
+String
+  str =
+  "19501289696574533000000000000000000000000000000000000000000000000000000000000000";
+EFloat ed = EFloat.FromDoubleBits(5793051147329279713L);
+EFloat edExp = EFloat.FromString(str);
+Assert.assertEquals("19501289696574533000000000000000000000000000000000000000000000000000000000000000",0,edExp.CompareToValue(ed));
+Assert.assertEquals(5793051147329279713L, ed.ToDoubleBits());
+}
+{
+String str = "-0.023038230747297033";
+EFloat ed = EFloat.FromDoubleBits(-4641074497532188517L);
+EFloat edExp = EFloat.FromString(str);
+Assert.assertEquals("-0.023038230747297033",0,edExp.CompareToValue(ed));
+Assert.assertEquals(-4641074497532188517L, ed.ToDoubleBits());
+}
+{
+String str = "-5761315294415299";
+EDecimal ed = EDecimal.FromDoubleBits(-4380744721764447805L);
+EDecimal edExp = EDecimal.FromString(str);
+Assert.assertEquals("-5761315294415299",0,edExp.CompareToValue(ed));
+Assert.assertEquals(-4380744721764447805L, ed.ToDoubleBits());
+}
+{
+String str = "4569138";
+EDecimal ed = EDecimal.FromSingleBits(1250652260);
+EDecimal edExp = EDecimal.FromString(str);
+Assert.assertEquals("4569138",0,edExp.CompareToValue(ed));
+Assert.assertEquals(1250652260, ed.ToSingleBits());
+}
+}
+
     @Test
     public void TestFloatDecimalSpecific() {
       String str =

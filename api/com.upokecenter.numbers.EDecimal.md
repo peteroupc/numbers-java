@@ -834,11 +834,12 @@ Renamed to ToEFloat.
  part, and returns the least-significant bits of its two's-complement
  form as a 64-bit signed integer.
 * `java.lang.String ToPlainString()`<br>
- Converts this value to a string, but without using exponential notation.
+ Converts this value to a string as though with the toString method, but
+ without using exponential notation.
 * `float ToSingle()`<br>
  Converts this value to its closest equivalent as a 32-bit floating-point
  number, using the half-even rounding mode.
-* `float ToSingleBits()`<br>
+* `int ToSingleBits()`<br>
  Converts this value to its closest equivalent as a 32-bit floating-point
  number encoded in the IEEE 754 binary32 format, using the half-even
  rounding mode.
@@ -4160,14 +4161,15 @@ Creates a binary floating-point number from this object's value. Note that
 
 ### ToPlainString
     public java.lang.String ToPlainString()
-Converts this value to a string, but without using exponential notation.
+Converts this value to a string as though with the toString method, but
+ without using exponential notation.
 
 **Returns:**
 
 * A text string.
 
 ### ToSingleBits
-    public float ToSingleBits()
+    public int ToSingleBits()
 Converts this value to its closest equivalent as a 32-bit floating-point
  number encoded in the IEEE 754 binary32 format, using the half-even
  rounding mode. <p>If this value is a NaN, sets the high bit of the

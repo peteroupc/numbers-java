@@ -728,8 +728,8 @@ TODO: Log-Real numbers
      * dbl}.
      */
     public static EDecimal FromDouble(double dbl) {
-      long value = Double.doubleToRawLongBits(dbl);
-      return FromDoubleBits(value);
+      long lvalue = Double.doubleToRawLongBits(dbl);
+      return FromDoubleBits(lvalue);
     }
 
     /**
@@ -5302,6 +5302,38 @@ private static String Chop(Object o) {
       return this.Add(negated, ctx);
     }
 
+    private static long IntegerToDoubleBits(long v, int expshift, boolean neg) {
+            int nexp = expshift;
+            while (v < (1L << 53)) {
+                v <<= 1;
+                --nexp;
+             }
+             // Clear the high bits where the exponent and sign are
+             v &= 0xfffffffffffffL;
+             // NOTE: Assumed not to be subnormal
+             v |= (long)(nexp + 1075) << 52;
+             if (neg) {
+               v |= ((long)(1L << 63));
+             }
+              return v;
+    }
+
+    private static int IntegerToSingleBits(int iv, int expshift, boolean neg) {
+            int nexp = expshift;
+            while (iv < (1 << 24)) {
+                iv <<= 1;
+                --nexp;
+             }
+             // Clear the high bits where the exponent and sign are
+             iv &= 0x7fffff;
+             // NOTE: Assumed not to be subnormal
+             iv |= (nexp + 150) << 23;
+             if (neg) {
+               iv |= 1 << 31;
+             }
+              return iv;
+    }
+
     /**
      * Converts this value to its closest equivalent as a 64-bit floating-point
      * number encoded in the IEEE 754 binary64 format, using the half-even
@@ -5336,8 +5368,7 @@ private static String Chop(Object o) {
           long v = this.unsignedMantissa.ToInt64();
           if (v <= (1L << 53)) {
             // This integer fits exactly in double
-            double dbl = this.isNegative() ? (double)(-v) : (double)v;
-            throw new UnsupportedOperationException();
+            return IntegerToDoubleBits(v, 0, this.isNegative());
           }
         }
         if (this.exponent.CompareToInt(0) < 0 &&
@@ -5348,23 +5379,17 @@ private static String Chop(Object o) {
           int vtp = ValueTenPowers[iex];
           if (m != Integer.MIN_VALUE) {
             if (m % vtp == 0) {
-              double dn = (double)(m / vtp);
-              double dbl = this.isNegative() ? -dn : dn;
-              throw new UnsupportedOperationException();
-            }
+              // Will fit in double without rounding
+              // System.out.println("m=" + m + " vtp=" + vtp);
+               return IntegerToDoubleBits(m / vtp, 0, this.isNegative());
+             }
             // Shift significand to be a 53-bit number (which
             // can fit exactly in a double)
             long am = Math.abs(m);
+            int expshift = 0;
             while (am < (1 << 52)) {
               am <<= 1;
-            }
-            if (am % vtp == 0) {
-              // Converting to double and doing floating-point
-              // division will be exact and will not require
-              // rounding
-              double dn = (double)m / (double)vtp;
-              double dbl = this.isNegative() ? -dn : dn;
-              throw new UnsupportedOperationException();
+              --expshift;
             }
             int divdCount = NumberUtility.BitLength(m);
             int divsCount = NumberUtility.BitLength(vtp);
@@ -5539,7 +5564,8 @@ private static String Chop(Object o) {
     }
 
     /**
-     * Converts this value to a string, but without using exponential notation.
+     * Converts this value to a string as though with the toString method, but
+     * without using exponential notation.
      * @return A text string.
      */
     public String ToPlainString() {
@@ -5561,38 +5587,18 @@ private static String Chop(Object o) {
      * positive infinity or negative infinity if this value exceeds the
      * range of a 32-bit floating point number.
      */
-    public float ToSingleBits() {
-       // TODO
-       throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Converts this value to its closest equivalent as a 32-bit floating-point
-     * number, using the half-even rounding mode. <p>If this value is a
-     * NaN, sets the high bit of the 32-bit floating point number's
-     * significand area for a quiet NaN, and clears it for a signaling NaN.
-     * Then the other bits of the significand area are set to the lowest
-     * bits of this object's unsigned significand, and the next-highest bit
-     * of the significand area is set if those bits are all zeros and this
-     * is a signaling NaN. Unfortunately, in the.NET implementation, the
-     * return value of this method may be a quiet NaN even if a signaling
-     * NaN would otherwise be generated.</p>
-     * @return The closest 32-bit binary floating-point number to this value. The
-     * return value can be positive infinity or negative infinity if this
-     * value exceeds the range of a 32-bit floating point number.
-     */
-    public float ToSingle() {
+    public int ToSingleBits() {
       if (this.IsPositiveInfinity()) {
-        return Float.POSITIVE_INFINITY;
+        return 0x7f800000;
       }
       if (this.IsNegativeInfinity()) {
-        return Float.NEGATIVE_INFINITY;
+        return (int)0xff800000;
       }
       if (this.isNegative() && this.isZero()) {
-        return Float.intBitsToFloat(1 << 31);
+        return (int)1 << 31;
       }
       if (this.isZero()) {
-        return 0.0f;
+        return 0;
       }
       if (this.isFinite()) {
         if (this.exponent.CompareToInt(0) == 0 &&
@@ -5600,7 +5606,7 @@ private static String Chop(Object o) {
           int v = this.unsignedMantissa.ToInt32();
           if (v <= (1 << 24)) {
             // This integer fits exactly in float
-            return this.isNegative() ? (float)(-v) : (float)v;
+            return IntegerToSingleBits(v, 0, this.isNegative());
           }
         }
         if (this.exponent.CompareToInt(0) < 0 &&
@@ -5611,8 +5617,7 @@ private static String Chop(Object o) {
           int vtp = ValueTenPowers[iex];
           if (m >= -(1 << 23) && m < (1 << 23)) {
             if (m % vtp == 0) {
-              float dn = (float)(m / vtp);
-              return this.isNegative() ? -dn : dn;
+              return IntegerToSingleBits(m / vtp, 0, this.isNegative());
             }
             // Shift significand to be a 24-bit number (which
             // can fit exactly in a single)
@@ -5620,14 +5625,6 @@ private static String Chop(Object o) {
             while (am < (1 << 23)) {
               am <<= 1;
             }
-            if (am % vtp == 0) {
-              // Converting to double and doing floating-point
-              // division will be exact and will not require
-              // rounding
-              float dn = (float)m / (float)vtp;
-              return this.isNegative() ? -dn : dn;
-            }
-
             int divdCount = NumberUtility.BitLength(m);
             int divsCount = NumberUtility.BitLength(vtp);
             int dividendShift = (divdCount <= divsCount) ? ((divsCount -
@@ -5678,17 +5675,37 @@ private static String Chop(Object o) {
               if (this.isNegative()) {
                 smallmantissa |= 1 << 31;
               }
-              return Float.intBitsToFloat(smallmantissa);
+              return smallmantissa;
             }
           }
         }
         if (this.exponent.CompareToInt(39) > 0) {
           // Very high exponent, treat as infinity
-          return this.isNegative() ? Float.NEGATIVE_INFINITY :
-            Float.POSITIVE_INFINITY;
+          return this.isNegative() ? ((int)0xff800000) :
+            0x7f800000;
         }
       }
-      return this.ToEFloat(EContext.Binary32).ToSingle();
+      return this.ToEFloat(EContext.Binary32).ToSingleBits();
+    }
+
+    /**
+     * Converts this value to its closest equivalent as a 32-bit floating-point
+     * number, using the half-even rounding mode. <p>If this value is a
+     * NaN, sets the high bit of the 32-bit floating point number's
+     * significand area for a quiet NaN, and clears it for a signaling NaN.
+     * Then the other bits of the significand area are set to the lowest
+     * bits of this object's unsigned significand, and the next-highest bit
+     * of the significand area is set if those bits are all zeros and this
+     * is a signaling NaN. Unfortunately, in the.NET implementation, the
+     * return value of this method may be a quiet NaN even if a signaling
+     * NaN would otherwise be generated.</p>
+     * @return The closest 32-bit binary floating-point number to this value. The
+     * return value can be positive infinity or negative infinity if this
+     * value exceeds the range of a 32-bit floating point number.
+     */
+    public float ToSingle() {
+       int sb = this.ToSingleBits();
+       return Float.intBitsToFloat(sb);
     }
 
     /**

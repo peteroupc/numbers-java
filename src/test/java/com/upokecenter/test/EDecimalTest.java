@@ -3473,7 +3473,7 @@ import com.upokecenter.numbers.*;
       // NaNs it may otherwise generate
       if (!(
         EDecimal.FromDouble(ed.ToDouble()).IsNaN()))Assert.fail(
-        str);
+        str + " -> " + EDecimal.FromDouble(ed.ToDouble()));
       if (!(EDecimal.FromSingle(ed.ToSingle()).IsNaN()))Assert.fail();
       if (!(EFloat.FromDouble(ef.ToDouble()).IsNaN()))Assert.fail();
       if (!(EFloat.FromSingle(ef.ToSingle()).IsNaN()))Assert.fail();

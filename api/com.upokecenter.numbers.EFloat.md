@@ -920,7 +920,8 @@ Creates a binary floating-point number from a 64-bit floating-point number
 
 **Returns:**
 
-* A binary floating-point number with the same value as <code>dbl</code>.
+* A binary floating-point number with the same value as the
+ floating-point number encoded in <code>dbl</code>.
 
 ### FromSingle
     public static EFloat FromSingle​(float flt)

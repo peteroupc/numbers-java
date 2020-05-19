@@ -464,11 +464,50 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
      * is often the case by converting the floating point number to a
      * string first.
      * @param dblBits
-     * @return A binary floating-point number with the same value as {@code dbl}.
+     * @return A binary floating-point number with the same value as the
+     * floating-point number encoded in {@code dbl}.
      */
     public static EFloat FromDoubleBits(long dblBits) {
-      // TODO
-      throw new UnsupportedOperationException();
+      int floatExponent = (int)((dblBits >> 52) & 0x7ff);
+      boolean neg = (dblBits >> 63) != 0;
+      long lvalue;
+      if (floatExponent == 2047) {
+        if ((dblBits & ((1L << 52) - 1)) == 0) {
+          return neg ? EFloat.NegativeInfinity : EFloat.PositiveInfinity;
+        }
+        // Treat high bit of mantissa as quiet/signaling bit
+        boolean quiet = ((dblBits >> 32) & 0x80000) != 0;
+        lvalue = dblBits & ((1L << 51) - 1);
+        if (lvalue == 0) {
+          return quiet ? NaN : SignalingNaN;
+        }
+        int flags = (neg ? BigNumberFlags.FlagNegative : 0) |
+          (quiet ? BigNumberFlags.FlagQuietNaN :
+            BigNumberFlags.FlagSignalingNaN);
+        return CreateWithFlags(
+            EInteger.FromInt64(lvalue),
+            EInteger.FromInt32(0),
+            flags);
+      }
+      lvalue = dblBits & ((1L << 52) - 1); // Mask out the exponent and sign
+      if (floatExponent == 0) {
+        ++floatExponent;
+      } else {
+        lvalue |= 1L << 52;
+      }
+      if (lvalue != 0) {
+        // Shift away trailing zeros
+        while ((lvalue & 1L) != 0) {
+           lvalue >>= 1;
+           ++floatExponent;
+        }
+      } else {
+        return neg ? EFloat.NegativeZero : EFloat.Zero;
+      }
+      return CreateWithFlags(
+          EInteger.FromInt64(lvalue),
+          EInteger.FromInt64(floatExponent - 1075),
+          neg ? BigNumberFlags.FlagNegative : 0);
     }
 
     /**
@@ -480,8 +519,8 @@ Create(EInteger.FromInt32(mantissaSmall), EInteger.FromInt32(exponentSmall));
      * @return A binary floating-point number with the same value as {@code flt}.
      */
     public static EFloat FromSingle(float flt) {
-      return
-FromSingleBits(Float.floatToRawIntBits(flt));
+      return FromSingleBits(
+    Float.floatToRawIntBits(flt));
     }
 
     /**
@@ -493,46 +532,8 @@ FromSingleBits(Float.floatToRawIntBits(flt));
      * @return A binary floating-point number with the same value as {@code dbl}.
      */
     public static EFloat FromDouble(double dbl) {
-      int[] value = Extras.DoubleToIntegers(dbl);
-      int floatExponent = (int)((value[1] >> 20) & 0x7ff);
-      boolean neg = (value[1] >> 31) != 0;
-      long lvalue;
-      if (floatExponent == 2047) {
-        if ((value[1] & 0xfffff) == 0 && value[0] == 0) {
-          return neg ? NegativeInfinity : PositiveInfinity;
-        }
-        // Treat high bit of mantissa as quiet/signaling bit
-        boolean quiet = (value[1] & 0x80000) != 0;
-        value[1] &= 0x7ffff;
-        lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
-        if (lvalue == 0) {
-          return quiet ? NaN : SignalingNaN;
-        }
-        value[0] = (neg ? BigNumberFlags.FlagNegative : 0) |
-          (quiet ? BigNumberFlags.FlagQuietNaN :
-            BigNumberFlags.FlagSignalingNaN);
-        return CreateWithFlags(
-            EInteger.FromInt64(lvalue),
-            EInteger.FromInt32(0),
-            value[0]);
-      }
-      value[1] &= 0xfffff; // Mask out the exponent and sign
-      if (floatExponent == 0) {
-        ++floatExponent;
-      } else {
-        value[1] |= 0x100000;
-      }
-      if ((value[1] | value[0]) != 0) {
-        floatExponent += NumberUtility.ShiftAwayTrailingZerosTwoElements(
-            value);
-      } else {
-        return neg ? EFloat.NegativeZero : EFloat.Zero;
-      }
-      lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
-      return CreateWithFlags(
-          EInteger.FromInt64(lvalue),
-          EInteger.FromInt64(floatExponent - 1075),
-          neg ? BigNumberFlags.FlagNegative : 0);
+      long lvalue = Double.doubleToRawLongBits(dbl);
+      return FromDoubleBits(lvalue);
     }
 
     /**
@@ -3479,8 +3480,84 @@ FromSingleBits(Float.floatToRawIntBits(flt));
      * the IEEE 754 binary32 format.
      */
     public int ToSingleBits() {
-      // TODO
-      throw new UnsupportedOperationException();
+      if (this.IsPositiveInfinity()) {
+        return 0x7f800000;
+      }
+      if (this.IsNegativeInfinity()) {
+        return (int)0xff800000;
+      }
+      if (this.IsNaN()) {
+        int nan = 0x7f800000;
+        if (this.isNegative()) {
+          nan |= ((int)(1 << 31));
+        }
+        // IsQuietNaN(): the quiet bit for X86 at least
+        // If signaling NaN and mantissa is 0: set 0x200000
+        // bit to keep the mantissa from being zero
+        if (this.IsQuietNaN()) {
+          nan |= 0x400000;
+        } else if (this.getUnsignedMantissa().isZero()) {
+          nan |= 0x200000;
+        }
+        if (!this.getUnsignedMantissa().isZero()) {
+          // Transfer diagnostic information
+          EInteger bigdata = this.getUnsignedMantissa().Remainder(EInteger.FromInt64(0x400000));
+          int intData = bigdata.ToInt32Checked();
+          nan |= intData;
+          if (intData == 0 && !this.IsQuietNaN()) {
+            nan |= 0x200000;
+          }
+        }
+        return nan;
+      }
+      EFloat thisValue = this;
+      // System.out.println("beforeround=" +thisValue + " ["+
+      // thisValue.getMantissa() + " " + thisValue.getExponent());
+      // Check whether rounding can be avoided for common cases
+      // where the value already fits a single
+      if (!thisValue.isFinite() ||
+        thisValue.unsignedMantissa.compareTo(0x1000000) >= 0 ||
+        thisValue.exponent.compareTo(-95) < 0 ||
+        thisValue.exponent.compareTo(95) > 0) {
+        thisValue = this.RoundToPrecision(EContext.Binary32);
+      }
+      // System.out.println("afterround=" +thisValue + " ["+
+      // thisValue.getMantissa() + " " + thisValue.getExponent());
+      if (!thisValue.isFinite()) {
+        return thisValue.ToSingleBits();
+      }
+      int intmant = thisValue.unsignedMantissa.ToInt32Checked();
+      if (thisValue.isNegative() && intmant == 0) {
+        return (int)1 << 31;
+      } else if (intmant == 0) {
+        return 0;
+      }
+      int intBitLength = NumberUtility.BitLength(intmant);
+      int expo = thisValue.exponent.ToInt32Checked();
+      boolean subnormal = false;
+      if (intBitLength < 24) {
+        int diff = 24 - intBitLength;
+        expo -= diff;
+        if (expo < -149) {
+          // System.out.println("Diff changed from " + diff + " to " + (diff -
+          // (-149 - expo)));
+          diff -= -149 - expo;
+          expo = -149;
+          subnormal = true;
+        }
+        intmant <<= diff;
+      }
+      // System.out.println("intmant=" + intmant + " " + intBitLength +
+      // " expo=" + expo +
+      // " subnormal=" + subnormal);
+      int smallmantissa = intmant & 0x7fffff;
+      if (!subnormal) {
+        smallmantissa |= (expo + 150) << 23;
+      }
+      if (this.isNegative()) {
+        smallmantissa |= 1 << 31;
+      }
+      return smallmantissa;
     }
 
     /**
@@ -3522,8 +3599,10 @@ FromSingleBits(Float.floatToRawIntBits(flt));
           }
         }
         long lret = (((long)nan[0]) & 0xffffffffL);
-        lret = (((long)nan[1]) << 32);
-        return lret;
+        lret |= (((long)nan[1]) << 32);
+        /*
+         System.out.println("lret={0:X8} {1:X8} {2:X}", nan[0], nan[1], lret);
+        */ return lret;
       }
       EFloat thisValue = this;
       // TODO: In next version after 1.6, use compareTo(long) instead
@@ -3782,84 +3861,8 @@ FromSingleBits(Float.floatToRawIntBits(flt));
      * value exceeds the range of a 32-bit floating point number.
      */
     public float ToSingle() {
-      if (this.IsPositiveInfinity()) {
-        return Float.POSITIVE_INFINITY;
-      }
-      if (this.IsNegativeInfinity()) {
-        return Float.NEGATIVE_INFINITY;
-      }
-      if (this.IsNaN()) {
-        int nan = 0x7f800000;
-        if (this.isNegative()) {
-          nan |= ((int)(1 << 31));
-        }
-        // IsQuietNaN(): the quiet bit for X86 at least
-        // If signaling NaN and mantissa is 0: set 0x200000
-        // bit to keep the mantissa from being zero
-        if (this.IsQuietNaN()) {
-          nan |= 0x400000;
-        } else if (this.getUnsignedMantissa().isZero()) {
-          nan |= 0x200000;
-        }
-        if (!this.getUnsignedMantissa().isZero()) {
-          // Transfer diagnostic information
-          EInteger bigdata = this.getUnsignedMantissa().Remainder(EInteger.FromInt64(0x400000));
-          int intData = bigdata.ToInt32Checked();
-          nan |= intData;
-          if (intData == 0 && !this.IsQuietNaN()) {
-            nan |= 0x200000;
-          }
-        }
-        return Float.intBitsToFloat(nan);
-      }
-      EFloat thisValue = this;
-      // System.out.println("beforeround=" +thisValue + " ["+
-      // thisValue.getMantissa() + " " + thisValue.getExponent());
-      // Check whether rounding can be avoided for common cases
-      // where the value already fits a single
-      if (!thisValue.isFinite() ||
-        thisValue.unsignedMantissa.compareTo(0x1000000) >= 0 ||
-        thisValue.exponent.compareTo(-95) < 0 ||
-        thisValue.exponent.compareTo(95) > 0) {
-        thisValue = this.RoundToPrecision(EContext.Binary32);
-      }
-      // System.out.println("afterround=" +thisValue + " ["+
-      // thisValue.getMantissa() + " " + thisValue.getExponent());
-      if (!thisValue.isFinite()) {
-        return thisValue.ToSingle();
-      }
-      int intmant = thisValue.unsignedMantissa.ToInt32Checked();
-      if (thisValue.isNegative() && intmant == 0) {
-        return Float.intBitsToFloat(1 << 31);
-      } else if (intmant == 0) {
-        return 0.0f;
-      }
-      int intBitLength = NumberUtility.BitLength(intmant);
-      int expo = thisValue.exponent.ToInt32Checked();
-      boolean subnormal = false;
-      if (intBitLength < 24) {
-        int diff = 24 - intBitLength;
-        expo -= diff;
-        if (expo < -149) {
-          // System.out.println("Diff changed from " + diff + " to " + (diff -
-          // (-149 - expo)));
-          diff -= -149 - expo;
-          expo = -149;
-          subnormal = true;
-        }
-        intmant <<= diff;
-      }
-      // System.out.println("intmant=" + intmant + " " + intBitLength +
-      // " expo=" + expo +
-      // " subnormal=" + subnormal);
-      int smallmantissa = intmant & 0x7fffff;
-      if (!subnormal) {
-        smallmantissa |= (expo + 150) << 23;
-      }
-      if (this.isNegative()) {
-        smallmantissa |= 1 << 31;
-      }
-      return Float.intBitsToFloat(smallmantissa);
+       int sb = this.ToSingleBits();
+       return Float.intBitsToFloat(sb);
     }
 
     /**
