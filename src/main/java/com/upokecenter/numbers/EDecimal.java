@@ -5304,7 +5304,7 @@ private static String Chop(Object o) {
 
     private static long IntegerToDoubleBits(long v, int expshift, boolean neg) {
             int nexp = expshift;
-            while (v < (1L << 53)) {
+            while (v < (1L << 52)) {
                 v <<= 1;
                 --nexp;
              }
@@ -5320,7 +5320,7 @@ private static String Chop(Object o) {
 
     private static int IntegerToSingleBits(int iv, int expshift, boolean neg) {
             int nexp = expshift;
-            while (iv < (1 << 24)) {
+            while (iv < (1 << 23)) {
                 iv <<= 1;
                 --nexp;
              }
