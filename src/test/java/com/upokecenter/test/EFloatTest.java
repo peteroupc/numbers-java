@@ -463,33 +463,42 @@ public static void TestDoubleSingleBitsSpecific() {
   Assert.assertEquals(-4641074497532188517L, ed.ToDoubleBits());
 }
 {
-String
-  str =
-  "19501289696574533000000000000000000000000000000000000000000000000000000000000000";
-EFloat ed = EFloat.FromDoubleBits(5793051147329279713L);
-EFloat edExp = EFloat.FromString(str);
-Assert.assertEquals("19501289696574533000000000000000000000000000000000000000000000000000000000000000",0,edExp.CompareToValue(ed));
-Assert.assertEquals(5793051147329279713L, ed.ToDoubleBits());
-}
-{
 String str = "-0.023038230747297033";
 EFloat ed = EFloat.FromDoubleBits(-4641074497532188517L);
 EFloat edExp = EFloat.FromString(str);
-Assert.assertEquals("-0.023038230747297033",0,edExp.CompareToValue(ed));
+{
+p.get(0)} Object objectTemp = 0;
+p.get(0)} Object objectTemp2 = edExp.CompareToValue(ed);
+p.get(0)}  tring messageTemp = "-0.023038230747297033" +
+   "\n" + ed.toString() + "\n" + edExp.toString();
+  Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
+p.get(0)}}
 Assert.assertEquals(-4641074497532188517L, ed.ToDoubleBits());
 }
 {
 String str = "-5761315294415299";
 EDecimal ed = EDecimal.FromDoubleBits(-4380744721764447805L);
 EDecimal edExp = EDecimal.FromString(str);
-Assert.assertEquals("-5761315294415299",0,edExp.CompareToValue(ed));
+{
+p.get(0)} Object objectTemp = 0;
+p.get(0)} Object objectTemp2 = edExp.CompareToValue(ed);
+p.get(0)}  tring messageTemp = "-5761315294415299" +
+   "\n" + ed.toString() + "\n" + edExp.toString();
+  Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
+p.get(0)}}
 Assert.assertEquals(-4380744721764447805L, ed.ToDoubleBits());
 }
 {
 String str = "4569138";
 EDecimal ed = EDecimal.FromSingleBits(1250652260);
 EDecimal edExp = EDecimal.FromString(str);
-Assert.assertEquals("4569138",0,edExp.CompareToValue(ed));
+{
+p.get(0)} Object objectTemp = 0;
+p.get(0)} Object objectTemp2 = edExp.CompareToValue(ed);
+p.get(0)}  tring messageTemp = "4569138" +
+   "\n" + ed.toString() + "\n" + edExp.toString();
+  Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
+p.get(0)}}
 Assert.assertEquals(1250652260, ed.ToSingleBits());
 }
 }
@@ -1180,6 +1189,59 @@ Assert.assertEquals(1250652260, ed.ToSingleBits());
       50, 51, 52,
       53, 54, 55, 56, 57, 58, 1020, 1021, 1022, 1023,
     };
+
+    @Test
+    public void TestFPDoubleBits() {
+      for (int i = 0; i < ValueFPIntegersExp.length; ++i) {
+        // Positive
+        EFloat ef = EFloat.Create(1, ValueFPIntegersExp[i]);
+        Assert.assertEquals(ValueFPIntegers[i], ef.toString());
+        ef = EFloat.FromDoubleBits(ef.ToDoubleBits());
+        Assert.assertEquals(ValueFPIntegers[i], ef.toString());
+        ef = EFloat.FromDoubleBits(
+            EDecimal.FromString(ValueFPIntegers[i]).ToDoubleBits());
+        Assert.assertEquals(ValueFPIntegers[i], ef.toString());
+        // Negative
+        ef = EFloat.Create(-1, ValueFPIntegersExp[i]);
+        Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
+        ef = EFloat.FromDoubleBits(ef.ToDoubleBits());
+        Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
+        ef = EFloat.FromDoubleBits(
+            EDecimal.FromString("-" + ValueFPIntegers[i]).ToDoubleBits());
+        Assert.assertEquals("-" + ValueFPIntegers[i], ef.toString());
+      }
+      for (int i = -1074; i < 1024; ++i) {
+        String intstr = TestCommon.IntToString(i);
+        // Positive
+        EFloat ef = EFloat.Create(1, i);
+        String fpstr = ef.toString();
+        ef = EFloat.FromDoubleBits(ef.ToDoubleBits());
+        Assert.assertEquals(intstr, fpstr, ef.toString());
+        ef = EFloat.FromDoubleBits(
+            EDecimal.FromString(fpstr).ToDoubleBits());
+        Assert.assertEquals(intstr, fpstr, ef.toString());
+        // Negative
+        ef = EFloat.Create(-1, i);
+        Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
+        ef = EFloat.FromDoubleBits(ef.ToDoubleBits());
+        Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
+        ef = EFloat.FromDoubleBits(
+            EDecimal.FromString("-" + fpstr).ToDoubleBits());
+        Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
+      }
+      EFloat ef2 = EFloat.Create(1, 1024);
+      if (!(ef2.ToDoubleBits() == (0x7ffL << 52))) {
+ Assert.fail();
+ }
+      ef2 = EFloat.Create(-1, 1024);
+      if (!(ef2.ToDoubleBits() == (0xfffL << 52))) {
+ Assert.fail();
+ }
+      ef2 = EFloat.Create(1, -1075);
+      if (!(EFloat.FromDoubleBits(ef2.ToDoubleBits()).isZero()))Assert.fail();
+      ef2 = EFloat.Create(-1, -1075);
+      if (!(EFloat.FromDoubleBits(ef2.ToDoubleBits()).isZero()))Assert.fail();
+    }
 
     @Test
     public void TestFPDoubles() {
