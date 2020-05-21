@@ -466,39 +466,27 @@ public static void TestDoubleSingleBitsSpecific() {
 String str = "-0.023038230747297033";
 EFloat ed = EFloat.FromDoubleBits(-4641074497532188517L);
 EFloat edExp = EFloat.FromString(str);
-{
-p.get(0)} Object objectTemp = 0;
-p.get(0)} Object objectTemp2 = edExp.CompareToValue(ed);
-p.get(0)}  tring messageTemp = "-0.023038230747297033" +
+String messageTemp = "-0.023038230747297033" +
    "\n" + ed.toString() + "\n" + edExp.toString();
-  Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
-p.get(0)}}
+ Assert.assertEquals(messageTemp, 0, edExp.CompareToValue(ed));
 Assert.assertEquals(-4641074497532188517L, ed.ToDoubleBits());
 }
 {
 String str = "-5761315294415299";
 EDecimal ed = EDecimal.FromDoubleBits(-4380744721764447805L);
 EDecimal edExp = EDecimal.FromString(str);
-{
-p.get(0)} Object objectTemp = 0;
-p.get(0)} Object objectTemp2 = edExp.CompareToValue(ed);
-p.get(0)}  tring messageTemp = "-5761315294415299" +
+String messageTemp = "-5761315294415299" +
    "\n" + ed.toString() + "\n" + edExp.toString();
-  Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
-p.get(0)}}
+ Assert.assertEquals(messageTemp, 0, edExp.CompareToValue(ed));
 Assert.assertEquals(-4380744721764447805L, ed.ToDoubleBits());
 }
 {
 String str = "4569138";
 EDecimal ed = EDecimal.FromSingleBits(1250652260);
 EDecimal edExp = EDecimal.FromString(str);
-{
-p.get(0)} Object objectTemp = 0;
-p.get(0)} Object objectTemp2 = edExp.CompareToValue(ed);
-p.get(0)}  tring messageTemp = "4569138" +
+String messageTemp = "4569138" +
    "\n" + ed.toString() + "\n" + edExp.toString();
-  Assert.assertEquals(messageTemp, objectTemp, objectTemp2);
-p.get(0)}}
+ Assert.assertEquals(messageTemp, 0, edExp.CompareToValue(ed));
 Assert.assertEquals(1250652260, ed.ToSingleBits());
 }
 }
@@ -889,6 +877,11 @@ Assert.assertEquals(1250652260, ed.ToSingleBits());
       if (!(EFloat.One.Log(EContext.Unlimited).IsNaN())) {
  Assert.fail();
  }
+    {
+      EFloat efa = EFloat.Create(6202238844624971L, 908).Log(EContext.Binary64);
+EFloat efb = EFloat.Create(731990329769283L, -40);
+Assert.assertEquals(efb, efa);
+}
       {
         EFloat efa = EFloat.Create(
             EInteger.FromString("7692406748247399"),
