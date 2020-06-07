@@ -45,11 +45,16 @@ Represents an arbitrary-precision rational number. This class can't be
  the same value as this one but as a nonnegative number.
 * `ERational Add​(int v)`<br>
  Returns the sum of a rational number and a 32-bit signed integer.
+* `ERational Add​(long v)`<br>
+ Returns the sum of a rational number and a 64-bit signed integer.
 * `ERational Add​(ERational otherValue)`<br>
  Adds two rational numbers.
 * `int compareTo​(int intOther)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
+* `int compareTo​(long intOther)`<br>
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
 * `int compareTo​(ERational other)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
@@ -67,6 +72,9 @@ Represents an arbitrary-precision rational number. This class can't be
 * `int CompareToValue​(int intOther)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
+* `int CompareToValue​(long intOther)`<br>
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
 * `int CompareToValue​(ERational other)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
@@ -93,8 +101,9 @@ Represents an arbitrary-precision rational number. This class can't be
 * `ERational Decrement()`<br>
  Subtracts one from an arbitrary-precision rational number.
 * `ERational Divide​(int v)`<br>
- Divides this instance by the value of an arbitrary-precision rational number
- object.
+ Divides this instance by the value of a 32-bit signed integer.
+* `ERational Divide​(long v)`<br>
+ Divides this instance by the value of a 64-bit signed integer.
 * `ERational Divide​(ERational otherValue)`<br>
  Divides this instance by the value of an arbitrary-precision rational number
  object.
@@ -112,6 +121,9 @@ Represents an arbitrary-precision rational number. This class can't be
  Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
 * `static ERational FromDouble​(double flt)`<br>
  Converts a 64-bit floating-point number to a rational number.
+* `static ERational FromDoubleBits​(long value)`<br>
+ Creates a binary rational number from a 64-bit floating-point number encoded
+ in the IEEE 754 binary64 format.
 * `static ERational FromEDecimal​(EDecimal ef)`<br>
  Converts an arbitrary-precision decimal number to a rational number.
 * `static ERational FromEFloat​(EFloat ef)`<br>
@@ -135,6 +147,9 @@ Renamed to FromEFloat.
  Converts a 64-bit signed integer to an arbitrary-precision rational number.
 * `static ERational FromSingle​(float flt)`<br>
  Converts a 32-bit binary floating-point number to a rational number.
+* `static ERational FromSingleBits​(int value)`<br>
+ Creates a binary rational number from a 32-bit floating-point number encoded
+ in the IEEE 754 binary32 format.
 * `static ERational FromString​(java.lang.String str)`<br>
  Creates a rational number from a text string that represents a number.
 * `static ERational FromString​(java.lang.String str,
@@ -189,6 +204,8 @@ Renamed to FromEFloat.
  Gets the lesser value between two values, ignoring their signs.
 * `ERational Multiply​(int v)`<br>
  Returns the value of this instance multiplied by a 32-bit signed integer.
+* `ERational Multiply​(long v)`<br>
+ Returns the value of this instance multiplied by a 64-bit signed integer.
 * `ERational Multiply​(ERational otherValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision rational
  number.
@@ -197,7 +214,10 @@ Renamed to FromEFloat.
  reversed.
 * `ERational Remainder​(int v)`<br>
  Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision rational number.
+ of a 32-bit signed integer.
+* `ERational Remainder​(long v)`<br>
+ Finds the remainder that results when this instance is divided by the value
+ of a 64-bit signed integer.
 * `ERational Remainder​(ERational otherValue)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision rational number.
@@ -205,6 +225,9 @@ Renamed to FromEFloat.
  Gets the sign of this rational number.
 * `ERational Subtract​(int v)`<br>
  Returns the result of subtracting a 32-bit signed integer from this
+ instance.
+* `ERational Subtract​(long v)`<br>
+ Returns the result of subtracting a 64-bit signed integer from this
  instance.
 * `ERational Subtract​(ERational otherValue)`<br>
  Subtracts an arbitrary-precision rational number from this instance.
@@ -222,6 +245,9 @@ Renamed to FromEFloat.
  as a byte (from 0 to 255).
 * `double ToDouble()`<br>
  Converts this value to a 64-bit floating-point number.
+* `long ToDoubleBits()`<br>
+ Converts this value to its closest equivalent as a 64-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary64 format.
 * `EDecimal ToEDecimal()`<br>
  Converts this rational number to an arbitrary-precision decimal number.
 * `EDecimal ToEDecimal​(EContext ctx)`<br>
@@ -315,6 +341,9 @@ Renamed to ToEFloatExactIfPossible.
  Converts this value to its form in lowest terms.
 * `float ToSingle()`<br>
  Converts this value to a 32-bit binary floating-point number.
+* `int ToSingleBits()`<br>
+ Converts this value to its closest equivalent as 32-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary32 format.
 * `EInteger ToSizedEInteger​(int maxBitLength)`<br>
  Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator, discarding its fractional part, and
@@ -642,6 +671,36 @@ Converts a 32-bit binary floating-point number to a rational number. This
 
 * A rational number with the same value as <code>flt</code>.
 
+### FromSingleBits
+    public static ERational FromSingleBits​(int value)
+Creates a binary rational number from a 32-bit floating-point number encoded
+ in the IEEE 754 binary32 format. This method computes the exact
+ value of the floating point number, not an approximation, as is
+ often the case by converting the number to a string.
+
+**Parameters:**
+
+* <code>value</code> - A 32-bit integer encoded in the IEEE 754 binary32 format.
+
+**Returns:**
+
+* A rational number with the same floating-point value as <code>flt</code>.
+
+### FromDoubleBits
+    public static ERational FromDoubleBits​(long value)
+Creates a binary rational number from a 64-bit floating-point number encoded
+ in the IEEE 754 binary64 format. This method computes the exact
+ value of the floating point number, not an approximation, as is
+ often the case by converting the number to a string.
+
+**Parameters:**
+
+* <code>value</code> - A 64-bit integer encoded in the IEEE 754 binary64 format.
+
+**Returns:**
+
+* A rational number with the same floating-point value as <code>flt</code>.
+
 ### FromString
     public static ERational FromString​(java.lang.String str)
 Creates a rational number from a text string that represents a number. See
@@ -941,6 +1000,45 @@ Compares the mathematical value of an arbitrary-precision rational number
 * Zero if the values are equal; a negative number if this instance is
  less, or a positive number if this instance is greater.
 
+### CompareToValue
+    public int CompareToValue​(long intOther)
+Compares the mathematical values of this object and another object,
+ accepting NaN values. <p>This method is not consistent with the
+ Equals method because two different numbers with the same
+ mathematical value, but different exponents, will compare as
+ equal.</p> <p>In this method, negative zero and positive zero are
+ considered equal.</p> <p>If this object is a quiet NaN or signaling
+ NaN, this method will not trigger an error. Instead, NaN will
+ compare greater than any other number, including infinity.</p>
+
+**Parameters:**
+
+* <code>intOther</code> - The parameter <code>intOther</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
+
+### compareTo
+    public int compareTo​(long intOther)
+Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the
+ Equals method, but it may change in a future version to use the
+ rules for the CompareToTotal method instead.
+
+**Parameters:**
+
+* <code>intOther</code> - The parameter <code>intOther</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
+
 ### CompareToBinary
     public int CompareToBinary​(EFloat other)
 Compares an arbitrary-precision binary floating-point number with this
@@ -1180,6 +1278,44 @@ Converts this value to a 64-bit floating-point number. The half-even
 * The closest 64-bit floating-point number to this value. The return
  value can be positive infinity or negative infinity if this value
  exceeds the range of a 64-bit floating point number.
+
+### ToDoubleBits
+    public long ToDoubleBits()
+Converts this value to its closest equivalent as a 64-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary64 format. The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the 64-bit floating point number's significand area for
+ a quiet NaN, and clears it for a signaling NaN. Then the other bits
+ of the significand area are set to the lowest bits of this object's
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p>
+
+**Returns:**
+
+* The closest 64-bit binary floating-point number to this value,
+ expressed as an integer in the IEEE 754 binary64 format. The return
+ value can be positive infinity or negative infinity if this value
+ exceeds the range of a 64-bit floating point number.
+
+### ToSingleBits
+    public int ToSingleBits()
+Converts this value to its closest equivalent as 32-bit floating-point
+ number, expressed as an integer in the IEEE 754 binary32 format. The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the 32-bit floating point number's significand area for
+ a quiet NaN, and clears it for a signaling NaN. Then the other bits
+ of the significand area are set to the lowest bits of this object's
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p>
+
+**Returns:**
+
+* The closest 32-bit binary floating-point number to this value,
+ expressed as an integer in the IEEE 754 binary32 format. The return
+ value can be positive infinity or negative infinity if this value
+ exceeds the range of a 32-bit floating point number.
 
 ### ToLowestTerms
     public ERational ToLowestTerms()
@@ -1580,8 +1716,7 @@ Returns the value of this instance multiplied by a 32-bit signed integer.
 
 ### Divide
     public ERational Divide​(int v)
-Divides this instance by the value of an arbitrary-precision rational number
- object.
+Divides this instance by the value of a 32-bit signed integer.
 
 **Parameters:**
 
@@ -1598,7 +1733,78 @@ Divides this instance by the value of an arbitrary-precision rational number
 ### Remainder
     public ERational Remainder​(int v)
 Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision rational number.
+ of a 32-bit signed integer.
+
+**Parameters:**
+
+* <code>v</code> - The divisor.
+
+**Returns:**
+
+* The remainder of the two numbers.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>v</code> is zero.
+
+### Add
+    public ERational Add​(long v)
+Returns the sum of a rational number and a 64-bit signed integer.
+
+**Parameters:**
+
+* <code>v</code> - A 64-bit signed integer.
+
+**Returns:**
+
+* The sum of the two numbers. Returns not-a-number (NaN) if this
+ object is NaN.
+
+### Subtract
+    public ERational Subtract​(long v)
+Returns the result of subtracting a 64-bit signed integer from this
+ instance.
+
+**Parameters:**
+
+* <code>v</code> - The parameter <code>v</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The difference of the two objects.
+
+### Multiply
+    public ERational Multiply​(long v)
+Returns the value of this instance multiplied by a 64-bit signed integer.
+
+**Parameters:**
+
+* <code>v</code> - The parameter <code>v</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The product of the two numbers.
+
+### Divide
+    public ERational Divide​(long v)
+Divides this instance by the value of a 64-bit signed integer.
+
+**Parameters:**
+
+* <code>v</code> - The parameter <code>v</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The quotient of the two objects.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - The parameter <code>v</code> is zero.
+
+### Remainder
+    public ERational Remainder​(long v)
+Finds the remainder that results when this instance is divided by the value
+ of a 64-bit signed integer.
 
 **Parameters:**
 

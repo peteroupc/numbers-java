@@ -465,6 +465,30 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Creates a binary rational number from a 32-bit floating-point number encoded
+     * in the IEEE 754 binary32 format. This method computes the exact
+     * value of the floating point number, not an approximation, as is
+     * often the case by converting the number to a string.
+     * @param value A 32-bit integer encoded in the IEEE 754 binary32 format.
+     * @return A rational number with the same floating-point value as {@code flt}.
+     */
+    public static ERational FromSingleBits(int value) {
+      return FromEFloat(EFloat.FromSingleBits(value));
+    }
+
+    /**
+     * Creates a binary rational number from a 64-bit floating-point number encoded
+     * in the IEEE 754 binary64 format. This method computes the exact
+     * value of the floating point number, not an approximation, as is
+     * often the case by converting the number to a string.
+     * @param value A 64-bit integer encoded in the IEEE 754 binary64 format.
+     * @return A rational number with the same floating-point value as {@code flt}.
+     */
+    public static ERational FromDoubleBits(long value) {
+      return FromEFloat(EFloat.FromDoubleBits(value));
+    }
+
+    /**
      * Creates a rational number from a text string that represents a number. See
      * <code>FromString(string, int, int)</code> for more information.
      * @param str A string that represents a number.
@@ -1156,6 +1180,39 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Compares the mathematical values of this object and another object,
+     * accepting NaN values. <p>This method is not consistent with the
+     * Equals method because two different numbers with the same
+     * mathematical value, but different exponents, will compare as
+     * equal.</p> <p>In this method, negative zero and positive zero are
+     * considered equal.</p> <p>If this object is a quiet NaN or signaling
+     * NaN, this method will not trigger an error. Instead, NaN will
+     * compare greater than any other number, including infinity.</p>
+     * @param intOther The parameter {@code intOther} is a 64-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other
+     * value, or 0 if both values are equal.
+     */
+    public int CompareToValue(long intOther) {
+      return this.CompareToValue(FromInt64(intOther));
+    }
+
+    /**
+     * Compares the mathematical values of this object and another object,
+     * accepting NaN values. This method currently uses the rules given in
+     * the CompareToValue method, so that it it is not consistent with the
+     * Equals method, but it may change in a future version to use the
+     * rules for the CompareToTotal method instead.
+     * @param intOther The parameter {@code intOther} is a 64-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other
+     * value, or 0 if both values are equal.
+     */
+    public int compareTo(long intOther) {
+      return this.CompareToValue(FromInt64(intOther));
+    }
+
+    /**
      * Compares an arbitrary-precision binary floating-point number with this
      * instance. In this method, NaN values are greater than any other
      * ERational or EFloat value, and two NaN values (even if their
@@ -1730,6 +1787,60 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Converts this value to its closest equivalent as a 64-bit floating-point
+     * number, expressed as an integer in the IEEE 754 binary64 format. The
+     * half-even rounding mode is used. <p>If this value is a NaN, sets the
+     * high bit of the 64-bit floating point number's significand area for
+     * a quiet NaN, and clears it for a signaling NaN. Then the other bits
+     * of the significand area are set to the lowest bits of this object's
+     * unsigned significand, and the next-highest bit of the significand
+     * area is set if those bits are all zeros and this is a signaling
+     * NaN.</p>
+     * @return The closest 64-bit binary floating-point number to this value,
+     * expressed as an integer in the IEEE 754 binary64 format. The return
+     * value can be positive infinity or negative infinity if this value
+     * exceeds the range of a 64-bit floating point number.
+     */
+    public long ToDoubleBits() {
+      if (!this.isFinite()) {
+        return this.ToEFloat(EContext.Binary64).ToDoubleBits();
+      }
+      if (this.isNegative() && this.isZero()) {
+        return EFloat.NegativeZero.ToDoubleBits();
+      }
+      return EFloat.FromEInteger(this.getNumerator())
+        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary64)
+        .ToDoubleBits();
+    }
+
+    /**
+     * Converts this value to its closest equivalent as 32-bit floating-point
+     * number, expressed as an integer in the IEEE 754 binary32 format. The
+     * half-even rounding mode is used. <p>If this value is a NaN, sets the
+     * high bit of the 32-bit floating point number's significand area for
+     * a quiet NaN, and clears it for a signaling NaN. Then the other bits
+     * of the significand area are set to the lowest bits of this object's
+     * unsigned significand, and the next-highest bit of the significand
+     * area is set if those bits are all zeros and this is a signaling
+     * NaN.</p>
+     * @return The closest 32-bit binary floating-point number to this value,
+     * expressed as an integer in the IEEE 754 binary32 format. The return
+     * value can be positive infinity or negative infinity if this value
+     * exceeds the range of a 32-bit floating point number.
+     */
+    public int ToSingleBits() {
+      if (!this.isFinite()) {
+        return this.ToEFloat(EContext.Binary32).ToSingleBits();
+      }
+      if (this.isNegative() && this.isZero()) {
+        return EFloat.NegativeZero.ToSingleBits();
+      }
+      return EFloat.FromEInteger(this.getNumerator())
+        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary32)
+        .ToSingleBits();
+    }
+
+    /**
      * Converts this value to its form in lowest terms. For example, (8/4) becomes
      * (4/1).
      * @return An arbitrary-precision rational with the same value as this one but
@@ -2267,8 +2378,7 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of an arbitrary-precision rational number
-     * object.
+     * Divides this instance by the value of a 32-bit signed integer.
      * @param v The parameter {@code v} is a 32-bit signed integer.
      * @return The quotient of the two objects.
      * @throws ArithmeticException The parameter {@code v} is zero.
@@ -2279,13 +2389,63 @@ at: http://peteroupc.github.io/
 
     /**
      * Finds the remainder that results when this instance is divided by the value
-     * of an arbitrary-precision rational number.
+     * of a 32-bit signed integer.
      * @param v The divisor.
      * @return The remainder of the two numbers.
      * @throws IllegalArgumentException The parameter {@code v} is zero.
      */
     public ERational Remainder(int v) {
       return this.Remainder(FromInt32(v));
+    }
+
+    /**
+     * Returns the sum of a rational number and a 64-bit signed integer.
+     * @param v A 64-bit signed integer.
+     * @return The sum of the two numbers. Returns not-a-number (NaN) if this
+     * object is NaN.
+     */
+    public ERational Add(long v) {
+      return this.Add(FromInt64(v));
+    }
+
+    /**
+     * Returns the result of subtracting a 64-bit signed integer from this
+     * instance.
+     * @param v The parameter {@code v} is a 64-bit signed integer.
+     * @return The difference of the two objects.
+     */
+    public ERational Subtract(long v) {
+      return this.Subtract(FromInt64(v));
+    }
+
+    /**
+     * Returns the value of this instance multiplied by a 64-bit signed integer.
+     * @param v The parameter {@code v} is a 64-bit signed integer.
+     * @return The product of the two numbers.
+     */
+    public ERational Multiply(long v) {
+      return this.Multiply(FromInt64(v));
+    }
+
+    /**
+     * Divides this instance by the value of a 64-bit signed integer.
+     * @param v The parameter {@code v} is a 64-bit signed integer.
+     * @return The quotient of the two objects.
+     * @throws ArithmeticException The parameter {@code v} is zero.
+     */
+    public ERational Divide(long v) {
+      return this.Divide(FromInt64(v));
+    }
+
+    /**
+     * Finds the remainder that results when this instance is divided by the value
+     * of a 64-bit signed integer.
+     * @param v The divisor.
+     * @return The remainder of the two numbers.
+     * @throws IllegalArgumentException The parameter {@code v} is zero.
+     */
+    public ERational Remainder(long v) {
+      return this.Remainder(FromInt64(v));
     }
 
     // Begin integer conversions

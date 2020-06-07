@@ -252,12 +252,17 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  positive).
 * `EDecimal Add​(int intValue)`<br>
  Adds this object and an 32-bit signed integer and returns the result.
+* `EDecimal Add​(long longValue)`<br>
+ Not documented yet.
 * `EDecimal Add​(EDecimal otherValue)`<br>
  Adds this object and another decimal number and returns the result.
 * `EDecimal Add​(EDecimal otherValue,
    EContext ctx)`<br>
  Finds the sum of this object and another object.
 * `int compareTo​(int intOther)`<br>
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
+* `int compareTo​(long intOther)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
 * `int compareTo​(EDecimal other)`<br>
@@ -285,6 +290,9 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs).
 * `int CompareToValue​(int intOther)`<br>
+ Compares the mathematical values of this object and another object,
+ accepting NaN values.
+* `int CompareToValue​(long intOther)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
 * `int CompareToValue​(EDecimal other)`<br>
@@ -326,7 +334,9 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
 * `EDecimal Decrement()`<br>
  Returns one subtracted from this arbitrary-precision decimal number.
 * `EDecimal Divide​(int intValue)`<br>
- Divides this object by an 32-bit signed integer and returns the result.
+ Divides this object by a 32-bit signed integer and returns the result.
+* `EDecimal Divide​(long longValue)`<br>
+ Divides this object by a 64-bit signed integer and returns the result.
 * `EDecimal Divide​(EDecimal divisor)`<br>
  Divides this object by another decimal number and returns the result.
 * `EDecimal Divide​(EDecimal divisor,
@@ -454,6 +464,24 @@ Renamed to FromEFloat.
 * `static EDecimal FromSingleBits​(int value)`<br>
  Creates an arbitrary-precision decimal number from a 32-bit binary
  floating-point number encoded in the IEEE 754 binary32 format.
+* `static EDecimal FromString​(char[] chars) char`<br>
+ Creates an arbitrary-precision decimal number from a sequence of char
+ s that represents a number.
+* `static EDecimal FromString​(char[] chars,
+          int offset,
+          int length) char`<br>
+ Creates an arbitrary-precision decimal number from a sequence of char
+ s that represents a number.
+* `static EDecimal FromString​(char[] chars,
+          int offset,
+          int length,
+          EContext ctx) char`<br>
+ Creates an arbitrary-precision decimal number from a sequence of
+ char s that represents a number.
+* `static EDecimal FromString​(char[] chars,
+          EContext ctx) char`<br>
+ Creates an arbitrary-precision decimal number from a sequence of char
+ s that represents a number.
 * `static EDecimal FromString​(java.lang.String str)`<br>
  Creates an arbitrary-precision decimal number from a text string that
  represents a number.
@@ -577,6 +605,8 @@ Renamed to FromEFloat.
  the right.
 * `EDecimal Multiply​(int intValue)`<br>
  Multiplies this object by the given 32-bit signed integer.
+* `EDecimal Multiply​(long longValue)`<br>
+ Multiplies this object by the given 64-bit signed integer.
 * `EDecimal Multiply​(EDecimal otherValue)`<br>
  Multiplies two decimal numbers.
 * `EDecimal Multiply​(EDecimal op,
@@ -751,6 +781,8 @@ Renamed to Sqrt.
  Renamed to Sqrt.
 * `EDecimal Subtract​(int intValue)`<br>
  Subtracts a 32-bit signed integer from this object and returns the result.
+* `EDecimal Subtract​(long longValue)`<br>
+ Not documented yet.
 * `EDecimal Subtract​(EDecimal otherValue)`<br>
  Subtracts an arbitrary-precision decimal number from this instance and
  returns the result.
@@ -1160,7 +1192,7 @@ Creates an arbitrary-precision decimal number from a 64-bit binary
 
 **Parameters:**
 
-* <code>dblBits</code> -
+* <code>dblBits</code> - The parameter <code>dblBits</code> is a 64-bit signed integer.
 
 **Returns:**
 
@@ -1299,6 +1331,153 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
 
 * An arbitrary-precision decimal number with the same value as <code>
  value</code>.
+
+### FromString
+    public static EDecimal FromString​(char[] chars)
+Creates an arbitrary-precision decimal number from a sequence of <code>char</code>
+ s that represents a number. See <code>FromString(string, int, int,
+ EContext)</code> for more information. Note that calling the overload
+ that takes an EContext is often much faster than creating the
+ EDecimal then calling <code>RoundToPrecision</code> on that EDecimal,
+ especially if the context specifies a precision limit and exponent
+ range.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence that represents a number.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>chars</code> is not a correctly
+ formatted number sequence.
+
+### FromString
+    public static EDecimal FromString​(char[] chars, EContext ctx)
+Creates an arbitrary-precision decimal number from a sequence of <code>char</code>
+ s that represents a number. See <code>FromString(string, int, int,
+ EContext)</code> for more information.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s that represents a number.
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and rounding isn't needed.
+ Note that providing a context is often much faster than creating the
+ EDecimal without a context then calling <code>RoundToPrecision</code> on
+ that EDecimal, especially if the context specifies a precision limit
+ and exponent range.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+### FromString
+    public static EDecimal FromString​(char[] chars, int offset, int length)
+Creates an arbitrary-precision decimal number from a sequence of <code>char</code>
+ s that represents a number. See <code>FromString(string, int, int,
+ EContext)</code> for more information. Note that calling the overload
+ that takes an EContext is often much faster than creating the
+ EDecimal then calling <code>RoundToPrecision</code> on that EDecimal,
+ especially if the context specifies a precision limit and exponent
+ range.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence that represents a number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ chars</code> (but not more than <code>chars</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>chars</code> is not a correctly
+ formatted number sequence.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> 's length, or <code>chars</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
+### FromString
+    public static EDecimal FromString​(char[] chars, int offset, int length, EContext ctx)
+<p>Creates an arbitrary-precision decimal number from a sequence of
+ <code>char</code> s that represents a number.</p> <p>The format of the
+ sequence generally consists of:</p> <ul> <li>An optional plus sign
+  ("+" , U+002B) or minus sign ("-", U+002D) (if the minus sign, the
+ value is negative.)</li> <li>One or more digits, with a single
+  optional decimal point (".", U+002E) before or after those digits or
+ between two of them. These digits may begin with any number of
+  zeros.</li> <li>Optionally, "E"/"e" followed by an optional
+  (positive exponent) or "-" (negative exponent) and followed by one
+ or more digits specifying the exponent (these digits may begin with
+  any number of zeros).</li></ul> <p>The sequence can also be "-INF",
+  "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN ("sNaN" /"-sNaN") followed by any number of
+ digits (these digits may begin with any number of zeros), all where
+ the letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p>
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s, a portion of which represents a
+ number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ chars</code> (but not more than <code>chars</code> 's length).
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and rounding isn't needed.
+ Note that providing a context is often much faster than creating the
+ EDecimal without a context then calling <code>RoundToPrecision</code> on
+ that EDecimal, especially if the context specifies a precision limit
+ and exponent range.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> 's length, or <code>chars</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
 
 ### FromString
     public static EDecimal FromString​(java.lang.String str)
@@ -1791,14 +1970,52 @@ Compares the mathematical values of this object and another object,
  Equals method because two different numbers with the same
  mathematical value, but different exponents, will compare as
  equal.</p> <p>In this method, negative zero and positive zero are
- considered equal.</p> <p>If this object or the other object is a
- quiet NaN or signaling NaN, this method will not trigger an error.
- Instead, NaN will compare greater than any other number, including
- infinity. Two different NaN values will be considered equal.</p>
+ considered equal.</p> <p>If this object is a quiet NaN or signaling
+ NaN, this method will not trigger an error. Instead, NaN will
+ compare greater than any other number, including infinity.</p>
 
 **Parameters:**
 
 * <code>intOther</code> - The parameter <code>intOther</code> is a 32-bit signed integer.
+
+**Returns:**
+
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
+
+### compareTo
+    public int compareTo​(long intOther)
+Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the
+ Equals method, but it may change in a future version to use the
+ rules for the CompareToTotal method instead.
+
+**Parameters:**
+
+* <code>intOther</code> - The parameter <code>intOther</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* Less than 0 if this object's value is less than the other value, or
+ greater than 0 if this object's value is greater than the other
+ value, or 0 if both values are equal.
+
+### CompareToValue
+    public int CompareToValue​(long intOther)
+Compares the mathematical values of this object and another object,
+ accepting NaN values. <p>This method is not consistent with the
+ Equals method because two different numbers with the same
+ mathematical value, but different exponents, will compare as
+ equal.</p> <p>In this method, negative zero and positive zero are
+ considered equal.</p> <p>If this object is a quiet NaN or signaling
+ NaN, this method will not trigger an error. Instead, NaN will
+ compare greater than any other number, including infinity.</p>
+
+**Parameters:**
+
+* <code>intOther</code> - The parameter <code>intOther</code> is a 64-bit signed integer.
 
 **Returns:**
 
@@ -2863,6 +3080,61 @@ Multiplies two decimal numbers. The resulting scale will be the sum of the
 * The product of the two decimal numbers.
 
 ### Add
+    public EDecimal Add​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Subtract
+    public EDecimal Subtract​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Multiply
+    public EDecimal Multiply​(long longValue)
+Multiplies this object by the given 64-bit signed integer. The resulting
+ exponent will be the sum of the exponents of the two numbers.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The product of the two numbers.
+
+### Divide
+    public EDecimal Divide​(long longValue)
+Divides this object by a 64-bit signed integer and returns the result. When
+ possible, the result will be exact.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The quotient of the two numbers. Returns infinity if the divisor is
+ 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
+ divisor and the dividend are 0. Returns NaN if the result can't be
+ exact because it would have a nonterminating decimal expansion;
+ examples include 1 divided by any multiple of 3, such as 1/3 or
+ 1/12.
+
+### Add
     public EDecimal Add​(int intValue)
 Adds this object and an 32-bit signed integer and returns the result.
 
@@ -2901,7 +3173,7 @@ Multiplies this object by the given 32-bit signed integer. The resulting
 
 ### Divide
     public EDecimal Divide​(int intValue)
-Divides this object by an 32-bit signed integer and returns the result. When
+Divides this object by a 32-bit signed integer and returns the result. When
  possible, the result will be exact.
 
 **Parameters:**

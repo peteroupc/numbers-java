@@ -1148,7 +1148,16 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestExceptions() {
       try {
-        EInteger.FromString(null);
+        EInteger.FromString((char[])null);
+        Assert.fail("Should have failed");
+      } catch (NullPointerException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EInteger.FromString((String)null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -1336,7 +1345,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestFromRadixString() {
       try {
-        EInteger.FromRadixString(null, 10);
+        EInteger.FromRadixString((String)null, 10);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -1402,7 +1411,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestFromRadixSubstring() {
       try {
-        EInteger.FromRadixSubstring(null, 10, 0, 1);
+        EInteger.FromRadixSubstring((String)null, 10, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -1602,7 +1611,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromString(null);
+        EInteger.FromString((String)null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -1687,7 +1696,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestFromSubstring() {
       try {
-        EInteger.FromSubstring(null, 0, 1);
+        EInteger.FromSubstring((String)null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty

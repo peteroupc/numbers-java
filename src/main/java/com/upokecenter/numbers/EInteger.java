@@ -19,10 +19,6 @@ at: http://peteroupc.github.io/
 // to return MaxValue on overflow
 // TODO: In next major version, perhaps change GetLowBit/GetDigitCount
 // to return MaxValue on overflow
-// TODO: In next version after 1.6, add long overloads in addition to int
-// overloads
-// in EDecimal/EFloat/EInteger/ERational (including compareTo and DivRem)
-// TODO: AndNot, Implication (Imp/OrNot), Equivalence (Eqv/XorNot)
 
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
@@ -427,6 +423,19 @@ at: http://peteroupc.github.io/
       return new EInteger(retwordcount, retreg, retnegative);
     }
 
+    // Approximate number of digits, multiplied by 100, that fit in
+    // each 16-bit word of an EInteger. This is used to calculate
+    // an upper bound on the EInteger's word array size based on
+    // the radix and the number of digits. Calculated from:
+    // ceil(ln(65536)*100/ln(radix)).
+    private static final int[] DigitsInWord = {
+      0, 0,
+      1600, 1010, 800, 690, 619, 570, 534, 505, 482, 463, 447,
+      433, 421, 410, 400, 392, 384, 377, 371, 365, 359, 354,
+      349, 345, 341, 337, 333, 330, 327, 323, 320, 318, 315,
+      312, 310, 308,
+    };
+
     /**
      * Converts a string to an arbitrary-precision integer in a given radix.
      * @param str A string described by the FromRadixSubstring method.
@@ -439,6 +448,7 @@ at: http://peteroupc.github.io/
      * @return An arbitrary-precision integer with the same value as the given
      * string.
      * @throws NullPointerException The parameter {@code str} is null.
+     * @throws NumberFormatException The string is empty or in an invalid format.
      */
     public static EInteger FromRadixString(String str, int radix) {
       if (str == null) {
@@ -478,6 +488,75 @@ at: http://peteroupc.github.io/
       if (str == null) {
         throw new NullPointerException("str");
       }
+      return FromRadixSubstringImpl(str, radix, index, endIndex);
+    }
+
+    /**
+     * Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
+     * given radix.
+     * @param cs A sequence of {@code char} s described by the FromRadixSubstring
+     * method.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039)
+     * and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+     * example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+     * basic upper-case letter A to Z is allowed in the sequence of {@code
+     * char} s, the corresponding basic lower-case letter (U+0061 to
+     * U+007a) is allowed instead.
+     * @return An arbitrary-precision integer with the same value as the given
+     * sequence of {@code char} s.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     * @throws NumberFormatException The sequence of {@code char} s is empty or in an
+     * invalid format.
+     */
+    public static EInteger FromRadixString(char[] cs, int radix) {
+      if (cs == null) {
+        throw new NullPointerException("cs");
+      }
+      return FromRadixSubstring(cs, radix, 0, cs.length);
+    }
+
+    /**
+     * Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+     * integer in a given radix.
+     * @param cs A text sequence of {@code char} s. The desired portion of the
+     * sequence of {@code char} s must contain only characters allowed by
+     *  the given radix, except that it may start with a minus sign ("-",
+     * U+002D) to indicate a negative number. The desired portion is not
+     * allowed to contain white space characters, including spaces. The
+     * desired portion may start with any number of zeros.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039)
+     * and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+     * example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+     * basic upper-case letter A to Z is allowed in the sequence of {@code
+     * char} s, the corresponding basic lower-case letter (U+0061 to
+     * U+007a) is allowed instead.
+     * @param index The index of the sequence of {@code char} s that starts the
+     * desired portion.
+     * @param endIndex The index of the sequence of {@code char} s that ends the
+     * desired portion. The length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence's portion.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     * @throws NumberFormatException The portion is empty or in an invalid format.
+     */
+    public static EInteger FromRadixSubstring(
+      char[] cs,
+      int radix,
+      int index,
+      int endIndex) {
+      if (cs == null) {
+        throw new NullPointerException("cs");
+      }
+      return FromRadixSubstringImpl(cs, radix, index, endIndex);
+    }
+
+    private static EInteger FromRadixSubstringImpl(
+      String str,
+      int radix,
+      int index,
+      int endIndex) {
       if (radix < 2) {
         throw new IllegalArgumentException("radix(" + radix +
           ") is less than 2");
@@ -670,7 +749,6 @@ at: http://peteroupc.github.io/
             endIndex,
             false);
         EInteger mult = null;
-        // swPow.Restart();
         int intpow = endIndex - midIndex;
         if (radix == 10) {
           eia = NumberUtility.MultiplyByPowerOfFive(eia,
@@ -693,19 +771,6 @@ at: http://peteroupc.github.io/
         return FromRadixSubstringInner(str, radix, index, endIndex, negative);
       }
     }
-
-    // Approximate number of digits, multiplied by 100, that fit in
-    // each 16-bit word of an EInteger. This is used to calculate
-    // an upper bound on the EInteger's word array size based on
-    // the radix and the number of digits. Calculated from:
-    // ceil(ln(65536)*100/ln(radix)).
-    private static final int[] DigitsInWord = {
-      0, 0,
-      1600, 1010, 800, 690, 619, 570, 534, 505, 482, 463, 447,
-      433, 421, 410, 400, 392, 384, 377, 371, 365, 359, 354,
-      349, 345, 341, 337, 333, 330, 327, 323, 320, 318, 315,
-      312, 310, 308,
-    };
 
     private static EInteger FromRadixSubstringInner(
       String str,
@@ -880,6 +945,424 @@ at: http://peteroupc.github.io/
           negative);
     }
 
+    private static EInteger FromRadixSubstringImpl(
+      char[] cs,
+      int radix,
+      int index,
+      int endIndex) {
+      if (radix < 2) {
+        throw new IllegalArgumentException("radix(" + radix +
+          ") is less than 2");
+      }
+      if (radix > 36) {
+        throw new IllegalArgumentException("radix(" + radix +
+          ") is more than 36");
+      }
+      if (index < 0) {
+        throw new IllegalArgumentException("index(" + index + ") is less than " +
+          "0");
+      }
+      if (index > cs.length) {
+        throw new IllegalArgumentException("index(" + index + ") is more than " +
+          cs.length);
+      }
+      if (endIndex < 0) {
+        throw new IllegalArgumentException("endIndex(" + endIndex +
+          ") is less than 0");
+      }
+      if (endIndex > cs.length) {
+        throw new IllegalArgumentException("endIndex(" + endIndex +
+          ") is more than " + cs.length);
+      }
+      if (endIndex < index) {
+        throw new IllegalArgumentException("endIndex(" + endIndex +
+          ") is less than " + index);
+      }
+      if (index == endIndex) {
+        throw new NumberFormatException("No digits");
+      }
+      boolean negative = false;
+      if (cs[index] == '-') {
+        ++index;
+        if (index == endIndex) {
+          throw new NumberFormatException("No digits");
+        }
+        negative = true;
+      }
+      // Skip leading zeros
+      for (; index < endIndex; ++index) {
+        char c = cs[index];
+        if (c != 0x30) {
+          break;
+        }
+      }
+      int effectiveLength = endIndex - index;
+      if (effectiveLength == 0) {
+        return EInteger.FromInt32(0);
+      }
+      short[] bigint;
+      if (radix == 16) {
+        // Special case for hexadecimal radix
+        int leftover = effectiveLength & 3;
+        int wordCount = effectiveLength >> 2;
+        if (leftover != 0) {
+          ++wordCount;
+        }
+        bigint = new short[wordCount];
+        int currentDigit = wordCount - 1;
+        // Get most significant digits if effective
+        // length is not divisible by 4
+        if (leftover != 0) {
+          int extraWord = 0;
+          for (int i = 0; i < leftover; ++i) {
+            extraWord <<= 4;
+            char c = cs[index + i];
+            int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+            if (digit >= 16) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            extraWord |= digit;
+          }
+          bigint[currentDigit] = ((short)extraWord);
+          --currentDigit;
+          index += leftover;
+        }
+
+        while (index < endIndex) {
+          char c = cs[index + 3];
+          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          if (digit >= 16) {
+            throw new NumberFormatException("Illegal character found");
+          }
+          int word = digit;
+          c = cs[index + 2];
+          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          if (digit >= 16) {
+            throw new NumberFormatException("Illegal character found");
+          }
+
+          word |= digit << 4;
+          c = cs[index + 1];
+          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          if (digit >= 16) {
+            throw new NumberFormatException("Illegal character found");
+          }
+
+          word |= digit << 8;
+          c = cs[index];
+          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          if (digit >= 16) {
+            throw new NumberFormatException("Illegal character found");
+          }
+          word |= digit << 12;
+          index += 4;
+          bigint[currentDigit] = ((short)word);
+          --currentDigit;
+        }
+        int count = CountWords(bigint);
+        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
+            count,
+            bigint,
+            negative);
+      } else if (radix == 2) {
+        // Special case for binary radix
+        int leftover = effectiveLength & 15;
+        int wordCount = effectiveLength >> 4;
+        if (leftover != 0) {
+          ++wordCount;
+        }
+        bigint = new short[wordCount];
+        int currentDigit = wordCount - 1;
+        // Get most significant digits if effective
+        // length is not divisible by 4
+        if (leftover != 0) {
+          int extraWord = 0;
+          for (int i = 0; i < leftover; ++i) {
+            extraWord <<= 1;
+            char c = cs[index + i];
+            int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
+            if (digit >= 2) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            extraWord |= digit;
+          }
+          bigint[currentDigit] = ((short)extraWord);
+          --currentDigit;
+          index += leftover;
+        }
+        while (index < endIndex) {
+          int word = 0;
+          int idx = index + 15;
+          for (int i = 0; i < 16; ++i) {
+            char c = cs[idx];
+            int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
+            if (digit >= 2) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            --idx;
+            word |= digit << i;
+          }
+          index += 16;
+          bigint[currentDigit] = ((short)word);
+          --currentDigit;
+        }
+        int count = CountWords(bigint);
+        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
+            count,
+            bigint,
+            negative);
+      } else {
+        return FromRadixSubstringGeneral(
+            cs,
+            radix,
+            index,
+            endIndex,
+            negative);
+      }
+    }
+
+    private static EInteger FromRadixSubstringGeneral(
+      char[] cs,
+      int radix,
+      int index,
+      int endIndex,
+      boolean negative) {
+      if (endIndex - index > 72) {
+        int midIndex = index + ((endIndex - index) / 2);
+        EInteger eia = FromRadixSubstringGeneral(
+            cs,
+            radix,
+            index,
+            midIndex,
+            false);
+        EInteger eib = FromRadixSubstringGeneral(
+            cs,
+            radix,
+            midIndex,
+            endIndex,
+            false);
+        EInteger mult = null;
+        int intpow = endIndex - midIndex;
+        if (radix == 10) {
+          eia = NumberUtility.MultiplyByPowerOfFive(eia,
+              intpow).ShiftLeft(intpow);
+        } else if (radix == 5) {
+          eia = NumberUtility.MultiplyByPowerOfFive(eia, intpow);
+        } else {
+          mult = EInteger.FromInt32(radix).Pow(endIndex - midIndex);
+          eia = eia.Multiply(mult);
+        }
+        eia = eia.Add(eib);
+        // System.out.println("index={0} {1} {2} [pow={3}] [pow={4} ms, muladd={5} ms]",
+        // index, midIndex, endIndex, endIndex-midIndex, swPow.getElapsedMilliseconds(),
+        // swMulAdd.getElapsedMilliseconds());
+        if (negative) {
+          eia = eia.Negate();
+        }
+        return eia;
+      } else {
+        return FromRadixSubstringInner(cs, radix, index, endIndex, negative);
+      }
+    }
+
+    private static EInteger FromRadixSubstringInner(
+      char[] cs,
+      int radix,
+      int index,
+      int endIndex,
+      boolean negative) {
+      if (endIndex - index <= 18 && radix <= 10) {
+        long rv = 0;
+        if (radix == 10) {
+          for (int i = index; i < endIndex; ++i) {
+            char c = cs[i];
+            int digit = (int)c - 0x30;
+            if (digit >= radix || digit < 0) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            rv = (rv * 10) + digit;
+          }
+          return FromInt64(negative ? -rv : rv);
+        } else {
+          for (int i = index; i < endIndex; ++i) {
+            char c = cs[i];
+            int digit = (c >= 0x80) ? 36 : ((int)c - 0x30);
+            if (digit >= radix || digit < 0) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            rv = (rv * radix) + digit;
+          }
+          return FromInt64(negative ? -rv : rv);
+        }
+      }
+      long lsize = ((long)(endIndex - index) * 100 / DigitsInWord[radix]) + 1;
+      lsize = Math.min(lsize, Integer.MAX_VALUE);
+      lsize = Math.max(lsize, 5);
+      short[] bigint = new short[(int)lsize];
+      if (radix == 10) {
+        long rv = 0;
+        int ei = endIndex - index <= 18 ? endIndex : index + 18;
+        for (int i = index; i < ei; ++i) {
+          char c = cs[i];
+          int digit = (int)c - 0x30;
+          if (digit >= radix || digit < 0) {
+            throw new NumberFormatException("Illegal character found");
+          }
+          rv = (rv * 10) + digit;
+        }
+        bigint[0] = ((short)(rv & ShortMask));
+        bigint[1] = ((short)((rv >> 16) & ShortMask));
+        bigint[2] = ((short)((rv >> 32) & ShortMask));
+        bigint[3] = ((short)((rv >> 48) & ShortMask));
+        int bn = Math.min(bigint.length, 5);
+        for (int i = ei; i < endIndex; ++i) {
+          short carry = 0;
+          int digit = 0;
+          int overf = 0;
+          if (i < endIndex - 3) {
+            overf = 55536; // 2**16 minus 10**4
+            int d1 = (int)cs[i] - 0x30;
+            int d2 = (int)cs[i + 1] - 0x30;
+            int d3 = (int)cs[i + 2] - 0x30;
+            int d4 = (int)cs[i + 3] - 0x30;
+            i += 3;
+            if (d1 >= 10 || d1 < 0 || d2 >= 10 || d2 < 0 || d3 >= 10 ||
+              d3 < 0 || d4 >= 10 || d4 < 0) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            digit = (d1 * 1000) + (d2 * 100) + (d3 * 10) + d4;
+            // Multiply by 10**4
+            for (int j = 0; j < bn; ++j) {
+              int p;
+              p = ((((int)bigint[j]) & ShortMask) * 10000);
+              int p2 = ((int)carry) & ShortMask;
+              p = (p + p2);
+              bigint[j] = ((short)p);
+              carry = ((short)(p >> 16));
+            }
+          } else {
+            overf = 65526; // 2**16 minus radix 10
+            char c = cs[i];
+            digit = (int)c - 0x30;
+            if (digit >= 10 || digit < 0) {
+              throw new NumberFormatException("Illegal character found");
+            }
+            // Multiply by 10
+            for (int j = 0; j < bn; ++j) {
+              int p;
+              p = ((((int)bigint[j]) & ShortMask) * 10);
+              int p2 = ((int)carry) & ShortMask;
+              p = (p + p2);
+              bigint[j] = ((short)p);
+              carry = ((short)(p >> 16));
+            }
+          }
+          if (carry != 0) {
+            bigint = GrowForCarry(bigint, carry);
+          }
+          // Add the parsed digit
+          if (digit != 0) {
+            int d = bigint[0] & ShortMask;
+            if (d <= overf) {
+              bigint[0] = ((short)(d + digit));
+            } else if (IncrementWords(
+                bigint,
+                0,
+                bigint.length,
+                (short)digit) != 0) {
+              bigint = GrowForCarry(bigint, (short)1);
+            }
+          }
+          bn = Math.min(bigint.length, bn + 1);
+        }
+      } else {
+        boolean haveSmallInt = true;
+        int maxSafeInt = ValueMaxSafeInts[radix - 2];
+        int maxShortPlusOneMinusRadix = 65536 - radix;
+        int smallInt = 0;
+        for (int i = index; i < endIndex; ++i) {
+          char c = cs[i];
+          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          if (digit >= radix) {
+            throw new NumberFormatException("Illegal character found");
+          }
+          if (haveSmallInt && smallInt < maxSafeInt) {
+            smallInt = (smallInt * radix) + digit;
+          } else {
+            if (haveSmallInt) {
+              bigint[0] = ((short)(smallInt & ShortMask));
+              bigint[1] = ((short)((smallInt >> 16) & ShortMask));
+              haveSmallInt = false;
+            }
+            // Multiply by the radix
+            short carry = 0;
+            int n = bigint.length;
+            for (int j = 0; j < n; ++j) {
+              int p;
+              p = ((((int)bigint[j]) & ShortMask) * radix);
+              int p2 = ((int)carry) & ShortMask;
+              p = (p + p2);
+              bigint[j] = ((short)p);
+              carry = ((short)(p >> 16));
+            }
+            if (carry != 0) {
+              bigint = GrowForCarry(bigint, carry);
+            }
+            // Add the parsed digit
+            if (digit != 0) {
+              int d = bigint[0] & ShortMask;
+              if (d <= maxShortPlusOneMinusRadix) {
+                bigint[0] = ((short)(d + digit));
+              } else if (IncrementWords(
+                  bigint,
+                  0,
+                  bigint.length,
+                  (short)digit) != 0) {
+                bigint = GrowForCarry(bigint, (short)1);
+              }
+            }
+          }
+        }
+        if (haveSmallInt) {
+          bigint[0] = ((short)(smallInt & ShortMask));
+          bigint[1] = ((short)((smallInt >> 16) & ShortMask));
+        }
+      }
+      int count = CountWords(bigint);
+      return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
+          count,
+          bigint,
+          negative);
+    }
+
+    /**
+     * Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
+     * @param cs A sequence of {@code char} s describing an integer in base-10
+     * (decimal) form. The sequence must contain only basic digits 0 to 9
+     *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
+     * U+002D) to indicate a negative number. The sequence is not allowed
+     * to contain white space characters, including spaces. The sequence
+     * may start with any number of zeros.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of {@code char} s.
+     * @throws NumberFormatException The parameter {@code cs} is in an invalid format.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     */
+    public static EInteger FromString(char[] cs) {
+      if (cs == null) {
+        throw new NullPointerException("cs");
+      }
+      int len = cs.length;
+      if (len == 1) {
+        char c = cs[0];
+        if (c >= '0' && c <= '9') {
+          return FromInt32((int)(c - '0'));
+        }
+        throw new NumberFormatException();
+      }
+      return FromRadixSubstring(cs, 10, 0, len);
+    }
+
     /**
      * Converts a string to an arbitrary-precision integer.
      * @param str A text string describing an integer in base-10 (decimal) form.
@@ -906,6 +1389,37 @@ at: http://peteroupc.github.io/
         throw new NumberFormatException();
       }
       return FromRadixSubstring(str, 10, 0, len);
+    }
+
+    /**
+     * Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+     * integer.
+     * @param cs A sequence of {@code char} s, the desired portion of which
+     * describes an integer in base-10 (decimal) form. The desired portion
+     * of the sequence of {@code char} s must contain only basic digits 0
+     * to 9 (U+0030 to U+0039), except that it may start with a minus sign
+     *  ("-", U+002D) to indicate a negative number. The desired portion is
+     * not allowed to contain white space characters, including spaces. The
+     * desired portion may start with any number of zeros.
+     * @param index The index of the sequence of {@code char} s that starts the
+     * desired portion.
+     * @param endIndex The index of the sequence of {@code char} s that ends the
+     * desired portion. The length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of {@code char} s portion.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the sequence's
+     * length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     */
+    public static EInteger FromSubstring(
+      char[] cs,
+      int index,
+      int endIndex) {
+      if (cs == null) {
+        throw new NullPointerException("cs");
+      }
+      return FromRadixSubstring(cs, 10, index, endIndex);
     }
 
     /**
@@ -2214,6 +2728,70 @@ at: http://peteroupc.github.io/
       return this.DivRem(EInteger.FromInt32(intDivisor));
     }
 
+  /**
+   * Not documented yet.
+   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+   * @return The return value is not documented yet.
+   */
+    public EInteger Add(long longValue) {
+return this.Add(EInteger.FromInt64(longValue));
+}
+
+  /**
+   * Not documented yet.
+   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+   * @return The return value is not documented yet.
+   */
+    public EInteger Subtract(long longValue) {
+return this.Subtract(EInteger.FromInt64(longValue));
+}
+
+  /**
+   * Not documented yet.
+   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+   * @return The return value is not documented yet.
+   */
+    public EInteger Multiply(long longValue) {
+return this.Multiply(EInteger.FromInt64(longValue));
+}
+
+  /**
+   * Not documented yet.
+   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+   * @return The return value is not documented yet.
+   */
+    public EInteger Divide(long longValue) {
+return this.Divide(EInteger.FromInt64(longValue));
+}
+
+  /**
+   * Not documented yet.
+   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+   * @return The return value is not documented yet.
+   */
+    public EInteger Remainder(long longValue) {
+return this.Remainder(EInteger.FromInt64(longValue));
+}
+
+  /**
+   * Not documented yet.
+   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+   * @return The return value is not documented yet.
+   */
+    public int compareTo(long longValue) {
+return this.compareTo(EInteger.FromInt64(longValue));
+}
+
+  /**
+   * Not documented yet.
+   * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
+   * integer.
+   * @return The return value is not documented yet.
+   */
+    public EInteger[] DivRem(long intDivisor) {
+      return this.DivRem(EInteger.FromInt64(intDivisor));
+}
+
     /**
      * Divides this object by another arbitrary-precision integer and returns the
      * quotient and remainder.
@@ -2628,7 +3206,7 @@ WordsShiftRightOne(bv, bvc);
      * Returns the number of decimal digits used by this integer, in the form of a
      * 64-bit signed integer.
      * @return The number of digits in the decimal form of this integer. Returns 1
-     * if this number is 0. Returns 2^63 - 1({@code Long.MAX_VALUE} in.getNET()
+     * if this number is 0. Returns 2^63 - 1({@code Long.MAX_VALUE} in.NET
      * or {@code Long.MAX_VALUE} in Java) if the number of decimal digits
      * is 2^63 - 1 or greater. (Use {@code GetDigitCountAsEInteger} instead
      * if the application relies on the exact number of decimal digits.).
@@ -3042,7 +3620,7 @@ ShortMask) != 0) ? 9 :
      * If the value is negative, finds the number of bits in the value
      * equal to this object's absolute value minus 1. For example, all
      * integers in the interval [-(2^63), (2^63) - 1], which is the same as
-     * the range of integers in Java's and.getNET()'s <code>long</code> type, have a
+     * the range of integers in Java's and.NET's <code>long</code> type, have a
      * signed bit length of 63 or less, and all other integers have a
      * signed bit length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
@@ -3059,7 +3637,7 @@ ShortMask) != 0) ? 9 :
      * value is negative, finds the number of bits in the value equal to
      * this object's absolute value minus 1. For example, all integers in
      * the interval [-(2^63), (2^63) - 1], which is the same as the range
-     * of integers in Java's and.getNET()'s <code>long</code> type, have a signed bit
+     * of integers in Java's and.NET's <code>long</code> type, have a signed bit
      * length of 63 or less, and all other integers have a signed bit
      * length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
@@ -3113,7 +3691,7 @@ ShortMask) != 0) ? 9 :
      * except for its sign. If the value is negative, finds the number of
      * bits in the value equal to this object's absolute value minus 1. For
      * example, all integers in the interval [-(2^63), (2^63) - 1], which
-     * is the same as the range of integers in Java's and.getNET()'s <code>long</code>
+     * is the same as the range of integers in Java's and.NET's <code>long</code>
      * type, have a signed bit length of 63 or less, and all other integers
      * have a signed bit length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
@@ -3177,7 +3755,7 @@ ShortMask) != 0) ? 9 :
      * all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
      * unsigned bit length of 63 or less, and all other integers have an
      * unsigned bit length of greater than 63. This interval is not the
-     * same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+     * same as the range of integers in Java's and.NET's <code>long</code> type.
      * @return The number of bits in this object's absolute value. Returns 0 if
      * this object's value is 0, and returns 1 if the value is negative 1.
      */
@@ -3192,7 +3770,7 @@ ShortMask) != 0) ? 9 :
      * integers in the interval [-((2^63) - 1), (2^63) - 1] have an
      * unsigned bit length of 63 or less, and all other integers have an
      * unsigned bit length of greater than 63. This interval is not the
-     * same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+     * same as the range of integers in Java's and.NET's <code>long</code> type.
      * @return The number of bits in this object's absolute value. Returns 0 if
      * this object's value is 0, and returns 1 if the value is negative 1.
      * Returns 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code
@@ -3238,7 +3816,7 @@ ShortMask) != 0) ? 9 :
      * (2^63) - 1] have an unsigned bit length of 63 or less, and all other
      * integers have an unsigned bit length of greater than 63. This
      * interval is not the same as the range of integers in Java's
-     * and.getNET()'s <code>long</code> type.
+     * and.NET's <code>long</code> type.
      * @return The number of bits in this object's absolute value. Returns 0 if
      * this object's value is 0, and returns 1 if the value is negative 1.
      * @throws ArithmeticException The return value would exceed the range of a
@@ -4293,6 +4871,126 @@ ShortMask) != 0) ? 9 :
       return (valueXaWordCount == 0) ? EInteger.FromInt32(0) : new
         EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
+
+    /**
+     * Does an AND NOT operation between this arbitrary-precision integer and
+     * another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, and the other integer's
+     * corresponding bit is not set. For example, in binary, 10110 AND NOT
+     * 11010 = 00100 (or in decimal, 22 AND NOT 26 = 4). This method uses
+     * the two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 AND NOT 01011 = 00100 (or in decimal, -18 OR 11 = 4).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
+    public EInteger AndNot(EInteger second) {
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      return this.And(second.Not());
+   }
+
+    /**
+     * Does an OR NOT operation (or implication or IMP operation) between this
+     * arbitrary-precision integer and another one.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, the other integer's
+     * corresponding bit is not set, or both. For example, in binary, 10110
+     * OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
+     * uses the two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
+     * -2).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
+    public EInteger OrNot(EInteger second) {
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      return this.Or(second.Not());
+   }
+
+    /**
+     * Does an OR NOT operation (or implication or IMP operation) between this
+     * arbitrary-precision integer and another one.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, the other integer's
+     * corresponding bit is not set, or both. For example, in binary, 10110
+     * OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
+     * uses the two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
+     * -2).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
+    public EInteger Imp(EInteger second) {
+      return this.OrNot(second);
+   }
+
+    /**
+     * Does an XOR NOT operation (or equivalence operation, EQV operation, or
+     * exclusive-OR NOT operation) between this arbitrary-precision integer
+     * and another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set or the other integer's
+     * corresponding bit is not set, but not both. For example, in binary,
+     * 10110 XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19).
+     * This method uses the two's complement form of negative integers (see
+     * {@link com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 XOR NOT 01011 =...11111010 (or in decimal, -18 OR 11 =
+     * -6).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
+    public EInteger XorNot(EInteger second) {
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      return this.Xor(second.Not());
+   }
+
+    /**
+     * Does an XOR NOT operation (or equivalence operation, EQV operation, or
+     * exclusive-OR NOT operation) between this arbitrary-precision integer
+     * and another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set or the other integer's
+     * corresponding bit is not set, but not both. For example, in binary,
+     * 10110 XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19).
+     * This method uses the two's complement form of negative integers (see
+     * {@link com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 XOR NOT 01011 =...11111010 (or in decimal, -18 OR 11 =
+     * -6).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
+    public EInteger Eqv(EInteger second) {
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      return this.XorNot(second);
+   }
 
     /**
      * Does an exclusive OR (XOR) operation between this arbitrary-precision

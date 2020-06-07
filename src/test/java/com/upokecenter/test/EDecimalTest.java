@@ -2461,7 +2461,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EDecimal.FromString(null);
+        EDecimal.FromString((String)null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -2474,7 +2474,7 @@ import com.upokecenter.numbers.*;
         EDecimal.Zero,
         EDecimal.FromString("0", null));
       try {
-        EDecimal.FromString(null, null);
+        EDecimal.FromString((String)null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -2492,7 +2492,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EDecimal.FromString(null, 0, 1);
+        EDecimal.FromString((String)null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -2575,7 +2575,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EDecimal.FromString(null, 0, 1, null);
+        EDecimal.FromString((String)null, 0, 1, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty

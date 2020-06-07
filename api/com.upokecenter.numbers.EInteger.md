@@ -30,11 +30,16 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
  Returns the absolute value of this object's value.
 * `EInteger Add​(int intValue)`<br>
  Adds this object and another object.
+* `EInteger Add​(long longValue)`<br>
+ Not documented yet.
 * `EInteger Add​(EInteger bigintAugend)`<br>
  Adds this object and another object.
 * `EInteger And​(EInteger other)`<br>
  Does an AND operation between this arbitrary-precision integer and another
  one.
+* `EInteger AndNot​(EInteger second)`<br>
+ Does an AND NOT operation between this arbitrary-precision integer and
+ another one.
 * `int AsInt32Checked()`<br>
  Deprecated.
 Renamed to ToInt32Checked.
@@ -57,23 +62,33 @@ Renamed to ToInt64Unchecked.
  Returns whether this object's value can fit in a 64-bit signed integer.
 * `int compareTo​(int intValue)`<br>
  Compares an arbitrary-precision integer with this instance.
+* `int compareTo​(long longValue)`<br>
+ Not documented yet.
 * `int compareTo​(EInteger other)`<br>
  Compares an arbitrary-precision integer with this instance.
 * `EInteger Decrement()`<br>
  Returns one subtracted from this arbitrary-precision integer.
 * `EInteger Divide​(int intValue)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
+* `EInteger Divide​(long longValue)`<br>
+ Not documented yet.
 * `EInteger Divide​(EInteger bigintDivisor)`<br>
  Divides this instance by the value of an arbitrary-precision integer.
 * `EInteger[] DivRem​(int intDivisor)`<br>
  Divides this object by a 32-bit signed integer and returns the quotient and
  remainder.
+* `EInteger[] DivRem​(long intDivisor)`<br>
+ Not documented yet.
 * `EInteger[] DivRem​(EInteger divisor)`<br>
  Divides this object by another arbitrary-precision integer and returns the
  quotient and remainder.
 * `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object and another object are equal and have the
  same type.
+* `EInteger Eqv​(EInteger second)`<br>
+ Does an XOR NOT operation (or equivalence operation, EQV operation, or
+ exclusive-OR NOT operation) between this arbitrary-precision integer
+ and another one.
 * `static EInteger FromBoolean​(boolean boolValue)`<br>
  Converts a boolean value (true or false) to an arbitrary-precision integer.
 * `static EInteger FromByte​(byte inputByte)`<br>
@@ -87,17 +102,34 @@ Renamed to ToInt64Unchecked.
  Converts a 32-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt64​(long longerValue)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision integer.
+* `static EInteger FromRadixString​(char[] cs,
+               int radix) char`<br>
+ Converts a sequence of char s to an arbitrary-precision integer in a
+ given radix.
 * `static EInteger FromRadixString​(java.lang.String str,
                int radix)`<br>
  Converts a string to an arbitrary-precision integer in a given radix.
+* `static EInteger FromRadixSubstring​(char[] cs,
+                  int radix,
+                  int index,
+                  int endIndex) char`<br>
+ Converts a portion of a sequence of char s to an arbitrary-precision
+ integer in a given radix.
 * `static EInteger FromRadixSubstring​(java.lang.String str,
                   int radix,
                   int index,
                   int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer in a given
  radix.
+* `static EInteger FromString​(char[] cs) char`<br>
+ Converts a sequence of char s to an arbitrary-precision integer.
 * `static EInteger FromString​(java.lang.String str)`<br>
  Converts a string to an arbitrary-precision integer.
+* `static EInteger FromSubstring​(char[] cs,
+             int index,
+             int endIndex) char`<br>
+ Converts a portion of a sequence of char s to an arbitrary-precision
+ integer.
 * `static EInteger FromSubstring​(java.lang.String str,
              int index,
              int endIndex)`<br>
@@ -162,6 +194,9 @@ This method may overflow.
  Gets the number zero as an arbitrary-precision integer.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
+* `EInteger Imp​(EInteger second)`<br>
+ Does an OR NOT operation (or implication or IMP operation) between this
+ arbitrary-precision integer and another one.
 * `EInteger Increment()`<br>
  Returns one added to this arbitrary-precision integer.
 * `boolean isEven()`<br>
@@ -198,6 +233,8 @@ This method may overflow.
 * `EInteger Multiply​(int intValue)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
   object.
+* `EInteger Multiply​(long longValue)`<br>
+ Not documented yet.
 * `EInteger Multiply​(EInteger bigintMult)`<br>
  Multiplies this instance by the value of an arbitrary-precision integer
  object.
@@ -209,6 +246,9 @@ This method may overflow.
 * `EInteger Or​(EInteger second)`<br>
  Does an OR operation between this arbitrary-precision integer and another
  one.
+* `EInteger OrNot​(EInteger second)`<br>
+ Does an OR NOT operation (or implication or IMP operation) between this
+ arbitrary-precision integer and another one.
 * `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
 * `EInteger Pow​(EInteger bigPower)`<br>
@@ -219,6 +259,8 @@ This method may overflow.
 * `EInteger Remainder​(int intValue)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision integer.
+* `EInteger Remainder​(long longValue)`<br>
+ Not documented yet.
 * `EInteger Remainder​(EInteger divisor)`<br>
  Finds the remainder that results when this instance is divided by the value
  of an arbitrary-precision integer.
@@ -241,6 +283,8 @@ This method may overflow.
 * `EInteger Subtract​(int intValue)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer.
+* `EInteger Subtract​(long longValue)`<br>
+ Not documented yet.
 * `EInteger Subtract​(EInteger subtrahend)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer.
@@ -276,6 +320,10 @@ This method may overflow.
 * `EInteger Xor​(EInteger other)`<br>
  Does an exclusive OR (XOR) operation between this arbitrary-precision
  integer and another one.
+* `EInteger XorNot​(EInteger second)`<br>
+ Does an XOR NOT operation (or equivalence operation, EQV operation, or
+ exclusive-OR NOT operation) between this arbitrary-precision integer
+ and another one.
 
 ## Method Details
 
@@ -440,6 +488,8 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
+* <code>java.lang.NumberFormatException</code> - The string is empty or in an invalid format.
+
 ### FromRadixSubstring
     public static EInteger FromRadixSubstring​(java.lang.String str, int radix, int index, int endIndex)
 Converts a portion of a string to an arbitrary-precision integer in a given
@@ -477,6 +527,99 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 * <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.
 
+### FromRadixString
+    public static EInteger FromRadixString​(char[] cs, int radix)
+Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
+ given radix.
+
+**Parameters:**
+
+* <code>cs</code> - A sequence of <code>char</code> s described by the FromRadixSubstring
+ method.
+
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
+ <code>char</code> s can use the basic digits 0 to 9 (U+0030 to U+0039)
+ and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+ example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+ basic upper-case letter A to Z is allowed in the sequence of <code>
+ char</code> s, the corresponding basic lower-case letter (U+0061 to
+ U+007a) is allowed instead.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as the given
+ sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The sequence of <code>char</code> s is empty or in an
+ invalid format.
+
+### FromRadixSubstring
+    public static EInteger FromRadixSubstring​(char[] cs, int radix, int index, int endIndex)
+Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+ integer in a given radix.
+
+**Parameters:**
+
+* <code>cs</code> - A text sequence of <code>char</code> s. The desired portion of the
+ sequence of <code>char</code> s must contain only characters allowed by
+  the given radix, except that it may start with a minus sign ("-",
+ U+002D) to indicate a negative number. The desired portion is not
+ allowed to contain white space characters, including spaces. The
+ desired portion may start with any number of zeros.
+
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
+ <code>char</code> s can use the basic digits 0 to 9 (U+0030 to U+0039)
+ and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+ example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+ basic upper-case letter A to Z is allowed in the sequence of <code>
+ char</code> s, the corresponding basic lower-case letter (U+0061 to
+ U+007a) is allowed instead.
+
+* <code>index</code> - The index of the sequence of <code>char</code> s that starts the
+ desired portion.
+
+* <code>endIndex</code> - The index of the sequence of <code>char</code> s that ends the
+ desired portion. The length will be index + endIndex - 1.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence's portion.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion is empty or in an invalid format.
+
+### FromString
+    public static EInteger FromString​(char[] cs)
+Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
+
+**Parameters:**
+
+* <code>cs</code> - A sequence of <code>char</code> s describing an integer in base-10
+ (decimal) form. The sequence must contain only basic digits 0 to 9
+  (U+0030 to U+0039), except that it may start with a minus sign ("-",
+ U+002D) to indicate a negative number. The sequence is not allowed
+ to contain white space characters, including spaces. The sequence
+ may start with any number of zeros.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>cs</code> is in an invalid format.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
+
 ### FromString
     public static EInteger FromString​(java.lang.String str)
 Converts a string to an arbitrary-precision integer.
@@ -500,6 +643,40 @@ Converts a string to an arbitrary-precision integer.
 * <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid format.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
+
+### FromSubstring
+    public static EInteger FromSubstring​(char[] cs, int index, int endIndex)
+Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+ integer.
+
+**Parameters:**
+
+* <code>cs</code> - A sequence of <code>char</code> s, the desired portion of which
+ describes an integer in base-10 (decimal) form. The desired portion
+ of the sequence of <code>char</code> s must contain only basic digits 0
+ to 9 (U+0030 to U+0039), except that it may start with a minus sign
+  ("-", U+002D) to indicate a negative number. The desired portion is
+ not allowed to contain white space characters, including spaces. The
+ desired portion may start with any number of zeros.
+
+* <code>index</code> - The index of the sequence of <code>char</code> s that starts the
+ desired portion.
+
+* <code>endIndex</code> - The index of the sequence of <code>char</code> s that ends the
+ desired portion. The length will be index + endIndex - 1.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence of <code>char</code> s portion.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
+ endIndex</code> is less than 0, or either is greater than the sequence's
+ length, or <code>endIndex</code> is less than <code>index</code>.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
 
 ### FromSubstring
     public static EInteger FromSubstring​(java.lang.String str, int index, int endIndex)
@@ -842,6 +1019,91 @@ Divides this object by a 32-bit signed integer and returns the quotient and
 
 * <code>java.lang.ArithmeticException</code> - The parameter <code>intDivisor</code> is 0.
 
+### Add
+    public EInteger Add​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Subtract
+    public EInteger Subtract​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Multiply
+    public EInteger Multiply​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Divide
+    public EInteger Divide​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### Remainder
+    public EInteger Remainder​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### compareTo
+    public int compareTo​(long longValue)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
+### DivRem
+    public EInteger[] DivRem​(long intDivisor)
+Not documented yet.
+
+**Parameters:**
+
+* <code>intDivisor</code> - The parameter <code>intDivisor</code> is a 64-bit signed
+ integer.
+
+**Returns:**
+
+* The return value is not documented yet.
+
 ### DivRem
     public EInteger[] DivRem​(EInteger divisor)
 Divides this object by another arbitrary-precision integer and returns the
@@ -931,7 +1193,7 @@ Returns the number of decimal digits used by this integer, in the form of a
 **Returns:**
 
 * The number of digits in the decimal form of this integer. Returns 1
- if this number is 0. Returns 2^63 - 1(<code>Long.MAX_VALUE</code> in.getNET()
+ if this number is 0. Returns 2^63 - 1(<code>Long.MAX_VALUE</code> in.NET
  or <code>Long.MAX_VALUE</code> in Java) if the number of decimal digits
  is 2^63 - 1 or greater. (Use <code>GetDigitCountAsEInteger</code> instead
  if the application relies on the exact number of decimal digits.).
@@ -1034,7 +1296,7 @@ Finds the minimum number of bits needed to represent this object's value,
  If the value is negative, finds the number of bits in the value
  equal to this object's absolute value minus 1. For example, all
  integers in the interval [-(2^63), (2^63) - 1], which is the same as
- the range of integers in Java's and.getNET()'s <code>long</code> type, have a
+ the range of integers in Java's and.NET's <code>long</code> type, have a
  signed bit length of 63 or less, and all other integers have a
  signed bit length of greater than 63.
 
@@ -1050,7 +1312,7 @@ Finds the minimum number of bits needed to represent this object's value,
  value is negative, finds the number of bits in the value equal to
  this object's absolute value minus 1. For example, all integers in
  the interval [-(2^63), (2^63) - 1], which is the same as the range
- of integers in Java's and.getNET()'s <code>long</code> type, have a signed bit
+ of integers in Java's and.NET's <code>long</code> type, have a signed bit
  length of 63 or less, and all other integers have a signed bit
  length of greater than 63.
 
@@ -1119,7 +1381,7 @@ Finds the minimum number of bits needed to represent this number's absolute
  all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
  unsigned bit length of 63 or less, and all other integers have an
  unsigned bit length of greater than 63. This interval is not the
- same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+ same as the range of integers in Java's and.NET's <code>long</code> type.
 
 **Returns:**
 
@@ -1133,7 +1395,7 @@ Finds the minimum number of bits needed to represent this number's absolute
  integers in the interval [-((2^63) - 1), (2^63) - 1] have an
  unsigned bit length of 63 or less, and all other integers have an
  unsigned bit length of greater than 63. This interval is not the
- same as the range of integers in Java's and.getNET()'s <code>long</code> type.
+ same as the range of integers in Java's and.NET's <code>long</code> type.
 
 **Returns:**
 
@@ -1436,6 +1698,138 @@ Does an OR operation between this arbitrary-precision integer and another
  11010 = 11110 (or in decimal, 22 OR 26 = 30). This method uses the
  two's complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
 ...11101110 OR 01011 =...11101111 (or in decimal, -18 OR 11 = -17).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
+
+### AndNot
+    public EInteger AndNot​(EInteger second)
+Does an AND NOT operation between this arbitrary-precision integer and
+ another one.<p>Each arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>second</code> - Another arbitrary-precision integer that participates in the
+ operation.
+
+**Returns:**
+
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bit of this integer is set, and the other integer's
+ corresponding bit is not set. For example, in binary, 10110 AND NOT
+ 11010 = 00100 (or in decimal, 22 AND NOT 26 = 4). This method uses
+ the two's complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
+...11101110 AND NOT 01011 = 00100 (or in decimal, -18 OR 11 = 4).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
+
+### OrNot
+    public EInteger OrNot​(EInteger second)
+Does an OR NOT operation (or implication or IMP operation) between this
+ arbitrary-precision integer and another one.<p>Each
+ arbitrary-precision integer is treated as a two's-complement form
+  (see <code>"Forms of numbers"</code>)
+ for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>second</code> - Another arbitrary-precision integer that participates in the
+ operation.
+
+**Returns:**
+
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bit of this integer is set, the other integer's
+ corresponding bit is not set, or both. For example, in binary, 10110
+ OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
+ uses the two's complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
+...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
+ -2).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
+
+### Imp
+    public EInteger Imp​(EInteger second)
+Does an OR NOT operation (or implication or IMP operation) between this
+ arbitrary-precision integer and another one.<p>Each
+ arbitrary-precision integer is treated as a two's-complement form
+  (see <code>"Forms of numbers"</code>)
+ for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>second</code> - Another arbitrary-precision integer that participates in the
+ operation.
+
+**Returns:**
+
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bit of this integer is set, the other integer's
+ corresponding bit is not set, or both. For example, in binary, 10110
+ OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
+ uses the two's complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
+...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
+ -2).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
+
+### XorNot
+    public EInteger XorNot​(EInteger second)
+Does an XOR NOT operation (or equivalence operation, EQV operation, or
+ exclusive-OR NOT operation) between this arbitrary-precision integer
+ and another one.<p>Each arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>second</code> - Another arbitrary-precision integer that participates in the
+ operation.
+
+**Returns:**
+
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bit of this integer is set or the other integer's
+ corresponding bit is not set, but not both. For example, in binary,
+ 10110 XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19).
+ This method uses the two's complement form of negative integers (see
+ <code>EDecimal</code>). For example, in binary,
+...11101110 XOR NOT 01011 =...11111010 (or in decimal, -18 OR 11 =
+ -6).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
+
+### Eqv
+    public EInteger Eqv​(EInteger second)
+Does an XOR NOT operation (or equivalence operation, EQV operation, or
+ exclusive-OR NOT operation) between this arbitrary-precision integer
+ and another one.<p>Each arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
+
+**Parameters:**
+
+* <code>second</code> - Another arbitrary-precision integer that participates in the
+ operation.
+
+**Returns:**
+
+* An arbitrary-precision integer in which each bit is set if the
+ corresponding bit of this integer is set or the other integer's
+ corresponding bit is not set, but not both. For example, in binary,
+ 10110 XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19).
+ This method uses the two's complement form of negative integers (see
+ <code>EDecimal</code>). For example, in binary,
+...11101110 XOR NOT 01011 =...11111010 (or in decimal, -18 OR 11 =
+ -6).
 
 **Throws:**
 
