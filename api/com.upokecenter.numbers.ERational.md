@@ -44,11 +44,14 @@ Represents an arbitrary-precision rational number. This class can't be
  Returns the absolute value of this rational number, that is, a number with
  the same value as this one but as a nonnegative number.
 * `ERational Add​(int v)`<br>
- Returns the sum of a rational number and a 32-bit signed integer.
+ Adds this arbitrary-precision rational number and a 32-bit signed integer
+ and returns the result.
 * `ERational Add​(long v)`<br>
- Returns the sum of a rational number and a 64-bit signed integer.
+ Adds this arbitrary-precision rational number and a 64-bit signed integer
+ and returns the result.
 * `ERational Add​(ERational otherValue)`<br>
- Adds two rational numbers.
+ Adds this arbitrary-precision rational number and another
+ arbitrary-precision rational number and returns the result.
 * `int compareTo​(int intOther)`<br>
  Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance.
@@ -101,12 +104,14 @@ Represents an arbitrary-precision rational number. This class can't be
 * `ERational Decrement()`<br>
  Subtracts one from an arbitrary-precision rational number.
 * `ERational Divide​(int v)`<br>
- Divides this instance by the value of a 32-bit signed integer.
+ Divides this arbitrary-precision rational number by a 32-bit signed integer
+ and returns the result.
 * `ERational Divide​(long v)`<br>
- Divides this instance by the value of a 64-bit signed integer.
+ Divides this arbitrary-precision rational number by a 64-bit signed integer
+ and returns the result.
 * `ERational Divide​(ERational otherValue)`<br>
- Divides this instance by the value of an arbitrary-precision rational number
- object.
+ Divides this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.
 * `boolean equals​(ERational other)`<br>
  Determines whether this object's numerator, denominator, and properties are
  equal to those of another object.
@@ -150,6 +155,21 @@ Renamed to FromEFloat.
 * `static ERational FromSingleBits​(int value)`<br>
  Creates a binary rational number from a 32-bit floating-point number encoded
  in the IEEE 754 binary32 format.
+* `static ERational FromString​(byte[] bytes)`<br>
+ Creates a rational number from a sequence of bytes that represents a number.
+* `static ERational FromString​(byte[] bytes,
+          int offset,
+          int length)`<br>
+ Creates a rational number from a sequence of bytes that represents a
+ number.
+* `static ERational FromString​(char[] chars) char`<br>
+ Creates a rational number from a sequence of char s that represents a
+ number.
+* `static ERational FromString​(char[] chars,
+          int offset,
+          int length) char`<br>
+ Creates a rational number from a sequence of char s that
+ represents a number.
 * `static ERational FromString​(java.lang.String str)`<br>
  Creates a rational number from a text string that represents a number.
 * `static ERational FromString​(java.lang.String str,
@@ -203,34 +223,38 @@ Renamed to FromEFloat.
             ERational second)`<br>
  Gets the lesser value between two values, ignoring their signs.
 * `ERational Multiply​(int v)`<br>
- Returns the value of this instance multiplied by a 32-bit signed integer.
+ Multiplies this arbitrary-precision rational number by a 32-bit signed
+ integer and returns the result.
 * `ERational Multiply​(long v)`<br>
- Returns the value of this instance multiplied by a 64-bit signed integer.
+ Multiplies this arbitrary-precision rational number by a 64-bit signed
+ integer and returns the result.
 * `ERational Multiply​(ERational otherValue)`<br>
- Multiplies this instance by the value of an arbitrary-precision rational
- number.
+ Multiplies this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.
 * `ERational Negate()`<br>
  Returns a rational number with the same value as this one but with the sign
  reversed.
 * `ERational Remainder​(int v)`<br>
- Finds the remainder that results when this instance is divided by the value
- of a 32-bit signed integer.
+ Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 32-bit signed integer.
 * `ERational Remainder​(long v)`<br>
- Finds the remainder that results when this instance is divided by the value
- of a 64-bit signed integer.
+ Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 64-bit signed integer.
 * `ERational Remainder​(ERational otherValue)`<br>
- Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision rational number.
+ Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by another arbitrary-precision rational
+ number.
 * `int signum()`<br>
  Gets the sign of this rational number.
 * `ERational Subtract​(int v)`<br>
- Returns the result of subtracting a 32-bit signed integer from this
- instance.
+ Subtracts a 32-bit signed integer from this arbitrary-precision rational
+ number and returns the result.
 * `ERational Subtract​(long v)`<br>
- Returns the result of subtracting a 64-bit signed integer from this
- instance.
+ Subtracts a 64-bit signed integer from this arbitrary-precision rational
+ number and returns the result.
 * `ERational Subtract​(ERational otherValue)`<br>
- Subtracts an arbitrary-precision rational number from this instance.
+ Subtracts an arbitrary-precision rational number from this
+ arbitrary-precision rational number and returns the result.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after converting it to an integer by discarding
@@ -764,6 +788,137 @@ Creates a rational number from a text string that represents a number. See
  than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
+### FromString
+    public static ERational FromString​(char[] chars)
+Creates a rational number from a sequence of <code>char</code> s that represents a
+ number. See <code>FromString(string, int, int)</code> for more
+ information.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s that represents a number.
+
+**Returns:**
+
+* An arbitrary-precision rational number with the same value as the
+ given sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>chars</code> is not a correctly
+ formatted sequence of <code>char</code> s.
+
+### FromString
+    public static ERational FromString​(char[] chars, int offset, int length)
+<p>Creates a rational number from a sequence of <code>char</code> s that
+ represents a number.</p> <p>The format of the sequence of
+ <code>char</code> s generally consists of:</p> <ul> <li>An optional plus
+  sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value
+ is negative.)</li> <li>The numerator in the form of one or more
+ digits (these digits may begin with any number of zeros).</li>
+  <li>Optionally, "/" followed by the denominator in the form of one
+ or more digits (these digits may begin with any number of zeros). If
+ a denominator is not given, it's equal to 1.</li></ul> <p>The
+  sequence of <code>char</code> s can also be "-INF", "-Infinity",
+  "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed by any number
+  of digits, or signaling NaN ("sNaN" /"-sNaN") followed by any number
+ of digits, all in any combination of upper and lower case.</p>
+ <p>All characters mentioned above are the corresponding characters
+ in the Basic Latin range. In particular, the digits must be the
+ basic digits 0 to 9 (U+0030 to U+0039). The sequence of <code>char</code>
+ s is not allowed to contain white space characters, including
+ spaces.</p>
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s, a portion of which represents a
+ number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ chars</code> (but not more than <code>chars</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision rational number.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>chars</code> is not a correctly
+ formatted sequence of <code>char</code> s.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> 's length, or <code>chars</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
+### FromString
+    public static ERational FromString​(byte[] bytes)
+Creates a rational number from a sequence of bytes that represents a number.
+ See <code>FromString(string, int, int)</code> for more information.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes that represents a number.
+
+**Returns:**
+
+* An arbitrary-precision rational number with the same value as the
+ given sequence of bytes.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is not a correctly
+ formatted sequence of bytes.
+
+### FromString
+    public static ERational FromString​(byte[] bytes, int offset, int length)
+<p>Creates a rational number from a sequence of bytes that represents a
+ number.</p> <p>The format of the sequence of bytes generally
+  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+ <li>The numerator in the form of one or more digits (these digits
+  may begin with any number of zeros).</li> <li>Optionally, "/"
+ followed by the denominator in the form of one or more digits (these
+ digits may begin with any number of zeros). If a denominator is not
+ given, it's equal to 1.</li></ul> <p>The sequence of bytes can also
+  be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+ followed by any number of digits, all in any combination of upper
+ and lower case.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence of bytes is not allowed to contain white space characters,
+ including spaces.</p>
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes, a portion of which represents a number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ bytes</code> (but not more than <code>bytes</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision rational number.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is not a correctly
+ formatted sequence of bytes.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>bytes</code> 's length, or <code>bytes</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
 ### CompareToTotalMagnitude
     public int CompareToTotalMagnitude​(ERational other)
 Compares the absolute values of this object and another object, imposing a
@@ -825,7 +980,8 @@ Returns the absolute value of this rational number, that is, a number with
 
 ### Add
     public ERational Add​(ERational otherValue)
-Adds two rational numbers.
+Adds this arbitrary-precision rational number and another
+ arbitrary-precision rational number and returns the result.
 
 **Parameters:**
 
@@ -1089,8 +1245,8 @@ Returns a number with the same value as this one, but copying the sign
 
 ### Divide
     public ERational Divide​(ERational otherValue)
-Divides this instance by the value of an arbitrary-precision rational number
- object.
+Divides this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.
 
 **Parameters:**
 
@@ -1211,8 +1367,8 @@ Returns whether this object is a signaling not-a-number value (which causes
 
 ### Multiply
     public ERational Multiply​(ERational otherValue)
-Multiplies this instance by the value of an arbitrary-precision rational
- number.
+Multiplies this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.
 
 **Parameters:**
 
@@ -1237,8 +1393,9 @@ Returns a rational number with the same value as this one but with the sign
 
 ### Remainder
     public ERational Remainder​(ERational otherValue)
-Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision rational number.
+Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by another arbitrary-precision rational
+ number.
 
 **Parameters:**
 
@@ -1254,7 +1411,8 @@ Finds the remainder that results when this instance is divided by the value
 
 ### Subtract
     public ERational Subtract​(ERational otherValue)
-Subtracts an arbitrary-precision rational number from this instance.
+Subtracts an arbitrary-precision rational number from this
+ arbitrary-precision rational number and returns the result.
 
 **Parameters:**
 
@@ -1678,7 +1836,8 @@ Subtracts one from an arbitrary-precision rational number.
 
 ### Add
     public ERational Add​(int v)
-Returns the sum of a rational number and a 32-bit signed integer.
+Adds this arbitrary-precision rational number and a 32-bit signed integer
+ and returns the result.
 
 **Parameters:**
 
@@ -1691,8 +1850,8 @@ Returns the sum of a rational number and a 32-bit signed integer.
 
 ### Subtract
     public ERational Subtract​(int v)
-Returns the result of subtracting a 32-bit signed integer from this
- instance.
+Subtracts a 32-bit signed integer from this arbitrary-precision rational
+ number and returns the result.
 
 **Parameters:**
 
@@ -1704,7 +1863,8 @@ Returns the result of subtracting a 32-bit signed integer from this
 
 ### Multiply
     public ERational Multiply​(int v)
-Returns the value of this instance multiplied by a 32-bit signed integer.
+Multiplies this arbitrary-precision rational number by a 32-bit signed
+ integer and returns the result.
 
 **Parameters:**
 
@@ -1716,7 +1876,8 @@ Returns the value of this instance multiplied by a 32-bit signed integer.
 
 ### Divide
     public ERational Divide​(int v)
-Divides this instance by the value of a 32-bit signed integer.
+Divides this arbitrary-precision rational number by a 32-bit signed integer
+ and returns the result.
 
 **Parameters:**
 
@@ -1732,8 +1893,8 @@ Divides this instance by the value of a 32-bit signed integer.
 
 ### Remainder
     public ERational Remainder​(int v)
-Finds the remainder that results when this instance is divided by the value
- of a 32-bit signed integer.
+Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 32-bit signed integer.
 
 **Parameters:**
 
@@ -1749,7 +1910,8 @@ Finds the remainder that results when this instance is divided by the value
 
 ### Add
     public ERational Add​(long v)
-Returns the sum of a rational number and a 64-bit signed integer.
+Adds this arbitrary-precision rational number and a 64-bit signed integer
+ and returns the result.
 
 **Parameters:**
 
@@ -1762,8 +1924,8 @@ Returns the sum of a rational number and a 64-bit signed integer.
 
 ### Subtract
     public ERational Subtract​(long v)
-Returns the result of subtracting a 64-bit signed integer from this
- instance.
+Subtracts a 64-bit signed integer from this arbitrary-precision rational
+ number and returns the result.
 
 **Parameters:**
 
@@ -1775,7 +1937,8 @@ Returns the result of subtracting a 64-bit signed integer from this
 
 ### Multiply
     public ERational Multiply​(long v)
-Returns the value of this instance multiplied by a 64-bit signed integer.
+Multiplies this arbitrary-precision rational number by a 64-bit signed
+ integer and returns the result.
 
 **Parameters:**
 
@@ -1787,7 +1950,8 @@ Returns the value of this instance multiplied by a 64-bit signed integer.
 
 ### Divide
     public ERational Divide​(long v)
-Divides this instance by the value of a 64-bit signed integer.
+Divides this arbitrary-precision rational number by a 64-bit signed integer
+ and returns the result.
 
 **Parameters:**
 
@@ -1803,8 +1967,8 @@ Divides this instance by the value of a 64-bit signed integer.
 
 ### Remainder
     public ERational Remainder​(long v)
-Finds the remainder that results when this instance is divided by the value
- of a 64-bit signed integer.
+Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 64-bit signed integer.
 
 **Parameters:**
 
@@ -1886,7 +2050,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
  number, once converted to an integer by discarding its fractional
- part, is less than -32768 or greater than 32767.
+ part, is less than -32768 or greater tha 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -1912,7 +2076,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
- an exact integer, or is less than -32768 or greater than 32767.
+ an exact integer, or is less than -32768 or greater tha 32767.
 
 ### FromInt16
     public static ERational FromInt16​(short inputInt16)

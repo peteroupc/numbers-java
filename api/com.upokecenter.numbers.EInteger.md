@@ -29,11 +29,14 @@ Represents an arbitrary-precision integer. (The "E" stands for "extended",
 * `EInteger Abs()`<br>
  Returns the absolute value of this object's value.
 * `EInteger Add​(int intValue)`<br>
- Adds this object and another object.
+ Adds this arbitrary-precision integer and a 32-bit signed integer and
+ returns the result.
 * `EInteger Add​(long longValue)`<br>
- Not documented yet.
+ Adds this arbitrary-precision integer and a 64-bit signed integer and
+ returns the result.
 * `EInteger Add​(EInteger bigintAugend)`<br>
- Adds this object and another object.
+ Adds this arbitrary-precision integer and another arbitrary-precision
+ integer and returns the result.
 * `EInteger And​(EInteger other)`<br>
  Does an AND operation between this arbitrary-precision integer and another
  one.
@@ -69,19 +72,26 @@ Renamed to ToInt64Unchecked.
 * `EInteger Decrement()`<br>
  Returns one subtracted from this arbitrary-precision integer.
 * `EInteger Divide​(int intValue)`<br>
- Divides this instance by the value of an arbitrary-precision integer.
+ Divides this arbitrary-precision integer by a 32-bit signed integer and
+ returns the result.
 * `EInteger Divide​(long longValue)`<br>
- Not documented yet.
+ Divides this arbitrary-precision integer by a 64-bit signed integer and
+ returns the result.
 * `EInteger Divide​(EInteger bigintDivisor)`<br>
- Divides this instance by the value of an arbitrary-precision integer.
+ Divides this arbitrary-precision integer by another arbitrary-precision
+ integer and returns the result.
 * `EInteger[] DivRem​(int intDivisor)`<br>
- Divides this object by a 32-bit signed integer and returns the quotient and
- remainder.
+ Divides this arbitrary-precision integer by a 32-bit signed integer and
+ returns a two-item array containing the result of the division and
+ the remainder, in that order.
 * `EInteger[] DivRem​(long intDivisor)`<br>
- Not documented yet.
+ Divides this arbitrary-precision integer by a 64-bit signed integer and
+ returns a two-item array containing the result of the division and the
+ remainder, in that order.
 * `EInteger[] DivRem​(EInteger divisor)`<br>
- Divides this object by another arbitrary-precision integer and returns the
- quotient and remainder.
+ Divides this arbitrary-precision integer by another arbitrary-precision
+ integer and returns a two-item array containing the result of the
+ division and the remainder, in that order.
 * `boolean equals​(java.lang.Object obj)`<br>
  Determines whether this object and another object are equal and have the
  same type.
@@ -102,6 +112,10 @@ Renamed to ToInt64Unchecked.
  Converts a 32-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt64​(long longerValue)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision integer.
+* `static EInteger FromRadixString​(byte[] bytes,
+               int radix)`<br>
+ Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+ integer in a given radix.
 * `static EInteger FromRadixString​(char[] cs,
                int radix) char`<br>
  Converts a sequence of char s to an arbitrary-precision integer in a
@@ -109,6 +123,12 @@ Renamed to ToInt64Unchecked.
 * `static EInteger FromRadixString​(java.lang.String str,
                int radix)`<br>
  Converts a string to an arbitrary-precision integer in a given radix.
+* `static EInteger FromRadixSubstring​(byte[] bytes,
+                  int radix,
+                  int index,
+                  int endIndex)`<br>
+ Converts a portion of a sequence of bytes (interpreted as text) to an
+ arbitrary-precision integer in a given radix.
 * `static EInteger FromRadixSubstring​(char[] cs,
                   int radix,
                   int index,
@@ -121,10 +141,18 @@ Renamed to ToInt64Unchecked.
                   int endIndex)`<br>
  Converts a portion of a string to an arbitrary-precision integer in a given
  radix.
+* `static EInteger FromString​(byte[] bytes)`<br>
+ Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+ integer.
 * `static EInteger FromString​(char[] cs) char`<br>
  Converts a sequence of char s to an arbitrary-precision integer.
 * `static EInteger FromString​(java.lang.String str)`<br>
  Converts a string to an arbitrary-precision integer.
+* `static EInteger FromSubstring​(byte[] bytes,
+             int index,
+             int endIndex)`<br>
+ Converts a portion of a sequence of bytes (interpreted as text) to an
+ arbitrary-precision integer.
 * `static EInteger FromSubstring​(char[] cs,
              int index,
              int endIndex) char`<br>
@@ -231,13 +259,14 @@ This method may overflow.
  Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
 * `EInteger Multiply​(int intValue)`<br>
- Multiplies this instance by the value of an arbitrary-precision integer
-  object.
+ Multiplies this arbitrary-precision integer by a 32-bit signed integer and
+  returns the result.
 * `EInteger Multiply​(long longValue)`<br>
- Not documented yet.
+ Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+ returns the result.
 * `EInteger Multiply​(EInteger bigintMult)`<br>
- Multiplies this instance by the value of an arbitrary-precision integer
- object.
+ Multiplies this arbitrary-precision integer by another arbitrary-precision
+ integer and returns the result.
 * `EInteger Negate()`<br>
  Gets the value of this object with the sign reversed.
 * `EInteger Not()`<br>
@@ -257,13 +286,14 @@ This method may overflow.
  Raises an arbitrary-precision integer to a power, which is given as another
  arbitrary-precision integer.
 * `EInteger Remainder​(int intValue)`<br>
- Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision integer.
+ Returns the remainder that would result when this arbitrary-precision
+ integer is divided by a 32-bit signed integer.
 * `EInteger Remainder​(long longValue)`<br>
- Not documented yet.
+ Returns the remainder that would result when this arbitrary-precision
+ integer is divided by a 64-bit signed integer.
 * `EInteger Remainder​(EInteger divisor)`<br>
- Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision integer.
+ Returns the remainder that would result when this arbitrary-precision
+ integer is divided by another arbitrary-precision integer.
 * `EInteger ShiftLeft​(int numberBits)`<br>
  Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits.
@@ -281,13 +311,14 @@ This method may overflow.
 * `EInteger[] SqrtRem()`<br>
  Calculates the square root and the remainder.
 * `EInteger Subtract​(int intValue)`<br>
- Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.
+ Subtracts a 32-bit signed integer from this arbitrary-precision integer and
+ returns the result.
 * `EInteger Subtract​(long longValue)`<br>
- Not documented yet.
+ Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+ returns the result.
 * `EInteger Subtract​(EInteger subtrahend)`<br>
  Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.
+ integer and returns the result.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255).
@@ -527,6 +558,64 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 
 * <code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.
 
+### FromSubstring
+    public static EInteger FromSubstring​(char[] cs, int index, int endIndex)
+Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+ integer.
+
+**Parameters:**
+
+* <code>cs</code> - A sequence of <code>char</code> s, the desired portion of which
+ describes an integer in base-10 (decimal) form. The desired portion
+ of the sequence of <code>char</code> s must contain only basic digits 0
+ to 9 (U+0030 to U+0039), except that it may start with a minus sign
+  ("-", U+002D) to indicate a negative number. The desired portion is
+ not allowed to contain white space characters, including spaces. The
+ desired portion may start with any number of zeros.
+
+* <code>index</code> - The index of the sequence of <code>char</code> s that starts the
+ desired portion.
+
+* <code>endIndex</code> - The index of the sequence of <code>char</code> s that ends the
+ desired portion. The length will be index + endIndex - 1.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence of <code>char</code> s portion.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
+ endIndex</code> is less than 0, or either is greater than the sequence's
+ length, or <code>endIndex</code> is less than <code>index</code>.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
+
+### FromString
+    public static EInteger FromString​(char[] cs)
+Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
+
+**Parameters:**
+
+* <code>cs</code> - A sequence of <code>char</code> s describing an integer in base-10
+ (decimal) form. The sequence must contain only basic digits 0 to 9
+  (U+0030 to U+0039), except that it may start with a minus sign ("-",
+ U+002D) to indicate a negative number. The sequence is not allowed
+ to contain white space characters, including spaces. The sequence
+ may start with any number of zeros.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence of <code>char</code> s.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>cs</code> is in an invalid format.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
+
 ### FromRadixString
     public static EInteger FromRadixString​(char[] cs, int radix)
 Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
@@ -596,29 +685,145 @@ Converts a portion of a sequence of <code>char</code> s to an arbitrary-precisio
 
 * <code>java.lang.NumberFormatException</code> - The portion is empty or in an invalid format.
 
-### FromString
-    public static EInteger FromString​(char[] cs)
-Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
+### FromSubstring
+    public static EInteger FromSubstring​(byte[] bytes, int index, int endIndex)
+Converts a portion of a sequence of bytes (interpreted as text) to an
+ arbitrary-precision integer. Each byte in the sequence has to be a
+ character in the Basic Latin range (0x00 to 0x7f or U+0000 to
+ U+007F) of the Unicode Standard.
 
 **Parameters:**
 
-* <code>cs</code> - A sequence of <code>char</code> s describing an integer in base-10
- (decimal) form. The sequence must contain only basic digits 0 to 9
-  (U+0030 to U+0039), except that it may start with a minus sign ("-",
- U+002D) to indicate a negative number. The sequence is not allowed
- to contain white space characters, including spaces. The sequence
- may start with any number of zeros.
+* <code>bytes</code> - A sequence of bytes (interpreted as text), the desired portion
+ of which describes an integer in base-10 (decimal) form. The desired
+ portion of the sequence of bytes (interpreted as text) must contain
+ only basic digits 0 to 9 (U+0030 to U+0039), except that it may
+  start with a minus sign ("-", U+002D) to indicate a negative number.
+ The desired portion is not allowed to contain white space
+ characters, including spaces. The desired portion may start with any
+ number of zeros.
+
+* <code>index</code> - The index of the sequence of bytes (interpreted as text) that
+ starts the desired portion.
+
+* <code>endIndex</code> - The index of the sequence of bytes (interpreted as text)
+ that ends the desired portion. The length will be index + endIndex -
+ 1.
 
 **Returns:**
 
 * An arbitrary-precision integer with the same value as given in the
- sequence of <code>char</code> s.
+ sequence of bytes (interpreted as text) portion.
 
 **Throws:**
 
-* <code>java.lang.NumberFormatException</code> - The parameter <code>cs</code> is in an invalid format.
+* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
+ endIndex</code> is less than 0, or either is greater than the sequence's
+ length, or <code>endIndex</code> is less than <code>index</code>.
 
-* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+### FromString
+    public static EInteger FromString​(byte[] bytes)
+Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+ integer. Each byte in the sequence has to be a code point in the
+ Basic Latin range (0x00 to 0x7f or U+0000 to U+007F) of the Unicode
+ Standard.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes describing an integer in base-10 (decimal)
+ form. The sequence must contain only basic digits 0 to 9 (U+0030 to
+  U+0039), except that it may start with a minus sign ("-", U+002D) to
+ indicate a negative number. The sequence is not allowed to contain
+ white space characters, including spaces. The sequence may start
+ with any number of zeros.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence of bytes.
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is in an invalid format.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+### FromRadixString
+    public static EInteger FromRadixString​(byte[] bytes, int radix)
+Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+ integer in a given radix. Each byte in the sequence has to be a
+ character in the Basic Latin range (0x00 to 0x7f or U+0000 to
+ U+007F) of the Unicode Standard.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes (interpreted as text) described by the
+ FromRadixSubstring method.
+
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
+ bytes can use the basic digits 0 to 9 (U+0030 to U+0039) and then
+ the basic upper-case letters A to Z (U+0041 to U+005A). For example,
+ 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a basic
+ upper-case letter A to Z is allowed in the sequence of bytes, the
+ corresponding basic lower-case letter (U+0061 to U+007a) is allowed
+ instead.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as the given
+ sequence of bytes.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The sequence of bytes (interpreted as text) is empty
+ or in an invalid format.
+
+### FromRadixSubstring
+    public static EInteger FromRadixSubstring​(byte[] bytes, int radix, int index, int endIndex)
+Converts a portion of a sequence of bytes (interpreted as text) to an
+ arbitrary-precision integer in a given radix. Each byte in the
+ sequence has to be a character in the Basic Latin range (0x00 to
+ 0x7f or U+0000 to U+007F) of the Unicode Standard.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes (interpreted as text). The desired portion
+ of the sequence of bytes (interpreted as text) must contain only
+ characters allowed by the given radix, except that it may start with
+  a minus sign ("-", U+002D) to indicate a negative number. The
+ desired portion is not allowed to contain white space characters,
+ including spaces. The desired portion may start with any number of
+ zeros.
+
+* <code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
+ bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030
+ to U+0039) and then the basic upper-case letters A to Z (U+0041 to
+ U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix
+ 16. Where a basic upper-case letter A to Z is allowed in the
+ sequence of bytes (interpreted as text), the corresponding basic
+ lower-case letter (U+0061 to U+007a) is allowed instead.
+
+* <code>index</code> - The index of the sequence of bytes (interpreted as text) that
+ starts the desired portion.
+
+* <code>endIndex</code> - The index of the sequence of bytes (interpreted as text)
+ that ends the desired portion. The length will be index + endIndex -
+ 1.
+
+**Returns:**
+
+* An arbitrary-precision integer with the same value as given in the
+ sequence's portion.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion is empty or in an invalid format.
 
 ### FromString
     public static EInteger FromString​(java.lang.String str)
@@ -643,40 +848,6 @@ Converts a string to an arbitrary-precision integer.
 * <code>java.lang.NumberFormatException</code> - The parameter <code>str</code> is in an invalid format.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
-
-### FromSubstring
-    public static EInteger FromSubstring​(char[] cs, int index, int endIndex)
-Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
- integer.
-
-**Parameters:**
-
-* <code>cs</code> - A sequence of <code>char</code> s, the desired portion of which
- describes an integer in base-10 (decimal) form. The desired portion
- of the sequence of <code>char</code> s must contain only basic digits 0
- to 9 (U+0030 to U+0039), except that it may start with a minus sign
-  ("-", U+002D) to indicate a negative number. The desired portion is
- not allowed to contain white space characters, including spaces. The
- desired portion may start with any number of zeros.
-
-* <code>index</code> - The index of the sequence of <code>char</code> s that starts the
- desired portion.
-
-* <code>endIndex</code> - The index of the sequence of <code>char</code> s that ends the
- desired portion. The length will be index + endIndex - 1.
-
-**Returns:**
-
-* An arbitrary-precision integer with the same value as given in the
- sequence of <code>char</code> s portion.
-
-**Throws:**
-
-* <code>java.lang.IllegalArgumentException</code> - The parameter <code>index</code> is less than 0, <code>
- endIndex</code> is less than 0, or either is greater than the sequence's
- length, or <code>endIndex</code> is less than <code>index</code>.
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.
 
 ### FromSubstring
     public static EInteger FromSubstring​(java.lang.String str, int index, int endIndex)
@@ -720,7 +891,8 @@ Returns the absolute value of this object's value.
 
 ### Add
     public EInteger Add​(EInteger bigintAugend)
-Adds this object and another object.
+Adds this arbitrary-precision integer and another arbitrary-precision
+ integer and returns the result.
 
 **Parameters:**
 
@@ -888,7 +1060,8 @@ Of two arbitrary-precision integers, returns the one with the smaller
 
 ### Add
     public EInteger Add​(int intValue)
-Adds this object and another object.
+Adds this arbitrary-precision integer and a 32-bit signed integer and
+ returns the result.
 
 **Parameters:**
 
@@ -900,8 +1073,8 @@ Adds this object and another object.
 
 ### Subtract
     public EInteger Subtract​(int intValue)
-Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.
+Subtracts a 32-bit signed integer from this arbitrary-precision integer and
+ returns the result.
 
 **Parameters:**
 
@@ -913,8 +1086,8 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 ### Multiply
     public EInteger Multiply​(int intValue)
-Multiplies this instance by the value of an arbitrary-precision integer
-  object.<p> </p><pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> .
+Multiplies this arbitrary-precision integer by a 32-bit signed integer and
+  returns the result.<p> </p><pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> .
 
 **Parameters:**
 
@@ -926,11 +1099,13 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 ### Divide
     public EInteger Divide​(int intValue)
-Divides this instance by the value of an arbitrary-precision integer. The
- result is rounded down (the fractional part is discarded). Except if
- the result is 0, it will be negative if this object is positive and
- the other is negative, or vice versa, and will be positive if both
- are positive or both are negative.
+Divides this arbitrary-precision integer by a 32-bit signed integer and
+ returns the result. The result of the division is rounded down (the
+ fractional part is discarded). Except if the result of the division
+ is 0, it will be negative if this arbitrary-precision integer is
+ positive and the other 32-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are
+ negative.
 
 **Parameters:**
 
@@ -946,11 +1121,12 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 ### Remainder
     public EInteger Remainder​(int intValue)
-Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision integer. The remainder is the value that
- remains when the absolute value of this object is divided by the
- absolute value of the other object; the remainder has the same sign
- (positive or negative) as this object.
+Returns the remainder that would result when this arbitrary-precision
+ integer is divided by a 32-bit signed integer. The remainder is the
+ number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other 32-bit signed integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -981,11 +1157,13 @@ Compares an arbitrary-precision integer with this instance.
 
 ### Divide
     public EInteger Divide​(EInteger bigintDivisor)
-Divides this instance by the value of an arbitrary-precision integer. The
- result is rounded down (the fractional part is discarded). Except if
- the result is 0, it will be negative if this object is positive and
- the other is negative, or vice versa, and will be positive if both
- are positive or both are negative.
+Divides this arbitrary-precision integer by another arbitrary-precision
+ integer and returns the result. The result of the division is
+ rounded down (the fractional part is discarded). Except if the
+ result of the division is 0, it will be negative if this
+ arbitrary-precision integer is positive and the other
+ arbitrary-precision integer is negative, or vice versa, and will be
+ positive if both are positive or both are negative.
 
 **Parameters:**
 
@@ -1003,8 +1181,17 @@ Divides this instance by the value of an arbitrary-precision integer. The
 
 ### DivRem
     public EInteger[] DivRem​(int intDivisor)
-Divides this object by a 32-bit signed integer and returns the quotient and
- remainder.
+Divides this arbitrary-precision integer by a 32-bit signed integer and
+ returns a two-item array containing the result of the division and
+ the remainder, in that order. The result of the division is rounded
+ down (the fractional part is discarded). Except if the result of the
+ division is 0, it will be negative if this arbitrary-precision
+ integer is positive and the other 32-bit signed integer is negative,
+ or vice versa, and will be positive if both are positive or both are
+ negative. The remainder is the number that remains when the absolute
+ value of this arbitrary-precision integer is divided by the absolute
+ value of the other 32-bit signed integer; the remainder has the same
+ sign (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -1021,7 +1208,8 @@ Divides this object by a 32-bit signed integer and returns the quotient and
 
 ### Add
     public EInteger Add​(long longValue)
-Not documented yet.
+Adds this arbitrary-precision integer and a 64-bit signed integer and
+ returns the result.
 
 **Parameters:**
 
@@ -1033,7 +1221,8 @@ Not documented yet.
 
 ### Subtract
     public EInteger Subtract​(long longValue)
-Not documented yet.
+Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+ returns the result.
 
 **Parameters:**
 
@@ -1045,7 +1234,8 @@ Not documented yet.
 
 ### Multiply
     public EInteger Multiply​(long longValue)
-Not documented yet.
+Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+ returns the result.
 
 **Parameters:**
 
@@ -1057,7 +1247,12 @@ Not documented yet.
 
 ### Divide
     public EInteger Divide​(long longValue)
-Not documented yet.
+Divides this arbitrary-precision integer by a 64-bit signed integer and
+ returns the result. The result of the division is rounded down (the
+ fractional part is discarded). Except if the result of the division is
+ 0, it will be negative if this arbitrary-precision integer is positive
+ and the other 64-bit signed integer is negative, or vice versa, and
+ will be positive if both are positive or both are negative.
 
 **Parameters:**
 
@@ -1069,7 +1264,12 @@ Not documented yet.
 
 ### Remainder
     public EInteger Remainder​(long longValue)
-Not documented yet.
+Returns the remainder that would result when this arbitrary-precision
+ integer is divided by a 64-bit signed integer. The remainder is the
+ number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other 64-bit signed integer; the remainder has the same sign (positive
+ or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -1093,7 +1293,17 @@ Not documented yet.
 
 ### DivRem
     public EInteger[] DivRem​(long intDivisor)
-Not documented yet.
+Divides this arbitrary-precision integer by a 64-bit signed integer and
+ returns a two-item array containing the result of the division and the
+ remainder, in that order. The result of the division is rounded down
+ (the fractional part is discarded). Except if the result of the
+ division is 0, it will be negative if this arbitrary-precision integer
+ is positive and the other 64-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are negative.
+ The remainder is the number that remains when the absolute value of
+ this arbitrary-precision integer is divided by the absolute value of
+ the other 64-bit signed integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -1106,8 +1316,18 @@ Not documented yet.
 
 ### DivRem
     public EInteger[] DivRem​(EInteger divisor)
-Divides this object by another arbitrary-precision integer and returns the
- quotient and remainder.
+Divides this arbitrary-precision integer by another arbitrary-precision
+ integer and returns a two-item array containing the result of the
+ division and the remainder, in that order. The result of the
+ division is rounded down (the fractional part is discarded). Except
+ if the result of the division is 0, it will be negative if this
+ arbitrary-precision integer is positive and the other
+ arbitrary-precision integer is negative, or vice versa, and will be
+ positive if both are positive or both are negative. The remainder is
+ the number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other arbitrary-precision integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -1484,8 +1704,8 @@ Calculates the remainder when this arbitrary-precision integer raised to a
 
 ### Multiply
     public EInteger Multiply​(EInteger bigintMult)
-Multiplies this instance by the value of an arbitrary-precision integer
- object.
+Multiplies this arbitrary-precision integer by another arbitrary-precision
+ integer and returns the result.
 
 **Parameters:**
 
@@ -1558,11 +1778,12 @@ Raises an arbitrary-precision integer to a power, which is given as another
 
 ### Remainder
     public EInteger Remainder​(EInteger divisor)
-Finds the remainder that results when this instance is divided by the value
- of an arbitrary-precision integer. The remainder is the value that
- remains when the absolute value of this object is divided by the
- absolute value of the other object; the remainder has the same sign
- (positive or negative) as this object.
+Returns the remainder that would result when this arbitrary-precision
+ integer is divided by another arbitrary-precision integer. The
+ remainder is the number that remains when the absolute value of this
+ arbitrary-precision integer is divided by the absolute value of the
+ other arbitrary-precision integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -1899,7 +2120,7 @@ Calculates the square root and the remainder.
 ### Subtract
     public EInteger Subtract​(EInteger subtrahend)
 Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.
+ integer and returns the result.
 
 **Parameters:**
 
@@ -2067,7 +2288,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater than
+* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater tha
  32767.
 
 ### ToInt16Unchecked

@@ -97,15 +97,20 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
 * `EFloat Add​(int intValue)`<br>
- Adds this object and another number and returns the result.
+ Adds this arbitrary-precision binary floating-point number and a 32-bit
+ signed integer and returns the result.
 * `EFloat Add​(long longValue)`<br>
- Not documented yet.
+ Adds this arbitrary-precision binary floating-point number and a 64-bit
+ signed integer and returns the result.
 * `EFloat Add​(EFloat otherValue)`<br>
- Adds this object and another binary floating-point number and returns the
+ Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the
  result.
 * `EFloat Add​(EFloat otherValue,
    EContext ctx)`<br>
- Finds the sum of this object and another object.
+ Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the
+ result.
 * `int compareTo​(int intOther)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
@@ -185,16 +190,20 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Returns one subtracted from this arbitrary-precision binary floating-point
  number.
 * `EFloat Divide​(int intValue)`<br>
- Divides this instance by the value of a 32-bit signed integer.
+ Divides this arbitrary-precision binary floating-point number by a 32-bit
+ signed integer and returns the result.
 * `EFloat Divide​(long longValue)`<br>
- Divides this instance by the value of a 64-bit signed integer.
+ Divides this arbitrary-precision binary floating-point number by a 64-bit
+ signed integer and returns the result.
 * `EFloat Divide​(EFloat divisor)`<br>
- Divides this object by another binary floating-point number and returns the
+ Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
  result.
 * `EFloat Divide​(EFloat divisor,
       EContext ctx)`<br>
  Divides this arbitrary-precision binary floating-point number by another
- arbitrary-precision binary floating-point number.
+ arbitrary-precision binary floating-point number and returns the
+ result.
 * `EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)`<br>
  Deprecated.
 Renamed to DivRemNaturalScale.
@@ -289,6 +298,42 @@ Renamed to DivRemNaturalScale.
 * `static EFloat FromSingleBits​(int value)`<br>
  Creates a binary floating-point number from a 32-bit floating-point number
  encoded in the IEEE 754 binary32 format.
+* `static EFloat FromString​(byte[] bytes)`<br>
+ Creates a binary floating-point number from a sequence of bytes that
+ represents a number, using an unlimited precision context.
+* `static EFloat FromString​(byte[] bytes,
+          int offset,
+          int length)`<br>
+ Creates a binary floating-point number from a sequence of bytes that
+ represents a number.
+* `static EFloat FromString​(byte[] bytes,
+          int offset,
+          int length,
+          EContext ctx)`<br>
+ Creates a binary floating-point number from a sequence of bytes that
+ represents a number.
+* `static EFloat FromString​(byte[] bytes,
+          EContext ctx)`<br>
+ Creates a binary floating-point number from a sequence of bytes that
+ represents a number.
+* `static EFloat FromString​(char[] chars) char`<br>
+ Creates a binary floating-point number from a sequence of char s that
+ represents a number, using an unlimited precision context.
+* `static EFloat FromString​(char[] chars,
+          int offset,
+          int length) char`<br>
+ Creates a binary floating-point number from a sequence of char s that
+ represents a number.
+* `static EFloat FromString​(char[] chars,
+          int offset,
+          int length,
+          EContext ctx) char`<br>
+ Creates a binary floating-point number from a sequence of char s that
+ represents a number.
+* `static EFloat FromString​(char[] chars,
+          EContext ctx) char`<br>
+ Creates a binary floating-point number from a sequence of char s that
+ represents a number.
 * `static EFloat FromString​(java.lang.String str)`<br>
  Creates a binary floating-point number from a text string that represents a
  number, using an unlimited precision context.
@@ -412,15 +457,20 @@ Renamed to DivRemNaturalScale.
  Returns a number similar to this number but with the radix point moved to
  the right.
 * `EFloat Multiply​(int intValue)`<br>
- Multiplies this instance by the value of an arbitrary-precision integer
-  object.
+ Multiplies this arbitrary-precision binary floating-point number by a 32-bit
+ signed integer and returns the result.
 * `EFloat Multiply​(long longValue)`<br>
- Not documented yet.
+ Multiplies this arbitrary-precision binary floating-point number by a 64-bit
+ signed integer and returns the result.
 * `EFloat Multiply​(EFloat otherValue)`<br>
- Multiplies two binary floating-point numbers.
+ Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result.
 * `EFloat Multiply​(EFloat op,
         EContext ctx)`<br>
- Multiplies two binary floating-point numbers.
+ Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result.
 * `EFloat MultiplyAndAdd​(EFloat multiplicand,
               EFloat augend)`<br>
  Multiplies by one binary floating-point number, and then adds another binary
@@ -485,8 +535,9 @@ Renamed to DivRemNaturalScale.
  trailing zeros removed from its significand.
 * `EFloat Remainder​(EFloat divisor,
          EContext ctx)`<br>
- Finds the remainder that results when dividing two arbitrary-precision
- binary floating-point numbers.
+ Returns the remainder that would result when this arbitrary-precision binary
+ floating-point number is divided by another arbitrary-precision
+ binary floating-point number.
 * `EFloat RemainderNaturalScale​(EFloat divisor) "this" - (("this" /
   "divisor") * "divisor")`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
@@ -564,17 +615,20 @@ Renamed to RoundToIntegerNoRoundedFlag.
 Renamed to Sqrt.
  Renamed to Sqrt.
 * `EFloat Subtract​(int intValue)`<br>
- Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.
+ Subtracts a 32-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result.
 * `EFloat Subtract​(long longValue)`<br>
- Not documented yet.
+ Subtracts a 64-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result.
 * `EFloat Subtract​(EFloat otherValue)`<br>
  Subtracts an arbitrary-precision binary floating-point number from this
- instance and returns the result.
+ arbitrary-precision binary floating-point number and returns the
+ result.
 * `EFloat Subtract​(EFloat otherValue,
         EContext ctx)`<br>
  Subtracts an arbitrary-precision binary floating-point number from this
- instance.
+ arbitrary-precision binary floating-point number and returns the
+ result.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after converting it to an integer by discarding
@@ -1147,6 +1201,292 @@ Creates a binary floating-point number from a text string that represents a
  than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
+### FromString
+    public static EFloat FromString​(char[] chars, int offset, int length, EContext ctx)
+Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number. Note that if the sequence contains a negative
+ exponent, the resulting value might not be exact, in which case the
+ resulting binary floating-point number will be an approximation of
+ this decimal number's value. <p>The format of the sequence generally
+  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+  <li>One or more digits, with a single optional decimal point (".",
+ U+002E) before or after those digits or between two of them. These
+ digits may begin with any number of zeros.</li> <li>Optionally,
+  "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
+ one or more digits specifying the exponent (these digits may begin
+ with any number of zeros).</li></ul> <p>The sequence can also be
+  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN") followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN ("sNaN") followed by any number of digits
+ (these digits may begin with any number of zeros), all where the
+ letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p>
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+ floating-point number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ chars</code> (but not more than <code>chars</code> 's length).
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags
+ are in addition to the pre-existing flags). Can be null, in which
+ case the precision is unlimited. Note that providing a context is
+ often much faster than creating an EDecimal without a context then
+ calling ToEFloat on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary
+ floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion given of <code>chars</code> is not a
+ correctly formatted number sequence; or either <code>offset</code> or
+ <code>length</code> is less than 0 or greater than <code>chars</code> 's
+ length, or <code>chars</code> 's length minus <code>offset</code> is less than
+ <code>length</code>.
+
+### FromString
+    public static EFloat FromString​(char[] chars)
+Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number, using an unlimited precision context. For more
+ information, see the <code>FromString(string, int, int, EContext)</code>
+ method.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+ floating-point number.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary
+ floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion given of <code>chars</code> is not a
+ correctly formatted number sequence.
+
+### FromString
+    public static EFloat FromString​(char[] chars, EContext ctx)
+Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+ floating-point number.
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags
+ are in addition to the pre-existing flags). Can be null, in which
+ case the precision is unlimited. Note that providing a context is
+ often much faster than creating an EDecimal without a context then
+ calling ToEFloat on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary
+ floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+### FromString
+    public static EFloat FromString​(char[] chars, int offset, int length)
+Creates a binary floating-point number from a sequence of <code>char</code> s that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.
+
+**Parameters:**
+
+* <code>chars</code> - A sequence of <code>char</code> s to convert to a binary
+ floating-point number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>chars</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ chars</code> (but not more than <code>chars</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>chars</code> 's length, or <code>chars</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
+### FromString
+    public static EFloat FromString​(byte[] bytes, int offset, int length, EContext ctx)
+Creates a binary floating-point number from a sequence of bytes that
+ represents a number. Note that if the sequence contains a negative
+ exponent, the resulting value might not be exact, in which case the
+ resulting binary floating-point number will be an approximation of
+ this decimal number's value. <p>The format of the sequence generally
+  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+  <li>One or more digits, with a single optional decimal point (".",
+ U+002E) before or after those digits or between two of them. These
+ digits may begin with any number of zeros.</li> <li>Optionally,
+  "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
+ one or more digits specifying the exponent (these digits may begin
+ with any number of zeros).</li></ul> <p>The sequence can also be
+  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN") followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN ("sNaN") followed by any number of digits
+ (these digits may begin with any number of zeros), all where the
+ letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p>
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+ number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ bytes</code> (but not more than <code>bytes</code> 's length).
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags
+ are in addition to the pre-existing flags). Can be null, in which
+ case the precision is unlimited. Note that providing a context is
+ often much faster than creating an EDecimal without a context then
+ calling ToEFloat on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary
+ floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion given of <code>bytes</code> is not a
+ correctly formatted number sequence; or either <code>offset</code> or
+ <code>length</code> is less than 0 or greater than <code>bytes</code> 's
+ length, or <code>bytes</code> 's length minus <code>offset</code> is less than
+ <code>length</code>.
+
+### FromString
+    public static EFloat FromString​(byte[] bytes)
+Creates a binary floating-point number from a sequence of bytes that
+ represents a number, using an unlimited precision context. For more
+ information, see the <code>FromString(string, int, int, EContext)</code>
+ method.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+ number.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary
+ floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.NumberFormatException</code> - The portion given of <code>bytes</code> is not a
+ correctly formatted number sequence.
+
+### FromString
+    public static EFloat FromString​(byte[] bytes, EContext ctx)
+Creates a binary floating-point number from a sequence of bytes that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+ number.
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If HasFlags of the context is true,
+ will also store the flags resulting from the operation (the flags
+ are in addition to the pre-existing flags). Can be null, in which
+ case the precision is unlimited. Note that providing a context is
+ often much faster than creating an EDecimal without a context then
+ calling ToEFloat on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
+
+**Returns:**
+
+* The parsed number, converted to arbitrary-precision binary
+ floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+### FromString
+    public static EFloat FromString​(byte[] bytes, int offset, int length)
+Creates a binary floating-point number from a sequence of bytes that
+ represents a number. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes to convert to a binary floating-point
+ number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ bytes</code> (but not more than <code>bytes</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision binary floating-point number.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>bytes</code> 's length, or <code>bytes</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
 ### Max
     public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
 Gets the greater value between two binary floating-point numbers.
@@ -1395,7 +1735,10 @@ Finds the absolute value of this object (if it's negative, it becomes
 
 ### Add
     public EFloat Add​(int intValue)
-Adds this object and another number and returns the result.
+Adds this arbitrary-precision binary floating-point number and a 32-bit
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision binary floating-point
+ number's exponent and the other 32-bit signed integer's exponent.
 
 **Parameters:**
 
@@ -1407,8 +1750,11 @@ Adds this object and another number and returns the result.
 
 ### Subtract
     public EFloat Subtract​(int intValue)
-Subtracts an arbitrary-precision integer from this arbitrary-precision
- integer.
+Subtracts a 32-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision binary
+ floating-point number's exponent and the other 32-bit signed
+ integer's exponent.
 
 **Parameters:**
 
@@ -1420,8 +1766,10 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 ### Multiply
     public EFloat Multiply​(int intValue)
-Multiplies this instance by the value of an arbitrary-precision integer
-  object.<p> </p><pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> .
+Multiplies this arbitrary-precision binary floating-point number by a 32-bit
+ signed integer and returns the result. The exponent for the result
+ is this arbitrary-precision binary floating-point number's exponent
+  plus the other 32-bit signed integer's exponent.<p> </p><pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> .
 
 **Parameters:**
 
@@ -1433,11 +1781,9 @@ Multiplies this instance by the value of an arbitrary-precision integer
 
 ### Divide
     public EFloat Divide​(int intValue)
-Divides this instance by the value of a 32-bit signed integer. The result is
- rounded down (the fractional part is discarded). Except if the
- result is 0, it will be negative if this object is positive and the
- other is negative, or vice versa, and will be positive if both are
- positive or both are negative.
+Divides this arbitrary-precision binary floating-point number by a 32-bit
+ signed integer and returns the result. When possible, the result
+ will be exact.
 
 **Parameters:**
 
@@ -1453,7 +1799,10 @@ Divides this instance by the value of a 32-bit signed integer. The result is
 
 ### Add
     public EFloat Add​(long longValue)
-Not documented yet.
+Adds this arbitrary-precision binary floating-point number and a 64-bit
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision binary floating-point
+ number's exponent and the other 64-bit signed integer's exponent.
 
 **Parameters:**
 
@@ -1465,7 +1814,11 @@ Not documented yet.
 
 ### Subtract
     public EFloat Subtract​(long longValue)
-Not documented yet.
+Subtracts a 64-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision binary
+ floating-point number's exponent and the other 64-bit signed
+ integer's exponent.
 
 **Parameters:**
 
@@ -1473,11 +1826,14 @@ Not documented yet.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The difference of the two objects.
 
 ### Multiply
     public EFloat Multiply​(long longValue)
-Not documented yet.
+Multiplies this arbitrary-precision binary floating-point number by a 64-bit
+ signed integer and returns the result. The exponent for the result
+ is this arbitrary-precision binary floating-point number's exponent
+  plus the other 64-bit signed integer's exponent.<p> </p><pre>EInteger result = EInteger.FromString("5").Multiply(200L);</pre> .
 
 **Parameters:**
 
@@ -1485,15 +1841,13 @@ Not documented yet.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The product of the two numbers.
 
 ### Divide
     public EFloat Divide​(long longValue)
-Divides this instance by the value of a 64-bit signed integer. The result is
- rounded down (the fractional part is discarded). Except if the
- result is 0, it will be negative if this object is positive and the
- other is negative, or vice versa, and will be positive if both are
- positive or both are negative.
+Divides this arbitrary-precision binary floating-point number by a 64-bit
+ signed integer and returns the result. When possible, the result
+ will be exact.
 
 **Parameters:**
 
@@ -1509,8 +1863,11 @@ Divides this instance by the value of a 64-bit signed integer. The result is
 
 ### Add
     public EFloat Add​(EFloat otherValue)
-Adds this object and another binary floating-point number and returns the
- result.
+Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the
+ result. The exponent for the result is the lower of this
+ arbitrary-precision binary floating-point number's exponent and the
+ other arbitrary-precision binary floating-point number's exponent.
 
 **Parameters:**
 
@@ -1522,8 +1879,9 @@ Adds this object and another binary floating-point number and returns the
 
 ### Add
     public EFloat Add​(EFloat otherValue, EContext ctx)
-Finds the sum of this object and another object. The result's exponent is
- set to the lower of the exponents of the two operands.
+Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the
+ result.
 
 **Parameters:**
 
@@ -1844,7 +2202,8 @@ Returns a number with the same value as this one, but copying the sign
 
 ### Divide
     public EFloat Divide​(EFloat divisor)
-Divides this object by another binary floating-point number and returns the
+Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
  result. When possible, the result will be exact.
 
 **Parameters:**
@@ -1861,9 +2220,8 @@ Divides this object by another binary floating-point number and returns the
 ### Divide
     public EFloat Divide​(EFloat divisor, EContext ctx)
 Divides this arbitrary-precision binary floating-point number by another
- arbitrary-precision binary floating-point number. The preferred
- exponent for the result is this object's exponent minus the
- divisor's exponent.
+ arbitrary-precision binary floating-point number and returns the
+ result. When possible, the result will be exact.
 
 **Parameters:**
 
@@ -2543,8 +2901,11 @@ Returns a number similar to this number but with the radix point moved to
 
 ### Multiply
     public EFloat Multiply​(EFloat otherValue)
-Multiplies two binary floating-point numbers. The resulting exponent will be
- the sum of the exponents of the two binary floating-point numbers.
+Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result. The exponent for the result is this arbitrary-precision
+ binary floating-point number's exponent plus the other
+ arbitrary-precision binary floating-point number's exponent.
 
 **Parameters:**
 
@@ -2560,10 +2921,9 @@ Multiplies two binary floating-point numbers. The resulting exponent will be
 
 ### Multiply
     public EFloat Multiply​(EFloat op, EContext ctx)
-Multiplies two binary floating-point numbers. The resulting scale will be
- the sum of the scales of the two binary floating-point numbers. The
- result's sign is positive if both operands have the same sign, and
- negative if they have different signs.
+Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the
+ result.
 
 **Parameters:**
 
@@ -2992,11 +3352,9 @@ Returns an object with the same numerical value as this one but with
 
 ### Remainder
     public EFloat Remainder​(EFloat divisor, EContext ctx)
-Finds the remainder that results when dividing two arbitrary-precision
- binary floating-point numbers. The remainder is the value that
- remains when the absolute value of this object is divided by the
- absolute value of the other object; the remainder has the same sign
- (positive or negative) as this object's value.
+Returns the remainder that would result when this arbitrary-precision binary
+ floating-point number is divided by another arbitrary-precision
+ binary floating-point number.
 
 **Parameters:**
 
@@ -3523,7 +3881,10 @@ Renamed to Sqrt.
 ### Subtract
     public EFloat Subtract​(EFloat otherValue)
 Subtracts an arbitrary-precision binary floating-point number from this
- instance and returns the result.
+ arbitrary-precision binary floating-point number and returns the
+ result. The exponent for the result is the lower of this
+ arbitrary-precision binary floating-point number's exponent and the
+ other arbitrary-precision binary floating-point number's exponent.
 
 **Parameters:**
 
@@ -3536,7 +3897,8 @@ Subtracts an arbitrary-precision binary floating-point number from this
 ### Subtract
     public EFloat Subtract​(EFloat otherValue, EContext ctx)
 Subtracts an arbitrary-precision binary floating-point number from this
- instance.
+ arbitrary-precision binary floating-point number and returns the
+ result.
 
 **Parameters:**
 
@@ -3910,7 +4272,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
  number, once converted to an integer by discarding its fractional
- part, is less than -32768 or greater than 32767.
+ part, is less than -32768 or greater tha 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -3936,7 +4298,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
- an exact integer, or is less than -32768 or greater than 32767.
+ an exact integer, or is less than -32768 or greater tha 32767.
 
 ### FromInt16
     public static EFloat FromInt16​(short inputInt16)

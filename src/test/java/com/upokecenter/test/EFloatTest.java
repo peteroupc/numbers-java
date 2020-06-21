@@ -581,7 +581,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString(null);
+        EFloat.FromString((String)null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -592,7 +592,7 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(EFloat.Zero, EFloat.FromString("0"));
       Assert.assertEquals(EFloat.Zero, EFloat.FromString("0", null));
       try {
-        EFloat.FromString(null, null);
+        EFloat.FromString((String)null, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -610,7 +610,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString(null, 0, 1);
+        EFloat.FromString((String)null, 0, 1);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -664,7 +664,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EFloat.FromString(null, 0, 1, null);
+        EFloat.FromString((String)null, 0, 1, null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty

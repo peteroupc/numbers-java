@@ -1203,14 +1203,14 @@ at: http://peteroupc.github.io/
       }
       EContext ctxCopy = ctx.WithBlankFlags();
       T one = this.helper.ValueOf(1);
-      ERounding intermedRounding = ERounding.HalfEven;
+      // ERounding intermedRounding = ERounding.HalfEven;
       if (sign == 0) {
         return this.RoundToPrecision(
               this.helper.CreateNewWithFlags(EInteger.FromInt32(0), EInteger.FromInt32(0), 0),
               ctxCopy);
       } else {
         int cmpOne = this.compareTo(thisValue, one);
-        EContext ctxdiv = null;
+        // EContext ctxdiv = null;
         if (cmpOne == 0) {
           // ln(2)
           thisValue = this.RoundToPrecision(

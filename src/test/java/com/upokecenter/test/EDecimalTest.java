@@ -6283,6 +6283,15 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
+        EDecimal.FromString(
+          ("xyzxyz" + tstr).toCharArray(),
+          6,
+          tstr.length());
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
         EFloat.FromString("xyzxyz" + tstr, 6, tstr.length());
       } catch (Exception ex) {
         Assert.fail(ex.toString());
@@ -6497,6 +6506,18 @@ import com.upokecenter.numbers.*;
       TestStringContextCore(econtexts, true);
     }
 
+    public static byte[] StringToBytes(String str) {
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      byte[] bytes = new byte[str.length()];
+      for (int i = 0; i < str.length(); ++i) {
+        byte b = (byte)(str.charAt(i) >= 0x80 ? (byte)'?' : (byte)str.charAt(i));
+        bytes[i] = b;
+      }
+      return bytes;
+    }
+
     public static void TestStringContextCore(EContext[] econtexts, boolean
       efloat) {
       if (econtexts == null) {
@@ -6575,6 +6596,18 @@ import com.upokecenter.numbers.*;
           sbs = RandomObjects.RandomDecimalString(rand);
         }
         EDecimal ed = EDecimal.FromString("xyzxyz" + sbs, 6, sbs.length());
+        if (rand.UniformInt(100) < 10) {
+          EDecimal ed2 = EDecimal.FromString(("xyzxyz" + sbs).toCharArray(),
+  6,
+  sbs.length());
+          Assert.assertEquals(ed, ed2);
+        }
+        if (rand.UniformInt(100) < 10) {
+          EDecimal ed2 = EDecimal.FromString(StringToBytes("xyzxyz" + sbs),
+  6,
+  sbs.length());
+          Assert.assertEquals(ed, ed2);
+        }
         for (int j = 0; j < econtexts.length; ++j) {
           ERounding rounding = roundings[rand.UniformInt(roundings.length)];
           EContext ec = econtexts[j];

@@ -10,6 +10,32 @@ at: http://peteroupc.github.io/
   final class Extras {
 private Extras() {
 }
+    public static byte[] CharsConcat(
+      byte[] c1,
+      int offset1,
+      int length1,
+      byte[] c2,
+      int offset2,
+      int length2) {
+      byte[] chars = new byte[length1 + length2];
+      System.arraycopy(c1, offset1, chars, 0, length1);
+      System.arraycopy(c2, offset2, chars, length1, length2);
+      return chars;
+    }
+
+    public static char[] CharsConcat(
+      char[] c1,
+      int offset1,
+      int length1,
+      char[] c2,
+      int offset2,
+      int length2) {
+      char[] chars = new char[length1 + length2];
+      System.arraycopy(c1, offset1, chars, 0, length1);
+      System.arraycopy(c2, offset2, chars, length1, length2);
+      return chars;
+    }
+
     public static int[] DoubleToIntegers(double dbl) {
       long value = Double.doubleToRawLongBits(dbl);
       int[] ret = new int[2];

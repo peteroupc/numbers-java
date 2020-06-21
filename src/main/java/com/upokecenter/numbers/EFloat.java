@@ -7,9 +7,6 @@ If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
  */
 
-// TODO: In next major version or earlier, consider adding byte[] equivalent
-// of FromString here and in EDecimal
-
   /**
    * Represents an arbitrary-precision binary floating-point number. (The "E"
    *  stands for "extended", meaning that instances of this class can be
@@ -665,109 +662,7 @@ at: http://peteroupc.github.io/
           EInteger.FromInt64(floatExponent - 150));
     }
 
-    /**
-     * Creates a binary floating-point number from a text string that represents a
-     * number. Note that if the string contains a negative exponent, the
-     * resulting value might not be exact, in which case the resulting
-     * binary floating-point number will be an approximation of this
-     * decimal number's value. <p>The format of the string generally
-     *  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
-     *  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
-     *  <li>One or more digits, with a single optional decimal point (".",
-     * U+002E) before or after those digits or between two of them. These
-     * digits may begin with any number of zeros.</li> <li>Optionally,
-     *  "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
-     * one or more digits specifying the exponent (these digits may begin
-     * with any number of zeros).</li></ul> <p>The string can also be
-     *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN") followed
-     * by any number of digits (these digits may begin with any number of
-     *  zeros), or signaling NaN ("sNaN") followed by any number of digits
-     * (these digits may begin with any number of zeros), all where the
-     * letters can be any combination of basic upper-case and/or basic
-     * lower-case letters.</p> <p>All characters mentioned above are the
-     * corresponding characters in the Basic Latin range. In particular,
-     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
-     * string is not allowed to contain white space characters, including
-     * spaces.</p>
-     * @param str The parameter {@code str} is a text string.
-     * @param offset An index starting at 0 showing where the desired portion of
-     * {@code str} begins.
-     * @param length The length, in code units, of the desired portion of {@code
-     * str} (but not more than {@code str} 's length).
-     * @param ctx An arithmetic context to control the precision, rounding, and
-     * exponent range of the result. If HasFlags of the context is true,
-     * will also store the flags resulting from the operation (the flags
-     * are in addition to the pre-existing flags). Can be null, in which
-     * case the precision is unlimited. Note that providing a context is
-     * often much faster than creating an EDecimal without a context then
-     * calling ToEFloat on that EDecimal, especially if the context
-     * specifies a precision limit and exponent range.
-     * @return The parsed number, converted to arbitrary-precision binary
-     * floating-point number.
-     * @throws NullPointerException The parameter {@code str} is null.
-     * @throws NumberFormatException The portion given of {@code str} is not a correctly
-     * formatted number string; or either {@code offset} or {@code length}
-     * is less than 0 or greater than {@code str} 's length, or {@code str}
-     * 's length minus {@code offset} is less than {@code length}.
-     */
-    public static EFloat FromString(
-      String str,
-      int offset,
-      int length,
-      EContext ctx) {
-      if (str == null) {
-        throw new NullPointerException("str");
-      }
-      if (offset < 0) {
-        throw new NumberFormatException("offset(" + offset + ") is not greater" +
-          "\u0020or equal to 0");
-      }
-      if (offset > str.length()) {
-        throw new NumberFormatException("offset(" + offset + ") is not less or" +
-          "\u0020equal to " + str.length());
-      }
-      if (length < 0) {
-        throw new NumberFormatException("length(" + length + ") is not greater or" +
-          "\u0020equal to 0");
-      }
-      if (length > str.length()) {
-        throw new NumberFormatException("length(" + length + ") is not less or" +
-          "\u0020equal to " + str.length());
-      }
-      if (str.length() - offset < length) {
-        throw new NumberFormatException("str's length minus " + offset + "(" +
-          (str.length() - offset) + ") is not greater or equal to " + length);
-      }
-      EContext b64 = EContext.Binary64;
-      if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
-        !ctx.isSimplified() && ctx.getEMax().compareTo(b64.getEMax()) <= 0 &&
-        ctx.getEMin().compareTo(b64.getEMin()) >= 0 &&
-        ctx.getPrecision().compareTo(b64.getPrecision()) <= 0) {
-        int tmpoffset = offset;
-        int endpos = offset + length;
-        if (length == 0) {
-          throw new NumberFormatException();
-        }
-        if (str.charAt(tmpoffset) == '-' || str.charAt(tmpoffset) == '+') {
-          ++tmpoffset;
-        }
-        if (tmpoffset < endpos && ((str.charAt(tmpoffset) >= '0' &&
-              str.charAt(tmpoffset) <= '9') || str.charAt(tmpoffset) == '.')) {
-          EFloat ef = DoubleEFloatFromString(str, offset, length, ctx);
-          if (ef != null) {
-            return ef;
-          }
-        }
-      }
-      return EDecimal.FromString(
-          str,
-          offset,
-          length,
-          EContext.Unlimited.WithSimplified(ctx != null && ctx.isSimplified()))
-        .ToEFloat(ctx);
-    }
-
-    private static EFloat SignalUnderflow(EContext ec, boolean negative, boolean
+    static EFloat SignalUnderflow(EContext ec, boolean negative, boolean
       zeroSignificand) {
       EInteger eTiny = ec.getEMin().Subtract(ec.getPrecision().Subtract(1));
       eTiny = eTiny.Subtract(2); // subtract 2 from proper eTiny to
@@ -781,7 +676,7 @@ at: http://peteroupc.github.io/
       return ret.RoundToPrecision(ec);
     }
 
-    private static EFloat SignalOverflow(EContext ec, boolean negative, boolean
+    static EFloat SignalOverflow(EContext ec, boolean negative, boolean
       zeroSignificand) {
       if (zeroSignificand) {
         EFloat ret = EFloat.Create(EInteger.FromInt32(0), ec.getEMax());
@@ -1064,21 +959,109 @@ at: http://peteroupc.github.io/
       if (negative) {
         mant = mant.Negate();
       }
-      // System.out.println("c " + ((mant.signum()<0 && negative) ||
-      // (mant.signum() >= 0 && !negative)));
       return EDecimal.Create(mant, exp).ToEFloat(ctx);
-      /* EInteger absexp = exp.Abs();
-      ef1 = EFloat.FromEInteger(mant);
-      ef2 = EFloat.FromEInteger(NumberUtility.FindPowerOfTenFromBig(absexp));
-      System.out.println("c ef1=" + ef1 + " ef2=" + ef2);
-      if (exp.signum() < 0) {
-        return ef1.Divide(ef2, ctx);
-      } else {
-        System.out.println("mult=" + ef1.Multiply(ef2, null));
-        System.out.println("mult=" + ef1.Multiply(ef2, ctx));
-        return ef1.Multiply(ef2, ctx);
+    }
+
+    /**
+     * Creates a binary floating-point number from a text string that represents a
+     * number. Note that if the string contains a negative exponent, the
+     * resulting value might not be exact, in which case the resulting
+     * binary floating-point number will be an approximation of this
+     * decimal number's value. <p>The format of the string generally
+     *  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+     *  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+     *  <li>One or more digits, with a single optional decimal point (".",
+     * U+002E) before or after those digits or between two of them. These
+     * digits may begin with any number of zeros.</li> <li>Optionally,
+     *  "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
+     * one or more digits specifying the exponent (these digits may begin
+     * with any number of zeros).</li></ul> <p>The string can also be
+     *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN") followed
+     * by any number of digits (these digits may begin with any number of
+     *  zeros), or signaling NaN ("sNaN") followed by any number of digits
+     * (these digits may begin with any number of zeros), all where the
+     * letters can be any combination of basic upper-case and/or basic
+     * lower-case letters.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular,
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+     * string is not allowed to contain white space characters, including
+     * spaces.</p>
+     * @param str The parameter {@code str} is a text string.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * str} (but not more than {@code str} 's length).
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags
+     * are in addition to the pre-existing flags). Can be null, in which
+     * case the precision is unlimited. Note that providing a context is
+     * often much faster than creating an EDecimal without a context then
+     * calling ToEFloat on that EDecimal, especially if the context
+     * specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws NumberFormatException The portion given of {@code str} is not a correctly
+     * formatted number string; or either {@code offset} or {@code length}
+     * is less than 0 or greater than {@code str} 's length, or {@code str}
+     * 's length minus {@code offset} is less than {@code length}.
+     */
+    public static EFloat FromString(
+      String str,
+      int offset,
+      int length,
+      EContext ctx) {
+      if (str == null) {
+        throw new NullPointerException("str");
       }
-      */
+      if (offset < 0) {
+        throw new NumberFormatException("offset(" + offset + ") is not greater" +
+          "\u0020or equal to 0");
+      }
+      if (offset > str.length()) {
+        throw new NumberFormatException("offset(" + offset + ") is not less or" +
+          "\u0020equal to " + str.length());
+      }
+      if (length < 0) {
+        throw new NumberFormatException("length(" + length + ") is not greater or" +
+          "\u0020equal to 0");
+      }
+      if (length > str.length()) {
+        throw new NumberFormatException("length(" + length + ") is not less or" +
+          "\u0020equal to " + str.length());
+      }
+      if (str.length() - offset < length) {
+        throw new NumberFormatException("str's length minus " + offset + "(" +
+          (str.length() - offset) + ") is not greater or equal to " + length);
+      }
+      EContext b64 = EContext.Binary64;
+      if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
+        !ctx.isSimplified() && ctx.getEMax().compareTo(b64.getEMax()) <= 0 &&
+        ctx.getEMin().compareTo(b64.getEMin()) >= 0 &&
+        ctx.getPrecision().compareTo(b64.getPrecision()) <= 0) {
+        int tmpoffset = offset;
+        int endpos = offset + length;
+        if (length == 0) {
+          throw new NumberFormatException();
+        }
+        if (str.charAt(tmpoffset) == '-' || str.charAt(tmpoffset) == '+') {
+          ++tmpoffset;
+        }
+        if (tmpoffset < endpos && ((str.charAt(tmpoffset) >= '0' &&
+              str.charAt(tmpoffset) <= '9') || str.charAt(tmpoffset) == '.')) {
+          EFloat ef = DoubleEFloatFromString(str, offset, length, ctx);
+          if (ef != null) {
+            return ef;
+          }
+        }
+      }
+      return EDecimal.FromString(
+          str,
+          offset,
+          length,
+          EContext.Unlimited.WithSimplified(ctx != null && ctx.isSimplified()))
+        .ToEFloat(ctx);
     }
 
     /**
@@ -1137,6 +1120,240 @@ at: http://peteroupc.github.io/
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of <code>char</code> s that
+     * represents a number. Note that if the sequence contains a negative
+     * exponent, the resulting value might not be exact, in which case the
+     * resulting binary floating-point number will be an approximation of
+     * this decimal number's value. <p>The format of the sequence generally
+     *  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+     *  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+     *  <li>One or more digits, with a single optional decimal point (".",
+     * U+002E) before or after those digits or between two of them. These
+     * digits may begin with any number of zeros.</li> <li>Optionally,
+     *  "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
+     * one or more digits specifying the exponent (these digits may begin
+     * with any number of zeros).</li></ul> <p>The sequence can also be
+     *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN") followed
+     * by any number of digits (these digits may begin with any number of
+     *  zeros), or signaling NaN ("sNaN") followed by any number of digits
+     * (these digits may begin with any number of zeros), all where the
+     * letters can be any combination of basic upper-case and/or basic
+     * lower-case letters.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular,
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+     * sequence is not allowed to contain white space characters, including
+     * spaces.</p>
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code chars} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * chars} (but not more than {@code chars} 's length).
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags
+     * are in addition to the pre-existing flags). Can be null, in which
+     * case the precision is unlimited. Note that providing a context is
+     * often much faster than creating an EDecimal without a context then
+     * calling ToEFloat on that EDecimal, especially if the context
+     * specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws NumberFormatException The portion given of {@code chars} is not a
+     * correctly formatted number sequence; or either {@code offset} or
+     * {@code length} is less than 0 or greater than {@code chars} 's
+     * length, or {@code chars} 's length minus {@code offset} is less than
+     * {@code length}.
+     */
+    public static EFloat FromString(
+      char[] chars,
+      int offset,
+      int length,
+      EContext ctx) {
+      return EFloatCharArrayString.FromString(chars, offset, length, ctx);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of <code>char</code> s that
+     * represents a number, using an unlimited precision context. For more
+     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * method.
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws NumberFormatException The portion given of {@code chars} is not a
+     * correctly formatted number sequence.
+     */
+    public static EFloat FromString(char[] chars) {
+      return FromString(chars, 0, chars == null ? 0 : chars.length, null);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of <code>char</code> s that
+     * represents a number. For more information, see the
+     * <code>FromString(string, int, int, EContext)</code> method.
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags
+     * are in addition to the pre-existing flags). Can be null, in which
+     * case the precision is unlimited. Note that providing a context is
+     * often much faster than creating an EDecimal without a context then
+     * calling ToEFloat on that EDecimal, especially if the context
+     * specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     */
+    public static EFloat FromString(char[] chars, EContext ctx) {
+      return FromString(chars, 0, chars == null ? 0 : chars.length, ctx);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of <code>char</code> s that
+     * represents a number. For more information, see the
+     * <code>FromString(string, int, int, EContext)</code> method.
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code chars} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * chars} (but not more than {@code chars} 's length).
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws T:IllegalArgumentException Either {@code offset} or {@code length}
+     * is less than 0 or greater than {@code chars} 's length, or {@code
+     * chars} 's length minus {@code offset} is less than {@code length}.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code chars} 's length, or {@code chars} 's
+     * length minus {@code offset} is less than {@code length}.
+     */
+    public static EFloat FromString(char[] chars, int offset, int length) {
+      return FromString(chars, offset, length, null);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of bytes that
+     * represents a number. Note that if the sequence contains a negative
+     * exponent, the resulting value might not be exact, in which case the
+     * resulting binary floating-point number will be an approximation of
+     * this decimal number's value. <p>The format of the sequence generally
+     *  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+     *  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+     *  <li>One or more digits, with a single optional decimal point (".",
+     * U+002E) before or after those digits or between two of them. These
+     * digits may begin with any number of zeros.</li> <li>Optionally,
+     *  "E+"/"e+" (positive exponent) or "E-"/"e-" (negative exponent) plus
+     * one or more digits specifying the exponent (these digits may begin
+     * with any number of zeros).</li></ul> <p>The sequence can also be
+     *  "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN") followed
+     * by any number of digits (these digits may begin with any number of
+     *  zeros), or signaling NaN ("sNaN") followed by any number of digits
+     * (these digits may begin with any number of zeros), all where the
+     * letters can be any combination of basic upper-case and/or basic
+     * lower-case letters.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular,
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+     * sequence is not allowed to contain white space characters, including
+     * spaces.</p>
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * bytes} (but not more than {@code bytes} 's length).
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags
+     * are in addition to the pre-existing flags). Can be null, in which
+     * case the precision is unlimited. Note that providing a context is
+     * often much faster than creating an EDecimal without a context then
+     * calling ToEFloat on that EDecimal, especially if the context
+     * specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The portion given of {@code bytes} is not a
+     * correctly formatted number sequence; or either {@code offset} or
+     * {@code length} is less than 0 or greater than {@code bytes} 's
+     * length, or {@code bytes} 's length minus {@code offset} is less than
+     * {@code length}.
+     */
+    public static EFloat FromString(
+      byte[] bytes,
+      int offset,
+      int length,
+      EContext ctx) {
+      return EFloatByteArrayString.FromString(bytes, offset, length, ctx);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of bytes that
+     * represents a number, using an unlimited precision context. For more
+     * information, see the <code>FromString(string, int, int, EContext)</code>
+     * method.
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The portion given of {@code bytes} is not a
+     * correctly formatted number sequence.
+     */
+    public static EFloat FromString(byte[] bytes) {
+      return FromString(bytes, 0, bytes == null ? 0 : bytes.length, null);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of bytes that
+     * represents a number. For more information, see the
+     * <code>FromString(string, int, int, EContext)</code> method.
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If HasFlags of the context is true,
+     * will also store the flags resulting from the operation (the flags
+     * are in addition to the pre-existing flags). Can be null, in which
+     * case the precision is unlimited. Note that providing a context is
+     * often much faster than creating an EDecimal without a context then
+     * calling ToEFloat on that EDecimal, especially if the context
+     * specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     */
+    public static EFloat FromString(byte[] bytes, EContext ctx) {
+      return FromString(bytes, 0, bytes == null ? 0 : bytes.length, ctx);
+    }
+
+    /**
+     * Creates a binary floating-point number from a sequence of bytes that
+     * represents a number. For more information, see the
+     * <code>FromString(string, int, int, EContext)</code> method.
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * bytes} (but not more than {@code bytes} 's length).
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws T:IllegalArgumentException Either {@code offset} or {@code length}
+     * is less than 0 or greater than {@code bytes} 's length, or {@code
+     * bytes} 's length minus {@code offset} is less than {@code length}.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's
+     * length minus {@code offset} is less than {@code length}.
+     */
+    public static EFloat FromString(byte[] bytes, int offset, int length) {
+      return FromString(bytes, offset, length, null);
     }
 
     /**
@@ -1395,7 +1612,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another number and returns the result.
+     * Adds this arbitrary-precision binary floating-point number and a 32-bit
+     * signed integer and returns the result. The exponent for the result
+     * is the lower of this arbitrary-precision binary floating-point
+     * number's exponent and the other 32-bit signed integer's exponent.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two objects.
      */
@@ -1404,8 +1624,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Subtracts an arbitrary-precision integer from this arbitrary-precision
-     * integer.
+     * Subtracts a 32-bit signed integer from this arbitrary-precision binary
+     * floating-point number and returns the result. The exponent for the
+     * result is the lower of this arbitrary-precision binary
+     * floating-point number's exponent and the other 32-bit signed
+     * integer's exponent.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The difference of the two objects.
      */
@@ -1415,8 +1638,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies this instance by the value of an arbitrary-precision integer
-     *  object.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
+     * Multiplies this arbitrary-precision binary floating-point number by a 32-bit
+     * signed integer and returns the result. The exponent for the result
+     * is this arbitrary-precision binary floating-point number's exponent
+     *  plus the other 32-bit signed integer's exponent.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -1425,11 +1650,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of a 32-bit signed integer. The result is
-     * rounded down (the fractional part is discarded). Except if the
-     * result is 0, it will be negative if this object is positive and the
-     * other is negative, or vice versa, and will be positive if both are
-     * positive or both are negative.
+     * Divides this arbitrary-precision binary floating-point number by a 32-bit
+     * signed integer and returns the result. When possible, the result
+     * will be exact.
      * @param intValue The divisor.
      * @return The quotient of the two objects.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -1439,7 +1662,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * Adds this arbitrary-precision binary floating-point number and a 64-bit
+     * signed integer and returns the result. The exponent for the result
+     * is the lower of this arbitrary-precision binary floating-point
+     * number's exponent and the other 64-bit signed integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The return value is not documented yet.
      */
@@ -1448,29 +1674,34 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
+     * Subtracts a 64-bit signed integer from this arbitrary-precision binary
+     * floating-point number and returns the result. The exponent for the
+     * result is the lower of this arbitrary-precision binary
+     * floating-point number's exponent and the other 64-bit signed
+     * integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The difference of the two objects.
      */
     public EFloat Subtract(long longValue) {
       return this.Subtract(EFloat.FromInt64(longValue));
     }
 
     /**
-     * Not documented yet.
+     * Multiplies this arbitrary-precision binary floating-point number by a 64-bit
+     * signed integer and returns the result. The exponent for the result
+     * is this arbitrary-precision binary floating-point number's exponent
+     *  plus the other 64-bit signed integer's exponent.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200L);</pre> . </p>
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The product of the two numbers.
      */
     public EFloat Multiply(long longValue) {
       return this.Multiply(EFloat.FromInt64(longValue));
     }
 
     /**
-     * Divides this instance by the value of a 64-bit signed integer. The result is
-     * rounded down (the fractional part is discarded). Except if the
-     * result is 0, it will be negative if this object is positive and the
-     * other is negative, or vice versa, and will be positive if both are
-     * positive or both are negative.
+     * Divides this arbitrary-precision binary floating-point number by a 64-bit
+     * signed integer and returns the result. When possible, the result
+     * will be exact.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The quotient of the two objects.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -1480,8 +1711,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another binary floating-point number and returns the
-     * result.
+     * Adds this arbitrary-precision binary floating-point number and another
+     * arbitrary-precision binary floating-point number and returns the
+     * result. The exponent for the result is the lower of this
+     * arbitrary-precision binary floating-point number's exponent and the
+     * other arbitrary-precision binary floating-point number's exponent.
      * @param otherValue An arbitrary-precision binary floating-point number.
      * @return The sum of the two objects.
      */
@@ -1490,8 +1724,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Finds the sum of this object and another object. The result's exponent is
-     * set to the lower of the exponents of the two operands.
+     * Adds this arbitrary-precision binary floating-point number and another
+     * arbitrary-precision binary floating-point number and returns the
+     * result.
      * @param otherValue The number to add to.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -1876,7 +2111,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this object by another binary floating-point number and returns the
+     * Divides this arbitrary-precision binary floating-point number by another
+     * arbitrary-precision binary floating-point number and returns the
      * result. When possible, the result will be exact.
      * @param divisor The number to divide by.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
@@ -1892,9 +2128,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Divides this arbitrary-precision binary floating-point number by another
-     * arbitrary-precision binary floating-point number. The preferred
-     * exponent for the result is this object's exponent minus the
-     * divisor's exponent.
+     * arbitrary-precision binary floating-point number and returns the
+     * result. When possible, the result will be exact.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -2616,8 +2851,11 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies two binary floating-point numbers. The resulting exponent will be
-     * the sum of the exponents of the two binary floating-point numbers.
+     * Multiplies this arbitrary-precision binary floating-point number by another
+     * arbitrary-precision binary floating-point number and returns the
+     * result. The exponent for the result is this arbitrary-precision
+     * binary floating-point number's exponent plus the other
+     * arbitrary-precision binary floating-point number's exponent.
      * @param otherValue Another binary floating-point number.
      * @return The product of the two binary floating-point numbers.
      * @throws NullPointerException The parameter {@code otherValue} is null.
@@ -2645,10 +2883,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies two binary floating-point numbers. The resulting scale will be
-     * the sum of the scales of the two binary floating-point numbers. The
-     * result's sign is positive if both operands have the same sign, and
-     * negative if they have different signs.
+     * Multiplies this arbitrary-precision binary floating-point number by another
+     * arbitrary-precision binary floating-point number and returns the
+     * result.
      * @param op Another binary floating-point number.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -3063,11 +3300,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Finds the remainder that results when dividing two arbitrary-precision
-     * binary floating-point numbers. The remainder is the value that
-     * remains when the absolute value of this object is divided by the
-     * absolute value of the other object; the remainder has the same sign
-     * (positive or negative) as this object's value.
+     * Returns the remainder that would result when this arbitrary-precision binary
+     * floating-point number is divided by another arbitrary-precision
+     * binary floating-point number.
      * @param divisor An arbitrary-precision binary floating-point number.
      * @param ctx The parameter {@code ctx} is an EContext object.
      * @return The remainder of the two numbers. Signals FlagInvalid and returns
@@ -3561,7 +3796,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Subtracts an arbitrary-precision binary floating-point number from this
-     * instance and returns the result.
+     * arbitrary-precision binary floating-point number and returns the
+     * result. The exponent for the result is the lower of this
+     * arbitrary-precision binary floating-point number's exponent and the
+     * other arbitrary-precision binary floating-point number's exponent.
      * @param otherValue The number to subtract from this instance's value.
      * @return The difference of the two objects.
      */
@@ -3571,7 +3809,8 @@ at: http://peteroupc.github.io/
 
     /**
      * Subtracts an arbitrary-precision binary floating-point number from this
-     * instance.
+     * arbitrary-precision binary floating-point number and returns the
+     * result.
      * @param otherValue The number to subtract from this instance's value.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -4507,7 +4746,7 @@ at: http://peteroupc.github.io/
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional
-     * part, is less than -32768 or greater than 32767.
+     * part, is less than -32768 or greater tha 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -4534,7 +4773,7 @@ at: http://peteroupc.github.io/
      * value.
      * @return This number's value as a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -32768 or greater than 32767.
+     * an exact integer, or is less than -32768 or greater tha 32767.
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {

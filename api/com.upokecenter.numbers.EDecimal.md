@@ -251,14 +251,20 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  Finds the absolute value of this object (if it's negative, it becomes
  positive).
 * `EDecimal Add​(int intValue)`<br>
- Adds this object and an 32-bit signed integer and returns the result.
+ Adds this arbitrary-precision decimal floating-point number and a 32-bit
+ signed integer and returns the result.
 * `EDecimal Add​(long longValue)`<br>
- Not documented yet.
+ Adds this arbitrary-precision decimal floating-point number and a 64-bit
+ signed integer and returns the result.
 * `EDecimal Add​(EDecimal otherValue)`<br>
- Adds this object and another decimal number and returns the result.
+ Adds this arbitrary-precision decimal floating-point number and another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `EDecimal Add​(EDecimal otherValue,
    EContext ctx)`<br>
- Finds the sum of this object and another object.
+ Adds this arbitrary-precision decimal floating-point number and another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `int compareTo​(int intOther)`<br>
  Compares the mathematical values of this object and another object,
  accepting NaN values.
@@ -334,15 +340,20 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
 * `EDecimal Decrement()`<br>
  Returns one subtracted from this arbitrary-precision decimal number.
 * `EDecimal Divide​(int intValue)`<br>
- Divides this object by a 32-bit signed integer and returns the result.
+ Divides this arbitrary-precision decimal floating-point number by a 32-bit
+ signed integer and returns the result.
 * `EDecimal Divide​(long longValue)`<br>
- Divides this object by a 64-bit signed integer and returns the result.
+ Divides this arbitrary-precision decimal floating-point number by a 64-bit
+ signed integer and returns the result.
 * `EDecimal Divide​(EDecimal divisor)`<br>
- Divides this object by another decimal number and returns the result.
+ Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `EDecimal Divide​(EDecimal divisor,
       EContext ctx)`<br>
- Divides this arbitrary-precision decimal number by another
- arbitrary-precision decimal number.
+ Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)`<br>
  Deprecated.
 Renamed to DivRemNaturalScale.
@@ -464,6 +475,24 @@ Renamed to FromEFloat.
 * `static EDecimal FromSingleBits​(int value)`<br>
  Creates an arbitrary-precision decimal number from a 32-bit binary
  floating-point number encoded in the IEEE 754 binary32 format.
+* `static EDecimal FromString​(byte[] bytes)`<br>
+ Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number.
+* `static EDecimal FromString​(byte[] bytes,
+          int offset,
+          int length)`<br>
+ Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number.
+* `static EDecimal FromString​(byte[] bytes,
+          int offset,
+          int length,
+          EContext ctx)`<br>
+ Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number.
+* `static EDecimal FromString​(byte[] bytes,
+          EContext ctx)`<br>
+ Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number.
 * `static EDecimal FromString​(char[] chars) char`<br>
  Creates an arbitrary-precision decimal number from a sequence of char
  s that represents a number.
@@ -604,14 +633,20 @@ Renamed to FromEFloat.
  Returns a number similar to this number but with the decimal point moved to
  the right.
 * `EDecimal Multiply​(int intValue)`<br>
- Multiplies this object by the given 32-bit signed integer.
+ Multiplies this arbitrary-precision decimal floating-point number by a
+ 32-bit signed integer and returns the result.
 * `EDecimal Multiply​(long longValue)`<br>
- Multiplies this object by the given 64-bit signed integer.
+ Multiplies this arbitrary-precision decimal floating-point number by a
+ 64-bit signed integer and returns the result.
 * `EDecimal Multiply​(EDecimal otherValue)`<br>
- Multiplies two decimal numbers.
+ Multiplies this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `EDecimal Multiply​(EDecimal op,
         EContext ctx)`<br>
- Multiplies two decimal numbers.
+ Multiplies this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `EDecimal MultiplyAndAdd​(EDecimal multiplicand,
               EDecimal augend)`<br>
  Multiplies by one decimal number, and then adds another decimal number.
@@ -679,8 +714,9 @@ Renamed to FromEFloat.
  trailing zeros removed from its significand.
 * `EDecimal Remainder​(EDecimal divisor,
          EContext ctx)`<br>
- Finds the remainder that results when dividing two arbitrary-precision
- decimal numbers.
+ Returns the remainder that would result when this arbitrary-precision
+ decimal floating-point number is divided by another
+ arbitrary-precision decimal floating-point number.
 * `EDecimal RemainderNaturalScale​(EDecimal divisor) "this" - (("this" /
   "divisor") * "divisor")`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
@@ -780,15 +816,20 @@ Renamed to RoundToIntegerNoRoundedFlag.
 Renamed to Sqrt.
  Renamed to Sqrt.
 * `EDecimal Subtract​(int intValue)`<br>
- Subtracts a 32-bit signed integer from this object and returns the result.
+ Subtracts a 32-bit signed integer from this arbitrary-precision decimal
+ floating-point number and returns the result.
 * `EDecimal Subtract​(long longValue)`<br>
- Not documented yet.
+ Subtracts a 64-bit signed integer from this arbitrary-precision decimal
+ floating-point number and returns the result.
 * `EDecimal Subtract​(EDecimal otherValue)`<br>
- Subtracts an arbitrary-precision decimal number from this instance and
- returns the result.
+ Subtracts an arbitrary-precision decimal floating-point number from this
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `EDecimal Subtract​(EDecimal otherValue,
         EContext ctx)`<br>
- Subtracts an arbitrary-precision decimal number from this instance.
+ Subtracts an arbitrary-precision decimal floating-point number from this
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 * `byte ToByteChecked()`<br>
  Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after converting it to an integer by discarding
@@ -1480,6 +1521,156 @@ Creates an arbitrary-precision decimal number from a sequence of <code>char</cod
  length minus <code>offset</code> is less than <code>length</code>.
 
 ### FromString
+    public static EDecimal FromString​(byte[] bytes)
+Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See
+ <code>FromString(string, int, int, EContext)</code> for more information.
+ Note that calling the overload that takes an EContext is often much
+ faster than creating the EDecimal then calling
+ <code>RoundToPrecision</code> on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence that represents a number.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of bytes (interpreted as text).
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is not a correctly
+ formatted number sequence.
+
+### FromString
+    public static EDecimal FromString​(byte[] bytes, EContext ctx)
+Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See
+ <code>FromString(string, int, int, EContext)</code> for more information.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes (interpreted as text) that represents a
+ number.
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and rounding isn't needed.
+ Note that providing a context is often much faster than creating the
+ EDecimal without a context then calling <code>RoundToPrecision</code> on
+ that EDecimal, especially if the context specifies a precision limit
+ and exponent range.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of bytes (interpreted as text).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+### FromString
+    public static EDecimal FromString​(byte[] bytes, int offset, int length)
+Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See
+ <code>FromString(string, int, int, EContext)</code> for more information.
+ Note that calling the overload that takes an EContext is often much
+ faster than creating the EDecimal then calling
+ <code>RoundToPrecision</code> on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence that represents a number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ bytes</code> (but not more than <code>bytes</code> 's length).
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of bytes (interpreted as text).
+
+**Throws:**
+
+* <code>java.lang.NumberFormatException</code> - The parameter <code>bytes</code> is not a correctly
+ formatted number sequence.
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>bytes</code> 's length, or <code>bytes</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
+### FromString
+    public static EDecimal FromString​(byte[] bytes, int offset, int length, EContext ctx)
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. Each byte in the
+ sequence has to be a code point in the Basic Latin range (0x00 to
+ 0x7f or U+0000 to U+007F) of the Unicode Standard.</p> <p>The format
+ of the sequence generally consists of:</p> <ul> <li>An optional plus
+  sign ("+" , U+002B) or minus sign ("-", U+002D) (if the minus sign,
+ the value is negative.)</li> <li>One or more digits, with a single
+  optional decimal point (".", U+002E) before or after those digits or
+ between two of them. These digits may begin with any number of
+  zeros.</li> <li>Optionally, "E"/"e" followed by an optional
+  (positive exponent) or "-" (negative exponent) and followed by one
+ or more digits specifying the exponent (these digits may begin with
+  any number of zeros).</li></ul> <p>The sequence can also be "-INF",
+  "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed
+ by any number of digits (these digits may begin with any number of
+  zeros), or signaling NaN ("sNaN" /"-sNaN") followed by any number of
+ digits (these digits may begin with any number of zeros), all where
+ the letters can be any combination of basic upper-case and/or basic
+ lower-case letters.</p> <p>All characters mentioned above are the
+ corresponding characters in the Basic Latin range. In particular,
+ the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+ sequence is not allowed to contain white space characters, including
+ spaces.</p>
+
+**Parameters:**
+
+* <code>bytes</code> - A sequence of bytes (interpreted as text), a portion of which
+ represents a number.
+
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.
+
+* <code>length</code> - The length, in code units, of the desired portion of <code>
+ bytes</code> (but not more than <code>bytes</code> 's length).
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). Can be null, in
+ which case the precision is unlimited and rounding isn't needed.
+ Note that providing a context is often much faster than creating the
+ EDecimal without a context then calling <code>RoundToPrecision</code> on
+ that EDecimal, especially if the context specifies a precision limit
+ and exponent range.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the same value as the
+ given sequence of bytes (interpreted as text).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>bytes</code> 's length, or <code>bytes</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
+
+### FromString
     public static EDecimal FromString​(java.lang.String str)
 Creates an arbitrary-precision decimal number from a text string that
  represents a number. See <code>FromString(string, int, int,
@@ -1893,7 +2084,11 @@ Finds the absolute value of this object (if it's negative, it becomes
 
 ### Add
     public EDecimal Add​(EDecimal otherValue)
-Adds this object and another decimal number and returns the result.
+Adds this arbitrary-precision decimal floating-point number and another
+ arbitrary-precision decimal floating-point number and returns the
+ result. The exponent for the result is the lower of this
+ arbitrary-precision decimal floating-point number's exponent and the
+ other arbitrary-precision decimal floating-point number's exponent.
 
 **Parameters:**
 
@@ -1905,8 +2100,9 @@ Adds this object and another decimal number and returns the result.
 
 ### Add
     public EDecimal Add​(EDecimal otherValue, EContext ctx)
-Finds the sum of this object and another object. The result's exponent is
- set to the lower of the exponents of the two operands.
+Adds this arbitrary-precision decimal floating-point number and another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 
 **Parameters:**
 
@@ -2223,8 +2419,9 @@ Compares the mathematical values of this object and another object. <p>In
 
 ### Divide
     public EDecimal Divide​(EDecimal divisor)
-Divides this object by another decimal number and returns the result. When
- possible, the result will be exact.
+Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result. When possible, the result will be exact.
 
 **Parameters:**
 
@@ -2241,9 +2438,9 @@ Divides this object by another decimal number and returns the result. When
 
 ### Divide
     public EDecimal Divide​(EDecimal divisor, EContext ctx)
-Divides this arbitrary-precision decimal number by another
- arbitrary-precision decimal number. The preferred exponent for the
- result is this object's exponent minus the divisor's exponent.
+Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result. When possible, the result will be exact.
 
 **Parameters:**
 
@@ -3043,8 +3240,11 @@ Returns a number similar to this number but with the decimal point moved to
 
 ### Multiply
     public EDecimal Multiply​(EDecimal otherValue)
-Multiplies two decimal numbers. The resulting exponent will be the sum of
- the exponents of the two decimal numbers.
+Multiplies this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result. The exponent for the result is this arbitrary-precision
+ decimal floating-point number's exponent plus the other
+ arbitrary-precision decimal floating-point number's exponent.
 
 **Parameters:**
 
@@ -3060,10 +3260,9 @@ Multiplies two decimal numbers. The resulting exponent will be the sum of
 
 ### Multiply
     public EDecimal Multiply​(EDecimal op, EContext ctx)
-Multiplies two decimal numbers. The resulting scale will be the sum of the
- scales of the two decimal numbers. The result's sign is positive if
- both operands have the same sign, and negative if they have
- different signs.
+Multiplies this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 
 **Parameters:**
 
@@ -3081,7 +3280,10 @@ Multiplies two decimal numbers. The resulting scale will be the sum of the
 
 ### Add
     public EDecimal Add​(long longValue)
-Not documented yet.
+Adds this arbitrary-precision decimal floating-point number and a 64-bit
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision decimal floating-point
+ number's exponent and the other 64-bit signed integer's exponent.
 
 **Parameters:**
 
@@ -3089,11 +3291,15 @@ Not documented yet.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The sum of the two objects.
 
 ### Subtract
     public EDecimal Subtract​(long longValue)
-Not documented yet.
+Subtracts a 64-bit signed integer from this arbitrary-precision decimal
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision decimal
+ floating-point number's exponent and the other 64-bit signed
+ integer's exponent.
 
 **Parameters:**
 
@@ -3101,12 +3307,14 @@ Not documented yet.
 
 **Returns:**
 
-* The return value is not documented yet.
+* The difference of the two objects.
 
 ### Multiply
     public EDecimal Multiply​(long longValue)
-Multiplies this object by the given 64-bit signed integer. The resulting
- exponent will be the sum of the exponents of the two numbers.
+Multiplies this arbitrary-precision decimal floating-point number by a
+ 64-bit signed integer and returns the result. The exponent for the
+ result is this arbitrary-precision decimal floating-point number's
+ exponent plus the other 64-bit signed integer's exponent.
 
 **Parameters:**
 
@@ -3118,8 +3326,9 @@ Multiplies this object by the given 64-bit signed integer. The resulting
 
 ### Divide
     public EDecimal Divide​(long longValue)
-Divides this object by a 64-bit signed integer and returns the result. When
- possible, the result will be exact.
+Divides this arbitrary-precision decimal floating-point number by a 64-bit
+ signed integer and returns the result. When possible, the result
+ will be exact.
 
 **Parameters:**
 
@@ -3136,7 +3345,10 @@ Divides this object by a 64-bit signed integer and returns the result. When
 
 ### Add
     public EDecimal Add​(int intValue)
-Adds this object and an 32-bit signed integer and returns the result.
+Adds this arbitrary-precision decimal floating-point number and a 32-bit
+ signed integer and returns the result. The exponent for the result
+ is the lower of this arbitrary-precision decimal floating-point
+ number's exponent and the other 32-bit signed integer's exponent.
 
 **Parameters:**
 
@@ -3148,7 +3360,11 @@ Adds this object and an 32-bit signed integer and returns the result.
 
 ### Subtract
     public EDecimal Subtract​(int intValue)
-Subtracts a 32-bit signed integer from this object and returns the result.
+Subtracts a 32-bit signed integer from this arbitrary-precision decimal
+ floating-point number and returns the result. The exponent for the
+ result is the lower of this arbitrary-precision decimal
+ floating-point number's exponent and the other 32-bit signed
+ integer's exponent.
 
 **Parameters:**
 
@@ -3160,8 +3376,10 @@ Subtracts a 32-bit signed integer from this object and returns the result.
 
 ### Multiply
     public EDecimal Multiply​(int intValue)
-Multiplies this object by the given 32-bit signed integer. The resulting
- exponent will be the sum of the exponents of the two numbers.
+Multiplies this arbitrary-precision decimal floating-point number by a
+ 32-bit signed integer and returns the result. The exponent for the
+ result is this arbitrary-precision decimal floating-point number's
+ exponent plus the other 32-bit signed integer's exponent.
 
 **Parameters:**
 
@@ -3173,8 +3391,9 @@ Multiplies this object by the given 32-bit signed integer. The resulting
 
 ### Divide
     public EDecimal Divide​(int intValue)
-Divides this object by a 32-bit signed integer and returns the result. When
- possible, the result will be exact.
+Divides this arbitrary-precision decimal floating-point number by a 32-bit
+ signed integer and returns the result. When possible, the result
+ will be exact.
 
 **Parameters:**
 
@@ -3625,11 +3844,9 @@ Returns an object with the same numerical value as this one but with
 
 ### Remainder
     public EDecimal Remainder​(EDecimal divisor, EContext ctx)
-Finds the remainder that results when dividing two arbitrary-precision
- decimal numbers. The remainder is the value that remains when the
- absolute value of this object is divided by the absolute value of
- the other object; the remainder has the same sign (positive or
- negative) as this object's value.
+Returns the remainder that would result when this arbitrary-precision
+ decimal floating-point number is divided by another
+ arbitrary-precision decimal floating-point number.
 
 **Parameters:**
 
@@ -4272,8 +4489,11 @@ Renamed to Sqrt.
 
 ### Subtract
     public EDecimal Subtract​(EDecimal otherValue)
-Subtracts an arbitrary-precision decimal number from this instance and
- returns the result.
+Subtracts an arbitrary-precision decimal floating-point number from this
+ arbitrary-precision decimal floating-point number and returns the
+ result. The exponent for the result is the lower of this
+ arbitrary-precision decimal floating-point number's exponent and the
+ other arbitrary-precision decimal floating-point number's exponent.
 
 **Parameters:**
 
@@ -4285,7 +4505,9 @@ Subtracts an arbitrary-precision decimal number from this instance and
 
 ### Subtract
     public EDecimal Subtract​(EDecimal otherValue, EContext ctx)
-Subtracts an arbitrary-precision decimal number from this instance.
+Subtracts an arbitrary-precision decimal floating-point number from this
+ arbitrary-precision decimal floating-point number and returns the
+ result.
 
 **Parameters:**
 
@@ -4654,7 +4876,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
  number, once converted to an integer by discarding its fractional
- part, is less than -32768 or greater than 32767.
+ part, is less than -32768 or greater tha 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -4680,7 +4902,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
- an exact integer, or is less than -32768 or greater than 32767.
+ an exact integer, or is less than -32768 or greater tha 32767.
 
 ### FromInt16
     public static EDecimal FromInt16​(short inputInt16)

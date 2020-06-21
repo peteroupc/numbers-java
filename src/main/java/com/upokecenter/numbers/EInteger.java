@@ -57,7 +57,7 @@ at: http://peteroupc.github.io/
 
     private static final int ShortMask = 0xffff;
 
-    private static final int[] ValueCharToDigit = {
+    static final int[] CharToDigit = {
       36, 36, 36, 36, 36, 36,
       36,
       36,
@@ -73,7 +73,7 @@ at: http://peteroupc.github.io/
       25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 36, 36, 36, 36,
     };
 
-    private static final int[] ValueMaxSafeInts = {
+    static final int[] MaxSafeInts = {
       1073741823, 715827881,
       536870911, 429496728, 357913940, 306783377, 268435455, 238609293,
       214748363, 195225785, 178956969, 165191048, 153391688, 143165575,
@@ -120,7 +120,7 @@ at: http://peteroupc.github.io/
       return cache;
     }
 
-    private EInteger(int wordCount, short[] reg, boolean negative) {
+    EInteger(int wordCount, short[] reg, boolean negative) {
       this.wordCount = wordCount;
       this.words = reg;
       this.negative = negative;
@@ -428,7 +428,7 @@ at: http://peteroupc.github.io/
     // an upper bound on the EInteger's word array size based on
     // the radix and the number of digits. Calculated from:
     // ceil(ln(65536)*100/ln(radix)).
-    private static final int[] DigitsInWord = {
+    static final int[] DigitsInWord = {
       0, 0,
       1600, 1010, 800, 690, 619, 570, 534, 505, 482, 463, 447,
       433, 421, 410, 400, 392, 384, 377, 371, 365, 359, 354,
@@ -492,6 +492,65 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+     * integer.
+     * @param cs A sequence of {@code char} s, the desired portion of which
+     * describes an integer in base-10 (decimal) form. The desired portion
+     * of the sequence of {@code char} s must contain only basic digits 0
+     * to 9 (U+0030 to U+0039), except that it may start with a minus sign
+     *  ("-", U+002D) to indicate a negative number. The desired portion is
+     * not allowed to contain white space characters, including spaces. The
+     * desired portion may start with any number of zeros.
+     * @param index The index of the sequence of {@code char} s that starts the
+     * desired portion.
+     * @param endIndex The index of the sequence of {@code char} s that ends the
+     * desired portion. The length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of {@code char} s portion.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the sequence's
+     * length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     */
+    public static EInteger FromSubstring(
+      char[] cs,
+      int index,
+      int endIndex) {
+      if (cs == null) {
+        throw new NullPointerException("cs");
+      }
+      return FromRadixSubstring(cs, 10, index, endIndex);
+    }
+
+    /**
+     * Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
+     * @param cs A sequence of {@code char} s describing an integer in base-10
+     * (decimal) form. The sequence must contain only basic digits 0 to 9
+     *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
+     * U+002D) to indicate a negative number. The sequence is not allowed
+     * to contain white space characters, including spaces. The sequence
+     * may start with any number of zeros.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of {@code char} s.
+     * @throws NumberFormatException The parameter {@code cs} is in an invalid format.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     */
+    public static EInteger FromString(char[] cs) {
+      if (cs == null) {
+        throw new NullPointerException("cs");
+      }
+      int len = cs.length;
+      if (len == 1) {
+        char c = cs[0];
+        if (c >= '0' && c <= '9') {
+          return FromInt32((int)(c - '0'));
+        }
+        throw new NumberFormatException();
+      }
+      return FromRadixSubstring(cs, 10, 0, len);
+    }
+
+    /**
      * Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
      * given radix.
      * @param cs A sequence of {@code char} s described by the FromRadixSubstring
@@ -549,7 +608,148 @@ at: http://peteroupc.github.io/
       if (cs == null) {
         throw new NullPointerException("cs");
       }
-      return FromRadixSubstringImpl(cs, radix, index, endIndex);
+      return EIntegerCharArrayString.FromRadixSubstringImpl(
+        cs,
+        radix,
+        index,
+        endIndex);
+    }
+
+    /**
+     * Converts a portion of a sequence of bytes (interpreted as text) to an
+     * arbitrary-precision integer. Each byte in the sequence has to be a
+     * character in the Basic Latin range (0x00 to 0x7f or U+0000 to
+     * U+007F) of the Unicode Standard.
+     * @param bytes A sequence of bytes (interpreted as text), the desired portion
+     * of which describes an integer in base-10 (decimal) form. The desired
+     * portion of the sequence of bytes (interpreted as text) must contain
+     * only basic digits 0 to 9 (U+0030 to U+0039), except that it may
+     *  start with a minus sign ("-", U+002D) to indicate a negative number.
+     * The desired portion is not allowed to contain white space
+     * characters, including spaces. The desired portion may start with any
+     * number of zeros.
+     * @param index The index of the sequence of bytes (interpreted as text) that
+     * starts the desired portion.
+     * @param endIndex The index of the sequence of bytes (interpreted as text)
+     * that ends the desired portion. The length will be index + endIndex -
+     * 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of bytes (interpreted as text) portion.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the sequence's
+     * length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     */
+    public static EInteger FromSubstring(
+      byte[] bytes,
+      int index,
+      int endIndex) {
+      if (bytes == null) {
+        throw new NullPointerException("bytes");
+      }
+      return FromRadixSubstring(bytes, 10, index, endIndex);
+    }
+
+    /**
+     * Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+     * integer. Each byte in the sequence has to be a code point in the
+     * Basic Latin range (0x00 to 0x7f or U+0000 to U+007F) of the Unicode
+     * Standard.
+     * @param bytes A sequence of bytes describing an integer in base-10 (decimal)
+     * form. The sequence must contain only basic digits 0 to 9 (U+0030 to
+     *  U+0039), except that it may start with a minus sign ("-", U+002D) to
+     * indicate a negative number. The sequence is not allowed to contain
+     * white space characters, including spaces. The sequence may start
+     * with any number of zeros.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of bytes.
+     * @throws NumberFormatException The parameter {@code bytes} is in an invalid format.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     */
+    public static EInteger FromString(byte[] bytes) {
+      if (bytes == null) {
+        throw new NullPointerException("bytes");
+      }
+      int len = bytes.length;
+      if (len == 1) {
+        byte c = bytes[0];
+        if (c >= '0' && c <= '9') {
+          return FromInt32((int)(c - '0'));
+        }
+        throw new NumberFormatException();
+      }
+      return FromRadixSubstring(bytes, 10, 0, len);
+    }
+
+    /**
+     * Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+     * integer in a given radix. Each byte in the sequence has to be a
+     * character in the Basic Latin range (0x00 to 0x7f or U+0000 to
+     * U+007F) of the Unicode Standard.
+     * @param bytes A sequence of bytes (interpreted as text) described by the
+     * FromRadixSubstring method.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * bytes can use the basic digits 0 to 9 (U+0030 to U+0039) and then
+     * the basic upper-case letters A to Z (U+0041 to U+005A). For example,
+     * 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a basic
+     * upper-case letter A to Z is allowed in the sequence of bytes, the
+     * corresponding basic lower-case letter (U+0061 to U+007a) is allowed
+     * instead.
+     * @return An arbitrary-precision integer with the same value as the given
+     * sequence of bytes.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The sequence of bytes (interpreted as text) is empty
+     * or in an invalid format.
+     */
+    public static EInteger FromRadixString(byte[] bytes, int radix) {
+      if (bytes == null) {
+        throw new NullPointerException("bytes");
+      }
+      return FromRadixSubstring(bytes, radix, 0, bytes.length);
+    }
+
+    /**
+     * Converts a portion of a sequence of bytes (interpreted as text) to an
+     * arbitrary-precision integer in a given radix. Each byte in the
+     * sequence has to be a character in the Basic Latin range (0x00 to
+     * 0x7f or U+0000 to U+007F) of the Unicode Standard.
+     * @param bytes A sequence of bytes (interpreted as text). The desired portion
+     * of the sequence of bytes (interpreted as text) must contain only
+     * characters allowed by the given radix, except that it may start with
+     *  a minus sign ("-", U+002D) to indicate a negative number. The
+     * desired portion is not allowed to contain white space characters,
+     * including spaces. The desired portion may start with any number of
+     * zeros.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030
+     * to U+0039) and then the basic upper-case letters A to Z (U+0041 to
+     * U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix
+     * 16. Where a basic upper-case letter A to Z is allowed in the
+     * sequence of bytes (interpreted as text), the corresponding basic
+     * lower-case letter (U+0061 to U+007a) is allowed instead.
+     * @param index The index of the sequence of bytes (interpreted as text) that
+     * starts the desired portion.
+     * @param endIndex The index of the sequence of bytes (interpreted as text)
+     * that ends the desired portion. The length will be index + endIndex -
+     * 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence's portion.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The portion is empty or in an invalid format.
+     */
+    public static EInteger FromRadixSubstring(
+      byte[] bytes,
+      int radix,
+      int index,
+      int endIndex) {
+      if (bytes == null) {
+        throw new NullPointerException("bytes");
+      }
+      return EIntegerByteArrayString.FromRadixSubstringImpl(
+        bytes,
+        radix,
+        index,
+        endIndex);
     }
 
     private static EInteger FromRadixSubstringImpl(
@@ -624,7 +824,7 @@ at: http://peteroupc.github.io/
           for (int i = 0; i < leftover; ++i) {
             extraWord <<= 4;
             char c = str.charAt(index + i);
-            int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+            int digit = (c >= 0x80) ? 36 : CharToDigit[(int)c];
             if (digit >= 16) {
               throw new NumberFormatException("Illegal character found");
             }
@@ -637,27 +837,27 @@ at: http://peteroupc.github.io/
 
         while (index < endIndex) {
           char c = str.charAt(index + 3);
-          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          int digit = (c >= 0x80) ? 36 : CharToDigit[(int)c];
           if (digit >= 16) {
             throw new NumberFormatException("Illegal character found");
           }
           int word = digit;
           c = str.charAt(index + 2);
-          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          digit = (c >= 0x80) ? 36 : CharToDigit[(int)c];
           if (digit >= 16) {
             throw new NumberFormatException("Illegal character found");
           }
 
           word |= digit << 4;
           c = str.charAt(index + 1);
-          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          digit = (c >= 0x80) ? 36 : CharToDigit[(int)c];
           if (digit >= 16) {
             throw new NumberFormatException("Illegal character found");
           }
 
           word |= digit << 8;
           c = str.charAt(index);
-          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          digit = (c >= 0x80) ? 36 : CharToDigit[(int)c];
           if (digit >= 16) {
             throw new NumberFormatException("Illegal character found");
           }
@@ -887,12 +1087,12 @@ at: http://peteroupc.github.io/
         }
       } else {
         boolean haveSmallInt = true;
-        int maxSafeInt = ValueMaxSafeInts[radix - 2];
+        int maxSafeInt = MaxSafeInts[radix - 2];
         int maxShortPlusOneMinusRadix = 65536 - radix;
         int smallInt = 0;
         for (int i = index; i < endIndex; ++i) {
           char c = str.charAt(i);
-          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
+          int digit = (c >= 0x80) ? 36 : CharToDigit[(int)c];
           if (digit >= radix) {
             throw new NumberFormatException("Illegal character found");
           }
@@ -943,424 +1143,6 @@ at: http://peteroupc.github.io/
           count,
           bigint,
           negative);
-    }
-
-    private static EInteger FromRadixSubstringImpl(
-      char[] cs,
-      int radix,
-      int index,
-      int endIndex) {
-      if (radix < 2) {
-        throw new IllegalArgumentException("radix(" + radix +
-          ") is less than 2");
-      }
-      if (radix > 36) {
-        throw new IllegalArgumentException("radix(" + radix +
-          ") is more than 36");
-      }
-      if (index < 0) {
-        throw new IllegalArgumentException("index(" + index + ") is less than " +
-          "0");
-      }
-      if (index > cs.length) {
-        throw new IllegalArgumentException("index(" + index + ") is more than " +
-          cs.length);
-      }
-      if (endIndex < 0) {
-        throw new IllegalArgumentException("endIndex(" + endIndex +
-          ") is less than 0");
-      }
-      if (endIndex > cs.length) {
-        throw new IllegalArgumentException("endIndex(" + endIndex +
-          ") is more than " + cs.length);
-      }
-      if (endIndex < index) {
-        throw new IllegalArgumentException("endIndex(" + endIndex +
-          ") is less than " + index);
-      }
-      if (index == endIndex) {
-        throw new NumberFormatException("No digits");
-      }
-      boolean negative = false;
-      if (cs[index] == '-') {
-        ++index;
-        if (index == endIndex) {
-          throw new NumberFormatException("No digits");
-        }
-        negative = true;
-      }
-      // Skip leading zeros
-      for (; index < endIndex; ++index) {
-        char c = cs[index];
-        if (c != 0x30) {
-          break;
-        }
-      }
-      int effectiveLength = endIndex - index;
-      if (effectiveLength == 0) {
-        return EInteger.FromInt32(0);
-      }
-      short[] bigint;
-      if (radix == 16) {
-        // Special case for hexadecimal radix
-        int leftover = effectiveLength & 3;
-        int wordCount = effectiveLength >> 2;
-        if (leftover != 0) {
-          ++wordCount;
-        }
-        bigint = new short[wordCount];
-        int currentDigit = wordCount - 1;
-        // Get most significant digits if effective
-        // length is not divisible by 4
-        if (leftover != 0) {
-          int extraWord = 0;
-          for (int i = 0; i < leftover; ++i) {
-            extraWord <<= 4;
-            char c = cs[index + i];
-            int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-            if (digit >= 16) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            extraWord |= digit;
-          }
-          bigint[currentDigit] = ((short)extraWord);
-          --currentDigit;
-          index += leftover;
-        }
-
-        while (index < endIndex) {
-          char c = cs[index + 3];
-          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-          if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
-          }
-          int word = digit;
-          c = cs[index + 2];
-          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-          if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
-          }
-
-          word |= digit << 4;
-          c = cs[index + 1];
-          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-          if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
-          }
-
-          word |= digit << 8;
-          c = cs[index];
-          digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-          if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
-          }
-          word |= digit << 12;
-          index += 4;
-          bigint[currentDigit] = ((short)word);
-          --currentDigit;
-        }
-        int count = CountWords(bigint);
-        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-            count,
-            bigint,
-            negative);
-      } else if (radix == 2) {
-        // Special case for binary radix
-        int leftover = effectiveLength & 15;
-        int wordCount = effectiveLength >> 4;
-        if (leftover != 0) {
-          ++wordCount;
-        }
-        bigint = new short[wordCount];
-        int currentDigit = wordCount - 1;
-        // Get most significant digits if effective
-        // length is not divisible by 4
-        if (leftover != 0) {
-          int extraWord = 0;
-          for (int i = 0; i < leftover; ++i) {
-            extraWord <<= 1;
-            char c = cs[index + i];
-            int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
-            if (digit >= 2) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            extraWord |= digit;
-          }
-          bigint[currentDigit] = ((short)extraWord);
-          --currentDigit;
-          index += leftover;
-        }
-        while (index < endIndex) {
-          int word = 0;
-          int idx = index + 15;
-          for (int i = 0; i < 16; ++i) {
-            char c = cs[idx];
-            int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
-            if (digit >= 2) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            --idx;
-            word |= digit << i;
-          }
-          index += 16;
-          bigint[currentDigit] = ((short)word);
-          --currentDigit;
-        }
-        int count = CountWords(bigint);
-        return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-            count,
-            bigint,
-            negative);
-      } else {
-        return FromRadixSubstringGeneral(
-            cs,
-            radix,
-            index,
-            endIndex,
-            negative);
-      }
-    }
-
-    private static EInteger FromRadixSubstringGeneral(
-      char[] cs,
-      int radix,
-      int index,
-      int endIndex,
-      boolean negative) {
-      if (endIndex - index > 72) {
-        int midIndex = index + ((endIndex - index) / 2);
-        EInteger eia = FromRadixSubstringGeneral(
-            cs,
-            radix,
-            index,
-            midIndex,
-            false);
-        EInteger eib = FromRadixSubstringGeneral(
-            cs,
-            radix,
-            midIndex,
-            endIndex,
-            false);
-        EInteger mult = null;
-        int intpow = endIndex - midIndex;
-        if (radix == 10) {
-          eia = NumberUtility.MultiplyByPowerOfFive(eia,
-              intpow).ShiftLeft(intpow);
-        } else if (radix == 5) {
-          eia = NumberUtility.MultiplyByPowerOfFive(eia, intpow);
-        } else {
-          mult = EInteger.FromInt32(radix).Pow(endIndex - midIndex);
-          eia = eia.Multiply(mult);
-        }
-        eia = eia.Add(eib);
-        // System.out.println("index={0} {1} {2} [pow={3}] [pow={4} ms, muladd={5} ms]",
-        // index, midIndex, endIndex, endIndex-midIndex, swPow.getElapsedMilliseconds(),
-        // swMulAdd.getElapsedMilliseconds());
-        if (negative) {
-          eia = eia.Negate();
-        }
-        return eia;
-      } else {
-        return FromRadixSubstringInner(cs, radix, index, endIndex, negative);
-      }
-    }
-
-    private static EInteger FromRadixSubstringInner(
-      char[] cs,
-      int radix,
-      int index,
-      int endIndex,
-      boolean negative) {
-      if (endIndex - index <= 18 && radix <= 10) {
-        long rv = 0;
-        if (radix == 10) {
-          for (int i = index; i < endIndex; ++i) {
-            char c = cs[i];
-            int digit = (int)c - 0x30;
-            if (digit >= radix || digit < 0) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            rv = (rv * 10) + digit;
-          }
-          return FromInt64(negative ? -rv : rv);
-        } else {
-          for (int i = index; i < endIndex; ++i) {
-            char c = cs[i];
-            int digit = (c >= 0x80) ? 36 : ((int)c - 0x30);
-            if (digit >= radix || digit < 0) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            rv = (rv * radix) + digit;
-          }
-          return FromInt64(negative ? -rv : rv);
-        }
-      }
-      long lsize = ((long)(endIndex - index) * 100 / DigitsInWord[radix]) + 1;
-      lsize = Math.min(lsize, Integer.MAX_VALUE);
-      lsize = Math.max(lsize, 5);
-      short[] bigint = new short[(int)lsize];
-      if (radix == 10) {
-        long rv = 0;
-        int ei = endIndex - index <= 18 ? endIndex : index + 18;
-        for (int i = index; i < ei; ++i) {
-          char c = cs[i];
-          int digit = (int)c - 0x30;
-          if (digit >= radix || digit < 0) {
-            throw new NumberFormatException("Illegal character found");
-          }
-          rv = (rv * 10) + digit;
-        }
-        bigint[0] = ((short)(rv & ShortMask));
-        bigint[1] = ((short)((rv >> 16) & ShortMask));
-        bigint[2] = ((short)((rv >> 32) & ShortMask));
-        bigint[3] = ((short)((rv >> 48) & ShortMask));
-        int bn = Math.min(bigint.length, 5);
-        for (int i = ei; i < endIndex; ++i) {
-          short carry = 0;
-          int digit = 0;
-          int overf = 0;
-          if (i < endIndex - 3) {
-            overf = 55536; // 2**16 minus 10**4
-            int d1 = (int)cs[i] - 0x30;
-            int d2 = (int)cs[i + 1] - 0x30;
-            int d3 = (int)cs[i + 2] - 0x30;
-            int d4 = (int)cs[i + 3] - 0x30;
-            i += 3;
-            if (d1 >= 10 || d1 < 0 || d2 >= 10 || d2 < 0 || d3 >= 10 ||
-              d3 < 0 || d4 >= 10 || d4 < 0) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            digit = (d1 * 1000) + (d2 * 100) + (d3 * 10) + d4;
-            // Multiply by 10**4
-            for (int j = 0; j < bn; ++j) {
-              int p;
-              p = ((((int)bigint[j]) & ShortMask) * 10000);
-              int p2 = ((int)carry) & ShortMask;
-              p = (p + p2);
-              bigint[j] = ((short)p);
-              carry = ((short)(p >> 16));
-            }
-          } else {
-            overf = 65526; // 2**16 minus radix 10
-            char c = cs[i];
-            digit = (int)c - 0x30;
-            if (digit >= 10 || digit < 0) {
-              throw new NumberFormatException("Illegal character found");
-            }
-            // Multiply by 10
-            for (int j = 0; j < bn; ++j) {
-              int p;
-              p = ((((int)bigint[j]) & ShortMask) * 10);
-              int p2 = ((int)carry) & ShortMask;
-              p = (p + p2);
-              bigint[j] = ((short)p);
-              carry = ((short)(p >> 16));
-            }
-          }
-          if (carry != 0) {
-            bigint = GrowForCarry(bigint, carry);
-          }
-          // Add the parsed digit
-          if (digit != 0) {
-            int d = bigint[0] & ShortMask;
-            if (d <= overf) {
-              bigint[0] = ((short)(d + digit));
-            } else if (IncrementWords(
-                bigint,
-                0,
-                bigint.length,
-                (short)digit) != 0) {
-              bigint = GrowForCarry(bigint, (short)1);
-            }
-          }
-          bn = Math.min(bigint.length, bn + 1);
-        }
-      } else {
-        boolean haveSmallInt = true;
-        int maxSafeInt = ValueMaxSafeInts[radix - 2];
-        int maxShortPlusOneMinusRadix = 65536 - radix;
-        int smallInt = 0;
-        for (int i = index; i < endIndex; ++i) {
-          char c = cs[i];
-          int digit = (c >= 0x80) ? 36 : ValueCharToDigit[(int)c];
-          if (digit >= radix) {
-            throw new NumberFormatException("Illegal character found");
-          }
-          if (haveSmallInt && smallInt < maxSafeInt) {
-            smallInt = (smallInt * radix) + digit;
-          } else {
-            if (haveSmallInt) {
-              bigint[0] = ((short)(smallInt & ShortMask));
-              bigint[1] = ((short)((smallInt >> 16) & ShortMask));
-              haveSmallInt = false;
-            }
-            // Multiply by the radix
-            short carry = 0;
-            int n = bigint.length;
-            for (int j = 0; j < n; ++j) {
-              int p;
-              p = ((((int)bigint[j]) & ShortMask) * radix);
-              int p2 = ((int)carry) & ShortMask;
-              p = (p + p2);
-              bigint[j] = ((short)p);
-              carry = ((short)(p >> 16));
-            }
-            if (carry != 0) {
-              bigint = GrowForCarry(bigint, carry);
-            }
-            // Add the parsed digit
-            if (digit != 0) {
-              int d = bigint[0] & ShortMask;
-              if (d <= maxShortPlusOneMinusRadix) {
-                bigint[0] = ((short)(d + digit));
-              } else if (IncrementWords(
-                  bigint,
-                  0,
-                  bigint.length,
-                  (short)digit) != 0) {
-                bigint = GrowForCarry(bigint, (short)1);
-              }
-            }
-          }
-        }
-        if (haveSmallInt) {
-          bigint[0] = ((short)(smallInt & ShortMask));
-          bigint[1] = ((short)((smallInt >> 16) & ShortMask));
-        }
-      }
-      int count = CountWords(bigint);
-      return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-          count,
-          bigint,
-          negative);
-    }
-
-    /**
-     * Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
-     * @param cs A sequence of {@code char} s describing an integer in base-10
-     * (decimal) form. The sequence must contain only basic digits 0 to 9
-     *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
-     * U+002D) to indicate a negative number. The sequence is not allowed
-     * to contain white space characters, including spaces. The sequence
-     * may start with any number of zeros.
-     * @return An arbitrary-precision integer with the same value as given in the
-     * sequence of {@code char} s.
-     * @throws NumberFormatException The parameter {@code cs} is in an invalid format.
-     * @throws NullPointerException The parameter {@code cs} is null.
-     */
-    public static EInteger FromString(char[] cs) {
-      if (cs == null) {
-        throw new NullPointerException("cs");
-      }
-      int len = cs.length;
-      if (len == 1) {
-        char c = cs[0];
-        if (c >= '0' && c <= '9') {
-          return FromInt32((int)(c - '0'));
-        }
-        throw new NumberFormatException();
-      }
-      return FromRadixSubstring(cs, 10, 0, len);
     }
 
     /**
@@ -1389,37 +1171,6 @@ at: http://peteroupc.github.io/
         throw new NumberFormatException();
       }
       return FromRadixSubstring(str, 10, 0, len);
-    }
-
-    /**
-     * Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
-     * integer.
-     * @param cs A sequence of {@code char} s, the desired portion of which
-     * describes an integer in base-10 (decimal) form. The desired portion
-     * of the sequence of {@code char} s must contain only basic digits 0
-     * to 9 (U+0030 to U+0039), except that it may start with a minus sign
-     *  ("-", U+002D) to indicate a negative number. The desired portion is
-     * not allowed to contain white space characters, including spaces. The
-     * desired portion may start with any number of zeros.
-     * @param index The index of the sequence of {@code char} s that starts the
-     * desired portion.
-     * @param endIndex The index of the sequence of {@code char} s that ends the
-     * desired portion. The length will be index + endIndex - 1.
-     * @return An arbitrary-precision integer with the same value as given in the
-     * sequence of {@code char} s portion.
-     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
-     * endIndex} is less than 0, or either is greater than the sequence's
-     * length, or {@code endIndex} is less than {@code index}.
-     * @throws NullPointerException The parameter {@code cs} is null.
-     */
-    public static EInteger FromSubstring(
-      char[] cs,
-      int index,
-      int endIndex) {
-      if (cs == null) {
-        throw new NullPointerException("cs");
-      }
-      return FromRadixSubstring(cs, 10, index, endIndex);
     }
 
     /**
@@ -1461,7 +1212,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.
+     * Adds this arbitrary-precision integer and another arbitrary-precision
+     * integer and returns the result.
      * @param bigintAugend Another arbitrary-precision integer.
      * @return The sum of the two objects.
      * @throws NullPointerException The parameter {@code bigintAugend} is null.
@@ -1934,7 +1686,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds this object and another object.
+     * Adds this arbitrary-precision integer and a 32-bit signed integer and
+     * returns the result.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return An arbitrary-precision integer.
      */
@@ -1991,8 +1744,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Subtracts an arbitrary-precision integer from this arbitrary-precision
-     * integer.
+     * Subtracts a 32-bit signed integer from this arbitrary-precision integer and
+     * returns the result.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The difference of the two objects.
      */
@@ -2003,8 +1756,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies this instance by the value of an arbitrary-precision integer
-     *  object.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
+     * Multiplies this arbitrary-precision integer by a 32-bit signed integer and
+     *  returns the result.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -2013,11 +1766,13 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of an arbitrary-precision integer. The
-     * result is rounded down (the fractional part is discarded). Except if
-     * the result is 0, it will be negative if this object is positive and
-     * the other is negative, or vice versa, and will be positive if both
-     * are positive or both are negative.
+     * Divides this arbitrary-precision integer by a 32-bit signed integer and
+     * returns the result. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 32-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
      * @param intValue The divisor.
      * @return The quotient of the two objects.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -2027,11 +1782,12 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Finds the remainder that results when this instance is divided by the value
-     * of an arbitrary-precision integer. The remainder is the value that
-     * remains when the absolute value of this object is divided by the
-     * absolute value of the other object; the remainder has the same sign
-     * (positive or negative) as this object.
+     * Returns the remainder that would result when this arbitrary-precision
+     * integer is divided by a 32-bit signed integer. The remainder is the
+     * number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other 32-bit signed integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The remainder of the two numbers.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -2066,11 +1822,13 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of an arbitrary-precision integer. The
-     * result is rounded down (the fractional part is discarded). Except if
-     * the result is 0, it will be negative if this object is positive and
-     * the other is negative, or vice versa, and will be positive if both
-     * are positive or both are negative.
+     * Divides this arbitrary-precision integer by another arbitrary-precision
+     * integer and returns the result. The result of the division is
+     * rounded down (the fractional part is discarded). Except if the
+     * result of the division is 0, it will be negative if this
+     * arbitrary-precision integer is positive and the other
+     * arbitrary-precision integer is negative, or vice versa, and will be
+     * positive if both are positive or both are negative.
      * @param bigintDivisor The divisor.
      * @return The quotient of the two objects.
      * @throws NullPointerException The parameter {@code bigintDivisor} is null.
@@ -2717,8 +2475,17 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this object by a 32-bit signed integer and returns the quotient and
-     * remainder.
+     * Divides this arbitrary-precision integer by a 32-bit signed integer and
+     * returns a two-item array containing the result of the division and
+     * the remainder, in that order. The result of the division is rounded
+     * down (the fractional part is discarded). Except if the result of the
+     * division is 0, it will be negative if this arbitrary-precision
+     * integer is positive and the other 32-bit signed integer is negative,
+     * or vice versa, and will be positive if both are positive or both are
+     * negative. The remainder is the number that remains when the absolute
+     * value of this arbitrary-precision integer is divided by the absolute
+     * value of the other 32-bit signed integer; the remainder has the same
+     * sign (positive or negative) as this arbitrary-precision integer.
      * @param intDivisor The number to divide by.
      * @return An array with two arbitrary-precision integers: the first is the
      * quotient, and the second is the remainder.
@@ -2729,7 +2496,8 @@ at: http://peteroupc.github.io/
     }
 
   /**
-   * Not documented yet.
+   * Adds this arbitrary-precision integer and a 64-bit signed integer and
+   * returns the result.
    * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -2738,7 +2506,8 @@ return this.Add(EInteger.FromInt64(longValue));
 }
 
   /**
-   * Not documented yet.
+   * Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+   * returns the result.
    * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -2747,7 +2516,8 @@ return this.Subtract(EInteger.FromInt64(longValue));
 }
 
   /**
-   * Not documented yet.
+   * Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+   * returns the result.
    * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -2756,7 +2526,12 @@ return this.Multiply(EInteger.FromInt64(longValue));
 }
 
   /**
-   * Not documented yet.
+   * Divides this arbitrary-precision integer by a 64-bit signed integer and
+   * returns the result. The result of the division is rounded down (the
+   * fractional part is discarded). Except if the result of the division is
+   * 0, it will be negative if this arbitrary-precision integer is positive
+   * and the other 64-bit signed integer is negative, or vice versa, and
+   * will be positive if both are positive or both are negative.
    * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -2765,7 +2540,12 @@ return this.Divide(EInteger.FromInt64(longValue));
 }
 
   /**
-   * Not documented yet.
+   * Returns the remainder that would result when this arbitrary-precision
+   * integer is divided by a 64-bit signed integer. The remainder is the
+   * number that remains when the absolute value of this
+   * arbitrary-precision integer is divided by the absolute value of the
+   * other 64-bit signed integer; the remainder has the same sign (positive
+   * or negative) as this arbitrary-precision integer.
    * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -2783,7 +2563,17 @@ return this.compareTo(EInteger.FromInt64(longValue));
 }
 
   /**
-   * Not documented yet.
+   * Divides this arbitrary-precision integer by a 64-bit signed integer and
+   * returns a two-item array containing the result of the division and the
+   * remainder, in that order. The result of the division is rounded down
+   * (the fractional part is discarded). Except if the result of the
+   * division is 0, it will be negative if this arbitrary-precision integer
+   * is positive and the other 64-bit signed integer is negative, or vice
+   * versa, and will be positive if both are positive or both are negative.
+   * The remainder is the number that remains when the absolute value of
+   * this arbitrary-precision integer is divided by the absolute value of
+   * the other 64-bit signed integer; the remainder has the same sign
+   * (positive or negative) as this arbitrary-precision integer.
    * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
    * integer.
    * @return The return value is not documented yet.
@@ -2793,8 +2583,18 @@ return this.compareTo(EInteger.FromInt64(longValue));
 }
 
     /**
-     * Divides this object by another arbitrary-precision integer and returns the
-     * quotient and remainder.
+     * Divides this arbitrary-precision integer by another arbitrary-precision
+     * integer and returns a two-item array containing the result of the
+     * division and the remainder, in that order. The result of the
+     * division is rounded down (the fractional part is discarded). Except
+     * if the result of the division is 0, it will be negative if this
+     * arbitrary-precision integer is positive and the other
+     * arbitrary-precision integer is negative, or vice versa, and will be
+     * positive if both are positive or both are negative. The remainder is
+     * the number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other arbitrary-precision integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
      * @param divisor The number to divide by.
      * @return An array with two arbitrary-precision integers: the first is the
      * quotient, and the second is the remainder.
@@ -3910,8 +3710,8 @@ ShortMask) != 0) ? 9 :
     }
 
     /**
-     * Multiplies this instance by the value of an arbitrary-precision integer
-     * object.
+     * Multiplies this arbitrary-precision integer by another arbitrary-precision
+     * integer and returns the result.
      * @param bigintMult Another arbitrary-precision integer.
      * @return The product of the two numbers.
      * @throws NullPointerException The parameter {@code bigintMult} is null.
@@ -4491,11 +4291,12 @@ ShortMask) != 0) ? 9 :
     }
 
     /**
-     * Finds the remainder that results when this instance is divided by the value
-     * of an arbitrary-precision integer. The remainder is the value that
-     * remains when the absolute value of this object is divided by the
-     * absolute value of the other object; the remainder has the same sign
-     * (positive or negative) as this object.
+     * Returns the remainder that would result when this arbitrary-precision
+     * integer is divided by another arbitrary-precision integer. The
+     * remainder is the number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other arbitrary-precision integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
      * @param divisor The number to divide by.
      * @return The remainder of the two numbers.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -5357,7 +5158,7 @@ ShortMask) != 0) ? 9 :
 
     /**
      * Subtracts an arbitrary-precision integer from this arbitrary-precision
-     * integer.
+     * integer and returns the result.
      * @param subtrahend Another arbitrary-precision integer.
      * @return The difference of the two objects.
      * @throws NullPointerException The parameter {@code subtrahend} is null.
@@ -7321,7 +7122,7 @@ ShortMask) != 0) ? 9 :
       }
     }
 
-    private static short[] CleanGrow(short[] a, int size) {
+    static short[] CleanGrow(short[] a, int size) {
       if (size > a.length) {
         short[] newa = new short[size];
         System.arraycopy(a, 0, newa, 0, a.length);
@@ -7374,7 +7175,7 @@ ShortMask) != 0) ? 9 :
       return 0;
     }
 
-    private static int CountWords(short[] array) {
+    static int CountWords(short[] array) {
       int n = array.length;
       while (n != 0 && array[n - 1] == 0) {
         --n;
@@ -7382,7 +7183,7 @@ ShortMask) != 0) ? 9 :
       return (int)n;
     }
 
-    private static int CountWords(short[] array, int pos, int len) {
+    static int CountWords(short[] array, int pos, int len) {
       int n = len;
       while (n != 0 && array[pos + n - 1] == 0) {
         --n;
@@ -7625,14 +7426,14 @@ ShortMask) != 0) ? 9 :
       return 0;
     }
 
-    private static short[] GrowForCarry(short[] a, short carry) {
+    static short[] GrowForCarry(short[] a, short carry) {
       int oldLength = a.length;
       short[] ret = CleanGrow(a, oldLength + 1);
       ret[oldLength] = carry;
       return ret;
     }
 
-    private static int IncrementWords(
+    static int IncrementWords(
       short[] words1,
       int words1Start,
       int n,
@@ -8889,7 +8690,7 @@ ShortMask) != 0) ? 9 :
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer.
      * @return This number's value as a 16-bit signed integer.
-     * @throws ArithmeticException This value is less than -32768 or greater than
+     * @throws ArithmeticException This value is less than -32768 or greater tha
      * 32767.
      */
     public short ToInt16Checked() {

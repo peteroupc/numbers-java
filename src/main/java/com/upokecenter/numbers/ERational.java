@@ -648,13 +648,9 @@ at: http://peteroupc.github.io/
             BigNumberFlags.FlagSignalingNaN;
           if (numerInt > MaxSafeInt) {
             numer = EInteger.FromSubstring(str, numerStart, endStr);
-            return new ERational(numer,
-                EInteger.FromInt32(1),
-                flags3);
+            return CreateNaN(numer, true, negative);
           } else {
-            return new ERational(EInteger.FromInt32(numerInt),
-                EInteger.FromInt32(1),
-                flags3);
+            return CreateNaN(EInteger.FromInt32(numerInt), true, negative);
           }
         }
       }
@@ -730,6 +726,111 @@ at: http://peteroupc.github.io/
           numer == null ? EInteger.FromInt32(numerInt) : numer,
           ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom);
       return negative ? erat.Negate() : erat;
+    }
+
+    /**
+     * Creates a rational number from a sequence of <code>char</code> s that represents a
+     * number. See <code>FromString(string, int, int)</code> for more
+     * information.
+     * @param chars A sequence of {@code char} s that represents a number.
+     * @return An arbitrary-precision rational number with the same value as the
+     * given sequence of {@code char} s.
+     * @throws NumberFormatException The parameter {@code chars} is not a correctly
+     * formatted sequence of {@code char} s.
+     */
+    public static ERational FromString(char[] chars) {
+      return FromString(chars, 0, chars == null ? 0 : chars.length);
+    }
+
+    /**
+     * <p>Creates a rational number from a sequence of <code>char</code> s that
+     * represents a number.</p> <p>The format of the sequence of
+     * <code>char</code> s generally consists of:</p> <ul> <li>An optional plus
+     *  sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value
+     * is negative.)</li> <li>The numerator in the form of one or more
+     * digits (these digits may begin with any number of zeros).</li>
+     *  <li>Optionally, "/" followed by the denominator in the form of one
+     * or more digits (these digits may begin with any number of zeros). If
+     * a denominator is not given, it's equal to 1.</li></ul> <p>The
+     *  sequence of <code>char</code> s can also be "-INF", "-Infinity",
+     *  "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed by any number
+     *  of digits, or signaling NaN ("sNaN" /"-sNaN") followed by any number
+     * of digits, all in any combination of upper and lower case.</p>
+     * <p>All characters mentioned above are the corresponding characters
+     * in the Basic Latin range. In particular, the digits must be the
+     * basic digits 0 to 9 (U+0030 to U+0039). The sequence of <code>char</code>
+     * s is not allowed to contain white space characters, including
+     * spaces.</p>
+     * @param chars A sequence of {@code char} s, a portion of which represents a
+     * number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code chars} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * chars} (but not more than {@code chars} 's length).
+     * @return An arbitrary-precision rational number.
+     * @throws NumberFormatException The parameter {@code chars} is not a correctly
+     * formatted sequence of {@code char} s.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code chars} 's length, or {@code chars} 's
+     * length minus {@code offset} is less than {@code length}.
+     */
+    public static ERational FromString(
+      char[] chars,
+      int offset,
+      int length) {
+       return ERationalCharArrayString.FromString(chars, offset, length);
+    }
+
+    /**
+     * Creates a rational number from a sequence of bytes that represents a number.
+     * See <code>FromString(string, int, int)</code> for more information.
+     * @param bytes A sequence of bytes that represents a number.
+     * @return An arbitrary-precision rational number with the same value as the
+     * given sequence of bytes.
+     * @throws NumberFormatException The parameter {@code bytes} is not a correctly
+     * formatted sequence of bytes.
+     */
+    public static ERational FromString(byte[] bytes) {
+      return FromString(bytes, 0, bytes == null ? 0 : bytes.length);
+    }
+
+    /**
+     * <p>Creates a rational number from a sequence of bytes that represents a
+     * number.</p> <p>The format of the sequence of bytes generally
+     *  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+     *  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
+     * <li>The numerator in the form of one or more digits (these digits
+     *  may begin with any number of zeros).</li> <li>Optionally, "/"
+     * followed by the denominator in the form of one or more digits (these
+     * digits may begin with any number of zeros). If a denominator is not
+     * given, it's equal to 1.</li></ul> <p>The sequence of bytes can also
+     *  be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+     *  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+     * followed by any number of digits, all in any combination of upper
+     * and lower case.</p> <p>All characters mentioned above are the
+     * corresponding characters in the Basic Latin range. In particular,
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
+     * sequence of bytes is not allowed to contain white space characters,
+     * including spaces.</p>
+     * @param bytes A sequence of bytes, a portion of which represents a number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * bytes} (but not more than {@code bytes} 's length).
+     * @return An arbitrary-precision rational number.
+     * @throws NumberFormatException The parameter {@code bytes} is not a correctly
+     * formatted sequence of bytes.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's
+     * length minus {@code offset} is less than {@code length}.
+     */
+    public static ERational FromString(
+      byte[] bytes,
+      int offset,
+      int length) {
+       return ERationalByteArrayString.FromString(bytes, offset, length);
     }
 
     /**
@@ -875,7 +976,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Adds two rational numbers.
+     * Adds this arbitrary-precision rational number and another
+     * arbitrary-precision rational number and returns the result.
      * @param otherValue Another arbitrary-precision rational number.
      * @return The sum of the two numbers. Returns not-a-number (NaN) if either
      * operand is NaN.
@@ -1455,8 +1557,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of an arbitrary-precision rational number
-     * object.
+     * Divides this arbitrary-precision rational number by another
+     * arbitrary-precision rational number and returns the result.
      * @param otherValue An arbitrary-precision rational number.
      * @return The quotient of the two objects.
      * @throws NullPointerException The parameter {@code otherValue} is null.
@@ -1615,8 +1717,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Multiplies this instance by the value of an arbitrary-precision rational
-     * number.
+     * Multiplies this arbitrary-precision rational number by another
+     * arbitrary-precision rational number and returns the result.
      * @param otherValue An arbitrary-precision rational number.
      * @return The product of the two numbers.
      * @throws NullPointerException The parameter {@code otherValue} is null.
@@ -1671,8 +1773,9 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Finds the remainder that results when this instance is divided by the value
-     * of an arbitrary-precision rational number.
+     * Returns the remainder that would result when this arbitrary-precision
+     * rational number is divided by another arbitrary-precision rational
+     * number.
      * @param otherValue An arbitrary-precision rational number.
      * @return The remainder of the two numbers.
      * @throws NullPointerException The parameter {@code otherValue} is null.
@@ -1726,7 +1829,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Subtracts an arbitrary-precision rational number from this instance.
+     * Subtracts an arbitrary-precision rational number from this
+     * arbitrary-precision rational number and returns the result.
      * @param otherValue An arbitrary-precision rational number.
      * @return The difference of the two objects.
      * @throws NullPointerException The parameter {@code otherValue} is null.
@@ -2349,7 +2453,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the sum of a rational number and a 32-bit signed integer.
+     * Adds this arbitrary-precision rational number and a 32-bit signed integer
+     * and returns the result.
      * @param v A 32-bit signed integer.
      * @return The sum of the two numbers. Returns not-a-number (NaN) if this
      * object is NaN.
@@ -2359,8 +2464,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the result of subtracting a 32-bit signed integer from this
-     * instance.
+     * Subtracts a 32-bit signed integer from this arbitrary-precision rational
+     * number and returns the result.
      * @param v The parameter {@code v} is a 32-bit signed integer.
      * @return The difference of the two objects.
      */
@@ -2369,7 +2474,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the value of this instance multiplied by a 32-bit signed integer.
+     * Multiplies this arbitrary-precision rational number by a 32-bit signed
+     * integer and returns the result.
      * @param v The parameter {@code v} is a 32-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -2378,7 +2484,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of a 32-bit signed integer.
+     * Divides this arbitrary-precision rational number by a 32-bit signed integer
+     * and returns the result.
      * @param v The parameter {@code v} is a 32-bit signed integer.
      * @return The quotient of the two objects.
      * @throws ArithmeticException The parameter {@code v} is zero.
@@ -2388,8 +2495,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Finds the remainder that results when this instance is divided by the value
-     * of a 32-bit signed integer.
+     * Returns the remainder that would result when this arbitrary-precision
+     * rational number is divided by a 32-bit signed integer.
      * @param v The divisor.
      * @return The remainder of the two numbers.
      * @throws IllegalArgumentException The parameter {@code v} is zero.
@@ -2399,7 +2506,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the sum of a rational number and a 64-bit signed integer.
+     * Adds this arbitrary-precision rational number and a 64-bit signed integer
+     * and returns the result.
      * @param v A 64-bit signed integer.
      * @return The sum of the two numbers. Returns not-a-number (NaN) if this
      * object is NaN.
@@ -2409,8 +2517,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the result of subtracting a 64-bit signed integer from this
-     * instance.
+     * Subtracts a 64-bit signed integer from this arbitrary-precision rational
+     * number and returns the result.
      * @param v The parameter {@code v} is a 64-bit signed integer.
      * @return The difference of the two objects.
      */
@@ -2419,7 +2527,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Returns the value of this instance multiplied by a 64-bit signed integer.
+     * Multiplies this arbitrary-precision rational number by a 64-bit signed
+     * integer and returns the result.
      * @param v The parameter {@code v} is a 64-bit signed integer.
      * @return The product of the two numbers.
      */
@@ -2428,7 +2537,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Divides this instance by the value of a 64-bit signed integer.
+     * Divides this arbitrary-precision rational number by a 64-bit signed integer
+     * and returns the result.
      * @param v The parameter {@code v} is a 64-bit signed integer.
      * @return The quotient of the two objects.
      * @throws ArithmeticException The parameter {@code v} is zero.
@@ -2438,8 +2548,8 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Finds the remainder that results when this instance is divided by the value
-     * of a 64-bit signed integer.
+     * Returns the remainder that would result when this arbitrary-precision
+     * rational number is divided by a 64-bit signed integer.
      * @param v The divisor.
      * @return The remainder of the two numbers.
      * @throws IllegalArgumentException The parameter {@code v} is zero.
@@ -2534,7 +2644,7 @@ at: http://peteroupc.github.io/
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional
-     * part, is less than -32768 or greater than 32767.
+     * part, is less than -32768 or greater tha 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -2561,7 +2671,7 @@ at: http://peteroupc.github.io/
      * value.
      * @return This number's value as a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -32768 or greater than 32767.
+     * an exact integer, or is less than -32768 or greater tha 32767.
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {
