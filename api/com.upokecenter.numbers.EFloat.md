@@ -191,14 +191,23 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  number.
 * `EFloat Divide​(int intValue)`<br>
  Divides this arbitrary-precision binary floating-point number by a 32-bit
- signed integer and returns the result.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating binary expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 * `EFloat Divide​(long longValue)`<br>
  Divides this arbitrary-precision binary floating-point number by a 64-bit
- signed integer and returns the result.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating binary expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 * `EFloat Divide​(EFloat divisor)`<br>
  Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
- result.
+ result; returns NaN instead if the result would have a
+ nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and
+ so on); if this is not desired, use DivideToExponent, or use the
+ Divide overload that takes an EContext.
 * `EFloat Divide​(EFloat divisor,
       EContext ctx)`<br>
  Divides this arbitrary-precision binary floating-point number by another
@@ -270,6 +279,11 @@ Renamed to DivRemNaturalScale.
 * `EFloat Exp​(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
+* `EFloat ExpM1​(EContext ctx)`<br>
+ Finds e (the base of natural logarithms) raised to the power of this
+ object's value, and subtracts the result by 1 and returns the final
+ result, in a way that avoids loss of precision if the true result is
+ very close to 0.
 * `static EFloat FromBoolean​(boolean boolValue)`<br>
  Converts a boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
@@ -395,6 +409,10 @@ Renamed to DivRemNaturalScale.
  Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
  value.
+* `EFloat Log1P​(EContext ctx)`<br>
+ Adds 1 to this object's value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object's value is
+ between 0 and 1.
 * `EFloat LogN​(EFloat baseValue,
     EContext ctx)`<br>
  Finds the base-N logarithm of this object, that is, the power (exponent)
@@ -1001,7 +1019,7 @@ Creates a binary floating-point number from a 64-bit floating-point number
 **Returns:**
 
 * A binary floating-point number with the same value as the
- floating-point number encoded in <code>dbl</code>.
+ floating-point number encoded in <code>dblBits</code>.
 
 ### FromSingle
     public static EFloat FromSingle​(float flt)
@@ -1062,7 +1080,7 @@ Creates a binary floating-point number from a 32-bit floating-point number
 **Returns:**
 
 * A binary floating-point number with the same floating-point value as
- <code>flt</code>.
+ <code>value</code>.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
@@ -1782,8 +1800,10 @@ Multiplies this arbitrary-precision binary floating-point number by a 32-bit
 ### Divide
     public EFloat Divide​(int intValue)
 Divides this arbitrary-precision binary floating-point number by a 32-bit
- signed integer and returns the result. When possible, the result
- will be exact.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating binary expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 
 **Parameters:**
 
@@ -1846,8 +1866,10 @@ Multiplies this arbitrary-precision binary floating-point number by a 64-bit
 ### Divide
     public EFloat Divide​(long longValue)
 Divides this arbitrary-precision binary floating-point number by a 64-bit
- signed integer and returns the result. When possible, the result
- will be exact.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating binary expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 
 **Parameters:**
 
@@ -2204,7 +2226,10 @@ Returns a number with the same value as this one, but copying the sign
     public EFloat Divide​(EFloat divisor)
 Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
- result. When possible, the result will be exact.
+ result; returns NaN instead if the result would have a
+ nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and
+ so on); if this is not desired, use DivideToExponent, or use the
+ Divide overload that takes an EContext.
 
 **Parameters:**
 
@@ -2215,13 +2240,15 @@ Divides this arbitrary-precision binary floating-point number by another
 * The quotient of the two numbers. Returns infinity if the divisor is
  0 and the dividend is nonzero. Returns not-a-number (NaN) if the
  divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating binary expansion.
+ exact because it would have a nonterminating binary expansion. If
+ this is not desired, use DivideToExponent instead, or use the Divide
+ overload that takes an EContext instead.
 
 ### Divide
     public EFloat Divide​(EFloat divisor, EContext ctx)
 Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
- result. When possible, the result will be exact.
+ result.
 
 **Parameters:**
 
@@ -2603,6 +2630,29 @@ Finds e (the base of natural logarithms) raised to the power of this
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
 
+### ExpM1
+    public EFloat ExpM1​(EContext ctx)
+Finds e (the base of natural logarithms) raised to the power of this
+ object's value, and subtracts the result by 1 and returns the final
+ result, in a way that avoids loss of precision if the true result is
+ very close to 0.
+
+**Parameters:**
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). <i>This parameter
+ can't be null, as the exponential function's results are generally
+ not exact.</i> (Unlike in the General Binary Arithmetic
+ Specification, any rounding mode is allowed.).
+
+**Returns:**
+
+* Exponential of this object, minus 1. Signals FlagInvalid and returns
+ not-a-number (NaN) if the parameter <code>ctx</code> is null or the
+ precision is unlimited (the context's Precision property is 0).
+
 ### hashCode
     public int hashCode()
 Calculates this object's hash code. No application or process IDs are used
@@ -2722,6 +2772,33 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  FlagInvalid and returns not-a-number (NaN) if the parameter <code>
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
+
+### Log1P
+    public EFloat Log1P​(EContext ctx)
+Adds 1 to this object's value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object's value is
+ between 0 and 1.
+
+**Parameters:**
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). <i>This parameter
+ can't be null, as the ln function's results are generally not
+ exact.</i> (Unlike in the General Binary Arithmetic Specification,
+ any rounding mode is allowed.).
+
+**Returns:**
+
+* Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if
+ this object is less than -1 (the result would be a complex number
+ with a real part equal to Ln of 1 plus this object's absolute value
+ and an imaginary part equal to pi, but the return value is still
+ NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the
+ parameter <code>ctx</code> is null or the precision is unlimited (the
+ context's Precision property is 0). Signals no flags and returns
+ negative infinity if this object's value is 0.
 
 ### LogN
     public EFloat LogN​(EFloat baseValue, EContext ctx)
@@ -4272,7 +4349,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
  number, once converted to an integer by discarding its fractional
- part, is less than -32768 or greater tha 32767.
+ part, is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -4298,7 +4375,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
- an exact integer, or is less than -32768 or greater tha 32767.
+ an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
     public static EFloat FromInt16​(short inputInt16)

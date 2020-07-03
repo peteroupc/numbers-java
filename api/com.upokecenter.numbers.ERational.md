@@ -5,8 +5,11 @@
 Represents an arbitrary-precision rational number. This class can't be
   inherited. (The "E" stands for "extended", meaning that instances of
  this class can be values other than numbers proper, such as infinity
- and not-a-number.) <p><b>Thread safety:</b> Instances of this class
- are immutable, so they are inherently safe for use by multiple
+ and not-a-number.) In this class, a rational number consists of a
+ numerator and denominator, each an arbitrary-precision integer
+ (EInteger), and this class does not automatically convert rational
+ numbers to lowest terms. <p><b>Thread safety:</b> Instances of this
+ class are immutable, so they are inherently safe for use by multiple
  threads. Multiple instances of this object with the same properties
   are interchangeable, so they should not be compared using the "=="
  operator (which might only check if each side of the operator is the
@@ -34,9 +37,10 @@ Represents an arbitrary-precision rational number. This class can't be
 ## Constructors
 
 * `ERational​(EInteger numerator,
-         EInteger denominator) ERational`<br>
- Initializes a new instance of the ERational
- class.
+         EInteger denominator)`<br>
+ Deprecated.
+Use the Create method instead.
+ Use the Create method instead.
 
 ## Methods
 
@@ -544,6 +548,9 @@ Creates a rational number with the given numerator and denominator.
 
 * <code>java.lang.IllegalArgumentException</code> - The denominator is zero.
 
+* <code>java.lang.NullPointerException</code> - The parameter <code>numerator</code> or <code>
+ denominator</code> is null.
+
 ### CreateNaN
     public static ERational CreateNaN​(EInteger diag)
 Creates a not-a-number arbitrary-precision rational number.
@@ -708,7 +715,8 @@ Creates a binary rational number from a 32-bit floating-point number encoded
 
 **Returns:**
 
-* A rational number with the same floating-point value as <code>flt</code>.
+* A rational number with the same floating-point value as <code>
+ value</code>.
 
 ### FromDoubleBits
     public static ERational FromDoubleBits​(long value)
@@ -723,7 +731,8 @@ Creates a binary rational number from a 64-bit floating-point number encoded
 
 **Returns:**
 
-* A rational number with the same floating-point value as <code>flt</code>.
+* A rational number with the same floating-point value as <code>
+ value</code>.
 
 ### FromString
     public static ERational FromString​(java.lang.String str)
@@ -2050,7 +2059,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
  number, once converted to an integer by discarding its fractional
- part, is less than -32768 or greater tha 32767.
+ part, is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -2076,7 +2085,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
- an exact integer, or is less than -32768 or greater tha 32767.
+ an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
     public static ERational FromInt16​(short inputInt16)

@@ -86,8 +86,8 @@ Renamed to ToInt64Unchecked.
  the remainder, in that order.
 * `EInteger[] DivRem​(long intDivisor)`<br>
  Divides this arbitrary-precision integer by a 64-bit signed integer and
- returns a two-item array containing the result of the division and the
- remainder, in that order.
+ returns a two-item array containing the result of the division and
+ the remainder, in that order.
 * `EInteger[] DivRem​(EInteger divisor)`<br>
  Divides this arbitrary-precision integer by another arbitrary-precision
  integer and returns a two-item array containing the result of the
@@ -294,6 +294,14 @@ This method may overflow.
 * `EInteger Remainder​(EInteger divisor)`<br>
  Returns the remainder that would result when this arbitrary-precision
  integer is divided by another arbitrary-precision integer.
+* `EInteger Root​(int root)`<br>
+ Finds the nth root of this instance's value, rounded down.
+* `EInteger Root​(EInteger root)`<br>
+ Finds the nth root of this instance's value, rounded down.
+* `EInteger[] RootRem​(int root)`<br>
+ Calculates the nth root and the remainder.
+* `EInteger[] RootRem​(EInteger root)`<br>
+ Calculates the nth root and the remainder.
 * `EInteger ShiftLeft​(int numberBits)`<br>
  Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits.
@@ -1249,10 +1257,11 @@ Multiplies this arbitrary-precision integer by a 64-bit signed integer and
     public EInteger Divide​(long longValue)
 Divides this arbitrary-precision integer by a 64-bit signed integer and
  returns the result. The result of the division is rounded down (the
- fractional part is discarded). Except if the result of the division is
- 0, it will be negative if this arbitrary-precision integer is positive
- and the other 64-bit signed integer is negative, or vice versa, and
- will be positive if both are positive or both are negative.
+ fractional part is discarded). Except if the result of the division
+ is 0, it will be negative if this arbitrary-precision integer is
+ positive and the other 64-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are
+ negative.
 
 **Parameters:**
 
@@ -1268,8 +1277,8 @@ Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 64-bit signed integer. The remainder is the
  number that remains when the absolute value of this
  arbitrary-precision integer is divided by the absolute value of the
- other 64-bit signed integer; the remainder has the same sign (positive
- or negative) as this arbitrary-precision integer.
+ other 64-bit signed integer; the remainder has the same sign
+ (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -1294,16 +1303,16 @@ Not documented yet.
 ### DivRem
     public EInteger[] DivRem​(long intDivisor)
 Divides this arbitrary-precision integer by a 64-bit signed integer and
- returns a two-item array containing the result of the division and the
- remainder, in that order. The result of the division is rounded down
- (the fractional part is discarded). Except if the result of the
- division is 0, it will be negative if this arbitrary-precision integer
- is positive and the other 64-bit signed integer is negative, or vice
- versa, and will be positive if both are positive or both are negative.
- The remainder is the number that remains when the absolute value of
- this arbitrary-precision integer is divided by the absolute value of
- the other 64-bit signed integer; the remainder has the same sign
- (positive or negative) as this arbitrary-precision integer.
+ returns a two-item array containing the result of the division and
+ the remainder, in that order. The result of the division is rounded
+ down (the fractional part is discarded). Except if the result of the
+ division is 0, it will be negative if this arbitrary-precision
+ integer is positive and the other 64-bit signed integer is negative,
+ or vice versa, and will be positive if both are positive or both are
+ negative. The remainder is the number that remains when the absolute
+ value of this arbitrary-precision integer is divided by the absolute
+ value of the other 64-bit signed integer; the remainder has the same
+ sign (positive or negative) as this arbitrary-precision integer.
 
 **Parameters:**
 
@@ -2117,6 +2126,74 @@ Calculates the square root and the remainder.
  and the square of the first integer. Returns two zeros if this value
  is 0 or less, or one and zero if this value equals 1.
 
+### Root
+    public EInteger Root​(EInteger root)
+Finds the nth root of this instance's value, rounded down.
+
+**Parameters:**
+
+* <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
+ method finds the square root; if 3, the cube root, and so on.
+
+**Returns:**
+
+* The square root of this object's value. Returns 0 if this value is 0
+ or less.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>root</code> is null.
+
+### RootRem
+    public EInteger[] RootRem​(EInteger root)
+Calculates the nth root and the remainder.
+
+**Parameters:**
+
+* <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
+ method finds the square root; if 3, the cube root, and so on.
+
+**Returns:**
+
+* An array of two arbitrary-precision integers: the first integer is
+ the nth root, and the second is the difference between this value
+ and the nth power of the first integer. Returns two zeros if this
+ value is 0 or less, or one and zero if this value equals 1.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>root</code> is null.
+
+### Root
+    public EInteger Root​(int root)
+Finds the nth root of this instance's value, rounded down.
+
+**Parameters:**
+
+* <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
+ method finds the square root; if 3, the cube root, and so on.
+
+**Returns:**
+
+* The square root of this object's value. Returns 0 if this value is 0
+ or less.
+
+### RootRem
+    public EInteger[] RootRem​(int root)
+Calculates the nth root and the remainder.
+
+**Parameters:**
+
+* <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
+ method finds the square root; if 3, the cube root, and so on.
+
+**Returns:**
+
+* An array of two arbitrary-precision integers: the first integer is
+ the nth root, and the second is the difference between this value
+ and the nth power of the first integer. Returns two zeros if this
+ value is 0 or less, or one and zero if this value equals 1.
+
 ### Subtract
     public EInteger Subtract​(EInteger subtrahend)
 Subtracts an arbitrary-precision integer from this arbitrary-precision
@@ -2288,7 +2365,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 **Throws:**
 
-* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater tha
+* <code>java.lang.ArithmeticException</code> - This value is less than -32768 or greater than
  32767.
 
 ### ToInt16Unchecked

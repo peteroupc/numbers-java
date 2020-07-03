@@ -11,8 +11,11 @@ at: http://peteroupc.github.io/
    * Represents an arbitrary-precision rational number. This class can't be
    *  inherited. (The "E" stands for "extended", meaning that instances of
    * this class can be values other than numbers proper, such as infinity
-   * and not-a-number.) <p><b>Thread safety:</b> Instances of this class
-   * are immutable, so they are inherently safe for use by multiple
+   * and not-a-number.) In this class, a rational number consists of a
+   * numerator and denominator, each an arbitrary-precision integer
+   * (EInteger), and this class does not automatically convert rational
+   * numbers to lowest terms. <p><b>Thread safety:</b> Instances of this
+   * class are immutable, so they are inherently safe for use by multiple
    * threads. Multiple instances of this object with the same properties
    *  are interchangeable, so they should not be compared using the "=="
    * operator (which might only check if each side of the operator is the
@@ -27,9 +30,9 @@ at: http://peteroupc.github.io/
      */
 
     public static final ERational NaN = new ERational(
-      EInteger.FromInt32(0),
-      EInteger.FromInt32(1),
-      BigNumberFlags.FlagQuietNaN);
+      FastIntegerFixed.Zero,
+      FastIntegerFixed.One,
+      (byte)BigNumberFlags.FlagQuietNaN);
 
     /**
      * Negative infinity, less than any other number.
@@ -37,16 +40,19 @@ at: http://peteroupc.github.io/
 
     public static final ERational NegativeInfinity =
       new ERational(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(1),
-        BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
+        FastIntegerFixed.Zero,
+        FastIntegerFixed.One,
+        (byte)(BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative));
 
     /**
      * A rational number for negative zero.
      */
 
     public static final ERational NegativeZero =
-      new ERational(EInteger.FromInt32(0), EInteger.FromInt32(1), BigNumberFlags.FlagNegative);
+      new ERational(
+          FastIntegerFixed.Zero,
+          FastIntegerFixed.One,
+          (byte)BigNumberFlags.FlagNegative);
 
     /**
      * The rational number one.
@@ -60,9 +66,9 @@ at: http://peteroupc.github.io/
 
     public static final ERational PositiveInfinity =
       new ERational(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(1),
-        BigNumberFlags.FlagInfinity);
+        FastIntegerFixed.Zero,
+        FastIntegerFixed.One,
+        (byte)BigNumberFlags.FlagInfinity);
 
     /**
      * A signaling not-a-number value.
@@ -70,9 +76,9 @@ at: http://peteroupc.github.io/
 
     public static final ERational SignalingNaN =
       new ERational(
-        EInteger.FromInt32(0),
-        EInteger.FromInt32(1),
-        BigNumberFlags.FlagSignalingNaN);
+        FastIntegerFixed.Zero,
+        FastIntegerFixed.One,
+        (byte)BigNumberFlags.FlagSignalingNaN);
 
     /**
      * The rational number ten.
@@ -86,12 +92,15 @@ at: http://peteroupc.github.io/
 
     public static final ERational Zero = FromEInteger(EInteger.FromInt32(0));
 
-    private final EInteger denominator;
+    private final FastIntegerFixed denominator;
 
-    private final int flags;
-    private final EInteger unsignedNumerator;
+    private final byte flags;
+    private final FastIntegerFixed unsignedNumerator;
 
-    private ERational(EInteger numerator, EInteger denominator, int flags) {
+    private ERational(
+      FastIntegerFixed numerator,
+      FastIntegerFixed denominator,
+      byte flags) {
       this.unsignedNumerator = numerator;
       this.denominator = denominator;
       this.flags = flags;
@@ -106,7 +115,9 @@ at: http://peteroupc.github.io/
      * @throws NullPointerException The parameter {@code numerator} or {@code
      * denominator} is null.
      * @throws IllegalArgumentException Denominator is zero.
-     */
+     * @deprecated Use the Create method instead.
+ */
+@Deprecated
     public ERational(EInteger numerator, EInteger denominator) {
       if (numerator == null) {
         throw new NullPointerException("numerator");
@@ -119,16 +130,16 @@ at: http://peteroupc.github.io/
       }
       boolean numNegative = numerator.signum() < 0;
       boolean denNegative = denominator.signum() < 0;
-      this.flags = (numNegative != denNegative) ?
-        BigNumberFlags.FlagNegative : 0;
+      this.flags = (byte)((numNegative != denNegative) ?
+        BigNumberFlags.FlagNegative : 0);
       if (numNegative) {
         numerator = numerator.Negate();
       }
       if (denNegative) {
         denominator = denominator.Negate();
       }
-      this.unsignedNumerator = numerator;
-      this.denominator = denominator;
+      this.unsignedNumerator = FastIntegerFixed.FromBig(numerator);
+      this.denominator = FastIntegerFixed.FromBig(denominator);
     }
 
     /**
@@ -147,7 +158,7 @@ at: http://peteroupc.github.io/
      * @return This object's denominator.
      */
     public final EInteger getDenominator() {
-        return this.denominator;
+        return this.denominator.ToEInteger();
       }
 
     /**
@@ -178,7 +189,8 @@ at: http://peteroupc.github.io/
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
-                BigNumberFlags.FlagNaN)) == 0) && this.unsignedNumerator.isZero();
+                BigNumberFlags.FlagNaN)) == 0) &&
+this.unsignedNumerator.isValueZero();
       }
 
     /**
@@ -187,8 +199,16 @@ at: http://peteroupc.github.io/
      * false}.
      */
     public boolean IsInteger() {
-      return this.isFinite() &&
-        this.unsignedNumerator.Remainder(this.denominator).signum() == 0;
+      if (!this.isFinite()) {
+        return false;
+      }
+      if (this.denominator.isEvenNumber() &&
+           !this.unsignedNumerator.isEvenNumber()) {
+        // Even denominator, odd numerator, so not an integer
+        return false;
+      }
+      EInteger rem = this.getNumerator().Remainder(this.getDenominator());
+      return rem.isZero();
     }
 
     /**
@@ -198,8 +218,8 @@ at: http://peteroupc.github.io/
      * object is negative).
      */
     public final EInteger getNumerator() {
-        return this.isNegative() ? ((this.unsignedNumerator).Negate()) :
-          this.unsignedNumerator;
+        return this.isNegative() ? this.unsignedNumerator.Negate().ToEInteger() :
+          this.unsignedNumerator.ToEInteger();
       }
 
     /**
@@ -209,7 +229,7 @@ at: http://peteroupc.github.io/
     public final int signum() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
                 BigNumberFlags.FlagNaN)) != 0) ? (this.isNegative() ? -1 : 1) :
-          (this.unsignedNumerator.isZero() ? 0 : (this.isNegative() ? -1 : 1));
+          (this.unsignedNumerator.isValueZero() ? 0 : (this.isNegative() ? -1 : 1));
       }
 
     /**
@@ -218,7 +238,7 @@ at: http://peteroupc.github.io/
      * returns the diagnostic information.
      */
     public final EInteger getUnsignedNumerator() {
-        return this.unsignedNumerator;
+        return this.unsignedNumerator.ToEInteger();
       }
 
     /**
@@ -253,11 +273,35 @@ at: http://peteroupc.github.io/
      * @param denominator The denominator.
      * @return An arbitrary-precision rational number.
      * @throws IllegalArgumentException The denominator is zero.
+     * @throws NullPointerException The parameter {@code numerator} or {@code
+     * denominator} is null.
      */
     public static ERational Create(
       EInteger numerator,
       EInteger denominator) {
-      return new ERational(numerator, denominator);
+      if (numerator == null) {
+        throw new NullPointerException("numerator");
+      }
+      if (denominator == null) {
+        throw new NullPointerException("denominator");
+      }
+      if (denominator.isZero()) {
+        throw new IllegalArgumentException("denominator is zero");
+      }
+      boolean numNegative = numerator.signum() < 0;
+      boolean denNegative = denominator.signum() < 0;
+      byte bflags = (byte)((numNegative != denNegative) ?
+        BigNumberFlags.FlagNegative : 0);
+      if (numNegative) {
+        numerator = numerator.Negate();
+      }
+      if (denNegative) {
+        denominator = denominator.Negate();
+      }
+      return new ERational(
+         FastIntegerFixed.FromBig(numerator),
+         FastIntegerFixed.FromBig(denominator),
+         bflags);
     }
 
     /**
@@ -308,7 +352,9 @@ at: http://peteroupc.github.io/
       }
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
-      return new ERational(diag, EInteger.FromInt32(1), flags);
+      return new ERational(FastIntegerFixed.FromBig(diag),
+  FastIntegerFixed.One,
+  (byte)flags);
     }
 
     /**
@@ -358,20 +404,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite()) {
-        int flags = 0;
-        if (ef.isNegative()) {
-          flags |= BigNumberFlags.FlagNegative;
-        }
-        if (ef.IsInfinity()) {
-          flags |= BigNumberFlags.FlagInfinity;
-        }
-        if (ef.IsSignalingNaN()) {
-          flags |= BigNumberFlags.FlagSignalingNaN;
-        }
-        if (ef.IsQuietNaN()) {
-          flags |= BigNumberFlags.FlagQuietNaN;
-        }
-        return new ERational(ef.getUnsignedMantissa(), EInteger.FromInt32(1), flags);
+        return ef.IsInfinity() ? (ef.isNegative() ? NegativeInfinity :
+PositiveInfinity) : CreateNaN(
+                 ef.getUnsignedMantissa(),
+                 ef.IsSignalingNaN(),
+                 ef.isNegative());
       }
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
@@ -407,20 +444,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("ef");
       }
       if (!ef.isFinite()) {
-        int flags = 0;
-        if (ef.isNegative()) {
-          flags |= BigNumberFlags.FlagNegative;
-        }
-        if (ef.IsInfinity()) {
-          flags |= BigNumberFlags.FlagInfinity;
-        }
-        if (ef.IsSignalingNaN()) {
-          flags |= BigNumberFlags.FlagSignalingNaN;
-        }
-        if (ef.IsQuietNaN()) {
-          flags |= BigNumberFlags.FlagQuietNaN;
-        }
-        return new ERational(ef.getUnsignedMantissa(), EInteger.FromInt32(1), flags);
+        return ef.IsInfinity() ? (ef.isNegative() ? NegativeInfinity :
+PositiveInfinity) : CreateNaN(
+                 ef.getUnsignedMantissa(),
+                 ef.IsSignalingNaN(),
+                 ef.isNegative());
       }
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
@@ -470,7 +498,8 @@ at: http://peteroupc.github.io/
      * value of the floating point number, not an approximation, as is
      * often the case by converting the number to a string.
      * @param value A 32-bit integer encoded in the IEEE 754 binary32 format.
-     * @return A rational number with the same floating-point value as {@code flt}.
+     * @return A rational number with the same floating-point value as {@code
+     * value}.
      */
     public static ERational FromSingleBits(int value) {
       return FromEFloat(EFloat.FromSingleBits(value));
@@ -482,7 +511,8 @@ at: http://peteroupc.github.io/
      * value of the floating point number, not an approximation, as is
      * often the case by converting the number to a string.
      * @param value A 64-bit integer encoded in the IEEE 754 binary64 format.
-     * @return A rational number with the same floating-point value as {@code flt}.
+     * @return A rational number with the same floating-point value as {@code
+     * value}.
      */
     public static ERational FromDoubleBits(long value) {
       return FromEFloat(EFloat.FromDoubleBits(value));
@@ -970,7 +1000,7 @@ at: http://peteroupc.github.io/
         return new ERational(
             this.unsignedNumerator,
             this.denominator,
-            this.flags & ~BigNumberFlags.FlagNegative);
+            (byte)(this.flags & ~BigNumberFlags.FlagNegative));
       }
       return this;
     }
@@ -988,11 +1018,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN(this.getUnsignedNumerator(), false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-            otherValue.unsignedNumerator,
+            otherValue.getUnsignedNumerator(),
             false,
             otherValue.isNegative());
       }
@@ -1217,14 +1247,12 @@ at: http://peteroupc.github.io/
       int cmp = first.CompareToValue(second);
       if (cmp == 0) {
         if (first.isNegative()) {
-          return (!second.isNegative()) ? first :
-(first.getDenominator().compareTo(second.getDenominator()) < 0 ?
-
+          return (!second.isNegative()) ? first : (
+              first.getDenominator().compareTo(second.getDenominator()) < 0 ?
               first : second);
         } else {
-          return second.isNegative() ? second :
-(first.getDenominator().compareTo(second.getDenominator()) > 0 ?
-
+          return second.isNegative() ? second : (
+              first.getDenominator().compareTo(second.getDenominator()) > 0 ?
               first : second);
         }
       }
@@ -1568,11 +1596,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN(this.getUnsignedNumerator(), false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-            otherValue.unsignedNumerator,
+            otherValue.getUnsignedNumerator(),
             false,
             otherValue.isNegative());
       }
@@ -1599,10 +1627,7 @@ at: http://peteroupc.github.io/
       }
       EInteger ad = this.getNumerator().Multiply(otherValue.getDenominator());
       EInteger bc = this.getDenominator().Multiply(otherValue.getNumerator());
-      return new ERational(
-          ad.Abs(),
-          bc.Abs(),
-          resultNeg ? BigNumberFlags.FlagNegative : 0);
+      return Create(ad, bc);
     }
 
     /**
@@ -1728,11 +1753,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN(this.getUnsignedNumerator(), false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-            otherValue.unsignedNumerator,
+            otherValue.getUnsignedNumerator(),
             false,
             otherValue.isNegative());
       }
@@ -1754,10 +1779,7 @@ at: http://peteroupc.github.io/
       EInteger ac = this.getNumerator().Multiply(otherValue.getNumerator());
       EInteger bd = this.getDenominator().Multiply(otherValue.getDenominator());
       return ac.isZero() ? (resultNeg ? NegativeZero : Zero) :
-        new ERational(
-          ac.Abs(),
-          bd.Abs(),
-          resultNeg ? BigNumberFlags.FlagNegative : 0);
+        Create(ac, bd);
     }
 
     /**
@@ -1769,7 +1791,7 @@ at: http://peteroupc.github.io/
       return new ERational(
           this.unsignedNumerator,
           this.denominator,
-          this.flags ^ BigNumberFlags.FlagNegative);
+          (byte)(this.flags ^ BigNumberFlags.FlagNegative));
     }
 
     /**
@@ -1785,11 +1807,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN(this.getUnsignedNumerator(), false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-            otherValue.unsignedNumerator,
+            otherValue.getUnsignedNumerator(),
             false,
             otherValue.isNegative());
       }
@@ -1799,7 +1821,6 @@ at: http://peteroupc.github.io/
       if (otherValue.IsQuietNaN()) {
         return otherValue;
       }
-      boolean resultNeg = this.isNegative() ^ otherValue.isNegative();
       if (this.IsInfinity()) {
         return NaN;
       }
@@ -1822,10 +1843,7 @@ at: http://peteroupc.github.io/
       bc = thisDen.Multiply(tnum);
       tden = tden.Multiply(thisDen);
       ad = ad.Subtract(bc);
-      return new ERational(
-          ad.Abs(),
-          tden.Abs(),
-          resultNeg ? BigNumberFlags.FlagNegative : 0);
+      return Create(ad, tden);
     }
 
     /**
@@ -1840,11 +1858,11 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("otherValue");
       }
       if (this.IsSignalingNaN()) {
-        return CreateNaN(this.unsignedNumerator, false, this.isNegative());
+        return CreateNaN(this.getUnsignedNumerator(), false, this.isNegative());
       }
       if (otherValue.IsSignalingNaN()) {
         return CreateNaN(
-            otherValue.unsignedNumerator,
+            otherValue.getUnsignedNumerator(),
             false,
             otherValue.isNegative());
       }
@@ -1886,7 +1904,7 @@ at: http://peteroupc.github.io/
         return EFloat.NegativeZero.ToDouble();
       }
       return EFloat.FromEInteger(this.getNumerator())
-        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary64)
+        .Divide(EFloat.FromEInteger(this.getDenominator()), EContext.Binary64)
         .ToDouble();
     }
 
@@ -1913,7 +1931,7 @@ at: http://peteroupc.github.io/
         return EFloat.NegativeZero.ToDoubleBits();
       }
       return EFloat.FromEInteger(this.getNumerator())
-        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary64)
+        .Divide(EFloat.FromEInteger(this.getDenominator()), EContext.Binary64)
         .ToDoubleBits();
     }
 
@@ -1940,7 +1958,7 @@ at: http://peteroupc.github.io/
         return EFloat.NegativeZero.ToSingleBits();
       }
       return EFloat.FromEInteger(this.getNumerator())
-        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary32)
+        .Divide(EFloat.FromEInteger(this.getDenominator()), EContext.Binary32)
         .ToSingleBits();
     }
 
@@ -1962,7 +1980,7 @@ at: http://peteroupc.github.io/
         return this.isNegative() ? NegativeZero : Zero;
       }
       EInteger num = this.getNumerator();
-      EInteger den = this.denominator;
+      EInteger den = this.getDenominator();
       EInteger gcd = num.Abs().Gcd(den);
       return Create(num.Divide(gcd), den.Divide(gcd));
     }
@@ -1991,7 +2009,7 @@ at: http://peteroupc.github.io/
         throw new ArithmeticException("Value is infinity or NaN");
       }
       EInteger unum = this.getUnsignedNumerator();
-      EInteger uden = this.denominator;
+      EInteger uden = this.getDenominator();
       if (unum.compareTo(uden) < 0) {
         return EInteger.FromInt32(0);
       }
@@ -2030,7 +2048,7 @@ at: http://peteroupc.github.io/
         throw new ArithmeticException("Value is infinity or NaN");
       }
       EInteger unum = this.getUnsignedNumerator();
-      EInteger uden = this.denominator;
+      EInteger uden = this.getDenominator();
       if (unum.isZero()) {
         return EInteger.FromInt32(0);
       }
@@ -2062,7 +2080,7 @@ at: http://peteroupc.github.io/
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      return this.getNumerator().Divide(this.denominator);
+      return this.getNumerator().Divide(this.getDenominator());
     }
 
     /**
@@ -2089,13 +2107,14 @@ at: http://peteroupc.github.io/
       if (!this.isFinite()) {
         throw new ArithmeticException("Value is infinity or NaN");
       }
-      if (this.denominator.isEven() && !this.unsignedNumerator.isEven()) {
+      if (this.denominator.isEvenNumber() &&
+           !this.unsignedNumerator.isEvenNumber()) {
         // Even denominator, odd numerator, so not an integer
         throw new ArithmeticException("Value is not an integer");
       }
       EInteger rem;
       EInteger quo;
-      EInteger[] divrem = this.getNumerator().DivRem(this.denominator);
+      EInteger[] divrem = this.getNumerator().DivRem(this.getDenominator());
       quo = divrem[0];
       rem = divrem[1];
       if (!rem.isZero()) {
@@ -2129,7 +2148,7 @@ at: http://peteroupc.github.io/
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
         return EDecimal.CreateNaN(
-            this.unsignedNumerator,
+            this.getUnsignedNumerator(),
             this.IsSignalingNaN(),
             this.isNegative(),
             ctx);
@@ -2168,7 +2187,7 @@ at: http://peteroupc.github.io/
       }
       if (this.IsNaN()) {
         return EDecimal.CreateNaN(
-            this.unsignedNumerator,
+            this.getUnsignedNumerator(),
             this.IsSignalingNaN(),
             this.isNegative(),
             ctx);
@@ -2270,7 +2289,7 @@ at: http://peteroupc.github.io/
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
-            this.unsignedNumerator,
+            this.getUnsignedNumerator(),
             this.IsSignalingNaN(),
             this.isNegative(),
             ctx);
@@ -2308,7 +2327,7 @@ at: http://peteroupc.github.io/
       }
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
-            this.unsignedNumerator,
+            this.getUnsignedNumerator(),
             this.IsSignalingNaN(),
             this.isNegative(),
             ctx);
@@ -2401,7 +2420,7 @@ at: http://peteroupc.github.io/
         return EFloat.NegativeZero.ToSingle();
       }
       return EFloat.FromEInteger(this.getNumerator())
-        .Divide(EFloat.FromEInteger(this.denominator), EContext.Binary32)
+        .Divide(EFloat.FromEInteger(this.getDenominator()), EContext.Binary32)
         .ToSingle();
     }
 
@@ -2415,14 +2434,14 @@ at: http://peteroupc.github.io/
     @Override public String toString() {
       if (!this.isFinite()) {
         if (this.IsSignalingNaN()) {
-          if (this.unsignedNumerator.isZero()) {
+          if (this.unsignedNumerator.isValueZero()) {
             return this.isNegative() ? "-sNaN" : "sNaN";
           }
           return this.isNegative() ? "-sNaN" + this.unsignedNumerator :
             "sNaN" + this.unsignedNumerator;
         }
         if (this.IsQuietNaN()) {
-          if (this.unsignedNumerator.isZero()) {
+          if (this.unsignedNumerator.isValueZero()) {
             return this.isNegative() ? "-NaN" : "NaN";
           }
           return this.isNegative() ? "-NaN" + this.unsignedNumerator :
@@ -2432,7 +2451,7 @@ at: http://peteroupc.github.io/
           return this.isNegative() ? "-Infinity" : "Infinity";
         }
       }
-      return (this.getNumerator().isZero() && this.isNegative()) ? ("-0/" +
+      return (this.unsignedNumerator.isValueZero() && this.isNegative()) ? ("-0/" +
           this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
     }
 
@@ -2644,7 +2663,7 @@ at: http://peteroupc.github.io/
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional
-     * part, is less than -32768 or greater tha 32767.
+     * part, is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -2671,7 +2690,7 @@ at: http://peteroupc.github.io/
      * value.
      * @return This number's value as a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -32768 or greater tha 32767.
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {

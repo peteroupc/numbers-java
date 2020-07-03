@@ -1048,8 +1048,6 @@ at: http://peteroupc.github.io/
         if (ctx.getHasExponentRange() && this.thisRadix >= 2 &&
             this.thisRadix <= 12 &&
             this.compareTo(thisValue, this.helper.ValueOf(10)) > 0) {
-          // FastInteger[] precBounds = NumberUtility.DigitLengthBounds(
-            // this.helper, // this.helper.GetMantissa(thisValue));
           // Calculated with ceil(ln(radix))+1 (radixes 0 and 1 are
           // not used and have entries of 1)
           int[] upperDivisors = {
@@ -1155,79 +1153,6 @@ at: http://peteroupc.github.io/
 
     public IRadixMathHelper<T> GetHelper() {
       return this.helper;
-    }
-
-    public T Ln1P(T thisValue, EContext ctx) {
-      if (ctx == null) {
-        return this.SignalInvalidWithMessage(ctx, "ctx is null");
-      }
-      if (!ctx.getHasMaxPrecision()) {
-        return this.SignalInvalidWithMessage(
-            ctx,
-            "ctx has unlimited precision");
-      }
-      int flags = this.helper.GetFlags(thisValue);
-      if ((flags & BigNumberFlags.FlagSignalingNaN) != 0) {
-        // NOTE: Returning a signaling NaN is independent of
-        // rounding mode
-        return this.SignalingNaNInvalid(thisValue, ctx);
-      }
-      if ((flags & BigNumberFlags.FlagQuietNaN) != 0) {
-        // NOTE: Returning a quiet NaN is independent of
-        // rounding mode
-        return this.ReturnQuietNaN(thisValue, ctx);
-      }
-      int sign = this.helper.GetSign(thisValue);
-      if (sign < 0) {
-        if ((flags & BigNumberFlags.FlagInfinity) != 0) {
-          return this.SignalInvalid(ctx);
-        }
-        T eabs = this.AbsRaw(thisValue);
-        int cmpOne = this.compareTo(eabs, this.helper.ValueOf(1));
-        if (cmpOne == 0) {
-           // ln(0), so negative infinity
-           return this.helper.CreateNewWithFlags(
-             EInteger.FromInt32(0),
-             EInteger.FromInt32(0),
-             BigNumberFlags.FlagNegative | BigNumberFlags.FlagInfinity);
-        } else if (cmpOne > 0) {
-           // ln(negative)
-           return this.SignalInvalid(ctx);
-        } else {
-           // TODO: ln(0 > x < 1)
-           throw new UnsupportedOperationException();
-        }
-      }
-      if ((flags & BigNumberFlags.FlagInfinity) != 0) {
-        return thisValue;
-      }
-      EContext ctxCopy = ctx.WithBlankFlags();
-      T one = this.helper.ValueOf(1);
-      // ERounding intermedRounding = ERounding.HalfEven;
-      if (sign == 0) {
-        return this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(EInteger.FromInt32(0), EInteger.FromInt32(0), 0),
-              ctxCopy);
-      } else {
-        int cmpOne = this.compareTo(thisValue, one);
-        // EContext ctxdiv = null;
-        if (cmpOne == 0) {
-          // ln(2)
-          thisValue = this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(EInteger.FromInt32(0), EInteger.FromInt32(0), 0),
-              ctxCopy);
-        } else if (cmpOne < 0) {
-          // TODO: ln(1 > x < 2)
-          throw new UnsupportedOperationException();
-        } else {
-          // TODO: ln(x > 2)
-          throw new UnsupportedOperationException();
-        }
-      }
-      if (ctx.getHasFlags()) {
-        ctx.setFlags(ctx.getFlags()|(ctxCopy.getFlags()));
-      }
-      return thisValue;
     }
 
     public T Ln(T thisValue, EContext ctx) {
@@ -1353,26 +1278,48 @@ at: http://peteroupc.github.io/
             FastInteger roots = new FastInteger(0);
             FastInteger error;
             EInteger bigError;
-            error = (this.compareTo(thisValue,
-  this.helper.ValueOf(Integer.MAX_VALUE)) >= 0) ?
-               new FastInteger(16) : new FastInteger(10);
+            FastIntegerFixed fmant = this.helper.GetMantissaFastInt(thisValue);
+            FastIntegerFixed[] bounds = NumberUtility.DigitLengthBoundsFixed(
+                  this.helper,
+                  fmant);
+            // System.out.println("thisValue "+thisValue);
+            // System.out.println("bounds "+bounds[1]+" ctxprec="+ctx.getPrecision());
+            error = new FastInteger(10);
+            if (this.compareTo(thisValue,
+                this.helper.ValueOf(10000000)) >= 0) {
+              if (this.helper.GetRadix() == 2) {
+                error = new FastInteger(32);
+              }
+              error = new FastInteger(16);
+            }
             bigError = error.ToEInteger();
-            ctxdiv = SetPrecisionIfLimited(ctx, ctx.getPrecision().Add(bigError))
+            EInteger cprec = EInteger.Max(bounds[1].ToEInteger(), ctx.getPrecision())
+               .Add(bigError);
+            ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
             T smallfrac = (ctxdiv.getPrecision().compareTo(400) > 0) ?
               this.Divide(one, this.helper.ValueOf(1000000), ctxdiv) :
-              this.Divide(one, this.helper.ValueOf(60), ctxdiv);
+              this.Divide(one, this.helper.ValueOf(200), ctxdiv);
             T closeToOne = this.Add(one, smallfrac, null);
             // System.out.println("Before Ln " +thisValue);
+            T oldThisValue = thisValue;
             // Take square root until this value
             // is close to 1
-            while (this.compareTo(thisValue, closeToOne) >= 0) {
+            while (this.compareTo(thisValue, two) >= 0) {
               thisValue = this.SquareRoot(
                   thisValue,
                   ctxdiv.WithUnlimitedExponents());
               // System.out.println("--> " +thisValue);
               roots.Increment();
             }
+            for (int i = 0; i < 8; ++i) {
+              thisValue = this.SquareRoot(
+                  thisValue,
+                  ctxdiv.WithUnlimitedExponents());
+              // System.out.println("--> " +thisValue);
+              roots.Increment();
+            }
+            // System.out.println("rootcount="+roots);
             // Find -Ln(1/thisValue)
             // System.out.println("LnInternalCloseToOne C " + thisValue);
             thisValue = this.Divide(one, thisValue, ctxdiv);
@@ -2559,6 +2506,135 @@ at: http://peteroupc.github.io/
           context);
     }
 
+    private T Root(T thisValue, int root, EContext ctx) {
+      if (ctx == null) {
+        return this.SignalInvalidWithMessage(ctx, "ctx is null");
+      }
+      if (!ctx.getHasMaxPrecision()) {
+        return this.SignalInvalidWithMessage(
+            ctx,
+            "ctx has unlimited precision");
+      }
+      T ret = this.SquareRootHandleSpecial(thisValue, ctx);
+      if ((Object)ret != (Object)null) {
+        return ret;
+      }
+      EContext ctxtmp = ctx.WithBlankFlags();
+      EInteger currentExp = this.helper.GetExponent(thisValue);
+      EInteger origExp = currentExp;
+      EInteger idealExp;
+      idealExp = currentExp;
+      idealExp = idealExp.Divide(EInteger.FromInt64(root));
+      if (currentExp.signum() < 0 && !currentExp.isEven()) {
+        // Round towards negative infinity; BigInteger's
+        // division operation rounds towards zero
+        idealExp = idealExp.Subtract(EInteger.FromInt32(1));
+      }
+      // System.out.println("curr=" + currentExp + " ideal=" + idealExp);
+      if (this.helper.GetSign(thisValue) == 0) {
+        ret = this.RoundToPrecision(
+            this.helper.CreateNewWithFlags(
+              EInteger.FromInt32(0),
+              idealExp,
+              this.helper.GetFlags(thisValue)),
+            ctxtmp);
+        if (ctx.getHasFlags()) {
+          ctx.setFlags(ctx.getFlags()|(ctxtmp.getFlags()));
+        }
+        return ret;
+      }
+      EInteger mantissa = this.helper.GetMantissa(thisValue);
+      FastInteger digitCount = this.helper.GetDigitLength(mantissa);
+      FastInteger targetPrecision = FastInteger.FromBig(ctx.getPrecision());
+      FastInteger precision = targetPrecision.Copy().Multiply(root).AddInt(2);
+      boolean rounded = false;
+      boolean inexact = false;
+      if (digitCount.compareTo(precision) < 0) {
+        FastInteger diff = precision.Copy().Subtract(digitCount);
+        // System.out.println(diff);
+        if ((!diff.isEvenNumber()) ^ (!origExp.isEven())) {
+          diff.Increment();
+        }
+        EInteger bigdiff = diff.ToEInteger();
+        currentExp = currentExp.Subtract(bigdiff);
+        mantissa = this.TryMultiplyByRadixPower(mantissa, diff);
+        if (mantissa == null) {
+          return this.SignalInvalidWithMessage(
+              ctx,
+              "Result requires too much memory");
+        }
+      }
+      EInteger[] sr = mantissa.RootRem(root);
+      digitCount = this.helper.GetDigitLength(sr[0]);
+      EInteger rootRemainder = sr[1];
+      // System.out.println("I " + mantissa + " -> " + sr[0] + " [target="+
+      // targetPrecision + "], (zero= " + rootRemainder.isZero() +") "
+      mantissa = sr[0];
+      if (!rootRemainder.isZero()) {
+        rounded = true;
+        inexact = true;
+      }
+      EInteger oldexp = currentExp;
+      currentExp = currentExp.ShiftRight(1);
+      if (oldexp.signum() < 0 && !oldexp.isEven()) {
+        // Round towards negative infinity; BigInteger's
+        // division operation rounds towards zero
+        currentExp = currentExp.Subtract(EInteger.FromInt32(1));
+      }
+      T retval = this.helper.CreateNewWithFlags(mantissa, currentExp, 0);
+      // System.out.println("idealExp= " + idealExp + ", curr" + currentExp
+      // +" guess= " + mantissa);
+      retval = this.RoundToPrecisionInternal(
+          retval,
+          0,
+          inexact ? 1 : 0,
+          null,
+          false,
+          ctxtmp);
+      currentExp = this.helper.GetExponent(retval);
+      // System.out.println("guess I " + guess + " idealExp=" + idealExp
+      // +", curr " + currentExp + " clamped= " +
+      // (ctxtmp.getFlags()&PrecisionContext.FlagClamped));
+      if ((ctxtmp.getFlags() & EContext.FlagUnderflow) == 0) {
+        int expcmp = currentExp.compareTo(idealExp);
+        if (expcmp <= 0 || !this.IsFinite(retval)) {
+          retval = this.ReduceToPrecisionAndIdealExponent(
+              retval,
+              ctx.getHasExponentRange() ? ctxtmp : null,
+              inexact ? targetPrecision : null,
+              FastInteger.FromBig(idealExp));
+        }
+      }
+      if (ctx.getHasFlags()) {
+        if (ctx.getClampNormalExponents() &&
+          !this.helper.GetExponent(retval).equals(idealExp) && (ctxtmp.getFlags() &
+            EContext.FlagInexact) == 0) {
+          ctx.setFlags(ctx.getFlags()|(EContext.FlagClamped));
+        }
+        rounded |= (ctxtmp.getFlags() & EContext.FlagOverflow) != 0;
+        // System.out.println("guess II " + guess);
+        currentExp = this.helper.GetExponent(retval);
+        if (rounded) {
+          ctxtmp.setFlags(ctxtmp.getFlags()|(EContext.FlagRounded));
+        } else {
+          if (currentExp.compareTo(idealExp) > 0) {
+            // Greater than the ideal, treat as rounded anyway
+            ctxtmp.setFlags(ctxtmp.getFlags()|(EContext.FlagRounded));
+          } else {
+            // System.out.println("idealExp= " + idealExp + ", curr" +
+            // currentExp + " (II)");
+            ctxtmp.setFlags(ctxtmp.getFlags()&~(EContext.FlagRounded));
+          }
+        }
+        if (inexact) {
+          ctxtmp.setFlags(ctxtmp.getFlags()|(EContext.FlagRounded));
+          ctxtmp.setFlags(ctxtmp.getFlags()|(EContext.FlagInexact));
+        }
+        ctx.setFlags(ctx.getFlags()|(ctxtmp.getFlags()));
+      }
+      return retval;
+    }
+
     public T SquareRoot(T thisValue, EContext ctx) {
       if (ctx == null) {
         return this.SignalInvalidWithMessage(ctx, "ctx is null");
@@ -2604,7 +2680,7 @@ at: http://peteroupc.github.io/
       boolean inexact = false;
       if (digitCount.compareTo(precision) < 0) {
         FastInteger diff = precision.Copy().Subtract(digitCount);
-        // System.out.println(diff);
+        // System.out.println("precisiondiff=" + diff);
         if ((!diff.isEvenNumber()) ^ (!origExp.isEven())) {
           diff.Increment();
         }
@@ -2620,8 +2696,10 @@ at: http://peteroupc.github.io/
       EInteger[] sr = mantissa.SqrtRem();
       digitCount = this.helper.GetDigitLength(sr[0]);
       EInteger squareRootRemainder = sr[1];
-      // System.out.println("I " + mantissa + " -> " + sr[0] + " [target="+
-      // targetPrecision + "], (zero= " + squareRootRemainder.isZero() +") "
+      // System.out.println("I " + mantissa + " -> " + sr[0] +
+      // " [target="+
+      // targetPrecision + "], (zero= " +
+      // squareRootRemainder.isZero() +") ");
       mantissa = sr[0];
       if (!squareRootRemainder.isZero()) {
         rounded = true;
@@ -4691,9 +4769,9 @@ this.helper.GetDigitLength(op2Mantissa.ToEInteger());
       if (sign < 0) {
         // Use the reciprocal for negative powers
         thisValue = this.Divide(one, thisValue, ctxdiv);
-         /*DUL("-->recip thisValue=" + thisValue +
-            " powInt=" + powIntBig + " flags=" + (ctxdiv == null ? -1 :
-ctxdiv.getFlags()));*/
+        // System.out.println("-->recip thisValue=" + thisValue +
+        //    " powInt=" + powIntBig + " flags=" + (ctxdiv == null ? -1 :
+        // ctxdiv.getFlags()));
         if ((ctxdiv.getFlags() & EContext.FlagOverflow) != 0) {
           return this.SignalOverflow(ctx, retvalNeg);
         }
@@ -4702,9 +4780,9 @@ ctxdiv.getFlags()));*/
       T r = one;
       while (!powIntBig.isZero()) {
         if (!powIntBig.isEven()) {
-            /*DUL("-->thisValue=" + thisValue +
-            " powInt=" + powIntBig + " flags=" +
-           (ctxdiv == null ? -1 : ctxdiv.getFlags()));*/
+          // System.out.println("-->RT thisValue=" + thisValue +
+          // " powInt=" + powIntBig + " flags=" +
+          // (ctxdiv == null ? -1 : ctxdiv.getFlags()));
           r = this.Multiply(r, thisValue, ctxdiv);
           if (ctxdiv != null && (ctxdiv.getFlags() & EContext.FlagOverflow) != 0) {
             return this.SignalOverflow(ctx, retvalNeg);
@@ -4715,6 +4793,9 @@ ctxdiv.getFlags()));*/
           if (ctxdiv != null) {
             ctxdiv.setFlags(ctxdiv.getFlags()&~(EContext.FlagOverflow));
           }
+          // System.out.println("-->TT thisValue=" + thisValue +
+          // " powInt=" + powIntBig + " flags=" +
+          // (ctxdiv == null ? -1 : ctxdiv.getFlags()));
           T tmp = this.Multiply(thisValue, thisValue, ctxdiv);
           if (ctxdiv != null && (ctxdiv.getFlags() & EContext.FlagOverflow) != 0) {
             // Avoid multiplying too huge numbers with

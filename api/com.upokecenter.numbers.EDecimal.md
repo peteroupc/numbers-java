@@ -341,14 +341,23 @@ Represents an arbitrary-precision decimal floating-point number. (The "E"
  Returns one subtracted from this arbitrary-precision decimal number.
 * `EDecimal Divide​(int intValue)`<br>
  Divides this arbitrary-precision decimal floating-point number by a 32-bit
- signed integer and returns the result.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating decimal expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 * `EDecimal Divide​(long longValue)`<br>
  Divides this arbitrary-precision decimal floating-point number by a 64-bit
- signed integer and returns the result.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating decimal expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 * `EDecimal Divide​(EDecimal divisor)`<br>
  Divides this arbitrary-precision decimal floating-point number by another
  arbitrary-precision decimal floating-point number and returns the
- result.
+ result; returns NaN instead if the result would have a
+ nonterminating decimal expansion (including 1/3, 1/12, 1/7, 2/3, and
+ so on); if this is not desired, use DivideToExponent, or use the
+ Divide overload that takes an EContext.
 * `EDecimal Divide​(EDecimal divisor,
       EContext ctx)`<br>
  Divides this arbitrary-precision decimal floating-point number by another
@@ -443,6 +452,11 @@ Renamed to DivRemNaturalScale.
 * `EDecimal Exp​(EContext ctx)`<br>
  Finds e (the base of natural logarithms) raised to the power of this
  object's value.
+* `EDecimal ExpM1​(EContext ctx)`<br>
+ Finds e (the base of natural logarithms) raised to the power of this
+ object's value, and subtracts the result by 1 and returns the final
+ result, in a way that avoids loss of precision if the true result is
+ very close to 0.
 * `static EDecimal FromBoolean​(boolean boolValue)`<br>
  Converts a boolean value (true or false) to an arbitrary-precision decimal
  number.
@@ -571,6 +585,10 @@ Renamed to FromEFloat.
  Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
  value.
+* `EDecimal Log1P​(EContext ctx)`<br>
+ Adds 1 to this object's value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object's value is
+ between 0 and 1.
 * `EDecimal LogN​(EDecimal baseValue,
     EContext ctx)`<br>
  Finds the base-N logarithm of this object, that is, the power (exponent)
@@ -1238,7 +1256,7 @@ Creates an arbitrary-precision decimal number from a 64-bit binary
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as <code>
- value</code>.
+ dblBits</code>.
 
 ### FromEInteger
     public static EDecimal FromEInteger​(EInteger bigint)
@@ -1365,8 +1383,8 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
 
 **Parameters:**
 
-* <code>value</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
- number encoded in the IEEE 754 binary32 format.
+* <code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
+ binary32 format.
 
 **Returns:**
 
@@ -2421,7 +2439,10 @@ Compares the mathematical values of this object and another object. <p>In
     public EDecimal Divide​(EDecimal divisor)
 Divides this arbitrary-precision decimal floating-point number by another
  arbitrary-precision decimal floating-point number and returns the
- result. When possible, the result will be exact.
+ result; returns NaN instead if the result would have a
+ nonterminating decimal expansion (including 1/3, 1/12, 1/7, 2/3, and
+ so on); if this is not desired, use DivideToExponent, or use the
+ Divide overload that takes an EContext.
 
 **Parameters:**
 
@@ -2440,7 +2461,7 @@ Divides this arbitrary-precision decimal floating-point number by another
     public EDecimal Divide​(EDecimal divisor, EContext ctx)
 Divides this arbitrary-precision decimal floating-point number by another
  arbitrary-precision decimal floating-point number and returns the
- result. When possible, the result will be exact.
+ result.
 
 **Parameters:**
 
@@ -2941,6 +2962,29 @@ Finds e (the base of natural logarithms) raised to the power of this
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
 
+### ExpM1
+    public EDecimal ExpM1​(EContext ctx)
+Finds e (the base of natural logarithms) raised to the power of this
+ object's value, and subtracts the result by 1 and returns the final
+ result, in a way that avoids loss of precision if the true result is
+ very close to 0.
+
+**Parameters:**
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). <i>This parameter
+ can't be null, as the exponential function's results are generally
+ not exact.</i> (Unlike in the General Binary Arithmetic
+ Specification, any rounding mode is allowed.).
+
+**Returns:**
+
+* Exponential of this object, minus 1. Signals FlagInvalid and returns
+ not-a-number (NaN) if the parameter <code>ctx</code> is null or the
+ precision is unlimited (the context's Precision property is 0).
+
 ### hashCode
     public int hashCode()
 Calculates this object's hash code. No application or process IDs are used
@@ -3060,6 +3104,33 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  FlagInvalid and returns not-a-number (NaN) if the parameter <code>
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
+
+### Log1P
+    public EDecimal Log1P​(EContext ctx)
+Adds 1 to this object's value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object's value is
+ between 0 and 1.
+
+**Parameters:**
+
+* <code>ctx</code> - An arithmetic context to control the precision, rounding, and
+ exponent range of the result. If <code>HasFlags</code> of the context is
+ true, will also store the flags resulting from the operation (the
+ flags are in addition to the pre-existing flags). <i>This parameter
+ can't be null, as the ln function's results are generally not
+ exact.</i> (Unlike in the General Binary Arithmetic Specification,
+ any rounding mode is allowed.).
+
+**Returns:**
+
+* Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if
+ this object is less than -1 (the result would be a complex number
+ with a real part equal to Ln of 1 plus this object's absolute value
+ and an imaginary part equal to pi, but the return value is still
+ NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the
+ parameter <code>ctx</code> is null or the precision is unlimited (the
+ context's Precision property is 0). Signals no flags and returns
+ negative infinity if this object's value is 0.
 
 ### LogN
     public EDecimal LogN​(EDecimal baseValue, EContext ctx)
@@ -3327,8 +3398,10 @@ Multiplies this arbitrary-precision decimal floating-point number by a
 ### Divide
     public EDecimal Divide​(long longValue)
 Divides this arbitrary-precision decimal floating-point number by a 64-bit
- signed integer and returns the result. When possible, the result
- will be exact.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating decimal expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 
 **Parameters:**
 
@@ -3341,7 +3414,8 @@ Divides this arbitrary-precision decimal floating-point number by a 64-bit
  divisor and the dividend are 0. Returns NaN if the result can't be
  exact because it would have a nonterminating decimal expansion;
  examples include 1 divided by any multiple of 3, such as 1/3 or
- 1/12.
+ 1/12. If this is not desired, use DivideToExponent instead, or use
+ the Divide overload that takes an EContext instead.
 
 ### Add
     public EDecimal Add​(int intValue)
@@ -3392,8 +3466,10 @@ Multiplies this arbitrary-precision decimal floating-point number by a
 ### Divide
     public EDecimal Divide​(int intValue)
 Divides this arbitrary-precision decimal floating-point number by a 32-bit
- signed integer and returns the result. When possible, the result
- will be exact.
+ signed integer and returns the result; returns NaN instead if the
+ result would have a nonterminating decimal expansion (including 1/3,
+ 1/12, 1/7, 2/3, and so on); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.
 
 **Parameters:**
 
@@ -4876,7 +4952,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
  number, once converted to an integer by discarding its fractional
- part, is less than -32768 or greater tha 32767.
+ part, is less than -32768 or greater than 32767.
 
 ### ToInt16Unchecked
     public short ToInt16Unchecked()
@@ -4902,7 +4978,7 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 **Throws:**
 
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
- an exact integer, or is less than -32768 or greater tha 32767.
+ an exact integer, or is less than -32768 or greater than 32767.
 
 ### FromInt16
     public static EDecimal FromInt16​(short inputInt16)

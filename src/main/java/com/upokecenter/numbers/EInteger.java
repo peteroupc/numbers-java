@@ -165,24 +165,24 @@ at: http://peteroupc.github.io/
      * than 0; otherwise, {@code false}.
      */
     public final boolean isPowerOfTwo() {
-            int wc = this.wordCount;
-            if (this.negative || wc == 0 ||
-                (wc > 1 && this.words[0] != 0)) {
-              return false;
-            }
-            for (int i = 0; i < wc - 1; ++i) {
-              if (this.words[i] != 0) {
-                return false;
-              }
-            }
-            int lastw = ((int)this.words[wc - 1]) & 0xffff;
-            if (lastw == 0) {
-              throw new IllegalStateException();
-            }
-            while ((lastw & 1) == 0) {
-              lastw >>= 1;
-            }
-            return lastw == 1;
+        int wc = this.wordCount;
+        if (this.negative || wc == 0 ||
+          (wc > 1 && this.words[0] != 0)) {
+          return false;
+        }
+        for (int i = 0; i < wc - 1; ++i) {
+          if (this.words[i] != 0) {
+            return false;
+          }
+        }
+        int lastw = ((int)this.words[wc - 1]) & 0xffff;
+        if (lastw == 0) {
+          throw new IllegalStateException();
+        }
+        while ((lastw & 1) == 0) {
+          lastw >>= 1;
+        }
+        return lastw == 1;
       }
 
     /**
@@ -609,10 +609,10 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("cs");
       }
       return EIntegerCharArrayString.FromRadixSubstringImpl(
-        cs,
-        radix,
-        index,
-        endIndex);
+          cs,
+          radix,
+          index,
+          endIndex);
     }
 
     /**
@@ -746,10 +746,10 @@ at: http://peteroupc.github.io/
         throw new NullPointerException("bytes");
       }
       return EIntegerByteArrayString.FromRadixSubstringImpl(
-        bytes,
-        radix,
-        index,
-        endIndex);
+          bytes,
+          radix,
+          index,
+          endIndex);
     }
 
     private static EInteger FromRadixSubstringImpl(
@@ -1925,14 +1925,14 @@ at: http://peteroupc.github.io/
           cc = (b >> 31) & 1;
         }
       } else {
-      for (int i = 0; i < factor2Count; ++i) {
-        a = ((((int)factor2[factor2Start + i]) & SMask) * factor1);
-        a = (a + cc);
-        b = ((int)minuendArr[minuendArrStart + i] & SMask) - (a & SMask);
-        resultArr[resultStart + i] = ((short)b);
-        cc = (a >> 16) + ((b >> 31) & 1);
-        cc &= SMask;
-      }
+        for (int i = 0; i < factor2Count; ++i) {
+          a = ((((int)factor2[factor2Start + i]) & SMask) * factor1);
+          a = (a + cc);
+          b = ((int)minuendArr[minuendArrStart + i] & SMask) - (a & SMask);
+          resultArr[resultStart + i] = ((short)b);
+          cc = (a >> 16) + ((b >> 31) & 1);
+          cc &= SMask;
+        }
       }
       a = cc;
       b = ((int)minuendArr[minuendArrStart + factor2Count] & SMask) - a;
@@ -2495,92 +2495,93 @@ at: http://peteroupc.github.io/
       return this.DivRem(EInteger.FromInt32(intDivisor));
     }
 
-  /**
-   * Adds this arbitrary-precision integer and a 64-bit signed integer and
-   * returns the result.
-   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Adds this arbitrary-precision integer and a 64-bit signed integer and
+     * returns the result.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The return value is not documented yet.
+     */
     public EInteger Add(long longValue) {
-return this.Add(EInteger.FromInt64(longValue));
-}
+      return this.Add(EInteger.FromInt64(longValue));
+    }
 
-  /**
-   * Subtracts a 64-bit signed integer from this arbitrary-precision integer and
-   * returns the result.
-   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+     * returns the result.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The return value is not documented yet.
+     */
     public EInteger Subtract(long longValue) {
-return this.Subtract(EInteger.FromInt64(longValue));
-}
+      return this.Subtract(EInteger.FromInt64(longValue));
+    }
 
-  /**
-   * Multiplies this arbitrary-precision integer by a 64-bit signed integer and
-   * returns the result.
-   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+     * returns the result.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The return value is not documented yet.
+     */
     public EInteger Multiply(long longValue) {
-return this.Multiply(EInteger.FromInt64(longValue));
-}
+      return this.Multiply(EInteger.FromInt64(longValue));
+    }
 
-  /**
-   * Divides this arbitrary-precision integer by a 64-bit signed integer and
-   * returns the result. The result of the division is rounded down (the
-   * fractional part is discarded). Except if the result of the division is
-   * 0, it will be negative if this arbitrary-precision integer is positive
-   * and the other 64-bit signed integer is negative, or vice versa, and
-   * will be positive if both are positive or both are negative.
-   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Divides this arbitrary-precision integer by a 64-bit signed integer and
+     * returns the result. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 64-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The return value is not documented yet.
+     */
     public EInteger Divide(long longValue) {
-return this.Divide(EInteger.FromInt64(longValue));
-}
+      return this.Divide(EInteger.FromInt64(longValue));
+    }
 
-  /**
-   * Returns the remainder that would result when this arbitrary-precision
-   * integer is divided by a 64-bit signed integer. The remainder is the
-   * number that remains when the absolute value of this
-   * arbitrary-precision integer is divided by the absolute value of the
-   * other 64-bit signed integer; the remainder has the same sign (positive
-   * or negative) as this arbitrary-precision integer.
-   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Returns the remainder that would result when this arbitrary-precision
+     * integer is divided by a 64-bit signed integer. The remainder is the
+     * number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other 64-bit signed integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The return value is not documented yet.
+     */
     public EInteger Remainder(long longValue) {
-return this.Remainder(EInteger.FromInt64(longValue));
-}
+      return this.Remainder(EInteger.FromInt64(longValue));
+    }
 
-  /**
-   * Not documented yet.
-   * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Not documented yet.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The return value is not documented yet.
+     */
     public int compareTo(long longValue) {
-return this.compareTo(EInteger.FromInt64(longValue));
-}
+      return this.compareTo(EInteger.FromInt64(longValue));
+    }
 
-  /**
-   * Divides this arbitrary-precision integer by a 64-bit signed integer and
-   * returns a two-item array containing the result of the division and the
-   * remainder, in that order. The result of the division is rounded down
-   * (the fractional part is discarded). Except if the result of the
-   * division is 0, it will be negative if this arbitrary-precision integer
-   * is positive and the other 64-bit signed integer is negative, or vice
-   * versa, and will be positive if both are positive or both are negative.
-   * The remainder is the number that remains when the absolute value of
-   * this arbitrary-precision integer is divided by the absolute value of
-   * the other 64-bit signed integer; the remainder has the same sign
-   * (positive or negative) as this arbitrary-precision integer.
-   * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
-   * integer.
-   * @return The return value is not documented yet.
-   */
+    /**
+     * Divides this arbitrary-precision integer by a 64-bit signed integer and
+     * returns a two-item array containing the result of the division and
+     * the remainder, in that order. The result of the division is rounded
+     * down (the fractional part is discarded). Except if the result of the
+     * division is 0, it will be negative if this arbitrary-precision
+     * integer is positive and the other 64-bit signed integer is negative,
+     * or vice versa, and will be positive if both are positive or both are
+     * negative. The remainder is the number that remains when the absolute
+     * value of this arbitrary-precision integer is divided by the absolute
+     * value of the other 64-bit signed integer; the remainder has the same
+     * sign (positive or negative) as this arbitrary-precision integer.
+     * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
+     * integer.
+     * @return The return value is not documented yet.
+     */
     public EInteger[] DivRem(long intDivisor) {
       return this.DivRem(EInteger.FromInt64(intDivisor));
-}
+    }
 
     /**
      * Divides this arbitrary-precision integer by another arbitrary-precision
@@ -2929,7 +2930,7 @@ return this.compareTo(EInteger.FromInt64(longValue));
                   } else if (eu && !ev) {
                     buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x0f) == 0) ?
                       WordsShiftRightFour(bu, buc) : WordsShiftRightOne(bu,
-  buc);
+        buc);
                     } else if (!eu && ev) {
                     if ((bv[0] & 0xff) == 0 && Math.abs(buc - bvc) > 1) {
                       // System.out.println("bv8");
@@ -2938,7 +2939,7 @@ return this.compareTo(EInteger.FromInt64(longValue));
                       bvc = (
                           (bv[0] & 0x0f) == 0 && Math.abs(
                 buc - bvc) > 1) ? WordsShiftRightFour(bv, bvc) :
-WordsShiftRightOne(bv, bvc);
+        WordsShiftRightOne(bv, bvc);
                     }
                   } else if (WordsCompare(bu, buc, bv, bvc) >= 0) {
                     buc = WordsSubtract(bu, buc, bv, bvc);
@@ -2961,7 +2962,7 @@ WordsShiftRightOne(bv, bvc);
                 EInteger valueBvVar = new EInteger(bvc, bv, false);
                 if (bshl >= 0) {
                   valueBuVar = valueBuVar.isZero() ? (valueBvVar.ShiftLeft(bshl)) :
-(valueBuVar.ShiftLeft(bshl));
+        (valueBuVar.ShiftLeft(bshl));
                 } else {
                   valueBuVar = valueBuVar.isZero() ? LeftShiftBigIntVar(
                       valueBvVar,
@@ -3040,7 +3041,8 @@ WordsShiftRightOne(bv, bvc);
                     ((value >= 100000000000000L) ? 15 : ((value
                           >= 10000000000000L) ?
                         14 : ((value >= 1000000000000L) ? 13 : ((value
-                >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+                              >= 100000000000L) ? 12 : ((value >=
+10000000000L) ?
                               11 : ((value >= 1000000000L) ? 10 : 9)))))))));
           } else {
             int v2 = (int)value;
@@ -3190,17 +3192,19 @@ WordsShiftRightOne(bv, bvc);
                     int maxDigitEstimate = maxDigits + 4;
                     int minDigitEstimate = minDigits + 4;
                     retval += ei.Abs().compareTo(NumberUtility.FindPowerOfTen(
-                minDigitEstimate)) >= 0 ? retval + maxDigitEstimate : retval +
+                          minDigitEstimate)) >= 0 ? retval +
+maxDigitEstimate : retval +
                       minDigitEstimate;
                     done = true;
                     break;
                   }
                 } else if (bitlen <= 6432162) {
                   // Much more accurate approximation
-          // Approximation of ln(2)/ln(10)
-          minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
-          maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
-          if (minDigits == maxDigits) {
+                  // Approximation of ln(2)/ln(10)
+                  minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >>
+41);
+                  maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
+                  if (minDigits == maxDigits) {
                     // Number of digits is the same for
                     // all numbers with this bit length
                     retval += minDigits + 4;
@@ -3296,15 +3300,12 @@ WordsShiftRightOne(bv, bvc);
                         0xffff) != 0) ? 4 : ((((c << 10) & ShortMask) != 0) ?
                       5 : ((((c << 9) & ShortMask) != 0) ? 6 : ((((c <<
                                 8) & ShortMask) != 0) ? 7 : ((((c << 7) &
-                                ShortMask) != 0) ? 8 : ((((c << 6) &
-ShortMask) != 0) ? 9 :
+                ShortMask) != 0) ? 8 : ((((c << 6) & ShortMask) != 0) ? 9 :
                               ((((c << 5) & ShortMask) != 0) ? 10 : ((((c <<
-                                        4) & ShortMask) != 0) ? 11 : ((((c <<
-3) &
+                4) & ShortMask) != 0) ? 11 : ((((c << 3) &
                                         0xffff) != 0) ? 12 : ((((c << 2) &
                                           0xffff) != 0) ? 13 : ((((c << 1) &
-                                            ShortMask) != 0) ? 14 :
-15))))))))))))));
+                ShortMask) != 0) ? 14 : 15))))))))))))));
           retSetBitLong += rsb;
           return retSetBitLong;
         }
@@ -4188,6 +4189,12 @@ ShortMask) != 0) ? 9 :
       if (this.compareTo(-1) == 0) {
         return this.isEven() ? EInteger.FromInt32(1) : this;
       }
+      EInteger bitLength = this.GetUnsignedBitLengthAsEInteger();
+      if (!this.isPowerOfTwo()) {
+        bitLength = bitLength.Subtract(1);
+      }
+      // System.out.println("sizeNeeded=" + bitLength.Multiply(bigPower));
+      // System.out.println("bigPower=" + bigPower);
       if (bigPower.CanFitInInt32()) {
         return this.Pow(bigPower.ToInt32Checked());
       }
@@ -4432,14 +4439,14 @@ ShortMask) != 0) ? 9 :
         // unshifted word has less memory
         int lastWord = ((int)this.words[this.wordCount - 1]) & 0xffff;
         int lastWordBL = NumberUtility.BitLength(lastWord) +
-           shiftBits;
+          shiftBits;
         int newWordCount = 0;
         if (lastWordBL <= 16) {
-           // New bit count is such that an additional word
-           // is not needed
-           newWordCount = numWords + shiftWords;
+          // New bit count is such that an additional word
+          // is not needed
+          newWordCount = numWords + shiftWords;
         } else {
-           newWordCount = numWords + BitsToWords(numberBits);
+          newWordCount = numWords + BitsToWords(numberBits);
         }
         short[] ret = new short[newWordCount];
         System.arraycopy(this.words, 0, ret, shiftWords, numWords);
@@ -4694,7 +4701,7 @@ ShortMask) != 0) ? 9 :
         throw new NullPointerException("second");
       }
       return this.And(second.Not());
-   }
+    }
 
     /**
      * Does an OR NOT operation (or implication or IMP operation) between this
@@ -4719,7 +4726,7 @@ ShortMask) != 0) ? 9 :
         throw new NullPointerException("second");
       }
       return this.Or(second.Not());
-   }
+    }
 
     /**
      * Does an OR NOT operation (or implication or IMP operation) between this
@@ -4741,7 +4748,7 @@ ShortMask) != 0) ? 9 :
      */
     public EInteger Imp(EInteger second) {
       return this.OrNot(second);
-   }
+    }
 
     /**
      * Does an XOR NOT operation (or equivalence operation, EQV operation, or
@@ -4766,7 +4773,7 @@ ShortMask) != 0) ? 9 :
         throw new NullPointerException("second");
       }
       return this.Xor(second.Not());
-   }
+    }
 
     /**
      * Does an XOR NOT operation (or equivalence operation, EQV operation, or
@@ -4791,7 +4798,7 @@ ShortMask) != 0) ? 9 :
         throw new NullPointerException("second");
       }
       return this.XorNot(second);
-   }
+    }
 
     /**
      * Does an exclusive OR (XOR) operation between this arbitrary-precision
@@ -5154,6 +5161,64 @@ ShortMask) != 0) ? 9 :
      */
     public EInteger[] SqrtRem() {
       return this.SqrtRemInternal(true);
+    }
+
+    /**
+     * Finds the nth root of this instance's value, rounded down.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
+     * @throws NullPointerException The parameter {@code root} is null.
+     */
+    public EInteger Root(EInteger root) {
+      if (root == null) {
+        throw new NullPointerException("root");
+      }
+      EInteger[] srrem = this.RootRemInternal(root, false);
+      return srrem[0];
+    }
+
+    /**
+     * Calculates the nth root and the remainder.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return An array of two arbitrary-precision integers: the first integer is
+     * the nth root, and the second is the difference between this value
+     * and the nth power of the first integer. Returns two zeros if this
+     * value is 0 or less, or one and zero if this value equals 1.
+     * @throws NullPointerException The parameter {@code root} is null.
+     */
+    public EInteger[] RootRem(EInteger root) {
+      if (root == null) {
+        throw new NullPointerException("root");
+      }
+      return this.RootRemInternal(root, true);
+    }
+
+    /**
+     * Finds the nth root of this instance's value, rounded down.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
+     */
+    public EInteger Root(int root) {
+      EInteger[] srrem = this.RootRemInternal(EInteger.FromInt32(root), false);
+      return srrem[0];
+    }
+
+    /**
+     * Calculates the nth root and the remainder.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return An array of two arbitrary-precision integers: the first integer is
+     * the nth root, and the second is the difference between this value
+     * and the nth power of the first integer. Returns two zeros if this
+     * value is 0 or less, or one and zero if this value equals 1.
+     */
+    public EInteger[] RootRem(int root) {
+      return this.RootRemInternal(EInteger.FromInt32(root), true);
     }
 
     /**
@@ -8519,6 +8584,45 @@ ShortMask) != 0) ? 9 :
           (int)size) : (size > tempSize ? 1 : -1);
     }
 
+    private EInteger[] RootRemInternal(EInteger root, boolean useRem) {
+      if (root.compareTo(1) == 0) {
+        EInteger thisValue = this;
+        return new EInteger[] { thisValue, EInteger.FromInt32(0) };
+      }
+      if (root.compareTo(1) < 0) {
+        throw new IllegalArgumentException("root");
+      }
+      if (root.compareTo(2) == 0) {
+        return this.SqrtRemInternal(useRem);
+      }
+      if (this.signum() <= 0) {
+        return new EInteger[] { EInteger.FromInt32(0), EInteger.FromInt32(0) };
+      }
+      if (this.equals(EInteger.FromInt32(1))) {
+        return new EInteger[] { EInteger.FromInt32(1), EInteger.FromInt32(0) };
+      }
+      EInteger bl = this.GetUnsignedBitLengthAsEInteger();
+      EInteger rm1 = root.Subtract(1);
+      EInteger shift = bl.Multiply(rm1).Divide(root);
+      EInteger ret = this.ShiftRight(shift);
+      while (true) {
+        EInteger oldret = ret;
+        ret = this.Divide(ret.Pow(rm1)).Add(ret.Multiply(rm1)).Divide(root);
+        if (oldret.equals(ret)) {
+          break;
+        }
+      }
+      if (useRem) {
+        EInteger erem = this.Subtract(ret.Pow(root));
+        if (erem.signum() < 0) {
+          throw new IllegalStateException();
+        }
+        return new EInteger[] { ret, erem };
+      } else {
+        return new EInteger[] { ret, null };
+      }
+    }
+
     private EInteger[] SqrtRemInternal(boolean useRem) {
       if (this.signum() <= 0) {
         return new EInteger[] { EInteger.FromInt32(0), EInteger.FromInt32(0) };
@@ -8690,7 +8794,7 @@ ShortMask) != 0) ? 9 :
      * Converts this number's value to a 16-bit signed integer if it can fit in a
      * 16-bit signed integer.
      * @return This number's value as a 16-bit signed integer.
-     * @throws ArithmeticException This value is less than -32768 or greater tha
+     * @throws ArithmeticException This value is less than -32768 or greater than
      * 32767.
      */
     public short ToInt16Checked() {

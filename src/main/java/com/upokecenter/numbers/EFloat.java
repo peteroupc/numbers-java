@@ -526,7 +526,7 @@ at: http://peteroupc.github.io/
      * string first.
      * @param dblBits The parameter {@code dblBits} is a 64-bit signed integer.
      * @return A binary floating-point number with the same value as the
-     * floating-point number encoded in {@code dbl}.
+     * floating-point number encoded in {@code dblBits}.
      */
     public static EFloat FromDoubleBits(long dblBits) {
       int floatExponent = (int)((dblBits >> 52) & 0x7ff);
@@ -616,7 +616,7 @@ at: http://peteroupc.github.io/
      * @param value A 32-bit binary floating-point number encoded in the IEEE 754
      * binary32 format.
      * @return A binary floating-point number with the same floating-point value as
-     * {@code flt}.
+     * {@code value}.
      */
     public static EFloat FromSingleBits(int value) {
       boolean neg = (value >> 31) != 0;
@@ -1227,9 +1227,6 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * chars} (but not more than {@code chars} 's length).
      * @return An arbitrary-precision binary floating-point number.
-     * @throws T:IllegalArgumentException Either {@code offset} or {@code length}
-     * is less than 0 or greater than {@code chars} 's length, or {@code
-     * chars} 's length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code chars} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code chars} 's length, or {@code chars} 's
@@ -1344,9 +1341,6 @@ at: http://peteroupc.github.io/
      * @param length The length, in code units, of the desired portion of {@code
      * bytes} (but not more than {@code bytes} 's length).
      * @return An arbitrary-precision binary floating-point number.
-     * @throws T:IllegalArgumentException Either {@code offset} or {@code length}
-     * is less than 0 or greater than {@code bytes} 's length, or {@code
-     * bytes} 's length minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code bytes} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's
@@ -1651,8 +1645,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Divides this arbitrary-precision binary floating-point number by a 32-bit
-     * signed integer and returns the result. When possible, the result
-     * will be exact.
+     * signed integer and returns the result; returns NaN instead if the
+     * result would have a nonterminating binary expansion (including 1/3,
+     * 1/12, 1/7, 2/3, and so on); if this is not desired, use
+     * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param intValue The divisor.
      * @return The quotient of the two objects.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -1700,8 +1696,10 @@ at: http://peteroupc.github.io/
 
     /**
      * Divides this arbitrary-precision binary floating-point number by a 64-bit
-     * signed integer and returns the result. When possible, the result
-     * will be exact.
+     * signed integer and returns the result; returns NaN instead if the
+     * result would have a nonterminating binary expansion (including 1/3,
+     * 1/12, 1/7, 2/3, and so on); if this is not desired, use
+     * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The quotient of the two objects.
      * @throws ArithmeticException Attempted to divide by zero.
@@ -2113,12 +2111,17 @@ at: http://peteroupc.github.io/
     /**
      * Divides this arbitrary-precision binary floating-point number by another
      * arbitrary-precision binary floating-point number and returns the
-     * result. When possible, the result will be exact.
+     * result; returns NaN instead if the result would have a
+     * nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3, and
+     * so on); if this is not desired, use DivideToExponent, or use the
+     * Divide overload that takes an EContext.
      * @param divisor The number to divide by.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
      * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating binary expansion.
+     * exact because it would have a nonterminating binary expansion. If
+     * this is not desired, use DivideToExponent instead, or use the Divide
+     * overload that takes an EContext instead.
      */
     public EFloat Divide(EFloat divisor) {
       return this.Divide(
@@ -2129,7 +2132,7 @@ at: http://peteroupc.github.io/
     /**
      * Divides this arbitrary-precision binary floating-point number by another
      * arbitrary-precision binary floating-point number and returns the
-     * result. When possible, the result will be exact.
+     * result.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -2499,6 +2502,86 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Finds e (the base of natural logarithms) raised to the power of this
+     * object's value, and subtracts the result by 1 and returns the final
+     * result, in a way that avoids loss of precision if the true result is
+     * very close to 0.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * can't be null, as the exponential function's results are generally
+     * not exact.</i> (Unlike in the General Binary Arithmetic
+     * Specification, any rounding mode is allowed.).
+     * @return Exponential of this object, minus 1. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the parameter {@code ctx} is null or the
+     * precision is unlimited (the context's Precision property is 0).
+     */
+    public EFloat ExpM1(EContext ctx) {
+      EFloat value = this;
+      if (value.IsNaN()) {
+        return value.Plus(ctx);
+      }
+      if (ctx == null || !ctx.getHasMaxPrecision()) {
+        return EFloat.SignalingNaN.Plus(ctx);
+      }
+      if (ctx.getTraps() != 0) {
+        EContext tctx = ctx.GetNontrapping();
+        EFloat ret = value.ExpM1(tctx);
+        return ctx.TriggerTraps(ret, tctx);
+      } else if (ctx.isSimplified()) {
+        EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
+        EFloat ret = value.PreRound(ctx).ExpM1(tmpctx);
+        if (ctx.getHasFlags()) {
+          int flags = ctx.getFlags();
+          ctx.setFlags(flags | tmpctx.getFlags());
+        }
+        // System.out.println("{0} {1} [{4} {5}] -> {2}
+        // [{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
+        // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
+        return ret.RoundToPrecision(ctx);
+      } else {
+        if (value.compareTo(-1) == 0) {
+          return EFloat.NegativeInfinity;
+        } else if (value.IsPositiveInfinity()) {
+          return EFloat.PositiveInfinity;
+        } else if (value.IsNegativeInfinity()) {
+          return EFloat.FromInt32(-1).Plus(ctx);
+        } else if (value.compareTo(0) == 0) {
+          return EFloat.FromInt32(0).Plus(ctx);
+        }
+        int flags = ctx.getFlags();
+        EContext tmpctx = null;
+        EFloat ret;
+        {
+          EInteger prec = ctx.getPrecision().Add(3);
+          tmpctx = ctx.WithBigPrecision(prec).WithBlankFlags();
+          if (value.Abs().compareTo(EFloat.Create(1, -1)) < 0) {
+            ret = value.Exp(tmpctx).Add(EFloat.FromInt32(-1), ctx);
+            EFloat oldret = ret;
+            while (true) {
+              prec = prec.Add(ctx.getPrecision()).Add(3);
+              tmpctx = ctx.WithBigPrecision(prec).WithBlankFlags();
+              ret = value.Exp(tmpctx).Add(EFloat.FromInt32(-1), ctx);
+              if (ret.compareTo(0) != 0 && ret.compareTo(oldret) == 0) {
+                break;
+              }
+              oldret = ret;
+            }
+          } else {
+            ret = value.Exp(tmpctx).Add(EFloat.FromInt32(-1), ctx);
+          }
+          flags |= tmpctx.getFlags();
+        }
+        if (ctx.getHasFlags()) {
+          flags |= ctx.getFlags();
+          ctx.setFlags(flags);
+        }
+        return ret;
+      }
+    }
+
+    /**
      * Calculates this object's hash code. No application or process IDs are used
      * in the hash code calculation.
      * @return A 32-bit signed integer.
@@ -2616,6 +2699,84 @@ at: http://peteroupc.github.io/
      */
     public EFloat Log10(EContext ctx) {
       return this.LogN(EFloat.FromInt32(10), ctx);
+    }
+
+    /**
+     * Adds 1 to this object's value and finds the natural logarithm of the result,
+     * in a way that avoids loss of precision when this object's value is
+     * between 0 and 1.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * can't be null, as the ln function's results are generally not
+     * exact.</i> (Unlike in the General Binary Arithmetic Specification,
+     * any rounding mode is allowed.).
+     * @return Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if
+     * this object is less than -1 (the result would be a complex number
+     * with a real part equal to Ln of 1 plus this object's absolute value
+     * and an imaginary part equal to pi, but the return value is still
+     * NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the
+     * parameter {@code ctx} is null or the precision is unlimited (the
+     * context's Precision property is 0). Signals no flags and returns
+     * negative infinity if this object's value is 0.
+     */
+    public EFloat Log1P(EContext ctx) {
+      EFloat value = this;
+      if (value.IsNaN()) {
+        return value.Plus(ctx);
+      }
+      if (ctx == null || !ctx.getHasMaxPrecision() ||
+        (value.compareTo(-1) < 0)) {
+        return EFloat.SignalingNaN.Plus(ctx);
+      }
+      if (ctx.getTraps() != 0) {
+        EContext tctx = ctx.GetNontrapping();
+        EFloat ret = value.Log1P(tctx);
+        return ctx.TriggerTraps(ret, tctx);
+      } else if (ctx.isSimplified()) {
+        EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
+        EFloat ret = value.PreRound(ctx).Log1P(tmpctx);
+        if (ctx.getHasFlags()) {
+          int flags = ctx.getFlags();
+          ctx.setFlags(flags | tmpctx.getFlags());
+        }
+        // System.out.println("{0} {1} [{4} {5}] -> {2}
+        // [{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
+        // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
+        return ret.RoundToPrecision(ctx);
+      } else {
+        if (value.compareTo(-1) == 0) {
+          return EFloat.NegativeInfinity;
+        } else if (value.IsPositiveInfinity()) {
+          return EFloat.PositiveInfinity;
+        }
+        if (value.compareTo(0) == 0) {
+          return EFloat.FromInt32(0).Plus(ctx);
+        }
+        int flags = ctx.getFlags();
+        EContext tmpctx = null;
+        EFloat ret;
+        // System.out.println("cmp=" +
+        // value.compareTo(EFloat.Create(1, -1)) +
+        // " add=" + value.Add(EFloat.FromInt32(1)));
+        if (value.compareTo(EFloat.Create(1, -1)) < 0) {
+          ret = value.Add(EFloat.FromInt32(1)).Log(ctx);
+        } else {
+          tmpctx = ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
+          // System.out.println("orig "+value);
+          // System.out.println("sub "+value.Add(EFloat.FromInt32(1),
+          // tmpctx).Subtract(value));
+          ret = value.Add(EFloat.FromInt32(1), tmpctx).Log(ctx);
+          // System.out.println("ret "+ret);
+          flags |= tmpctx.getFlags();
+        }
+        if (ctx.getHasFlags()) {
+          flags |= ctx.getFlags();
+          ctx.setFlags(flags);
+        }
+        return ret;
+      }
     }
 
     /**
@@ -2964,9 +3125,9 @@ at: http://peteroupc.github.io/
       if ((subtrahend.flags & BigNumberFlags.FlagNaN) == 0) {
         int newflags = subtrahend.flags ^ BigNumberFlags.FlagNegative;
         negated = new EFloat(
-            subtrahend.unsignedMantissa,
-            subtrahend.exponent,
-            (byte)newflags);
+          subtrahend.unsignedMantissa,
+          subtrahend.exponent,
+          (byte)newflags);
       }
       return MathValue.MultiplyAndAdd(this, op, negated, ctx);
     }
@@ -3830,9 +3991,9 @@ at: http://peteroupc.github.io/
       if ((otherValue.flags & BigNumberFlags.FlagNaN) == 0) {
         int newflags = otherValue.flags ^ BigNumberFlags.FlagNegative;
         negated = new EFloat(
-            otherValue.unsignedMantissa,
-            otherValue.exponent,
-            (byte)newflags);
+          otherValue.unsignedMantissa,
+          otherValue.exponent,
+          (byte)newflags);
       }
       return this.Add(negated, ctx);
     }
@@ -4633,7 +4794,7 @@ at: http://peteroupc.github.io/
         int flags) {
         return new EFloat(FastIntegerFixed.FromBig(mantissa),
             FastIntegerFixed.FromBig(exponent),
-          (byte)flags);
+            (byte)flags);
       }
 
       public EFloat CreateNewWithFlagsFastInt(
@@ -4641,9 +4802,9 @@ at: http://peteroupc.github.io/
         FastIntegerFixed fexponent,
         int flags) {
         return new EFloat(
-          fmantissa,
-          fexponent,
-          (byte)flags);
+            fmantissa,
+            fexponent,
+            (byte)flags);
       }
 
       /**
@@ -4746,7 +4907,7 @@ at: http://peteroupc.github.io/
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional
-     * part, is less than -32768 or greater tha 32767.
+     * part, is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -4773,7 +4934,7 @@ at: http://peteroupc.github.io/
      * value.
      * @return This number's value as a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -32768 or greater tha 32767.
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {

@@ -3328,15 +3328,15 @@ import com.upokecenter.numbers.*;
     }
     @Test(timeout = 60000)
     public void TestRoundToExponent() {
-      this.TestRoundToExponentOne("-0", "-0", 0, ERounding.Down);
-      this.TestRoundToExponentOne("-0", "-0", 0, ERounding.HalfEven);
-      this.TestRoundToExponentOne("-0", "-0", 0, ERounding.Floor);
-      this.TestRoundToExponentOne("-0.0", "-0", 0, ERounding.Down);
-      this.TestRoundToExponentOne("-0.0", "-0", 0, ERounding.HalfEven);
-      this.TestRoundToExponentOne("-0.0", "-0", 0, ERounding.Floor);
-      this.TestRoundToExponentOne("-0.0000", "-0", 0, ERounding.Down);
-      this.TestRoundToExponentOne("-0.0000", "-0", 0, ERounding.HalfEven);
-      this.TestRoundToExponentOne("-0.0000", "-0", 0, ERounding.Floor);
+      TestRoundToExponentOne("-0", "-0", 0, ERounding.Down);
+      TestRoundToExponentOne("-0", "-0", 0, ERounding.HalfEven);
+      TestRoundToExponentOne("-0", "-0", 0, ERounding.Floor);
+      TestRoundToExponentOne("-0.0", "-0", 0, ERounding.Down);
+      TestRoundToExponentOne("-0.0", "-0", 0, ERounding.HalfEven);
+      TestRoundToExponentOne("-0.0", "-0", 0, ERounding.Floor);
+      TestRoundToExponentOne("-0.0000", "-0", 0, ERounding.Down);
+      TestRoundToExponentOne("-0.0000", "-0", 0, ERounding.HalfEven);
+      TestRoundToExponentOne("-0.0000", "-0", 0, ERounding.Floor);
     }
     @Test
     public void TestRoundToExponentExact() {
@@ -5608,7 +5608,7 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals((float)oldd, d, 0f);
     }
 
-    private void TestRoundToExponentOne(
+    private static void TestRoundToExponentOne(
       String input,
       String expected,
       int exponent,

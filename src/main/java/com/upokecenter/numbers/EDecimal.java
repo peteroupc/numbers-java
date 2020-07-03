@@ -8,11 +8,8 @@ at: http://peteroupc.github.io/
  */
 
 /*
-TODO: add one/zero/ten to Java version; maybe change to fields in next major
-version
-TODO: Use FastIntegerFixed in ERational
-TODO: Log1P and ExpM1 in EFloat and ERational
-TODO: Log-Real numbers
+TODO: In next major version, maybe convert EDecimal.One/Ten/Zero to fields
+rather than properties
 */
 
   /**
@@ -326,7 +323,7 @@ TODO: Log-Real numbers
         CacheLast);
 
     static EDecimal FromCache(int v) {
-       return Cache[v - CacheFirst];
+      return Cache[v - CacheFirst];
     }
 
     private static EDecimal[] EDecimalCache(int first, int last) {
@@ -480,12 +477,12 @@ TODO: Log-Real numbers
         return this.unsignedMantissa.ToEInteger();
       }
 
-      static EDecimal ChangeExponent(EDecimal ret, EInteger exponent) {
-          return new EDecimal(
-            ret.unsignedMantissa,
-            FastIntegerFixed.FromBig(exponent),
-            (byte)ret.flags);
-      }
+    static EDecimal ChangeExponent(EDecimal ret, EInteger exponent) {
+      return new EDecimal(
+          ret.unsignedMantissa,
+          FastIntegerFixed.FromBig(exponent),
+          (byte)ret.flags);
+    }
 
     /**
      * Returns a number with the value <code>exponent*10^significand</code>.
@@ -756,7 +753,7 @@ TODO: Log-Real numbers
      * FromString instead in most cases.
      * @param dblBits The parameter {@code dblBits} is a 64-bit signed integer.
      * @return An arbitrary-precision decimal number with the same value as {@code
-     * value}.
+     * dblBits}.
      */
     public static EDecimal FromDoubleBits(long dblBits) {
       int[] value = new int[] {
@@ -1007,8 +1004,8 @@ TODO: Log-Real numbers
      *  value of the closest "float" to 0.1, not 0.1 exactly). To create an
      * arbitrary-precision decimal number from a decimal value, use
      * FromString instead in most cases.
-     * @param value The parameter {@code flt} is a 32-bit binary floating-point
-     * number encoded in the IEEE 754 binary32 format.
+     * @param value A 32-bit binary floating-point number encoded in the IEEE 754
+     * binary32 format.
      * @return An arbitrary-precision decimal number with the same value as {@code
      * value}.
      */
@@ -3515,7 +3512,10 @@ TODO: Log-Real numbers
     /**
      * Divides this arbitrary-precision decimal floating-point number by another
      * arbitrary-precision decimal floating-point number and returns the
-     * result. When possible, the result will be exact.
+     * result; returns NaN instead if the result would have a
+     * nonterminating decimal expansion (including 1/3, 1/12, 1/7, 2/3, and
+     * so on); if this is not desired, use DivideToExponent, or use the
+     * Divide overload that takes an EContext.
      * @param divisor The number to divide by.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
@@ -3533,7 +3533,7 @@ TODO: Log-Real numbers
     /**
      * Divides this arbitrary-precision decimal floating-point number by another
      * arbitrary-precision decimal floating-point number and returns the
-     * result. When possible, the result will be exact.
+     * result.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is
@@ -4026,6 +4026,86 @@ TODO: Log-Real numbers
     }
 
     /**
+     * Finds e (the base of natural logarithms) raised to the power of this
+     * object's value, and subtracts the result by 1 and returns the final
+     * result, in a way that avoids loss of precision if the true result is
+     * very close to 0.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * can't be null, as the exponential function's results are generally
+     * not exact.</i> (Unlike in the General Binary Arithmetic
+     * Specification, any rounding mode is allowed.).
+     * @return Exponential of this object, minus 1. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the parameter {@code ctx} is null or the
+     * precision is unlimited (the context's Precision property is 0).
+     */
+    public EDecimal ExpM1(EContext ctx) {
+      EDecimal value = this;
+      if (value.IsNaN()) {
+        return value.Plus(ctx);
+      }
+      if (ctx == null || !ctx.getHasMaxPrecision()) {
+        return EDecimal.SignalingNaN.Plus(ctx);
+      }
+      if (ctx.getTraps() != 0) {
+        EContext tctx = ctx.GetNontrapping();
+        EDecimal ret = value.ExpM1(tctx);
+        return ctx.TriggerTraps(ret, tctx);
+      } else if (ctx.isSimplified()) {
+        EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
+        EDecimal ret = value.PreRound(ctx).ExpM1(tmpctx);
+        if (ctx.getHasFlags()) {
+          int flags = ctx.getFlags();
+          ctx.setFlags(flags | tmpctx.getFlags());
+        }
+        // System.out.println("{0} {1} [{4} {5}] -> {2}
+        // [{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
+        // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
+        return ret.RoundToPrecision(ctx);
+      } else {
+        if (value.compareTo(-1) == 0) {
+          return EDecimal.NegativeInfinity;
+        } else if (value.IsPositiveInfinity()) {
+          return EDecimal.PositiveInfinity;
+        } else if (value.IsNegativeInfinity()) {
+          return EDecimal.FromInt32(-1).Plus(ctx);
+        } else if (value.compareTo(0) == 0) {
+          return EDecimal.FromInt32(0).Plus(ctx);
+        }
+        int flags = ctx.getFlags();
+        EContext tmpctx = null;
+        EDecimal ret;
+        {
+          EInteger prec = ctx.getPrecision().Add(3);
+          tmpctx = ctx.WithBigPrecision(prec).WithBlankFlags();
+          if (value.Abs().compareTo(EDecimal.Create(5, -1)) < 0) {
+            ret = value.Exp(tmpctx).Add(EDecimal.FromInt32(-1), ctx);
+            EDecimal oldret = ret;
+            while (true) {
+              prec = prec.Add(ctx.getPrecision()).Add(3);
+              tmpctx = ctx.WithBigPrecision(prec).WithBlankFlags();
+              ret = value.Exp(tmpctx).Add(EDecimal.FromInt32(-1), ctx);
+              if (ret.compareTo(0) != 0 && ret.compareTo(oldret) == 0) {
+                break;
+              }
+              oldret = ret;
+            }
+          } else {
+            ret = value.Exp(tmpctx).Add(EDecimal.FromInt32(-1), ctx);
+          }
+          flags |= tmpctx.getFlags();
+        }
+        if (ctx.getHasFlags()) {
+          flags |= ctx.getFlags();
+          ctx.setFlags(flags);
+        }
+        return ret;
+      }
+    }
+
+    /**
      * Calculates this object's hash code. No application or process IDs are used
      * in the hash code calculation.
      * @return A 32-bit signed integer.
@@ -4143,6 +4223,80 @@ TODO: Log-Real numbers
      */
     public EDecimal Log10(EContext ctx) {
       return this.LogN(EDecimal.FromInt32(10), ctx);
+    }
+
+    /**
+     * Adds 1 to this object's value and finds the natural logarithm of the result,
+     * in a way that avoids loss of precision when this object's value is
+     * between 0 and 1.
+     * @param ctx An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is
+     * true, will also store the flags resulting from the operation (the
+     * flags are in addition to the pre-existing flags). <i>This parameter
+     * can't be null, as the ln function's results are generally not
+     * exact.</i> (Unlike in the General Binary Arithmetic Specification,
+     * any rounding mode is allowed.).
+     * @return Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if
+     * this object is less than -1 (the result would be a complex number
+     * with a real part equal to Ln of 1 plus this object's absolute value
+     * and an imaginary part equal to pi, but the return value is still
+     * NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the
+     * parameter {@code ctx} is null or the precision is unlimited (the
+     * context's Precision property is 0). Signals no flags and returns
+     * negative infinity if this object's value is 0.
+     */
+    public EDecimal Log1P(EContext ctx) {
+      EDecimal value = this;
+      if (value.IsNaN()) {
+        return value.Plus(ctx);
+      }
+      if (ctx == null || !ctx.getHasMaxPrecision() ||
+        (value.compareTo(-1) < 0)) {
+        return EDecimal.SignalingNaN.Plus(ctx);
+      }
+      if (ctx.getTraps() != 0) {
+        EContext tctx = ctx.GetNontrapping();
+        EDecimal ret = value.Log1P(tctx);
+        return ctx.TriggerTraps(ret, tctx);
+      } else if (ctx.isSimplified()) {
+        EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
+        EDecimal ret = value.PreRound(ctx).Log1P(tmpctx);
+        if (ctx.getHasFlags()) {
+          int flags = ctx.getFlags();
+          ctx.setFlags(flags | tmpctx.getFlags());
+        }
+        // System.out.println("{0} {1} [{4} {5}] -> {2}
+        // [{3}]",value,baseValue,ret,ret.RoundToPrecision(ctx),
+        // value.Quantize(value, ctx), baseValue.Quantize(baseValue, ctx));
+        return ret.RoundToPrecision(ctx);
+      } else {
+        if (value.compareTo(-1) == 0) {
+          return EDecimal.NegativeInfinity;
+        } else if (value.IsPositiveInfinity()) {
+          return EDecimal.PositiveInfinity;
+        }
+        if (value.compareTo(0) == 0) {
+          return EDecimal.FromInt32(0).Plus(ctx);
+        }
+        int flags = ctx.getFlags();
+        EContext tmpctx = null;
+        EDecimal ret;
+        // System.out.println("cmp=" +
+        // value.compareTo(EDecimal.Create(1, -1)) +
+        // " add=" + value.Add(EDecimal.FromInt32(1)));
+        if (value.compareTo(EDecimal.Create(5, -1)) < 0) {
+          ret = value.Add(EDecimal.FromInt32(1)).Log(ctx);
+        } else {
+          tmpctx = ctx.WithBigPrecision(ctx.getPrecision().Add(3)).WithBlankFlags();
+          ret = value.Add(EDecimal.FromInt32(1), tmpctx).Log(ctx);
+          flags |= tmpctx.getFlags();
+        }
+        if (ctx.getHasFlags()) {
+          flags |= ctx.getFlags();
+          ctx.setFlags(flags);
+        }
+        return ret;
+      }
     }
 
     /**
@@ -4482,15 +4636,18 @@ TODO: Log-Real numbers
 
     /**
      * Divides this arbitrary-precision decimal floating-point number by a 64-bit
-     * signed integer and returns the result. When possible, the result
-     * will be exact.
+     * signed integer and returns the result; returns NaN instead if the
+     * result would have a nonterminating decimal expansion (including 1/3,
+     * 1/12, 1/7, 2/3, and so on); if this is not desired, use
+     * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
      * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
      * divisor and the dividend are 0. Returns NaN if the result can't be
      * exact because it would have a nonterminating decimal expansion;
      * examples include 1 divided by any multiple of 3, such as 1/3 or
-     * 1/12.
+     * 1/12. If this is not desired, use DivideToExponent instead, or use
+     * the Divide overload that takes an EContext instead.
      */
     public EDecimal Divide(long longValue) {
       return this.Divide(EDecimal.FromInt64(longValue));
@@ -4536,8 +4693,10 @@ TODO: Log-Real numbers
 
     /**
      * Divides this arbitrary-precision decimal floating-point number by a 32-bit
-     * signed integer and returns the result. When possible, the result
-     * will be exact.
+     * signed integer and returns the result; returns NaN instead if the
+     * result would have a nonterminating decimal expansion (including 1/3,
+     * 1/12, 1/7, 2/3, and so on); if this is not desired, use
+     * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param intValue A 32-bit signed integer, the divisor, to divide this object
      * by.
      * @return The quotient of the two numbers. Returns infinity if the divisor is
@@ -7261,7 +7420,7 @@ TODO: Log-Real numbers
      * @return This number's value, truncated to a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional
-     * part, is less than -32768 or greater tha 32767.
+     * part, is less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -7299,7 +7458,7 @@ TODO: Log-Real numbers
      * value.
      * @return This number's value as a 16-bit signed integer.
      * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -32768 or greater tha 32767.
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {

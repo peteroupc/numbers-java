@@ -3114,6 +3114,62 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestRoot() {
+      RandomGenerator r = new RandomGenerator();
+      for (int i = 0; i < 20; ++i) {
+        EInteger bigintA = RandomBigInteger(r);
+        if (bigintA.signum() < 0) {
+          bigintA = bigintA.Negate();
+        }
+        if (bigintA.signum() == 0) {
+          bigintA = EInteger.FromInt32(1);
+        }
+        EInteger sqr = bigintA.Multiply(bigintA).Multiply(bigintA);
+        EInteger sr = sqr.Root(3);
+        TestCommon.CompareTestEqual(bigintA, sr);
+      }
+      for (int i = 0; i < 10000; ++i) {
+        EInteger bigintA = RandomBigInteger(r);
+        if (bigintA.signum() < 0) {
+          bigintA = bigintA.Negate();
+        }
+        if (bigintA.signum() == 0) {
+          bigintA = EInteger.FromInt32(1);
+        }
+        EInteger sr = bigintA.Root(3);
+        EInteger srsqr = sr.Multiply(sr).Multiply(sr);
+        sr = sr.Add(EInteger.FromInt32(1));
+        EInteger sronesqr = sr.Multiply(sr).Multiply(sr);
+        if (srsqr.compareTo(bigintA) > 0) {
+          Assert.fail(srsqr + " not " + bigintA +
+            " or less (TestRoot, root=" + sr + ")");
+        }
+        if (sronesqr.compareTo(bigintA) <= 0) {
+          Assert.fail(srsqr + " not greater than " + bigintA +
+            " (TestRoot, root=" + sr + ")");
+        }
+      }
+      try {
+ EInteger.FromInt32(7).Root(0);
+ Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+ throw new IllegalStateException("", ex);
+}
+      try {
+ EInteger.FromInt32(7).Root(-1);
+ Assert.fail("Should have failed");
+} catch (IllegalArgumentException ex) {
+// NOTE: Intentionally empty
+} catch (Exception ex) {
+ Assert.fail(ex.toString());
+ throw new IllegalStateException("", ex);
+}
+    }
+
+    @Test
     public void TestSqrt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 20; ++i) {
@@ -3126,6 +3182,8 @@ import com.upokecenter.numbers.*;
         }
         EInteger sqr = bigintA.Multiply(bigintA);
         EInteger sr = sqr.Sqrt();
+        TestCommon.CompareTestEqual(bigintA, sr);
+        sr = sqr.Root(2);
         TestCommon.CompareTestEqual(bigintA, sr);
       }
       for (int i = 0; i < 10000; ++i) {

@@ -33,7 +33,7 @@ at: http://peteroupc.github.io/
        return this.GetDigitLength();
     }
 
-    private void VerifyKnownLength() {
+    private static void VerifyKnownLength() {
     }
 
     public void ShiftToDigits(
@@ -53,7 +53,7 @@ at: http://peteroupc.github.io/
           // NOTE: For BitShiftAccumulator, truncating and shifting
           // are the same, unlike in DigitShiftAccumulator
           this.ShiftRight(preShift);
-          this.VerifyKnownLength();
+          VerifyKnownLength();
           return;
         } else {
           FastInteger bitDiff = this.knownBitLength.Copy()
@@ -64,20 +64,20 @@ at: http://peteroupc.github.io/
             // NOTE: For BitShiftAccumulator, truncating and shifting
             // are the same, unlike in DigitShiftAccumulator
             this.ShiftRight(preShift);
-            this.VerifyKnownLength();
+            VerifyKnownLength();
             return;
           } else {
             // NOTE: For BitShiftAccumulator, truncating and shifting
             // are the same, unlike in DigitShiftAccumulator
             this.ShiftRight(bitDiff);
-            this.VerifyKnownLength();
+            VerifyKnownLength();
             return;
           }
         }
       }
       if (bits.CanFitInInt32()) {
         this.ShiftToDigitsInt(bits.ToInt32());
-        this.VerifyKnownLength();
+        VerifyKnownLength();
       } else {
         this.knownBitLength = (this.knownBitLength == null) ? (this.CalcKnownBitLength()) : this.knownBitLength;
         EInteger bigintDiff = this.knownBitLength.ToEInteger();
@@ -88,7 +88,7 @@ at: http://peteroupc.github.io/
           // desired bit length
           this.ShiftRight(FastInteger.FromBig(bigintDiff));
         }
-        this.VerifyKnownLength();
+        VerifyKnownLength();
       }
     }
 

@@ -352,11 +352,8 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
         return ret;
       }
       EContext ctx2 = GetContextWithFlags(ctx);
-      // System.out.println("was: " + thisValue);
       thisValue = this.PreRound(thisValue, ctx2);
-      // System.out.println("now: " + thisValue);
       thisValue = this.wrapper.Ln(thisValue, ctx2);
-      // System.out.println("result: " + thisValue);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
 

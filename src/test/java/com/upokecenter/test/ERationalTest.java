@@ -301,9 +301,9 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals(ei1, er.getNumerator());
         Assert.assertEquals(ei2, er.getDenominator());
         ERational er2 = ERational.FromString(
-          "xyzxyz" + erstr,
-          6,
-          erstr.length());
+            "xyzxyz" + erstr,
+            6,
+            erstr.length());
         Assert.assertEquals(er, er2);
         er2 = ERational.FromString(erstr + "xyzxyz", 0, erstr.length());
         Assert.assertEquals(er, er2);
@@ -470,9 +470,9 @@ import com.upokecenter.numbers.*;
         ERational enumber = RandomObjects.RandomERational(fr);
         boolean numDenClose = !enumber.isFinite() ||
           enumber.getNumerator().GetUnsignedBitLengthAsEInteger()
-            .Subtract(enumber.getDenominator().GetUnsignedBitLengthAsEInteger())
-            .Abs().compareTo(130) < 0 ||
-            enumber.getDenominator().compareTo(enumber.getUnsignedNumerator()) >= 0;
+          .Subtract(enumber.getDenominator().GetUnsignedBitLengthAsEInteger())
+          .Abs().compareTo(130) < 0 ||
+          enumber.getDenominator().compareTo(enumber.getUnsignedNumerator()) >= 0;
         if (!enumber.isFinite()) {
           try {
             enumber.ToByteChecked();
@@ -625,9 +625,9 @@ import com.upokecenter.numbers.*;
             throw new IllegalStateException("", ex);
           }
           try {
-if (numDenClose) {
-  enumber.ToByteUnchecked();
-}
+            if (numDenClose) {
+              enumber.ToByteUnchecked();
+            }
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -665,9 +665,9 @@ if (numDenClose) {
             eint,
             EInteger.FromInt16(enumber.ToInt16Checked()));
           if (numDenClose) {
-          TestCommon.AssertEquals(
-            eint,
-            EInteger.FromInt16(enumber.ToInt16Unchecked()));
+            TestCommon.AssertEquals(
+              eint,
+              EInteger.FromInt16(enumber.ToInt16Unchecked()));
           }
           if (isInteger) {
             TestCommon.AssertEquals(
@@ -713,9 +713,9 @@ if (numDenClose) {
             throw new IllegalStateException("", ex);
           }
           try {
-if (numDenClose) {
-  enumber.ToInt16Unchecked();
-}
+            if (numDenClose) {
+              enumber.ToInt16Unchecked();
+            }
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -802,9 +802,9 @@ if (numDenClose) {
             throw new IllegalStateException("", ex);
           }
           try {
-if (numDenClose) {
-  enumber.ToInt32Unchecked();
-}
+            if (numDenClose) {
+              enumber.ToInt32Unchecked();
+            }
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -892,9 +892,9 @@ if (numDenClose) {
             throw new IllegalStateException("", ex);
           }
           try {
-if (numDenClose) {
-  enumber.ToInt64Unchecked();
-}
+            if (numDenClose) {
+              enumber.ToInt64Unchecked();
+            }
           } catch (Exception ex) {
             Assert.fail(ex.toString());
             throw new IllegalStateException("", ex);
@@ -1316,10 +1316,10 @@ if (numDenClose) {
         EFloat f2 = EFloat.FromSingle(er.ToSingle());
         TestCommon.CompareTestEqual(d1, d2);
         TestCommon.CompareTestEqual(f1, f2);
-      d1 = er.ToEFloat(EContext.Binary64);
-      d2 = EFloat.FromDoubleBits(er.ToDoubleBits());
-      f1 = er.ToEFloat(EContext.Binary32);
-      f2 = EFloat.FromSingleBits(er.ToSingleBits());
+        d1 = er.ToEFloat(EContext.Binary64);
+        d2 = EFloat.FromDoubleBits(er.ToDoubleBits());
+        f1 = er.ToEFloat(EContext.Binary32);
+        f2 = EFloat.FromSingleBits(er.ToSingleBits());
         TestCommon.CompareTestEqual(d1, d2);
         TestCommon.CompareTestEqual(f1, f2);
       }

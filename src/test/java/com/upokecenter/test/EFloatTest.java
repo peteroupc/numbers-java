@@ -454,10 +454,10 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
-    public static void TestDoubleSingleBitsSpecific() {
+    public void TestDoubleSingleBitsSpecific() {
       {
         String str =
-"-0.0230382307472970331019279655038189957849681377410888671875";
+          "-0.0230382307472970331019279655038189957849681377410888671875";
         EFloat ed = EFloat.FromDoubleBits(-4641074497532188517L);
         EFloat edExp = EFloat.FromString(str);
         Assert.assertEquals(0, edExp.CompareToValue(ed));
@@ -880,19 +880,21 @@ import com.upokecenter.numbers.*;
  }
       {
         EFloat efa = EFloat.Create(6202238844624971L,
-  908).Log(EContext.Binary64);
+            908).Log(EContext.Binary64);
         EFloat efb = EFloat.Create(731990329769283L, -40);
-        Assert.assertEquals(efb, efa);
+        String str = "" + EFloat.Create(6202238844624971L, 908);
+        TestCommon.CompareTestEqual(efb, efa, str);
       }
       {
-        EFloat efa = EFloat.Create(
+        EFloat efaa = EFloat.Create(
             EInteger.FromString("7692406748247399"),
-            EInteger.FromString("-465")).Log(EContext.Binary64).Reduce(null);
+            EInteger.FromString("-465"));
+        EFloat efa = efaa.Log(EContext.Binary64).Reduce(null);
         EFloat efb = EFloat.Create(
             EInteger.FromString("-5026693231795637"),
             EInteger.FromString("-44"));
         String str = OutputEF(efb) + "\n" + OutputEF(efa);
-        Assert.assertEquals(str, efb, efa);
+        TestCommon.CompareTestEqual(efb, efa, str);
       }
       {
         EFloat efa = EFloat.Create(
@@ -902,7 +904,7 @@ import com.upokecenter.numbers.*;
             EInteger.FromString("-339788104073483"),
             EInteger.FromString("-39"));
         String str = OutputEF(efb) + "\n" + OutputEF(efa);
-        Assert.assertEquals(str, efb, efa);
+        TestCommon.CompareTestEqual(efb, efa, str);
       }
       {
         EFloat efa = EFloat.Create(
@@ -912,7 +914,7 @@ import com.upokecenter.numbers.*;
             EInteger.FromString("1000630292553943"),
             EInteger.FromString("-42"));
         String str = OutputEF(efb) + "\n" + OutputEF(efa);
-        Assert.assertEquals(str, efb, efa);
+        TestCommon.CompareTestEqual(efb, efa, str);
       }
       {
         EFloat efa = EFloat.Create(
@@ -922,9 +924,104 @@ import com.upokecenter.numbers.*;
             EInteger.FromString("-276083795723785"),
             EInteger.FromString("-41"));
         String str = OutputEF(efb) + "\n" + OutputEF(efa);
-        Assert.assertEquals(str, efb, efa);
+        TestCommon.CompareTestEqual(efb, efa, str);
+      }
+      {
+ EFloat ef = EFloat.FromString(
+   "49565911.77858351171016693115234375")
+    .Log(EContext.Binary64);
+ EFloat ef2 = EFloat.FromString(
+   "17.718813892893447103915605111978948116302490234375");
+ TestCommon.CompareTestEqual(ef2, ef);
       }
     }
+
+    @Test
+    public void TestExpM1() {
+      {
+        EFloat efa = EFloat.Create(1007123499737607L,
+  -522).ExpM1(EContext.Binary64);
+        EFloat efb = EFloat.Create(1007123499737607L, -522);
+        TestCommon.CompareTestEqual(efb, efa);
+      }
+      {
+        EFloat efa = EFloat.Create(6580149561684505L,
+  -1071).ExpM1(EContext.Binary64);
+        EFloat efb = EFloat.Create(6580149561684505L, -1071);
+        TestCommon.CompareTestEqual(efb, efa);
+      }
+      {
+        EFloat efa = EFloat.Create(-3676681081736271L,
+  -81).ExpM1(EContext.Binary64);
+        EFloat efb = EFloat.Create(-7353362157881635L, -82);
+        TestCommon.CompareTestEqual(efb, efa);
+      }
+      {
+        EFloat efa = EFloat.Create(-969434867059159L,
+  -66).ExpM1(EContext.Binary64);
+        EFloat efb = EFloat.Create(-7755427989821553L, -69);
+        TestCommon.CompareTestEqual(efb, efa);
+      }
+      {
+        EFloat efa = EFloat.Create(3153411279369011L,
+  -70).ExpM1(EContext.Binary64);
+        EFloat efb = EFloat.Create(6306830981643433L, -71);
+        TestCommon.CompareTestEqual(efb, efa);
+      }
+      {
+        EFloat efa = EFloat.Create(-1481872941857973L,
+  -86).ExpM1(EContext.Binary64);
+        EFloat efb = EFloat.Create(-740936470921891L, -85);
+        TestCommon.CompareTestEqual(efb, efa);
+      }
+    }
+
+    public static String DebugStringLog1P(
+      EFloat expec,
+      EFloat actual,
+      EFloat inp) {
+        return OutputEF(expec) + "\n" + OutputEF(actual) + "\n" + OutputEF(inp);
+    }
+
+    @Test
+    public void TestLog1P() {
+      {
+        EFloat efa = EFloat.Create(3326311965476095L,
+  -26);
+        EFloat efl = efa.Log1P(EContext.Binary64);
+        EFloat efb = EFloat.Create(4987402727842631L, -48);
+        TestCommon.CompareTestEqual(efb, efl, DebugStringLog1P(efb, efl, efa));
+      }
+      {
+        EFloat efa = EFloat.Create(-5934733692758989L,
+  -166);
+        EFloat efl = efa.Log1P(EContext.Binary64);
+        EFloat efb = EFloat.Create(-5934733692758989L, -166);
+        TestCommon.CompareTestEqual(efb, efl, DebugStringLog1P(efb, efl, efa));
+      }
+      {
+        EFloat efa = EFloat.Create(7028563965745449L,
+  -26);
+        EFloat efl = efa.Log1P(EContext.Binary64);
+        EFloat efb = EFloat.Create(2598989644557185L, -47);
+        TestCommon.CompareTestEqual(efb, efl, DebugStringLog1P(efb, efl, efa));
+      }
+      {
+        EFloat efa = EFloat.Create(6661843800332999L,
+  -311);
+        EFloat efl = efa.Log1P(EContext.Binary64);
+        EFloat efb = EFloat.Create(6661843800332999L, -311);
+        TestCommon.CompareTestEqual(efb, efl, DebugStringLog1P(efb, efl, efa));
+      }
+      {
+        EFloat efa = EFloat.Create(2966802219632029L,
+  -588);
+        EFloat efl = efa.Log1P(EContext.Binary64);
+        EFloat efb = EFloat.Create(2966802219632029L, -588);
+        TestCommon.CompareTestEqual(efb, efl, DebugStringLog1P(efb, efl, efa));
+      }
+    }
+
     @Test
     public void TestLog10() {
       if (!(EFloat.One.Log10(null).IsNaN())) {
@@ -1190,7 +1287,8 @@ import com.upokecenter.numbers.*;
       TestIntegerDoubleSingleOne(EInteger.FromString("16777216"));
       TestIntegerDoubleSingleOne(EInteger.FromString("9007199254740992"));
 
-  TestIntegerDoubleSingleOne(EInteger.FromString("36410213260593956497280175692088585748480"));
+      TestIntegerDoubleSingleOne(
+        EInteger.FromString("36410213260593956497280175692088585748480"));
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger ei = RandomObjects.RandomEInteger(rg);
@@ -1342,7 +1440,7 @@ import com.upokecenter.numbers.*;
         EFloat.Zero,
         EFloat.NegativeZero.Plus(null));
     }
-    @Test(timeout = 100000)
+    @Test
     public void TestPow() {
       EContext[] ecs = new EContext[] {
         EContext.Binary32,
@@ -1369,23 +1467,6 @@ import com.upokecenter.numbers.*;
           ei = ei.Add(ei.signum() < 0 ? thresh.Negate() : thresh);
         }
         powerlist.add(ei);
-      }
-      for (EContext ec : ecs) {
-        EFloat efa = EFloat.FromInt32(1).NextPlus(ec).Negate();
-        EFloat efb = EFloat.FromInt32(1).NextMinus(ec).Negate();
-        for (EInteger ei : powerlist) {
-          EFloat efp = efa.Pow(EFloat.FromEInteger(ei));
-          EFloat efexp = null;
-          efexp = (ei.isEven()) ? (ei.signum() >= 0 ? EFloat.PositiveInfinity :
-EFloat.Zero) : (ei.signum() >= 0 ? EFloat.NegativeInfinity :
-EFloat.NegativeZero);
-          Assert.assertEquals(efexp, efp);
-          efp = efb.Pow(EFloat.FromEInteger(ei));
-          efexp = (ei.isEven()) ? (ei.signum() < 0 ? EFloat.PositiveInfinity :
-EFloat.Zero) : (ei.signum() < 0 ? EFloat.NegativeInfinity :
-EFloat.NegativeZero);
-          Assert.assertEquals(efexp, efp);
-        }
       }
     }
     @Test
@@ -1919,7 +2000,7 @@ EFloat.NegativeZero);
     @Test
     public void TestCloseToOverflowSpecific() {
       EContext ec =
-EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
+        EContext.Unlimited.WithPrecision(53).WithExponentRange(-1022,
           1023).WithRounding(
           ERounding.Down).WithAdjustExponent(
           false).WithExponentClamp(true).WithSimplified(false);
