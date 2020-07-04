@@ -1224,8 +1224,11 @@ Divides this arbitrary-precision integer by a 32-bit signed integer and
 
 **Returns:**
 
-* A two-item array containing the result of the division and the
- remainder, in that order.
+* An array of two items: the first is the result of the division as an
+ arbitrary-precision integer, and the second is the remainder as an
+ arbitrary-precision integer. The result of division is the result of
+ the Divide method on the two operands, and the remainder is the
+ result of the Remainder method on the two operands.
 
 **Throws:**
 
@@ -1348,8 +1351,11 @@ Divides this arbitrary-precision integer by a 64-bit signed integer and
 
 **Returns:**
 
-* A two-item array containing the result of the division and the
- remainder, in that order.
+* An array of two items: the first is the result of the division as an
+ arbitrary-precision integer, and the second is the remainder as an
+ arbitrary-precision integer. The result of division is the result of
+ the Divide method on the two operands, and the remainder is the
+ result of the Remainder method on the two operands.
 
 ### DivRem
     public EInteger[] DivRem​(EInteger divisor)
@@ -1372,8 +1378,11 @@ Divides this arbitrary-precision integer by another arbitrary-precision
 
 **Returns:**
 
-* A two-item array containing the result of the division and the
- remainder, in that order.
+* An array of two items: the first is the result of the division as an
+ arbitrary-precision integer, and the second is the remainder as an
+ arbitrary-precision integer. The result of division is the result of
+ the Divide method on the two operands, and the remainder is the
+ result of the Remainder method on the two operands.
 
 **Throws:**
 

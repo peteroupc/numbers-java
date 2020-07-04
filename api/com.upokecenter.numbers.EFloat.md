@@ -260,12 +260,16 @@ Renamed to DivRemNaturalScale.
  Divides this object by another binary floating-point number and returns a
  result with the same exponent as this object (the dividend).
 * `EFloat[] DivRemNaturalScale​(EFloat divisor)`<br>
- Calculates the quotient and remainder using the DivideToIntegerNaturalScale
- and the formula in RemainderNaturalScale.
+ Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns a
+ two-item array containing the result of the division and the
+ remainder, in that order.
 * `EFloat[] DivRemNaturalScale​(EFloat divisor,
                   EContext ctx)`<br>
- Calculates the quotient and remainder using the DivideToIntegerNaturalScale
- and the formula in RemainderNaturalScale.
+ Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns a
+ two-item array containing the result of the division and the
+ remainder, in that order.
 * `boolean equals​(EFloat other)`<br>
  Determines whether this object's significand, exponent, and properties are
  equal to those of another object.
@@ -2559,8 +2563,12 @@ Divides this object by another binary floating-point number and returns a
 
 ### DivRemNaturalScale
     public EFloat[] DivRemNaturalScale​(EFloat divisor)
-Calculates the quotient and remainder using the DivideToIntegerNaturalScale
- and the formula in RemainderNaturalScale.
+Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns a
+ two-item array containing the result of the division and the
+ remainder, in that order. The result of division is calculated as
+ though by <code>DivideToIntegerNaturalScale</code>, and the remainder is
+ calculated as though by <code>RemainderNaturalScale</code>.
 
 **Parameters:**
 
@@ -2568,13 +2576,21 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 
 **Returns:**
 
-* A 2 element array consisting of the quotient and remainder in that
- order.
+* An array of two items: the first is the result of the division as an
+ arbitrary-precision binary floating-point number, and the second is
+ the remainder as an arbitrary-precision binary floating-point
+ number. The result of division is the result of the method on the
+ two operands, and the remainder is the result of the Remainder
+ method on the two operands.
 
 ### DivRemNaturalScale
     public EFloat[] DivRemNaturalScale​(EFloat divisor, EContext ctx)
-Calculates the quotient and remainder using the DivideToIntegerNaturalScale
- and the formula in RemainderNaturalScale.
+Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns a
+ two-item array containing the result of the division and the
+ remainder, in that order. The result of division is calculated as
+ though by <code>DivideToIntegerNaturalScale</code>, and the remainder is
+ calculated as though by <code>RemainderNaturalScale</code>.
 
 **Parameters:**
 
@@ -2593,8 +2609,12 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 
 **Returns:**
 
-* A 2 element array consisting of the quotient and remainder in that
- order.
+* An array of two items: the first is the result of the division as an
+ arbitrary-precision binary floating-point number, and the second is
+ the remainder as an arbitrary-precision binary floating-point
+ number. The result of division is the result of the method on the
+ two operands, and the remainder is the result of the Remainder
+ method on the two operands.
 
 ### equals
     public boolean equals​(EFloat other)
@@ -3475,6 +3495,12 @@ Returns an object with the same numerical value as this one but with
     public EFloat Remainder​(EFloat divisor, EContext ctx)
 Returns the remainder that would result when this arbitrary-precision binary
  floating-point number is divided by another arbitrary-precision
+ binary floating-point number. The remainder is the number that
+ remains when the absolute value of this arbitrary-precision binary
+ floating-point number is divided (as though by
+ DivideToIntegerZeroScale) by the absolute value of the other
+ arbitrary-precision binary floating-point number; the remainder has
+ the same sign (positive or negative) as this arbitrary-precision
  binary floating-point number.
 
 **Parameters:**
@@ -3487,7 +3513,13 @@ Returns the remainder that would result when this arbitrary-precision binary
 
 * The remainder that would result when this arbitrary-precision binary
  floating-point number is divided by another arbitrary-precision
- binary floating-point number.
+ binary floating-point number. Signals FlagDivideByZero and returns
+ infinity if the divisor (this arbitrary-precision binary
+ floating-point number) is 0 and the dividend (the other
+ arbitrary-precision binary floating-point number) is nonzero.
+ Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+ and the dividend are 0, or if the result of the division doesn't fit
+ the given precision.
 
 ### RemainderNoRoundAfterDivide
     public EFloat RemainderNoRoundAfterDivide​(EFloat divisor, EContext ctx)

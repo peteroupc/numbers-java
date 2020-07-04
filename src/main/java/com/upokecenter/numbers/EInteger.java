@@ -2504,8 +2504,11 @@ at: http://peteroupc.github.io/
      * value of the other 32-bit signed integer; the remainder has the same
      * sign (positive or negative) as this arbitrary-precision integer.
      * @param intDivisor The number to divide by.
-     * @return A two-item array containing the result of the division and the
-     * remainder, in that order.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision integer, and the second is the remainder as an
+     * arbitrary-precision integer. The result of division is the result of
+     * the Divide method on the two operands, and the remainder is the
+     * result of the Remainder method on the two operands.
      * @throws ArithmeticException The parameter {@code intDivisor} is 0.
      */
     public EInteger[] DivRem(int intDivisor) {
@@ -2604,8 +2607,11 @@ at: http://peteroupc.github.io/
      * sign (positive or negative) as this arbitrary-precision integer.
      * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
      * integer.
-     * @return A two-item array containing the result of the division and the
-     * remainder, in that order.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision integer, and the second is the remainder as an
+     * arbitrary-precision integer. The result of division is the result of
+     * the Divide method on the two operands, and the remainder is the
+     * result of the Remainder method on the two operands.
      */
     public EInteger[] DivRem(long intDivisor) {
       return this.DivRem(EInteger.FromInt64(intDivisor));
@@ -2625,8 +2631,11 @@ at: http://peteroupc.github.io/
      * other arbitrary-precision integer; the remainder has the same sign
      * (positive or negative) as this arbitrary-precision integer.
      * @param divisor The number to divide by.
-     * @return A two-item array containing the result of the division and the
-     * remainder, in that order.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision integer, and the second is the remainder as an
+     * arbitrary-precision integer. The result of division is the result of
+     * the Divide method on the two operands, and the remainder is the
+     * result of the Remainder method on the two operands.
      * @throws ArithmeticException The parameter {@code divisor} is 0.
      * @throws NullPointerException The parameter {@code divisor} is null.
      */

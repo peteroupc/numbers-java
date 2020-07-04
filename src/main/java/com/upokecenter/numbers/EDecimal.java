@@ -3608,11 +3608,19 @@ rather than properties
     }
 
     /**
-     * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
-     * and the formula in RemainderNaturalScale.
+     * Divides this arbitrary-precision decimal floating-point number by another
+     * arbitrary-precision decimal floating-point number and returns a
+     * two-item array containing the result of the division and the
+     * remainder, in that order. The result of division is calculated as
+     * though by <code>DivideToIntegerNaturalScale</code>, and the remainder is
+     * calculated as though by <code>RemainderNaturalScale</code>.
      * @param divisor The number to divide by.
-     * @return A 2 element array consisting of the quotient and remainder in that
-     * order.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision decimal floating-point number, and the second is
+     * the remainder as an arbitrary-precision decimal floating-point
+     * number. The result of division is the result of the method on the
+     * two operands, and the remainder is the result of the Remainder
+     * method on the two operands.
      */
     public EDecimal[] DivRemNaturalScale(EDecimal
       divisor) {
@@ -3620,8 +3628,12 @@ rather than properties
     }
 
     /**
-     * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
-     * and the formula in RemainderNaturalScale.
+     * Divides this arbitrary-precision decimal floating-point number by another
+     * arbitrary-precision decimal floating-point number and returns a
+     * two-item array containing the result of the division and the
+     * remainder, in that order. The result of division is calculated as
+     * though by <code>DivideToIntegerNaturalScale</code>, and the remainder is
+     * calculated as though by <code>RemainderNaturalScale</code>.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only in
@@ -3633,8 +3645,12 @@ rather than properties
      * rounding. Can be null, in which the precision is unlimited and no
      * additional rounding, other than the rounding down to an integer
      * after division, is needed.
-     * @return A 2 element array consisting of the quotient and remainder in that
-     * order.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision decimal floating-point number, and the second is
+     * the remainder as an arbitrary-precision decimal floating-point
+     * number. The result of division is the result of the method on the
+     * two operands, and the remainder is the result of the Remainder
+     * method on the two operands.
      */
     public EDecimal[] DivRemNaturalScale(
       EDecimal divisor,
@@ -5176,6 +5192,12 @@ rather than properties
     /**
      * Returns the remainder that would result when this arbitrary-precision
      * decimal floating-point number is divided by another
+     * arbitrary-precision decimal floating-point number. The remainder is
+     * the number that remains when the absolute value of this
+     * arbitrary-precision decimal floating-point number is divided (as
+     * though by DivideToIntegerZeroScale) by the absolute value of the
+     * other arbitrary-precision decimal floating-point number; the
+     * remainder has the same sign (positive or negative) as this
      * arbitrary-precision decimal floating-point number.
      * @param divisor The number to divide by.
      * @param ctx An arithmetic context object to control the precision, rounding,
@@ -5186,7 +5208,13 @@ rather than properties
      * precision is unlimited.
      * @return The remainder that would result when this arbitrary-precision
      * decimal floating-point number is divided by another
-     * arbitrary-precision decimal floating-point number.
+     * arbitrary-precision decimal floating-point number. Signals
+     * FlagDivideByZero and returns infinity if the divisor (this
+     * arbitrary-precision decimal floating-point number) is 0 and the
+     * dividend (the other arbitrary-precision decimal floating-point
+     * number) is nonzero. Signals FlagInvalid and returns not-a-number
+     * (NaN) if the divisor and the dividend are 0, or if the result of the
+     * division doesn't fit the given precision.
      */
     public EDecimal Remainder(
       EDecimal divisor,
