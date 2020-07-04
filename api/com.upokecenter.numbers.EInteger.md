@@ -1324,7 +1324,7 @@ Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>intValue</code> - The parameter <code>intValue</code> is a 64-bit signed integer.
+* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
 
 **Returns:**
 

@@ -2586,7 +2586,7 @@ at: http://peteroupc.github.io/
 
     /**
      * Compares an arbitrary-precision integer with this instance.
-     * @param intValue The parameter {@code intValue} is a 64-bit signed integer.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return Zero if the values are equal; a negative number if this instance is
      * less, or a positive number if this instance is greater.
      */
