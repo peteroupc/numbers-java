@@ -3523,7 +3523,16 @@ rather than properties
      * @param divisor The number to divide by.
      * @return The result of dividing this arbitrary-precision decimal
      * floating-point number by another arbitrary-precision decimal
-     * floating-point number.
+     * floating-point number. Returns infinity if the divisor (this
+     * arbitrary-precision decimal floating-point number) is 0 and the
+     * dividend (the other arbitrary-precision decimal floating-point
+     * number) is nonzero. Returns not-a-number (NaN) if the divisor and
+     * the dividend are 0. Returns NaN if the result can't be exact because
+     * it would have a nonterminating binary expansion (examples include 1
+     * divided by any multiple of 3, such as 1/3 or 1/12). If this is not
+     * desired, use DivideToExponent instead, or use the Divide overload
+     * that takes an {@code EContext} (such as {@code EContext.Decimal128}
+     *) instead.
      */
     public EDecimal Divide(EDecimal divisor) {
       return this.Divide(
@@ -3543,7 +3552,15 @@ rather than properties
      * which case the precision is unlimited and no rounding is needed.
      * @return The result of dividing this arbitrary-precision decimal
      * floating-point number by another arbitrary-precision decimal
-     * floating-point number.
+     * floating-point number. Signals FlagDivideByZero and returns infinity
+     * if the divisor (this arbitrary-precision decimal floating-point
+     * number) is 0 and the dividend (the other arbitrary-precision decimal
+     * floating-point number) is nonzero. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the divisor and the dividend are 0; or, either
+     * {@code ctx} is null or {@code ctx} 's precision is 0, and the result
+     * would have a nonterminating decimal expansion (examples include 1
+     * divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding
+     * mode is ERounding.None and the result is not exact.
      */
     public EDecimal Divide(
       EDecimal divisor,
@@ -4646,7 +4663,15 @@ rather than properties
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The result of dividing this arbitrary-precision decimal
-     * floating-point number by a 64-bit signed integer.
+     * floating-point number by a 64-bit signed integer. Returns infinity
+     * if the divisor (this arbitrary-precision decimal floating-point
+     * number) is 0 and the dividend (the other 64-bit signed integer) is
+     * nonzero. Returns not-a-number (NaN) if the divisor and the dividend
+     * are 0. Returns NaN if the result can't be exact because it would
+     * have a nonterminating binary expansion (examples include 1 divided
+     * by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
+     * use DivideToExponent instead, or use the Divide overload that takes
+     * an {@code EContext} (such as {@code EContext.Decimal128}) instead.
      */
     public EDecimal Divide(long longValue) {
       return this.Divide(EDecimal.FromInt64(longValue));
@@ -4703,7 +4728,15 @@ rather than properties
      * @param intValue A 32-bit signed integer, the divisor, to divide this object
      * by.
      * @return The result of dividing this arbitrary-precision decimal
-     * floating-point number by a 32-bit signed integer.
+     * floating-point number by a 32-bit signed integer. Returns infinity
+     * if the divisor (this arbitrary-precision decimal floating-point
+     * number) is 0 and the dividend (the other 32-bit signed integer) is
+     * nonzero. Returns not-a-number (NaN) if the divisor and the dividend
+     * are 0. Returns NaN if the result can't be exact because it would
+     * have a nonterminating binary expansion (examples include 1 divided
+     * by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
+     * use DivideToExponent instead, or use the Divide overload that takes
+     * an {@code EContext} (such as {@code EContext.Decimal128}) instead.
      */
     public EDecimal Divide(int intValue) {
       return this.Divide(EDecimal.FromInt32(intValue));

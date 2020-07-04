@@ -1655,7 +1655,15 @@ at: http://peteroupc.github.io/
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param intValue The divisor.
      * @return The result of dividing this arbitrary-precision binary
-     * floating-point number by a 32-bit signed integer.
+     * floating-point number by a 32-bit signed integer. Returns infinity
+     * if the divisor (this arbitrary-precision binary floating-point
+     * number) is 0 and the dividend (the other 32-bit signed integer) is
+     * nonzero. Returns not-a-number (NaN) if the divisor and the dividend
+     * are 0. Returns NaN if the result can't be exact because it would
+     * have a nonterminating binary expansion (examples include 1 divided
+     * by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
+     * use DivideToExponent instead, or use the Divide overload that takes
+     * an {@code EContext} (such as {@code EContext.Binary64}) instead.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(int intValue) {
@@ -1711,7 +1719,15 @@ at: http://peteroupc.github.io/
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The result of dividing this arbitrary-precision binary
-     * floating-point number by a 64-bit signed integer.
+     * floating-point number by a 64-bit signed integer. Returns infinity
+     * if the divisor (this arbitrary-precision binary floating-point
+     * number) is 0 and the dividend (the other 64-bit signed integer) is
+     * nonzero. Returns not-a-number (NaN) if the divisor and the dividend
+     * are 0. Returns NaN if the result can't be exact because it would
+     * have a nonterminating binary expansion (examples include 1 divided
+     * by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
+     * use DivideToExponent instead, or use the Divide overload that takes
+     * an {@code EContext} (such as {@code EContext.Binary64}) instead.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(long longValue) {
@@ -2132,7 +2148,16 @@ at: http://peteroupc.github.io/
      * @param divisor The number to divide by.
      * @return The result of dividing this arbitrary-precision binary
      * floating-point number by another arbitrary-precision binary
-     * floating-point number.
+     * floating-point number. Returns infinity if the divisor (this
+     * arbitrary-precision binary floating-point number) is 0 and the
+     * dividend (the other arbitrary-precision binary floating-point
+     * number) is nonzero. Returns not-a-number (NaN) if the divisor and
+     * the dividend are 0. Returns NaN if the result can't be exact because
+     * it would have a nonterminating binary expansion (examples include 1
+     * divided by any multiple of 3, such as 1/3 or 1/12). If this is not
+     * desired, use DivideToExponent instead, or use the Divide overload
+     * that takes an {@code EContext} (such as {@code EContext.Binary64})
+     * instead.
      */
     public EFloat Divide(EFloat divisor) {
       return this.Divide(
@@ -2152,7 +2177,15 @@ at: http://peteroupc.github.io/
      * which case the precision is unlimited and no rounding is needed.
      * @return The result of dividing this arbitrary-precision binary
      * floating-point number by another arbitrary-precision binary
-     * floating-point number.
+     * floating-point number. Signals FlagDivideByZero and returns infinity
+     * if the divisor (this arbitrary-precision binary floating-point
+     * number) is 0 and the dividend (the other arbitrary-precision binary
+     * floating-point number) is nonzero. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the divisor and the dividend are 0; or, either
+     * {@code ctx} is null or {@code ctx} 's precision is 0, and the result
+     * would have a nonterminating decimal expansion (examples include 1
+     * divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding
+     * mode is ERounding.None and the result is not exact.
      */
     public EFloat Divide(
       EFloat divisor,

@@ -2456,7 +2456,16 @@ Divides this arbitrary-precision decimal floating-point number by another
 
 * The result of dividing this arbitrary-precision decimal
  floating-point number by another arbitrary-precision decimal
- floating-point number.
+ floating-point number. Returns infinity if the divisor (this
+ arbitrary-precision decimal floating-point number) is 0 and the
+ dividend (the other arbitrary-precision decimal floating-point
+ number) is nonzero. Returns not-a-number (NaN) if the divisor and
+ the dividend are 0. Returns NaN if the result can't be exact because
+ it would have a nonterminating binary expansion (examples include 1
+ divided by any multiple of 3, such as 1/3 or 1/12). If this is not
+ desired, use DivideToExponent instead, or use the Divide overload
+ that takes an <code>EContext</code> (such as <code>EContext.Decimal128</code>
+) instead.
 
 ### Divide
     public EDecimal Divide​(EDecimal divisor, EContext ctx)
@@ -2478,7 +2487,15 @@ Divides this arbitrary-precision decimal floating-point number by another
 
 * The result of dividing this arbitrary-precision decimal
  floating-point number by another arbitrary-precision decimal
- floating-point number.
+ floating-point number. Signals FlagDivideByZero and returns infinity
+ if the divisor (this arbitrary-precision decimal floating-point
+ number) is 0 and the dividend (the other arbitrary-precision decimal
+ floating-point number) is nonzero. Signals FlagInvalid and returns
+ not-a-number (NaN) if the divisor and the dividend are 0; or, either
+ <code>ctx</code> is null or <code>ctx</code> 's precision is 0, and the result
+ would have a nonterminating decimal expansion (examples include 1
+ divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding
+ mode is ERounding.None and the result is not exact.
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
@@ -3414,7 +3431,15 @@ Divides this arbitrary-precision decimal floating-point number by a 64-bit
 **Returns:**
 
 * The result of dividing this arbitrary-precision decimal
- floating-point number by a 64-bit signed integer.
+ floating-point number by a 64-bit signed integer. Returns infinity
+ if the divisor (this arbitrary-precision decimal floating-point
+ number) is 0 and the dividend (the other 64-bit signed integer) is
+ nonzero. Returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Returns NaN if the result can't be exact because it would
+ have a nonterminating binary expansion (examples include 1 divided
+ by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
+ use DivideToExponent instead, or use the Divide overload that takes
+ an <code>EContext</code> (such as <code>EContext.Decimal128</code>) instead.
 
 ### Add
     public EDecimal Add​(int intValue)
@@ -3482,7 +3507,15 @@ Divides this arbitrary-precision decimal floating-point number by a 32-bit
 **Returns:**
 
 * The result of dividing this arbitrary-precision decimal
- floating-point number by a 32-bit signed integer.
+ floating-point number by a 32-bit signed integer. Returns infinity
+ if the divisor (this arbitrary-precision decimal floating-point
+ number) is 0 and the dividend (the other 32-bit signed integer) is
+ nonzero. Returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Returns NaN if the result can't be exact because it would
+ have a nonterminating binary expansion (examples include 1 divided
+ by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
+ use DivideToExponent instead, or use the Divide overload that takes
+ an <code>EContext</code> (such as <code>EContext.Decimal128</code>) instead.
 
 ### MultiplyAndAdd
     public EDecimal MultiplyAndAdd​(EDecimal multiplicand, EDecimal augend)
