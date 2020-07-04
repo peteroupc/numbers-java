@@ -66,7 +66,7 @@ Renamed to ToInt64Unchecked.
 * `int compareTo​(int intValue)`<br>
  Compares an arbitrary-precision integer with this instance.
 * `int compareTo​(long longValue)`<br>
- Not documented yet.
+ Compares an arbitrary-precision integer with this instance.
 * `int compareTo​(EInteger other)`<br>
  Compares an arbitrary-precision integer with this instance.
 * `EInteger Decrement()`<br>
@@ -1320,15 +1320,16 @@ Returns the remainder that would result when this arbitrary-precision
 
 ### compareTo
     public int compareTo​(long longValue)
-Not documented yet.
+Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
 
-* <code>longValue</code> - The parameter <code>longValue</code> is a 64-bit signed integer.
+* <code>intValue</code> - The parameter <code>intValue</code> is a 64-bit signed integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* Zero if the values are equal; a negative number if this instance is
+ less, or a positive number if this instance is greater.
 
 ### DivRem
     public EInteger[] DivRem​(long intDivisor)

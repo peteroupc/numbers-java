@@ -2585,9 +2585,10 @@ at: http://peteroupc.github.io/
     }
 
     /**
-     * Not documented yet.
-     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * Compares an arbitrary-precision integer with this instance.
+     * @param intValue The parameter {@code intValue} is a 64-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
      */
     public int compareTo(long longValue) {
       return this.compareTo(EInteger.FromInt64(longValue));
