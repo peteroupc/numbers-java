@@ -908,7 +908,8 @@ Adds this arbitrary-precision integer and another arbitrary-precision
 
 **Returns:**
 
-* The sum of the two objects.
+* The sum of the two numbers, that is, this arbitrary-precision
+ integer plus another arbitrary-precision integer.
 
 **Throws:**
 
@@ -1077,7 +1078,8 @@ Adds this arbitrary-precision integer and a 32-bit signed integer and
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* The sum of the two numbers, that is, this arbitrary-precision
+ integer plus a 32-bit signed integer.
 
 ### Subtract
     public EInteger Subtract​(int intValue)
@@ -1090,7 +1092,8 @@ Subtracts a 32-bit signed integer from this arbitrary-precision integer and
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision integer minus a 32-bit signed integer.
 
 ### Multiply
     public EInteger Multiply​(int intValue)
@@ -1103,7 +1106,8 @@ Multiplies this arbitrary-precision integer by a 32-bit signed integer and
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ integer times a 32-bit signed integer.
 
 ### Divide
     public EInteger Divide​(int intValue)
@@ -1121,7 +1125,13 @@ Divides this arbitrary-precision integer by a 32-bit signed integer and
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision integer by a 32-bit
+ signed integer. The result of the division is rounded down (the
+ fractional part is discarded). Except if the result of the division
+ is 0, it will be negative if this arbitrary-precision integer is
+ positive and the other 32-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are
+ negative.
 
 **Throws:**
 
@@ -1142,7 +1152,8 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The remainder of the two numbers.
+* The remainder that would result when this arbitrary-precision
+ integer is divided by a 32-bit signed integer.
 
 **Throws:**
 
@@ -1179,7 +1190,13 @@ Divides this arbitrary-precision integer by another arbitrary-precision
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision integer by another
+ arbitrary-precision integer. The result of the division is rounded
+ down (the fractional part is discarded). Except if the result of the
+ division is 0, it will be negative if this arbitrary-precision
+ integer is positive and the other arbitrary-precision integer is
+ negative, or vice versa, and will be positive if both are positive
+ or both are negative.
 
 **Throws:**
 
@@ -1207,8 +1224,8 @@ Divides this arbitrary-precision integer by a 32-bit signed integer and
 
 **Returns:**
 
-* An array with two arbitrary-precision integers: the first is the
- quotient, and the second is the remainder.
+* A two-item array containing the result of the division and the
+ remainder, in that order.
 
 **Throws:**
 
@@ -1225,7 +1242,8 @@ Adds this arbitrary-precision integer and a 64-bit signed integer and
 
 **Returns:**
 
-* The return value is not documented yet.
+* The sum of the two numbers, that is, this arbitrary-precision
+ integer plus a 64-bit signed integer.
 
 ### Subtract
     public EInteger Subtract​(long longValue)
@@ -1238,7 +1256,8 @@ Subtracts a 64-bit signed integer from this arbitrary-precision integer and
 
 **Returns:**
 
-* The return value is not documented yet.
+* The difference between the two numbers, that is, this
+ arbitrary-precision integer minus a 64-bit signed integer.
 
 ### Multiply
     public EInteger Multiply​(long longValue)
@@ -1251,7 +1270,8 @@ Multiplies this arbitrary-precision integer by a 64-bit signed integer and
 
 **Returns:**
 
-* The return value is not documented yet.
+* The product of the two numbers, that is, this arbitrary-precision
+ integer times a 64-bit signed integer.
 
 ### Divide
     public EInteger Divide​(long longValue)
@@ -1269,7 +1289,13 @@ Divides this arbitrary-precision integer by a 64-bit signed integer and
 
 **Returns:**
 
-* The return value is not documented yet.
+* The result of dividing this arbitrary-precision integer by a 64-bit
+ signed integer. The result of the division is rounded down (the
+ fractional part is discarded). Except if the result of the division
+ is 0, it will be negative if this arbitrary-precision integer is
+ positive and the other 64-bit signed integer is negative, or vice
+ versa, and will be positive if both are positive or both are
+ negative.
 
 ### Remainder
     public EInteger Remainder​(long longValue)
@@ -1286,7 +1312,8 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The return value is not documented yet.
+* The remainder that would result when this arbitrary-precision
+ integer is divided by a 64-bit signed integer.
 
 ### compareTo
     public int compareTo​(long longValue)
@@ -1321,7 +1348,8 @@ Divides this arbitrary-precision integer by a 64-bit signed integer and
 
 **Returns:**
 
-* The return value is not documented yet.
+* A two-item array containing the result of the division and the
+ remainder, in that order.
 
 ### DivRem
     public EInteger[] DivRem​(EInteger divisor)
@@ -1344,8 +1372,8 @@ Divides this arbitrary-precision integer by another arbitrary-precision
 
 **Returns:**
 
-* An array with two arbitrary-precision integers: the first is the
- quotient, and the second is the remainder.
+* A two-item array containing the result of the division and the
+ remainder, in that order.
 
 **Throws:**
 
@@ -1722,7 +1750,8 @@ Multiplies this arbitrary-precision integer by another arbitrary-precision
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ integer times another arbitrary-precision integer.
 
 **Throws:**
 
@@ -1800,7 +1829,8 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The remainder of the two numbers.
+* The remainder that would result when this arbitrary-precision
+ integer is divided by another arbitrary-precision integer.
 
 **Throws:**
 
@@ -2205,7 +2235,9 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision integer minus another arbitrary-precision
+ integer.
 
 **Throws:**
 

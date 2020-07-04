@@ -1009,8 +1009,8 @@ PositiveInfinity) : CreateNaN(
      * Adds this arbitrary-precision rational number and another
      * arbitrary-precision rational number and returns the result.
      * @param otherValue Another arbitrary-precision rational number.
-     * @return The sum of the two numbers. Returns not-a-number (NaN) if either
-     * operand is NaN.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * rational number plus another arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Add(ERational otherValue) {
@@ -1588,7 +1588,8 @@ PositiveInfinity) : CreateNaN(
      * Divides this arbitrary-precision rational number by another
      * arbitrary-precision rational number and returns the result.
      * @param otherValue An arbitrary-precision rational number.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision rational number by
+     * another arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Divide(ERational otherValue) {
@@ -1745,7 +1746,8 @@ PositiveInfinity) : CreateNaN(
      * Multiplies this arbitrary-precision rational number by another
      * arbitrary-precision rational number and returns the result.
      * @param otherValue An arbitrary-precision rational number.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * rational number times another arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Multiply(ERational otherValue) {
@@ -1799,7 +1801,9 @@ PositiveInfinity) : CreateNaN(
      * rational number is divided by another arbitrary-precision rational
      * number.
      * @param otherValue An arbitrary-precision rational number.
-     * @return The remainder of the two numbers.
+     * @return The remainder that would result when this arbitrary-precision
+     * rational number is divided by another arbitrary-precision rational
+     * number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Remainder(ERational otherValue) {
@@ -1850,7 +1854,9 @@ PositiveInfinity) : CreateNaN(
      * Subtracts an arbitrary-precision rational number from this
      * arbitrary-precision rational number and returns the result.
      * @param otherValue An arbitrary-precision rational number.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision rational number minus another
+     * arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public ERational Subtract(ERational otherValue) {
@@ -2475,8 +2481,8 @@ PositiveInfinity) : CreateNaN(
      * Adds this arbitrary-precision rational number and a 32-bit signed integer
      * and returns the result.
      * @param v A 32-bit signed integer.
-     * @return The sum of the two numbers. Returns not-a-number (NaN) if this
-     * object is NaN.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * rational number plus a 32-bit signed integer.
      */
     public ERational Add(int v) {
       return this.Add(FromInt32(v));
@@ -2486,7 +2492,8 @@ PositiveInfinity) : CreateNaN(
      * Subtracts a 32-bit signed integer from this arbitrary-precision rational
      * number and returns the result.
      * @param v The parameter {@code v} is a 32-bit signed integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision rational number minus a 32-bit signed integer.
      */
     public ERational Subtract(int v) {
       return this.Subtract(FromInt32(v));
@@ -2496,7 +2503,8 @@ PositiveInfinity) : CreateNaN(
      * Multiplies this arbitrary-precision rational number by a 32-bit signed
      * integer and returns the result.
      * @param v The parameter {@code v} is a 32-bit signed integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * rational number times a 32-bit signed integer.
      */
     public ERational Multiply(int v) {
       return this.Multiply(FromInt32(v));
@@ -2506,7 +2514,8 @@ PositiveInfinity) : CreateNaN(
      * Divides this arbitrary-precision rational number by a 32-bit signed integer
      * and returns the result.
      * @param v The parameter {@code v} is a 32-bit signed integer.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision rational number by a
+     * 32-bit signed integer.
      * @throws ArithmeticException The parameter {@code v} is zero.
      */
     public ERational Divide(int v) {
@@ -2517,7 +2526,8 @@ PositiveInfinity) : CreateNaN(
      * Returns the remainder that would result when this arbitrary-precision
      * rational number is divided by a 32-bit signed integer.
      * @param v The divisor.
-     * @return The remainder of the two numbers.
+     * @return The remainder that would result when this arbitrary-precision
+     * rational number is divided by a 32-bit signed integer.
      * @throws IllegalArgumentException The parameter {@code v} is zero.
      */
     public ERational Remainder(int v) {
@@ -2528,8 +2538,8 @@ PositiveInfinity) : CreateNaN(
      * Adds this arbitrary-precision rational number and a 64-bit signed integer
      * and returns the result.
      * @param v A 64-bit signed integer.
-     * @return The sum of the two numbers. Returns not-a-number (NaN) if this
-     * object is NaN.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * rational number plus a 64-bit signed integer.
      */
     public ERational Add(long v) {
       return this.Add(FromInt64(v));
@@ -2539,7 +2549,8 @@ PositiveInfinity) : CreateNaN(
      * Subtracts a 64-bit signed integer from this arbitrary-precision rational
      * number and returns the result.
      * @param v The parameter {@code v} is a 64-bit signed integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision rational number minus a 64-bit signed integer.
      */
     public ERational Subtract(long v) {
       return this.Subtract(FromInt64(v));
@@ -2549,7 +2560,8 @@ PositiveInfinity) : CreateNaN(
      * Multiplies this arbitrary-precision rational number by a 64-bit signed
      * integer and returns the result.
      * @param v The parameter {@code v} is a 64-bit signed integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * rational number times a 64-bit signed integer.
      */
     public ERational Multiply(long v) {
       return this.Multiply(FromInt64(v));
@@ -2559,7 +2571,8 @@ PositiveInfinity) : CreateNaN(
      * Divides this arbitrary-precision rational number by a 64-bit signed integer
      * and returns the result.
      * @param v The parameter {@code v} is a 64-bit signed integer.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision rational number by a
+     * 64-bit signed integer.
      * @throws ArithmeticException The parameter {@code v} is zero.
      */
     public ERational Divide(long v) {
@@ -2570,7 +2583,8 @@ PositiveInfinity) : CreateNaN(
      * Returns the remainder that would result when this arbitrary-precision
      * rational number is divided by a 64-bit signed integer.
      * @param v The divisor.
-     * @return The remainder of the two numbers.
+     * @return The remainder that would result when this arbitrary-precision
+     * rational number is divided by a 64-bit signed integer.
      * @throws IllegalArgumentException The parameter {@code v} is zero.
      */
     public ERational Remainder(long v) {

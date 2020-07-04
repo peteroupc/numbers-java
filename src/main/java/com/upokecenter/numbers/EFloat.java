@@ -1611,7 +1611,8 @@ at: http://peteroupc.github.io/
      * is the lower of this arbitrary-precision binary floating-point
      * number's exponent and the other 32-bit signed integer's exponent.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return The sum of the two objects.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus a 32-bit signed integer.
      */
     public EFloat Add(int intValue) {
       return this.Add(EFloat.FromInt32(intValue));
@@ -1624,7 +1625,9 @@ at: http://peteroupc.github.io/
      * floating-point number's exponent and the other 32-bit signed
      * integer's exponent.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision binary floating-point number minus a 32-bit
+     * signed integer.
      */
     public EFloat Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
@@ -1637,7 +1640,8 @@ at: http://peteroupc.github.io/
      * is this arbitrary-precision binary floating-point number's exponent
      *  plus the other 32-bit signed integer's exponent.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * binary floating-point number times a 32-bit signed integer.
      */
     public EFloat Multiply(int intValue) {
       return this.Multiply(EFloat.FromInt32(intValue));
@@ -1650,7 +1654,8 @@ at: http://peteroupc.github.io/
      * 1/12, 1/7, 2/3, and so on); if this is not desired, use
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param intValue The divisor.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision binary
+     * floating-point number by a 32-bit signed integer.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(int intValue) {
@@ -1663,7 +1668,8 @@ at: http://peteroupc.github.io/
      * is the lower of this arbitrary-precision binary floating-point
      * number's exponent and the other 64-bit signed integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus a 64-bit signed integer.
      */
     public EFloat Add(long longValue) {
       return this.Add(EFloat.FromInt64(longValue));
@@ -1676,7 +1682,9 @@ at: http://peteroupc.github.io/
      * floating-point number's exponent and the other 64-bit signed
      * integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision binary floating-point number minus a 64-bit
+     * signed integer.
      */
     public EFloat Subtract(long longValue) {
       return this.Subtract(EFloat.FromInt64(longValue));
@@ -1688,7 +1696,8 @@ at: http://peteroupc.github.io/
      * is this arbitrary-precision binary floating-point number's exponent
      *  plus the other 64-bit signed integer's exponent.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200L);</pre> . </p>
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * binary floating-point number times a 64-bit signed integer.
      */
     public EFloat Multiply(long longValue) {
       return this.Multiply(EFloat.FromInt64(longValue));
@@ -1701,7 +1710,8 @@ at: http://peteroupc.github.io/
      * 1/12, 1/7, 2/3, and so on); if this is not desired, use
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision binary
+     * floating-point number by a 64-bit signed integer.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(long longValue) {
@@ -1715,7 +1725,9 @@ at: http://peteroupc.github.io/
      * arbitrary-precision binary floating-point number's exponent and the
      * other arbitrary-precision binary floating-point number's exponent.
      * @param otherValue An arbitrary-precision binary floating-point number.
-     * @return The sum of the two objects.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus another arbitrary-precision binary
+     * floating-point number.
      */
     public EFloat Add(EFloat otherValue) {
       return this.Add(otherValue, EContext.UnlimitedHalfEven);
@@ -1731,7 +1743,9 @@ at: http://peteroupc.github.io/
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus another arbitrary-precision binary
+     * floating-point number.
      */
     public EFloat Add(
       EFloat otherValue,
@@ -2116,12 +2130,9 @@ at: http://peteroupc.github.io/
      * so on); if this is not desired, use DivideToExponent, or use the
      * Divide overload that takes an EContext.
      * @param divisor The number to divide by.
-     * @return The quotient of the two numbers. Returns infinity if the divisor is
-     * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
-     * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating binary expansion. If
-     * this is not desired, use DivideToExponent instead, or use the Divide
-     * overload that takes an EContext instead.
+     * @return The result of dividing this arbitrary-precision binary
+     * floating-point number by another arbitrary-precision binary
+     * floating-point number.
      */
     public EFloat Divide(EFloat divisor) {
       return this.Divide(
@@ -2139,13 +2150,9 @@ at: http://peteroupc.github.io/
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return The quotient of the two objects. Signals FlagDivideByZero and
-     * returns infinity if the divisor is 0 and the dividend is nonzero.
-     * Signals FlagInvalid and returns not-a-number (NaN) if the divisor
-     * and the dividend are 0; or, either {@code ctx} is null or {@code
-     * ctx} 's precision is 0, and the result would have a nonterminating
-     * binary expansion; or, the rounding mode is ERounding.None and the
-     * result is not exact.
+     * @return The result of dividing this arbitrary-precision binary
+     * floating-point number by another arbitrary-precision binary
+     * floating-point number.
      */
     public EFloat Divide(
       EFloat divisor,
@@ -3018,7 +3025,9 @@ at: http://peteroupc.github.io/
      * binary floating-point number's exponent plus the other
      * arbitrary-precision binary floating-point number's exponent.
      * @param otherValue Another binary floating-point number.
-     * @return The product of the two binary floating-point numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * binary floating-point number times another arbitrary-precision
+     * binary floating-point number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EFloat Multiply(EFloat otherValue) {
@@ -3053,7 +3062,9 @@ at: http://peteroupc.github.io/
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * binary floating-point number times another arbitrary-precision
+     * binary floating-point number.
      */
     public EFloat Multiply(
       EFloat op,
@@ -3466,9 +3477,9 @@ at: http://peteroupc.github.io/
      * binary floating-point number.
      * @param divisor An arbitrary-precision binary floating-point number.
      * @param ctx The parameter {@code ctx} is an EContext object.
-     * @return The remainder of the two numbers. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
-     * the given precision.
+     * @return The remainder that would result when this arbitrary-precision binary
+     * floating-point number is divided by another arbitrary-precision
+     * binary floating-point number.
      */
     public EFloat Remainder(
       EFloat divisor,
@@ -3962,7 +3973,9 @@ at: http://peteroupc.github.io/
      * arbitrary-precision binary floating-point number's exponent and the
      * other arbitrary-precision binary floating-point number's exponent.
      * @param otherValue The number to subtract from this instance's value.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision binary floating-point number minus another
+     * arbitrary-precision binary floating-point number.
      */
     public EFloat Subtract(EFloat otherValue) {
       return this.Subtract(otherValue, null);
@@ -3978,7 +3991,9 @@ at: http://peteroupc.github.io/
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return An arbitrary-precision binary floating-point number.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision binary floating-point number minus another
+     * arbitrary-precision binary floating-point number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EFloat Subtract(

@@ -2114,7 +2114,9 @@ Adds this arbitrary-precision decimal floating-point number and another
 
 **Returns:**
 
-* The sum of the two objects.
+* The sum of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number plus another arbitrary-precision
+ decimal floating-point number.
 
 ### Add
     public EDecimal Add​(EDecimal otherValue, EContext ctx)
@@ -2134,7 +2136,9 @@ Adds this arbitrary-precision decimal floating-point number and another
 
 **Returns:**
 
-* The sum of thisValue and the other object.
+* The sum of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number plus another arbitrary-precision
+ decimal floating-point number.
 
 ### compareTo
     public int compareTo​(EDecimal other)
@@ -2450,12 +2454,9 @@ Divides this arbitrary-precision decimal floating-point number by another
 
 **Returns:**
 
-* The quotient of the two numbers. Returns infinity if the divisor is
- 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
- divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating decimal expansion;
- examples include 1 divided by any multiple of 3, such as 1/3 or
- 1/12.
+* The result of dividing this arbitrary-precision decimal
+ floating-point number by another arbitrary-precision decimal
+ floating-point number.
 
 ### Divide
     public EDecimal Divide​(EDecimal divisor, EContext ctx)
@@ -2475,14 +2476,9 @@ Divides this arbitrary-precision decimal floating-point number by another
 
 **Returns:**
 
-* The quotient of the two objects. Signals FlagDivideByZero and
- returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor
- and the dividend are 0; or, either <code>ctx</code> is null or <code>
- ctx</code> 's precision is 0, and the result would have a nonterminating
- decimal expansion (examples include 1 divided by any multiple of 3,
- such as 1/3 or 1/12); or, the rounding mode is ERounding.None and
- the result is not exact.
+* The result of dividing this arbitrary-precision decimal
+ floating-point number by another arbitrary-precision decimal
+ floating-point number.
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)
@@ -3323,7 +3319,9 @@ Multiplies this arbitrary-precision decimal floating-point number by another
 
 **Returns:**
 
-* The product of the two decimal numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number times another arbitrary-precision
+ decimal floating-point number.
 
 **Throws:**
 
@@ -3347,7 +3345,9 @@ Multiplies this arbitrary-precision decimal floating-point number by another
 
 **Returns:**
 
-* The product of the two decimal numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number times another arbitrary-precision
+ decimal floating-point number.
 
 ### Add
     public EDecimal Add​(long longValue)
@@ -3362,7 +3362,8 @@ Adds this arbitrary-precision decimal floating-point number and a 64-bit
 
 **Returns:**
 
-* The sum of the two objects.
+* The sum of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number plus a 64-bit signed integer.
 
 ### Subtract
     public EDecimal Subtract​(long longValue)
@@ -3378,7 +3379,9 @@ Subtracts a 64-bit signed integer from this arbitrary-precision decimal
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision decimal floating-point number minus a 64-bit
+ signed integer.
 
 ### Multiply
     public EDecimal Multiply​(long longValue)
@@ -3393,7 +3396,8 @@ Multiplies this arbitrary-precision decimal floating-point number by a
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number times a 64-bit signed integer.
 
 ### Divide
     public EDecimal Divide​(long longValue)
@@ -3409,13 +3413,8 @@ Divides this arbitrary-precision decimal floating-point number by a 64-bit
 
 **Returns:**
 
-* The quotient of the two numbers. Returns infinity if the divisor is
- 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
- divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating decimal expansion;
- examples include 1 divided by any multiple of 3, such as 1/3 or
- 1/12. If this is not desired, use DivideToExponent instead, or use
- the Divide overload that takes an EContext instead.
+* The result of dividing this arbitrary-precision decimal
+ floating-point number by a 64-bit signed integer.
 
 ### Add
     public EDecimal Add​(int intValue)
@@ -3430,7 +3429,8 @@ Adds this arbitrary-precision decimal floating-point number and a 32-bit
 
 **Returns:**
 
-* The sum of the two objects.
+* The sum of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number plus a 32-bit signed integer.
 
 ### Subtract
     public EDecimal Subtract​(int intValue)
@@ -3446,7 +3446,9 @@ Subtracts a 32-bit signed integer from this arbitrary-precision decimal
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision decimal floating-point number minus a 32-bit
+ signed integer.
 
 ### Multiply
     public EDecimal Multiply​(int intValue)
@@ -3461,7 +3463,8 @@ Multiplies this arbitrary-precision decimal floating-point number by a
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ decimal floating-point number times a 32-bit signed integer.
 
 ### Divide
     public EDecimal Divide​(int intValue)
@@ -3478,12 +3481,8 @@ Divides this arbitrary-precision decimal floating-point number by a 32-bit
 
 **Returns:**
 
-* The quotient of the two numbers. Returns infinity if the divisor is
- 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
- divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating decimal expansion;
- examples include 1 divided by any multiple of 3, such as 1/3 or
- 1/12.
+* The result of dividing this arbitrary-precision decimal
+ floating-point number by a 32-bit signed integer.
 
 ### MultiplyAndAdd
     public EDecimal MultiplyAndAdd​(EDecimal multiplicand, EDecimal augend)
@@ -3937,9 +3936,9 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The remainder of the two numbers. Signals FlagInvalid and returns
- not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
- the given precision.
+* The remainder that would result when this arbitrary-precision
+ decimal floating-point number is divided by another
+ arbitrary-precision decimal floating-point number.
 
 ### RemainderNoRoundAfterDivide
     public EDecimal RemainderNoRoundAfterDivide​(EDecimal divisor, EContext ctx)
@@ -4577,7 +4576,9 @@ Subtracts an arbitrary-precision decimal floating-point number from this
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision decimal floating-point number minus another
+ arbitrary-precision decimal floating-point number.
 
 ### Subtract
     public EDecimal Subtract​(EDecimal otherValue, EContext ctx)
@@ -4597,7 +4598,9 @@ Subtracts an arbitrary-precision decimal floating-point number from this
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision decimal floating-point number minus another
+ arbitrary-precision decimal floating-point number.
 
 **Throws:**
 

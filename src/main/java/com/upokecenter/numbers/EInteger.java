@@ -1215,7 +1215,8 @@ at: http://peteroupc.github.io/
      * Adds this arbitrary-precision integer and another arbitrary-precision
      * integer and returns the result.
      * @param bigintAugend Another arbitrary-precision integer.
-     * @return The sum of the two objects.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * integer plus another arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code bigintAugend} is null.
      */
     public EInteger Add(EInteger bigintAugend) {
@@ -1689,7 +1690,8 @@ at: http://peteroupc.github.io/
      * Adds this arbitrary-precision integer and a 32-bit signed integer and
      * returns the result.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return An arbitrary-precision integer.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * integer plus a 32-bit signed integer.
      */
     public EInteger Add(int intValue) {
       if (intValue == 0) {
@@ -1747,7 +1749,8 @@ at: http://peteroupc.github.io/
      * Subtracts a 32-bit signed integer from this arbitrary-precision integer and
      * returns the result.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision integer minus a 32-bit signed integer.
      */
     public EInteger Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
@@ -1759,7 +1762,8 @@ at: http://peteroupc.github.io/
      * Multiplies this arbitrary-precision integer by a 32-bit signed integer and
      *  returns the result.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * integer times a 32-bit signed integer.
      */
     public EInteger Multiply(int intValue) {
       return this.Multiply(EInteger.FromInt32(intValue));
@@ -1774,7 +1778,13 @@ at: http://peteroupc.github.io/
      * versa, and will be positive if both are positive or both are
      * negative.
      * @param intValue The divisor.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision integer by a 32-bit
+     * signed integer. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 32-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Divide(int intValue) {
@@ -1789,7 +1799,8 @@ at: http://peteroupc.github.io/
      * other 32-bit signed integer; the remainder has the same sign
      * (positive or negative) as this arbitrary-precision integer.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
-     * @return The remainder of the two numbers.
+     * @return The remainder that would result when this arbitrary-precision
+     * integer is divided by a 32-bit signed integer.
      * @throws ArithmeticException Attempted to divide by zero.
      * @throws NullPointerException The parameter {@code intValue} is null.
      */
@@ -1830,7 +1841,13 @@ at: http://peteroupc.github.io/
      * arbitrary-precision integer is negative, or vice versa, and will be
      * positive if both are positive or both are negative.
      * @param bigintDivisor The divisor.
-     * @return The quotient of the two objects.
+     * @return The result of dividing this arbitrary-precision integer by another
+     * arbitrary-precision integer. The result of the division is rounded
+     * down (the fractional part is discarded). Except if the result of the
+     * division is 0, it will be negative if this arbitrary-precision
+     * integer is positive and the other arbitrary-precision integer is
+     * negative, or vice versa, and will be positive if both are positive
+     * or both are negative.
      * @throws NullPointerException The parameter {@code bigintDivisor} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      */
@@ -2487,8 +2504,8 @@ at: http://peteroupc.github.io/
      * value of the other 32-bit signed integer; the remainder has the same
      * sign (positive or negative) as this arbitrary-precision integer.
      * @param intDivisor The number to divide by.
-     * @return An array with two arbitrary-precision integers: the first is the
-     * quotient, and the second is the remainder.
+     * @return A two-item array containing the result of the division and the
+     * remainder, in that order.
      * @throws ArithmeticException The parameter {@code intDivisor} is 0.
      */
     public EInteger[] DivRem(int intDivisor) {
@@ -2499,7 +2516,8 @@ at: http://peteroupc.github.io/
      * Adds this arbitrary-precision integer and a 64-bit signed integer and
      * returns the result.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * integer plus a 64-bit signed integer.
      */
     public EInteger Add(long longValue) {
       return this.Add(EInteger.FromInt64(longValue));
@@ -2509,7 +2527,8 @@ at: http://peteroupc.github.io/
      * Subtracts a 64-bit signed integer from this arbitrary-precision integer and
      * returns the result.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision integer minus a 64-bit signed integer.
      */
     public EInteger Subtract(long longValue) {
       return this.Subtract(EInteger.FromInt64(longValue));
@@ -2519,7 +2538,8 @@ at: http://peteroupc.github.io/
      * Multiplies this arbitrary-precision integer by a 64-bit signed integer and
      * returns the result.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * integer times a 64-bit signed integer.
      */
     public EInteger Multiply(long longValue) {
       return this.Multiply(EInteger.FromInt64(longValue));
@@ -2534,7 +2554,13 @@ at: http://peteroupc.github.io/
      * versa, and will be positive if both are positive or both are
      * negative.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The result of dividing this arbitrary-precision integer by a 64-bit
+     * signed integer. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 64-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
      */
     public EInteger Divide(long longValue) {
       return this.Divide(EInteger.FromInt64(longValue));
@@ -2548,7 +2574,8 @@ at: http://peteroupc.github.io/
      * other 64-bit signed integer; the remainder has the same sign
      * (positive or negative) as this arbitrary-precision integer.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The return value is not documented yet.
+     * @return The remainder that would result when this arbitrary-precision
+     * integer is divided by a 64-bit signed integer.
      */
     public EInteger Remainder(long longValue) {
       return this.Remainder(EInteger.FromInt64(longValue));
@@ -2577,7 +2604,8 @@ at: http://peteroupc.github.io/
      * sign (positive or negative) as this arbitrary-precision integer.
      * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
      * integer.
-     * @return The return value is not documented yet.
+     * @return A two-item array containing the result of the division and the
+     * remainder, in that order.
      */
     public EInteger[] DivRem(long intDivisor) {
       return this.DivRem(EInteger.FromInt64(intDivisor));
@@ -2597,8 +2625,8 @@ at: http://peteroupc.github.io/
      * other arbitrary-precision integer; the remainder has the same sign
      * (positive or negative) as this arbitrary-precision integer.
      * @param divisor The number to divide by.
-     * @return An array with two arbitrary-precision integers: the first is the
-     * quotient, and the second is the remainder.
+     * @return A two-item array containing the result of the division and the
+     * remainder, in that order.
      * @throws ArithmeticException The parameter {@code divisor} is 0.
      * @throws NullPointerException The parameter {@code divisor} is null.
      */
@@ -3714,7 +3742,8 @@ maxDigitEstimate : retval +
      * Multiplies this arbitrary-precision integer by another arbitrary-precision
      * integer and returns the result.
      * @param bigintMult Another arbitrary-precision integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * integer times another arbitrary-precision integer.
      * @throws NullPointerException The parameter {@code bigintMult} is null.
      */
     public EInteger Multiply(EInteger bigintMult) {
@@ -4305,7 +4334,8 @@ maxDigitEstimate : retval +
      * other arbitrary-precision integer; the remainder has the same sign
      * (positive or negative) as this arbitrary-precision integer.
      * @param divisor The number to divide by.
-     * @return The remainder of the two numbers.
+     * @return The remainder that would result when this arbitrary-precision
+     * integer is divided by another arbitrary-precision integer.
      * @throws ArithmeticException Attempted to divide by zero.
      * @throws NullPointerException The parameter {@code divisor} is null.
      */
@@ -5225,7 +5255,9 @@ maxDigitEstimate : retval +
      * Subtracts an arbitrary-precision integer from this arbitrary-precision
      * integer and returns the result.
      * @param subtrahend Another arbitrary-precision integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision integer minus another arbitrary-precision
+     * integer.
      * @throws NullPointerException The parameter {@code subtrahend} is null.
      */
     public EInteger Subtract(EInteger subtrahend) {

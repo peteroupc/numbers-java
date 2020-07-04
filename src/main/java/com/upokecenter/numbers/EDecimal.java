@@ -2930,7 +2930,9 @@ rather than properties
      * arbitrary-precision decimal floating-point number's exponent and the
      * other arbitrary-precision decimal floating-point number's exponent.
      * @param otherValue An arbitrary-precision decimal number.
-     * @return The sum of the two objects.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number plus another arbitrary-precision
+     * decimal floating-point number.
      */
     public EDecimal Add(EDecimal otherValue) {
       if (this.isFinite() && otherValue != null && otherValue.isFinite() &&
@@ -2954,7 +2956,9 @@ rather than properties
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return The sum of thisValue and the other object.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number plus another arbitrary-precision
+     * decimal floating-point number.
      */
     public EDecimal Add(
       EDecimal otherValue,
@@ -3517,12 +3521,9 @@ rather than properties
      * so on); if this is not desired, use DivideToExponent, or use the
      * Divide overload that takes an EContext.
      * @param divisor The number to divide by.
-     * @return The quotient of the two numbers. Returns infinity if the divisor is
-     * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
-     * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating decimal expansion;
-     * examples include 1 divided by any multiple of 3, such as 1/3 or
-     * 1/12.
+     * @return The result of dividing this arbitrary-precision decimal
+     * floating-point number by another arbitrary-precision decimal
+     * floating-point number.
      */
     public EDecimal Divide(EDecimal divisor) {
       return this.Divide(
@@ -3540,14 +3541,9 @@ rather than properties
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return The quotient of the two objects. Signals FlagDivideByZero and
-     * returns infinity if the divisor is 0 and the dividend is nonzero.
-     * Signals FlagInvalid and returns not-a-number (NaN) if the divisor
-     * and the dividend are 0; or, either {@code ctx} is null or {@code
-     * ctx} 's precision is 0, and the result would have a nonterminating
-     * decimal expansion (examples include 1 divided by any multiple of 3,
-     * such as 1/3 or 1/12); or, the rounding mode is ERounding.None and
-     * the result is not exact.
+     * @return The result of dividing this arbitrary-precision decimal
+     * floating-point number by another arbitrary-precision decimal
+     * floating-point number.
      */
     public EDecimal Divide(
       EDecimal divisor,
@@ -4541,7 +4537,9 @@ rather than properties
      * decimal floating-point number's exponent plus the other
      * arbitrary-precision decimal floating-point number's exponent.
      * @param otherValue Another decimal number.
-     * @return The product of the two decimal numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number times another arbitrary-precision
+     * decimal floating-point number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EDecimal Multiply(EDecimal otherValue) {
@@ -4591,7 +4589,9 @@ rather than properties
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and rounding isn't needed.
-     * @return The product of the two decimal numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number times another arbitrary-precision
+     * decimal floating-point number.
      */
     public EDecimal Multiply(EDecimal op, EContext ctx) {
       return GetMathValue(ctx).Multiply(this, op, ctx);
@@ -4603,7 +4603,8 @@ rather than properties
      * is the lower of this arbitrary-precision decimal floating-point
      * number's exponent and the other 64-bit signed integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The sum of the two objects.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number plus a 64-bit signed integer.
      */
     public EDecimal Add(long longValue) {
       return this.Add(EDecimal.FromInt64(longValue));
@@ -4616,7 +4617,9 @@ rather than properties
      * floating-point number's exponent and the other 64-bit signed
      * integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision decimal floating-point number minus a 64-bit
+     * signed integer.
      */
     public EDecimal Subtract(long longValue) {
       return this.Subtract(EDecimal.FromInt64(longValue));
@@ -4628,7 +4631,8 @@ rather than properties
      * result is this arbitrary-precision decimal floating-point number's
      * exponent plus the other 64-bit signed integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number times a 64-bit signed integer.
      */
     public EDecimal Multiply(long longValue) {
       return this.Multiply(EDecimal.FromInt64(longValue));
@@ -4641,13 +4645,8 @@ rather than properties
      * 1/12, 1/7, 2/3, and so on); if this is not desired, use
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
-     * @return The quotient of the two numbers. Returns infinity if the divisor is
-     * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
-     * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating decimal expansion;
-     * examples include 1 divided by any multiple of 3, such as 1/3 or
-     * 1/12. If this is not desired, use DivideToExponent instead, or use
-     * the Divide overload that takes an EContext instead.
+     * @return The result of dividing this arbitrary-precision decimal
+     * floating-point number by a 64-bit signed integer.
      */
     public EDecimal Divide(long longValue) {
       return this.Divide(EDecimal.FromInt64(longValue));
@@ -4659,7 +4658,8 @@ rather than properties
      * is the lower of this arbitrary-precision decimal floating-point
      * number's exponent and the other 32-bit signed integer's exponent.
      * @param intValue A 32-bit signed integer to add to this object.
-     * @return The sum of the two objects.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number plus a 32-bit signed integer.
      */
     public EDecimal Add(int intValue) {
       return this.Add(EDecimal.FromInt32(intValue));
@@ -4672,7 +4672,9 @@ rather than properties
      * floating-point number's exponent and the other 32-bit signed
      * integer's exponent.
      * @param intValue A 32-bit signed integer to subtract from this object.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision decimal floating-point number minus a 32-bit
+     * signed integer.
      */
     public EDecimal Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
@@ -4685,7 +4687,8 @@ rather than properties
      * result is this arbitrary-precision decimal floating-point number's
      * exponent plus the other 32-bit signed integer's exponent.
      * @param intValue A 32-bit signed integer to multiply this object by.
-     * @return The product of the two numbers.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * decimal floating-point number times a 32-bit signed integer.
      */
     public EDecimal Multiply(int intValue) {
       return this.Multiply(EDecimal.FromInt32(intValue));
@@ -4699,12 +4702,8 @@ rather than properties
      * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param intValue A 32-bit signed integer, the divisor, to divide this object
      * by.
-     * @return The quotient of the two numbers. Returns infinity if the divisor is
-     * 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
-     * divisor and the dividend are 0. Returns NaN if the result can't be
-     * exact because it would have a nonterminating decimal expansion;
-     * examples include 1 divided by any multiple of 3, such as 1/3 or
-     * 1/12.
+     * @return The result of dividing this arbitrary-precision decimal
+     * floating-point number by a 32-bit signed integer.
      */
     public EDecimal Divide(int intValue) {
       return this.Divide(EDecimal.FromInt32(intValue));
@@ -5152,9 +5151,9 @@ rather than properties
      * store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which the
      * precision is unlimited.
-     * @return The remainder of the two numbers. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
-     * the given precision.
+     * @return The remainder that would result when this arbitrary-precision
+     * decimal floating-point number is divided by another
+     * arbitrary-precision decimal floating-point number.
      */
     public EDecimal Remainder(
       EDecimal divisor,
@@ -5777,7 +5776,9 @@ rather than properties
      * arbitrary-precision decimal floating-point number's exponent and the
      * other arbitrary-precision decimal floating-point number's exponent.
      * @param otherValue The number to subtract from this instance's value.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision decimal floating-point number minus another
+     * arbitrary-precision decimal floating-point number.
      */
     public EDecimal Subtract(EDecimal otherValue) {
       return this.Subtract(otherValue, EContext.UnlimitedHalfEven);
@@ -5793,7 +5794,9 @@ rather than properties
      * true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in
      * which case the precision is unlimited and no rounding is needed.
-     * @return The difference of the two objects.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision decimal floating-point number minus another
+     * arbitrary-precision decimal floating-point number.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EDecimal Subtract(

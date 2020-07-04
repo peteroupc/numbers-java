@@ -998,8 +998,8 @@ Adds this arbitrary-precision rational number and another
 
 **Returns:**
 
-* The sum of the two numbers. Returns not-a-number (NaN) if either
- operand is NaN.
+* The sum of the two numbers, that is, this arbitrary-precision
+ rational number plus another arbitrary-precision rational number.
 
 **Throws:**
 
@@ -1263,7 +1263,8 @@ Divides this arbitrary-precision rational number by another
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision rational number by
+ another arbitrary-precision rational number.
 
 **Throws:**
 
@@ -1385,7 +1386,8 @@ Multiplies this arbitrary-precision rational number by another
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ rational number times another arbitrary-precision rational number.
 
 **Throws:**
 
@@ -1412,7 +1414,9 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The remainder of the two numbers.
+* The remainder that would result when this arbitrary-precision
+ rational number is divided by another arbitrary-precision rational
+ number.
 
 **Throws:**
 
@@ -1429,7 +1433,9 @@ Subtracts an arbitrary-precision rational number from this
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision rational number minus another
+ arbitrary-precision rational number.
 
 **Throws:**
 
@@ -1854,8 +1860,8 @@ Adds this arbitrary-precision rational number and a 32-bit signed integer
 
 **Returns:**
 
-* The sum of the two numbers. Returns not-a-number (NaN) if this
- object is NaN.
+* The sum of the two numbers, that is, this arbitrary-precision
+ rational number plus a 32-bit signed integer.
 
 ### Subtract
     public ERational Subtract​(int v)
@@ -1868,7 +1874,8 @@ Subtracts a 32-bit signed integer from this arbitrary-precision rational
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision rational number minus a 32-bit signed integer.
 
 ### Multiply
     public ERational Multiply​(int v)
@@ -1881,7 +1888,8 @@ Multiplies this arbitrary-precision rational number by a 32-bit signed
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ rational number times a 32-bit signed integer.
 
 ### Divide
     public ERational Divide​(int v)
@@ -1894,7 +1902,8 @@ Divides this arbitrary-precision rational number by a 32-bit signed integer
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision rational number by a
+ 32-bit signed integer.
 
 **Throws:**
 
@@ -1911,7 +1920,8 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The remainder of the two numbers.
+* The remainder that would result when this arbitrary-precision
+ rational number is divided by a 32-bit signed integer.
 
 **Throws:**
 
@@ -1928,8 +1938,8 @@ Adds this arbitrary-precision rational number and a 64-bit signed integer
 
 **Returns:**
 
-* The sum of the two numbers. Returns not-a-number (NaN) if this
- object is NaN.
+* The sum of the two numbers, that is, this arbitrary-precision
+ rational number plus a 64-bit signed integer.
 
 ### Subtract
     public ERational Subtract​(long v)
@@ -1942,7 +1952,8 @@ Subtracts a 64-bit signed integer from this arbitrary-precision rational
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision rational number minus a 64-bit signed integer.
 
 ### Multiply
     public ERational Multiply​(long v)
@@ -1955,7 +1966,8 @@ Multiplies this arbitrary-precision rational number by a 64-bit signed
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ rational number times a 64-bit signed integer.
 
 ### Divide
     public ERational Divide​(long v)
@@ -1968,7 +1980,8 @@ Divides this arbitrary-precision rational number by a 64-bit signed integer
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision rational number by a
+ 64-bit signed integer.
 
 **Throws:**
 
@@ -1985,7 +1998,8 @@ Returns the remainder that would result when this arbitrary-precision
 
 **Returns:**
 
-* The remainder of the two numbers.
+* The remainder that would result when this arbitrary-precision
+ rational number is divided by a 64-bit signed integer.
 
 **Throws:**
 

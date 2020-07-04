@@ -1764,7 +1764,8 @@ Adds this arbitrary-precision binary floating-point number and a 32-bit
 
 **Returns:**
 
-* The sum of the two objects.
+* The sum of the two numbers, that is, this arbitrary-precision binary
+ floating-point number plus a 32-bit signed integer.
 
 ### Subtract
     public EFloat Subtract​(int intValue)
@@ -1780,7 +1781,9 @@ Subtracts a 32-bit signed integer from this arbitrary-precision binary
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision binary floating-point number minus a 32-bit
+ signed integer.
 
 ### Multiply
     public EFloat Multiply​(int intValue)
@@ -1795,7 +1798,8 @@ Multiplies this arbitrary-precision binary floating-point number by a 32-bit
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ binary floating-point number times a 32-bit signed integer.
 
 ### Divide
     public EFloat Divide​(int intValue)
@@ -1811,7 +1815,8 @@ Divides this arbitrary-precision binary floating-point number by a 32-bit
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision binary
+ floating-point number by a 32-bit signed integer.
 
 **Throws:**
 
@@ -1830,7 +1835,8 @@ Adds this arbitrary-precision binary floating-point number and a 64-bit
 
 **Returns:**
 
-* The return value is not documented yet.
+* The sum of the two numbers, that is, this arbitrary-precision binary
+ floating-point number plus a 64-bit signed integer.
 
 ### Subtract
     public EFloat Subtract​(long longValue)
@@ -1846,7 +1852,9 @@ Subtracts a 64-bit signed integer from this arbitrary-precision binary
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision binary floating-point number minus a 64-bit
+ signed integer.
 
 ### Multiply
     public EFloat Multiply​(long longValue)
@@ -1861,7 +1869,8 @@ Multiplies this arbitrary-precision binary floating-point number by a 64-bit
 
 **Returns:**
 
-* The product of the two numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ binary floating-point number times a 64-bit signed integer.
 
 ### Divide
     public EFloat Divide​(long longValue)
@@ -1877,7 +1886,8 @@ Divides this arbitrary-precision binary floating-point number by a 64-bit
 
 **Returns:**
 
-* The quotient of the two objects.
+* The result of dividing this arbitrary-precision binary
+ floating-point number by a 64-bit signed integer.
 
 **Throws:**
 
@@ -1897,7 +1907,9 @@ Adds this arbitrary-precision binary floating-point number and another
 
 **Returns:**
 
-* The sum of the two objects.
+* The sum of the two numbers, that is, this arbitrary-precision binary
+ floating-point number plus another arbitrary-precision binary
+ floating-point number.
 
 ### Add
     public EFloat Add​(EFloat otherValue, EContext ctx)
@@ -1917,7 +1929,9 @@ Adds this arbitrary-precision binary floating-point number and another
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The sum of the two numbers, that is, this arbitrary-precision binary
+ floating-point number plus another arbitrary-precision binary
+ floating-point number.
 
 ### compareTo
     public int compareTo​(EFloat other)
@@ -2237,12 +2251,9 @@ Divides this arbitrary-precision binary floating-point number by another
 
 **Returns:**
 
-* The quotient of the two numbers. Returns infinity if the divisor is
- 0 and the dividend is nonzero. Returns not-a-number (NaN) if the
- divisor and the dividend are 0. Returns NaN if the result can't be
- exact because it would have a nonterminating binary expansion. If
- this is not desired, use DivideToExponent instead, or use the Divide
- overload that takes an EContext instead.
+* The result of dividing this arbitrary-precision binary
+ floating-point number by another arbitrary-precision binary
+ floating-point number.
 
 ### Divide
     public EFloat Divide​(EFloat divisor, EContext ctx)
@@ -2262,13 +2273,9 @@ Divides this arbitrary-precision binary floating-point number by another
 
 **Returns:**
 
-* The quotient of the two objects. Signals FlagDivideByZero and
- returns infinity if the divisor is 0 and the dividend is nonzero.
- Signals FlagInvalid and returns not-a-number (NaN) if the divisor
- and the dividend are 0; or, either <code>ctx</code> is null or <code>
- ctx</code> 's precision is 0, and the result would have a nonterminating
- binary expansion; or, the rounding mode is ERounding.None and the
- result is not exact.
+* The result of dividing this arbitrary-precision binary
+ floating-point number by another arbitrary-precision binary
+ floating-point number.
 
 ### DivideAndRemainderNaturalScale
     @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)
@@ -2990,7 +2997,9 @@ Multiplies this arbitrary-precision binary floating-point number by another
 
 **Returns:**
 
-* The product of the two binary floating-point numbers.
+* The product of the two numbers, that is, this arbitrary-precision
+ binary floating-point number times another arbitrary-precision
+ binary floating-point number.
 
 **Throws:**
 
@@ -3014,7 +3023,9 @@ Multiplies this arbitrary-precision binary floating-point number by another
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The product of the two numbers, that is, this arbitrary-precision
+ binary floating-point number times another arbitrary-precision
+ binary floating-point number.
 
 ### MultiplyAndAdd
     public EFloat MultiplyAndAdd​(EFloat multiplicand, EFloat augend)
@@ -3441,9 +3452,9 @@ Returns the remainder that would result when this arbitrary-precision binary
 
 **Returns:**
 
-* The remainder of the two numbers. Signals FlagInvalid and returns
- not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
- the given precision.
+* The remainder that would result when this arbitrary-precision binary
+ floating-point number is divided by another arbitrary-precision
+ binary floating-point number.
 
 ### RemainderNoRoundAfterDivide
     public EFloat RemainderNoRoundAfterDivide​(EFloat divisor, EContext ctx)
@@ -3969,7 +3980,9 @@ Subtracts an arbitrary-precision binary floating-point number from this
 
 **Returns:**
 
-* The difference of the two objects.
+* The difference between the two numbers, that is, this
+ arbitrary-precision binary floating-point number minus another
+ arbitrary-precision binary floating-point number.
 
 ### Subtract
     public EFloat Subtract​(EFloat otherValue, EContext ctx)
@@ -3989,7 +4002,9 @@ Subtracts an arbitrary-precision binary floating-point number from this
 
 **Returns:**
 
-* An arbitrary-precision binary floating-point number.
+* The difference between the two numbers, that is, this
+ arbitrary-precision binary floating-point number minus another
+ arbitrary-precision binary floating-point number.
 
 **Throws:**
 
