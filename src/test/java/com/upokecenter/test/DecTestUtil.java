@@ -318,10 +318,22 @@ private DecTestUtil() {
       Assert.assertEquals("DivideByZero: " + str,(expected & EContext.FlagDivideByZero) != 0,(actual & EContext.FlagDivideByZero) != 0);
     }
 
-    private static boolean Contains(String str, String sub) {
-      return (sub.length() == 1) ?
-        (str.indexOf(sub.charAt(0)) >= 0) :
-        (str.indexOf(sub) >= 0);
+    public static boolean Contains(String str, String sub) {
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      if (sub == null) {
+        throw new NullPointerException("sub");
+      }
+      if (sub.length() == 1) {
+        for (int i = 0; i < str.length(); ++i) {
+            if (str.charAt(i) == sub.charAt(0)) {
+              return true;
+            }
+         }
+         return false;
+      }
+      return str.indexOf(sub) >= 0;
     }
 
     private static boolean StartsWith(String str, String sub) {
@@ -943,10 +955,16 @@ private DecTestUtil() {
 
     static int ParseLineInput(String ln) {
       if (ln.length() == 0) {
-        { return 0;
+        return 0;
+      }
+      int ix = -1;
+      for (int i = 0; i < ln.length(); ++i) {
+        if (ln.charAt(i) == '\u0020') {
+          // Space found
+          ix = i;
+          break;
         }
       }
-      int ix = ln.indexOf(' ');
       // NOTE: ix < 2 includes cases where space is not found
       if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix - 1) != 's' &&
          ln.charAt(ix - 1) != 'q')) {

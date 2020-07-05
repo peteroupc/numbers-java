@@ -1769,7 +1769,9 @@ Adds this arbitrary-precision binary floating-point number and a 32-bit
 **Returns:**
 
 * The sum of the two numbers, that is, this arbitrary-precision binary
- floating-point number plus a 32-bit signed integer.
+ floating-point number plus a 32-bit signed integer. If this
+ arbitrary-precision binary floating-point number is not-a-number
+ (NaN), returns NaN.
 
 ### Subtract
     public EFloat Subtract​(int intValue)
@@ -1787,7 +1789,8 @@ Subtracts a 32-bit signed integer from this arbitrary-precision binary
 
 * The difference between the two numbers, that is, this
  arbitrary-precision binary floating-point number minus a 32-bit
- signed integer.
+ signed integer. If this arbitrary-precision binary floating-point
+ number is not-a-number (NaN), returns NaN.
 
 ### Multiply
     public EFloat Multiply​(int intValue)
@@ -1848,7 +1851,9 @@ Adds this arbitrary-precision binary floating-point number and a 64-bit
 **Returns:**
 
 * The sum of the two numbers, that is, this arbitrary-precision binary
- floating-point number plus a 64-bit signed integer.
+ floating-point number plus a 64-bit signed integer. If this
+ arbitrary-precision binary floating-point number is not-a-number
+ (NaN), returns NaN.
 
 ### Subtract
     public EFloat Subtract​(long longValue)
@@ -1866,7 +1871,8 @@ Subtracts a 64-bit signed integer from this arbitrary-precision binary
 
 * The difference between the two numbers, that is, this
  arbitrary-precision binary floating-point number minus a 64-bit
- signed integer.
+ signed integer. If this arbitrary-precision binary floating-point
+ number is not-a-number (NaN), returns NaN.
 
 ### Multiply
     public EFloat Multiply​(long longValue)
@@ -1929,7 +1935,8 @@ Adds this arbitrary-precision binary floating-point number and another
 
 * The sum of the two numbers, that is, this arbitrary-precision binary
  floating-point number plus another arbitrary-precision binary
- floating-point number.
+ floating-point number. If this arbitrary-precision binary
+ floating-point number is not-a-number (NaN), returns NaN.
 
 ### Add
     public EFloat Add​(EFloat otherValue, EContext ctx)
@@ -1951,7 +1958,8 @@ Adds this arbitrary-precision binary floating-point number and another
 
 * The sum of the two numbers, that is, this arbitrary-precision binary
  floating-point number plus another arbitrary-precision binary
- floating-point number.
+ floating-point number. If this arbitrary-precision binary
+ floating-point number is not-a-number (NaN), returns NaN.
 
 ### compareTo
     public int compareTo​(EFloat other)
@@ -4047,7 +4055,9 @@ Subtracts an arbitrary-precision binary floating-point number from this
 
 * The difference between the two numbers, that is, this
  arbitrary-precision binary floating-point number minus another
- arbitrary-precision binary floating-point number.
+ arbitrary-precision binary floating-point number. If this
+ arbitrary-precision binary floating-point number is not-a-number
+ (NaN), returns NaN.
 
 ### Subtract
     public EFloat Subtract​(EFloat otherValue, EContext ctx)
@@ -4069,7 +4079,9 @@ Subtracts an arbitrary-precision binary floating-point number from this
 
 * The difference between the two numbers, that is, this
  arbitrary-precision binary floating-point number minus another
- arbitrary-precision binary floating-point number.
+ arbitrary-precision binary floating-point number. If this
+ arbitrary-precision binary floating-point number is not-a-number
+ (NaN), returns NaN.
 
 **Throws:**
 

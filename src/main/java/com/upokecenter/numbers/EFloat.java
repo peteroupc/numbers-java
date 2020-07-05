@@ -1290,7 +1290,9 @@ at: http://peteroupc.github.io/
      * number's exponent and the other 32-bit signed integer's exponent.
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The sum of the two numbers, that is, this arbitrary-precision binary
-     * floating-point number plus a 32-bit signed integer.
+     * floating-point number plus a 32-bit signed integer. If this
+     * arbitrary-precision binary floating-point number is not-a-number
+     * (NaN), returns NaN.
      */
     public EFloat Add(int intValue) {
       return this.Add(EFloat.FromInt32(intValue));
@@ -1305,7 +1307,8 @@ at: http://peteroupc.github.io/
      * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
      * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus a 32-bit
-     * signed integer.
+     * signed integer. If this arbitrary-precision binary floating-point
+     * number is not-a-number (NaN), returns NaN.
      */
     public EFloat Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
@@ -1355,7 +1358,9 @@ at: http://peteroupc.github.io/
      * number's exponent and the other 64-bit signed integer's exponent.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The sum of the two numbers, that is, this arbitrary-precision binary
-     * floating-point number plus a 64-bit signed integer.
+     * floating-point number plus a 64-bit signed integer. If this
+     * arbitrary-precision binary floating-point number is not-a-number
+     * (NaN), returns NaN.
      */
     public EFloat Add(long longValue) {
       return this.Add(EFloat.FromInt64(longValue));
@@ -1370,7 +1375,8 @@ at: http://peteroupc.github.io/
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus a 64-bit
-     * signed integer.
+     * signed integer. If this arbitrary-precision binary floating-point
+     * number is not-a-number (NaN), returns NaN.
      */
     public EFloat Subtract(long longValue) {
       return this.Subtract(EFloat.FromInt64(longValue));
@@ -1421,7 +1427,8 @@ at: http://peteroupc.github.io/
      * @param otherValue An arbitrary-precision binary floating-point number.
      * @return The sum of the two numbers, that is, this arbitrary-precision binary
      * floating-point number plus another arbitrary-precision binary
-     * floating-point number.
+     * floating-point number. If this arbitrary-precision binary
+     * floating-point number is not-a-number (NaN), returns NaN.
      */
     public EFloat Add(EFloat otherValue) {
       return this.Add(otherValue, EContext.UnlimitedHalfEven);
@@ -1439,7 +1446,8 @@ at: http://peteroupc.github.io/
      * which case the precision is unlimited and no rounding is needed.
      * @return The sum of the two numbers, that is, this arbitrary-precision binary
      * floating-point number plus another arbitrary-precision binary
-     * floating-point number.
+     * floating-point number. If this arbitrary-precision binary
+     * floating-point number is not-a-number (NaN), returns NaN.
      */
     public EFloat Add(
       EFloat otherValue,
@@ -3714,7 +3722,9 @@ at: http://peteroupc.github.io/
      * @param otherValue The number to subtract from this instance's value.
      * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus another
-     * arbitrary-precision binary floating-point number.
+     * arbitrary-precision binary floating-point number. If this
+     * arbitrary-precision binary floating-point number is not-a-number
+     * (NaN), returns NaN.
      */
     public EFloat Subtract(EFloat otherValue) {
       return this.Subtract(otherValue, null);
@@ -3732,7 +3742,9 @@ at: http://peteroupc.github.io/
      * which case the precision is unlimited and no rounding is needed.
      * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus another
-     * arbitrary-precision binary floating-point number.
+     * arbitrary-precision binary floating-point number. If this
+     * arbitrary-precision binary floating-point number is not-a-number
+     * (NaN), returns NaN.
      * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EFloat Subtract(
