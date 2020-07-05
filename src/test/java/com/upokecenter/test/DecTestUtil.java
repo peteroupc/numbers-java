@@ -1346,7 +1346,7 @@ private DecTestUtil() {
       if (Contains(type, "!")) {
         return 0;
       }
-      if (op.contains("cff")) {
+      if (Contains(op, "cff")) {
         // skip test cases for
         // conversion to another floating point format
         return 0;
@@ -1616,10 +1616,10 @@ private DecTestUtil() {
       if (ParseLine(ln) != 0) {
         return;
       }
-      if (ln.contains("-- ")) {
+      if (Contains(ln, "-- ")) {
         ln = ln.substring(0,ln.indexOf("-- "));
       }
-      match = (!ln.contains(":")) ? null : ValuePropertyLine.matcher(ln);
+      match = (!Contains(ln, ":")) ? null : ValuePropertyLine.matcher(ln);
       if (match != null && match.matches()) {
         String paramName = ToLowerCaseAscii(
             match.group(1));
@@ -1665,15 +1665,15 @@ private DecTestUtil() {
             GetKeyOrDefault(context, "maxexponent", "9999"));
         // Skip tests that take null as input or output;
         // also skip tests that take a hex number format
-        if (input1.contains("#") ||
-                 input2.contains("#") ||
-                 input3.contains("#") ||
-                 output.contains("#")) {
+        if (Contains(input1, "#") ||
+                 Contains(input2, "#") ||
+                 Contains(input3, "#") ||
+                 Contains(output, "#")) {
           return;
         }
-        if (!extended && (input1.contains("sNaN") ||
-            input2.contains("sNaN") || input3.contains("sNaN") ||
-            output.contains("sNaN"))) {
+        if (!extended && (Contains(input1, "sNaN") ||
+            Contains(input2, "sNaN") || Contains(input3, "sNaN") ||
+           Contains(output, "sNaN"))) {
           System.out.println(ln);
         }
         if (name.equals("S")) {
@@ -1772,10 +1772,10 @@ private DecTestUtil() {
             return;
           }
         }
-        if (input1.contains("?")) {
+        if (Contains(input1, "?")) {
           return;
         }
-        if (flags.contains("Invalid_context")) {
+        if (Contains(flags, "Invalid_context")) {
           return;
         }
 
@@ -2015,35 +2015,35 @@ private DecTestUtil() {
           }
         }
         flags = ToLowerCaseAscii(flags);
-        boolean invalid = flags.contains("division_impossible") ||
-          flags.contains("division_undefined") ||
-          flags.contains("invalid_operation");
-        boolean divzero = flags.contains("division_by_zero");
+        boolean invalid = Contains(flags, "division_impossible") ||
+          Contains(flags, "division_undefined") ||
+          Contains(flags, "invalid_operation");
+        boolean divzero = Contains(flags, "division_by_zero");
         int expectedFlags = 0;
-        if (flags.contains("inexact")) {
+        if (Contains(flags, "inexact")) {
           expectedFlags |= EContext.FlagInexact;
         }
-        if (flags.contains("subnormal")) {
+        if (Contains(flags, "subnormal")) {
           expectedFlags |= EContext.FlagSubnormal;
         }
-        if (flags.contains("rounded")) {
+        if (Contains(flags, "rounded")) {
           expectedFlags |= EContext.FlagRounded;
         }
-        if (flags.contains("underflow")) {
+        if (Contains(flags, "underflow")) {
           expectedFlags |= EContext.FlagUnderflow;
         }
-        if (flags.contains("overflow")) {
+        if (Contains(flags, "overflow")) {
           expectedFlags |= EContext.FlagOverflow;
         }
-        if (flags.contains("clamped")) {
+        if (Contains(flags, "clamped")) {
           if (extended || clamp) {
             expectedFlags |= EContext.FlagClamped;
           }
         }
-        if (flags.contains("lost_digits")) {
+        if (Contains(flags, "lost_digits")) {
           expectedFlags |= EContext.FlagLostDigits;
         }
-        boolean conversionError = flags.contains("conversion_syntax");
+        boolean conversionError = Contains(flags, "conversion_syntax");
         if (invalid) {
           expectedFlags |= EContext.FlagInvalid;
         }

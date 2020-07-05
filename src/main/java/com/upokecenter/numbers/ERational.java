@@ -23,8 +23,6 @@ at: http://peteroupc.github.io/
    */
 
   public final class ERational implements Comparable<ERational> {
-    private static final int MaxSafeInt = 214748363;
-
     /**
      * A not-a-number value.
      */
