@@ -22,6 +22,16 @@ private Extras() {
       System.arraycopy(c2, offset2, chars, length1, length2);
       return chars;
     }
+    public static String CharsConcat(
+      String s1,
+      int offset1,
+      int length1,
+      String s2,
+      int offset2,
+      int length2) {
+      return s1.substring(offset1, (offset1)+(length1)) +
+               s2.substring(offset2, (offset2)+(length2));
+    }
 
     public static char[] CharsConcat(
       char[] c1,

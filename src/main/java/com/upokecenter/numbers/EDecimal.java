@@ -10,6 +10,7 @@ at: http://peteroupc.github.io/
 /*
 TODO: In next major version, maybe convert EDecimal.One/Ten/Zero to fields
 rather than properties
+TODO: Move FromString(String, *) implementations into separate classes
 */
 
   /**

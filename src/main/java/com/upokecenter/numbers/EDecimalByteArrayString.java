@@ -614,12 +614,11 @@ chars[i +
       }
       int de = digitEnd;
       int dde = decimalDigitEnd;
-      if (!haveExponent && haveDecimalPoint &&
-        (de - digitStart) + (dde - decimalDigitStart) <=
-        18) {
+      if (!haveExponent && haveDecimalPoint) {
         // No more than 18 digits
         long lv = 0L;
         int expo = -(dde - decimalDigitStart);
+        int digitCount = 0;
         if (mantInt <= MaxSafeInt) {
           lv = mantInt;
         } else {
@@ -627,18 +626,30 @@ chars[i +
           for (vi = digitStart; vi < de; ++vi) {
             byte chvi = chars[vi];
 
+            if (digitCount < 0 || digitCount >= 18) {
+               digitCount = -1;
+               break;
+            } else if (digitCount > 0 || chvi != '0') {
+              ++digitCount;
+            }
             lv = ((lv * 10) + (int)(chvi - '0'));
           }
           for (vi = decimalDigitStart; vi < dde; ++vi) {
             byte chvi = chars[vi];
 
+            if (digitCount < 0 || digitCount >= 18) {
+               digitCount = -1;
+               break;
+            } else if (digitCount > 0 || chvi != '0') {
+              ++digitCount;
+            }
             lv = ((lv * 10) + (int)(chvi - '0'));
           }
         }
         if (negative) {
           lv = -lv;
         }
-        if (!negative || lv != 0) {
+        if (digitCount >= 0 && (!negative || lv != 0)) {
           ret = EDecimal.Create(lv, (long)expo);
           return ret;
         }
@@ -1054,27 +1065,42 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
       // "decdigitRange="+decimalDigitStart+"-"+decimalDigitEnd);
       int de = digitEnd;
       int dde = decimalDigitEnd;
-      if (!haveExponent && haveDecimalPoint &&
-        (de - digitStart) + (dde - decimalDigitStart) <=
-        18 && newScale == null) {
+      if (!haveExponent && haveDecimalPoint && newScale == null) {
         // No more than 18 digits
         long lv = 0L;
         int expo = newScaleInt; // -(dde - decimalDigitStart);
+        int digitCount = 0;
         if (mantInt <= MaxSafeInt) {
           lv = mantInt;
         } else {
           int vi = 0;
           for (vi = digitStart; vi < de; ++vi) {
-            lv = ((lv * 10) + (int)(chars[vi] - '0'));
+            byte chvi = chars[vi];
+
+            if (digitCount < 0 || digitCount >= 18) {
+               digitCount = -1;
+               break;
+            } else if (digitCount > 0 || chvi != '0') {
+              ++digitCount;
+            }
+            lv = ((lv * 10) + (int)(chvi - '0'));
           }
           for (vi = decimalDigitStart; vi < dde; ++vi) {
-            lv = ((lv * 10) + (int)(chars[vi] - '0'));
+            byte chvi = chars[vi];
+
+            if (digitCount < 0 || digitCount >= 18) {
+               digitCount = -1;
+               break;
+            } else if (digitCount > 0 || chvi != '0') {
+              ++digitCount;
+            }
+            lv = ((lv * 10) + (int)(chvi - '0'));
           }
         }
         if (negative) {
           lv = -lv;
         }
-        if (!negative || lv != 0) {
+        if (digitCount >= 0 && (!negative || lv != 0)) {
           // System.out.println("lv="+lv+" expo="+expo);
           ret = EDecimal.Create(lv, (long)expo);
           if (ctx != null) {
