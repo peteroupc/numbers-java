@@ -29,6 +29,8 @@ private Extras() {
       String s2,
       int offset2,
       int length2) {
+      // System.out.println(s1.substring(offset1, (offset1)+(length1)));
+      // System.out.println(s2.substring(offset2, (offset2)+(length2)));
       return s1.substring(offset1, (offset1)+(length1)) +
                s2.substring(offset2, (offset2)+(length2));
     }

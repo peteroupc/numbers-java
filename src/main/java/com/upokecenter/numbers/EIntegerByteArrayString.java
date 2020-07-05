@@ -3,6 +3,8 @@ package com.upokecenter.numbers;
   final class EIntegerByteArrayString {
 private EIntegerByteArrayString() {
 }
+    private static final int ShortMask = 0xffff;
+
     public static EInteger FromRadixSubstringImpl(
       byte[] cs,
       int radix,
@@ -194,12 +196,14 @@ private EIntegerByteArrayString() {
             index,
             midIndex,
             false);
+        // System.out.println("eia="+eia);
         EInteger eib = FromRadixSubstringGeneral(
             cs,
             radix,
             midIndex,
             endIndex,
             false);
+        // System.out.println("eib="+eib);
         EInteger mult = null;
         int intpow = endIndex - midIndex;
         if (radix == 10) {
@@ -218,6 +222,7 @@ private EIntegerByteArrayString() {
         if (negative) {
           eia = eia.Negate();
         }
+        // System.out.println("eia now="+eia);
         return eia;
       } else {
         return FromRadixSubstringInner(cs, radix, index, endIndex, negative);
@@ -230,8 +235,9 @@ private EIntegerByteArrayString() {
       int index,
       int endIndex,
       boolean negative) {
-      if (endIndex - index <= 18 && radix <= 10) {
+      if (radix <= 10) {
         long rv = 0;
+        int digitCount = 0;
         if (radix == 10) {
           for (int i = index; i < endIndex; ++i) {
             byte c = cs[i];
@@ -239,9 +245,18 @@ private EIntegerByteArrayString() {
             if (digit >= radix || digit < 0) {
               throw new NumberFormatException("Illegal character found");
             }
+            if (digitCount < 0 || digitCount >= 18) {
+              digitCount = -1;
+               break;
+            } else if (digitCount > 0 || digit != 0) {
+              ++digitCount;
+            }
             rv = (rv * 10) + digit;
           }
-          return EInteger.FromInt64(negative ? -rv : rv);
+          // System.out.println("short="+(negative ? -rv : rv));
+          if (digitCount >= 0) {
+            return EInteger.FromInt64(negative ? -rv : rv);
+          }
         } else {
           for (int i = index; i < endIndex; ++i) {
             byte c = cs[i];
@@ -249,15 +264,22 @@ private EIntegerByteArrayString() {
             if (digit >= radix || digit < 0) {
               throw new NumberFormatException("Illegal character found");
             }
+            if (digitCount < 0 || digitCount >= 18) {
+              digitCount = -1;
+               break;
+            } else if (digitCount > 0 || digit != 0) {
+              ++digitCount;
+            }
             rv = (rv * radix) + digit;
           }
-          return EInteger.FromInt64(negative ? -rv : rv);
+          if (digitCount >= 0) {
+            return EInteger.FromInt64(negative ? -rv : rv);
+          }
         }
       }
       int[] c2d = EInteger.CharToDigit;
       int[] d2w = EInteger.DigitsInWord;
-      long lsize = ((long)(endIndex - index) * 100 /
-d2w[radix]) + 1;
+      long lsize = ((long)(endIndex - index) * 100 / d2w[radix]) + 1;
       lsize = Math.min(lsize, Integer.MAX_VALUE);
       lsize = Math.max(lsize, 5);
       short[] bigint = new short[(int)lsize];
@@ -272,10 +294,10 @@ d2w[radix]) + 1;
           }
           rv = (rv * 10) + digit;
         }
-        bigint[0] = ((short)(rv & ((short)0xffff)));
-        bigint[1] = ((short)((rv >> 16) & ((short)0xffff)));
-        bigint[2] = ((short)((rv >> 32) & ((short)0xffff)));
-        bigint[3] = ((short)((rv >> 48) & ((short)0xffff)));
+        bigint[0] = ((short)(rv & ShortMask));
+        bigint[1] = ((short)((rv >> 16) & ShortMask));
+        bigint[2] = ((short)((rv >> 32) & ShortMask));
+        bigint[3] = ((short)((rv >> 48) & ShortMask));
         int bn = Math.min(bigint.length, 5);
         for (int i = ei; i < endIndex; ++i) {
           short carry = 0;
@@ -296,9 +318,9 @@ d2w[radix]) + 1;
             // Multiply by 10**4
             for (int j = 0; j < bn; ++j) {
               int p;
-              p = ((((int)bigint[j]) & ((short)0xffff)) *
+              p = ((((int)bigint[j]) & ShortMask) *
 10000);
-              int p2 = ((int)carry) & ((short)0xffff);
+              int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
               carry = ((short)(p >> 16));
@@ -313,8 +335,8 @@ d2w[radix]) + 1;
             // Multiply by 10
             for (int j = 0; j < bn; ++j) {
               int p;
-              p = ((((int)bigint[j]) & ((short)0xffff)) * 10);
-              int p2 = ((int)carry) & ((short)0xffff);
+              p = ((((int)bigint[j]) & ShortMask) * 10);
+              int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
               carry = ((short)(p >> 16));
@@ -325,7 +347,7 @@ d2w[radix]) + 1;
           }
           // Add the parsed digit
           if (digit != 0) {
-            int d = bigint[0] & ((short)0xffff);
+            int d = bigint[0] & ShortMask;
             if (d <= overf) {
               bigint[0] = ((short)(d + digit));
             } else if (EInteger.IncrementWords(
@@ -355,9 +377,9 @@ d2w[radix]) + 1;
           } else {
             if (haveSmallInt) {
               bigint[0] = ((short)(smallInt &
-((short)0xffff)));
+ShortMask));
               bigint[1] = ((short)((smallInt >> 16) &
-((short)0xffff)));
+ShortMask));
               haveSmallInt = false;
             }
             // Multiply by the radix
@@ -365,9 +387,9 @@ d2w[radix]) + 1;
             int n = bigint.length;
             for (int j = 0; j < n; ++j) {
               int p;
-              p = ((((int)bigint[j]) & ((short)0xffff)) *
+              p = ((((int)bigint[j]) & ShortMask) *
 radix);
-              int p2 = ((int)carry) & ((short)0xffff);
+              int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
               carry = ((short)(p >> 16));
@@ -377,7 +399,7 @@ radix);
             }
             // Add the parsed digit
             if (digit != 0) {
-              int d = bigint[0] & ((short)0xffff);
+              int d = bigint[0] & ShortMask;
               if (d <= maxShortPlusOneMinusRadix) {
                 bigint[0] = ((short)(d + digit));
               } else if (EInteger.IncrementWords(
@@ -391,9 +413,9 @@ radix);
           }
         }
         if (haveSmallInt) {
-          bigint[0] = ((short)(smallInt & ((short)0xffff)));
+          bigint[0] = ((short)(smallInt & ShortMask));
           bigint[1] = ((short)((smallInt >> 16) &
-((short)0xffff)));
+ShortMask));
         }
       }
       int count = EInteger.CountWords(bigint);

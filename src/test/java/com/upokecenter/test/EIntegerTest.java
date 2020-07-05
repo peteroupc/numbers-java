@@ -1579,6 +1579,8 @@ import com.upokecenter.numbers.*;
           StringAndBigInt sabi = StringAndBigInt.Generate(fr, i);
           padding.append('!');
           String sabiString = sabi.getStringValue();
+          byte[] sabiBytes = StringToBytes(padding + sabiString);
+          char[] sabiChars = StringToChars(padding + sabiString);
           EInteger actualBigInt = EInteger.FromRadixSubstring(
               padding + sabiString,
               i,
@@ -1587,8 +1589,48 @@ import com.upokecenter.numbers.*;
           Assert.assertEquals(
             sabi.getBigIntValue(),
             actualBigInt);
+          // Byte array overload
+          actualBigInt = EInteger.FromRadixSubstring(
+              sabiBytes,
+              i,
+              j + 1,
+              j + 1 + sabiString.length());
+          Assert.assertEquals(
+            sabi.getBigIntValue(),
+            actualBigInt);
+          // Char array overload
+          actualBigInt = EInteger.FromRadixSubstring(
+              sabiChars,
+              i,
+              j + 1,
+              j + 1 + sabiString.length());
+          Assert.assertEquals(
+            sabi.getBigIntValue(),
+            actualBigInt);
         }
       }
+    }
+    public static char[] StringToChars(String str) {
+       if (str == null) {
+         throw new NullPointerException("str");
+       }
+       char[] chars = new char[str.length()];
+       for (int i = 0; i < str.length(); ++i) {
+         char ch = str.charAt(i);
+         chars[i] = ch;
+       }
+       return chars;
+    }
+    public static byte[] StringToBytes(String str) {
+       if (str == null) {
+         throw new NullPointerException("str");
+       }
+       byte[] bytes = new byte[str.length()];
+       for (int i = 0; i < str.length(); ++i) {
+         char ch = str.charAt(i);
+         bytes[i] = (byte)ch;
+       }
+       return bytes;
     }
     @Test
     public void TestFromString() {
