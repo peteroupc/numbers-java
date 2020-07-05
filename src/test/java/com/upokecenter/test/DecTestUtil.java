@@ -319,7 +319,8 @@ private DecTestUtil() {
     }
 
     private static boolean Contains(String str, String sub) {
-      return (sub.length() == 1) ? (str.indexOf(sub.charAt(0)) >= 0) :
+      return (sub.length() == 1) ?
+        (str.indexOf(sub.charAt(0)) >= 0) :
         (str.indexOf(sub) >= 0);
     }
 
