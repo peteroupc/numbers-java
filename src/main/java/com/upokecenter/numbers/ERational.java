@@ -2015,9 +2015,11 @@ PositiveInfinity) : CreateNaN(
       if (this.isNegative() && this.isZero()) {
         return EDecimal.NegativeZero;
       }
+      EInteger num = this.getNumerator();
+      EInteger den = this.getDenominator();
       EDecimal valueEdNum = (this.isNegative() && this.isZero()) ?
-        EDecimal.NegativeZero : EDecimal.FromEInteger(this.getNumerator());
-      EDecimal valueEdDen = EDecimal.FromEInteger(this.getDenominator());
+        EDecimal.NegativeZero : EDecimal.FromEInteger(num);
+      EDecimal valueEdDen = EDecimal.FromEInteger(den);
       EDecimal ed = valueEdNum.Divide(valueEdDen, null);
       if (ed.IsNaN()) {
         // Result would be inexact, try again using the precision context

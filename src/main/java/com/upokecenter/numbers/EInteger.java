@@ -20,6 +20,30 @@ at: http://peteroupc.github.io/
 // TODO: In next major version, perhaps change GetLowBit/GetDigitCount
 // to return MaxValue on overflow
 
+  /**
+   * Represents an arbitrary-precision integer. (The "E" stands for "extended",
+   * and has this prefix to group it with the other classes common to this
+   * library, particularly EDecimal, EFloat, and ERational.) <p>Instances
+   * of this class are immutable, so they are inherently safe for use by
+   * multiple threads. Multiple instances of this object with the same
+   * value are interchangeable, but they should be compared using the
+   *  "Equals" method rather than the "==" operator.</p> <p><b>Security
+   * note</b></p> <p>It is not recommended to implement security-sensitive
+   * algorithms using the methods in this class, for several reasons:</p>
+   * <ul> <li><code>EInteger</code> objects are immutable, so they can't be
+   * modified, and the memory they occupy is not guaranteed to be cleared
+   * in a timely fashion due to garbage collection. This is relevant for
+   * applications that use many-bit-long numbers as secret parameters.</li>
+   * <li>The methods in this class (especially those that involve
+   *  arithmetic) are not guaranteed to be "constant-time"
+   * (non-data-dependent) for all relevant inputs. Certain attacks that
+   * involve encrypted communications have exploited the timing and other
+   * aspects of such communications to derive keying material or cleartext
+   * indirectly.</li></ul> <p>Applications should instead use dedicated
+   * security libraries to handle big numbers in security-sensitive
+   * algorithms.</p>
+   */
+
   public final class EInteger implements Comparable<EInteger> {
     private static final String Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -102,22 +126,44 @@ at: http://peteroupc.github.io/
       this.negative = negative;
     }
 
+    /**
+     * Gets the number 1 as an arbitrary-precision integer.
+     * @return The number 1 as an arbitrary-precision integer.
+     */
     public static EInteger getOne() {
         return ValueOne;
       }
 
+    /**
+     * Gets the number 10 as an arbitrary-precision integer.
+     * @return The number 10 as an arbitrary-precision integer.
+     */
     public static EInteger getTen() {
         return ValueTen;
       }
 
+    /**
+     * Gets the number zero as an arbitrary-precision integer.
+     * @return The number zero as an arbitrary-precision integer.
+     */
     public static EInteger getZero() {
         return ValueZero;
       }
 
+    /**
+     * Gets a value indicating whether this value is even.
+     * @return {@code true} if this value is even; otherwise, {@code false}.
+     */
     public final boolean isEven() {
         return !this.GetUnsignedBit(0);
       }
 
+    /**
+     * Gets a value indicating whether this object's value is a power of two, and
+     * greater than 0.
+     * @return {@code true} if this object's value is a power of two, and greater
+     * than 0; otherwise, {@code false}.
+     */
     public final boolean isPowerOfTwo() {
         int wc = this.wordCount;
         if (this.negative || wc == 0 ||
@@ -139,10 +185,18 @@ at: http://peteroupc.github.io/
         return lastw == 1;
       }
 
+    /**
+     * Gets a value indicating whether this value is 0.
+     * @return {@code true} if this value is 0; otherwise, {@code false}.
+     */
     public final boolean isZero() {
         return this.wordCount == 0;
       }
 
+    /**
+     * Gets the sign of this object's value.
+     * @return The sign of this object's value.
+     */
     public final int signum() {
         return (this.wordCount == 0) ? 0 : (this.negative ? -1 : 1);
       }
@@ -163,6 +217,35 @@ at: http://peteroupc.github.io/
         new EInteger(newwordCount, words, false);
     }
 
+    /**
+     * Initializes an arbitrary-precision integer from an array of bytes.
+     * @param bytes A byte array consisting of the two's-complement form (see
+     *  {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}) of the
+     * arbitrary-precision integer to create. The byte array is encoded
+     * using the following rules: <ul> <li>Positive numbers have the first
+     * byte's highest bit cleared, and negative numbers have the bit
+     * set.</li> <li>The last byte contains the lowest 8-bits, the
+     * next-to-last contains the next lowest 8 bits, and so on. For
+     * example, the number 300 can be encoded as {@code 0x01, 0x2c} and 200
+     * as {@code 0x00, 0xc8}. (Note that the second example contains a set
+     * high bit in {@code 0xc8}, so an additional 0 is added at the start
+     * to ensure it's interpreted as positive.)</li> <li>To encode negative
+     * numbers, take the absolute value of the number, subtract by 1,
+     * encode the number into bytes, and toggle each bit of each byte. Any
+     * further bits that appear beyond the most significant bit of the
+     * number will be all ones. For example, the number -450 can be encoded
+     * as {@code 0xfe, 0x70} and -52869 as {@code 0xff, 0x31, 0x7b}. (Note
+     * that the second example contains a cleared high bit in {@code 0x31,
+     * 0x7B}, so an additional 0xff is added at the start to ensure it's
+     * interpreted as negative.)</li></ul> <p>For little-endian, the byte
+     * order is reversed from the byte order just discussed.</p>.
+     * @param littleEndian If true, the byte order is little-endian, or
+     * least-significant-byte first. If false, the byte order is
+     * big-endian, or most-significant-byte first.
+     * @return An arbitrary-precision integer. Returns 0 if the byte array's length
+     * is 0.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     */
     public static EInteger FromBytes(byte[] bytes, boolean littleEndian) {
       if (bytes == null) {
         throw new NullPointerException("bytes");
@@ -225,10 +308,21 @@ at: http://peteroupc.github.io/
         new EInteger(newwordCount, newreg, numIsNegative);
     }
 
+    /**
+     * Converts a boolean value (true or false) to an arbitrary-precision integer.
+     * @param boolValue Either true or false.
+     * @return The number 1 if {@code boolValue} is true; otherwise, 0.
+     */
     public static EInteger FromBoolean(boolean boolValue) {
       return boolValue ? ValueOne : ValueZero;
     }
 
+    /**
+     * Converts a 32-bit signed integer to an arbitrary-precision integer.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return An arbitrary-precision integer with the same value as the 64-bit
+     * number.
+     */
     public static EInteger FromInt32(int intValue) {
       if (intValue >= CacheFirst && intValue <= CacheLast) {
         return Cache[intValue - CacheFirst];
@@ -264,6 +358,13 @@ at: http://peteroupc.github.io/
       return new EInteger(retwordcount, retreg, retnegative);
     }
 
+    /**
+     * Converts a 64-bit signed integer to an arbitrary-precision integer.
+     * @param longerValue The parameter {@code longerValue} is a 64-bit signed
+     * integer.
+     * @return An arbitrary-precision integer with the same value as the 64-bit
+     * number.
+     */
     public static EInteger FromInt64(long longerValue) {
       if (longerValue >= CacheFirst && longerValue <= CacheLast) {
         return Cache[(int)(longerValue - CacheFirst)];
@@ -335,6 +436,20 @@ at: http://peteroupc.github.io/
       312, 310, 308,
     };
 
+    /**
+     * Converts a string to an arbitrary-precision integer in a given radix.
+     * @param str A string described by the FromRadixSubstring method.
+     * @param radix A base from 2 to 36. Depending on the radix, the string can use
+     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
+     * upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
+     * radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case
+     * letter A to Z is allowed in the string, the corresponding basic
+     * lower-case letter (U+0061 to U+007a) is allowed instead.
+     * @return An arbitrary-precision integer with the same value as the given
+     * string.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws NumberFormatException The string is empty or in an invalid format.
+     */
     public static EInteger FromRadixString(String str, int radix) {
       if (str == null) {
         throw new NullPointerException("str");
@@ -342,6 +457,29 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(str, radix, 0, str.length());
     }
 
+    /**
+     * Converts a portion of a string to an arbitrary-precision integer in a given
+     * radix.
+     * @param str A text string. The desired portion of the string must contain
+     * only characters allowed by the given radix, except that it may start
+     *  with a minus sign ("-", U+002D) to indicate a negative number. The
+     * desired portion is not allowed to contain white space characters,
+     * including spaces. The desired portion may start with any number of
+     * zeros.
+     * @param radix A base from 2 to 36. Depending on the radix, the string can use
+     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
+     * upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
+     * radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case
+     * letter A to Z is allowed in the string, the corresponding basic
+     * lower-case letter (U+0061 to U+007a) is allowed instead.
+     * @param index The index of the string that starts the string portion.
+     * @param endIndex The index of the string that ends the string portion. The
+     * length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * string portion.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws NumberFormatException The string portion is empty or in an invalid format.
+     */
     public static EInteger FromRadixSubstring(
       String str,
       int radix,
@@ -350,9 +488,34 @@ at: http://peteroupc.github.io/
       if (str == null) {
         throw new NullPointerException("str");
       }
-      return EIntegerTextString.FromRadixSubstringImpl(str, radix, index, endIndex);
+      return EIntegerTextString.FromRadixSubstringImpl(
+        str,
+        radix,
+        index,
+        endIndex);
     }
 
+    /**
+     * Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+     * integer.
+     * @param cs A sequence of {@code char} s, the desired portion of which
+     * describes an integer in base-10 (decimal) form. The desired portion
+     * of the sequence of {@code char} s must contain only basic digits 0
+     * to 9 (U+0030 to U+0039), except that it may start with a minus sign
+     *  ("-", U+002D) to indicate a negative number. The desired portion is
+     * not allowed to contain white space characters, including spaces. The
+     * desired portion may start with any number of zeros.
+     * @param index The index of the sequence of {@code char} s that starts the
+     * desired portion.
+     * @param endIndex The index of the sequence of {@code char} s that ends the
+     * desired portion. The length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of {@code char} s portion.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the sequence's
+     * length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     */
     public static EInteger FromSubstring(
       char[] cs,
       int index,
@@ -363,6 +526,19 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(cs, 10, index, endIndex);
     }
 
+    /**
+     * Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
+     * @param cs A sequence of {@code char} s describing an integer in base-10
+     * (decimal) form. The sequence must contain only basic digits 0 to 9
+     *  (U+0030 to U+0039), except that it may start with a minus sign ("-",
+     * U+002D) to indicate a negative number. The sequence is not allowed
+     * to contain white space characters, including spaces. The sequence
+     * may start with any number of zeros.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of {@code char} s.
+     * @throws NumberFormatException The parameter {@code cs} is in an invalid format.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     */
     public static EInteger FromString(char[] cs) {
       if (cs == null) {
         throw new NullPointerException("cs");
@@ -378,6 +554,24 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(cs, 10, 0, len);
     }
 
+    /**
+     * Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
+     * given radix.
+     * @param cs A sequence of {@code char} s described by the FromRadixSubstring
+     * method.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039)
+     * and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+     * example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+     * basic upper-case letter A to Z is allowed in the sequence of {@code
+     * char} s, the corresponding basic lower-case letter (U+0061 to
+     * U+007a) is allowed instead.
+     * @return An arbitrary-precision integer with the same value as the given
+     * sequence of {@code char} s.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     * @throws NumberFormatException The sequence of {@code char} s is empty or in an
+     * invalid format.
+     */
     public static EInteger FromRadixString(char[] cs, int radix) {
       if (cs == null) {
         throw new NullPointerException("cs");
@@ -385,6 +579,31 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(cs, radix, 0, cs.length);
     }
 
+    /**
+     * Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
+     * integer in a given radix.
+     * @param cs A text sequence of {@code char} s. The desired portion of the
+     * sequence of {@code char} s must contain only characters allowed by
+     *  the given radix, except that it may start with a minus sign ("-",
+     * U+002D) to indicate a negative number. The desired portion is not
+     * allowed to contain white space characters, including spaces. The
+     * desired portion may start with any number of zeros.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039)
+     * and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+     * example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a
+     * basic upper-case letter A to Z is allowed in the sequence of {@code
+     * char} s, the corresponding basic lower-case letter (U+0061 to
+     * U+007a) is allowed instead.
+     * @param index The index of the sequence of {@code char} s that starts the
+     * desired portion.
+     * @param endIndex The index of the sequence of {@code char} s that ends the
+     * desired portion. The length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence's portion.
+     * @throws NullPointerException The parameter {@code cs} is null.
+     * @throws NumberFormatException The portion is empty or in an invalid format.
+     */
     public static EInteger FromRadixSubstring(
       char[] cs,
       int radix,
@@ -400,6 +619,31 @@ at: http://peteroupc.github.io/
           endIndex);
     }
 
+    /**
+     * Converts a portion of a sequence of bytes (interpreted as text) to an
+     * arbitrary-precision integer. Each byte in the sequence has to be a
+     * character in the Basic Latin range (0x00 to 0x7f or U+0000 to
+     * U+007F) of the Unicode Standard.
+     * @param bytes A sequence of bytes (interpreted as text), the desired portion
+     * of which describes an integer in base-10 (decimal) form. The desired
+     * portion of the sequence of bytes (interpreted as text) must contain
+     * only basic digits 0 to 9 (U+0030 to U+0039), except that it may
+     *  start with a minus sign ("-", U+002D) to indicate a negative number.
+     * The desired portion is not allowed to contain white space
+     * characters, including spaces. The desired portion may start with any
+     * number of zeros.
+     * @param index The index of the sequence of bytes (interpreted as text) that
+     * starts the desired portion.
+     * @param endIndex The index of the sequence of bytes (interpreted as text)
+     * that ends the desired portion. The length will be index + endIndex -
+     * 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of bytes (interpreted as text) portion.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the sequence's
+     * length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     */
     public static EInteger FromSubstring(
       byte[] bytes,
       int index,
@@ -410,6 +654,22 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(bytes, 10, index, endIndex);
     }
 
+    /**
+     * Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+     * integer. Each byte in the sequence has to be a code point in the
+     * Basic Latin range (0x00 to 0x7f or U+0000 to U+007F) of the Unicode
+     * Standard.
+     * @param bytes A sequence of bytes describing an integer in base-10 (decimal)
+     * form. The sequence must contain only basic digits 0 to 9 (U+0030 to
+     *  U+0039), except that it may start with a minus sign ("-", U+002D) to
+     * indicate a negative number. The sequence is not allowed to contain
+     * white space characters, including spaces. The sequence may start
+     * with any number of zeros.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence of bytes.
+     * @throws NumberFormatException The parameter {@code bytes} is in an invalid format.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     */
     public static EInteger FromString(byte[] bytes) {
       if (bytes == null) {
         throw new NullPointerException("bytes");
@@ -425,6 +685,26 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(bytes, 10, 0, len);
     }
 
+    /**
+     * Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
+     * integer in a given radix. Each byte in the sequence has to be a
+     * character in the Basic Latin range (0x00 to 0x7f or U+0000 to
+     * U+007F) of the Unicode Standard.
+     * @param bytes A sequence of bytes (interpreted as text) described by the
+     * FromRadixSubstring method.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * bytes can use the basic digits 0 to 9 (U+0030 to U+0039) and then
+     * the basic upper-case letters A to Z (U+0041 to U+005A). For example,
+     * 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a basic
+     * upper-case letter A to Z is allowed in the sequence of bytes, the
+     * corresponding basic lower-case letter (U+0061 to U+007a) is allowed
+     * instead.
+     * @return An arbitrary-precision integer with the same value as the given
+     * sequence of bytes.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The sequence of bytes (interpreted as text) is empty
+     * or in an invalid format.
+     */
     public static EInteger FromRadixString(byte[] bytes, int radix) {
       if (bytes == null) {
         throw new NullPointerException("bytes");
@@ -432,6 +712,35 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(bytes, radix, 0, bytes.length);
     }
 
+    /**
+     * Converts a portion of a sequence of bytes (interpreted as text) to an
+     * arbitrary-precision integer in a given radix. Each byte in the
+     * sequence has to be a character in the Basic Latin range (0x00 to
+     * 0x7f or U+0000 to U+007F) of the Unicode Standard.
+     * @param bytes A sequence of bytes (interpreted as text). The desired portion
+     * of the sequence of bytes (interpreted as text) must contain only
+     * characters allowed by the given radix, except that it may start with
+     *  a minus sign ("-", U+002D) to indicate a negative number. The
+     * desired portion is not allowed to contain white space characters,
+     * including spaces. The desired portion may start with any number of
+     * zeros.
+     * @param radix A base from 2 to 36. Depending on the radix, the sequence of
+     * bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030
+     * to U+0039) and then the basic upper-case letters A to Z (U+0041 to
+     * U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix
+     * 16. Where a basic upper-case letter A to Z is allowed in the
+     * sequence of bytes (interpreted as text), the corresponding basic
+     * lower-case letter (U+0061 to U+007a) is allowed instead.
+     * @param index The index of the sequence of bytes (interpreted as text) that
+     * starts the desired portion.
+     * @param endIndex The index of the sequence of bytes (interpreted as text)
+     * that ends the desired portion. The length will be index + endIndex -
+     * 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * sequence's portion.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The portion is empty or in an invalid format.
+     */
     public static EInteger FromRadixSubstring(
       byte[] bytes,
       int radix,
@@ -447,6 +756,19 @@ at: http://peteroupc.github.io/
           endIndex);
     }
 
+    /**
+     * Converts a string to an arbitrary-precision integer.
+     * @param str A text string describing an integer in base-10 (decimal) form.
+     * The string must contain only basic digits 0 to 9 (U+0030 to U+0039),
+     *  except that it may start with a minus sign ("-", U+002D) to indicate
+     * a negative number. The string is not allowed to contain white space
+     * characters, including spaces. The string may start with any number
+     * of zeros.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * string.
+     * @throws NumberFormatException The parameter {@code str} is in an invalid format.
+     * @throws NullPointerException The parameter {@code str} is null.
+     */
     public static EInteger FromString(String str) {
       if (str == null) {
         throw new NullPointerException("str");
@@ -462,6 +784,25 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(str, 10, 0, len);
     }
 
+    /**
+     * Converts a portion of a string to an arbitrary-precision integer.
+     * @param str A text string, the desired portion of which describes an integer
+     * in base-10 (decimal) form. The desired portion of the string must
+     * contain only basic digits 0 to 9 (U+0030 to U+0039), except that it
+     *  may start with a minus sign ("-", U+002D) to indicate a negative
+     * number. The desired portion is not allowed to contain white space
+     * characters, including spaces. The desired portion may start with any
+     * number of zeros.
+     * @param index The index of the string that starts the string portion.
+     * @param endIndex The index of the string that ends the string portion. The
+     * length will be index + endIndex - 1.
+     * @return An arbitrary-precision integer with the same value as given in the
+     * string portion.
+     * @throws IllegalArgumentException The parameter {@code index} is less than 0, {@code
+     * endIndex} is less than 0, or either is greater than the string's
+     * length, or {@code endIndex} is less than {@code index}.
+     * @throws NullPointerException The parameter {@code str} is null.
+     */
     public static EInteger FromSubstring(
       String str,
       int index,
@@ -472,11 +813,23 @@ at: http://peteroupc.github.io/
       return FromRadixSubstring(str, 10, index, endIndex);
     }
 
+    /**
+     * Returns the absolute value of this object's value.
+     * @return This object's value with the sign removed.
+     */
     public EInteger Abs() {
       return (this.wordCount == 0 || !this.negative) ? this : new
         EInteger(this.wordCount, this.words, false);
     }
 
+    /**
+     * Adds this arbitrary-precision integer and another arbitrary-precision
+     * integer and returns the result.
+     * @param bigintAugend Another arbitrary-precision integer.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * integer plus another arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code bigintAugend} is null.
+     */
     public EInteger Add(EInteger bigintAugend) {
       if (bigintAugend == null) {
         throw new NullPointerException("bigintAugend");
@@ -732,38 +1085,65 @@ at: http://peteroupc.github.io/
       return new EInteger(count, diffReg, diffNeg);
     }
 
-/**
- * @deprecated Renamed to ToInt32Checked.
+    /**
+     * Converts this object's value to a 32-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 32-bit signed integer.
+     * @throws T:ArithmeticException This object's value is too big to fit a
+     * 32-bit signed integer.
+     * @deprecated Renamed to ToInt32Checked.
  */
 @Deprecated
     public int AsInt32Checked() {
       return this.ToInt32Checked();
     }
 
-/**
- * @deprecated Renamed to ToInt32Unchecked.
+    /**
+     * Converts this object's value to a 32-bit signed integer. If the value can't
+     * fit in a 32-bit integer, returns the lower 32 bits of this object's
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
+     * @return A 32-bit signed integer.
+     * @deprecated Renamed to ToInt32Unchecked.
  */
 @Deprecated
     public int AsInt32Unchecked() {
       return this.ToInt32Unchecked();
     }
 
-/**
- * @deprecated Renamed to ToInt64Checked.
+    /**
+     * Converts this object's value to a 64-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 64-bit signed integer.
+     * @throws T:ArithmeticException This object's value is too big to fit a
+     * 64-bit signed integer.
+     * @deprecated Renamed to ToInt64Checked.
  */
 @Deprecated
     public long AsInt64Checked() {
       return this.ToInt64Checked();
     }
 
-/**
- * @deprecated Renamed to ToInt64Unchecked.
+    /**
+     * Converts this object's value to a 64-bit signed integer. If the value can't
+     * fit in a 64-bit integer, returns the lower 64 bits of this object's
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
+     * @return A 64-bit signed integer.
+     * @deprecated Renamed to ToInt64Unchecked.
  */
 @Deprecated
     public long AsInt64Unchecked() {
       return this.ToInt64Unchecked();
     }
 
+    /**
+     * Returns whether this object's value can fit in a 32-bit signed integer.
+     * @return {@code true} if this object's value is from -2147483648 through
+     * 2147483647; otherwise, {@code false}.
+     */
     public boolean CanFitInInt32() {
       int c = this.wordCount;
       if (c > 2) {
@@ -776,6 +1156,11 @@ at: http://peteroupc.github.io/
       return true;
     }
 
+    /**
+     * Returns whether this object's value can fit in a 64-bit signed integer.
+     * @return {@code true} if this object's value is from -9223372036854775808
+     * through 9223372036854775807; otherwise, {@code false}.
+     */
     public boolean CanFitInInt64() {
       int c = this.wordCount;
       if (c > 4) {
@@ -789,6 +1174,13 @@ at: http://peteroupc.github.io/
       return true;
     }
 
+    /**
+     * Compares an arbitrary-precision integer with this instance.
+     * @param other The integer to compare to this value.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.
+     */
     public int compareTo(EInteger other) {
       if (other == null) {
         return 1;
@@ -827,6 +1219,14 @@ at: http://peteroupc.github.io/
       return ((size > tempSize) ^ (sa <= 0)) ? 1 : -1;
     }
 
+    /**
+     * Returns the greater of two arbitrary-precision integers.
+     * @param first The first integer to compare.
+     * @param second The second integer to compare.
+     * @return The greater of the two integers.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
     public static EInteger Max(EInteger first, EInteger second) {
       if (first == null) {
         throw new NullPointerException("first");
@@ -837,6 +1237,14 @@ at: http://peteroupc.github.io/
       return first.compareTo(second) > 0 ? first : second;
     }
 
+    /**
+     * Returns the smaller of two arbitrary-precision integers.
+     * @param first The first integer to compare.
+     * @param second The second integer to compare.
+     * @return The smaller of the two integers.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
     public static EInteger Min(EInteger first, EInteger second) {
       if (first == null) {
         throw new NullPointerException("first");
@@ -847,6 +1255,16 @@ at: http://peteroupc.github.io/
       return first.compareTo(second) < 0 ? first : second;
     }
 
+    /**
+     * Of two arbitrary-precision integers, returns the one with the greater
+     * absolute value. If both integers have the same absolute value, this
+     * method has the same effect as Max.
+     * @param first The first integer to compare.
+     * @param second The second integer to compare.
+     * @return The integer with the greater absolute value.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
     public static EInteger MaxMagnitude(EInteger first, EInteger second) {
       if (first == null) {
         throw new NullPointerException("first");
@@ -858,6 +1276,16 @@ at: http://peteroupc.github.io/
       return (cmp == 0) ? Max(first, second) : (cmp > 0 ? first : second);
     }
 
+    /**
+     * Of two arbitrary-precision integers, returns the one with the smaller
+     * absolute value. If both integers have the same absolute value, this
+     * method has the same effect as Min.
+     * @param first The first integer to compare.
+     * @param second The second integer to compare.
+     * @return The integer with the smaller absolute value.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
+     */
     public static EInteger MinMagnitude(EInteger first, EInteger second) {
       if (first == null) {
         throw new NullPointerException("first");
@@ -869,6 +1297,13 @@ at: http://peteroupc.github.io/
       return (cmp == 0) ? Min(first, second) : (cmp < 0 ? first : second);
     }
 
+    /**
+     * Adds this arbitrary-precision integer and a 32-bit signed integer and
+     * returns the result.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * integer plus a 32-bit signed integer.
+     */
     public EInteger Add(int intValue) {
       if (intValue == 0) {
         return this;
@@ -921,24 +1356,75 @@ at: http://peteroupc.github.io/
       return this.Add(EInteger.FromInt32(intValue));
     }
 
+    /**
+     * Subtracts a 32-bit signed integer from this arbitrary-precision integer and
+     * returns the result.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision integer minus a 32-bit signed integer.
+     */
     public EInteger Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
         this.Subtract(EInteger.FromInt32(intValue)) : ((intValue == 0) ?
           this : this.Add(-intValue));
     }
 
+    /**
+     * Multiplies this arbitrary-precision integer by a 32-bit signed integer and
+     *  returns the result.<p> <pre>EInteger result = EInteger.FromString("5").Multiply(200);</pre> . </p>
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * integer times a 32-bit signed integer.
+     */
     public EInteger Multiply(int intValue) {
       return this.Multiply(EInteger.FromInt32(intValue));
     }
 
+    /**
+     * Divides this arbitrary-precision integer by a 32-bit signed integer and
+     * returns the result. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 32-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
+     * @param intValue The divisor.
+     * @return The result of dividing this arbitrary-precision integer by a 32-bit
+     * signed integer. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 32-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
+     * @throws ArithmeticException Attempted to divide by zero.
+     */
     public EInteger Divide(int intValue) {
       return this.Divide(EInteger.FromInt32(intValue));
     }
 
+    /**
+     * Returns the remainder that would result when this arbitrary-precision
+     * integer is divided by a 32-bit signed integer. The remainder is the
+     * number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other 32-bit signed integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The remainder that would result when this arbitrary-precision
+     * integer is divided by a 32-bit signed integer.
+     * @throws ArithmeticException Attempted to divide by zero.
+     * @throws NullPointerException The parameter {@code intValue} is null.
+     */
     public EInteger Remainder(int intValue) {
       return this.Remainder(EInteger.FromInt32(intValue));
     }
 
+    /**
+     * Compares an arbitrary-precision integer with this instance.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     */
     public int compareTo(int intValue) {
       int c = this.wordCount;
       if (c > 2) {
@@ -957,6 +1443,25 @@ at: http://peteroupc.github.io/
       return thisInt == intValue ? 0 : (thisInt < intValue ? -1 : 1);
     }
 
+    /**
+     * Divides this arbitrary-precision integer by another arbitrary-precision
+     * integer and returns the result. The result of the division is
+     * rounded down (the fractional part is discarded). Except if the
+     * result of the division is 0, it will be negative if this
+     * arbitrary-precision integer is positive and the other
+     * arbitrary-precision integer is negative, or vice versa, and will be
+     * positive if both are positive or both are negative.
+     * @param bigintDivisor The divisor.
+     * @return The result of dividing this arbitrary-precision integer by another
+     * arbitrary-precision integer. The result of the division is rounded
+     * down (the fractional part is discarded). Except if the result of the
+     * division is 0, it will be negative if this arbitrary-precision
+     * integer is positive and the other arbitrary-precision integer is
+     * negative, or vice versa, and will be positive if both are positive
+     * or both are negative.
+     * @throws NullPointerException The parameter {@code bigintDivisor} is null.
+     * @throws ArithmeticException Attempted to divide by zero.
+     */
     public EInteger Divide(EInteger bigintDivisor) {
       if (bigintDivisor == null) {
         throw new NullPointerException("bigintDivisor");
@@ -1597,38 +2102,155 @@ at: http://peteroupc.github.io/
       }
     }
 
+    /**
+     * Divides this arbitrary-precision integer by a 32-bit signed integer and
+     * returns a two-item array containing the result of the division and
+     * the remainder, in that order. The result of the division is rounded
+     * down (the fractional part is discarded). Except if the result of the
+     * division is 0, it will be negative if this arbitrary-precision
+     * integer is positive and the other 32-bit signed integer is negative,
+     * or vice versa, and will be positive if both are positive or both are
+     * negative. The remainder is the number that remains when the absolute
+     * value of this arbitrary-precision integer is divided by the absolute
+     * value of the other 32-bit signed integer; the remainder has the same
+     * sign (positive or negative) as this arbitrary-precision integer.
+     * @param intDivisor The number to divide by.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision integer, and the second is the remainder as an
+     * arbitrary-precision integer. The result of division is the result of
+     * the Divide method on the two operands, and the remainder is the
+     * result of the Remainder method on the two operands.
+     * @throws ArithmeticException The parameter {@code intDivisor} is 0.
+     */
     public EInteger[] DivRem(int intDivisor) {
       return this.DivRem(EInteger.FromInt32(intDivisor));
     }
 
+    /**
+     * Adds this arbitrary-precision integer and a 64-bit signed integer and
+     * returns the result.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The sum of the two numbers, that is, this arbitrary-precision
+     * integer plus a 64-bit signed integer.
+     */
     public EInteger Add(long longValue) {
       return this.Add(EInteger.FromInt64(longValue));
     }
 
+    /**
+     * Subtracts a 64-bit signed integer from this arbitrary-precision integer and
+     * returns the result.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision integer minus a 64-bit signed integer.
+     */
     public EInteger Subtract(long longValue) {
       return this.Subtract(EInteger.FromInt64(longValue));
     }
 
+    /**
+     * Multiplies this arbitrary-precision integer by a 64-bit signed integer and
+     * returns the result.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * integer times a 64-bit signed integer.
+     */
     public EInteger Multiply(long longValue) {
       return this.Multiply(EInteger.FromInt64(longValue));
     }
 
+    /**
+     * Divides this arbitrary-precision integer by a 64-bit signed integer and
+     * returns the result. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 64-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The result of dividing this arbitrary-precision integer by a 64-bit
+     * signed integer. The result of the division is rounded down (the
+     * fractional part is discarded). Except if the result of the division
+     * is 0, it will be negative if this arbitrary-precision integer is
+     * positive and the other 64-bit signed integer is negative, or vice
+     * versa, and will be positive if both are positive or both are
+     * negative.
+     */
     public EInteger Divide(long longValue) {
       return this.Divide(EInteger.FromInt64(longValue));
     }
 
+    /**
+     * Returns the remainder that would result when this arbitrary-precision
+     * integer is divided by a 64-bit signed integer. The remainder is the
+     * number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other 64-bit signed integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The remainder that would result when this arbitrary-precision
+     * integer is divided by a 64-bit signed integer.
+     */
     public EInteger Remainder(long longValue) {
       return this.Remainder(EInteger.FromInt64(longValue));
     }
 
+    /**
+     * Compares an arbitrary-precision integer with this instance.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return Zero if the values are equal; a negative number if this instance is
+     * less, or a positive number if this instance is greater.
+     */
     public int compareTo(long longValue) {
       return this.compareTo(EInteger.FromInt64(longValue));
     }
 
+    /**
+     * Divides this arbitrary-precision integer by a 64-bit signed integer and
+     * returns a two-item array containing the result of the division and
+     * the remainder, in that order. The result of the division is rounded
+     * down (the fractional part is discarded). Except if the result of the
+     * division is 0, it will be negative if this arbitrary-precision
+     * integer is positive and the other 64-bit signed integer is negative,
+     * or vice versa, and will be positive if both are positive or both are
+     * negative. The remainder is the number that remains when the absolute
+     * value of this arbitrary-precision integer is divided by the absolute
+     * value of the other 64-bit signed integer; the remainder has the same
+     * sign (positive or negative) as this arbitrary-precision integer.
+     * @param intDivisor The parameter {@code intDivisor} is a 64-bit signed
+     * integer.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision integer, and the second is the remainder as an
+     * arbitrary-precision integer. The result of division is the result of
+     * the Divide method on the two operands, and the remainder is the
+     * result of the Remainder method on the two operands.
+     */
     public EInteger[] DivRem(long intDivisor) {
       return this.DivRem(EInteger.FromInt64(intDivisor));
     }
 
+    /**
+     * Divides this arbitrary-precision integer by another arbitrary-precision
+     * integer and returns a two-item array containing the result of the
+     * division and the remainder, in that order. The result of the
+     * division is rounded down (the fractional part is discarded). Except
+     * if the result of the division is 0, it will be negative if this
+     * arbitrary-precision integer is positive and the other
+     * arbitrary-precision integer is negative, or vice versa, and will be
+     * positive if both are positive or both are negative. The remainder is
+     * the number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other arbitrary-precision integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
+     * @param divisor The number to divide by.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision integer, and the second is the remainder as an
+     * arbitrary-precision integer. The result of division is the result of
+     * the Divide method on the two operands, and the remainder is the
+     * result of the Remainder method on the two operands.
+     * @throws ArithmeticException The parameter {@code divisor} is 0.
+     * @throws NullPointerException The parameter {@code divisor} is null.
+     */
     public EInteger[] DivRem(EInteger divisor) {
       if (divisor == null) {
         throw new NullPointerException("divisor");
@@ -1743,6 +2365,13 @@ at: http://peteroupc.github.io/
       return new EInteger[] { bigquo2, bigrem };
     }
 
+    /**
+     * Determines whether this object and another object are equal and have the
+     * same type.
+     * @param obj The parameter {@code obj} is an arbitrary object.
+     * @return {@code true} if this object and another object are equal; otherwise,
+     * {@code false}.
+     */
     @Override public boolean equals(Object obj) {
       EInteger other = ((obj instanceof EInteger) ? (EInteger)obj : null);
       if (other == null) {
@@ -1807,6 +2436,17 @@ at: http://peteroupc.github.io/
       return eret;
     }
 
+    /**
+     * Returns the greatest common divisor of this integer and the given integer.
+     * The greatest common divisor (GCD) is also known as the greatest
+     * common factor (GCF).
+     * @param bigintSecond Another arbitrary-precision integer.
+     * @return An arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code bigintSecond} is null.
+     * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
+     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
+     * @throws ArithmeticException Attempted to divide by zero.
+     */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
         throw new NullPointerException("bigintSecond");
@@ -1826,6 +2466,15 @@ at: http://peteroupc.github.io/
       if (thisValue.equals(EInteger.FromInt32(1))) {
         return thisValue;
       }
+      if (thisValue.wordCount > 10 || bigintSecond.wordCount > 10) {
+      // if (thisValue.wordCount > 500 || bigintSecond.wordCount > 500) {
+         return SubquadraticGCD(thisValue, bigintSecond);
+      } else {
+         return BaseGcd(thisValue, bigintSecond);
+      }
+    }
+
+    private static EInteger BaseGcd(EInteger thisValue, EInteger bigintSecond) {
       if (thisValue.CanFitInInt64() && bigintSecond.CanFitInInt64()) {
         long u = thisValue.ToInt64Unchecked();
         long v = bigintSecond.ToInt64Unchecked();
@@ -1843,7 +2492,8 @@ at: http://peteroupc.github.io/
         while (eib.wordCount > 3) {
           // Lehmer's algorithm
           EInteger eiaa, eibb, eicc, eidd;
-          EInteger eish = eia.GetUnsignedBitLengthAsEInteger().Subtract(48);
+          EInteger eish = eia.GetUnsignedBitLengthAsEInteger();
+          eish = eish.Subtract(48);
           EInteger eiee = eia.ShiftRight(eish);
           EInteger eiff = eib.ShiftRight(eish);
           eiaa = eidd = EInteger.FromInt32(1);
@@ -1868,12 +2518,31 @@ at: http://peteroupc.github.io/
                 eia.Multiply(eiaa).Add(eib.Multiply(eibb));
               EInteger tb = eibb.isZero() ? eia.Remainder(eib) :
                 eia.Multiply(eicc).Add(eib.Multiply(eidd));
+              // System.out.println("eia/b="+eia.wordCount+"/"+eib.wordCount);
+              // System.out.println("eiaa/bb="+eiaa.wordCount+"/"+eibb.wordCount);
               eia = ta;
               eib = tb;
-              // System.out.println("q tawc="+eia.wordCount+"/"+eib.wordCount);
               break;
+            } else if (eiq.CanFitInInt32() &&
+                eidd.CanFitInInt32() && eicc.CanFitInInt32()) {
+              EInteger t = eiff;
+              // System.out.println("eiq eiffccdd="+eiff.wordCount+"/"+
+              // eicc.wordCount+"/"+eidd.wordCount);
+              int eiqi = eiq.ToInt32Checked();
+              eiff = eiee.Subtract(eiff.Multiply(eiqi));
+              eiee = t;
+              t = eicc;
+              eicc = eiaa.Subtract((long)eicc.ToInt32Checked() * eiqi);
+              eiaa = t;
+              t = eidd;
+              eidd = eibb.Subtract((long)eidd.ToInt32Checked() * eiqi);
+              // System.out.println("->eiffccdd="+eiff.wordCount+"/"+
+              // eicc.wordCount+"/"+eidd.wordCount);
+              eibb = t;
             } else {
               EInteger t = eiff;
+              // System.out.println("eiffccdd="+eiff.wordCount+"/"+
+              // eicc.wordCount+"/"+eidd.wordCount);
               eiff = eiee.Subtract(eiff.Multiply(eiq));
               eiee = t;
               t = eicc;
@@ -1881,13 +2550,14 @@ at: http://peteroupc.github.io/
               eiaa = t;
               t = eidd;
               eidd = eibb.Subtract(eidd.Multiply(eiq));
+              // System.out.println("->eiffccdd="+eiff.wordCount+"/"+
+              // eicc.wordCount+"/"+eidd.wordCount);
               eibb = t;
             }
           }
         }
         if (eib.isZero()) {
-          { return eia;
-          }
+          return eia;
         }
         while (!eib.isZero()) {
           if (eia.wordCount <= 3 && eib.wordCount <= 3) {
@@ -1898,102 +2568,384 @@ at: http://peteroupc.github.io/
           eia = ta;
         }
         return eia;
-        /*
-                // Big integer version of code above
-                int bshl = 0;
-                EInteger ebshl = null;
-                short[] bu = thisValue.Copy();
-                short[] bv = bigintSecond.Copy();
-                int buc = thisValue.wordCount;
-                int bvc = bigintSecond.wordCount;
-                while (buc != 0 && bvc != 0 && !WordsEqual(bu, buc, bv, bvc)) {
-                  if (buc <= 3 && bvc <= 3) {
-                    return GcdLong(
-                        WordsToLongUnchecked(bu, buc),
-                        WordsToLongUnchecked(bv, bvc));
-                  }
-                  if ((bu[0] & 0x0f) == 0 && (bv[0] & 0x0f) == 0) {
-                    if (bshl < 0) {
-                      ebshl = ebshl.Add(4);
-                    } else if (bshl == Integer.MAX_VALUE - 3) {
-                      ebshl = EInteger.FromInt32(Integer.MAX_VALUE - 3).Add(4);
-                      bshl = -1;
-                    } else {
-                      bshl += 4;
-                    }
-                    buc = WordsShiftRightFour(bu, buc);
-                    bvc = WordsShiftRightFour(bv, bvc);
-                    continue;
-                  }
-                  boolean eu = (bu[0] & 0x01) == 0;
-                  boolean ev = (bv[0] & 0x01) == 0;
-                  if (eu && ev) {
-                    if (bshl < 0) {
-                      ebshl = ebshl.Add(EInteger.FromInt32(1));
-                    } else if (bshl == Integer.MAX_VALUE) {
-                      ebshl = EInteger.FromInt32(Integer.MAX_VALUE);
-                      ebshl = ebshl.Add(EInteger.FromInt32(1));
-                      bshl = -1;
-                    } else {
-                      ++bshl;
-                    }
-                    buc = WordsShiftRightOne(bu, buc);
-                    bvc = WordsShiftRightOne(bv, bvc);
-                  } else if (eu && !ev) {
-                    buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x0f) == 0) ?
-                      WordsShiftRightFour(bu, buc) : WordsShiftRightOne(bu,
-        buc);
-                    } else if (!eu && ev) {
-                    if ((bv[0] & 0xff) == 0 && Math.abs(buc - bvc) > 1) {
-                      // System.out.println("bv8");
-                      bvc = WordsShiftRightEight(bv, bvc);
-                    } else {
-                      bvc = (
-                          (bv[0] & 0x0f) == 0 && Math.abs(
-                buc - bvc) > 1) ? WordsShiftRightFour(bv, bvc) :
-        WordsShiftRightOne(bv, bvc);
-                    }
-                  } else if (WordsCompare(bu, buc, bv, bvc) >= 0) {
-                    buc = WordsSubtract(bu, buc, bv, bvc);
-                    buc = (Math.abs(buc - bvc) > 1 && (bu[0] & 0x02) == 0) ?
-                      WordsShiftRightTwo(bu, buc) : WordsShiftRightOne(bu, buc);
-                    } else {
-                    short[] butmp = bv;
-                    short[] bvtmp = bu;
-                    int buctmp = bvc;
-                    int bvctmp = buc;
-                    buctmp = WordsSubtract(butmp, buctmp, bvtmp, bvctmp);
-                    buctmp = WordsShiftRightOne(butmp, buctmp);
-                    bu = butmp;
-                    bv = bvtmp;
-                    buc = buctmp;
-                    bvc = bvctmp;
-                  }
-                }
-                EInteger valueBuVar = new EInteger(buc, bu, false);
-                EInteger valueBvVar = new EInteger(bvc, bv, false);
-                if (bshl >= 0) {
-                  valueBuVar = valueBuVar.isZero() ? (valueBvVar.ShiftLeft(bshl)) :
-        (valueBuVar.ShiftLeft(bshl));
-                } else {
-                  valueBuVar = valueBuVar.isZero() ? LeftShiftBigIntVar(
-                      valueBvVar,
-                      ebshl) : LeftShiftBigIntVar(
-                      valueBuVar,
-                      ebshl);
-                }
-                return valueBuVar;
-        */ }
+      }
     }
 
+ private static EInteger MinBitLength(EInteger eia, EInteger eib) {
+  return EInteger.Min(BL(eia), BL(eib));
+ }
+
+ private static EInteger MaxBitLength(EInteger eia, EInteger eib) {
+  return EInteger.Max(BL(eia), BL(eib));
+ }
+
+ private static void SDivStep(EInteger[] eiam, EInteger eis) {
+  // a, b, m.get(0) ... m.get(3)
+   if (eiam[0].compareTo(eiam[1]) > 0) {
+     // a > b
+     EInteger[] divrem = eiam[0].DivRem(eiam[1]);
+     if (BL(divrem[1]).compareTo(eis) <= 0) {
+       divrem[0] = divrem[0].Subtract(1);
+       divrem[1] = divrem[1].Add(eiam[1]);
+     }
+     eiam[3] = eiam[3].Add(eiam[2].Multiply(divrem[0]));
+     eiam[5] = eiam[5].Add(eiam[4].Multiply(divrem[0]));
+     eiam[0] = divrem[1];
+   } else {
+     // a <= b
+     EInteger[] divrem = eiam[1].DivRem(eiam[0]);
+     if (BL(divrem[1]).compareTo(eis) <= 0) {
+       divrem[0] = divrem[0].Subtract(1);
+       divrem[1] = divrem[1].Add(eiam[0]);
+     }
+     eiam[2] = eiam[2].Add(eiam[3].Multiply(divrem[0]));
+     eiam[4] = eiam[4].Add(eiam[5].Multiply(divrem[0]));
+     eiam[1] = divrem[1];
+   }
+ }
+
+ private static void LSDivStep(long[] longam, long ls) {
+  // a, b, m.get(0) ... m.get(3)
+   if (longam[0] > longam[1]) {
+     // a > b
+     long[] divrem = new long[] { longam[0] / longam[1], longam[0] % longam[1] };
+     if (LBL(divrem[1]) <= ls) {
+       divrem[0] = divrem[0] - 1;
+       divrem[1] = divrem[1] + longam[1];
+     }
+     longam[3] = longam[3] + (longam[2] * divrem[0]);
+     longam[5] = longam[5] + (longam[4] * divrem[0]);
+     longam[0] = divrem[1];
+   } else {
+     // a <= b
+     long[] divrem = new long[] { longam[1] / longam[0], longam[1] % longam[0] };
+     if (LBL(divrem[1]) <= ls) {
+       divrem[0] = divrem[0] - 1;
+       divrem[1] = divrem[1] + longam[0];
+     }
+     longam[2] = longam[2] + (longam[3] * divrem[0]);
+     longam[4] = longam[4] + (longam[5] * divrem[0]);
+     longam[1] = divrem[1];
+   }
+ }
+
+ private static EInteger BL(EInteger eia) {
+  EInteger ret = eia.GetUnsignedBitLengthAsEInteger();
+  return ret;
+ }
+
+ private static int LBL(long mantlong) {
+      return NumberUtility.BitLength(Math.abs(mantlong));
+ }
+
+private static long[] LHalfGCD(long longa, long longb) {
+       if (longa == 0 || longb == 0) {
+          return new long[] { 0, 0, 1, 0, 0, 1 };
+       }
+       int ln = Math.max(LBL(longa), LBL(longb));
+       int ls = (ln >> 1) + 1;
+       long[] ret = new long[6];
+       if (Math.min(LBL(longa), LBL(longb)) > ((ln * 3) >> 2) + 2) {
+          int p1 = ln >> 1;
+          long nhalfmask = (1L << p1) - 1;
+          long longah = longa >> p1;
+          long longal = longa & nhalfmask;
+          long longbh = longb >> p1;
+          long longbl = longb & nhalfmask;
+          long[] ret2 = LHalfGCD(longah, longbh);
+          System.arraycopy(ret2, 0, ret, 0, 6);
+          longa = longal*(ret2[5]) - (longbl*(ret2[3]));
+          longb = longbl*(ret2[2]) - (longal*(ret2[4]));
+          longa += ret2[0] << p1;
+          longb += ret2[1] << p1;
+       } else {
+          // Set M to identity
+          ret = new long[6];
+          ret[2] = 1;
+          ret[3] = 0;
+          ret[4] = 0;
+          ret[5] = 1;
+       }
+       ret[0] = longa;
+       ret[1] = longb;
+       while (Math.max(LBL(ret[0]), LBL(ret[1])) > ((ln * 3) >> 2) + 1 &&
+                LBL(ret[0] - ret[1]) > ls) {
+         if (ret[0] < 0 || ret[1] < 0) {
+            { throw new IllegalStateException("Internal error");
+         }
+           }
+           LSDivStep(ret, ls);
+       }
+       longa = ret[0];
+       longb = ret[1];
+       if (Math.min(LBL(longa), LBL(longb)) > ls + 2) {
+          ln = Math.max(LBL(longa), LBL(longb));
+          int p1 = ((ls * 2) - ln) + 1;
+          long nhalfmask = (1L << p1) - 1;
+          long longah = longa >> p1;
+          long longal = longa & nhalfmask;
+          long longbh = longb >> p1;
+          long longbl = longb & nhalfmask;
+          long[] ret2 = LHalfGCD(longah, longbh);
+          longa = longal*(ret2[5]) - (longbl*(ret2[3]));
+          longb = longbl*(ret2[2]) - (longal*(ret2[4]));
+          longa += ret2[0] << p1;
+          longb += ret2[1] << p1;
+          if (longa < 0 || longb < 0) {
+             { throw new IllegalStateException("Internal error");
+          }
+}
+          long ma, mb, mc, md;
+          ma = ret[2]*(ret2[2]) + (ret[3]*(ret2[4]));
+          mb = ret[2]*(ret2[3]) + (ret[3]*(ret2[5]));
+          mc = ret[4]*(ret2[2]) + (ret[5]*(ret2[4]));
+          md = ret[4]*(ret2[3]) + (ret[5]*(ret2[5]));
+          ret[2] = ma;
+          ret[3] = mb;
+          ret[4] = mc;
+          ret[5] = md;
+       }
+       ret[0] = longa;
+       ret[1] = longb;
+       while (LBL(ret[0] - ret[1]) > ls) {
+         if (ret[0] < 0 || ret[1] < 0) {
+            { throw new IllegalStateException("Internal error");
+         }
+           }
+           LSDivStep(ret, ls);
+       }
+       if (ret[0] < 0 || ret[1] < 0) {
+          { throw new IllegalStateException("Internal error");
+       }
+}
+       // Verify det M == 1
+       if (ret[2] < 0 || ret[3] < 0 || ret[4] < 0 ||
+            ret[5] < 0) {
+          { throw new IllegalStateException("Internal error");
+       }
+}
+       if (ret[2]*(ret[5]) - (ret[3]*(ret[4])) != 1) {
+          throw new IllegalStateException("Internal error");
+       }
+       if (LBL(ret[0] - ret[1]) > ls) {
+             throw new IllegalStateException("Internal error");
+       }
+       return ret;
+}
+
+ // Implements Niels Moeller's Half-GCD algorithm from 2008
+ private static EInteger[] HalfGCD(EInteger eia, EInteger eib) {
+       if (eia.isZero() || eib.isZero()) {
+          return new EInteger[] {
+            EInteger.FromInt32(0), EInteger.FromInt32(0),
+            EInteger.FromInt32(1), EInteger.FromInt32(0), EInteger.FromInt32(0), EInteger.FromInt32(1),
+          };
+       }
+       EInteger[] ret = new EInteger[6];
+       if (eia.CanFitInInt64() && eib.CanFitInInt64()) {
+          long[] lret = LHalfGCD(eia.ToInt64Checked(), eib.ToInt64Checked());
+          for (int i = 0; i < 6; ++i) {
+            ret[i] = EInteger.FromInt64(lret[i]);
+          }
+          return ret;
+       }
+       EInteger ein = MaxBitLength(eia, eib);
+       long ln = ein.CanFitInInt64() ? ein.ToInt64Checked() : -1;
+       /* System.out.println("hgcd eia.set("+thishgcd+","+eia.ToRadixString(16)+"
+bl="+BL(eia)));
+       System.out.println("hgcd eib.set("+thishgcd+","+eib.ToRadixString(16)+"
+bl="+BL(eib)));
+       System.out.println("hgcd
+nh.set("+thishgcd+","+n.Multiply(3).ShiftRight(2).Add(2)));
+       */ EInteger eis = ein.ShiftRight(1).Add(1);
+       EInteger eiah, eial, eibh, eibl;
+       if (MinBitLength(eia,
+  eib).compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) > 0) {
+          EInteger p1 = ein.ShiftRight(1);
+          EInteger nhalfmask = EInteger.FromInt32(1).ShiftLeft(p1).Subtract(1);
+          eiah = eia.ShiftRight(p1);
+          eial = eia.And(nhalfmask);
+          eibh = eib.ShiftRight(p1);
+          eibl = eib.And(nhalfmask);
+          EInteger[] ret2 = HalfGCD(eiah, eibh);
+          System.arraycopy(ret2, 0, ret, 0, 6);
+          eia = eial.Multiply(ret2[5]).Subtract(eibl.Multiply(ret2[3]));
+          eib = eibl.Multiply(ret2[2]).Subtract(eial.Multiply(ret2[4]));
+          eia = eia.Add(ret2[0].ShiftLeft(p1));
+          eib = eib.Add(ret2[1].ShiftLeft(p1));
+       } else {
+          // Set M to identity
+          ret = new EInteger[6];
+          ret[2] = EInteger.FromInt32(1);
+          ret[3] = EInteger.FromInt32(0);
+          ret[4] = EInteger.FromInt32(0);
+          ret[5] = EInteger.FromInt32(1);
+       }
+       ret[0] = eia;
+       ret[1] = eib;
+       // if (BL(eia.Subtract(eib)).compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) >
+       // 0) {
+       // throw new IllegalStateException("Internal error");
+       // }
+       /* System.out.println("[1]eia="+ret[0].ToRadixString(16));
+       System.out.println("[1]eib="+ret[1].ToRadixString(16));
+       System.out.println("[1]mat="+Arrays.toString(new
+EInteger[] { ret[2], ret[3], ret[4], ret[5]}));
+       System.out.println("mbl="+MaxBitLength(ret[0],ret[1])+"
+nh="+n.Multiply(3).ShiftRight(2).Add(1));
+       System.out.println("absbl="+BL(ret[0].Subtract(ret[1]))+" s="+s);
+       */ while (MaxBitLength(ret[0], ret[1]).compareTo(
+                   ein.Multiply(3).ShiftRight(2).Add(1)) > 0 &&
+                   BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0
+) {
+           // System.out.println("[sdiv1]eia="+ret[0].ToRadixString(16)+"
+           // bl="+BL(ret[0])+", s="+eis);
+           // System.out.println("[sdiv1]eib="+ret[1].ToRadixString(16)+"
+           // bl="+BL(ret[1])+", s="+eis);
+if (ret[0].signum() < 0 || ret[1].signum() < 0) {
+              { throw new IllegalStateException("Internal error");
+           }
+           }
+           SDivStep(ret, eis);
+           // System.out.println("[sdiv1]ret="+Arrays.toString(ret));
+       }
+       eia = ret[0];
+       eib = ret[1];
+       // if (MaxBitLength(eia, eib).compareTo(n.Multiply(3).ShiftRight(2).Add(2)) >
+       // 0) {
+       // throw new IllegalStateException("Internal error");
+       // }
+       if (MinBitLength(eia, eib).compareTo(eis.Add(2)) > 0) {
+          ein = MaxBitLength(eia, eib);
+          EInteger p1 = eis.Add(eis).Subtract(ein).Add(1);
+          EInteger nhalfmask = EInteger.FromInt32(1).ShiftLeft(p1).Subtract(1);
+          eiah = eia.ShiftRight(p1);
+          eial = eia.And(nhalfmask);
+          eibh = eib.ShiftRight(p1);
+          eibl = eib.And(nhalfmask);
+          EInteger[] ret2 = HalfGCD(eiah, eibh);
+          eia = eial.Multiply(ret2[5]).Subtract(eibl.Multiply(ret2[3]));
+          eib = eibl.Multiply(ret2[2]).Subtract(eial.Multiply(ret2[4]));
+          eia = eia.Add(ret2[0].ShiftLeft(p1));
+          eib = eib.Add(ret2[1].ShiftLeft(p1));
+          if (eia.signum() < 0 || eib.signum() < 0) {
+             { throw new IllegalStateException("Internal error");
+          }
+}
+          EInteger ma, mb, mc, md;
+          // System.out.println("m "+Arrays.toString(new
+          // EInteger[] { ret[2], ret[3], ret[4], ret[5]}));
+          // System.out.println("m' "+Arrays.toString(new
+          // EInteger[] { ret2[2], ret2[3], ret2[4], ret2[5]}));
+          ma = ret[2].Multiply(ret2[2]).Add(ret[3].Multiply(ret2[4]));
+          mb = ret[2].Multiply(ret2[3]).Add(ret[3].Multiply(ret2[5]));
+          mc = ret[4].Multiply(ret2[2]).Add(ret[5].Multiply(ret2[4]));
+          md = ret[4].Multiply(ret2[3]).Add(ret[5].Multiply(ret2[5]));
+          ret[2] = ma;
+          ret[3] = mb;
+          ret[4] = mc;
+          ret[5] = md;
+          // System.out.println("newm "+Arrays.toString(ret));
+       }
+       ret[0] = eia;
+       ret[1] = eib;
+       // if (BL(eia.Subtract(eib)).compareTo(s.Add(2)) > 0) {
+       // throw new IllegalStateException("Internal error");
+       // }
+       // System.out.println("[2]eia="+ret[0].ToRadixString(16));
+       // System.out.println("[2]eib="+ret[1].ToRadixString(16));
+       while (BL(ret[0].Subtract(ret[1])). compareTo(eis) > 0) {
+           // System.out.println("[sdiv2]eia="+ret[0].ToRadixString(16)+"
+           // bl="+BL(ret[0])+", s="+s);
+           // System.out.println("[sdiv2]eib="+ret[1].ToRadixString(16)+"
+           // bl="+BL(ret[1])+", s="+s);
+if (ret[0].signum() < 0 || ret[1].signum() < 0) {
+              { throw new IllegalStateException("Internal error");
+           }
+           }
+           SDivStep(ret, eis);
+           // System.out.println("[sdiv2]ret="+Arrays.toString(ret));
+       }
+       // for (int i = 0; i < 6; ++i) {
+       // System.out.println("hgcd["+thishgcd+"]["+i+"]="+ret[i].ToRadixString(16));
+       // }
+       if (ret[0].signum() < 0 || ret[1].signum() < 0) {
+          { throw new IllegalStateException("Internal error");
+       }
+}
+       // Verify det M == 1
+       if (ret[2].signum() < 0 || ret[3].signum() < 0 || ret[4].signum() < 0 ||
+            ret[5].signum() < 0) {
+          { throw new IllegalStateException("Internal error");
+       }
+}
+       if
+(ret[2].Multiply(ret[5]).Subtract(ret[3].Multiply(ret[4])).compareTo(1) !=
+0) {
+          throw new IllegalStateException("Internal error");
+       }
+       if (BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0) {
+             throw new IllegalStateException("Internal error");
+       }
+       return ret;
+  }
+
+  private static EInteger SubquadraticGCD(EInteger eia, EInteger eib) {
+       EInteger ein = MaxBitLength(eia, eib);
+       EInteger[] ret = new EInteger[] { eia, eib };
+       for (int i = 0; i < 20; ++i) {
+         if (ein.compareTo(48) < 0) {
+            { break;
+         }
+}
+          // System.out.println("============");
+          // System.out.println("eia="+ret[0].ToRadixString(16));
+          // System.out.println("eib="+ret[1].ToRadixString(16));
+          // System.out.println("n="+ein);
+          EInteger nhalf = ein.ShiftRight(1);
+          EInteger nhalfmask =
+          EInteger.FromInt32(1).ShiftLeft(nhalf).Subtract(1);
+        EInteger eiah = ret[0].ShiftRight(nhalf);
+        EInteger eial = ret[0].And(nhalfmask);
+        EInteger eibh = ret[1].ShiftRight(nhalf);
+        EInteger eibl = ret[1].And(nhalfmask);
+        EInteger[] hgcd = HalfGCD(eiah, eibh);
+        eia = eial.Multiply(hgcd[5]).Subtract(eibl.Multiply(hgcd[3]));
+        eib = eibl.Multiply(hgcd[2]).Subtract(eial.Multiply(hgcd[4]));
+        eia = eia.Add(hgcd[0].ShiftLeft(nhalf));
+        eib = eib.Add(hgcd[1].ShiftLeft(nhalf));
+        if (eia.signum() < 0 || eib.signum() < 0) {
+             { throw new IllegalStateException("Internal error");
+          }
+          }
+          ein = MaxBitLength(eia, eib);
+          ret[0] = eia;
+          ret[1] = eib;
+       }
+       // System.out.println("eia final "+eia);
+       // System.out.println("eib final "+eib);
+       return BaseGcd(eia, eib);
+  }
+
+    /**
+     * Returns the number of decimal digits used by this integer, in the form of an
+     * arbitrary-precision integer.
+     * @return The number of digits in the decimal form of this integer. Returns 1
+     * if this number is 0.
+     */
     public EInteger GetDigitCountAsEInteger() {
       // NOTE: All digit counts can currently fit in Int64, so just
       // use GetDigitCountAsInt64 for the time being
       return EInteger.FromInt64(this.GetDigitCountAsInt64());
     }
 
-/**
- * @deprecated This method may overflow. Use GetDigitCountAsEInteger instead.
+    /**
+     * Returns the number of decimal digits used by this integer.
+     * @return The number of digits in the decimal form of this integer. Returns 1
+     * if this number is 0.
+     * @throws ArithmeticException The return value would exceed the range of a
+     * 32-bit signed integer.
+     * @deprecated This method may overflow. Use GetDigitCountAsEInteger instead.
  */
 @Deprecated
     public int GetDigitCount() {
@@ -2004,6 +2956,15 @@ at: http://peteroupc.github.io/
       return (int)dc;
     }
 
+    /**
+     * Returns the number of decimal digits used by this integer, in the form of a
+     * 64-bit signed integer.
+     * @return The number of digits in the decimal form of this integer. Returns 1
+     * if this number is 0. Returns 2^63 - 1({@code Long.MAX_VALUE} in.NET
+     * or {@code Long.MAX_VALUE} in Java) if the number of decimal digits
+     * is 2^63 - 1 or greater. (Use {@code GetDigitCountAsEInteger} instead
+     * if the application relies on the exact number of decimal digits.).
+     */
     public long GetDigitCountAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       EInteger ei = this;
@@ -2232,6 +3193,11 @@ maxDigitEstimate : retval +
       return retval;
     }
 
+    /**
+     * Returns the hash code for this instance. No application or process IDs are
+     * used in the hash code calculation.
+     * @return A 32-bit signed integer.
+     */
     @Override public int hashCode() {
       int hashCodeValue = 0;
       {
@@ -2245,14 +3211,33 @@ maxDigitEstimate : retval +
       return hashCodeValue;
     }
 
-/**
- * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
+    /**
+     * Gets the bit position of the lowest set bit in this number's absolute value.
+     * (This will also be the position of the lowest set bit in the
+     * number's two's-complement form (see {@link
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
+     * @return The bit position of the lowest bit set in the number, starting at 0.
+     * Returns -1 if this value is 0.
+     * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
  */
 @Deprecated
     public int GetLowBit() {
       return this.GetLowBitAsEInteger().ToInt32Checked();
     }
 
+    /**
+     * Gets the bit position of the lowest set bit in this number's absolute value,
+     * in the form of a 64-bit signed integer. (This will also be the
+     * position of the lowest set bit in the number's two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}
+     *).).
+     * @return The bit position of the lowest bit set in the number, starting at 0.
+     * Returns -1 if this value is 0 or odd. Returns 2^63 - 1 ({@code
+     * Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java) if this
+     * number is other than zero but the lowest set bit is at 2^63 - 1 or
+     * greater. (Use {@code GetLowBitAsEInteger} instead if the application
+     * relies on the exact value of the lowest set bit position.).
+     */
     public long GetLowBitAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       long retSetBitLong = 0;
@@ -2281,10 +3266,31 @@ maxDigitEstimate : retval +
       return -1;
     }
 
+    /**
+     * Gets the bit position of the lowest set bit in this number's absolute value,
+     * in the form of an arbitrary-precision integer. (This will also be
+     * the position of the lowest set bit in the number's two's-complement
+     *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of
+     *  numbers"}).).
+     * @return The bit position of the lowest bit set in the number, starting at 0.
+     * Returns -1 if this value is 0 or odd.
+     */
     public EInteger GetLowBitAsEInteger() {
       return EInteger.FromInt64(this.GetLowBitAsInt64());
     }
 
+    /**
+     * Returns whether a bit is set in the two's-complement form (see {@link
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
+     * object's value.
+     * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
+     * the least significant bit, 1 is the next least significant bit, and
+     * so on.
+     * @return {@code true} if the given bit is set in the two' s-complement form
+     * (see {@link com.upokecenter.numbers.EDecimal}) of this object's
+     * value; otherwise, {@code false}.
+     * @throws NullPointerException The parameter {@code bigIndex} is null.
+     */
     public boolean GetSignedBit(EInteger bigIndex) {
       if (bigIndex == null) {
         throw new NullPointerException("bigIndex");
@@ -2322,6 +3328,17 @@ maxDigitEstimate : retval +
       }
     }
 
+    /**
+     * Returns whether a bit is set in the two's-complement form (see {@link
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}) of this
+     * object's value.
+     * @param index The index, starting at 0, of the bit to test, where 0 is the
+     * least significant bit, 1 is the next least significant bit, and so
+     * on.
+     * @return {@code true} if the given bit is set in the two' s-complement form
+     * (see {@link com.upokecenter.numbers.EDecimal}) of this object's
+     * value; otherwise, {@code false}.
+     */
     public boolean GetSignedBit(int index) {
       if (index < 0) {
         throw new IllegalArgumentException("index");
@@ -2351,11 +3368,39 @@ maxDigitEstimate : retval +
       return this.GetUnsignedBit(index);
     }
 
+    /**
+     * Finds the minimum number of bits needed to represent this object's value,
+     * except for its sign, in the form of an arbitrary-precision integer.
+     * If the value is negative, finds the number of bits in the value
+     * equal to this object's absolute value minus 1. For example, all
+     * integers in the interval [-(2^63), (2^63) - 1], which is the same as
+     * the range of integers in Java's and.NET's <code>long</code> type, have a
+     * signed bit length of 63 or less, and all other integers have a
+     * signed bit length of greater than 63.
+     * @return The number of bits in this object's value, except for its sign.
+     * Returns 0 if this object's value is 0 or negative 1.
+     */
     public EInteger GetSignedBitLengthAsEInteger() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       return EInteger.FromInt64(this.GetSignedBitLengthAsInt64());
     }
 
+    /**
+     * Finds the minimum number of bits needed to represent this object's value,
+     * except for its sign, in the form of a 64-bit signed integer. If the
+     * value is negative, finds the number of bits in the value equal to
+     * this object's absolute value minus 1. For example, all integers in
+     * the interval [-(2^63), (2^63) - 1], which is the same as the range
+     * of integers in Java's and.NET's <code>long</code> type, have a signed bit
+     * length of 63 or less, and all other integers have a signed bit
+     * length of greater than 63.
+     * @return The number of bits in this object's value, except for its sign.
+     * Returns 0 if this object's value is 0 or negative 1. Returns 2^63 -
+     * 1 ({@code Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java)
+     * if the number of bits is 2^63 - 1 or greater. (Use {@code
+     * GetUnsignedBitLengthAsEInteger} instead if the application relies on
+     * the exact number of bits.).
+     */
     public long GetSignedBitLengthAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       int wc = this.wordCount;
@@ -2395,14 +3440,34 @@ maxDigitEstimate : retval +
       return 0;
     }
 
-/**
- * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
+    /**
+     * Finds the minimum number of bits needed to represent this object's value,
+     * except for its sign. If the value is negative, finds the number of
+     * bits in the value equal to this object's absolute value minus 1. For
+     * example, all integers in the interval [-(2^63), (2^63) - 1], which
+     * is the same as the range of integers in Java's and.NET's <code>long</code>
+     * type, have a signed bit length of 63 or less, and all other integers
+     * have a signed bit length of greater than 63.
+     * @return The number of bits in this object's value, except for its sign.
+     * Returns 0 if this object's value is 0 or negative 1.
+     * @throws ArithmeticException The return value would exceed the range of a
+     * 32-bit signed integer.
+     * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
  */
 @Deprecated
     public int GetSignedBitLength() {
       return this.GetSignedBitLengthAsEInteger().ToInt32Checked();
     }
 
+    /**
+     * Returns whether a bit is set in this number's absolute value.
+     * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
+     * the least significant bit, 1 is the next least significant bit, and
+     * so on.
+     * @return {@code true} if the given bit is set in this number's absolute
+     * value.
+     * @throws NullPointerException The parameter {@code bigIndex} is null.
+     */
     public boolean GetUnsignedBit(EInteger bigIndex) {
       if (bigIndex == null) {
         throw new NullPointerException("bigIndex");
@@ -2422,6 +3487,14 @@ maxDigitEstimate : retval +
       return (boolean)(((this.words[index] >> (int)indexmod) & 1) != 0);
     }
 
+    /**
+     * Returns whether a bit is set in this number's absolute value.
+     * @param index The index, starting at 0, of the bit to test, where 0 is the
+     * least significant bit, 1 is the next least significant bit, and so
+     * on.
+     * @return {@code true} if the given bit is set in this number's absolute
+     * value.
+     */
     public boolean GetUnsignedBit(int index) {
       if (index < 0) {
         throw new IllegalArgumentException("index(" + index + ") is less than 0");
@@ -2430,11 +3503,35 @@ maxDigitEstimate : retval +
         ((boolean)(((this.words[index >> 4] >> (int)(index & 15)) & 1) != 0));
     }
 
+    /**
+     * Finds the minimum number of bits needed to represent this number's absolute
+     * value, in the form of an arbitrary-precision integer. For example,
+     * all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
+     * unsigned bit length of 63 or less, and all other integers have an
+     * unsigned bit length of greater than 63. This interval is not the
+     * same as the range of integers in Java's and.NET's <code>long</code> type.
+     * @return The number of bits in this object's absolute value. Returns 0 if
+     * this object's value is 0, and returns 1 if the value is negative 1.
+     */
     public EInteger GetUnsignedBitLengthAsEInteger() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       return EInteger.FromInt64(this.GetUnsignedBitLengthAsInt64());
     }
 
+    /**
+     * Finds the minimum number of bits needed to represent this number's absolute
+     * value, in the form of a 64-bit signed integer. For example, all
+     * integers in the interval [-((2^63) - 1), (2^63) - 1] have an
+     * unsigned bit length of 63 or less, and all other integers have an
+     * unsigned bit length of greater than 63. This interval is not the
+     * same as the range of integers in Java's and.NET's <code>long</code> type.
+     * @return The number of bits in this object's absolute value. Returns 0 if
+     * this object's value is 0, and returns 1 if the value is negative 1.
+     * Returns 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code
+     * Long.MAX_VALUE} in Java) if the number of bits is 2^63 - 1 or
+     * greater. (Use {@code GetUnsignedBitLengthAsEInteger} instead if the
+     * application relies on the exact number of bits.).
+     */
     public long GetUnsignedBitLengthAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
       int wc = this.wordCount;
@@ -2467,14 +3564,35 @@ maxDigitEstimate : retval +
       return 0;
     }
 
-/**
- * @deprecated This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
+    /**
+     * Finds the minimum number of bits needed to represent this number's absolute
+     * value. For example, all integers in the interval [-((2^63) - 1),
+     * (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+     * integers have an unsigned bit length of greater than 63. This
+     * interval is not the same as the range of integers in Java's
+     * and.NET's <code>long</code> type.
+     * @return The number of bits in this object's absolute value. Returns 0 if
+     * this object's value is 0, and returns 1 if the value is negative 1.
+     * @throws ArithmeticException The return value would exceed the range of a
+     * 32-bit signed integer.
+     * @deprecated This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.
  */
 @Deprecated
     public int GetUnsignedBitLength() {
       return this.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
     }
 
+    /**
+     * Finds the modulus remainder that results when this instance is divided by
+     * the value of an arbitrary-precision integer. The modulus remainder
+     * is the same as the normal remainder if the normal remainder is
+     * positive, and equals divisor plus normal remainder if the normal
+     * remainder is negative.
+     * @param divisor The number to divide by.
+     * @return An arbitrary-precision integer.
+     * @throws IllegalArgumentException The parameter {@code divisor} is less than 0.
+     * @throws NullPointerException The parameter {@code divisor} is null.
+     */
     public EInteger Mod(EInteger divisor) {
       if (divisor == null) {
         throw new NullPointerException("divisor");
@@ -2489,6 +3607,15 @@ maxDigitEstimate : retval +
       return remainderEInt;
     }
 
+    /**
+     * Finds the modulus remainder that results when this instance is divided by
+     * the value of another integer. The modulus remainder is the same as
+     * the normal remainder if the normal remainder is positive, and equals
+     * divisor plus normal remainder if the normal remainder is negative.
+     * @param smallDivisor The divisor of the modulus.
+     * @return The modulus remainder.
+     * @throws IllegalArgumentException The parameter {@code smallDivisor} is less than 0.
+     */
     public EInteger Mod(int smallDivisor) {
       if (smallDivisor < 0) {
         throw new ArithmeticException("Divisor is negative");
@@ -2500,6 +3627,15 @@ maxDigitEstimate : retval +
       return remainderEInt;
     }
 
+    /**
+     * Calculates the remainder when this arbitrary-precision integer raised to a
+     * certain power is divided by another arbitrary-precision integer.
+     * @param pow The power to raise this integer by.
+     * @param mod The integer to divide the raised number by.
+     * @return An arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code pow} or {@code mod} is
+     * null.
+     */
     public EInteger ModPow(EInteger pow, EInteger mod) {
       if (pow == null) {
         throw new NullPointerException("pow");
@@ -2527,6 +3663,14 @@ maxDigitEstimate : retval +
       return r;
     }
 
+    /**
+     * Multiplies this arbitrary-precision integer by another arbitrary-precision
+     * integer and returns the result.
+     * @param bigintMult Another arbitrary-precision integer.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * integer times another arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code bigintMult} is null.
+     */
     public EInteger Multiply(EInteger bigintMult) {
       if (bigintMult == null) {
         throw new NullPointerException("bigintMult");
@@ -2961,6 +4105,10 @@ maxDigitEstimate : retval +
         Math.min(countA + countB, w0.wordCount));
     }
 
+    /**
+     * Gets the value of this object with the sign reversed.
+     * @return This object's value with the sign reversed.
+     */
     public EInteger Negate() {
       return this.wordCount == 0 ? this : new EInteger(
           this.wordCount,
@@ -2968,6 +4116,13 @@ maxDigitEstimate : retval +
           !this.negative);
     }
 
+    /**
+     * Raises an arbitrary-precision integer to a power.
+     * @param bigPower The exponent to raise this integer to.
+     * @return The result. Returns 1 if {@code bigPower} is 0.
+     * @throws NullPointerException The parameter {@code bigPower} is null.
+     * @throws IllegalArgumentException BigPower is negative.
+     */
     public EInteger Pow(EInteger bigPower) {
       if (bigPower == null) {
         throw new NullPointerException("bigPower");
@@ -3010,6 +4165,11 @@ maxDigitEstimate : retval +
       return ret;
     }
 
+    /**
+     * Raises an arbitrary-precision integer to a power.
+     * @param powerSmall The exponent to raise this integer to.
+     * @return The result. Returns 1 if {@code powerSmall} is 0.
+     */
     public EInteger Pow(int powerSmall) {
       if (powerSmall < 0) {
         throw new IllegalArgumentException("powerSmall(" + powerSmall +
@@ -3048,6 +4208,14 @@ maxDigitEstimate : retval +
       return r;
     }
 
+    /**
+     * Raises an arbitrary-precision integer to a power, which is given as another
+     * arbitrary-precision integer.
+     * @param power The exponent to raise to.
+     * @return The result. Returns 1 if {@code power} is 0.
+     * @throws IllegalArgumentException The parameter {@code power} is less than 0.
+     * @throws NullPointerException The parameter {@code power} is null.
+     */
     public EInteger PowBigIntVar(EInteger power) {
       if (power == null) {
         throw new NullPointerException("power");
@@ -3083,6 +4251,19 @@ maxDigitEstimate : retval +
       return r;
     }
 
+    /**
+     * Returns the remainder that would result when this arbitrary-precision
+     * integer is divided by another arbitrary-precision integer. The
+     * remainder is the number that remains when the absolute value of this
+     * arbitrary-precision integer is divided by the absolute value of the
+     * other arbitrary-precision integer; the remainder has the same sign
+     * (positive or negative) as this arbitrary-precision integer.
+     * @param divisor The number to divide by.
+     * @return The remainder that would result when this arbitrary-precision
+     * integer is divided by another arbitrary-precision integer.
+     * @throws ArithmeticException Attempted to divide by zero.
+     * @throws NullPointerException The parameter {@code divisor} is null.
+     */
     public EInteger Remainder(EInteger divisor) {
       if (divisor == null) {
         throw new NullPointerException("divisor");
@@ -3130,6 +4311,18 @@ maxDigitEstimate : retval +
       return new EInteger(count, remainderReg, this.negative);
     }
 
+    /**
+     * Returns an arbitrary-precision integer with the bits shifted to the right.
+     * For this operation, the arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}). Thus, for negative values, the
+     * arbitrary-precision integer is sign-extended.
+     * @param eshift The number of bits to shift. Can be negative, in which case
+     * this is the same as ShiftLeft with the absolute value of this
+     * parameter.
+     * @return An arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code eshift} is null.
+     */
     public EInteger ShiftRight(EInteger eshift) {
       if (eshift == null) {
         throw new NullPointerException("eshift");
@@ -3146,6 +4339,17 @@ maxDigitEstimate : retval +
       return ret.ShiftRight(valueETempShift.ToInt32Checked());
     }
 
+    /**
+     * Returns an arbitrary-precision integer with the bits shifted to the left by
+     * a number of bits given as an arbitrary-precision integer. A value of
+     * 1 doubles this value, a value of 2 multiplies it by 4, a value of 3
+     * by 8, a value of 4 by 16, and so on.
+     * @param eshift The number of bits to shift. Can be negative, in which case
+     * this is the same as ShiftRight with the absolute value of this
+     * parameter.
+     * @return An arbitrary-precision integer.
+     * @throws NullPointerException The parameter {@code eshift} is null.
+     */
     public EInteger ShiftLeft(EInteger eshift) {
       if (eshift == null) {
         throw new NullPointerException("eshift");
@@ -3162,6 +4366,16 @@ maxDigitEstimate : retval +
       return ret.ShiftLeft(valueETempShift.ToInt32Checked());
     }
 
+    /**
+     * Returns an arbitrary-precision integer with the bits shifted to the left by
+     * a number of bits. A value of 1 doubles this value, a value of 2
+     * multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so
+     * on.
+     * @param numberBits The number of bits to shift. Can be negative, in which
+     * case this is the same as shiftRight with the absolute value of this
+     * parameter.
+     * @return An arbitrary-precision integer.
+     */
     public EInteger ShiftLeft(int numberBits) {
       if (numberBits == 0 || this.wordCount == 0) {
         return this;
@@ -3237,6 +4451,19 @@ maxDigitEstimate : retval +
       }
     }
 
+    /**
+     * Returns an arbitrary-precision integer with every bit flipped from this one
+     * (also called an inversion or NOT operation).
+     * @return An arbitrary-precision integer in which each bit in its two's
+     * complement representation is set if the corresponding bit of this
+     * integer is clear, and vice versa. Returns -1 if this integer is 0.
+     * If this integer is positive, the return value is negative, and vice
+     * versa. This method uses the two's complement form of negative
+     * integers (see {@link com.upokecenter.numbers.EDecimal}). For
+     * example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
+     * -21). In binary, NOT...11100110 = 11001 (or in decimal, NOT -26 =
+     * 25).
+     */
     public EInteger Not() {
       if (this.wordCount == 0) {
         return EInteger.FromInt32(-1);
@@ -3261,6 +4488,22 @@ maxDigitEstimate : retval +
         EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
+    /**
+     * Does an AND operation between this arbitrary-precision integer and another
+     * one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param other Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bits of this integer and the other integer (in their
+     * two's-complement representation) are both set. For example, in
+     * binary, 10110 AND 01100 = 00100 (or in decimal, 22 AND 12 = 4). This
+     * method uses the two's complement form of negative integers (see
+     * {@link com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11100111 AND 01100 = 00100 (or in decimal, -25 AND 12 = 4).
+     * @throws NullPointerException The parameter {@code other} is null.
+     */
     public EInteger And(EInteger other) {
       if (other == null) {
         throw new NullPointerException("other");
@@ -3314,6 +4557,22 @@ maxDigitEstimate : retval +
         EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
+    /**
+     * Does an OR operation between this arbitrary-precision integer and another
+     * one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, the other integer's
+     * corresponding bit is set, or both. For example, in binary, 10110 OR
+     * 11010 = 11110 (or in decimal, 22 OR 26 = 30). This method uses the
+     * two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 OR 01011 =...11101111 (or in decimal, -18 OR 11 = -17).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     public EInteger Or(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
@@ -3376,6 +4635,22 @@ maxDigitEstimate : retval +
         EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
+    /**
+     * Does an AND NOT operation between this arbitrary-precision integer and
+     * another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, and the other integer's
+     * corresponding bit is not set. For example, in binary, 10110 AND NOT
+     * 11010 = 00100 (or in decimal, 22 AND NOT 26 = 4). This method uses
+     * the two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 AND NOT 01011 = 00100 (or in decimal, -18 OR 11 = 4).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     public EInteger AndNot(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
@@ -3383,6 +4658,24 @@ maxDigitEstimate : retval +
       return this.And(second.Not());
     }
 
+    /**
+     * Does an OR NOT operation (or implication or IMP operation) between this
+     * arbitrary-precision integer and another one.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, the other integer's
+     * corresponding bit is not set, or both. For example, in binary, 10110
+     * OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
+     * uses the two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
+     * -2).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     public EInteger OrNot(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
@@ -3390,10 +4683,46 @@ maxDigitEstimate : retval +
       return this.Or(second.Not());
     }
 
+    /**
+     * Does an OR NOT operation (or implication or IMP operation) between this
+     * arbitrary-precision integer and another one.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set, the other integer's
+     * corresponding bit is not set, or both. For example, in binary, 10110
+     * OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
+     * uses the two's complement form of negative integers (see {@link
+     * com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
+     * -2).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     public EInteger Imp(EInteger second) {
       return this.OrNot(second);
     }
 
+    /**
+     * Does an XOR NOT operation (or equivalence operation, EQV operation, or
+     * exclusive-OR NOT operation) between this arbitrary-precision integer
+     * and another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set or the other integer's
+     * corresponding bit is not set, but not both. For example, in binary,
+     * 10110 XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19).
+     * This method uses the two's complement form of negative integers (see
+     * {@link com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 XOR NOT 01011 =...11111010 (or in decimal, -18 OR 11 =
+     * -6).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     public EInteger XorNot(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
@@ -3401,6 +4730,24 @@ maxDigitEstimate : retval +
       return this.Xor(second.Not());
     }
 
+    /**
+     * Does an XOR NOT operation (or equivalence operation, EQV operation, or
+     * exclusive-OR NOT operation) between this arbitrary-precision integer
+     * and another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of this integer is set or the other integer's
+     * corresponding bit is not set, but not both. For example, in binary,
+     * 10110 XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19).
+     * This method uses the two's complement form of negative integers (see
+     * {@link com.upokecenter.numbers.EDecimal}). For example, in binary,
+     *...11101110 XOR NOT 01011 =...11111010 (or in decimal, -18 OR 11 =
+     * -6).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     public EInteger Eqv(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
@@ -3408,6 +4755,20 @@ maxDigitEstimate : retval +
       return this.XorNot(second);
     }
 
+    /**
+     * Does an exclusive OR (XOR) operation between this arbitrary-precision
+     * integer and another one.
+     * @param other Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit is set in one input integer but not in the other.
+     * For example, in binary, 11010 XOR 01001 = 10011 (or in decimal, 26
+     * XOR 9 = 19). This method uses the two's complement form of negative
+     * integers (see {@link com.upokecenter.numbers.EDecimal}). For
+     * example, in binary, ...11101101 XOR 00011 =...11101110 (or in
+     * decimal, -19 XOR 3 = -18).
+     * @throws NullPointerException The parameter {@code other} is null.
+     */
     public EInteger Xor(EInteger other) {
       if (other == null) {
         throw new NullPointerException("other");
@@ -3673,6 +5034,17 @@ maxDigitEstimate : retval +
       return wordCount;
     }
 
+    /**
+     * Returns an arbitrary-precision integer with the bits shifted to the right.
+     * For this operation, the arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}). Thus, for negative values, the
+     * arbitrary-precision integer is sign-extended.
+     * @param numberBits The number of bits to shift. Can be negative, in which
+     * case this is the same as shiftLeft with the absolute value of this
+     * parameter.
+     * @return An arbitrary-precision integer.
+     */
     public EInteger ShiftRight(int numberBits) {
       if (numberBits == 0 || this.wordCount == 0) {
         return this;
@@ -3725,15 +5097,35 @@ maxDigitEstimate : retval +
       return new EInteger(retWordCount, ret, this.negative);
     }
 
+    /**
+     * Finds the square root of this instance's value, rounded down.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
+     */
     public EInteger Sqrt() {
       EInteger[] srrem = this.SqrtRemInternal(false);
       return srrem[0];
     }
 
+    /**
+     * Calculates the square root and the remainder.
+     * @return An array of two arbitrary-precision integers: the first integer is
+     * the square root, and the second is the difference between this value
+     * and the square of the first integer. Returns two zeros if this value
+     * is 0 or less, or one and zero if this value equals 1.
+     */
     public EInteger[] SqrtRem() {
       return this.SqrtRemInternal(true);
     }
 
+    /**
+     * Finds the nth root of this instance's value, rounded down.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
+     * @throws NullPointerException The parameter {@code root} is null.
+     */
     public EInteger Root(EInteger root) {
       if (root == null) {
         throw new NullPointerException("root");
@@ -3742,6 +5134,16 @@ maxDigitEstimate : retval +
       return srrem[0];
     }
 
+    /**
+     * Calculates the nth root and the remainder.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return An array of two arbitrary-precision integers: the first integer is
+     * the nth root, and the second is the difference between this value
+     * and the nth power of the first integer. Returns two zeros if this
+     * value is 0 or less, or one and zero if this value equals 1.
+     * @throws NullPointerException The parameter {@code root} is null.
+     */
     public EInteger[] RootRem(EInteger root) {
       if (root == null) {
         throw new NullPointerException("root");
@@ -3749,15 +5151,40 @@ maxDigitEstimate : retval +
       return this.RootRemInternal(root, true);
     }
 
+    /**
+     * Finds the nth root of this instance's value, rounded down.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
+     */
     public EInteger Root(int root) {
       EInteger[] srrem = this.RootRemInternal(EInteger.FromInt32(root), false);
       return srrem[0];
     }
 
+    /**
+     * Calculates the nth root and the remainder.
+     * @param root The root to find; must be 1 or greater. If this value is 2, this
+     * method finds the square root; if 3, the cube root, and so on.
+     * @return An array of two arbitrary-precision integers: the first integer is
+     * the nth root, and the second is the difference between this value
+     * and the nth power of the first integer. Returns two zeros if this
+     * value is 0 or less, or one and zero if this value equals 1.
+     */
     public EInteger[] RootRem(int root) {
       return this.RootRemInternal(EInteger.FromInt32(root), true);
     }
 
+    /**
+     * Subtracts an arbitrary-precision integer from this arbitrary-precision
+     * integer and returns the result.
+     * @param subtrahend Another arbitrary-precision integer.
+     * @return The difference between the two numbers, that is, this
+     * arbitrary-precision integer minus another arbitrary-precision
+     * integer.
+     * @throws NullPointerException The parameter {@code subtrahend} is null.
+     */
     public EInteger Subtract(EInteger subtrahend) {
       if (subtrahend == null) {
         throw new NullPointerException("subtrahend");
@@ -3766,6 +5193,19 @@ maxDigitEstimate : retval +
         ((subtrahend.wordCount == 0) ? this : this.Add(subtrahend.Negate()));
     }
 
+    /**
+     * Returns a byte array of this integer's value. The byte array will take the
+     * number's two's-complement form (see {@link
+     *  com.upokecenter.numbers.EDecimal "Forms of numbers"}), using the
+     * fewest bytes necessary to store its value unambiguously. If this
+     * value is negative, the bits that appear beyond the most significant
+     * bit of the number will be all ones. The resulting byte array can be
+     * passed to the <code>FromBytes()</code> method (with the same byte order)
+     * to reconstruct this integer's value.
+     * @param littleEndian Either {@code true} or {@code false}.
+     * @return A byte array. If this value is 0, returns a byte array with the
+     * single element 0.
+     */
     public byte[] ToBytes(boolean littleEndian) {
       int sign = this.signum();
       if (sign == 0) {
@@ -3828,6 +5268,13 @@ maxDigitEstimate : retval +
       }
     }
 
+    /**
+     * Converts this object's value to a 32-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 32-bit signed integer.
+     * @throws T:ArithmeticException This object's value is too big to fit a
+     * 32-bit signed integer.
+     */
     public int ToInt32Checked() {
       int count = this.wordCount;
       if (count == 0) {
@@ -3846,6 +5293,14 @@ maxDigitEstimate : retval +
       return this.ToInt32Unchecked();
     }
 
+    /**
+     * Converts this object's value to a 32-bit signed integer. If the value can't
+     * fit in a 32-bit integer, returns the lower 32 bits of this object's
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
+     * @return A 32-bit signed integer.
+     */
     public int ToInt32Unchecked() {
       int c = (int)this.wordCount;
       if (c == 0) {
@@ -3862,6 +5317,13 @@ maxDigitEstimate : retval +
       return intRetValue;
     }
 
+    /**
+     * Converts this object's value to a 64-bit signed integer, throwing an
+     * exception if it can't fit.
+     * @return A 64-bit signed integer.
+     * @throws T:ArithmeticException This object's value is too big to fit a
+     * 64-bit signed integer.
+     */
     public long ToInt64Checked() {
       int count = this.wordCount;
       if (count == 0) {
@@ -3881,6 +5343,14 @@ maxDigitEstimate : retval +
       return this.ToInt64Unchecked();
     }
 
+    /**
+     * Converts this object's value to a 64-bit signed integer. If the value can't
+     * fit in a 64-bit integer, returns the lower 64 bits of this object's
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) (in which case the return value might have a
+     * different sign than this object's value).
+     * @return A 64-bit signed integer.
+     */
     public long ToInt64Unchecked() {
       int c = (int)this.wordCount;
       if (c == 0) {
@@ -4081,6 +5551,19 @@ maxDigitEstimate : retval +
       outputSB.append(s, 0, i);
     }
 
+    /**
+     * Generates a string representing the value of this object, in the given
+     * radix.
+     * @param radix A radix from 2 through 36. For example, to generate a
+     * hexadecimal (base-16) string, specify 16. To generate a decimal
+     * (base-10) string, specify 10.
+     * @return A string representing the value of this object. If this value is 0,
+     *  returns "0". If negative, the string will begin with a minus sign
+     *  ("-", U+002D). Depending on the radix, the string will use the basic
+     * digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case
+     * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
+     * 0-9, then A-F in radix 16.
+     */
     public String ToRadixString(int radix) {
       if (radix < 2) {
         throw new IllegalArgumentException("radix(" + radix +
@@ -4163,6 +5646,12 @@ maxDigitEstimate : retval +
       }
     }
 
+    /**
+     * Converts this object to a text string in base 10.
+     * @return A string representation of this object. If negative, the string will
+     *  begin with a minus sign ("-", U+002D). The string will use the basic
+     * digits 0 to 9 (U+0030 to U+0039).
+     */
     @Override public String toString() {
       if (this.isZero()) {
         return "0";
@@ -7206,16 +8695,30 @@ maxDigitEstimate : retval +
       };
     }
 
+    /**
+     * Returns one added to this arbitrary-precision integer.
+     * @return The given arbitrary-precision integer plus one.
+     */
     public EInteger Increment() {
       return this.Add(EInteger.FromInt32(1));
     }
 
+    /**
+     * Returns one subtracted from this arbitrary-precision integer.
+     * @return The given arbitrary-precision integer minus one.
+     */
     public EInteger Decrement() {
       return this.Subtract(EInteger.FromInt32(1));
     }
 
     // Begin integer conversions
 
+    /**
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255).
+     * @return This number's value as a byte (from 0 to 255).
+     * @throws ArithmeticException This value is less than 0 or greater than 255.
+     */
     public byte ToByteChecked() {
       int val = this.ToInt32Checked();
       if (val < 0 || val > 255) {
@@ -7224,16 +8727,33 @@ maxDigitEstimate : retval +
       return (byte)(val & 0xff);
     }
 
+    /**
+     * Converts this number to a byte (from 0 to 255), returning the
+     * least-significant bits of this number's two's-complement form.
+     * @return This number, converted to a byte (from 0 to 255).
+     */
     public byte ToByteUnchecked() {
       int val = this.ToInt32Unchecked();
       return (byte)(val & 0xff);
     }
 
+    /**
+     * Converts a byte (from 0 to 255) to an arbitrary-precision integer.
+     * @param inputByte The number to convert as a byte (from 0 to 255).
+     * @return This number's value as an arbitrary-precision integer.
+     */
     public static EInteger FromByte(byte inputByte) {
       int val = ((int)inputByte) & 0xff;
       return FromInt32(val);
     }
 
+    /**
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer.
+     * @return This number's value as a 16-bit signed integer.
+     * @throws ArithmeticException This value is less than -32768 or greater than
+     * 32767.
+     */
     public short ToInt16Checked() {
       int val = this.ToInt32Checked();
       if (val < -32768 || val > 32767) {
@@ -7242,11 +8762,21 @@ maxDigitEstimate : retval +
       return (short)(val & ShortMask);
     }
 
+    /**
+     * Converts this number to a 16-bit signed integer, returning the
+     * least-significant bits of this number's two's-complement form.
+     * @return This number, converted to a 16-bit signed integer.
+     */
     public short ToInt16Unchecked() {
       int val = this.ToInt32Unchecked();
       return (short)(val & ShortMask);
     }
 
+    /**
+     * Converts a 16-bit signed integer to an arbitrary-precision integer.
+     * @param inputInt16 The number to convert as a 16-bit signed integer.
+     * @return This number's value as an arbitrary-precision integer.
+     */
     public static EInteger FromInt16(short inputInt16) {
       int val = (int)inputInt16;
       return FromInt32(val);

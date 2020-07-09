@@ -4,7 +4,7 @@
   <groupId>com.github.peteroupc</groupId>
   <artifactId>numbers</artifactId>
   <packaging>jar</packaging>
-  <version>1.7.1</version>
+  <version>1.7.2-SNAPSHOT</version>
   <name>Arbitrary-Precision Number Library</name>
   <description>A Java library that supports arbitrary-precision binary and decimal floating-point numbers and rational numbers with arbitrary-precision components, and supports arithmetic with these numbers.</description>
   <url>https://github.com/peteroupc/Numbers-Java</url>
