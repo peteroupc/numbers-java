@@ -2467,7 +2467,7 @@ at: http://peteroupc.github.io/
         return thisValue;
       }
       if (thisValue.wordCount > 10 || bigintSecond.wordCount > 10) {
-      // if (thisValue.wordCount > 500 || bigintSecond.wordCount > 500) {
+      // if (thisValue.wordCount > 500 && bigintSecond.wordCount > 500) {
          return SubquadraticGCD(thisValue, bigintSecond);
       } else {
          return BaseGcd(thisValue, bigintSecond);
@@ -2718,18 +2718,7 @@ private static long[] LHalfGCD(long longa, long longb) {
           { throw new IllegalStateException("Internal error");
        }
 }
-       // Verify det M == 1
-       if (ret[2] < 0 || ret[3] < 0 || ret[4] < 0 ||
-            ret[5] < 0) {
-          { throw new IllegalStateException("Internal error");
-       }
-}
-       if (ret[2]*(ret[5]) - (ret[3]*(ret[4])) != 1) {
-          throw new IllegalStateException("Internal error");
-       }
-       if (LBL(ret[0] - ret[1]) > ls) {
-             throw new IllegalStateException("Internal error");
-       }
+
        return ret;
 }
 
@@ -2829,9 +2818,8 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
           eia = eia.Add(ret2[0].ShiftLeft(p1));
           eib = eib.Add(ret2[1].ShiftLeft(p1));
           if (eia.signum() < 0 || eib.signum() < 0) {
-             { throw new IllegalStateException("Internal error");
+             throw new IllegalStateException("Internal error");
           }
-}
           EInteger ma, mb, mc, md;
           // System.out.println("m "+Arrays.toString(new
           // EInteger[] { ret[2], ret[3], ret[4], ret[5]}));
@@ -2869,24 +2857,7 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
        // for (int i = 0; i < 6; ++i) {
        // System.out.println("hgcd["+thishgcd+"]["+i+"]="+ret[i].ToRadixString(16));
        // }
-       if (ret[0].signum() < 0 || ret[1].signum() < 0) {
-          { throw new IllegalStateException("Internal error");
-       }
-}
-       // Verify det M == 1
-       if (ret[2].signum() < 0 || ret[3].signum() < 0 || ret[4].signum() < 0 ||
-            ret[5].signum() < 0) {
-          { throw new IllegalStateException("Internal error");
-       }
-}
-       if
-(ret[2].Multiply(ret[5]).Subtract(ret[3].Multiply(ret[4])).compareTo(1) !=
-0) {
-          throw new IllegalStateException("Internal error");
-       }
-       if (BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0) {
-             throw new IllegalStateException("Internal error");
-       }
+
        return ret;
   }
 
@@ -2899,8 +2870,8 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
          }
 }
           // System.out.println("============");
-          // System.out.println("eia="+ret[0].ToRadixString(16));
-          // System.out.println("eib="+ret[1].ToRadixString(16));
+          System.out.println("eia=" + ret[0].ToRadixString(16));
+          System.out.println("eib=" + ret[1].ToRadixString(16));
           // System.out.println("n="+ein);
           EInteger nhalf = ein.ShiftRight(1);
           EInteger nhalfmask =
@@ -2914,9 +2885,13 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
         eib = eibl.Multiply(hgcd[2]).Subtract(eial.Multiply(hgcd[4]));
         eia = eia.Add(hgcd[0].ShiftLeft(nhalf));
         eib = eib.Add(hgcd[1].ShiftLeft(nhalf));
-        if (eia.signum() < 0 || eib.signum() < 0) {
-             { throw new IllegalStateException("Internal error");
-          }
+        System.out.println("eia->" + eia.ToRadixString(16));
+      System.out.println("eib->" + eib.ToRadixString(16));
+    if (eia.signum() < 0 || eib.signum() < 0) {
+      for (int k = 0; k < 6; ++k) {
+             System.out.println("hgcd["+k+"]=" + ret[k].ToRadixString(16));
+            }
+            throw new IllegalStateException("Internal error");
           }
           ein = MaxBitLength(eia, eib);
           ret[0] = eia;

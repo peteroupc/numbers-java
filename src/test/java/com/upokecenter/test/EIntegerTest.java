@@ -1967,6 +1967,23 @@ import com.upokecenter.numbers.*;
           "15",
           stringTemp);
       }
+      EInteger
+  ei1 =
+  EInteger.FromString("1088692579850251977918382727683876451288883451475551838663907953515213777772897669");
+      EInteger
+  ei2 =
+  EInteger.FromString("734154292316019508508581520803142368704146796235662433292652");
+      TestGcdPair(ei1, ei2, EInteger.FromInt32(1));
+
+  ei1 =
+  EInteger.FromString("390162357953126476870450846332252625209515327296852766");
+  ei2 = EInteger.FromString("854818964073568437308435317723736629914");
+      TestGcdPair(ei1, ei2, EInteger.FromInt32(2));
+    ei1 = EInteger.FromString("1669589419950395927580");
+
+  ei2 =
+  EInteger.FromString("1391147381889193092596558363578727285498500460445439101064428207862760");
+      TestGcdPair(ei1, ei2, EInteger.FromInt32(20));
       int prime = 0;
       RandomGenerator rand = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
@@ -1983,9 +2000,7 @@ import com.upokecenter.numbers.*;
           continue;
         }
         ba = ba.Multiply(bigprime);
-        Assert.assertEquals(
-          bigprime,
-          bigprime.Gcd(ba));
+        Assert.assertEquals(ba.toString(), bigprime, bigprime.Gcd(ba));
       }
       TestGcdPair(EInteger.FromInt64(-1867), EInteger.FromInt64(-4456), EInteger.FromInt32(1));
       TestGcdPair(EInteger.FromInt64(4604), EInteger.FromInt64(-4516), EInteger.FromInt64(4));
@@ -3429,8 +3444,15 @@ import com.upokecenter.numbers.*;
       EInteger biggcd) {
       EInteger ba = biga.Gcd(bigb);
       EInteger bb = bigb.Gcd(biga);
-      Assert.assertEquals(ba, biggcd);
-      Assert.assertEquals(bb, biggcd);
+      if (!ba.equals(biggcd)) {
+        Assert.assertEquals(biga+ " " + bigb,biggcd,ba);
+      }
+      if (!bb.equals(biggcd)) {
+        Assert.assertEquals(biga+ " " + bigb,biggcd,bb);
+      }
+      Assert.assertEquals(biggcd, biga.Negate().Gcd(bigb));
+      Assert.assertEquals(biggcd, biga.Gcd(bigb.Negate()));
+      Assert.assertEquals(biggcd, biga.Negate().Gcd(bigb.Negate()));
     }
 
     private static String ToUpperCaseAscii(String str) {
