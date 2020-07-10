@@ -1490,8 +1490,8 @@ This method may overflow. Use GetLowBitAsEInteger instead.
 
 **Returns:**
 
-* The bit position of the lowest bit set in the number, starting at 0.
- Returns -1 if this value is 0.
+* The bit position of the lowest bit set in the number's absolute
+ value, starting at 0. Returns -1 if this value is 0.
 
 ### GetLowBitAsInt64
     public long GetLowBitAsInt64()
@@ -1503,12 +1503,13 @@ Gets the bit position of the lowest set bit in this number's absolute value,
 
 **Returns:**
 
-* The bit position of the lowest bit set in the number, starting at 0.
- Returns -1 if this value is 0 or odd. Returns 2^63 - 1 (<code>
- Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java) if this
- number is other than zero but the lowest set bit is at 2^63 - 1 or
- greater. (Use <code>GetLowBitAsEInteger</code> instead if the application
- relies on the exact value of the lowest set bit position.).
+* The bit position of the lowest bit set in the number's absolute
+ value, starting at 0. Returns -1 if this value is 0 or odd. Returns
+ 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code>
+ in Java) if this number is other than zero but the lowest set bit is
+ at 2^63 - 1 or greater. (Use <code>GetLowBitAsEInteger</code> instead if
+ the application relies on the exact value of the lowest set bit
+ position.).
 
 ### GetLowBitAsEInteger
     public EInteger GetLowBitAsEInteger()
@@ -1520,8 +1521,8 @@ Gets the bit position of the lowest set bit in this number's absolute value,
 
 **Returns:**
 
-* The bit position of the lowest bit set in the number, starting at 0.
- Returns -1 if this value is 0 or odd.
+* The bit position of the lowest bit set in the number's absolute
+ value, starting at 0. Returns -1 if this value is 0 or odd.
 
 ### GetSignedBit
     public boolean GetSignedBit​(EInteger bigIndex)
@@ -2270,7 +2271,8 @@ Returns a byte array of this integer's value. The byte array will take the
 
 **Parameters:**
 
-* <code>littleEndian</code> - Either <code>true</code> or <code>false</code>.
+* <code>littleEndian</code> - See the 'littleEndian' parameter of the <code>
+ FromBytes()</code> method.
 
 **Returns:**
 
@@ -2347,9 +2349,10 @@ Converts this object to a text string in base 10.
 
 **Returns:**
 
-* A string representation of this object. If negative, the string will
-  begin with a minus sign ("-", U+002D). The string will use the basic
- digits 0 to 9 (U+0030 to U+0039).
+* A string representation of this object. If this value is 0, returns
+  "0". If negative, the string will begin with a minus sign ("-",
+ U+002D). The string will use the basic digits 0 to 9 (U+0030 to
+ U+0039).
 
 ### Increment
     public EInteger Increment()

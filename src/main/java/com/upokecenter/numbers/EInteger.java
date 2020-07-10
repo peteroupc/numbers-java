@@ -2466,9 +2466,8 @@ at: http://peteroupc.github.io/
       if (thisValue.equals(EInteger.FromInt32(1))) {
         return thisValue;
       }
-      if (thisValue.wordCount > 10 || bigintSecond.wordCount > 10) {
-      // if (thisValue.wordCount > 500 && bigintSecond.wordCount > 500) {
-         return SubquadraticGCD(thisValue, bigintSecond);
+      if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 250) {
+        return SubquadraticGCD(thisValue, bigintSecond);
       } else {
          return BaseGcd(thisValue, bigintSecond);
       }
@@ -2605,59 +2604,75 @@ at: http://peteroupc.github.io/
  }
 
  private static void LSDivStep(long[] longam, long ls) {
+  {
   // a, b, m.get(0) ... m.get(3)
    if (longam[0] > longam[1]) {
      // a > b
      long[] divrem = new long[] { longam[0] / longam[1], longam[0] % longam[1] };
      if (LBL(divrem[1]) <= ls) {
-       divrem[0] = divrem[0] - 1;
-       divrem[1] = divrem[1] + longam[1];
+       --divrem[0];
+       divrem[1] += longam[1];
      }
-     longam[3] = longam[3] + (longam[2] * divrem[0]);
-     longam[5] = longam[5] + (longam[4] * divrem[0]);
+     longam[3] += longam[2] * divrem[0];
+     longam[5] += longam[4] * divrem[0];
      longam[0] = divrem[1];
    } else {
      // a <= b
      long[] divrem = new long[] { longam[1] / longam[0], longam[1] % longam[0] };
      if (LBL(divrem[1]) <= ls) {
-       divrem[0] = divrem[0] - 1;
-       divrem[1] = divrem[1] + longam[0];
+       --divrem[0];
+       divrem[1] += longam[0];
      }
-     longam[2] = longam[2] + (longam[3] * divrem[0]);
-     longam[4] = longam[4] + (longam[5] * divrem[0]);
+     longam[2] += longam[3] * divrem[0];
+     longam[4] += longam[5] * divrem[0];
      longam[1] = divrem[1];
+   }
    }
  }
 
  private static EInteger BL(EInteger eia) {
+if (eia.isZero()) {
+  return EInteger.FromInt32(0);
+}
   EInteger ret = eia.GetUnsignedBitLengthAsEInteger();
   return ret;
  }
 
  private static int LBL(long mantlong) {
-      return NumberUtility.BitLength(Math.abs(mantlong));
+return (mantlong == 0) ? 0 : NumberUtility.BitLength(Math.abs(mantlong));
  }
 
-private static long[] LHalfGCD(long longa, long longb) {
+ private static long[] LHalfGCD(long longa, long longb) {
        if (longa == 0 || longb == 0) {
-          return new long[] { 0, 0, 1, 0, 0, 1 };
+          // System.out.println("LHalfGCD failed");
+          return new long[] { longa, longb, 1, 0, 0, 1 };
        }
-       int ln = Math.max(LBL(longa), LBL(longb));
-       int ls = (ln >> 1) + 1;
        long[] ret = new long[6];
+       // System.out.println("LHalfGCD "+longa+" "+longb);
+       {
+       int ln = Math.max(LBL(longa), LBL(longb));
+       int lnmin = Math.min(LBL(longa), LBL(longb));
+       int ls = (ln >> 1) + 1;
+       if (lnmin <= ls) {
+         // System.out.println("LHalfGCD failed: nmin<= s");
+          return new long[] { longa, longb, 1, 0, 0, 1 };
+       }
        if (Math.min(LBL(longa), LBL(longb)) > ((ln * 3) >> 2) + 2) {
-          int p1 = ln >> 1;
-          long nhalfmask = (1L << p1) - 1;
-          long longah = longa >> p1;
-          long longal = longa & nhalfmask;
-          long longbh = longb >> p1;
-          long longbl = longb & nhalfmask;
-          long[] ret2 = LHalfGCD(longah, longbh);
+         int p1 = ln >> 1;
+         long nhalfmask = (1L << p1) - 1;
+         long longah = longa >> p1;
+         long longal = longa & nhalfmask;
+         long longbh = longb >> p1;
+         long longbl = longb & nhalfmask;
+         long[] ret2 = LHalfGCD(longah, longbh);
+         if (ret2 == null) {
+           return null;
+         }
           System.arraycopy(ret2, 0, ret, 0, 6);
-          longa = longal*(ret2[5]) - (longbl*(ret2[3]));
-          longb = longbl*(ret2[2]) - (longal*(ret2[4]));
-          longa += ret2[0] << p1;
-          longb += ret2[1] << p1;
+        longa = (longal * ret2[5]) - (longbl* ret2[3]);
+        longb = (longbl * ret2[2]) - (longal* ret2[4]);
+        longa += ret2[0] << p1;
+        longb += ret2[1] << p1;
        } else {
           // Set M to identity
           ret = new long[6];
@@ -2668,11 +2683,14 @@ private static long[] LHalfGCD(long longa, long longb) {
        }
        ret[0] = longa;
        ret[1] = longb;
+       for (int k = 0; k < 6; ++k) {
+       // System.out.println("ret_afterloop1 "+k+"=" +
+       // EInteger.FromInt64(ret[k]).ToRadixString(16));
+       }
        while (Math.max(LBL(ret[0]), LBL(ret[1])) > ((ln * 3) >> 2) + 1 &&
                 LBL(ret[0] - ret[1]) > ls) {
          if (ret[0] < 0 || ret[1] < 0) {
-            { throw new IllegalStateException("Internal error");
-         }
+            throw new IllegalStateException("Internal error");
            }
            LSDivStep(ret, ls);
        }
@@ -2687,14 +2705,16 @@ private static long[] LHalfGCD(long longa, long longb) {
           long longbh = longb >> p1;
           long longbl = longb & nhalfmask;
           long[] ret2 = LHalfGCD(longah, longbh);
+          if (ret2 == null) {
+            return null;
+          }
           longa = longal*(ret2[5]) - (longbl*(ret2[3]));
           longb = longbl*(ret2[2]) - (longal*(ret2[4]));
           longa += ret2[0] << p1;
           longb += ret2[1] << p1;
           if (longa < 0 || longb < 0) {
-             { throw new IllegalStateException("Internal error");
+             throw new IllegalStateException("Internal error");
           }
-}
           long ma, mb, mc, md;
           ma = ret[2]*(ret2[2]) + (ret[3]*(ret2[4]));
           mb = ret[2]*(ret2[3]) + (ret[3]*(ret2[5]));
@@ -2709,44 +2729,48 @@ private static long[] LHalfGCD(long longa, long longb) {
        ret[1] = longb;
        while (LBL(ret[0] - ret[1]) > ls) {
          if (ret[0] < 0 || ret[1] < 0) {
-            { throw new IllegalStateException("Internal error");
-         }
+            throw new IllegalStateException("Internal error");
            }
            LSDivStep(ret, ls);
        }
        if (ret[0] < 0 || ret[1] < 0) {
-          { throw new IllegalStateException("Internal error");
+          throw new IllegalStateException("Internal error");
        }
-}
-
+       }
        return ret;
 }
 
  // Implements Niels Moeller's Half-GCD algorithm from 2008
  private static EInteger[] HalfGCD(EInteger eia, EInteger eib) {
        if (eia.isZero() || eib.isZero()) {
+          // System.out.println("HalfGCD failed");
           return new EInteger[] {
-            EInteger.FromInt32(0), EInteger.FromInt32(0),
-            EInteger.FromInt32(1), EInteger.FromInt32(0), EInteger.FromInt32(0), EInteger.FromInt32(1),
+            eia, eib, EInteger.FromInt32(1), EInteger.FromInt32(0),
+            EInteger.FromInt32(0), EInteger.FromInt32(1),
           };
        }
        EInteger[] ret = new EInteger[6];
        if (eia.CanFitInInt64() && eib.CanFitInInt64()) {
           long[] lret = LHalfGCD(eia.ToInt64Checked(), eib.ToInt64Checked());
+          if (lret == null) {
+            return null;
+          }
           for (int i = 0; i < 6; ++i) {
             ret[i] = EInteger.FromInt64(lret[i]);
           }
           return ret;
        }
        EInteger ein = MaxBitLength(eia, eib);
+       EInteger einmin = MinBitLength(eia, eib);
        long ln = ein.CanFitInInt64() ? ein.ToInt64Checked() : -1;
-       /* System.out.println("hgcd eia.set("+thishgcd+","+eia.ToRadixString(16)+"
-bl="+BL(eia)));
-       System.out.println("hgcd eib.set("+thishgcd+","+eib.ToRadixString(16)+"
-bl="+BL(eib)));
-       System.out.println("hgcd
-nh.set("+thishgcd+","+n.Multiply(3).ShiftRight(2).Add(2)));
-       */ EInteger eis = ein.ShiftRight(1).Add(1);
+       EInteger eis = ein.ShiftRight(1).Add(1);
+       /* // if (einmin.compareTo(eis) <= 0) {
+          //System.out.println("HalfGCD failed: nmin<= s");
+          //return new EInteger[] {
+            eia, eib, EInteger.FromInt32(1), EInteger.FromInt32(0),
+            //EInteger.FromInt32(0), EInteger.FromInt32(1)
+          };
+       //} */
        EInteger eiah, eial, eibh, eibl;
        if (MinBitLength(eia,
   eib).compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) > 0) {
@@ -2757,6 +2781,9 @@ nh.set("+thishgcd+","+n.Multiply(3).ShiftRight(2).Add(2)));
           eibh = eib.ShiftRight(p1);
           eibl = eib.And(nhalfmask);
           EInteger[] ret2 = HalfGCD(eiah, eibh);
+          if (ret2 == null) {
+            return null;
+          }
           System.arraycopy(ret2, 0, ret, 0, 6);
           eia = eial.Multiply(ret2[5]).Subtract(eibl.Multiply(ret2[3]));
           eib = eibl.Multiply(ret2[2]).Subtract(eial.Multiply(ret2[4]));
@@ -2772,38 +2799,25 @@ nh.set("+thishgcd+","+n.Multiply(3).ShiftRight(2).Add(2)));
        }
        ret[0] = eia;
        ret[1] = eib;
-       // if (BL(eia.Subtract(eib)).compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) >
-       // 0) {
-       // throw new IllegalStateException("Internal error");
-       // }
-       /* System.out.println("[1]eia="+ret[0].ToRadixString(16));
-       System.out.println("[1]eib="+ret[1].ToRadixString(16));
-       System.out.println("[1]mat="+Arrays.toString(new
-EInteger[] { ret[2], ret[3], ret[4], ret[5]}));
-       System.out.println("mbl="+MaxBitLength(ret[0],ret[1])+"
-nh="+n.Multiply(3).ShiftRight(2).Add(1));
-       System.out.println("absbl="+BL(ret[0].Subtract(ret[1]))+" s="+s);
-       */ while (MaxBitLength(ret[0], ret[1]).compareTo(
+       for (int k = 0; k < 6; ++k) {
+       // System.out.println("ret_afterloop1.set("+k+"," +
+       // ret[k].ToRadixString(16)));
+       }
+       while (MaxBitLength(ret[0], ret[1]).compareTo(
                    ein.Multiply(3).ShiftRight(2).Add(1)) > 0 &&
                    BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0
 ) {
-           // System.out.println("[sdiv1]eia="+ret[0].ToRadixString(16)+"
-           // bl="+BL(ret[0])+", s="+eis);
-           // System.out.println("[sdiv1]eib="+ret[1].ToRadixString(16)+"
-           // bl="+BL(ret[1])+", s="+eis);
-if (ret[0].signum() < 0 || ret[1].signum() < 0) {
-              { throw new IllegalStateException("Internal error");
-           }
+         if (ret[0].signum() < 0 || ret[1].signum() < 0) {
+             throw new IllegalStateException("Internal error");
            }
            SDivStep(ret, eis);
-           // System.out.println("[sdiv1]ret="+Arrays.toString(ret));
+       }
+       for (int k = 0; k < 6; ++k) {
+       // System.out.println("ret_afterloop2.set("+k+"," +
+       // ret[k].ToRadixString(16)));
        }
        eia = ret[0];
        eib = ret[1];
-       // if (MaxBitLength(eia, eib).compareTo(n.Multiply(3).ShiftRight(2).Add(2)) >
-       // 0) {
-       // throw new IllegalStateException("Internal error");
-       // }
        if (MinBitLength(eia, eib).compareTo(eis.Add(2)) > 0) {
           ein = MaxBitLength(eia, eib);
           EInteger p1 = eis.Add(eis).Subtract(ein).Add(1);
@@ -2813,6 +2827,9 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
           eibh = eib.ShiftRight(p1);
           eibl = eib.And(nhalfmask);
           EInteger[] ret2 = HalfGCD(eiah, eibh);
+          if (ret2 == null) {
+            return null;
+          }
           eia = eial.Multiply(ret2[5]).Subtract(eibl.Multiply(ret2[3]));
           eib = eibl.Multiply(ret2[2]).Subtract(eial.Multiply(ret2[4]));
           eia = eia.Add(ret2[0].ShiftLeft(p1));
@@ -2837,26 +2854,20 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
        }
        ret[0] = eia;
        ret[1] = eib;
-       // if (BL(eia.Subtract(eib)).compareTo(s.Add(2)) > 0) {
-       // throw new IllegalStateException("Internal error");
-       // }
-       // System.out.println("[2]eia="+ret[0].ToRadixString(16));
-       // System.out.println("[2]eib="+ret[1].ToRadixString(16));
+       for (int k = 0; k < 6; ++k) {
+       // System.out.println("ret_afterloop3.set("+k+"," +
+       // ret[k].ToRadixString(16)));
+       }
        while (BL(ret[0].Subtract(ret[1])). compareTo(eis) > 0) {
-           // System.out.println("[sdiv2]eia="+ret[0].ToRadixString(16)+"
-           // bl="+BL(ret[0])+", s="+s);
-           // System.out.println("[sdiv2]eib="+ret[1].ToRadixString(16)+"
-           // bl="+BL(ret[1])+", s="+s);
-if (ret[0].signum() < 0 || ret[1].signum() < 0) {
-              { throw new IllegalStateException("Internal error");
-           }
+         if (ret[0].signum() < 0 || ret[1].signum() < 0) {
+              throw new IllegalStateException("Internal error");
            }
            SDivStep(ret, eis);
            // System.out.println("[sdiv2]ret="+Arrays.toString(ret));
        }
-       // for (int i = 0; i < 6; ++i) {
-       // System.out.println("hgcd["+thishgcd+"]["+i+"]="+ret[i].ToRadixString(16));
-       // }
+       for (int k = 0; k < 6; ++k) {
+       // System.out.println("lhgcd.set("+k+"," + ret[k].ToRadixString(16)));
+       }
 
        return ret;
   }
@@ -2866,13 +2877,10 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
        EInteger[] ret = new EInteger[] { eia, eib };
        for (int i = 0; i < 20; ++i) {
          if (ein.compareTo(48) < 0) {
-            { break;
+           break;
          }
-}
-          // System.out.println("============");
-          System.out.println("eia=" + ret[0].ToRadixString(16));
-          System.out.println("eib=" + ret[1].ToRadixString(16));
-          // System.out.println("n="+ein);
+          // System.out.println("eia=" + ret[0].ToRadixString(16));
+          // System.out.println("eib=" + ret[1].ToRadixString(16));
           EInteger nhalf = ein.ShiftRight(1);
           EInteger nhalfmask =
           EInteger.FromInt32(1).ShiftLeft(nhalf).Subtract(1);
@@ -2880,16 +2888,22 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
         EInteger eial = ret[0].And(nhalfmask);
         EInteger eibh = ret[1].ShiftRight(nhalf);
         EInteger eibl = ret[1].And(nhalfmask);
-        EInteger[] hgcd = HalfGCD(eiah, eibh);
+        // System.out.println("eiah->" + eiah.ToRadixString(16));
+        // System.out.println("eibh->" + eibh.ToRadixString(16));
+      EInteger[] hgcd = HalfGCD(eiah, eibh);
+      if (hgcd == null) {
+           // System.out.println("hgcd failed");
+           break;
+        }
         eia = eial.Multiply(hgcd[5]).Subtract(eibl.Multiply(hgcd[3]));
         eib = eibl.Multiply(hgcd[2]).Subtract(eial.Multiply(hgcd[4]));
         eia = eia.Add(hgcd[0].ShiftLeft(nhalf));
         eib = eib.Add(hgcd[1].ShiftLeft(nhalf));
-        System.out.println("eia->" + eia.ToRadixString(16));
-      System.out.println("eib->" + eib.ToRadixString(16));
-    if (eia.signum() < 0 || eib.signum() < 0) {
-      for (int k = 0; k < 6; ++k) {
-             System.out.println("hgcd["+k+"]=" + ret[k].ToRadixString(16));
+        // System.out.println("eia->" + eia.ToRadixString(16));
+        // System.out.println("eib->" + eib.ToRadixString(16));
+      if (eia.signum() < 0 || eib.signum() < 0) {
+        for (int k = 0; k < 6; ++k) {
+             System.out.println("hgcd["+ k + "]=" + hgcd[k].ToRadixString(16));
             }
             throw new IllegalStateException("Internal error");
           }
@@ -2897,9 +2911,9 @@ if (ret[0].signum() < 0 || ret[1].signum() < 0) {
           ret[0] = eia;
           ret[1] = eib;
        }
-       // System.out.println("eia final "+eia);
-       // System.out.println("eib final "+eib);
-       return BaseGcd(eia, eib);
+       // System.out.println("eia final "+eia.ToRadixString(16));
+       // System.out.println("eib final "+eib.ToRadixString(16));
+       return BaseGcd(ret[0], ret[1]);
   }
 
     /**
@@ -3191,8 +3205,8 @@ maxDigitEstimate : retval +
      * (This will also be the position of the lowest set bit in the
      * number's two's-complement form (see {@link
      *  com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
-     * @return The bit position of the lowest bit set in the number, starting at 0.
-     * Returns -1 if this value is 0.
+     * @return The bit position of the lowest bit set in the number's absolute
+     * value, starting at 0. Returns -1 if this value is 0.
      * @deprecated This method may overflow. Use GetLowBitAsEInteger instead.
  */
 @Deprecated
@@ -3206,12 +3220,13 @@ maxDigitEstimate : retval +
      * position of the lowest set bit in the number's two's-complement form
      *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}
      *).).
-     * @return The bit position of the lowest bit set in the number, starting at 0.
-     * Returns -1 if this value is 0 or odd. Returns 2^63 - 1 ({@code
-     * Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java) if this
-     * number is other than zero but the lowest set bit is at 2^63 - 1 or
-     * greater. (Use {@code GetLowBitAsEInteger} instead if the application
-     * relies on the exact value of the lowest set bit position.).
+     * @return The bit position of the lowest bit set in the number's absolute
+     * value, starting at 0. Returns -1 if this value is 0 or odd. Returns
+     * 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE}
+     * in Java) if this number is other than zero but the lowest set bit is
+     * at 2^63 - 1 or greater. (Use {@code GetLowBitAsEInteger} instead if
+     * the application relies on the exact value of the lowest set bit
+     * position.).
      */
     public long GetLowBitAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -3247,8 +3262,8 @@ maxDigitEstimate : retval +
      * the position of the lowest set bit in the number's two's-complement
      *  form (see {@link com.upokecenter.numbers.EDecimal "Forms of
      *  numbers"}).).
-     * @return The bit position of the lowest bit set in the number, starting at 0.
-     * Returns -1 if this value is 0 or odd.
+     * @return The bit position of the lowest bit set in the number's absolute
+     * value, starting at 0. Returns -1 if this value is 0 or odd.
      */
     public EInteger GetLowBitAsEInteger() {
       return EInteger.FromInt64(this.GetLowBitAsInt64());
@@ -5177,7 +5192,8 @@ maxDigitEstimate : retval +
      * bit of the number will be all ones. The resulting byte array can be
      * passed to the <code>FromBytes()</code> method (with the same byte order)
      * to reconstruct this integer's value.
-     * @param littleEndian Either {@code true} or {@code false}.
+     * @param littleEndian See the 'littleEndian' parameter of the {@code
+     * FromBytes()} method.
      * @return A byte array. If this value is 0, returns a byte array with the
      * single element 0.
      */
@@ -5623,9 +5639,10 @@ maxDigitEstimate : retval +
 
     /**
      * Converts this object to a text string in base 10.
-     * @return A string representation of this object. If negative, the string will
-     *  begin with a minus sign ("-", U+002D). The string will use the basic
-     * digits 0 to 9 (U+0030 to U+0039).
+     * @return A string representation of this object. If this value is 0, returns
+     *  "0". If negative, the string will begin with a minus sign ("-",
+     * U+002D). The string will use the basic digits 0 to 9 (U+0030 to
+     * U+0039).
      */
     @Override public String toString() {
       if (this.isZero()) {
