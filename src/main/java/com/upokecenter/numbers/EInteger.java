@@ -19,6 +19,8 @@ at: http://peteroupc.github.io/
 // to return MaxValue on overflow
 // TODO: In next major version, perhaps change GetLowBit/GetDigitCount
 // to return MaxValue on overflow
+// TODO: Add overload to FromBytes to take a portion of a byte array
+// TODO: Add faster equivalent to And((1 << n)-1)
 
   /**
    * Represents an arbitrary-precision integer. (The "E" stands for "extended",
@@ -2604,6 +2606,8 @@ at: http://peteroupc.github.io/
  }
 
  private static void LSDivStep(long[] longam, long ls) {
+  ArgumentAssert.GreaterOrEqual(longam[0]);
+  ArgumentAssert.GreaterOrEqual(longam[1]);
   {
   // a, b, m.get(0) ... m.get(3)
    if (longam[0] > longam[1]) {
@@ -2668,11 +2672,11 @@ return (mantlong == 0) ? 0 : NumberUtility.BitLength(Math.abs(mantlong));
          if (ret2 == null) {
            return null;
          }
-          System.arraycopy(ret2, 0, ret, 0, 6);
-        longa = (longal * ret2[5]) - (longbl* ret2[3]);
-        longb = (longbl * ret2[2]) - (longal* ret2[4]);
-        longa += ret2[0] << p1;
-        longb += ret2[1] << p1;
+         System.arraycopy(ret2, 0, ret, 0, 6);
+       longa = (longal * ret2[5]) - (longbl * ret2[3]);
+       longb = (longbl * ret2[2]) - (longal * ret2[4]);
+       longa += ret2[0] << p1;
+       longb += ret2[1] << p1;
        } else {
           // Set M to identity
           ret = new long[6];
@@ -2903,7 +2907,7 @@ return (mantlong == 0) ? 0 : NumberUtility.BitLength(Math.abs(mantlong));
         // System.out.println("eib->" + eib.ToRadixString(16));
       if (eia.signum() < 0 || eib.signum() < 0) {
         for (int k = 0; k < 6; ++k) {
-             System.out.println("hgcd["+ k + "]=" + hgcd[k].ToRadixString(16));
+             System.out.println("hgcd[" + k + "]=" + hgcd[k].ToRadixString(16));
             }
             throw new IllegalStateException("Internal error");
           }
