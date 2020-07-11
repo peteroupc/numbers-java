@@ -1298,10 +1298,8 @@ import com.upokecenter.numbers.*;
       if (littleEndian) {
         if (!(bytes.length == 1 || (
               !(bytes[bytes.length - 1] == 0x00 && ((int)bytes[bytes.length
-- 2] &
-                0x80) == 0) && !(bytes[bytes.length - 1] == (byte)0xff &&
-((int)bytes[bytes.length -
-                2] & 0x80) != 0)))) {
+                - 2] & 0x80) == 0) && !(bytes[bytes.length - 1] == (byte)0xff &&
+                ((int)bytes[bytes.length - 2] & 0x80) != 0)))) {
           return false;
         }
       } else {
@@ -1611,26 +1609,26 @@ import com.upokecenter.numbers.*;
       }
     }
     public static char[] StringToChars(String str) {
-       if (str == null) {
-         throw new NullPointerException("str");
-       }
-       char[] chars = new char[str.length()];
-       for (int i = 0; i < str.length(); ++i) {
-         char ch = str.charAt(i);
-         chars[i] = ch;
-       }
-       return chars;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      char[] chars = new char[str.length()];
+      for (int i = 0; i < str.length(); ++i) {
+        char ch = str.charAt(i);
+        chars[i] = ch;
+      }
+      return chars;
     }
     public static byte[] StringToBytes(String str) {
-       if (str == null) {
-         throw new NullPointerException("str");
-       }
-       byte[] bytes = new byte[str.length()];
-       for (int i = 0; i < str.length(); ++i) {
-         char ch = str.charAt(i);
-         bytes[i] = (byte)ch;
-       }
-       return bytes;
+      if (str == null) {
+        throw new NullPointerException("str");
+      }
+      byte[] bytes = new byte[str.length()];
+      for (int i = 0; i < str.length(); ++i) {
+        char ch = str.charAt(i);
+        bytes[i] = (byte)ch;
+      }
+      return bytes;
     }
     @Test
     public void TestFromString() {
@@ -1967,21 +1965,23 @@ import com.upokecenter.numbers.*;
           "15",
           stringTemp);
       }
-      EInteger
-  ei1 =
+      EInteger ei1 =
+
   EInteger.FromString("1088692579850251977918382727683876451288883451475551838663907953515213777772897669");
-      EInteger
-  ei2 =
+      EInteger ei2 =
+
   EInteger.FromString("734154292316019508508581520803142368704146796235662433292652");
       TestGcdPair(ei1, ei2, EInteger.FromInt32(1));
 
-  ei1 =
-  EInteger.FromString("390162357953126476870450846332252625209515327296852766");
-  ei2 = EInteger.FromString("854818964073568437308435317723736629914");
-      TestGcdPair(ei1, ei2, EInteger.FromInt32(2));
-    ei1 = EInteger.FromString("1669589419950395927580");
+      ei1 =
 
-  ei2 =
+  EInteger.FromString("390162357953126476870450846332252625209515327296852766");
+      ei2 = EInteger.FromString("854818964073568437308435317723736629914");
+      TestGcdPair(ei1, ei2, EInteger.FromInt32(2));
+      ei1 = EInteger.FromString("1669589419950395927580");
+
+      ei2 =
+
   EInteger.FromString("1391147381889193092596558363578727285498500460445439101064428207862760");
       TestGcdPair(ei1, ei2, EInteger.FromInt32(20));
       int prime = 0;
@@ -2714,7 +2714,8 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      try { (EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar(null);
+      try {
+        (EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar (null);
 
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
@@ -2746,7 +2747,8 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      try { (EInteger.FromInt64(13)).Mod(null);
+      try {
+        (EInteger.FromInt64(13)).Mod (null);
 
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
@@ -2755,7 +2757,8 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      try { (EInteger.FromInt64(13)).Mod(EInteger.FromInt64(-4));
+      try {
+        (EInteger.FromInt64(13)).Mod (EInteger.FromInt64(-4));
 
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -2764,7 +2767,8 @@ import com.upokecenter.numbers.*;
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
-      try { (EInteger.FromInt64(-13)).Mod(EInteger.FromInt64(-4));
+      try {
+        (EInteger.FromInt64(-13)).Mod (EInteger.FromInt64(-4));
 
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -3207,23 +3211,23 @@ import com.upokecenter.numbers.*;
         }
       }
       try {
- EInteger.FromInt32(7).Root(0);
- Assert.fail("Should have failed");
-} catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
- Assert.fail(ex.toString());
- throw new IllegalStateException("", ex);
-}
+        EInteger.FromInt32(7).Root(0);
+        Assert.fail("Should have failed");
+      } catch (IllegalArgumentException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
       try {
- EInteger.FromInt32(7).Root(-1);
- Assert.fail("Should have failed");
-} catch (IllegalArgumentException ex) {
-// NOTE: Intentionally empty
-} catch (Exception ex) {
- Assert.fail(ex.toString());
- throw new IllegalStateException("", ex);
-}
+        EInteger.FromInt32(7).Root(-1);
+        Assert.fail("Should have failed");
+      } catch (IllegalArgumentException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
 
     @Test
@@ -3517,7 +3521,7 @@ import com.upokecenter.numbers.*;
           // If abs(b)>1 and abs(a)>1, abs(product) must be greater than abs(a) and
           // abs(b)
           if (bigintA.Abs().compareTo(1) > 0 && bigintB.Abs().compareTo(1) >
-0) {
+            0) {
             if (!(bigintC.Abs().compareTo(bigintA.Abs()) > 0))Assert.fail();
             if (!(bigintC.Abs().compareTo(bigintB.Abs()) > 0))Assert.fail();
           }

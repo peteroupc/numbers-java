@@ -327,11 +327,11 @@ private DecTestUtil() {
       }
       if (sub.length() == 1) {
         for (int i = 0; i < str.length(); ++i) {
-            if (str.charAt(i) == sub.charAt(0)) {
-              return true;
-            }
-         }
-         return false;
+          if (str.charAt(i) == sub.charAt(0)) {
+            return true;
+          }
+        }
+        return false;
       }
       return str.indexOf(sub) >= 0;
     }
@@ -967,7 +967,7 @@ private DecTestUtil() {
       }
       // NOTE: ix < 2 includes cases where space is not found
       if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix - 1) != 's' &&
-         ln.charAt(ix - 1) != 'q')) {
+          ln.charAt(ix - 1) != 'q')) {
         return 0;
       }
       String[] chunks = SplitAtSpaceRuns(ln);
@@ -1692,7 +1692,7 @@ private DecTestUtil() {
         }
         if (!extended && (Contains(input1, "sNaN") ||
             Contains(input2, "sNaN") || Contains(input3, "sNaN") ||
-           Contains(output, "sNaN"))) {
+            Contains(output, "sNaN"))) {
           System.out.println(ln);
         }
         if (name.equals("S")) {
@@ -2248,8 +2248,8 @@ private DecTestUtil() {
       String name) {
       if (((expected & flag) != 0) != ((actual & flag) != 0)) {
         String msg = name + ": " + FlagsToString(flag) +
-           "\nExpected flags: " + FlagsToString(expected) +
-           "\nActual flags..: " + FlagsToString(actual);
+          "\nExpected flags: " + FlagsToString(expected) +
+          "\nActual flags..: " + FlagsToString(actual);
         Assert.assertEquals(msg, (expected & flag) != 0, (actual & flag) != 0);
       }
     }
