@@ -1413,22 +1413,20 @@ Determines whether this object and another object are equal and have the
     public EInteger Gcd​(EInteger bigintSecond)
 Returns the greatest common divisor of this integer and the given integer.
  The greatest common divisor (GCD) is also known as the greatest
- common factor (GCF).
+ common factor (GCF). This method works even if either or both
+ integers are negative.
 
 **Parameters:**
 
-* <code>bigintSecond</code> - Another arbitrary-precision integer.
+* <code>bigintSecond</code> - Another arbitrary-precision integer. Can be negative.
 
 **Returns:**
 
-* An arbitrary-precision integer.
+* The greatest common divisor of this integer and the given integer.
 
 **Throws:**
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.
-
-* <code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn't satisfy
- shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 

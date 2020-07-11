@@ -2441,12 +2441,11 @@ at: http://peteroupc.github.io/
     /**
      * Returns the greatest common divisor of this integer and the given integer.
      * The greatest common divisor (GCD) is also known as the greatest
-     * common factor (GCF).
-     * @param bigintSecond Another arbitrary-precision integer.
-     * @return An arbitrary-precision integer.
+     * common factor (GCF). This method works even if either or both
+     * integers are negative.
+     * @param bigintSecond Another arbitrary-precision integer. Can be negative.
+     * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
-     * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
-     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
      * @throws ArithmeticException Attempted to divide by zero.
      */
     public EInteger Gcd(EInteger bigintSecond) {
@@ -2724,18 +2723,18 @@ at: http://peteroupc.github.io/
           if (ret2 == null) {
             return null;
           }
-          longa = longal * ret2[5] - (longbl * ret2[3]);
-          longb = longbl * ret2[2] - (longal * ret2[4]);
+          longa = (longal * ret2[5]) - (longbl * ret2[3]);
+          longb = (longbl * ret2[2]) - (longal * ret2[4]);
           longa += ret2[0] << p1;
           longb += ret2[1] << p1;
           if (longa < 0 || longb < 0) {
             throw new IllegalStateException("Internal error");
           }
           long ma, mb, mc, md;
-          ma = ret[2] * ret2[2] + (ret[3] * ret2[4]);
-          mb = ret[2] * ret2[3] + (ret[3] * ret2[5]);
-          mc = ret[4] * ret2[2] + (ret[5] * ret2[4]);
-          md = ret[4] * ret2[3] + (ret[5] * ret2[5]);
+          ma = (ret[2] * ret2[2]) + (ret[3] * ret2[4]);
+          mb = (ret[2] * ret2[3]) + (ret[3] * ret2[5]);
+          mc = (ret[4] * ret2[2]) + (ret[5] * ret2[4]);
+          md = (ret[4] * ret2[3]) + (ret[5] * ret2[5]);
           ret[2] = ma;
           ret[3] = mb;
           ret[4] = mc;

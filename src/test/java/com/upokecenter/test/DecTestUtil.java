@@ -17,8 +17,11 @@ private DecTestUtil() {
     private static final Pattern ValueQuotes = Pattern.compile(
       "^[\\'\\\"]|[\\'\\\"]$");
 
+    private static final testLineRegex =
+  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
+
     private static final Pattern ValueTestLine = Pattern.compile(
-  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)");
+      testLineRegex);
 
     public static String[] SplitAtFast(
       String str,
