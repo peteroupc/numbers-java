@@ -2724,18 +2724,18 @@ at: http://peteroupc.github.io/
           if (ret2 == null) {
             return null;
           }
-          longa = longal*(ret2[5]) - (longbl*(ret2[3]));
-          longb = longbl*(ret2[2]) - (longal*(ret2[4]));
+          longa = longal * ret2[5] - (longbl * ret2[3]);
+          longb = longbl * ret2[2] - (longal * ret2[4]);
           longa += ret2[0] << p1;
           longb += ret2[1] << p1;
           if (longa < 0 || longb < 0) {
             throw new IllegalStateException("Internal error");
           }
           long ma, mb, mc, md;
-          ma = ret[2]*(ret2[2]) + (ret[3]*(ret2[4]));
-          mb = ret[2]*(ret2[3]) + (ret[3]*(ret2[5]));
-          mc = ret[4]*(ret2[2]) + (ret[5]*(ret2[4]));
-          md = ret[4]*(ret2[3]) + (ret[5]*(ret2[5]));
+          ma = ret[2] * ret2[2] + (ret[3] * ret2[4]);
+          mb = ret[2] * ret2[3] + (ret[3] * ret2[5]);
+          mc = ret[4] * ret2[2] + (ret[5] * ret2[4]);
+          md = ret[4] * ret2[3] + (ret[5] * ret2[5]);
           ret[2] = ma;
           ret[3] = mb;
           ret[4] = mc;
@@ -2874,7 +2874,7 @@ at: http://peteroupc.github.io/
         // System.out.println("ret_afterloop3.set("+k+"," +
         // ret[k].ToRadixString(16)));
       }
-      while (BL(ret[0].Subtract(ret[1])). compareTo(eis) > 0) {
+      while (BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0) {
         if (ret[0].signum() < 0 || ret[1].signum() < 0) {
           throw new IllegalStateException("Internal error");
         }

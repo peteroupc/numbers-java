@@ -2715,8 +2715,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        (EInteger.FromInt32(0).Subtract(EInteger.FromInt64(1))).PowBigIntVar (null);
-
+        EInteger ei = EInteger.FromInt32(0).Subtract(1);
+        ei.PowBigIntVar(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -2748,8 +2748,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        (EInteger.FromInt64(13)).Mod (null);
-
+        EInteger.FromInt32(13).Mod(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -2758,7 +2757,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        (EInteger.FromInt64(13)).Mod (EInteger.FromInt64(-4));
+        EInteger.FromInt32(13).Mod(EInteger.FromInt64(-4));
 
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -2768,7 +2767,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        (EInteger.FromInt64(-13)).Mod (EInteger.FromInt64(-4));
+        EInteger.FromInt32(13).Mod(EInteger.FromInt64(-4));
 
         Assert.fail("Should have failed");
       } catch (ArithmeticException ex) {
@@ -3449,10 +3448,10 @@ import com.upokecenter.numbers.*;
       EInteger ba = biga.Gcd(bigb);
       EInteger bb = bigb.Gcd(biga);
       if (!ba.equals(biggcd)) {
-        Assert.assertEquals(biga+ " " + bigb,biggcd,ba);
+        Assert.assertEquals(biga + " " + bigb,biggcd,ba);
       }
       if (!bb.equals(biggcd)) {
-        Assert.assertEquals(biga+ " " + bigb,biggcd,bb);
+        Assert.assertEquals(biga + " " + bigb,biggcd,bb);
       }
       Assert.assertEquals(biggcd, biga.Negate().Gcd(bigb));
       Assert.assertEquals(biggcd, biga.Gcd(bigb.Negate()));
