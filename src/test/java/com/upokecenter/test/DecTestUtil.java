@@ -11,17 +11,17 @@ import com.upokecenter.numbers.*;
   public final class DecTestUtil {
 private DecTestUtil() {
 }
+    private static final String TestLineRegex =
+  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
+
     private static final Pattern ValuePropertyLine = Pattern.compile(
       "^(\\w+)\\:\\s*(\\S+).*");
 
     private static final Pattern ValueQuotes = Pattern.compile(
       "^[\\'\\\"]|[\\'\\\"]$");
 
-    private static final testLineRegex =
-  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
-
     private static final Pattern ValueTestLine = Pattern.compile(
-      testLineRegex);
+      TestLineRegex);
 
     public static String[] SplitAtFast(
       String str,
