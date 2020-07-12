@@ -485,6 +485,12 @@ Initializes an arbitrary-precision integer from a portion of an array of
  using the rules given in the FromBytes(bytes, offset, length,
  littleEndian) overload.
 
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+ <code>bytes</code> begins.
+
+* <code>length</code> - The length, in bytes, of the desired portion of <code>bytes</code>
+ (but not more than <code>bytes</code> 's length).
+
 * <code>littleEndian</code> - If true, the byte order is little-endian, or
  least-significant-byte first. If false, the byte order is
  big-endian, or most-significant-byte first.
@@ -497,6 +503,10 @@ Initializes an arbitrary-precision integer from a portion of an array of
 **Throws:**
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+* <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
+ than 0 or greater than <code>bytes</code> 's length, or <code>bytes</code> 's
+ length minus <code>offset</code> is less than <code>length</code>.
 
 ### FromBoolean
     public static EInteger FromBoolean​(boolean boolValue)

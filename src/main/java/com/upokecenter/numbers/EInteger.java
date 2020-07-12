@@ -265,12 +265,19 @@ at: http://peteroupc.github.io/
      * arbitrary-precision integer to create. The byte array is encoded
      * using the rules given in the FromBytes(bytes, offset, length,
      * littleEndian) overload.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.
+     * @param length The length, in bytes, of the desired portion of {@code bytes}
+     * (but not more than {@code bytes} 's length).
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is
      * big-endian, or most-significant-byte first.
      * @return An arbitrary-precision integer. Returns 0 if the byte array's length
      * is 0.
      * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's
+     * length minus {@code offset} is less than {@code length}.
      */
     public static EInteger FromBytes(
       byte[] bytes,
@@ -2972,7 +2979,7 @@ FromInt32((int)bytes[offset]) :
         if (eia.signum() < 0 || eib.signum() < 0) {
           StringBuilder sb = new StringBuilder();
           sb.append("eia="+ret[0] +"\n");
-          sb.append("eib="+ret[0] +"\n");
+          sb.append("eib="+ret[1] +"\n");
           for (int k = 0; k < 6; ++k) {
             sb.append("hgcd_" + k + "=" + hgcd[k].ToRadixString(16));
             sb.append("\n");
