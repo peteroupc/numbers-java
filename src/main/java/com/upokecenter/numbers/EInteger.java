@@ -242,9 +242,24 @@ at: http://peteroupc.github.io/
 
     /**
      * Initializes an arbitrary-precision integer from a portion of an array of
-     * bytes.
-     * @param offset Not documented yet.
-     * @param length Not documented yet.
+     * bytes. The portion of the byte array is encoded using the following
+     * rules: <ul> <li>Positive numbers have the first byte's highest bit
+     * cleared, and negative numbers have the bit set.</li> <li>The last
+     * byte contains the lowest 8-bits, the next-to-last contains the next
+     * lowest 8 bits, and so on. For example, the number 300 can be encoded
+     * as <code>0x01, 0x2C</code> and 200 as <code>0x00, 0xC8</code>. (Note that the
+     * second example contains a set high bit in <code>0xC8</code>, so an
+     * additional 0 is added at the start to ensure it's interpreted as
+     * positive.)</li> <li>To encode negative numbers, take the absolute
+     * value of the number, subtract by 1, encode the number into bytes,
+     * and toggle each bit of each byte. Any further bits that appear
+     * beyond the most significant bit of the number will be all ones. For
+     * example, the number -450 can be encoded as <code>0xfe, 0x70</code> and
+     * -52869 as <code>0xff, 0x31, 0x7B</code>. (Note that the second example
+     * contains a cleared high bit in <code>0x31, 0x7B</code>, so an additional
+     * 0xff is added at the start to ensure it's interpreted as
+     * negative.)</li></ul> <p>For little-endian, the byte order is
+     * reversed from the byte order just discussed.</p>
      * @param bytes A byte array consisting of the two's-complement form (see
      *  {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}) of the
      * arbitrary-precision integer to create. The byte array is encoded
@@ -253,28 +268,29 @@ at: http://peteroupc.github.io/
      * @param littleEndian If true, the byte order is little-endian, or
      * least-significant-byte first. If false, the byte order is
      * big-endian, or most-significant-byte first.
-     * @return An arbitrary-precision integer. Returns 0 if "length" is 0.
+     * @return An arbitrary-precision integer. Returns 0 if the byte array's length
+     * is 0.
      * @throws NullPointerException The parameter {@code bytes} is null.
      */
     public static EInteger FromBytes(
       byte[] bytes,
- int offset,
- int length,
- boolean littleEndian) {
+      int offset,
+      int length,
+      boolean littleEndian) {
       if (bytes == null) {
         throw new NullPointerException("bytes");
       }
       if (offset < 0) {
         throw new IllegalArgumentException("offset (" + offset + ") is not greater" +
-"\u0020or equal to 0");
+           "\u0020or equal to 0");
       }
       if (offset > bytes.length) {
         throw new IllegalArgumentException("offset (" + offset + ") is not less or" +
-"\u0020equal to " + bytes.length);
+           "\u0020equal to " + bytes.length);
       }
       if (length < 0) {
-        throw new IllegalArgumentException("length (" + length + ") is not greater or" +
-"\u0020equal to 0");
+        throw new IllegalArgumentException("length (" + length + ") is not " +
+            "greater or equal to 0");
       }
       if (length > bytes.length) {
         throw new IllegalArgumentException("length (" + length + ") is not less or" +
@@ -282,7 +298,7 @@ at: http://peteroupc.github.io/
       }
       if (bytes.length - offset < length) {
         throw new IllegalArgumentException("bytes's length minus " + offset + " (" +
-(bytes.length - offset) + ") is not greater or equal to " + length);
+           (bytes.length - offset) + ") is not greater or equal to " + length);
       }
       if (length == 0) {
         return EInteger.FromInt32(0);
@@ -2481,6 +2497,8 @@ FromInt32((int)bytes[offset]) :
      * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
+     * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
+     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -2501,7 +2519,8 @@ FromInt32((int)bytes[offset]) :
       if (thisValue.equals(EInteger.FromInt32(1))) {
         return thisValue;
       }
-      if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 250) {
+      if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 12) {
+      // if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 250) {
         return SubquadraticGCD(thisValue, bigintSecond);
       } else {
         return BaseGcd(thisValue, bigintSecond);
@@ -2951,10 +2970,14 @@ FromInt32((int)bytes[offset]) :
         // System.out.println("eia->" + eia.ToRadixString(16));
         // System.out.println("eib->" + eib.ToRadixString(16));
         if (eia.signum() < 0 || eib.signum() < 0) {
+          StringBuilder sb = new StringBuilder();
+          sb.append("eia="+ret[0] +"\n");
+          sb.append("eib="+ret[0] +"\n");
           for (int k = 0; k < 6; ++k) {
-            System.out.println("hgcd[" + k + "]=" + hgcd[k].ToRadixString(16));
+            sb.append("hgcd_" + k + "=" + hgcd[k].ToRadixString(16));
+            sb.append("\n");
           }
-          throw new IllegalStateException("Internal error");
+          throw new IllegalStateException("Internal error\n" + sb);
         }
         ein = MaxBitLength(eia, eib);
         ret[0] = eia;

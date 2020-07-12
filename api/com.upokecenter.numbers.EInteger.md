@@ -458,13 +458,26 @@ Initializes an arbitrary-precision integer from an array of bytes.
 ### FromBytes
     public static EInteger FromBytes​(byte[] bytes, int offset, int length, boolean littleEndian)
 Initializes an arbitrary-precision integer from a portion of an array of
- bytes.
+ bytes. The portion of the byte array is encoded using the following
+ rules: <ul> <li>Positive numbers have the first byte's highest bit
+ cleared, and negative numbers have the bit set.</li> <li>The last
+ byte contains the lowest 8-bits, the next-to-last contains the next
+ lowest 8 bits, and so on. For example, the number 300 can be encoded
+ as <code>0x01, 0x2C</code> and 200 as <code>0x00, 0xC8</code>. (Note that the
+ second example contains a set high bit in <code>0xC8</code>, so an
+ additional 0 is added at the start to ensure it's interpreted as
+ positive.)</li> <li>To encode negative numbers, take the absolute
+ value of the number, subtract by 1, encode the number into bytes,
+ and toggle each bit of each byte. Any further bits that appear
+ beyond the most significant bit of the number will be all ones. For
+ example, the number -450 can be encoded as <code>0xfe, 0x70</code> and
+ -52869 as <code>0xff, 0x31, 0x7B</code>. (Note that the second example
+ contains a cleared high bit in <code>0x31, 0x7B</code>, so an additional
+ 0xff is added at the start to ensure it's interpreted as
+ negative.)</li></ul> <p>For little-endian, the byte order is
+ reversed from the byte order just discussed.</p>
 
 **Parameters:**
-
-* <code>offset</code> - Not documented yet.
-
-* <code>length</code> - Not documented yet.
 
 * <code>bytes</code> - A byte array consisting of the two's-complement form (see
   <code>"Forms of numbers"</code>) of the
@@ -478,7 +491,8 @@ Initializes an arbitrary-precision integer from a portion of an array of
 
 **Returns:**
 
-* An arbitrary-precision integer. Returns 0 if "length" is 0.
+* An arbitrary-precision integer. Returns 0 if the byte array's length
+ is 0.
 
 **Throws:**
 
@@ -1449,6 +1463,9 @@ Returns the greatest common divisor of this integer and the given integer.
 * <code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
+
+* <code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn't satisfy
+ shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
 
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()

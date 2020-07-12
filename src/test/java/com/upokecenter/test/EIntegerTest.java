@@ -1289,34 +1289,39 @@ import com.upokecenter.numbers.*;
     }
 
     public static boolean TestEIntegerFromBytes(byte[] bytes, boolean littleEndian) {
+       return TestEIntegerFromBytes(bytes, 0, bytes.length, littleEndian);
+    }
+
+    public static boolean TestEIntegerFromBytes(byte[] bytes, int offset, int length, boolean littleEndian) {
       if (bytes == null) {
         throw new NullPointerException("bytes");
       }
-      if (bytes.length == 0) {
+      if (length == 0) {
         return false;
       }
       if (littleEndian) {
-        if (!(bytes.length == 1 || (
-              !(bytes[bytes.length - 1] == 0x00 && ((int)bytes[bytes.length
-                - 2] & 0x80) == 0) && !(bytes[bytes.length - 1] == (byte)0xff &&
-                ((int)bytes[bytes.length - 2] & 0x80) != 0)))) {
+        if (!(length == 1 || (
+              !(bytes[offset + length - 1] == 0x00 && ((int)bytes[offset + length
+                - 2] & 0x80) == 0) && !(bytes[offset + length - 1] == (byte)0xff &&
+                ((int)bytes[offset + length - 2] & 0x80) != 0)))) {
           return false;
         }
       } else {
-        if (!(bytes.length == 1 || (
-              !(bytes[0] == 0x00 && ((int)bytes[1] & 0x80) == 0) &&
-              !(bytes[0] == (byte)0xff && ((int)bytes[1] & 0x80) != 0)
-))) {
+        if (!(length == 1 || (
+              !(bytes[offset] == 0x00 && ((int)bytes[offset + 1] & 0x80) == 0) &&
+              !(bytes[offset] == (byte)0xff && ((int)bytes[offset + 1] & 0x80) != 0)))) {
           return false;
         }
       }
       boolean negative = false;
-      negative = (!littleEndian) ? ((bytes[0] & 0x80) != 0) :
-        ((bytes[bytes.length - 1] & 0x80) != 0);
-      EInteger ei = EInteger.FromBytes(bytes, littleEndian);
+      negative = (!littleEndian) ? ((bytes[offset] & 0x80) != 0) :
+        ((bytes[offset + length - 1] & 0x80) != 0);
+      EInteger ei = (offset == 0 && length == bytes.length) ?
+          EInteger.FromBytes(bytes, littleEndian) :
+          EInteger.FromBytes(bytes, offset, length, littleEndian);
       Assert.assertEquals(negative, ei.signum() < 0);
       byte[] ba = ei.ToBytes(littleEndian);
-      TestCommon.AssertByteArraysEqual(bytes, ba);
+      TestCommon.AssertByteArraysEqual(bytes, offset, length, ba);
       return true;
     }
 
@@ -1338,6 +1343,13 @@ import com.upokecenter.numbers.*;
       for (int i = 0; i < 1000; ++i) {
         byte[] bytes = RandomObjects.RandomByteString(rg);
         TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
+        int offset1 = rg.GetInt32(bytes.length + 1);
+        int offset2 = rg.GetInt32(bytes.length + 1);
+        if (offset1 != offset2) {
+          int length = Math.abs(offset1-offset2);
+          int offset = Math.min(offset1, offset2);
+          TestEIntegerFromBytes(bytes, offset, length, rg.UniformInt(2) == 0);
+        }
       }
     }
     @Test
