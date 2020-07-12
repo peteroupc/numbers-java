@@ -106,6 +106,12 @@ Renamed to ToInt64Unchecked.
 * `static EInteger FromBytes​(byte[] bytes,
          boolean littleEndian)`<br>
  Initializes an arbitrary-precision integer from an array of bytes.
+* `static EInteger FromBytes​(byte[] bytes,
+         int offset,
+         int length,
+         boolean littleEndian)`<br>
+ Initializes an arbitrary-precision integer from a portion of an array of
+ bytes.
 * `static EInteger FromInt16​(short inputInt16)`<br>
  Converts a 16-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt32​(int intValue)`<br>
@@ -433,23 +439,8 @@ Initializes an arbitrary-precision integer from an array of bytes.
 * <code>bytes</code> - A byte array consisting of the two's-complement form (see
   <code>"Forms of numbers"</code>) of the
  arbitrary-precision integer to create. The byte array is encoded
- using the following rules: <ul> <li>Positive numbers have the first
- byte's highest bit cleared, and negative numbers have the bit
- set.</li> <li>The last byte contains the lowest 8-bits, the
- next-to-last contains the next lowest 8 bits, and so on. For
- example, the number 300 can be encoded as <code>0x01, 0x2c</code> and 200
- as <code>0x00, 0xc8</code>. (Note that the second example contains a set
- high bit in <code>0xc8</code>, so an additional 0 is added at the start
- to ensure it's interpreted as positive.)</li> <li>To encode negative
- numbers, take the absolute value of the number, subtract by 1,
- encode the number into bytes, and toggle each bit of each byte. Any
- further bits that appear beyond the most significant bit of the
- number will be all ones. For example, the number -450 can be encoded
- as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7b</code>. (Note
- that the second example contains a cleared high bit in <code>0x31,
- 0x7B</code>, so an additional 0xff is added at the start to ensure it's
- interpreted as negative.)</li></ul> <p>For little-endian, the byte
- order is reversed from the byte order just discussed.</p>.
+ using the rules given in the FromBytes(bytes, offset, length,
+ littleEndian) overload.
 
 * <code>littleEndian</code> - If true, the byte order is little-endian, or
  least-significant-byte first. If false, the byte order is
@@ -459,6 +450,35 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 * An arbitrary-precision integer. Returns 0 if the byte array's length
  is 0.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
+
+### FromBytes
+    public static EInteger FromBytes​(byte[] bytes, int offset, int length, boolean littleEndian)
+Initializes an arbitrary-precision integer from a portion of an array of
+ bytes.
+
+**Parameters:**
+
+* <code>offset</code> - Not documented yet.
+
+* <code>length</code> - Not documented yet.
+
+* <code>bytes</code> - A byte array consisting of the two's-complement form (see
+  <code>"Forms of numbers"</code>) of the
+ arbitrary-precision integer to create. The byte array is encoded
+ using the rules given in the FromBytes(bytes, offset, length,
+ littleEndian) overload.
+
+* <code>littleEndian</code> - If true, the byte order is little-endian, or
+ least-significant-byte first. If false, the byte order is
+ big-endian, or most-significant-byte first.
+
+**Returns:**
+
+* An arbitrary-precision integer. Returns 0 if "length" is 0.
 
 **Throws:**
 
