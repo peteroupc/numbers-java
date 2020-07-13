@@ -108,6 +108,17 @@ import com.upokecenter.numbers.*;
       4294967295L, 0L, 4294967296L, 32L, 4294967297L, 0,
     };
 
+    // Generates an EInteger of manageable size
+    private static EInteger RandomManageableEInteger(IRandomGenExtended rg) {
+       EInteger ei;
+       while (true) {
+         ei = RandomObjects.RandomEInteger(rg);
+         if (ei.GetUnsignedBitLengthAsInt64() <= 16 * 3000) {
+           return ei;
+         }
+       }
+    }
+
     public static void AssertAdd(EInteger bi, EInteger bi2, String s) {
       EIntegerTest.AssertBigIntegersEqual(s, bi.Add(bi2));
       EIntegerTest.AssertBigIntegersEqual(s, bi2.Add(bi));
@@ -203,10 +214,13 @@ import com.upokecenter.numbers.*;
       TestMultiplyDivideOne(bigintA, bigintB);
     }
 
-    public static void DoTestPow(String m1, int m2, String result) {
-      EInteger bigintA = EInteger.FromString(m1);
-      AssertBigIntegersEqual(result, bigintA.Pow(m2));
-      AssertBigIntegersEqual(result, bigintA.PowBigIntVar(EInteger.FromInt32(m2)));
+    private static void DoTestPow(EInteger em1, int m2, EInteger eresult) {
+      TestCommon.CompareTestEqual(eresult, em1.Pow(m2), "" + m2);
+      TestCommon.CompareTestEqual(eresult, em1.Pow(EInteger.FromInt32(m2)),
+  "" + m2);
+      TestCommon.CompareTestEqual(eresult,
+  em1.PowBigIntVar(EInteger.FromInt32(m2)),
+  "" + m2);
     }
 
     public static void DoTestRemainder(
@@ -2824,6 +2838,16 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
     }
+
+    public static void TestSimpleMultiply(int inta, int intb, int intresult) {
+       TestCommon.CompareTestEqual(
+            EInteger.FromInt32(intresult),
+            EInteger.FromInt32(inta).Multiply(EInteger.FromInt32(intb)));
+       TestCommon.CompareTestEqual(
+         EInteger.FromInt32(intresult),
+         EInteger.FromInt32(inta).Multiply(intb));
+    }
+
     @Test
     public void TestMultiply() {
       try {
@@ -2836,8 +2860,17 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       RandomGenerator r = new RandomGenerator();
+      TestSimpleMultiply(1, 1, 1);
+      TestSimpleMultiply(1, -1, -1);
+      TestSimpleMultiply(-1, 1, -1);
+      TestSimpleMultiply(-1, -1, 1);
+      for (int i = 0; i < 20000; ++i) {
+        int inta = -20000 + r.GetInt32(40000);
+        int intb = -20000 + r.GetInt32(40000);
+        TestSimpleMultiply(inta, intb, inta * intb);
+      }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomManageableEInteger(r);
         EInteger bigintB = bigintA.Add(EInteger.FromInt32(1));
         EInteger bigintC = bigintA.Multiply(bigintB);
         // Test near-squaring
@@ -3142,16 +3175,22 @@ import com.upokecenter.numbers.*;
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 200; ++i) {
         int power = 1 + r.UniformInt(8);
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        while (bigintA.GetUnsignedBitLengthAsInt64() > 16 * 1000) {
-          bigintA = RandomObjects.RandomEInteger(r);
-        }
+        EInteger bigintA = RandomManageableEInteger(r);
         EInteger bigintB = bigintA;
         for (int j = 1; j < power; ++j) {
           bigintB = bigintB.Multiply(bigintA);
         }
-        DoTestPow(bigintA.toString(), power, bigintB.toString());
+        DoTestPow(bigintA, power, bigintB);
       }
+      System.out.println("-1/1/-1");
+      DoTestPow(EInteger.FromInt32(-1), 1, EInteger.FromInt32(-1));
+      DoTestPow(EInteger.FromInt32(-1), 2, EInteger.FromInt32(1));
+      DoTestPow(EInteger.FromInt32(-1), 3, EInteger.FromInt32(-1));
+      DoTestPow(EInteger.FromInt32(-1), 4, EInteger.FromInt32(1));
+      DoTestPow(EInteger.FromInt32(-4), 1, EInteger.FromInt32(-4));
+      DoTestPow(EInteger.FromInt32(-4), 2, EInteger.FromInt32(16));
+      DoTestPow(EInteger.FromInt32(-4), 3, EInteger.FromInt32(-64));
+      DoTestPow(EInteger.FromInt32(-4), 4, EInteger.FromInt32(256));
     }
     @Test
     public void TestPowBigIntVar() {
@@ -3225,27 +3264,12 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestRoot() {
+      TestCommon.CompareTestEqual(
+          EInteger.FromInt32(2),
+          EInteger.FromInt32(26).Root(3));
       RandomGenerator r = new RandomGenerator();
-      for (int i = 0; i < 20; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        while (bigintA.GetUnsignedBitLengthAsInt64() > 16 * 3000) {
-          bigintA = RandomObjects.RandomEInteger(r);
-        }
-        if (bigintA.signum() < 0) {
-          bigintA = bigintA.Negate();
-        }
-        if (bigintA.signum() == 0) {
-          bigintA = EInteger.FromInt32(1);
-        }
-        EInteger sqr = bigintA.Multiply(bigintA).Multiply(bigintA);
-        EInteger sr = sqr.Root(3);
-        TestCommon.CompareTestEqual(bigintA, sr);
-      }
-      for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        while (bigintA.GetUnsignedBitLengthAsInt64() > 16 * 1000) {
-          bigintA = RandomObjects.RandomEInteger(r);
-        }
+      for (int i = 0; i < 1000; ++i) {
+        EInteger bigintA = RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3264,6 +3288,18 @@ import com.upokecenter.numbers.*;
           Assert.fail(srsqr + " not greater than " + bigintA +
             " (TestRoot, root=" + sr + ")");
         }
+      }
+      for (int i = 0; i < 20; ++i) {
+        EInteger bigintA = RandomManageableEInteger(r);
+        if (bigintA.signum() < 0) {
+          bigintA = bigintA.Negate();
+        }
+        if (bigintA.signum() == 0) {
+          bigintA = EInteger.FromInt32(1);
+        }
+        EInteger sqr = bigintA.Multiply(bigintA).Multiply(bigintA);
+        EInteger sr = sqr.Root(3);
+        TestCommon.CompareTestEqual(bigintA, sr);
       }
       try {
         EInteger.FromInt32(7).Root(0);
@@ -3289,7 +3325,7 @@ import com.upokecenter.numbers.*;
     public void TestSqrt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 20; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3303,7 +3339,7 @@ import com.upokecenter.numbers.*;
         TestCommon.CompareTestEqual(bigintA, sr);
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3443,7 +3479,7 @@ import com.upokecenter.numbers.*;
       RandomGenerator r = new RandomGenerator();
       for (int radix = 2; radix < 36; ++radix) {
         for (int i = 0; i < 80; ++i) {
-          EInteger bigintA = RandomObjects.RandomEInteger(r);
+          EInteger bigintA = RandomManageableEInteger(r);
           String s = bigintA.ToRadixString(radix);
           EInteger big2 = EInteger.FromRadixString(s, radix);
           Assert.assertEquals(big2.ToRadixString(radix), s);

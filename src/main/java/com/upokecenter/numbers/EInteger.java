@@ -2899,11 +2899,11 @@ FromInt32((int)bytes[offset]) :
         }
         SDivStep(ret, eis);
         // for (int k = 0; k < 6; ++k) {
-        //   System.out.println("ret_loop2_"+ k + "=" + ret[k].ToRadixString(16));
+        // System.out.println("ret_loop2_"+ k + "=" + ret[k].ToRadixString(16));
         // }
       }
       // for (int k = 0; k < 6; ++k) {
-      //  System.out.println("ret_afterloop2_"+ k + "=" +
+      // System.out.println("ret_afterloop2_"+ k + "=" +
       // ret[k].ToRadixString(16));
       // }
       eia = ret[0];
@@ -4227,7 +4227,7 @@ ShortMask) != 0) ? 9 :
         return this;
       }
       if (this.compareTo(-1) == 0) {
-        return this.isEven() ? EInteger.FromInt32(1) : this;
+        return bigPower.isEven() ? EInteger.FromInt32(1) : this;
       }
       EInteger bitLength = this.GetUnsignedBitLengthAsEInteger();
       if (!this.isPowerOfTwo()) {
@@ -4273,15 +4273,17 @@ ShortMask) != 0) ? 9 :
         return this;
       }
       if (this.compareTo(-1) == 0) {
-        return this.isEven() ? EInteger.FromInt32(1) : this;
+        return (powerSmall & 1) == 0 ? EInteger.FromInt32(1) : this;
       }
       if (powerSmall == 2) {
         return thisVar.Multiply(thisVar);
       }
       if (powerSmall == 3) {
-        return (thisVar.Multiply(thisVar)).Multiply(thisVar);
+        return thisVar.Multiply(thisVar).Multiply(thisVar);
       }
       EInteger r = EInteger.FromInt32(1);
+      // boolean negatePower = (powerSmall & 1) != 0 && thisVar.signum() < 0;
+      // thisVar = thisVar.Abs();
       while (powerSmall != 0) {
         if ((powerSmall & 1) != 0) {
           r = r.Multiply(thisVar);
@@ -4291,7 +4293,7 @@ ShortMask) != 0) ? 9 :
           thisVar = thisVar.Multiply(thisVar);
         }
       }
-      return r;
+      return r; // negatePower ? r.Negate() : r;
     }
 
     /**
@@ -4303,6 +4305,7 @@ ShortMask) != 0) ? 9 :
      * @throws NullPointerException The parameter {@code power} is null.
      */
     public EInteger PowBigIntVar(EInteger power) {
+      // TODO: Deprecate in favor of Pow(EInteger)
       if (power == null) {
         throw new NullPointerException("power");
       }
@@ -4322,9 +4325,11 @@ ShortMask) != 0) ? 9 :
         return thisVar.Multiply(thisVar);
       }
       if (power.wordCount == 1 && power.words[0] == 3) {
-        return (thisVar.Multiply(thisVar)).Multiply(thisVar);
+        return thisVar.Multiply(thisVar).Multiply(thisVar);
       }
       EInteger r = EInteger.FromInt32(1);
+      // boolean negatePower = !power.isEven() && thisVar.signum() < 0;
+      // thisVar = thisVar.Abs();
       while (!power.isZero()) {
         if (!power.isEven()) {
           r = r.Multiply(thisVar);
@@ -4334,7 +4339,7 @@ ShortMask) != 0) ? 9 :
           thisVar = thisVar.Multiply(thisVar);
         }
       }
-      return r;
+      return r; // negatePower ? r.Negate() : r;
     }
 
     /**
@@ -8604,15 +8609,34 @@ ShortMask) != 0) ? 9 :
       if (this.equals(EInteger.FromInt32(1))) {
         return new EInteger[] { EInteger.FromInt32(1), EInteger.FromInt32(0) };
       }
-      EInteger bl = this.GetUnsignedBitLengthAsEInteger();
+      /*
+      if (this.CanFitInInt64()) {
+         long v = this.ToInt64Checked();
+         int bl = NumberUtility.BitLength(v);
+      }
+      */ EInteger bl = this.GetUnsignedBitLengthAsEInteger();
       EInteger rm1 = root.Subtract(1);
-      EInteger shift = bl.Multiply(rm1).Divide(root);
+      EInteger shift = EInteger.Max(
+          EInteger.FromInt32(0),
+          bl.Multiply(rm1).Divide(root).Subtract(1));
       EInteger ret = this.ShiftRight(shift);
-      while (true) {
-        EInteger oldret = ret;
-        ret = this.Divide(ret.Pow(rm1)).Add(ret.Multiply(rm1)).Divide(root);
-        if (oldret.equals(ret)) {
-          break;
+      // NOTE: ret is an upper bound of the root
+      if (ret.signum() > 0) {
+        // System.out.println("this->"+this+" initial->"+ret);
+        while (true) {
+          EInteger oldret = ret;
+          // System.out.println(" thiswc -> " + this.wordCount +
+          // " :: wc -> " + ret.wordCount + (ret.wordCount==1 ?
+          // ("=>"+this) : ""));
+          ret = this.Divide(ret.Pow(rm1)).Add(ret.Multiply(rm1)).Divide(root);
+          if (oldret.equals(ret)) {
+            break;
+          }
+          if (ret.compareTo(oldret) > 0) {
+            // Starting to vacillate; break
+            ret = oldret;
+            break;
+          }
         }
       }
       if (useRem) {
