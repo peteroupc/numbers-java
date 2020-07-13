@@ -2466,7 +2466,7 @@ FromInt32((int)bytes[offset]) :
       return ei;
     }
 
-    private static EInteger GcdLong(long u, long v) {
+    private static long GcdLong(long u, long v) {
       // Adapted from Christian Stigen Larsen's
       // public domain GCD code
 
@@ -2490,9 +2490,7 @@ FromInt32((int)bytes[offset]) :
           v = tmp;
         }
       }
-      EInteger eret = (u == 0) ?
-        EInteger.FromInt64(v << shl) : EInteger.FromInt64(u << shl);
-      return eret;
+      return (u == 0) ? (v << shl) : (u << shl);
     }
 
     /**
@@ -2538,7 +2536,7 @@ FromInt32((int)bytes[offset]) :
       if (thisValue.CanFitInInt64() && bigintSecond.CanFitInInt64()) {
         long u = thisValue.ToInt64Unchecked();
         long v = bigintSecond.ToInt64Unchecked();
-        return GcdLong(u, v);
+        return EInteger.FromInt64(GcdLong(u, v));
       } else {
         boolean bigger = thisValue.compareTo(bigintSecond) >= 0;
         if (!bigger) {
@@ -2621,7 +2619,8 @@ FromInt32((int)bytes[offset]) :
         }
         while (!eib.isZero()) {
           if (eia.wordCount <= 3 && eib.wordCount <= 3) {
-            return GcdLong(eia.ToInt64Checked(), eib.ToInt64Checked());
+            return EInteger.FromInt64(
+                GcdLong(eia.ToInt64Checked(), eib.ToInt64Checked()));
           }
           EInteger ta = eib;
           eib = eia.Remainder(eib);
@@ -2643,20 +2642,30 @@ FromInt32((int)bytes[offset]) :
       // a, b, m.get(0) ... m.get(3)
       if (eiam[0].compareTo(eiam[1]) > 0) {
         // a > b
-        EInteger[] divrem = eiam[0].DivRem(eiam[1]);
+        EInteger eia = eiam[0];
+        EInteger eib = eiam[1];
+        EInteger[] divrem = eia.DivRem(eib);
         if (BL(divrem[1]).compareTo(eis) <= 0) {
           divrem[0] = divrem[0].Subtract(1);
-          divrem[1] = divrem[1].Add(eiam[1]);
+          if (divrem[0].signum() < 0) {
+            throw new IllegalStateException();
+          }
+          divrem[1] = divrem[1].Add(eib);
         }
         eiam[3] = eiam[3].Add(eiam[2].Multiply(divrem[0]));
         eiam[5] = eiam[5].Add(eiam[4].Multiply(divrem[0]));
         eiam[0] = divrem[1];
       } else {
         // a <= b
-        EInteger[] divrem = eiam[1].DivRem(eiam[0]);
+        EInteger eia = eiam[1];
+        EInteger eib = eiam[0];
+        EInteger[] divrem = eia.DivRem(eib);
         if (BL(divrem[1]).compareTo(eis) <= 0) {
           divrem[0] = divrem[0].Subtract(1);
-          divrem[1] = divrem[1].Add(eiam[0]);
+          if (divrem[0].signum() < 0) {
+            throw new IllegalStateException();
+          }
+          divrem[1] = divrem[1].Add(eib);
         }
         eiam[2] = eiam[2].Add(eiam[3].Multiply(divrem[0]));
         eiam[4] = eiam[4].Add(eiam[5].Multiply(divrem[0]));
@@ -2677,30 +2686,40 @@ FromInt32((int)bytes[offset]) :
         // a, b, m.get(0) ... m.get(3)
         if (longam[0] > longam[1]) {
           // a > b
-          long drem = longam[0] % longam[1];
-          long[] divrem = new long[] {
-            longam[0] / longam[1], drem,
+          long a = longam[0];
+          long b = longam[1];
+          long ddiv = a / b;
+          long[] ldivrem = new long[] {
+            ddiv, a - (ddiv * b),
           };
-          if (LBL(divrem[1]) <= ls) {
-            --divrem[0];
-            divrem[1] += longam[1];
+          if (LBL(ldivrem[1]) <= ls) {
+            --ldivrem[0];
+            if (ldivrem[0] < 0) {
+              throw new IllegalStateException();
+            }
+            ldivrem[1] += b;
           }
-          longam[3] += longam[2] * divrem[0];
-          longam[5] += longam[4] * divrem[0];
-          longam[0] = divrem[1];
+          longam[3] += longam[2] * ldivrem[0];
+          longam[5] += longam[4] * ldivrem[0];
+          longam[0] = ldivrem[1];
         } else {
           // a <= b
-          long drem = longam[1] / longam[0];
-          long[] divrem = new long[] {
-            longam[1] % longam[0], drem,
+          long a = longam[1];
+          long b = longam[0];
+          long ddiv = a / b;
+          long[] ldivrem = new long[] {
+            ddiv, a - (ddiv * b),
           };
-          if (LBL(divrem[1]) <= ls) {
-            --divrem[0];
-            divrem[1] += longam[0];
+          if (LBL(ldivrem[1]) <= ls) {
+            --ldivrem[0];
+            if (ldivrem[0] < 0) {
+              throw new IllegalStateException();
+            }
+            ldivrem[1] += b;
           }
-          longam[2] += longam[3] * divrem[0];
-          longam[4] += longam[5] * divrem[0];
-          longam[1] = divrem[1];
+          longam[2] += longam[3] * ldivrem[0];
+          longam[4] += longam[5] * ldivrem[0];
+          longam[1] = ldivrem[1];
         }
       }
     }
@@ -2722,8 +2741,10 @@ FromInt32((int)bytes[offset]) :
         // System.out.println("LHalfGCD failed");
         return new long[] { longa, longb, 1, 0, 0, 1 };
       }
+      long olonga = longa;
+      long olongb = longb;
       long[] ret = new long[6];
-      // System.out.println("LHalfGCD "+longa+" "+longb);
+      // System.out.println("LHalfGCD " + longa + " " + longb);
       {
         int ln = Math.max(LBL(longa), LBL(longb));
         int lnmin = Math.min(LBL(longa), LBL(longb));
@@ -2732,7 +2753,7 @@ FromInt32((int)bytes[offset]) :
           // System.out.println("LHalfGCD failed: nmin<= s");
           return new long[] { longa, longb, 1, 0, 0, 1 };
         }
-        if (Math.min(LBL(longa), LBL(longb)) > ((ln * 3) >> 2) + 2) {
+        if (lnmin > ((ln * 3) >> 2) + 2) {
           int p1 = ln >> 1;
           long nhalfmask = (1L << p1) - 1;
           long longah = longa >> p1;
@@ -2748,9 +2769,13 @@ FromInt32((int)bytes[offset]) :
           longb = (longbl * ret2[2]) - (longal * ret2[4]);
           longa += ret2[0] << p1;
           longb += ret2[1] << p1;
+          if (longa < 0 || longb < 0) {
+            throw new IllegalStateException(
+              "Internal error: longa=" + olonga + " olongb=" +
+              olongb);
+          }
         } else {
           // Set M to identity
-          ret = new long[6];
           ret[2] = 1;
           ret[3] = 0;
           ret[4] = 0;
@@ -2758,14 +2783,12 @@ FromInt32((int)bytes[offset]) :
         }
         ret[0] = longa;
         ret[1] = longb;
-        for (int k = 0; k < 6; ++k) {
-          // System.out.println("ret_afterloop1 "+k+"=" +
-          // EInteger.FromInt64(ret[k]).ToRadixString(16));
-        }
         while (Math.max(LBL(ret[0]), LBL(ret[1])) > ((ln * 3) >> 2) + 1 &&
           LBL(ret[0] - ret[1]) > ls) {
           if (ret[0] < 0 || ret[1] < 0) {
-            throw new IllegalStateException("Internal error");
+            throw new IllegalStateException(
+              "Internal error: longa=" + olonga + " olongb=" +
+              olongb);
           }
           LSDivStep(ret, ls);
         }
@@ -2815,8 +2838,33 @@ FromInt32((int)bytes[offset]) :
       return ret;
     }
 
+    private static long[] SlowSgcd(long longa, long longb) {
+       long[] ret = new long[] { longa, longb, 1, 0, 0, 1 };
+       int ls = Math.max(LBL(longa), LBL(longb));
+       ls = (ls >> 1) + 1;
+       while (LBL(ret[0] - ret[1]) > ls) {
+         LSDivStep(ret, ls);
+       }
+       return ret;
+    }
+
+    private static EInteger[] SlowSgcd(EInteger eia, EInteger eib) {
+       EInteger[] ret = new EInteger[] {
+         eia, eib, EInteger.FromInt32(1), EInteger.FromInt32(0),
+         EInteger.FromInt32(0), EInteger.FromInt32(1),
+       };
+       EInteger eis = EInteger.Max(BL(eia), BL(eib));
+       eis = eis.ShiftRight(1).Add(1);
+       while (BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0) {
+         SDivStep(ret, eis);
+       }
+       return ret;
+    }
+
     // Implements Niels Moeller's Half-GCD algorithm from 2008
     private static EInteger[] HalfGCD(EInteger eia, EInteger eib) {
+      EInteger oeia = eia;
+      EInteger oeib = eib;
       if (eia.isZero() || eib.isZero()) {
         // System.out.println("HalfGCD failed");
         return new EInteger[] {
@@ -2825,6 +2873,7 @@ FromInt32((int)bytes[offset]) :
         };
       }
       EInteger[] ret = new EInteger[6];
+      // System.out.println("HalfGCD " + eia + " " + eib);
       if (eia.CanFitInInt64() && eib.CanFitInInt64()) {
         long[] lret = LHalfGCD(eia.ToInt64Checked(), eib.ToInt64Checked());
         if (lret == null) {
@@ -2839,16 +2888,15 @@ FromInt32((int)bytes[offset]) :
       EInteger einmin = MinBitLength(eia, eib);
       long ln = ein.CanFitInInt64() ? ein.ToInt64Checked() : -1;
       EInteger eis = ein.ShiftRight(1).Add(1);
-      /* // if (einmin.compareTo(eis) <= 0) {
-         //System.out.println("HalfGCD failed: nmin<= s");
-         //return new EInteger[] {
+      if (einmin.compareTo(eis) <= 0) {
+         // System.out.println("HalfGCD failed: nmin<= s");
+         return new EInteger[] {
            eia, eib, EInteger.FromInt32(1), EInteger.FromInt32(0),
-           //EInteger.FromInt32(0), EInteger.FromInt32(1)
+           EInteger.FromInt32(0), EInteger.FromInt32(1),
          };
-      //} */
+      }
       EInteger eiah, eial, eibh, eibl;
-      if (MinBitLength(eia,
-          eib).compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) > 0) {
+      if (einmin.compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) > 0) {
         EInteger p1 = ein.ShiftRight(1);
         EInteger nhalfmask = EInteger.FromInt32(1).ShiftLeft(p1).Subtract(1);
         eiah = eia.ShiftRight(p1);
@@ -2864,9 +2912,13 @@ FromInt32((int)bytes[offset]) :
         eib = eibl.Multiply(ret2[2]).Subtract(eial.Multiply(ret2[4]));
         eia = eia.Add(ret2[0].ShiftLeft(p1));
         eib = eib.Add(ret2[1].ShiftLeft(p1));
+        if (eia.signum() < 0 || eib.signum() < 0) {
+          throw new IllegalStateException(
+            "Internal error: oeia=" + oeia + " oeib=" +
+              oeib + " eiah=" + eiah + " eibh=" + eibh);
+        }
       } else {
         // Set M to identity
-        ret = new EInteger[6];
         ret[2] = EInteger.FromInt32(1);
         ret[3] = EInteger.FromInt32(0);
         ret[4] = EInteger.FromInt32(0);
@@ -2874,23 +2926,28 @@ FromInt32((int)bytes[offset]) :
       }
       ret[0] = eia;
       ret[1] = eib;
+      /*
       for (int k = 0; k < 6; ++k) {
-        // System.out.println("ret_afterloop1.set("+k+"," +
-        // ret[k].ToRadixString(16)));
+        System.out.println("ret_afterloop1_"+ k + "=" +
+           ret[k].ToRadixString(16));
       }
-      while (MaxBitLength(ret[0], ret[1]).compareTo(
+      */ while (MaxBitLength(ret[0], ret[1]).compareTo(
           ein.Multiply(3).ShiftRight(2).Add(1)) > 0 &&
-        BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0
-) {
+        BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0) {
         if (ret[0].signum() < 0 || ret[1].signum() < 0) {
-          throw new IllegalStateException("Internal error");
+          throw new IllegalStateException(
+            "Internal error: eia=" + oeia + " oeib=" +
+              oeib);
         }
         SDivStep(ret, eis);
+        // for (int k = 0; k < 6; ++k) {
+        // System.out.println("ret_loop2_"+ k + "=" + ret[k].ToRadixString(16));
+        // }
       }
-      for (int k = 0; k < 6; ++k) {
-        // System.out.println("ret_afterloop2.set("+k+"," +
-        // ret[k].ToRadixString(16)));
-      }
+      // for (int k = 0; k < 6; ++k) {
+      // System.out.println("ret_afterloop2_"+ k + "=" +
+      // ret[k].ToRadixString(16));
+      // }
       eia = ret[0];
       eib = ret[1];
       if (MinBitLength(eia, eib).compareTo(eis.Add(2)) > 0) {
@@ -2929,19 +2986,16 @@ FromInt32((int)bytes[offset]) :
       }
       ret[0] = eia;
       ret[1] = eib;
-      for (int k = 0; k < 6; ++k) {
+      // for (int k = 0; k < 6; ++k) {
         // System.out.println("ret_afterloop3.set("+k+"," +
         // ret[k].ToRadixString(16)));
-      }
+      // }
       while (BL(ret[0].Subtract(ret[1])).compareTo(eis) > 0) {
         if (ret[0].signum() < 0 || ret[1].signum() < 0) {
           throw new IllegalStateException("Internal error");
         }
         SDivStep(ret, eis);
         // System.out.println("[sdiv2]ret="+Arrays.toString(ret));
-      }
-      for (int k = 0; k < 6; ++k) {
-        // System.out.println("lhgcd.set("+k+"," + ret[k].ToRadixString(16)));
       }
 
       return ret;
@@ -2978,8 +3032,8 @@ FromInt32((int)bytes[offset]) :
         // System.out.println("eib->" + eib.ToRadixString(16));
         if (eia.signum() < 0 || eib.signum() < 0) {
           StringBuilder sb = new StringBuilder();
-          sb.append("eia="+ret[0] +"\n");
-          sb.append("eib="+ret[1] +"\n");
+          sb.append("eia=" + ret[0] + "\n");
+          sb.append("eib=" + ret[1] + "\n");
           for (int k = 0; k < 6; ++k) {
             sb.append("hgcd_" + k + "=" + hgcd[k].ToRadixString(16));
             sb.append("\n");
