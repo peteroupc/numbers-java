@@ -240,46 +240,7 @@ at: http://peteroupc.github.io/
       return FromBytes(bytes, 0, bytes.length, littleEndian);
     }
 
-    /**
-     * Initializes an arbitrary-precision integer from a portion of an array of
-     * bytes. The portion of the byte array is encoded using the following
-     * rules: <ul> <li>Positive numbers have the first byte's highest bit
-     * cleared, and negative numbers have the bit set.</li> <li>The last
-     * byte contains the lowest 8-bits, the next-to-last contains the next
-     * lowest 8 bits, and so on. For example, the number 300 can be encoded
-     * as <code>0x01, 0x2C</code> and 200 as <code>0x00, 0xC8</code>. (Note that the
-     * second example contains a set high bit in <code>0xC8</code>, so an
-     * additional 0 is added at the start to ensure it's interpreted as
-     * positive.)</li> <li>To encode negative numbers, take the absolute
-     * value of the number, subtract by 1, encode the number into bytes,
-     * and toggle each bit of each byte. Any further bits that appear
-     * beyond the most significant bit of the number will be all ones. For
-     * example, the number -450 can be encoded as <code>0xfe, 0x70</code> and
-     * -52869 as <code>0xff, 0x31, 0x7B</code>. (Note that the second example
-     * contains a cleared high bit in <code>0x31, 0x7B</code>, so an additional
-     * 0xff is added at the start to ensure it's interpreted as
-     * negative.)</li></ul> <p>For little-endian, the byte order is
-     * reversed from the byte order just discussed.</p>
-     * @param bytes A byte array consisting of the two's-complement form (see
-     *  {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}) of the
-     * arbitrary-precision integer to create. The byte array is encoded
-     * using the rules given in the FromBytes(bytes, offset, length,
-     * littleEndian) overload.
-     * @param offset An index starting at 0 showing where the desired portion of
-     * {@code bytes} begins.
-     * @param length The length, in bytes, of the desired portion of {@code bytes}
-     * (but not more than {@code bytes} 's length).
-     * @param littleEndian If true, the byte order is little-endian, or
-     * least-significant-byte first. If false, the byte order is
-     * big-endian, or most-significant-byte first.
-     * @return An arbitrary-precision integer. Returns 0 if the byte array's length
-     * is 0.
-     * @throws NullPointerException The parameter {@code bytes} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's
-     * length minus {@code offset} is less than {@code length}.
-     */
-    public static EInteger FromBytes(
+    private static EInteger FromBytes(
       byte[] bytes,
       int offset,
       int length,
@@ -2502,8 +2463,6 @@ FromInt32((int)bytes[offset]) :
      * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
-     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -2524,8 +2483,7 @@ FromInt32((int)bytes[offset]) :
       if (thisValue.equals(EInteger.FromInt32(1))) {
         return thisValue;
       }
-      if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 12) {
-      // if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 250) {
+      if (Math.max(thisValue.wordCount, bigintSecond.wordCount) > 250) {
         return SubquadraticGCD(thisValue, bigintSecond);
       } else {
         return BaseGcd(thisValue, bigintSecond);
@@ -2941,11 +2899,11 @@ FromInt32((int)bytes[offset]) :
         }
         SDivStep(ret, eis);
         // for (int k = 0; k < 6; ++k) {
-        // System.out.println("ret_loop2_"+ k + "=" + ret[k].ToRadixString(16));
+        //   System.out.println("ret_loop2_"+ k + "=" + ret[k].ToRadixString(16));
         // }
       }
       // for (int k = 0; k < 6; ++k) {
-      // System.out.println("ret_afterloop2_"+ k + "=" +
+      //  System.out.println("ret_afterloop2_"+ k + "=" +
       // ret[k].ToRadixString(16));
       // }
       eia = ret[0];
@@ -3004,7 +2962,7 @@ FromInt32((int)bytes[offset]) :
     private static EInteger SubquadraticGCD(EInteger eia, EInteger eib) {
       EInteger ein = MaxBitLength(eia, eib);
       EInteger[] ret = new EInteger[] { eia, eib };
-      for (int i = 0; i < 20; ++i) {
+      while (true) {
         if (ein.compareTo(48) < 0) {
           break;
         }
@@ -3039,6 +2997,10 @@ FromInt32((int)bytes[offset]) :
             sb.append("\n");
           }
           throw new IllegalStateException("Internal error\n" + sb);
+        }
+        if (ret[0].equals(eia) && ret[1].equals(eib)) {
+          // Didn't change
+          break;
         }
         ein = MaxBitLength(eia, eib);
         ret[0] = eia;

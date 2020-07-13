@@ -362,27 +362,6 @@ import com.upokecenter.numbers.*;
       return r;
     }
 
-    public static EInteger RandomBigInteger(RandomGenerator r) {
-      if (r == null) {
-        throw new NullPointerException("r");
-      }
-      int selection = r.UniformInt(100);
-      int count = r.UniformInt(60) + 1;
-      if (selection < 40) {
-        count = r.UniformInt(7) + 1;
-      }
-      if (selection < 50) {
-        count = r.UniformInt(15) + 1;
-      }
-      if (selection < 3) {
-        count = r.UniformInt(250) + 1;
-      }
-      byte[] bytes = new byte[count];
-      for (int i = 0; i < count; ++i) {
-        bytes[i] = (byte)((int)r.UniformInt(256));
-      }
-      return BigFromBytes(bytes);
-    }
     @Test
     public void TestFromBoolean() {
       Assert.assertEquals(EInteger.FromInt32(1), EInteger.FromBoolean(true));
@@ -411,8 +390,8 @@ import com.upokecenter.numbers.*;
     public void TestAddSubtract() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
-        EInteger bigintB = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintB = RandomObjects.RandomEInteger(r);
         EInteger bigintC = bigintA.Add(bigintB);
         EInteger bigintD = bigintC.Subtract(bigintB);
         if (!bigintD.equals(bigintA)) {
@@ -429,7 +408,7 @@ import com.upokecenter.numbers.*;
         }
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         int smallIntB = r.UniformInt(0x7fffffff);
         EInteger bigintC = bigintA.Add(smallIntB);
         EInteger bigintD = bigintC.Subtract(smallIntB);
@@ -828,7 +807,7 @@ import com.upokecenter.numbers.*;
     public void TestCanFitInInt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 2000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         Assert.assertEquals(
           bigintA.CanFitInInt32(),
           bigintA.GetSignedBitLengthAsEInteger().compareTo(31) <= 0);
@@ -935,9 +914,9 @@ import com.upokecenter.numbers.*;
     public void TestCompareTo() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
-        EInteger bigintB = RandomBigInteger(r);
-        EInteger bigintC = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintB = RandomObjects.RandomEInteger(r);
+        EInteger bigintC = RandomObjects.RandomEInteger(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
         TestCommon.CompareTestConsistency(bigintA, bigintB, bigintC);
       }
@@ -1289,47 +1268,34 @@ import com.upokecenter.numbers.*;
     }
 
     public static boolean TestEIntegerFromBytes(byte[] bytes, boolean littleEndian) {
-       if (bytes == null) {
-         throw new NullPointerException("bytes");
-       }
-       return TestEIntegerFromBytes(bytes, 0, bytes.length, littleEndian);
-    }
-
-    public static boolean TestEIntegerFromBytes(
-      byte[] bytes,
-      int offset,
-      int length,
-      boolean littleEndian) {
       if (bytes == null) {
         throw new NullPointerException("bytes");
       }
+      int offset = 0;
+      int length = bytes.length;
       if (length == 0) {
         return false;
       }
       if (littleEndian) {
         if (!(length == 1 || (
               !(bytes[offset + length - 1] == 0x00 && ((int)bytes[offset +
-length
-                - 2] & 0x80) == 0) && !(bytes[offset + length - 1] ==
-(byte)0xff &&
+                length - 2] & 0x80) == 0) && !(bytes[offset + length - 1] ==
+                (byte)0xff &&
                 ((int)bytes[offset + length - 2] & 0x80) != 0)))) {
           return false;
         }
       } else {
         if (!(length == 1 || (
               !(bytes[offset] == 0x00 && ((int)bytes[offset + 1] & 0x80) ==
-0) &&
-              !(bytes[offset] == (byte)0xff && ((int)bytes[offset + 1] &
-0x80) != 0)))) {
+                0) && !(bytes[offset] == (byte)0xff && ((int)bytes[offset + 1] &
+                  0x80) != 0)))) {
           return false;
         }
       }
       boolean negative = false;
       negative = (!littleEndian) ? ((bytes[offset] & 0x80) != 0) :
         ((bytes[offset + length - 1] & 0x80) != 0);
-      EInteger ei = (offset == 0 && length == bytes.length) ?
-          EInteger.FromBytes(bytes, littleEndian) :
-          EInteger.FromBytes(bytes, offset, length, littleEndian);
+      EInteger ei = EInteger.FromBytes(bytes, littleEndian);
       Assert.assertEquals(negative, ei.signum() < 0);
       byte[] ba = ei.ToBytes(littleEndian);
       TestCommon.AssertByteArraysEqual(bytes, offset, length, ba);
@@ -1356,11 +1322,12 @@ length
         TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
         int offset1 = rg.GetInt32(bytes.length + 1);
         int offset2 = rg.GetInt32(bytes.length + 1);
-        if (offset1 != offset2) {
+        /* if (offset1 != offset2) {
           int length = Math.abs(offset1 - offset2);
           int offset = Math.min(offset1, offset2);
           TestEIntegerFromBytes(bytes, offset, length, rg.UniformInt(2) == 0);
         }
+        */
       }
     }
     @Test
@@ -2018,7 +1985,7 @@ length
           }
         }
         EInteger bigprime = EInteger.FromInt32(prime);
-        EInteger ba = RandomBigInteger(rand);
+        EInteger ba = RandomObjects.RandomEInteger(rand);
         if (ba.isZero()) {
           continue;
         }
@@ -2112,62 +2079,62 @@ length
       }
     }
 
- @Test
- public void TestGcdSpecific1() {
-  EInteger eia =
+    @Test
+    public void TestGcdSpecific1() {
+      EInteger eia =
 
   EInteger.FromString("31087445093332925259488531187214798679962746631365434956607825050983640030004626432697");
-  EInteger eib =
+      EInteger eib =
 
   EInteger.FromString("634110413245973045752985332739706355633747812352917054306813756224650904");
-  EInteger gcd = EInteger.FromString("1");
-  TestGcdPair(eia, eib, gcd);
- }
+      EInteger gcd = EInteger.FromString("1");
+      TestGcdPair(eia, eib, gcd);
+    }
 
- @Test
- public void TestGcdSpecific2() {
-  EInteger eia =
+    @Test
+    public void TestGcdSpecific2() {
+      EInteger eia =
 
   EInteger.FromString("34919464185156438130737093950000449414901433260046574365653671833127498045928977578356713");
-  EInteger eib =
+      EInteger eib =
 
   EInteger.FromString("164193664625099565521863251759922447177022769597753704347721217067439342602815077739234");
-  EInteger gcd = EInteger.FromString("1");
-  TestGcdPair(eia, eib, gcd);
- }
- @Test
- public void TestGcdSpecific3() {
-  EInteger eia =
+      EInteger gcd = EInteger.FromString("1");
+      TestGcdPair(eia, eib, gcd);
+    }
+    @Test
+    public void TestGcdSpecific3() {
+      EInteger eia =
 
   EInteger.FromString("103862788645466657156274316837043801135780275578563880187476945864288161266");
-  EInteger eib =
+      EInteger eib =
 
   EInteger.FromString("49380347741774569630130462581871110923545066914152503189431047757");
-  EInteger gcd = EInteger.FromString("1");
-  TestGcdPair(eia, eib, gcd);
- }
- @Test
- public void TestGcdSpecific6() {
-  EInteger eia =
+      EInteger gcd = EInteger.FromString("1");
+      TestGcdPair(eia, eib, gcd);
+    }
+    @Test
+    public void TestGcdSpecific6() {
+      EInteger eia =
 
   EInteger.FromString("4478588462902174856284550822841587751257736243593417026536878393910594570150960");
-  EInteger eib =
+      EInteger eib =
 
   EInteger.FromString("200436597645961750509884674543137682538095599306199896499547606239076266894278634228");
-  EInteger gcd = EInteger.FromString("4");
-  TestGcdPair(eia, eib, gcd);
- }
- @Test
- public void TestGcdSpecific4() {
-  EInteger eia =
+      EInteger gcd = EInteger.FromString("4");
+      TestGcdPair(eia, eib, gcd);
+    }
+    @Test
+    public void TestGcdSpecific4() {
+      EInteger eia =
 
   EInteger.FromString("479324527105721205395276387652685206399828597662080440776635747462472972671572622295");
-  EInteger eib =
+      EInteger eib =
 
   EInteger.FromString("838212340549242323846978901107367041041509191230401720028242035196388222327176688904324510590144");
-  EInteger gcd = EInteger.FromString("11");
-  TestGcdPair(eia, eib, gcd);
- }
+      EInteger gcd = EInteger.FromString("11");
+      TestGcdPair(eia, eib, gcd);
+    }
 
     @Test
     public void TestGetBits() {
@@ -2184,7 +2151,7 @@ length
         Assert.assertEquals(39, integerTemp2);
       }
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         String str = bigintA.Abs().toString();
         Assert.assertEquals(str, EInteger.FromInt32(str.length()), bigintA.GetDigitCountAsEInteger());
       }
@@ -2601,7 +2568,7 @@ length
     public void TestIsEven() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         EInteger mod = bigintA.Remainder(EInteger.FromInt64(2));
         Assert.assertEquals(mod.isZero(), bigintA.isEven());
         if (bigintA.isEven()) {
@@ -2870,7 +2837,7 @@ length
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         EInteger bigintB = bigintA.Add(EInteger.FromInt32(1));
         EInteger bigintC = bigintA.Multiply(bigintB);
         // Test near-squaring
@@ -3175,7 +3142,10 @@ length
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 200; ++i) {
         int power = 1 + r.UniformInt(8);
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        while (bigintA.GetUnsignedBitLengthAsInt64() > 16 * 1000) {
+          bigintA = RandomObjects.RandomEInteger(r);
+        }
         EInteger bigintB = bigintA;
         for (int j = 1; j < power; ++j) {
           bigintB = bigintB.Multiply(bigintA);
@@ -3200,7 +3170,7 @@ length
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(-12), bigint.ShiftRight(12));
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         EInteger bigintB = bigintA;
         for (int j = 0; j < 100; ++j) {
           EInteger ba = bigintA;
@@ -3233,7 +3203,7 @@ length
         }
       }
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         bigintA = bigintA.Abs();
         EInteger bigintB = bigintA;
         for (int j = 0; j < 100; ++j) {
@@ -3257,7 +3227,10 @@ length
     public void TestRoot() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 20; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        while (bigintA.GetUnsignedBitLengthAsInt64() > 16 * 3000) {
+          bigintA = RandomObjects.RandomEInteger(r);
+        }
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3269,7 +3242,10 @@ length
         TestCommon.CompareTestEqual(bigintA, sr);
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        while (bigintA.GetUnsignedBitLengthAsInt64() > 16 * 1000) {
+          bigintA = RandomObjects.RandomEInteger(r);
+        }
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3313,7 +3289,7 @@ length
     public void TestSqrt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 20; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3327,7 +3303,7 @@ length
         TestCommon.CompareTestEqual(bigintA, sr);
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3467,7 +3443,7 @@ length
       RandomGenerator r = new RandomGenerator();
       for (int radix = 2; radix < 36; ++radix) {
         for (int i = 0; i < 80; ++i) {
-          EInteger bigintA = RandomBigInteger(r);
+          EInteger bigintA = RandomObjects.RandomEInteger(r);
           String s = bigintA.ToRadixString(radix);
           EInteger big2 = EInteger.FromRadixString(s, radix);
           Assert.assertEquals(big2.ToRadixString(radix), s);
@@ -3487,14 +3463,14 @@ length
       AssertBigIntegersEqual("898989", other);
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         ExtraTest.TestStringEqualRoundTrip(bigintA);
       }
       // Test serialization of relatively big numbers
       for (int i = 0; i < 20; ++i) {
-        EInteger bigintA = RandomBigInteger(r);
+        EInteger bigintA = RandomObjects.RandomEInteger(r);
         bigintA = bigintA.ShiftLeft(r.UniformInt(2000) + (16 * 500));
-        bigintA = bigintA.Subtract(RandomBigInteger(r));
+        bigintA = bigintA.Subtract(RandomObjects.RandomEInteger(r));
         ExtraTest.TestStringEqualRoundTrip(bigintA);
       }
     }
