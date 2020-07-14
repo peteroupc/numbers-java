@@ -1244,8 +1244,8 @@ rather than properties
      * @param bytes A sequence that represents a number.
      * @param offset An index starting at 0 showing where the desired portion of
      * {@code bytes} begins.
-     * @param length The length, in code units, of the desired portion of {@code
-     * bytes} (but not more than {@code bytes} 's length).
+     * @param length The length, in bytes, of the desired portion of {@code bytes}
+     * (but not more than {@code bytes} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
      * given sequence of bytes (interpreted as text).
      * @throws NumberFormatException The parameter {@code bytes} is not a correctly

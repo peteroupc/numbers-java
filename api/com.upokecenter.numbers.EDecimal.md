@@ -1613,8 +1613,8 @@ Creates an arbitrary-precision decimal number from a sequence of bytes
 * <code>offset</code> - An index starting at 0 showing where the desired portion of
  <code>bytes</code> begins.
 
-* <code>length</code> - The length, in code units, of the desired portion of <code>
- bytes</code> (but not more than <code>bytes</code> 's length).
+* <code>length</code> - The length, in bytes, of the desired portion of <code>bytes</code>
+ (but not more than <code>bytes</code> 's length).
 
 **Returns:**
 
