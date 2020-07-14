@@ -8609,12 +8609,11 @@ ShortMask) != 0) ? 9 :
       if (this.equals(EInteger.FromInt32(1))) {
         return new EInteger[] { EInteger.FromInt32(1), EInteger.FromInt32(0) };
       }
-      /*
-      if (this.CanFitInInt64()) {
-         long v = this.ToInt64Checked();
-         int bl = NumberUtility.BitLength(v);
-      }
-      */ EInteger bl = this.GetUnsignedBitLengthAsEInteger();
+      // if (this.CanFitInInt64()) {
+      // long v = this.ToInt64Checked();
+      // int bl = NumberUtility.BitLength(v);
+      // }
+      EInteger bl = this.GetUnsignedBitLengthAsEInteger();
       EInteger rm1 = root.Subtract(1);
       EInteger shift = EInteger.Max(
           EInteger.FromInt32(0),

@@ -216,11 +216,14 @@ import com.upokecenter.numbers.*;
 
     private static void DoTestPow(EInteger em1, int m2, EInteger eresult) {
       TestCommon.CompareTestEqual(eresult, em1.Pow(m2), "" + m2);
-      TestCommon.CompareTestEqual(eresult, em1.Pow(EInteger.FromInt32(m2)),
-  "" + m2);
-      TestCommon.CompareTestEqual(eresult,
-  em1.PowBigIntVar(EInteger.FromInt32(m2)),
-  "" + m2);
+      TestCommon.CompareTestEqual(
+        eresult,
+        em1.Pow(EInteger.FromInt32(m2)),
+        "" + m2);
+      TestCommon.CompareTestEqual(
+        eresult,
+        em1.PowBigIntVar(EInteger.FromInt32(m2)),
+        "" + m2);
     }
 
     public static void DoTestRemainder(
@@ -3260,6 +3263,49 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestSign() {
       // not implemented yet
+    }
+
+    @Test
+    public void TestRootRem() {
+      TestCommon.CompareTestEqual(
+          EInteger.FromInt32(2),
+          EInteger.FromInt32(26).RootRem(3)[0]);
+      RandomGenerator r = new RandomGenerator();
+      for (int i = 0; i < 500; ++i) {
+        EInteger bigintA = RandomManageableEInteger(r);
+        if (bigintA.signum() < 0) {
+          bigintA = bigintA.Negate();
+        }
+        if (bigintA.signum() == 0) {
+          bigintA = EInteger.FromInt32(1);
+        }
+        EInteger[] srr = bigintA.RootRem(3);
+        EInteger srsqr = srr[0].Multiply(srr[0]).Multiply(srr[0]);
+        if (srsqr.compareTo(bigintA) > 0) {
+          Assert.fail(srsqr + " not " + bigintA +
+            " or less (TestRoot, root=" + srr + ")");
+        }
+        EInteger srrem = bigintA.Subtract(srsqr);
+        TestCommon.CompareTestEqual(srrem, srr[1]);
+      }
+      try {
+        EInteger.FromInt32(7).RootRem(0);
+        Assert.fail("Should have failed");
+      } catch (IllegalArgumentException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
+      try {
+        EInteger.FromInt32(7).RootRem(-1);
+        Assert.fail("Should have failed");
+      } catch (IllegalArgumentException ex) {
+        // NOTE: Intentionally empty
+      } catch (Exception ex) {
+        Assert.fail(ex.toString());
+        throw new IllegalStateException("", ex);
+      }
     }
 
     @Test
