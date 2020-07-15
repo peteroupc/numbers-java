@@ -18,8 +18,7 @@ Represents an arbitrary-precision binary floating-point number.
 A class that implements additional operations on arbitrary-precision binary
  floating-point numbers.
 
-* [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -
-Represents an arbitrary-precision integer.
+* [com.upokecenter.numbers.EInteger](com.upokecenter.numbers.EInteger.md) -  
 
 * [com.upokecenter.numbers.ERational](com.upokecenter.numbers.ERational.md) -
 Represents an arbitrary-precision rational number.

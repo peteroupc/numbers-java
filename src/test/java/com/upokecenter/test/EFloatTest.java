@@ -2090,6 +2090,9 @@ import com.upokecenter.numbers.*;
       }
       EInteger emant = efa.getMantissa();
       int mantBits = emant.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
+      if (mantBits > bitCount) {
+        throw new IllegalStateException("Too many bits; expected double- or single-sized significand");
+      }
       boolean fullPrecision = mantBits == bitCount;
       boolean isSubnormal = EFloats.IsSubnormal(efa,
           dbl ? EContext.Binary64 : EContext.Binary32);
