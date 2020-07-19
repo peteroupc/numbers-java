@@ -1272,8 +1272,29 @@ at: http://peteroupc.github.io/
           }
         } else {
           // Greater than 1
+          T hundred = this.helper.ValueOf(100);
           T two = this.helper.ValueOf(2);
-          if (this.compareTo(thisValue, two) >= 0) {
+          if (this.compareTo(thisValue, hundred) >= 0 &&
+this.helper.GetRadix() == 2) {
+            FastIntegerFixed fmant = this.helper.GetMantissaFastInt(thisValue);
+            EInteger fexp =
+this.helper.GetExponentFastInt(thisValue).ToEInteger();
+            EInteger fbits =
+fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
+            fexp = fexp.Add(fbits);
+            T reduced = this.helper.CreateNewWithFlags(fmant.ToEInteger(),
+  fexp,
+  0);
+            T addval = this.helper.CreateNewWithFlags(fexp, EInteger.FromInt32(0), 0);
+            EInteger cprec = ctx.getPrecision().Add(10);
+            ctxdiv = SetPrecisionIfLimited(ctx, cprec)
+              .WithRounding(intermedRounding).WithBlankFlags();
+            reduced = this.Ln(reduced, ctxdiv);
+            thisValue = this.Add(this.Multiply(this.Ln(two, ctxdiv), addval,
+  null),
+ reduced,
+ ctxCopy);
+          } else if (this.compareTo(thisValue, two) >= 0) {
             // 2 or greater
             FastInteger roots = new FastInteger(0);
             FastInteger error;
