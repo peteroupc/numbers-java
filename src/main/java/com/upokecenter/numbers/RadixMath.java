@@ -1289,6 +1289,9 @@ fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
             EInteger cprec = ctx.getPrecision().Add(10);
             ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
+            if (this.compareTo(reduced, hundred) >= 0) {
+              throw new IllegalStateException("" + reduced);
+            }
             reduced = this.Ln(reduced, ctxdiv);
             thisValue = this.Add(this.Multiply(this.Ln(two, ctxdiv), addval,
   null),
