@@ -335,16 +335,24 @@ import com.upokecenter.numbers.*;
  }
       {
         Object objectTemp =
+
   EFloat.FromString("0.009461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
         Object objectTemp2 =
+
   EFloat.FromString("0.009461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
         Assert.assertEquals(objectTemp, objectTemp2);
       }
-      if (!(
-  EFloat.FromString("0.009461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609")).equals(EFloat.FromString("0.001809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474"))) {
- Assert.fail((
-  EFloat.FromString("0.009461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609"))+" not equal to "+(EFloat.FromString("0.001809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474")));
+      {
+        Object objectTemp =
+
+  EFloat.FromString("0.009461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
+        Object objectTemp2 =
+
+  EFloat.FromString("0.001809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474");
+        if (!(objectTemp).equals(objectTemp2)) {
+ Assert.fail((objectTemp)+" not equal to "+(objectTemp2));
 }
+      }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EFloat bigintA = RandomObjects.RandomEFloat(r);
@@ -2170,8 +2178,8 @@ Assert.assertEquals(efb, efa);
       EInteger emant = efa.getMantissa();
       int mantBits = emant.GetUnsignedBitLengthAsEInteger().ToInt32Checked();
       if (mantBits > bitCount) {
-        throw new IllegalStateException("Too many bits; expected double-
-or single-sized significand");
+        throw new IllegalStateException("Too many bits; expected double-" +
+"\u0020or single-sized significand");
       }
       boolean fullPrecision = mantBits == bitCount;
       boolean isSubnormal = EFloats.IsSubnormal(efa,
