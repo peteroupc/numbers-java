@@ -1308,21 +1308,15 @@ fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
             EInteger cprec = ctx.getPrecision().Add(10);
             ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
-            if (this.compareTo(reduced, one) >= 0 ||
-                 this.compareTo(reduced, half) < 0) {
-              throw new IllegalStateException(
-                "thisValue = " + thisValue + "\n" +
-                "fexp = " + fexp + "\n" + "fbits = " + fbits + "\n" +
-                "adjval = " + adjval + "\n" + "reduced = " + reduced + "\n");
-            }
+
             System.out.println("thisValue = " + thisValue + "\n" +
                 "fexp = " + fexp + "\n" + "fbits = " + fbits + "\n" +
                 "adjval = " + adjval + "\n" + "reduced = " + reduced + "\n");
             reduced = this.Ln(reduced, ctxdiv);
-            thisValue = this.Add(this.Multiply(this.Ln(two, ctxdiv), addval,
-  null),
- reduced,
- ctxCopy);
+            thisValue = this.MultiplyAndAdd(
+              this.Ln(two, ctxdiv),
+              addval,
+              reduced, ctxCopy);
           } else if (this.compareTo(thisValue, two) >= 0) {
             // 2 or greater
             FastInteger roots = new FastInteger(0);

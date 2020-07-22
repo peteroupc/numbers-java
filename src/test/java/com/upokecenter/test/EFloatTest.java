@@ -1005,9 +1005,10 @@ import com.upokecenter.numbers.*;
 }
 @Test
     public void TestLogExpSpecificF() {
-EFloat efa = EFloat.Create(7894203448763243L, 790).Log(EContext.Binary64);
-EFloat efb = EFloat.Create(642324992820697L, -40);
-Assert.assertEquals(efb, efa);
+ EFloat efa = EFloat.Create(7894203448763243L, 790).Log(EContext.Binary64);
+ EFloat efb = EFloat.Create(642324992820697L, -40);
+ String str = OutputEF(efb) + "\n" + OutputEF(efa);
+ TestCommon.CompareTestEqual(efb, efa, str);
 }
 @Test
     public void TestLogExpSpecificG() {
