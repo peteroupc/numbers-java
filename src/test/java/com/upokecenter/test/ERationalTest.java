@@ -447,6 +447,26 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestEquals() {
+      if (ERational.One.equals(null)) {
+ Assert.fail();
+ }
+      if (ERational.Zero.equals(null)) {
+ Assert.fail();
+ }
+      if (ERational.One.equals(ERational.Zero)) {
+ Assert.fail();
+ }
+      if (ERational.Zero.equals(ERational.One)) {
+ Assert.fail();
+ }
+      Assert.assertEquals(
+        ERational.FromString("12/24"),
+        ERational.FromString("12/24"));
+      if (!(
+        ERational.FromString("24/48")).equals(ERational.FromString("12/24"))) {
+ Assert.fail((
+        ERational.FromString("24/48"))+" not equal to "+(ERational.FromString("12/24")));
+}
       ERational era = ERational.FromString("0/3920");
       ERational erb = ERational.FromString("0/3920");
       TestCommon.CompareTestEqualAndConsistent(

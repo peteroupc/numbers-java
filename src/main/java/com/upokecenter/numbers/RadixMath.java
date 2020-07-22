@@ -1275,23 +1275,49 @@ at: http://peteroupc.github.io/
           T hundred = this.helper.ValueOf(100);
           T two = this.helper.ValueOf(2);
           if (this.compareTo(thisValue, hundred) >= 0 &&
-this.helper.GetRadix() == 2) {
+                this.helper.GetRadix() == 2) {
+            T half = this.Divide(this.helper.ValueOf(1),
+  this.helper.ValueOf(2), EContext.Unlimited);
             FastIntegerFixed fmant = this.helper.GetMantissaFastInt(thisValue);
             EInteger fexp =
 this.helper.GetExponentFastInt(thisValue).ToEInteger();
             EInteger fbits =
 fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
-            fexp = fexp.Add(fbits);
-            T reduced = this.helper.CreateNewWithFlags(fmant.ToEInteger(),
-  fexp,
-  0);
-            T addval = this.helper.CreateNewWithFlags(fexp, EInteger.FromInt32(0), 0);
+            EInteger adjval = EInteger.FromInt32(1);
+            adjval = fbits.Negate(); // fexp.Subtract(fbits.Add(fexp));
+            EInteger adjbits = EInteger.FromInt32(0);
+            T reduced = null;
+            if (fexp.signum() > 0) {
+               reduced = this.helper.CreateNewWithFlags(fmant.ToEInteger(),
+                 adjval,
+                 0);
+               adjbits = fexp.Add(fbits);
+            } else {
+               reduced = this.helper.CreateNewWithFlags(fmant.ToEInteger(),
+                 adjval,
+                 0);
+               adjbits = fexp.Add(fbits);
+            }
+            T addval = adjbits.signum() < 0 ? this.helper.CreateNewWithFlags(
+                  adjbits.Abs(),
+                  EInteger.FromInt32(0),
+                BigNumberFlags.FlagNegative) : this.helper.CreateNewWithFlags(
+                  adjbits.Abs(),
+                  EInteger.FromInt32(0),
+                  0);
             EInteger cprec = ctx.getPrecision().Add(10);
             ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
-            if (this.compareTo(reduced, hundred) >= 0) {
-              throw new IllegalStateException("" + reduced);
+            if (this.compareTo(reduced, one) >= 0 ||
+                 this.compareTo(reduced, half) < 0) {
+              throw new IllegalStateException(
+                "thisValue = " + thisValue + "\n" +
+                "fexp = " + fexp + "\n" + "fbits = " + fbits + "\n" +
+                "adjval = " + adjval + "\n" + "reduced = " + reduced + "\n");
             }
+            System.out.println("thisValue = " + thisValue + "\n" +
+                "fexp = " + fexp + "\n" + "fbits = " + fbits + "\n" +
+                "adjval = " + adjval + "\n" + "reduced = " + reduced + "\n");
             reduced = this.Ln(reduced, ctxdiv);
             thisValue = this.Add(this.Multiply(this.Ln(two, ctxdiv), addval,
   null),
