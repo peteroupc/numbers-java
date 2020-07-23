@@ -1272,17 +1272,21 @@ at: http://peteroupc.github.io/
           }
         } else {
           // Greater than 1
-          T hundred = this.helper.ValueOf(100);
+          // T hundred = this.helper.ValueOf(100);
           T two = this.helper.ValueOf(2);
-          if (this.compareTo(thisValue, hundred) >= 0 &&
+          // System.out.println("thisValue=" + thisValue +
+          // " hundredcmp=" + this.compareTo(thisValue, hundred) +
+          // " twocmp=" + this.compareTo(thisValue, two));
+          if (this.compareTo(thisValue, two) > 0 &&
                 this.helper.GetRadix() == 2) {
             T half = this.Divide(this.helper.ValueOf(1),
-  this.helper.ValueOf(2), EContext.Unlimited);
+             this.helper.ValueOf(2),
+           EContext.Unlimited);
             FastIntegerFixed fmant = this.helper.GetMantissaFastInt(thisValue);
             EInteger fexp =
-this.helper.GetExponentFastInt(thisValue).ToEInteger();
+               this.helper.GetExponentFastInt(thisValue).ToEInteger();
             EInteger fbits =
-fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
+               fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
             EInteger adjval = EInteger.FromInt32(1);
             adjval = fbits.Negate(); // fexp.Subtract(fbits.Add(fexp));
             EInteger adjbits = EInteger.FromInt32(0);
@@ -1301,7 +1305,7 @@ fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
             T addval = adjbits.signum() < 0 ? this.helper.CreateNewWithFlags(
                   adjbits.Abs(),
                   EInteger.FromInt32(0),
-                BigNumberFlags.FlagNegative) : this.helper.CreateNewWithFlags(
+                  BigNumberFlags.FlagNegative) : this.helper.CreateNewWithFlags(
                   adjbits.Abs(),
                   EInteger.FromInt32(0),
                   0);
@@ -1309,14 +1313,15 @@ fmant.ToEInteger().GetUnsignedBitLengthAsEInteger();
             ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
 
-            System.out.println("thisValue = " + thisValue + "\n" +
-                "fexp = " + fexp + "\n" + "fbits = " + fbits + "\n" +
-                "adjval = " + adjval + "\n" + "reduced = " + reduced + "\n");
+            // System.out.println("thisValue = " + thisValue + "\n" +
+            // "fexp = " + fexp + "\n" + "fbits = " + fbits + "\n" +
+            // "adjval = " + adjval + "\n" + "reduced = " + reduced + "\n");
             reduced = this.Ln(reduced, ctxdiv);
             thisValue = this.MultiplyAndAdd(
               this.Ln(two, ctxdiv),
               addval,
-              reduced, ctxCopy);
+              reduced,
+              ctxCopy);
           } else if (this.compareTo(thisValue, two) >= 0) {
             // 2 or greater
             FastInteger roots = new FastInteger(0);

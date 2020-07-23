@@ -1014,7 +1014,8 @@ import com.upokecenter.numbers.*;
     public void TestLogExpSpecificG() {
  EFloat efa = EFloat.Create(4939846268124649L, -48).Log(EContext.Binary64);
  EFloat efb = EFloat.Create(6451509911495955L, -51);
- String str = OutputEF(efb) + "\n" + OutputEF(efa);
+ String str = OutputEF(efb) + "\n" + OutputEF(efa) + "\nInput: " +
+        OutputEF(EFloat.Create(4939846268124649L, -48)) ;
  TestCommon.CompareTestEqual(efb, efa, str);
 }
 
