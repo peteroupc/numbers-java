@@ -5725,8 +5725,7 @@ at: http://peteroupc.github.io/
           highExpBound = highExpBound.Add(bounds[1]);
           FastIntegerFixed fpf =
 FastIntegerFixed.FromFastInteger(fastPrecision);
-          /*
-          String
+          /* String
 ch1=""+lowExpBound;ch1=ch1.substring(0,Math.min(12,ch1.length()));
           String
 ch2=""+highExpBound;ch2=ch2.substring(0,Math.min(12,ch2.length()));
