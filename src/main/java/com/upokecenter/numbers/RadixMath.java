@@ -1314,9 +1314,8 @@ return null;
         } else if (cmpOne < 0) {
           // Less than 1
           T half = this.Divide(one, this.helper.ValueOf(2), ctxCopy);
-          if (this.compareTo(thisValue, half) >= 0 && this.helper.GetRadix()
-== 2 &&
-              ctx.getPrecision().compareTo(53) <= 0) {
+          if (this.compareTo(thisValue, half) >= 0 &&
+              this.helper.GetRadix() == 2 && ctx.getPrecision().compareTo(53) <= 0) {
             if (thisValue instanceof EFloat) {
               EFloat ef = ((thisValue instanceof EFloat) ? (EFloat)thisValue : null);
               ef = FastLn(ef, ctxCopy);
