@@ -1123,13 +1123,13 @@ at: http://peteroupc.github.io/
             this.Divide(fracpart, intpart, ctxdiv),
             null);
         ctxdiv.setFlags(0);
-        System.out.println("fracpart1=" + fracpart);
+        // System.out.println("fracpart1=" + fracpart);
         EInteger workingPrec = ctxdiv.getPrecision();
         workingPrec = workingPrec.Add(
             this.WorkingDigits(EInteger.FromInt32(40)));
-        System.out.println("intpart=" + intpart + " wp=" + workingPrec);
+        // System.out.println("intpart=" + intpart + " wp=" + workingPrec);
         thisValue = this.ExpInternal(fracpart, workingPrec, ctxdiv);
-        System.out.println("thisValue=" + thisValue);
+        // System.out.println("thisValue=" + thisValue);
         if ((ctxdiv.getFlags() & EContext.FlagUnderflow) != 0) {
           if (ctx.getHasFlags()) {
             ctx.setFlags(ctx.getFlags()|(ctxdiv.getFlags()));
