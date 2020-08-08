@@ -290,8 +290,8 @@ IntegerMode.SmallValue) {
         case LargeValue:
           return new FastIntegerFixed(
             IntegerMode.LargeValue,
- 0,
- this.largeValue.Negate());
+            0,
+            this.largeValue.Negate());
         default: throw new IllegalStateException();
       }
     }
