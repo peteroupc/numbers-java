@@ -110,13 +110,13 @@ import com.upokecenter.numbers.*;
 
     // Generates an EInteger of manageable size
     private static EInteger RandomManageableEInteger(IRandomGenExtended rg) {
-       EInteger ei;
-       while (true) {
-         ei = RandomObjects.RandomEInteger(rg);
-         if (ei.GetUnsignedBitLengthAsInt64() <= 16 * 3000) {
-           return ei;
-         }
-       }
+      EInteger ei;
+      while (true) {
+        ei = RandomObjects.RandomEInteger(rg);
+        if (ei.GetUnsignedBitLengthAsInt64() <= 16 * 3000) {
+          return ei;
+        }
+      }
     }
 
     public static void AssertAdd(EInteger bi, EInteger bi2, String s) {
@@ -1308,8 +1308,17 @@ import com.upokecenter.numbers.*;
       if (bytes == null) {
         throw new NullPointerException("bytes");
       }
-      int offset = 0;
-      int length = bytes.length;
+      return TestEIntegerFromBytes(bytes, 0, bytes.length, littleEndian);
+    }
+
+    public static boolean TestEIntegerFromBytes(
+      byte[] bytes,
+      int offset,
+      int length,
+      boolean littleEndian) {
+      if (bytes == null) {
+        throw new NullPointerException("bytes");
+      }
       if (length == 0) {
         return false;
       }
@@ -1332,7 +1341,9 @@ import com.upokecenter.numbers.*;
       boolean negative = false;
       negative = (!littleEndian) ? ((bytes[offset] & 0x80) != 0) :
         ((bytes[offset + length - 1] & 0x80) != 0);
-      EInteger ei = EInteger.FromBytes(bytes, littleEndian);
+      EInteger ei = (offset == 0 && length == bytes.length) ?
+        EInteger.FromBytes(bytes, littleEndian) :
+        EInteger.FromBytes(bytes, offset, length, littleEndian);
       Assert.assertEquals(negative, ei.signum() < 0);
       byte[] ba = ei.ToBytes(littleEndian);
       TestCommon.AssertByteArraysEqual(bytes, offset, length, ba);
@@ -1359,12 +1370,11 @@ import com.upokecenter.numbers.*;
         TestEIntegerFromBytes(bytes, rg.UniformInt(2) == 0);
         int offset1 = rg.GetInt32(bytes.length + 1);
         int offset2 = rg.GetInt32(bytes.length + 1);
-        /* if (offset1 != offset2) {
+        if (offset1 != offset2) {
           int length = Math.abs(offset1 - offset2);
           int offset = Math.min(offset1, offset2);
           TestEIntegerFromBytes(bytes, offset, length, rg.UniformInt(2) == 0);
         }
-        */
       }
     }
     @Test
@@ -2863,12 +2873,12 @@ import com.upokecenter.numbers.*;
     }
 
     public static void TestSimpleMultiply(int inta, int intb, int intresult) {
-       TestCommon.CompareTestEqual(
-            EInteger.FromInt32(intresult),
-            EInteger.FromInt32(inta).Multiply(EInteger.FromInt32(intb)));
-       TestCommon.CompareTestEqual(
-         EInteger.FromInt32(intresult),
-         EInteger.FromInt32(inta).Multiply(intb));
+      TestCommon.CompareTestEqual(
+        EInteger.FromInt32(intresult),
+        EInteger.FromInt32(inta).Multiply(EInteger.FromInt32(intb)));
+      TestCommon.CompareTestEqual(
+        EInteger.FromInt32(intresult),
+        EInteger.FromInt32(inta).Multiply(intb));
     }
 
     @Test
@@ -3288,8 +3298,8 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestRootRem() {
       TestCommon.CompareTestEqual(
-          EInteger.FromInt32(2),
-          EInteger.FromInt32(26).RootRem(3)[0]);
+        EInteger.FromInt32(2),
+        EInteger.FromInt32(26).RootRem(3)[0]);
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
         EInteger bigintA = RandomManageableEInteger(r);
@@ -3331,8 +3341,8 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestRoot() {
       TestCommon.CompareTestEqual(
-          EInteger.FromInt32(2),
-          EInteger.FromInt32(26).Root(3));
+        EInteger.FromInt32(2),
+        EInteger.FromInt32(26).Root(3));
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
         EInteger bigintA = RandomManageableEInteger(r);
