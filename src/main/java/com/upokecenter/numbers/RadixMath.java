@@ -1320,7 +1320,10 @@ return null;
               EFloat ef = ((thisValue instanceof EFloat) ? (EFloat)thisValue : null);
               ef = FastLn(ef, ctxCopy);
               if (ef != null) {
-                thisValue = (T)ef;
+                thisValue = this.helper.CreateNewWithFlags(
+                  ef.getUnsignedMantissa(),
+                  ef.getExponent(),
+                  BigNumberFlags.FlagNegative);
                 if (ctx.getHasFlags()) {
                   ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact));
                   ctx.setFlags(ctx.getFlags()|(EContext.FlagRounded));

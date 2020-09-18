@@ -2952,7 +2952,7 @@ import com.upokecenter.numbers.*;
         TestToFloatRoundingOne(objectTemp, true);
         objectTemp = EFloat.Create(
   EInteger.FromRadixString("100110100000000011000010111000111111101", 2),
-            EInteger.FromInt32(-1073));
+  EInteger.FromInt32(-1073));
         TestToFloatRoundingOne(objectTemp, true);
       }
     }
