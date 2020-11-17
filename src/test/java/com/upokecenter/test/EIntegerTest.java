@@ -3338,14 +3338,15 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    @Test
+    @Test(timeout = 40000)
     public void TestRoot() {
       TestCommon.CompareTestEqual(
         EInteger.FromInt32(2),
         EInteger.FromInt32(26).Root(3));
       RandomGenerator r = new RandomGenerator();
-      for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomManageableEInteger(r);
+      for (int i = 0; i < 1000 + 100; ++i) {
+        EInteger bigintA = (i < 100) ? EInteger.FromInt32(i) :
+RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3397,7 +3398,7 @@ import com.upokecenter.numbers.*;
       }
     }
 
-    @Test
+    @Test(timeout = 20000)
     public void TestSqrt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 20; ++i) {
@@ -3414,8 +3415,9 @@ import com.upokecenter.numbers.*;
         sr = sqr.Root(2);
         TestCommon.CompareTestEqual(bigintA, sr);
       }
-      for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomManageableEInteger(r);
+      for (int i = 0; i < 10000 + 100; ++i) {
+        EInteger bigintA = (i < 100) ? EInteger.FromInt32(i) :
+RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
