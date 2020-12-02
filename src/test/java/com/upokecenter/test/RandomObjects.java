@@ -623,7 +623,7 @@ maxExc) {
       if (exponentCount > 0) {
         int rr = r.GetInt32(3);
         if (rr == 0) {
-          sb.append("E");
+          sb.append('E');
         } else if (rr == 1) {
           sb.append("E+");
         } else if (rr == 2) {
