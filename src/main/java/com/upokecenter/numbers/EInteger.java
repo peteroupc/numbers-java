@@ -9,7 +9,9 @@ Parts of the GCD function adapted by Peter O.
 from public domain GCD code by Christian
 Stigen Larsen (http://csl.sublevel3.org).
 
-Any copyright is dedicated to the Public Domain.
+Any copyright to this work is released to the Public Domain.
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
 http://creativecommons.org/publicdomain/zero/1.0/
 If you like this, you should donate to Peter O.
 at: http://peteroupc.github.io/
@@ -2503,7 +2505,7 @@ FromInt32((int)bytes[offset]) :
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
-     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
+     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {

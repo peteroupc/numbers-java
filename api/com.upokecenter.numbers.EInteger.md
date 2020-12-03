@@ -1475,7 +1475,7 @@ Returns the greatest common divisor of this integer and the given integer.
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
 * <code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn't satisfy
- shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
+ shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
 
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()
