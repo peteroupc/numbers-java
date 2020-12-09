@@ -4844,11 +4844,27 @@ at: http://peteroupc.github.io/
     }
 
     /**
+     * Converts an unsigned integer expressed as a 64-bit signed integer to an
+     * arbitrary-precision binary number.
+     * @param longerValue A 64-bit signed integer. If this value is 0 or greater,
+     * the return value will represent it. If this value is less than 0,
+     * the return value will store 2^64 plus this value instead.
+     * @return An arbitrary-precision binary number with the exponent set to 0. If
+     * {@code longerValue} is 0 or greater, the return value will represent
+     * it. If {@code longerValue} is less than 0, the return value will
+     * store 2^64 plus this value instead.
+     */
+    public static EFloat FromInt64AsUnsigned(long longerValue) {
+      return longerValue >= 0 ? FromInt64(longerValue) :
+           FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
+    }
+
+    /**
      * Converts a 64-bit signed integer to an arbitrary-precision binary
      * floating-point number.
      * @param inputInt64 The number to convert as a 64-bit signed integer.
      * @return This number's value as an arbitrary-precision binary floating-point
-     * number.
+     * number with the exponent set to 0.
      */
     public static EFloat FromInt64(long inputInt64) {
       if (inputInt64 >= CacheFirst && inputInt64 <= CacheLast) {

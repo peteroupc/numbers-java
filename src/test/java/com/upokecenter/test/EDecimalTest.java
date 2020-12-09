@@ -1379,8 +1379,10 @@ import com.upokecenter.numbers.*;
       }
       {
         Object objectTemp =
+
   EDecimal.FromString("0.009461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
         Object objectTemp2 =
+
   EDecimal.FromString("0.001809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474");
         if (!(objectTemp).equals(objectTemp2)) {
  Assert.fail((objectTemp)+" not equal to "+(objectTemp2));
@@ -5900,6 +5902,32 @@ EDecimal.FromString("-6.44157770841120149430189812635250244E+472921500817");
         Assert.fail(ex.toString());
         throw new IllegalStateException("", ex);
       }
+    }
+
+    public static void TestUnsignedLongOne(long v, String expectedStr) {
+         EInteger ei = EInteger.FromInt64AsUnsigned(v);
+         Assert.assertEquals(
+           expectedStr,
+           DataUtilities.ToLowerCaseAscii(ei.ToRadixString(16)));
+         EDecimal ed = EDecimal.FromInt64AsUnsigned(v);
+         TestCommon.CompareTestEqual(EDecimal.FromEInteger(ei), ed);
+         EFloat ef = EDecimal.FromInt64AsUnsigned(v);
+         TestCommon.CompareTestEqual(EFloat.FromEInteger(ei), ef);
+         ERational er = EDecimal.FromInt64AsUnsigned(v);
+         TestCommon.CompareTestEqual(ERational.FromEInteger(ei), er);
+    }
+
+    @Test
+    public void TestUnsignedLong() {
+       TestUnsignedLongOne(0x0L,"0");
+       TestUnsignedLongOne(0xFL,"f");
+       TestUnsignedLongOne(0xFFFFFFFFL,"ffffffff");
+       TestUnsignedLongOne(-1,"ffffffffffffffff");
+       TestUnsignedLongOne(-3,"fffffffffffffffd");
+       TestUnsignedLongOne(Long.MAX_VALUE,"7fffffffffffffff");
+       TestUnsignedLongOne(Long.MAX_VALUE-1,"7ffffffffffffffe");
+       TestUnsignedLongOne(Long.MIN_VALUE,"8000000000000000");
+       TestUnsignedLongOne(Long.MIN_VALUE+1,"8000000000000001");
     }
 
     @Test

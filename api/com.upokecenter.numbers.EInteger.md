@@ -118,6 +118,9 @@ Renamed to ToInt64Unchecked.
  Converts a 32-bit signed integer to an arbitrary-precision integer.
 * `static EInteger FromInt64​(long longerValue)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision integer.
+* `static EInteger FromInt64AsUnsigned​(long longerValue)`<br>
+ Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision integer.
 * `static EInteger FromRadixString​(byte[] bytes,
                int radix)`<br>
  Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
@@ -532,6 +535,24 @@ Converts a 32-bit signed integer to an arbitrary-precision integer.
 
 * An arbitrary-precision integer with the same value as the 64-bit
  number.
+
+### FromInt64AsUnsigned
+    public static EInteger FromInt64AsUnsigned​(long longerValue)
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision integer.
+
+**Parameters:**
+
+* <code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+ the return value will represent it. If this value is less than 0,
+ the return value will store 2^64 plus this value instead.
+
+**Returns:**
+
+* An arbitrary-precision integer. If <code>longerValue</code> is 0 or
+ greater, the return value will represent it. If <code>longerValue</code>
+ is less than 0, the return value will store 2^64 plus this value
+ instead.
 
 ### FromInt64
     public static EInteger FromInt64​(long longerValue)

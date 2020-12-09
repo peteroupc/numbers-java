@@ -311,6 +311,9 @@ Renamed to DivRemNaturalScale.
 * `static EFloat FromInt64​(long inputInt64)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision binary
  floating-point number.
+* `static EFloat FromInt64AsUnsigned​(long longerValue)`<br>
+ Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision binary number.
 * `static EFloat FromSingle​(float flt)`<br>
  Creates a binary floating-point number from a 32-bit floating-point number.
 * `static EFloat FromSingleBits​(int value)`<br>
@@ -4597,6 +4600,24 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
  an exact integer, or is less than -9223372036854775808 or greater
  than 9223372036854775807.
 
+### FromInt64AsUnsigned
+    public static EFloat FromInt64AsUnsigned​(long longerValue)
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision binary number.
+
+**Parameters:**
+
+* <code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+ the return value will represent it. If this value is less than 0,
+ the return value will store 2^64 plus this value instead.
+
+**Returns:**
+
+* An arbitrary-precision binary number with the exponent set to 0. If
+ <code>longerValue</code> is 0 or greater, the return value will represent
+ it. If <code>longerValue</code> is less than 0, the return value will
+ store 2^64 plus this value instead.
+
 ### FromInt64
     public static EFloat FromInt64​(long inputInt64)
 Converts a 64-bit signed integer to an arbitrary-precision binary
@@ -4609,4 +4630,4 @@ Converts a 64-bit signed integer to an arbitrary-precision binary
 **Returns:**
 
 * This number's value as an arbitrary-precision binary floating-point
- number.
+ number with the exponent set to 0.

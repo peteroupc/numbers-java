@@ -154,6 +154,9 @@ Renamed to FromEFloat.
  Converts a 32-bit signed integer to an arbitrary-precision rational number.
 * `static ERational FromInt64​(long inputInt64)`<br>
  Converts a 64-bit signed integer to an arbitrary-precision rational number.
+* `static ERational FromInt64AsUnsigned​(long longerValue)`<br>
+ Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision rational number.
 * `static ERational FromSingle​(float flt)`<br>
  Converts a 32-bit binary floating-point number to a rational number.
 * `static ERational FromSingleBits​(int value)`<br>
@@ -2224,6 +2227,24 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -9223372036854775808 or greater
  than 9223372036854775807.
+
+### FromInt64AsUnsigned
+    public static ERational FromInt64AsUnsigned​(long longerValue)
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision rational number.
+
+**Parameters:**
+
+* <code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+ the return value will represent it. If this value is less than 0,
+ the return value will store 2^64 plus this value instead.
+
+**Returns:**
+
+* An arbitrary-precision rational number. If <code>longerValue</code> is 0
+ or greater, the return value will represent it. If <code>
+ longerValue</code> is less than 0, the return value will store 2^64 plus
+ this value instead.
 
 ### FromInt64
     public static ERational FromInt64​(long inputInt64)

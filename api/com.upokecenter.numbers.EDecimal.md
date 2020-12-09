@@ -487,6 +487,9 @@ Renamed to FromEFloat.
  Creates an arbitrary-precision decimal number from a 32-bit signed integer.
 * `static EDecimal FromInt64​(long valueSmall)`<br>
  Creates an arbitrary-precision decimal number from a 64-bit signed integer.
+* `static EDecimal FromInt64AsUnsigned​(long longerValue)`<br>
+ Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision decimal number.
 * `static EDecimal FromSingle​(float flt)`<br>
  Creates an arbitrary-precision decimal number from a 32-bit binary
  floating-point number.
@@ -1330,6 +1333,24 @@ Creates an arbitrary-precision decimal number from a 32-bit signed integer.
 
 * An arbitrary-precision decimal number with the exponent set to 0.
 
+### FromInt64AsUnsigned
+    public static EDecimal FromInt64AsUnsigned​(long longerValue)
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision decimal number.
+
+**Parameters:**
+
+* <code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+ the return value will represent it. If this value is less than 0,
+ the return value will store 2^64 plus this value instead.
+
+**Returns:**
+
+* An arbitrary-precision decimal number with the exponent set to 0. If
+ <code>longerValue</code> is 0 or greater, the return value will represent
+ it. If <code>longerValue</code> is less than 0, the return value will
+ store 2^64 plus this value instead.
+
 ### FromInt64
     public static EDecimal FromInt64​(long valueSmall)
 Creates an arbitrary-precision decimal number from a 64-bit signed integer.
@@ -1341,7 +1362,8 @@ Creates an arbitrary-precision decimal number from a 64-bit signed integer.
 
 **Returns:**
 
-* An arbitrary-precision decimal number with the exponent set to 0.
+* This number's value as an arbitrary-precision decimal number with
+ the exponent set to 0.
 
 ### FromSingle
     public static EDecimal FromSingle​(float flt)

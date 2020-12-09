@@ -420,6 +420,25 @@ FromInt32((int)bytes[offset]) :
     }
 
     /**
+     * Converts an unsigned integer expressed as a 64-bit signed integer to an
+     * arbitrary-precision integer.
+     * @param longerValue A 64-bit signed integer. If this value is 0 or greater,
+     * the return value will represent it. If this value is less than 0,
+     * the return value will store 2^64 plus this value instead.
+     * @return An arbitrary-precision integer. If {@code longerValue} is 0 or
+     * greater, the return value will represent it. If {@code longerValue}
+     * is less than 0, the return value will store 2^64 plus this value
+     * instead.
+     */
+    public static EInteger FromInt64AsUnsigned(long longerValue) {
+      if (longerValue >= 0) {
+        return EInteger.FromInt64(longerValue);
+      } else {
+        return EInteger.FromInt32(1).ShiftLeft(64).Add(longerValue);
+      }
+    }
+
+    /**
      * Converts a 64-bit signed integer to an arbitrary-precision integer.
      * @param longerValue The parameter {@code longerValue} is a 64-bit signed
      * integer.
