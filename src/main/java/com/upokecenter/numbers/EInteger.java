@@ -425,10 +425,9 @@ FromInt32((int)bytes[offset]) :
      * @param longerValue A 64-bit signed integer. If this value is 0 or greater,
      * the return value will represent it. If this value is less than 0,
      * the return value will store 2^64 plus this value instead.
-     * @return An arbitrary-precision integer. If {@code longerValue} is 0 or
-     * greater, the return value will represent it. If {@code longerValue}
-     * is less than 0, the return value will store 2^64 plus this value
-     * instead.
+     * @return An arbitrary-precision integer. If "longerValue" is 0 or greater,
+     *  the return value will represent it. If "longerValue" is less than 0,
+     * the return value will store 2^64 plus this value instead.
      */
     public static EInteger FromInt64AsUnsigned(long longerValue) {
       if (longerValue >= 0) {
@@ -3550,11 +3549,11 @@ ShortMask) != 0) ? 9 :
      * length of 63 or less, and all other integers have a signed bit
      * length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
-     * Returns 0 if this object's value is 0 or negative 1. Returns 2^63 -
-     * 1 ({@code Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java)
-     * if the number of bits is 2^63 - 1 or greater. (Use {@code
-     * GetUnsignedBitLengthAsEInteger} instead if the application relies on
-     * the exact number of bits.).
+     * Returns 0 if this object's value is 0 or negative 1. If the return
+     * value would be greater than 2^63 - 1 ({@code Long.MAX_VALUE} in.NET
+     * or {@code Long.MAX_VALUE} in Java), returns 2^63 - 1 instead. (Use
+     * {@code GetSignedBitLengthAsEInteger} instead of this method if the
+     * application relies on the exact number of bits.).
      */
     public long GetSignedBitLengthAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -3682,10 +3681,11 @@ ShortMask) != 0) ? 9 :
      * same as the range of integers in Java's and.NET's <code>long</code> type.
      * @return The number of bits in this object's absolute value. Returns 0 if
      * this object's value is 0, and returns 1 if the value is negative 1.
-     * Returns 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code
-     * Long.MAX_VALUE} in Java) if the number of bits is 2^63 - 1 or
-     * greater. (Use {@code GetUnsignedBitLengthAsEInteger} instead if the
-     * application relies on the exact number of bits.).
+     * If the return value would be greater than 2^63 - 1({@code
+     * Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java), returns
+     * 2^63 - 1 instead. (Use {@code GetUnsignedBitLengthAsEInteger}
+     * instead of this method if the application relies on the exact number
+     * of bits.).
      */
     public long GetUnsignedBitLengthAsInt64() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts

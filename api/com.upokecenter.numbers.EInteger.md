@@ -549,10 +549,9 @@ Converts an unsigned integer expressed as a 64-bit signed integer to an
 
 **Returns:**
 
-* An arbitrary-precision integer. If <code>longerValue</code> is 0 or
- greater, the return value will represent it. If <code>longerValue</code>
- is less than 0, the return value will store 2^64 plus this value
- instead.
+* An arbitrary-precision integer. If "longerValue" is 0 or greater,
+  the return value will represent it. If "longerValue" is less than 0,
+ the return value will store 2^64 plus this value instead.
 
 ### FromInt64
     public static EInteger FromInt64​(long longerValue)
@@ -1658,11 +1657,11 @@ Finds the minimum number of bits needed to represent this object's value,
 **Returns:**
 
 * The number of bits in this object's value, except for its sign.
- Returns 0 if this object's value is 0 or negative 1. Returns 2^63 -
- 1 (<code>Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java)
- if the number of bits is 2^63 - 1 or greater. (Use <code>
- GetUnsignedBitLengthAsEInteger</code> instead if the application relies on
- the exact number of bits.).
+ Returns 0 if this object's value is 0 or negative 1. If the return
+ value would be greater than 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET
+ or <code>Long.MAX_VALUE</code> in Java), returns 2^63 - 1 instead. (Use
+ <code>GetSignedBitLengthAsEInteger</code> instead of this method if the
+ application relies on the exact number of bits.).
 
 ### GetSignedBitLength
     @Deprecated public int GetSignedBitLength()
@@ -1740,10 +1739,11 @@ Finds the minimum number of bits needed to represent this number's absolute
 
 * The number of bits in this object's absolute value. Returns 0 if
  this object's value is 0, and returns 1 if the value is negative 1.
- Returns 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET or <code>
- Long.MAX_VALUE</code> in Java) if the number of bits is 2^63 - 1 or
- greater. (Use <code>GetUnsignedBitLengthAsEInteger</code> instead if the
- application relies on the exact number of bits.).
+ If the return value would be greater than 2^63 - 1(<code>
+ Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java), returns
+ 2^63 - 1 instead. (Use <code>GetUnsignedBitLengthAsEInteger</code>
+ instead of this method if the application relies on the exact number
+ of bits.).
 
 ### GetUnsignedBitLength
     @Deprecated public int GetUnsignedBitLength()
