@@ -5904,16 +5904,45 @@ EDecimal.FromString("-6.44157770841120149430189812635250244E+472921500817");
       }
     }
 
+    public static String ToLowerCaseAscii(String str) {
+      if (str == null) {
+        return null;
+      }
+      int len = str.length();
+      char c = (char)0;
+      boolean hasUpperCase = false;
+      for (int i = 0; i < len; ++i) {
+        c = str.charAt(i);
+        if (c >= 'A' && c <= 'Z') {
+          hasUpperCase = true;
+          break;
+        }
+      }
+      if (!hasUpperCase) {
+        return str;
+      }
+      StringBuilder builder = new StringBuilder();
+      for (int i = 0; i < len; ++i) {
+        c = str.charAt(i);
+        if (c >= 'A' && c <= 'Z') {
+          builder.append((char)(c + 0x20));
+        } else {
+          builder.append(c);
+        }
+      }
+      return builder.toString();
+    }
+
     public static void TestUnsignedLongOne(long v, String expectedStr) {
          EInteger ei = EInteger.FromInt64AsUnsigned(v);
          Assert.assertEquals(
            expectedStr,
-           DataUtilities.ToLowerCaseAscii(ei.ToRadixString(16)));
+           ToLowerCaseAscii(ei.ToRadixString(16)));
          EDecimal ed = EDecimal.FromInt64AsUnsigned(v);
          TestCommon.CompareTestEqual(EDecimal.FromEInteger(ei), ed);
-         EFloat ef = EDecimal.FromInt64AsUnsigned(v);
+         EFloat ef = EFloat.FromInt64AsUnsigned(v);
          TestCommon.CompareTestEqual(EFloat.FromEInteger(ei), ef);
-         ERational er = EDecimal.FromInt64AsUnsigned(v);
+         ERational er = ERational.FromInt64AsUnsigned(v);
          TestCommon.CompareTestEqual(ERational.FromEInteger(ei), er);
     }
 

@@ -2191,55 +2191,55 @@ private DecTestUtil() {
       StringBuilder sb = new StringBuilder();
       if ((flags & EContext.FlagInexact) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Inexact");
       }
       if ((flags & EContext.FlagRounded) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Rounded");
       }
       if ((flags & EContext.FlagSubnormal) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Subnormal");
       }
       if ((flags & EContext.FlagOverflow) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Overflow");
       }
       if ((flags & EContext.FlagUnderflow) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Underflow");
       }
       if ((flags & EContext.FlagClamped) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Clamped");
       }
       if ((flags & EContext.FlagInvalid) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Invalid");
       }
       if ((flags & EContext.FlagDivideByZero) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Divide_by_zero");
       }
       if ((flags & EContext.FlagLostDigits) != 0) {
         if (sb.length() > 0) {
-          sb.append(" ");
+          sb.append(' ');
         }
         sb.append("Lost_digits");
       }
