@@ -549,9 +549,10 @@ Converts an unsigned integer expressed as a 64-bit signed integer to an
 
 **Returns:**
 
-* An arbitrary-precision integer. If "longerValue" is 0 or greater,
-  the return value will represent it. If "longerValue" is less than 0,
- the return value will store 2^64 plus this value instead.
+* An arbitrary-precision integer. If <code>longerValue</code> is 0 or
+ greater, the return value will represent it. If <code>longerValue</code>
+ is less than 0, the return value will store 2^64 plus this value
+ instead.
 
 ### FromInt64
     public static EInteger FromInt64​(long longerValue)
