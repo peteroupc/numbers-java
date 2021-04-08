@@ -3525,13 +3525,13 @@ ShortMask) != 0) ? 9 :
 
     /**
      * Finds the minimum number of bits needed to represent this object's value,
-     * except for its sign, in the form of an arbitrary-precision integer.
-     * If the value is negative, finds the number of bits in the value
-     * equal to this object's absolute value minus 1. For example, all
-     * integers in the interval [-(2^63), (2^63) - 1], which is the same as
-     * the range of integers in Java's and.NET's <code>long</code> type, have a
-     * signed bit length of 63 or less, and all other integers have a
-     * signed bit length of greater than 63.
+     * except for its sign, and returns that number of bits as an
+     * arbitrary-precision integer. If the value is negative, finds the
+     * number of bits in the value equal to this object's absolute value
+     * minus 1. For example, all integers in the interval [-(2^63), (2^63)
+     * - 1], which is the same as the range of integers in Java's and.NET's
+     * <code>long</code> type, have a signed bit length of 63 or less, and all
+     * other integers have a signed bit length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
      * Returns 0 if this object's value is 0 or negative 1.
      */
@@ -3542,13 +3542,13 @@ ShortMask) != 0) ? 9 :
 
     /**
      * Finds the minimum number of bits needed to represent this object's value,
-     * except for its sign, in the form of a 64-bit signed integer. If the
-     * value is negative, finds the number of bits in the value equal to
-     * this object's absolute value minus 1. For example, all integers in
-     * the interval [-(2^63), (2^63) - 1], which is the same as the range
-     * of integers in Java's and.NET's <code>long</code> type, have a signed bit
-     * length of 63 or less, and all other integers have a signed bit
-     * length of greater than 63.
+     * except for its sign, and returns that number of bits as a 64-bit
+     * signed integer. If the value is negative, finds the number of bits
+     * in the value equal to this object's absolute value minus 1. For
+     * example, all integers in the interval [-(2^63), (2^63) - 1], which
+     * is the same as the range of integers in Java's and.NET's <code>long</code>
+     * type, have a signed bit length of 63 or less, and all other integers
+     * have a signed bit length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
      * Returns 0 if this object's value is 0 or negative 1. If the return
      * value would be greater than 2^63 - 1 ({@code Long.MAX_VALUE} in.NET
@@ -3660,11 +3660,12 @@ ShortMask) != 0) ? 9 :
 
     /**
      * Finds the minimum number of bits needed to represent this number's absolute
-     * value, in the form of an arbitrary-precision integer. For example,
-     * all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
-     * unsigned bit length of 63 or less, and all other integers have an
-     * unsigned bit length of greater than 63. This interval is not the
-     * same as the range of integers in Java's and.NET's <code>long</code> type.
+     * value, and returns that number of bits as an arbitrary-precision
+     * integer. For example, all integers in the interval [-((2^63) - 1),
+     * (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+     * integers have an unsigned bit length of greater than 63. This
+     * interval is not the same as the range of integers in Java's
+     * and.NET's <code>long</code> type.
      * @return The number of bits in this object's absolute value. Returns 0 if
      * this object's value is 0, and returns 1 if the value is negative 1.
      */
@@ -3675,11 +3676,12 @@ ShortMask) != 0) ? 9 :
 
     /**
      * Finds the minimum number of bits needed to represent this number's absolute
-     * value, in the form of a 64-bit signed integer. For example, all
-     * integers in the interval [-((2^63) - 1), (2^63) - 1] have an
-     * unsigned bit length of 63 or less, and all other integers have an
-     * unsigned bit length of greater than 63. This interval is not the
-     * same as the range of integers in Java's and.NET's <code>long</code> type.
+     * value, and returns that number of bits as a 64-bit signed integer.
+     * For example, all integers in the interval [-((2^63) - 1), (2^63) -
+     * 1] have an unsigned bit length of 63 or less, and all other integers
+     * have an unsigned bit length of greater than 63. This interval is not
+     * the same as the range of integers in Java's and.NET's <code>long</code>
+     * type.
      * @return The number of bits in this object's absolute value. Returns 0 if
      * this object's value is 0, and returns 1 if the value is negative 1.
      * If the return value would be greater than 2^63 - 1({@code
