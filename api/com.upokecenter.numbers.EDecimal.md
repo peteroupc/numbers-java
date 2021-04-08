@@ -950,7 +950,7 @@ Renamed to ToEFloat.
  value is an exact integer and that integer does not overflow the
  given signed bit count.
 * `java.lang.String toString()`<br>
- Converts this value to a string.
+ Converts this value to a text string.
 * `EDecimal Ulp()`<br>
  Returns the unit in the last place.
 
@@ -4880,7 +4880,7 @@ Converts this value to its closest equivalent as a 32-bit floating-point
 
 ### toString
     public java.lang.String toString()
-Converts this value to a string. Returns a value compatible with this
+Converts this value to a text string. Returns a value compatible with this
  class's FromString method.
 
 **Overrides:**
@@ -4890,9 +4890,10 @@ Converts this value to a string. Returns a value compatible with this
 **Returns:**
 
 * A string representation of this object. The text string will be in
- exponential notation if the exponent is greater than 0 or if the
- number's first nonzero digit is more than five digits after the
- decimal point.
+ exponential notation (expressed as a number 1 or greater, but less
+ than 10, times a power of 10) if this object's Exponent property is
+ greater than 0 or if the number's first nonzero decimal digit is
+ more than five digits after the decimal point.
 
 ### Ulp
     public EDecimal Ulp()

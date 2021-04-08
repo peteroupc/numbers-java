@@ -5210,12 +5210,13 @@ rather than properties
     }
 
     /**
-     * Converts this value to a string. Returns a value compatible with this
+     * Converts this value to a text string. Returns a value compatible with this
      * class's FromString method.
      * @return A string representation of this object. The text string will be in
-     * exponential notation if the exponent is greater than 0 or if the
-     * number's first nonzero digit is more than five digits after the
-     * decimal point.
+     * exponential notation (expressed as a number 1 or greater, but less
+     * than 10, times a power of 10) if this object's Exponent property is
+     * greater than 0 or if the number's first nonzero decimal digit is
+     * more than five digits after the decimal point.
      */
     @Override public String toString() {
       return this.ToStringInternal(0);
@@ -5746,6 +5747,7 @@ rather than properties
       }
     }
 
+    // TODO: Add option to always display exponential notation
     private String ToStringInternal(int mode) {
       boolean negative = (this.flags & BigNumberFlags.FlagNegative) != 0;
       if (!this.isFinite()) {
