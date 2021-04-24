@@ -975,7 +975,7 @@ import com.upokecenter.numbers.*;
       EInteger mant = efa.getMantissa();
       Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(3411748882100003L, 784);
-      String str = "ExpM1\n"+ OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = "ExpM1\n" + OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test
@@ -994,7 +994,7 @@ import com.upokecenter.numbers.*;
       EInteger mant = efa.getMantissa();
       Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(3461693826094423L, -52);
-      String str = "Exp\n"+ OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = "Exp\n" + OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test
@@ -1012,7 +1012,7 @@ import com.upokecenter.numbers.*;
       EInteger mant = efa.getMantissa();
       Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(195906767427969L, 413);
-      String str = "ExpM1\n"+ OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = "ExpM1\n" + OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test

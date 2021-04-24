@@ -2524,7 +2524,7 @@ FromInt32((int)bytes[offset]) :
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
-     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
+     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -4652,7 +4652,7 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   *
+   * Not documented yet.
    * @param longBitCount The parameter {@code longBitCount} is a 64-bit signed
    * integer.
    * @return The return value is not documented yet.
@@ -4662,7 +4662,7 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   *
+   * Not documented yet.
    * @param bitCount The parameter {@code bitCount} is a 32-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -4710,7 +4710,7 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   *
+   * Not documented yet.
    * @param bigBitCount The parameter {@code bigBitCount} is a Numbers.EInteger
    * object.
    * @return The return value is not documented yet.
@@ -4736,14 +4736,14 @@ bigBitCount.signum() + ") is not greater or equal to 0");
         if (!this.negative) {
           EInteger bigOtherWordCount = bigBitCount.Add(15).Divide(16);
           if (
-            EInteger.FromInt32(this.wordCount).compareTo(bigOtherWordCount)<
+            EInteger.FromInt32(this.wordCount).compareTo(bigOtherWordCount) <
 0) {
             return this;
           }
-        long otherWordCount = bigOtherWordCount.ToInt32Checked();
-        if (otherWordCount == 0) {
-          return EInteger.FromInt32(0);
-        } else {
+          long otherWordCount = bigOtherWordCount.ToInt32Checked();
+          if (otherWordCount == 0) {
+            return EInteger.FromInt32(0);
+          } else {
            int intOtherWordCount = ((int)otherWordCount);
            int bitRemainder = bigBitCount.Remainder(16).ToInt32Checked();
            int smallerCount = Math.min(this.wordCount, intOtherWordCount);
