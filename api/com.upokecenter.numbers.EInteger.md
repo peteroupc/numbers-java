@@ -247,11 +247,8 @@ This method may overflow.
 * `boolean isZero()`<br>
  Gets a value indicating whether this value is 0.
 * `EInteger LowBits​(int bitCount)`<br>
- Not documented yet.
 * `EInteger LowBits​(long longBitCount)`<br>
- Not documented yet.
 * `EInteger LowBits​(EInteger bigBitCount)`<br>
- Not documented yet.
 * `static EInteger Max​(EInteger first,
    EInteger second)`<br>
  Returns the greater of two arbitrary-precision integers.
@@ -1505,7 +1502,7 @@ Returns the greatest common divisor of this integer and the given integer.
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
 * <code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn't satisfy
- shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
+ shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
 
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()
@@ -2010,27 +2007,38 @@ Returns an arbitrary-precision integer with every bit flipped from this one
 
 ### LowBits
     public EInteger LowBits​(long longBitCount)
-Not documented yet.
 
 **Parameters:**
 
-* <code>longBitCount</code> - Not documented yet.
+* <code>longBitCount</code> - The parameter <code>longBitCount</code> is a 64-bit signed
+ integer.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 ### LowBits
     public EInteger LowBits​(int bitCount)
-Not documented yet.
 
 **Parameters:**
 
-* <code>bitCount</code> - Not documented yet.
+* <code>bitCount</code> - The parameter <code>bitCount</code> is a 32-bit signed integer.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 ### LowBits
     public EInteger LowBits​(EInteger bigBitCount)
-Not documented yet.
 
 **Parameters:**
 
-* <code>bigBitCount</code> - Not documented yet.
+* <code>bigBitCount</code> - The parameter <code>bigBitCount</code> is a Numbers.EInteger
+ object.
+
+**Returns:**
+
+* The return value is not documented yet.
 
 **Throws:**
 

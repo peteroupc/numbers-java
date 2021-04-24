@@ -972,13 +972,17 @@ import com.upokecenter.numbers.*;
     public void TestLogExpSpecificA() {
       EFloat efa = EFloat.Create(5094638944929121L,
   -43).ExpM1(EContext.Binary64);
+      EInteger mant = efa.getMantissa();
+      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(3411748882100003L, 784);
-      String str = OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = "ExpM1\n"+ OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test
     public void TestLogExpSpecificB() {
       EFloat efa = EFloat.Create(1168389840651401L, 526).Log(EContext.Binary64);
+      EInteger mant = efa.getMantissa();
+      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(1756095199620111L, -42);
       String str = OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
@@ -987,8 +991,10 @@ import com.upokecenter.numbers.*;
     public void TestLogExpSpecificC() {
       EFloat efa = EFloat.Create(-1184982539430741L,
   -52).Exp(EContext.Binary64);
+      EInteger mant = efa.getMantissa();
+      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(3461693826094423L, -52);
-      String str = OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = "Exp\n"+ OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test
@@ -1003,8 +1009,10 @@ import com.upokecenter.numbers.*;
     public void TestLogExpSpecificE() {
       EFloat efa = EFloat.Create(5615046595603761L,
   -44).ExpM1(EContext.Binary64);
+      EInteger mant = efa.getMantissa();
+      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
       EFloat efb = EFloat.Create(195906767427969L, 413);
-      String str = OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = "ExpM1\n"+ OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test

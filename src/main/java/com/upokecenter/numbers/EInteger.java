@@ -2524,7 +2524,7 @@ FromInt32((int)bytes[offset]) :
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
-     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
+     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -4652,16 +4652,19 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   * Not documented yet.
-   * @param longBitCount Not documented yet.
+   *
+   * @param longBitCount The parameter {@code longBitCount} is a 64-bit signed
+   * integer.
+   * @return The return value is not documented yet.
    */
     public EInteger LowBits(long longBitCount) {
         return this.LowBits(EInteger.FromInt64(longBitCount));
     }
 
   /**
-   * Not documented yet.
-   * @param bitCount Not documented yet.
+   *
+   * @param bitCount The parameter {@code bitCount} is a 32-bit signed integer.
+   * @return The return value is not documented yet.
    */
     public EInteger LowBits(int bitCount) {
         if (bitCount < 0) {
@@ -4707,8 +4710,10 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   * Not documented yet.
-   * @param bigBitCount Not documented yet.
+   *
+   * @param bigBitCount The parameter {@code bigBitCount} is a Numbers.EInteger
+   * object.
+   * @return The return value is not documented yet.
    * @throws NullPointerException The parameter {@code bigBitCount} is null.
    */
     public EInteger LowBits(EInteger bigBitCount) {
