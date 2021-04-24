@@ -246,6 +246,12 @@ This method may overflow.
  greater than 0.
 * `boolean isZero()`<br>
  Gets a value indicating whether this value is 0.
+* `EInteger LowBits​(int bitCount)`<br>
+ Not documented yet.
+* `EInteger LowBits​(long longBitCount)`<br>
+ Not documented yet.
+* `EInteger LowBits​(EInteger bigBitCount)`<br>
+ Not documented yet.
 * `static EInteger Max​(EInteger first,
    EInteger second)`<br>
  Returns the greater of two arbitrary-precision integers.
@@ -2001,6 +2007,34 @@ Returns an arbitrary-precision integer with every bit flipped from this one
  example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
  -21). In binary, NOT...11100110 = 11001 (or in decimal, NOT -26 =
  25).
+
+### LowBits
+    public EInteger LowBits​(long longBitCount)
+Not documented yet.
+
+**Parameters:**
+
+* <code>longBitCount</code> - Not documented yet.
+
+### LowBits
+    public EInteger LowBits​(int bitCount)
+Not documented yet.
+
+**Parameters:**
+
+* <code>bitCount</code> - Not documented yet.
+
+### LowBits
+    public EInteger LowBits​(EInteger bigBitCount)
+Not documented yet.
+
+**Parameters:**
+
+* <code>bigBitCount</code> - Not documented yet.
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>bigBitCount</code> is null.
 
 ### And
     public EInteger And​(EInteger other)

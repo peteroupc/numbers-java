@@ -5948,15 +5948,15 @@ EDecimal.FromString("-6.44157770841120149430189812635250244E+472921500817");
 
     @Test
     public void TestUnsignedLong() {
-       TestUnsignedLongOne(0x0L,"0");
-       TestUnsignedLongOne(0xFL,"f");
-       TestUnsignedLongOne(0xFFFFFFFFL,"ffffffff");
-       TestUnsignedLongOne(-1,"ffffffffffffffff");
-       TestUnsignedLongOne(-3,"fffffffffffffffd");
-       TestUnsignedLongOne(Long.MAX_VALUE,"7fffffffffffffff");
-       TestUnsignedLongOne(Long.MAX_VALUE-1,"7ffffffffffffffe");
-       TestUnsignedLongOne(Long.MIN_VALUE,"8000000000000000");
-       TestUnsignedLongOne(Long.MIN_VALUE+1,"8000000000000001");
+       TestUnsignedLongOne(0x0L, "0");
+       TestUnsignedLongOne(0xFL, "f");
+       TestUnsignedLongOne(0xFFFFFFFFL, "ffffffff");
+       TestUnsignedLongOne(-1, "ffffffffffffffff");
+       TestUnsignedLongOne(-3, "fffffffffffffffd");
+       TestUnsignedLongOne(Long.MAX_VALUE, "7fffffffffffffff");
+       TestUnsignedLongOne(Long.MAX_VALUE - 1, "7ffffffffffffffe");
+       TestUnsignedLongOne(Long.MIN_VALUE, "8000000000000000");
+       TestUnsignedLongOne(Long.MIN_VALUE + 1, "8000000000000001");
     }
 
     @Test

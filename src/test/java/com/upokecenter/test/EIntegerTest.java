@@ -403,6 +403,51 @@ import com.upokecenter.numbers.*;
       AssertAdd(negLarge, negLarge, "-11111110");
     }
 
+    private static void LowBitsAssertEqual(
+      Object o1,
+      Object o2,
+      EInteger ei,
+      int intval,
+      String msg) {
+      if (!o1.equals(o2)) {
+        Assert.assertEquals(ei+" "+intval+" "+msg,o1,o2);
+      }
+    }
+
+    @Test
+    public void TestAnd() {
+       EInteger eiand = EInteger.FromInt32(1).ShiftLeft(1).Subtract(1);
+       EInteger ei1 = EInteger.FromInt32(102).And(eiand);
+       Assert.assertEquals(EInteger.FromInt32(0), ei1);
+    }
+
+    @Test
+    public void TestLowBits() {
+       RandomGenerator r = new RandomGenerator();
+       int[] ints = {0, 1, 3, 5, 16, 32, 33, 37, 100, 1000, 10000, 100000 };
+       EInteger eia = EInteger.FromInt32(1).ShiftLeft(100);
+       EInteger eib = EInteger.FromInt32(1).ShiftLeft(1000);
+       EInteger eic = EInteger.FromInt32(1).ShiftLeft(10000);
+       for (int i = 0; i < 10000; ++i) {
+          EInteger ei = RandomObjects.RandomEInteger(r).Abs();
+          for (int j = 0; j < ints.length; ++j) {
+             EInteger ei1 = ei.And(EInteger.FromInt32(1).ShiftLeft(ints[j]).Subtract(1));
+             EInteger ei2 = ei.LowBits(ints[j]);
+             EInteger ei3 = ei.LowBits(EInteger.FromInt32(ints[j]));
+             EInteger ei4 = ei.LowBits((long)ints[j]);
+             LowBitsAssertEqual(ei1, ei2, ei,ints[j],"ei2");
+             LowBitsAssertEqual(ei1, ei3, ei,ints[j],"ei3");
+             LowBitsAssertEqual(ei1, ei4, ei,ints[j],"ei4");
+             ei1 = ei.LowBits(eia);
+             LowBitsAssertEqual(ei, ei1, ei,ints[j],"eia");
+             ei1 = ei.LowBits(eib);
+             LowBitsAssertEqual(ei, ei1, ei,ints[j],"eib");
+             ei1 = ei.LowBits(eic);
+             LowBitsAssertEqual(ei, ei1, ei,ints[j],"eic");
+          }
+       }
+    }
+
     @Test
     public void TestAddSubtract() {
       RandomGenerator r = new RandomGenerator();

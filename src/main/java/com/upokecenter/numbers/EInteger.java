@@ -4651,6 +4651,116 @@ ShortMask) != 0) ? 9 :
         EInteger(valueXaWordCount, valueXaReg, valueXaNegative);
     }
 
+  /**
+   * Not documented yet.
+   * @param longBitCount Not documented yet.
+   */
+    public EInteger LowBits(long longBitCount) {
+        return this.LowBits(EInteger.FromInt64(longBitCount));
+    }
+
+  /**
+   * Not documented yet.
+   * @param bitCount Not documented yet.
+   */
+    public EInteger LowBits(int bitCount) {
+        if (bitCount < 0) {
+          throw new IllegalArgumentException("\"bitCount\" (" + bitCount + ") is" +
+"\u0020not greater or equal to 0");
+        }
+        if (bitCount == 0 || this.signum() == 0) {
+          return EInteger.FromInt32(0);
+        }
+        if (this.signum() > 0) {
+           long bits = this.GetUnsignedBitLengthAsInt64();
+           if (bits <= bitCount) {
+             return this;
+           }
+        }
+        if (!this.negative) {
+          long otherWordCount = BitsToWords(bitCount);
+          if (this.wordCount < otherWordCount) {
+            return this;
+          } else if (otherWordCount == 0) {
+            return EInteger.FromInt32(0);
+        } else {
+           int intOtherWordCount = ((int)otherWordCount);
+           int bitRemainder = bitCount & 15;
+           int smallerCount = Math.min(this.wordCount, intOtherWordCount);
+           short[] result = new short[intOtherWordCount];
+           if (bitRemainder == 0) {
+             System.arraycopy(this.words, 0, result, 0, intOtherWordCount);
+           } else {
+           short shortMask = ((short)((1 << bitRemainder) - 1));
+           // System.out.println("wc={0} bc={1} br={2}
+           // sm={3}",otherWordCount,bitCount,bitRemainder,shortMask);
+           System.arraycopy(this.words, 0, result, 0, intOtherWordCount - 1);
+           result[intOtherWordCount - 1] = ((short)(
+               this.words[intOtherWordCount - 1] & shortMask));
+           }
+           smallerCount = CountWords(result);
+           return (smallerCount == 0) ? EInteger.FromInt32(0) : new
+             EInteger(smallerCount, result, false);
+        }
+      }
+      return this.And(EInteger.FromInt32(1).ShiftLeft(bitCount).Subtract(1));
+    }
+
+  /**
+   * Not documented yet.
+   * @param bigBitCount Not documented yet.
+   * @throws NullPointerException The parameter {@code bigBitCount} is null.
+   */
+    public EInteger LowBits(EInteger bigBitCount) {
+        if (bigBitCount == null) {
+          throw new NullPointerException("bigBitCount");
+        }
+        if (bigBitCount.signum() < 0) {
+          throw new IllegalArgumentException("\"bigBitCount.signum()\" (" +
+bigBitCount.signum() + ") is not greater or equal to 0");
+        }
+        if (bigBitCount.signum() == 0 || this.signum() == 0) {
+          return EInteger.FromInt32(0);
+        }
+        if (this.signum() > 0) {
+           EInteger bigBits = this.GetUnsignedBitLengthAsEInteger();
+           if (bigBits.compareTo(bigBitCount) <= 0) {
+             return this;
+           }
+        }
+        if (!this.negative) {
+          EInteger bigOtherWordCount = bigBitCount.Add(15).Divide(16);
+          if (
+            EInteger.FromInt32(this.wordCount).compareTo(bigOtherWordCount)<
+0) {
+            return this;
+          }
+        long otherWordCount = bigOtherWordCount.ToInt32Checked();
+        if (otherWordCount == 0) {
+          return EInteger.FromInt32(0);
+        } else {
+           int intOtherWordCount = ((int)otherWordCount);
+           int bitRemainder = bigBitCount.Remainder(16).ToInt32Checked();
+           int smallerCount = Math.min(this.wordCount, intOtherWordCount);
+           short[] result = new short[intOtherWordCount];
+           if (bitRemainder == 0) {
+             System.arraycopy(this.words, 0, result, 0, intOtherWordCount);
+           } else {
+           short shortMask = ((short)((1 << bitRemainder) - 1));
+           // System.out.println("wc={0} bc={1} br={2} sm={3}
+           // big",otherWordCount,bigBitCount,bitRemainder,shortMask);
+           System.arraycopy(this.words, 0, result, 0, intOtherWordCount - 1);
+           result[intOtherWordCount - 1] = ((short)(
+               this.words[intOtherWordCount - 1] & shortMask));
+           }
+           smallerCount = CountWords(result);
+           return (smallerCount == 0) ? EInteger.FromInt32(0) : new
+             EInteger(smallerCount, result, false);
+        }
+      }
+      return this.And(EInteger.FromInt32(1).ShiftLeft(bigBitCount).Subtract(1));
+    }
+
     /**
      * Does an AND operation between this arbitrary-precision integer and another
      * one.<p>Each arbitrary-precision integer is treated as a
@@ -7184,7 +7294,7 @@ ShortMask) != 0) ? 9 :
     }
 
     private static int BitsToWords(int bitCount) {
-      return (bitCount + 15) >> 4;
+      return ((bitCount & 0x0f) == 0) ? (bitCount >> 4) : (bitCount >> 4) + 1;
     }
 
     private static void ChunkedLinearMultiply(
