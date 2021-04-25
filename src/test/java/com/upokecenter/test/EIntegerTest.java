@@ -410,7 +410,7 @@ import com.upokecenter.numbers.*;
       int intval,
       String msg) {
       if (!o1.equals(o2)) {
-        Assert.assertEquals(ei+" "+intval + " " + msg,o1,o2);
+        Assert.assertEquals(ei+ " " + intval + " " + msg,o1,o2);
       }
     }
 
@@ -3443,7 +3443,7 @@ RandomManageableEInteger(r);
       }
     }
 
-    @Test(timeout = 20000)
+    @Test(timeout = 30000)
     public void TestSqrt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 20; ++i) {
@@ -3461,6 +3461,9 @@ RandomManageableEInteger(r);
         TestCommon.CompareTestEqual(bigintA, sr);
       }
       for (int i = 0; i < 10000 + 100; ++i) {
+        if (i % 100 == 0) {
+          System.out.println(i);
+        }
         EInteger bigintA = (i < 100) ? EInteger.FromInt32(i) :
 RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {

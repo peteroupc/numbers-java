@@ -973,7 +973,9 @@ import com.upokecenter.numbers.*;
       EFloat efa = EFloat.Create(5094638944929121L,
   -43).ExpM1(EContext.Binary64);
       EInteger mant = efa.getMantissa();
-      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
+      if (!(mant.Abs().GetUnsignedBitLengthAsInt64() <= 53)) {
+ Assert.fail();
+ }
       EFloat efb = EFloat.Create(6823497764200007L, 783);
       String str = "ExpM1\n" + OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
@@ -982,7 +984,9 @@ import com.upokecenter.numbers.*;
     public void TestLogExpSpecificB() {
       EFloat efa = EFloat.Create(1168389840651401L, 526).Log(EContext.Binary64);
       EInteger mant = efa.getMantissa();
-      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
+      if (!(mant.Abs().GetUnsignedBitLengthAsInt64() <= 53)) {
+ Assert.fail();
+ }
       EFloat efb = EFloat.Create(1756095199620111L, -42);
       String str = OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
@@ -992,8 +996,10 @@ import com.upokecenter.numbers.*;
       EFloat efa = EFloat.Create(-1184982539430741L,
   -52).Exp(EContext.Binary64);
       EInteger mant = efa.getMantissa();
-      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
-      EFloat efb = EFloat.Create(6923387652188847, -53);
+      if (!(mant.Abs().GetUnsignedBitLengthAsInt64() <= 53)) {
+ Assert.fail();
+ }
+      EFloat efb = EFloat.Create(6923387652188847L, -53);
       String str = "Exp\n" + OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
     }
@@ -1010,7 +1016,9 @@ import com.upokecenter.numbers.*;
       EFloat efa = EFloat.Create(5615046595603761L,
   -44).ExpM1(EContext.Binary64);
       EInteger mant = efa.getMantissa();
-      Assert.LessOrEqual(mant.Abs().GetUnsignedBitLengthAsInt64(), 53);
+      if (!(mant.Abs().GetUnsignedBitLengthAsInt64() <= 53)) {
+ Assert.fail();
+ }
       EFloat efb = EFloat.Create(6269016557695007L, 408);
       String str = "ExpM1\n" + OutputEF(efb) + "\n" + OutputEF(efa);
       TestCommon.CompareTestEqual(efb, efa, str);
