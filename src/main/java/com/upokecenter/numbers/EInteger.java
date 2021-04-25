@@ -2925,11 +2925,11 @@ FromInt32((int)bytes[offset]) :
       EInteger eiah, eial, eibh, eibl;
       if (einmin.compareTo(ein.Multiply(3).ShiftRight(2).Add(2)) > 0) {
         EInteger p1 = ein.ShiftRight(1);
-        EInteger nhalfmask = EInteger.FromInt32(1).ShiftLeft(p1).Subtract(1);
+
         eiah = eia.ShiftRight(p1);
-        eial = eia.And(nhalfmask);
+        eial = eia.LowBits(p1);
         eibh = eib.ShiftRight(p1);
-        eibl = eib.And(nhalfmask);
+        eibl = eib.LowBits(p1);
         EInteger[] ret2 = HalfGCD(eiah, eibh);
         if (ret2 == null) {
           return null;
@@ -2946,10 +2946,8 @@ FromInt32((int)bytes[offset]) :
         }
       } else {
         // Set M to identity
-        ret[2] = EInteger.FromInt32(1);
-        ret[3] = EInteger.FromInt32(0);
-        ret[4] = EInteger.FromInt32(0);
-        ret[5] = EInteger.FromInt32(1);
+        ret[2] = ret[5] = EInteger.FromInt32(1);
+        ret[3] = ret[4] = EInteger.FromInt32(0);
       }
       ret[0] = eia;
       ret[1] = eib;
@@ -2980,11 +2978,10 @@ FromInt32((int)bytes[offset]) :
       if (MinBitLength(eia, eib).compareTo(eis.Add(2)) > 0) {
         ein = MaxBitLength(eia, eib);
         EInteger p1 = eis.Add(eis).Subtract(ein).Add(1);
-        EInteger nhalfmask = EInteger.FromInt32(1).ShiftLeft(p1).Subtract(1);
         eiah = eia.ShiftRight(p1);
-        eial = eia.And(nhalfmask);
+        eial = eia.LowBits(p1);
         eibh = eib.ShiftRight(p1);
-        eibl = eib.And(nhalfmask);
+        eibl = eib.LowBits(p1);
         EInteger[] ret2 = HalfGCD(eiah, eibh);
         if (ret2 == null) {
           return null;
@@ -3038,12 +3035,10 @@ FromInt32((int)bytes[offset]) :
         // System.out.println("eia=" + ret[0].ToRadixString(16));
         // System.out.println("eib=" + ret[1].ToRadixString(16));
         EInteger nhalf = ein.ShiftRight(1);
-        EInteger nhalfmask =
-          EInteger.FromInt32(1).ShiftLeft(nhalf).Subtract(1);
         EInteger eiah = ret[0].ShiftRight(nhalf);
-        EInteger eial = ret[0].And(nhalfmask);
+        EInteger eial = ret[0].LowBits(nhalf);
         EInteger eibh = ret[1].ShiftRight(nhalf);
-        EInteger eibl = ret[1].And(nhalfmask);
+        EInteger eibl = ret[1].LowBits(nhalf);
         // System.out.println("eiah->" + eiah.ToRadixString(16));
         // System.out.println("eibh->" + eibh.ToRadixString(16));
         EInteger[] hgcd = HalfGCD(eiah, eibh);
@@ -4652,17 +4647,29 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   * Not documented yet.
+   * Extracts the lowest bits of this integer. This is equivalent to
+   * <code>And(2^longBitCount - 1)</code>, but is more efficient when this
+   * integer is non-negative and longBitCount's value is large.
    * @param longBitCount The parameter {@code longBitCount} is a 64-bit signed
    * integer.
    * @return The return value is not documented yet.
    */
     public EInteger LowBits(long longBitCount) {
-        return this.LowBits(EInteger.FromInt64(longBitCount));
+        if (longBitCount < 0) {
+          throw new IllegalArgumentException("\"longBitCount\" (" + longBitCount +
+") is" +
+"\u0020not greater or equal to 0");
+        }
+        return (
+          longBitCount <= Integer.MAX_VALUE) ?
+this.LowBits((int)longBitCount) :
+this.LowBits(EInteger.FromInt64(longBitCount));
     }
 
   /**
-   * Not documented yet.
+   * Extracts the lowest bits of this integer. This is equivalent to
+   * <code>And(2^bitCount - 1)</code>, but is more efficient when this integer is
+   * non-negative and bitCount's value is large.
    * @param bitCount The parameter {@code bitCount} is a 32-bit signed integer.
    * @return The return value is not documented yet.
    */
@@ -4710,7 +4717,9 @@ ShortMask) != 0) ? 9 :
     }
 
   /**
-   * Not documented yet.
+   * Extracts the lowest bits of this integer. This is equivalent to
+   * <code>And(2^bigBitCount - 1)</code>, but is more efficient when this integer
+   * is non-negative and bigBitCount's value is large.
    * @param bigBitCount The parameter {@code bigBitCount} is a Numbers.EInteger
    * object.
    * @return The return value is not documented yet.
@@ -4731,6 +4740,9 @@ bigBitCount.signum() + ") is not greater or equal to 0");
            EInteger bigBits = this.GetUnsignedBitLengthAsEInteger();
            if (bigBits.compareTo(bigBitCount) <= 0) {
              return this;
+           }
+           if (this.CanFitInInt32()) {
+             return this.LowBits((int)this.ToInt32Checked());
            }
         }
         if (!this.negative) {

@@ -247,11 +247,11 @@ This method may overflow.
 * `boolean isZero()`<br>
  Gets a value indicating whether this value is 0.
 * `EInteger LowBits​(int bitCount)`<br>
- Not documented yet.
+ Extracts the lowest bits of this integer.
 * `EInteger LowBits​(long longBitCount)`<br>
- Not documented yet.
+ Extracts the lowest bits of this integer.
 * `EInteger LowBits​(EInteger bigBitCount)`<br>
- Not documented yet.
+ Extracts the lowest bits of this integer.
 * `static EInteger Max​(EInteger first,
    EInteger second)`<br>
  Returns the greater of two arbitrary-precision integers.
@@ -2010,7 +2010,9 @@ Returns an arbitrary-precision integer with every bit flipped from this one
 
 ### LowBits
     public EInteger LowBits​(long longBitCount)
-Not documented yet.
+Extracts the lowest bits of this integer. This is equivalent to
+ <code>And(2^longBitCount - 1)</code>, but is more efficient when this
+ integer is non-negative and longBitCount's value is large.
 
 **Parameters:**
 
@@ -2023,7 +2025,9 @@ Not documented yet.
 
 ### LowBits
     public EInteger LowBits​(int bitCount)
-Not documented yet.
+Extracts the lowest bits of this integer. This is equivalent to
+ <code>And(2^bitCount - 1)</code>, but is more efficient when this integer is
+ non-negative and bitCount's value is large.
 
 **Parameters:**
 
@@ -2035,7 +2039,9 @@ Not documented yet.
 
 ### LowBits
     public EInteger LowBits​(EInteger bigBitCount)
-Not documented yet.
+Extracts the lowest bits of this integer. This is equivalent to
+ <code>And(2^bigBitCount - 1)</code>, but is more efficient when this integer
+ is non-negative and bigBitCount's value is large.
 
 **Parameters:**
 
