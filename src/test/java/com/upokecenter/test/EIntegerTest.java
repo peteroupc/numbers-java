@@ -410,7 +410,7 @@ import com.upokecenter.numbers.*;
       int intval,
       String msg) {
       if (!o1.equals(o2)) {
-        Assert.assertEquals(ei+" "+intval+" " + msg,o1,o2);
+        Assert.assertEquals(ei+" "+intval + " " + msg,o1,o2);
       }
     }
 
