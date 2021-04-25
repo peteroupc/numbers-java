@@ -410,7 +410,7 @@ import com.upokecenter.numbers.*;
       int intval,
       String msg) {
       if (!o1.equals(o2)) {
-        Assert.assertEquals(ei + " " + intval + " " + msg,o1,o2);
+        Assert.assertEquals(ei+ " " + intval + " " + msg,o1,o2);
       }
     }
 
@@ -419,6 +419,12 @@ import com.upokecenter.numbers.*;
        EInteger eiand = EInteger.FromInt32(1).ShiftLeft(1).Subtract(1);
        EInteger ei1 = EInteger.FromInt32(102).And(eiand);
        Assert.assertEquals(EInteger.FromInt32(0), ei1);
+    }
+
+    @Test
+    public void TestLowBitsSpecific1() {
+       EInteger ei1 = EInteger.FromInt32(123).LowBits(1);
+       Assert.assertEquals(EInteger.FromInt32(1), ei1);
     }
 
     @Test

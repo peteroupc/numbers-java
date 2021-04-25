@@ -4662,7 +4662,7 @@ ShortMask) != 0) ? 9 :
         }
         return (
           longBitCount <= Integer.MAX_VALUE) ?
-this.LowBits((int)longBitCount) :
+(this.LowBits((int)longBitCount)) :
 this.LowBits(EInteger.FromInt64(longBitCount));
     }
 
@@ -4741,8 +4741,8 @@ bigBitCount.signum() + ") is not greater or equal to 0");
            if (bigBits.compareTo(bigBitCount) <= 0) {
              return this;
            }
-           if (this.CanFitInInt32()) {
-             return this.LowBits((int)this.ToInt32Checked());
+           if (bigBitCount.CanFitInInt32()) {
+             return this.LowBits((int)bigBitCount.ToInt32Checked());
            }
         }
         if (!this.negative) {
