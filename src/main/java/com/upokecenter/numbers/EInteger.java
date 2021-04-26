@@ -2522,6 +2522,10 @@ at: http://peteroupc.github.io/
      * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
+     * @throws IllegalArgumentException doesn't satisfy eia.signum()&gt;= 0; doesn't
+     * satisfy eib.signum()&gt;= 0; bigPower is negative; bigPower is
+     * negative; doesn't satisfy shiftBits&lt;16; doesn't satisfy
+     * sqroot.signum()&gt;= 0.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -3139,7 +3143,8 @@ at: http://peteroupc.github.io/
                     ((value >= 100000000000000L) ? 15 : ((value
                           >= 10000000000000L) ?
                         14 : ((value >= 1000000000000L) ? 13 : ((value
-                              >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+                              >= 100000000000L) ? 12 : ((value >=
+10000000000L) ?
                               11 : ((value >= 1000000000L) ? 10 : 9)))))))));
           } else {
             int v2 = (int)value;
@@ -3289,7 +3294,8 @@ at: http://peteroupc.github.io/
                     int maxDigitEstimate = maxDigits + 4;
                     int minDigitEstimate = minDigits + 4;
                     retval += ei.Abs().compareTo(NumberUtility.FindPowerOfTen(
-                          minDigitEstimate)) >= 0 ? retval + maxDigitEstimate : retval +
+                          minDigitEstimate)) >= 0 ? retval +
+maxDigitEstimate : retval +
                       minDigitEstimate;
                     done = true;
                     break;
@@ -3397,15 +3403,12 @@ at: http://peteroupc.github.io/
                         0xffff) != 0) ? 4 : ((((c << 10) & ShortMask) != 0) ?
                       5 : ((((c << 9) & ShortMask) != 0) ? 6 : ((((c <<
                                 8) & ShortMask) != 0) ? 7 : ((((c << 7) &
-                                ShortMask) != 0) ? 8 : ((((c << 6) &
-                                  ShortMask) != 0) ? 9 :
+                ShortMask) != 0) ? 8 : ((((c << 6) & ShortMask) != 0) ? 9 :
                               ((((c << 5) & ShortMask) != 0) ? 10 : ((((c <<
-                                        4) & ShortMask) != 0) ? 11 : ((((c <<
-                                          3) &
+                4) & ShortMask) != 0) ? 11 : ((((c << 3) &
                                         0xffff) != 0) ? 12 : ((((c << 2) &
                                           0xffff) != 0) ? 13 : ((((c << 1) &
-                                            ShortMask) != 0) ? 14 :
-                                        15))))))))))))));
+                ShortMask) != 0) ? 14 : 15))))))))))))));
           retSetBitLong += rsb;
           return retSetBitLong;
         }
@@ -4185,18 +4188,18 @@ at: http://peteroupc.github.io/
       EInteger[] wts = { w0, wt1, wt2, wt3, wt4, wt5, w6 };
       int[] wts2 = new int[] {
         -90, 5, -3, -60, 20, 2,
-          -90,
-        };
+        -90,
+      };
       EInteger w1 = Interpolate(wts, wts2, 180);
       wts2 = new int[] {
         -120,
-          1,
-          1,
-          -4,
-          -4,
-          0,
-          6,
-        };
+        1,
+        1,
+        -4,
+        -4,
+        0,
+        6,
+      };
       EInteger w2 = Interpolate(wts, wts2, 24);
       wts2 = new int[] {
         45,
@@ -4225,8 +4228,8 @@ at: http://peteroupc.github.io/
           24);
       wts2 = new int[] {
         -360, 5, 3, -120, -40, 8,
-          -360,
-        };
+        -360,
+      };
       EInteger w5 = Interpolate(wts,
           wts2,
           180);
@@ -4270,18 +4273,17 @@ at: http://peteroupc.github.io/
      * Raises an arbitrary-precision integer to a power.
      * @param longPower The exponent to raise this integer to.
      * @return The result. Returns 1 if {@code longPower} is 0.
+     * @throws IllegalArgumentException bigPower is negative.
      */
     public EInteger Pow(long longPower) {
-      if (longPower< 0) {
+      if (longPower < 0) {
         throw new IllegalArgumentException("bigPower is negative");
       }
       if (longPower == 0) {
         return EInteger.FromInt32(1);
       }
-      if (longPower < Integer.MAX_VALUE) {
-        return this.Pow ((int)longPower);
-      }
-      return this.Pow(EInteger.FromInt64(longPower));
+      return (longPower < Integer.MAX_VALUE) ? this.Pow((int)longPower) :
+this.Pow(EInteger.FromInt64(longPower));
     }
 
     /**
@@ -4643,8 +4645,7 @@ at: http://peteroupc.github.io/
     public EInteger LowBits(long longBitCount) {
       if (longBitCount < 0) {
         throw new IllegalArgumentException("\"longBitCount\" (" + longBitCount +
-          ") is" +
-          "\u0020not greater or equal to 0");
+          ") is" + "\u0020not greater or equal to 0");
       }
       return (longBitCount <= Integer.MAX_VALUE) ?
         this.LowBits((int)longBitCount) :

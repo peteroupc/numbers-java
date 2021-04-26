@@ -1507,6 +1507,11 @@ Returns the greatest common divisor of this integer and the given integer.
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
+* <code>java.lang.IllegalArgumentException</code> - doesn't satisfy eia.signum()&gt;= 0; doesn't
+ satisfy eib.signum()&gt;= 0; bigPower is negative; bigPower is
+ negative; doesn't satisfy shiftBits&lt;16; doesn't satisfy
+ sqroot.signum()&gt;= 0.
+
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()
 Returns the number of decimal digits used by this integer, in the form of an
@@ -1870,6 +1875,10 @@ Raises an arbitrary-precision integer to a power.
 **Returns:**
 
 * The result. Returns 1 if <code>longPower</code> is 0.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - bigPower is negative.
 
 ### Pow
     public EInteger Pow​(EInteger bigPower)
