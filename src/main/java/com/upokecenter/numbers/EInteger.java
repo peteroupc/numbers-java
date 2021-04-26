@@ -4392,37 +4392,7 @@ at: http://peteroupc.github.io/
       if (power == null) {
         throw new NullPointerException("power");
       }
-      int sign = power.signum();
-      if (sign < 0) {
-        throw new IllegalArgumentException(
-          "sign (" + sign + ") is less than 0");
-      }
-      EInteger thisVar = this;
-      if (sign == 0) {
-        return EInteger.FromInt32(1);
-      }
-      if (power.equals(EInteger.FromInt32(1))) {
-        return this;
-      }
-      if (power.wordCount == 1 && power.words[0] == 2) {
-        return thisVar.Multiply(thisVar);
-      }
-      if (power.wordCount == 1 && power.words[0] == 3) {
-        return thisVar.Multiply(thisVar).Multiply(thisVar);
-      }
-      EInteger r = EInteger.FromInt32(1);
-      // boolean negatePower = !power.isEven() && thisVar.signum() < 0;
-      // thisVar = thisVar.Abs();
-      while (!power.isZero()) {
-        if (!power.isEven()) {
-          r = r.Multiply(thisVar);
-        }
-        power = power.ShiftRight(1);
-        if (!power.isZero()) {
-          thisVar = thisVar.Multiply(thisVar);
-        }
-      }
-      return r; // negatePower ? r.Negate() : r;
+      return this.Pow(power);
     }
 
     /**

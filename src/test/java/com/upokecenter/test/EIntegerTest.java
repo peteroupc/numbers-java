@@ -222,7 +222,7 @@ import com.upokecenter.numbers.*;
         "" + m2);
       TestCommon.CompareTestEqual(
         eresult,
-        em1.PowBigIntVar(EInteger.FromInt32(m2)),
+        em1.Pow(EInteger.FromInt32(m2)),
         "" + m2);
     }
 
@@ -2842,7 +2842,7 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       try {
-        EInteger.FromInt32(1).PowBigIntVar(null);
+        EInteger.FromInt32(1).Pow(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -2861,7 +2861,7 @@ import com.upokecenter.numbers.*;
       }
       try {
         EInteger ei = EInteger.FromInt32(0).Subtract(1);
-        ei.PowBigIntVar(null);
+        ei.Pow(null);
         Assert.fail("Should have failed");
       } catch (NullPointerException ex) {
         // NOTE: Intentionally empty
@@ -3277,7 +3277,7 @@ import com.upokecenter.numbers.*;
       DoTestPow(EInteger.FromInt32(-4), 4, EInteger.FromInt32(256));
     }
     @Test
-    public void TestPowBigIntVar() {
+    public void TestPow() {
       // not implemented yet
     }
     @Test
