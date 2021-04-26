@@ -298,11 +298,14 @@ This method may overflow.
  arbitrary-precision integer and another one.
 * `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
+* `EInteger Pow​(long longPower)`<br>
+ Raises an arbitrary-precision integer to a power.
 * `EInteger Pow​(EInteger bigPower)`<br>
  Raises an arbitrary-precision integer to a power.
 * `EInteger PowBigIntVar​(EInteger power)`<br>
- Raises an arbitrary-precision integer to a power, which is given as another
- arbitrary-precision integer.
+ Deprecated.
+Use Pow instead.
+ Use Pow instead.
 * `EInteger Remainder​(int intValue)`<br>
  Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 32-bit signed integer.
@@ -1857,6 +1860,18 @@ Gets the value of this object with the sign reversed.
 * This object's value with the sign reversed.
 
 ### Pow
+    public EInteger Pow​(long longPower)
+Raises an arbitrary-precision integer to a power.
+
+**Parameters:**
+
+* <code>longPower</code> - The exponent to raise this integer to.
+
+**Returns:**
+
+* The result. Returns 1 if <code>longPower</code> is 0.
+
+### Pow
     public EInteger Pow​(EInteger bigPower)
 Raises an arbitrary-precision integer to a power.
 
@@ -1887,9 +1902,9 @@ Raises an arbitrary-precision integer to a power.
 * The result. Returns 1 if <code>powerSmall</code> is 0.
 
 ### PowBigIntVar
-    public EInteger PowBigIntVar​(EInteger power)
-Raises an arbitrary-precision integer to a power, which is given as another
- arbitrary-precision integer.
+    @Deprecated public EInteger PowBigIntVar​(EInteger power)
+Deprecated.
+Use Pow instead.
 
 **Parameters:**
 
@@ -2023,8 +2038,8 @@ Extracts the lowest bits of this integer. This is equivalent to
 ### LowBits
     public EInteger LowBits​(int bitCount)
 Extracts the lowest bits of this integer. This is equivalent to
- <code>And(2^bitCount - 1)</code>, but is more efficient when this integer is
- non-negative and bitCount's value is large.
+ <code>And(2^bitCount - 1)</code>, but is more efficient when this integer
+ is non-negative and bitCount's value is large.
 
 **Parameters:**
 
@@ -2038,8 +2053,8 @@ Extracts the lowest bits of this integer. This is equivalent to
 ### LowBits
     public EInteger LowBits​(EInteger bigBitCount)
 Extracts the lowest bits of this integer. This is equivalent to
- <code>And(2^bigBitCount - 1)</code>, but is more efficient when this integer
- is non-negative and bigBitCount's value is large.
+ <code>And(2^bigBitCount - 1)</code>, but is more efficient when this
+ integer is non-negative and bigBitCount's value is large.
 
 **Parameters:**
 
