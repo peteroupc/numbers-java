@@ -2523,8 +2523,6 @@ FromInt32((int)bytes[offset]) :
      * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws IllegalArgumentException bigPower is negative; doesn't satisfy
-     * shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -4650,9 +4648,9 @@ ShortMask) != 0) ? 9 :
    * Extracts the lowest bits of this integer. This is equivalent to
    * <code>And(2^longBitCount - 1)</code>, but is more efficient when this
    * integer is non-negative and longBitCount's value is large.
-   * @param longBitCount The parameter {@code longBitCount} is a 64-bit signed
-   * integer.
-   * @return The return value is not documented yet.
+   * @param longBitCount The number of bits to extract from the lowest part of
+   * this integer.
+   * @return A value equivalent to {@code And(2^longBitCount - 1)}.
    */
     public EInteger LowBits(long longBitCount) {
         if (longBitCount < 0) {
@@ -4660,8 +4658,7 @@ ShortMask) != 0) ? 9 :
 ") is" +
 "\u0020not greater or equal to 0");
         }
-        return (
-          longBitCount <= Integer.MAX_VALUE) ?
+        return (longBitCount <= Integer.MAX_VALUE) ?
 this.LowBits((int)longBitCount) :
 this.LowBits(EInteger.FromInt64(longBitCount));
     }
@@ -4670,8 +4667,9 @@ this.LowBits(EInteger.FromInt64(longBitCount));
    * Extracts the lowest bits of this integer. This is equivalent to
    * <code>And(2^bitCount - 1)</code>, but is more efficient when this integer is
    * non-negative and bitCount's value is large.
-   * @param bitCount The parameter {@code bitCount} is a 32-bit signed integer.
-   * @return The return value is not documented yet.
+   * @param bitCount The number of bits to extract from the lowest part of this
+   * integer.
+   * @return A value equivalent to {@code And(2^bitCount - 1)}.
    */
     public EInteger LowBits(int bitCount) {
         if (bitCount < 0) {
@@ -4720,9 +4718,9 @@ this.LowBits(EInteger.FromInt64(longBitCount));
    * Extracts the lowest bits of this integer. This is equivalent to
    * <code>And(2^bigBitCount - 1)</code>, but is more efficient when this integer
    * is non-negative and bigBitCount's value is large.
-   * @param bigBitCount The parameter {@code bigBitCount} is a Numbers.EInteger
-   * object.
-   * @return The return value is not documented yet.
+   * @param bigBitCount The number of bits to extract from the lowest part of
+   * this integer.
+   * @return A value equivalent to {@code And(2^bigBitCount - 1)}.
    * @throws NullPointerException The parameter {@code bigBitCount} is null.
    */
     public EInteger LowBits(EInteger bigBitCount) {

@@ -1504,9 +1504,6 @@ Returns the greatest common divisor of this integer and the given integer.
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
-* <code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn't satisfy
- shiftBits&lt;16; doesn't satisfy sqroot.signum()&gt;= 0.
-
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()
 Returns the number of decimal digits used by this integer, in the form of an
@@ -2016,12 +2013,12 @@ Extracts the lowest bits of this integer. This is equivalent to
 
 **Parameters:**
 
-* <code>longBitCount</code> - The parameter <code>longBitCount</code> is a 64-bit signed
- integer.
+* <code>longBitCount</code> - The number of bits to extract from the lowest part of
+ this integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* A value equivalent to <code>And(2^longBitCount - 1)</code>.
 
 ### LowBits
     public EInteger LowBits​(int bitCount)
@@ -2031,11 +2028,12 @@ Extracts the lowest bits of this integer. This is equivalent to
 
 **Parameters:**
 
-* <code>bitCount</code> - The parameter <code>bitCount</code> is a 32-bit signed integer.
+* <code>bitCount</code> - The number of bits to extract from the lowest part of this
+ integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* A value equivalent to <code>And(2^bitCount - 1)</code>.
 
 ### LowBits
     public EInteger LowBits​(EInteger bigBitCount)
@@ -2045,12 +2043,12 @@ Extracts the lowest bits of this integer. This is equivalent to
 
 **Parameters:**
 
-* <code>bigBitCount</code> - The parameter <code>bigBitCount</code> is a Numbers.EInteger
- object.
+* <code>bigBitCount</code> - The number of bits to extract from the lowest part of
+ this integer.
 
 **Returns:**
 
-* The return value is not documented yet.
+* A value equivalent to <code>And(2^bigBitCount - 1)</code>.
 
 **Throws:**
 
