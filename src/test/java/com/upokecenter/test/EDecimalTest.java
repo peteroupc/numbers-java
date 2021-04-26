@@ -1384,7 +1384,7 @@ import com.upokecenter.numbers.*;
         Object objectTemp2 =
 
   EDecimal.FromString("0.001809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474");
-        if (!(objectTemp).equals(objectTemp2)) {
+        if ((objectTemp).equals(objectTemp2)) {
  Assert.fail((objectTemp)+" not equal to "+(objectTemp2));
 }
       }

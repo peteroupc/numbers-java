@@ -462,7 +462,7 @@ import com.upokecenter.numbers.*;
       Assert.assertEquals(
         ERational.FromString("12/24"),
         ERational.FromString("12/24"));
-      if (!(
+      if ((
         ERational.FromString("24/48")).equals(ERational.FromString("12/24"))) {
  Assert.fail((
         ERational.FromString("24/48"))+" not equal to "+(ERational.FromString("12/24")));

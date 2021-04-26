@@ -4662,7 +4662,7 @@ ShortMask) != 0) ? 9 :
         }
         return (
           longBitCount <= Integer.MAX_VALUE) ?
-(this.LowBits((int)longBitCount)) :
+this.LowBits((int)longBitCount) :
 this.LowBits(EInteger.FromInt64(longBitCount));
     }
 
