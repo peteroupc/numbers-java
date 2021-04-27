@@ -2222,7 +2222,7 @@ at: http://peteroupc.github.io/
           !ctx.getHasMaxPrecision())) {
         // TODO: In next major version, support the case when:
         // - ctx is null or has unlimited precision, and
-        // - thisValue is greater than 0.
+        // - thisValue is less than 0.
         // This case is trivial: divide 1 by thisValue^abs(pow).
         String ValueOutputMessage =
           "ctx is null or has unlimited precision, " +
@@ -2342,7 +2342,16 @@ at: http://peteroupc.github.io/
           return thisValue;
         }
       }
-      EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(17));
+      EInteger upperBoundInt = NumberUtility.IntegerDigitLengthUpperBound(
+         this.helper,
+         powInt);
+      EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(10));
+      guardDigits = guardDigits.Add(upperBoundInt);
+      // /*
+      // System.out.println("guardDigits=" + guardDigits +
+      // " upperBoundInt=" + upperBoundInt +
+      // " powint=" + powInt);
+      // */
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits));

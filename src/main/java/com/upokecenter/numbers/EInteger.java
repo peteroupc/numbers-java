@@ -2522,10 +2522,7 @@ at: http://peteroupc.github.io/
      * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws IllegalArgumentException doesn't satisfy eia.signum()&gt;= 0; doesn't
-     * satisfy eib.signum()&gt;= 0; bigPower is negative; bigPower is
-     * negative; doesn't satisfy shiftBits&lt;16; doesn't satisfy
-     * sqroot.signum()&gt;= 0.
+     * @throws IllegalArgumentException bigPower is negative.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {

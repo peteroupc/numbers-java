@@ -3277,10 +3277,6 @@ import com.upokecenter.numbers.*;
       DoTestPow(EInteger.FromInt32(-4), 4, EInteger.FromInt32(256));
     }
     @Test
-    public void TestPow() {
-      // not implemented yet
-    }
-    @Test
     public void TestRemainder() {
       DoTestRemainder("2472320648", "2831812081", "2472320648");
       DoTestRemainder("-2472320648", "2831812081", "-2472320648");

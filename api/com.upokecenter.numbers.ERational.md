@@ -1278,7 +1278,10 @@ Divides this arbitrary-precision rational number by another
 Determines whether this object's numerator, denominator, and properties are
  equal to those of another object and that other object is an
  arbitrary-precision rational number. Not-a-number values are
- considered equal if the rest of their properties are equal.
+ considered equal if the rest of their properties are equal. This is
+ not the same as value equality. Notably, two ERationals with the
+ same value, but of which one is in lowest terms and the other is
+ not, are compared as unequal by this method (example: 1/2 vs. 5/10).
 
 **Overrides:**
 

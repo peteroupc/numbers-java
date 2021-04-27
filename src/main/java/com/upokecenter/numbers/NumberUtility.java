@@ -821,6 +821,27 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
       }
     }
 
+    public static <THelper> EInteger IntegerDigitLengthUpperBound(
+       IRadixMathHelper<THelper> helper,
+       THelper val) {
+       // Gets an upper bound on the number of digits in the integer
+       // part of the given number 'val'.
+       int flags = helper.GetFlags(val);
+       if ((flags & BigNumberFlags.FlagSpecial) != 0) {
+          // Infinity and NaN are not supported
+          throw new UnsupportedOperationException();
+       }
+       EInteger expo = helper.GetExponent(val);
+       EInteger mant = helper.GetMantissa(val).Abs();
+       if (expo.signum() <= 0) {
+          // Exponent Y in X*digits^Y is 0 or negative, so upper bound
+          // of significand's digit count works by itself.
+          return DigitLengthUpperBound(helper, mant).ToEInteger();
+       } else {
+          return DigitLengthUpperBound(helper, mant).ToEInteger().Add(expo);
+       }
+    }
+
     public static <THelper> FastIntegerFixed DigitLengthFixed(
       IRadixMathHelper<THelper> helper,
       FastIntegerFixed fei) {
