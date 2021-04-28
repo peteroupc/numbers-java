@@ -350,7 +350,7 @@ import com.upokecenter.numbers.*;
 
   EFloat.FromString("0.001809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474");
         if ((objectTemp).equals(objectTemp2)) {
- Assert.fail((objectTemp)+" not equal to "+(objectTemp2));
+ Assert.fail((objectTemp)+" may not be equal to "+(objectTemp2));
 }
       }
       RandomGenerator r = new RandomGenerator();
@@ -1025,9 +1025,14 @@ import com.upokecenter.numbers.*;
     }
     @Test
     public void TestLogExpSpecificF() {
-      EFloat efa = EFloat.Create(7894203448763243L, 790).Log(EContext.Binary64);
+      EFloat efaa = EFloat.Create(7894203448763243L, 790);
+      EFloat efa = efaa.Log(EContext.Binary64);
+      EInteger mant = efa.getMantissa();
+      if (!(mant.Abs().GetUnsignedBitLengthAsInt64() <= 53)) {
+ Assert.fail();
+ }
       EFloat efb = EFloat.Create(642324992820697L, -40);
-      String str = OutputEF(efb) + "\n" + OutputEF(efa);
+      String str = OutputEF(efb) + "\n" + OutputEF(efa) + "\n" + efaa;
       TestCommon.CompareTestEqual(efb, efa, str);
     }
     @Test

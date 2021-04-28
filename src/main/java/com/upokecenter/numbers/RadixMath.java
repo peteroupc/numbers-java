@@ -1385,6 +1385,7 @@ at: http://peteroupc.github.io/
               error.AddInt(6);
               error.AddBig(ctx.getPrecision());
               bigError = error.ToEInteger();
+              // System.out.println("LnInternalCloseToOne error="+error);
               // System.out.println("LnInternalCloseToOne B " +(thisValue as
               // EDecimal)?.ToDouble());
               thisValue = this.LnInternalCloseToOne2(
@@ -1478,13 +1479,10 @@ at: http://peteroupc.github.io/
             bigError = error.ToEInteger();
             EInteger cprec = EInteger.Max(bounds[1].ToEInteger(), ctx.getPrecision())
               .Add(bigError);
+            // System.out.println("cprec prec " + (// ctx.getPrecision()) + " bounds " +
+            //(bounds[1].ToEInteger()));
             ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
-            T smallfrac = (ctxdiv.getPrecision().compareTo(400) > 0) ?
-              this.Divide(one, this.helper.ValueOf(1000000), ctxdiv) :
-              this.Divide(one, this.helper.ValueOf(200), ctxdiv);
-            T closeToOne = this.Add(one, smallfrac, null);
-            // System.out.println("Before Ln " +thisValue);
             T oldThisValue = thisValue;
             // Take square root until this value
             // is close to 1
@@ -1492,10 +1490,15 @@ at: http://peteroupc.github.io/
               thisValue = this.SquareRoot(
                   thisValue,
                   ctxdiv.WithUnlimitedExponents());
-              // System.out.println("--> " +thisValue);
               roots.Increment();
             }
-            for (int i = 0; i < 8; ++i) {
+            int iterCount = 8;
+            if (this.helper.GetRadix() == 2 && cprec.compareTo(300) > 0) {
+              iterCount = 36;
+            } else if (this.helper.GetRadix() > 2 && cprec.compareTo(100) > 0) {
+              iterCount = 36;
+            }
+            for (int i = 0; i < iterCount; ++i) {
               thisValue = this.SquareRoot(
                   thisValue,
                   ctxdiv.WithUnlimitedExponents());
@@ -1504,9 +1507,13 @@ at: http://peteroupc.github.io/
             }
             // System.out.println("rootcount="+roots);
             // Find -Ln(1/thisValue)
-            // System.out.println("LnInternalCloseToOne C " + thisValue);
-            thisValue = this.Divide(one, thisValue, ctxdiv);
-            // System.out.println("LnInternalCloseToOne C " + thisValue);
+            /*if (thisValue instanceof EDecimal) {
+   System.out.println("LnInternalCloseToOne C " + ((((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble()));
+ } else {
+ System.out.println("LnInternalCloseToOne C " + ((((thisValue instanceof EFloat) ? (EFloat)thisValue : null))?.ToDouble()));
+}
+            */ thisValue = this.Divide(one, thisValue, ctxdiv);
+            // System.out.println("LnInternalCloseToOne C prec " + ctxdiv.getPrecision());
             thisValue = this.LnInternalCloseToOne2(
                 thisValue,
                 ctxdiv.getPrecision(),
@@ -2345,12 +2352,13 @@ at: http://peteroupc.github.io/
       EInteger upperBoundInt = NumberUtility.IntegerDigitLengthUpperBound(
          this.helper,
          powInt);
+      upperBoundInt = EInteger.Min(EInteger.FromInt32(50), upperBoundInt);
       EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(15));
       guardDigits = guardDigits.Add(upperBoundInt);
-      //System.out.println("guardDigits=" + guardDigits +
-      // " upperBoundInt=" + upperBoundInt +
-      // " powint=" + powInt);
-      EContext ctxdiv = SetPrecisionIfLimited(
+      /*if (upperBoundInt.compareTo(50) > 0) {
+      System.out.println("guardDigits=" + guardDigits +
+        " upperBoundInt=" + upperBoundInt + " powint=" + powInt);
+      }*/ EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits));
       if (ctx.getRounding() != ERounding.Ceiling &&
@@ -4715,7 +4723,7 @@ at: http://peteroupc.github.io/
       int vacillations = 0;
       String dbg = "";
       // if (thisValue instanceof EDecimal) {
-      // dbg="" + ((EDecimal)thisValue).ToDouble();
+      // dbg="" + (((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble();
       // }
       // System.out.println("workingprec=" + workingPrecision);
       EContext ctxdiv = SetPrecisionIfLimited(
