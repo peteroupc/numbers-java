@@ -2345,13 +2345,11 @@ at: http://peteroupc.github.io/
       EInteger upperBoundInt = NumberUtility.IntegerDigitLengthUpperBound(
          this.helper,
          powInt);
-      EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(10));
+      EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(15));
       guardDigits = guardDigits.Add(upperBoundInt);
-      // /*
-      // System.out.println("guardDigits=" + guardDigits +
+      //System.out.println("guardDigits=" + guardDigits +
       // " upperBoundInt=" + upperBoundInt +
       // " powint=" + powInt);
-      // */
       EContext ctxdiv = SetPrecisionIfLimited(
           ctx,
           ctx.getPrecision().Add(guardDigits));
