@@ -1480,7 +1480,7 @@ at: http://peteroupc.github.io/
             EInteger cprec = EInteger.Max(bounds[1].ToEInteger(), ctx.getPrecision())
               .Add(bigError);
             // System.out.println("cprec prec " + (// ctx.getPrecision()) + " bounds " +
-            //(bounds[1].ToEInteger()));
+            // (bounds[1].ToEInteger()));
             ctxdiv = SetPrecisionIfLimited(ctx, cprec)
               .WithRounding(intermedRounding).WithBlankFlags();
             T oldThisValue = thisValue;

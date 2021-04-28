@@ -1507,7 +1507,7 @@ Returns the greatest common divisor of this integer and the given integer.
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
-* <code>java.lang.IllegalArgumentException</code> - bigPower is negative.
+* <code>java.lang.IllegalArgumentException</code> - BigPower is negative.
 
 ### GetDigitCountAsEInteger
     public EInteger GetDigitCountAsEInteger()
@@ -1875,7 +1875,7 @@ Raises an arbitrary-precision integer to a power.
 
 **Throws:**
 
-* <code>java.lang.IllegalArgumentException</code> - bigPower is negative.
+* <code>java.lang.IllegalArgumentException</code> - BigPower is negative.
 
 ### Pow
     public EInteger Pow​(EInteger bigPower)

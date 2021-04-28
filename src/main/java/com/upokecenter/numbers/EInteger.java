@@ -2522,7 +2522,7 @@ at: http://peteroupc.github.io/
      * @return The greatest common divisor of this integer and the given integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
-     * @throws IllegalArgumentException bigPower is negative.
+     * @throws IllegalArgumentException BigPower is negative.
      */
     public EInteger Gcd(EInteger bigintSecond) {
       if (bigintSecond == null) {
@@ -4270,7 +4270,7 @@ maxDigitEstimate : retval +
      * Raises an arbitrary-precision integer to a power.
      * @param longPower The exponent to raise this integer to.
      * @return The result. Returns 1 if {@code longPower} is 0.
-     * @throws IllegalArgumentException bigPower is negative.
+     * @throws IllegalArgumentException BigPower is negative.
      */
     public EInteger Pow(long longPower) {
       if (longPower < 0) {
