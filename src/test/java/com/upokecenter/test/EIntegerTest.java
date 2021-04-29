@@ -430,7 +430,7 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestLowBits() {
        RandomGenerator r = new RandomGenerator();
-       int[] ints = {0, 1, 3, 5, 16, 32, 33, 37, 100, 1000, 10000, 100000 };
+       int[] ints = { 0, 1, 3, 5, 16, 32, 33, 37, 100, 1000, 10000, 100000 };
        EInteger eia = EInteger.FromInt32(1).ShiftLeft(100);
        EInteger eib = EInteger.FromInt32(1).ShiftLeft(1000);
        EInteger eic = EInteger.FromInt32(1).ShiftLeft(10000);

@@ -7,29 +7,50 @@ private EFloatCharArrayString() {
       char[] chars,
       int offset,
       int length,
-      EContext ctx) {
+      EContext ctx,
+      boolean throwException) {
       if (chars == null) {
-        throw new NullPointerException("chars");
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NullPointerException("chars");
+        }
       }
       if (offset < 0) {
-        throw new NumberFormatException("offset(" + offset + ") is not greater" +
-          "\u0020or equal to 0");
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("offset(" + offset + ") is not" +
+"\u0020greater" + "\u0020or equal to 0");
+}
       }
       if (offset > chars.length) {
-        throw new NumberFormatException("offset(" + offset + ") is not less or" +
-          "\u0020equal to " + chars.length);
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("offset(" + offset + ") is not" +
+"\u0020less" + "\u0020or" + "\u0020equal to " + chars.length);
+}
       }
       if (length < 0) {
-        throw new NumberFormatException("length(" + length + ") is not greater or" +
-          "\u0020equal to 0");
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("length(" + length + ") is not" +
+"\u0020greater or" + "\u0020equal to 0");
+}
       }
       if (length > chars.length) {
-        throw new NumberFormatException("length(" + length + ") is not less or" +
-          "\u0020equal to " + chars.length);
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("length(" + length + ") is not" +
+"\u0020less" + "\u0020or" + "\u0020equal to " + chars.length);
+}
       }
       if (chars.length - offset < length) {
-        throw new NumberFormatException("str's length minus " + offset + "(" +
-          (chars.length - offset) + ") is not greater or equal to " + length);
+        if (!throwException) {
+          return null;
+        } else {
+  throw new NumberFormatException("str's length minus " + offset + "(" +
+(chars.length - offset) + ") is not greater or equal to " + length);
+ }
       }
       EContext b64 = EContext.Binary64;
       if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
@@ -39,14 +60,23 @@ private EFloatCharArrayString() {
         int tmpoffset = offset;
         int endpos = offset + length;
         if (length == 0) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         if (chars[tmpoffset] == '-' || chars[tmpoffset] == '+') {
           ++tmpoffset;
         }
         if (tmpoffset < endpos && ((chars[tmpoffset] >= '0' &&
               chars[tmpoffset] <= '9') || chars[tmpoffset] == '.')) {
-          EFloat ef = DoubleEFloatFromString(chars, offset, length, ctx);
+          EFloat ef = DoubleEFloatFromString(
+            chars,
+            offset,
+            length,
+            ctx,
+            throwException);
           if (ef != null) {
             return ef;
           }
@@ -64,13 +94,22 @@ private EFloatCharArrayString() {
       char[] chars,
       int offset,
       int length,
-      EContext ctx) {
+      EContext ctx,
+      boolean throwException) {
       int tmpoffset = offset;
       if (chars == null) {
-        throw new NullPointerException("chars");
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NullPointerException("chars");
+        }
       }
       if (length == 0) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       int endStr = tmpoffset + length;
       boolean negative = false;
@@ -150,7 +189,11 @@ private EFloatCharArrayString() {
           }
         } else if (ch == '.') {
           if (haveDecimalPoint) {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
           haveDecimalPoint = true;
           decimalDigitStart = i + 1;
@@ -160,11 +203,19 @@ private EFloatCharArrayString() {
           ++i;
           break;
         } else {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (!haveDigits) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       int expInt = 0;
       int expoffset = 1;
@@ -176,7 +227,11 @@ private EFloatCharArrayString() {
       if (haveExponent) {
         haveDigits = false;
         if (i == endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         char ch = chars[i];
         if (ch == '+' || ch == '-') {
@@ -202,11 +257,19 @@ private EFloatCharArrayString() {
               expInt = Integer.MAX_VALUE;
             }
           } else {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
         }
         if (!haveDigits) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         expInt *= expoffset;
         if (expPrec > 12) {
@@ -220,7 +283,11 @@ private EFloatCharArrayString() {
         }
       }
       if (i != endStr) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       if (expInt != Integer.MAX_VALUE && expInt > -Integer.MAX_VALUE &&
         mantissaLong != Long.MAX_VALUE && (ctx == null ||
@@ -315,14 +382,14 @@ private EFloatCharArrayString() {
               decimalDigitStart,
               decimalDigitEnd);
         } else {
-        char[] ctmpstr = Extras.CharsConcat(
-          chars,
-          digitStart,
-          digitEnd - digitStart,
-          chars,
-          decimalDigitStart,
-          decimalDigitEnd - decimalDigitStart);
-        mant = EInteger.FromString(ctmpstr);
+          char[] ctmpstr = Extras.CharsConcat(
+              chars,
+              digitStart,
+              digitEnd - digitStart,
+              chars,
+              decimalDigitStart,
+              decimalDigitEnd - decimalDigitStart);
+          mant = EInteger.FromString(ctmpstr);
         }
       } else {
         mant = EInteger.FromSubstring(chars, digitStart, digitEnd);

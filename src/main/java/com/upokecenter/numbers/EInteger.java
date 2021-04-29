@@ -571,7 +571,8 @@ at: http://peteroupc.github.io/
           str,
           radix,
           index,
-          endIndex);
+          endIndex,
+          true);
     }
 
     /**
@@ -695,7 +696,8 @@ at: http://peteroupc.github.io/
           cs,
           radix,
           index,
-          endIndex);
+          endIndex,
+          true);
     }
 
     /**
@@ -832,7 +834,8 @@ at: http://peteroupc.github.io/
           bytes,
           radix,
           index,
-          endIndex);
+          endIndex,
+          true);
     }
 
     /**

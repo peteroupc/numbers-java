@@ -565,7 +565,7 @@ PositiveInfinity) : CreateNaN(
       String str,
       int offset,
       int length) {
-       return ERationalTextString.FromString(str, offset, length);
+       return ERationalTextString.FromString(str, offset, length, true);
     }
 
     /**
@@ -619,7 +619,7 @@ PositiveInfinity) : CreateNaN(
       char[] chars,
       int offset,
       int length) {
-       return ERationalCharArrayString.FromString(chars, offset, length);
+       return ERationalCharArrayString.FromString(chars, offset, length, true);
     }
 
     /**
@@ -670,7 +670,7 @@ PositiveInfinity) : CreateNaN(
       byte[] bytes,
       int offset,
       int length) {
-       return ERationalByteArrayString.FromString(bytes, offset, length);
+       return ERationalByteArrayString.FromString(bytes, offset, length, true);
     }
 
     /**

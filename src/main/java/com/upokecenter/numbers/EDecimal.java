@@ -954,7 +954,7 @@ rather than properties
      */
     public static EDecimal FromInt64AsUnsigned(long longerValue) {
       return longerValue >= 0 ? FromInt64(longerValue) :
-           FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
+        FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
     }
 
     /**
@@ -1208,7 +1208,12 @@ rather than properties
       if (chars == null) {
         throw new NullPointerException("chars");
       }
-      return EDecimalCharArrayString.FromString(chars, offset, length, ctx);
+      return EDecimalCharArrayString.FromString(
+          chars,
+          offset,
+          length,
+          ctx,
+          true);
     }
 
     /**
@@ -1335,7 +1340,12 @@ rather than properties
       if (bytes == null) {
         throw new NullPointerException("bytes");
       }
-      return EDecimalByteArrayString.FromString(bytes, offset, length, ctx);
+      return EDecimalByteArrayString.FromString(
+          bytes,
+          offset,
+          length,
+          ctx,
+          true);
     }
 
     /**
@@ -1459,7 +1469,7 @@ rather than properties
       if (str == null) {
         throw new NullPointerException("str");
       }
-      return EDecimalTextString.FromString(str, offset, length, ctx);
+      return EDecimalTextString.FromString(str, offset, length, ctx, true);
     }
 
     static EDecimal SignalUnderflow(EContext ec, boolean negative, boolean

@@ -9,43 +9,75 @@ private EIntegerByteArrayString() {
       byte[] cs,
       int radix,
       int index,
-      int endIndex) {
+      int endIndex,
+      boolean throwException) {
       if (radix < 2) {
-        throw new IllegalArgumentException("radix(" + radix +
-          ") is less than 2");
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("radix(" + radix + ") is less than 2");
+ }
       }
       if (radix > 36) {
-        throw new IllegalArgumentException("radix(" + radix +
-          ") is more than 36");
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("radix(" + radix + ") is more than 36");
+ }
       }
       if (index < 0) {
-        throw new IllegalArgumentException("index(" + index + ") is less than " +
-          "0");
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("index(" + index + ") is less than " + "0");
+ }
       }
       if (index > cs.length) {
-        throw new IllegalArgumentException("index(" + index + ") is more than " +
-          cs.length);
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("index(" + index + ") is more than " + cs.length);
+ }
       }
       if (endIndex < 0) {
-        throw new IllegalArgumentException("endIndex(" + endIndex +
-          ") is less than 0");
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("endIndex(" + endIndex + ") is less than 0");
+ }
       }
       if (endIndex > cs.length) {
-        throw new IllegalArgumentException("endIndex(" + endIndex +
-          ") is more than " + cs.length);
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("endIndex(" + endIndex + ") is more than " +
+cs.length);
+ }
       }
       if (endIndex < index) {
-        throw new IllegalArgumentException("endIndex(" + endIndex +
-          ") is less than " + index);
+        if (!throwException) {
+          return null;
+        } else {
+  throw new IllegalArgumentException("endIndex(" + endIndex + ") is less than " +
+index);
+ }
       }
       if (index == endIndex) {
-        throw new NumberFormatException("No digits");
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException("No digits");
+        }
       }
       boolean negative = false;
       if (cs[index] == '-') {
         ++index;
         if (index == endIndex) {
-          throw new NumberFormatException("No digits");
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException("No digits");
+          }
         }
         negative = true;
       }
@@ -80,7 +112,11 @@ private EIntegerByteArrayString() {
             byte c = cs[index + i];
             int digit = (c >= 0x80) ? 36 : c2d[(int)c];
             if (digit >= 16) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             extraWord |= digit;
           }
@@ -93,27 +129,43 @@ private EIntegerByteArrayString() {
           byte c = cs[index + 3];
           int digit = (c >= 0x80) ? 36 : c2d[(int)c];
           if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Illegal character found");
+            }
           }
           int word = digit;
           c = cs[index + 2];
           digit = (c >= 0x80) ? 36 : c2d[(int)c];
           if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Illegal character found");
+            }
           }
 
           word |= digit << 4;
           c = cs[index + 1];
           digit = (c >= 0x80) ? 36 : c2d[(int)c];
           if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Illegal character found");
+            }
           }
 
           word |= digit << 8;
           c = cs[index];
           digit = (c >= 0x80) ? 36 : c2d[(int)c];
           if (digit >= 16) {
-            throw new NumberFormatException("Illegal character found");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Illegal character found");
+            }
           }
           word |= digit << 12;
           index += 4;
@@ -143,7 +195,11 @@ private EIntegerByteArrayString() {
             byte c = cs[index + i];
             int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
             if (digit >= 2) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             extraWord |= digit;
           }
@@ -158,7 +214,11 @@ private EIntegerByteArrayString() {
             byte c = cs[idx];
             int digit = (c == '0') ? 0 : ((c == '1') ? 1 : 2);
             if (digit >= 2) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             --idx;
             word |= digit << i;
@@ -174,11 +234,12 @@ private EIntegerByteArrayString() {
             negative);
       } else {
         return FromRadixSubstringGeneral(
-            cs,
-            radix,
-            index,
-            endIndex,
-            negative);
+          cs,
+          radix,
+          index,
+          endIndex,
+          negative,
+          throwException);
       }
     }
 
@@ -187,22 +248,25 @@ private EIntegerByteArrayString() {
       int radix,
       int index,
       int endIndex,
-      boolean negative) {
+      boolean negative,
+      boolean throwException) {
       if (endIndex - index > 72) {
         int midIndex = index + ((endIndex - index) / 2);
         EInteger eia = FromRadixSubstringGeneral(
-            cs,
-            radix,
-            index,
-            midIndex,
-            false);
+          cs,
+          radix,
+          index,
+          midIndex,
+          false,
+          throwException);
         // System.out.println("eia="+eia);
         EInteger eib = FromRadixSubstringGeneral(
-            cs,
-            radix,
-            midIndex,
-            endIndex,
-            false);
+          cs,
+          radix,
+          midIndex,
+          endIndex,
+          false,
+          throwException);
         // System.out.println("eib="+eib);
         EInteger mult = null;
         int intpow = endIndex - midIndex;
@@ -225,7 +289,13 @@ private EIntegerByteArrayString() {
         // System.out.println("eia now="+eia);
         return eia;
       } else {
-        return FromRadixSubstringInner(cs, radix, index, endIndex, negative);
+        return FromRadixSubstringInner(
+          cs,
+          radix,
+          index,
+          endIndex,
+          negative,
+          throwException);
       }
     }
 
@@ -234,7 +304,8 @@ private EIntegerByteArrayString() {
       int radix,
       int index,
       int endIndex,
-      boolean negative) {
+      boolean negative,
+      boolean throwException) {
       if (radix <= 10) {
         long rv = 0;
         int digitCount = 0;
@@ -243,7 +314,11 @@ private EIntegerByteArrayString() {
             byte c = cs[i];
             int digit = (int)c - 0x30;
             if (digit >= radix || digit < 0) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             if (digitCount < 0 || digitCount >= 18) {
               digitCount = -1;
@@ -262,7 +337,11 @@ private EIntegerByteArrayString() {
             byte c = cs[i];
             int digit = (c >= 0x80) ? 36 : ((int)c - 0x30);
             if (digit >= radix || digit < 0) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             if (digitCount < 0 || digitCount >= 18) {
               digitCount = -1;
@@ -290,7 +369,11 @@ private EIntegerByteArrayString() {
           byte c = cs[i];
           int digit = (int)c - 0x30;
           if (digit >= radix || digit < 0) {
-            throw new NumberFormatException("Illegal character found");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Illegal character found");
+            }
           }
           rv = (rv * 10) + digit;
         }
@@ -312,14 +395,18 @@ private EIntegerByteArrayString() {
             i += 3;
             if (d1 >= 10 || d1 < 0 || d2 >= 10 || d2 < 0 || d3 >= 10 ||
               d3 < 0 || d4 >= 10 || d4 < 0) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             digit = (d1 * 1000) + (d2 * 100) + (d3 * 10) + d4;
             // Multiply by 10**4
             for (int j = 0; j < bn; ++j) {
               int p;
               p = ((((int)bigint[j]) & ShortMask) *
-10000);
+                  10000);
               int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
@@ -330,7 +417,11 @@ private EIntegerByteArrayString() {
             byte c = cs[i];
             digit = (int)c - 0x30;
             if (digit >= 10 || digit < 0) {
-              throw new NumberFormatException("Illegal character found");
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException("Illegal character found");
+              }
             }
             // Multiply by 10
             for (int j = 0; j < bn; ++j) {
@@ -370,16 +461,20 @@ private EIntegerByteArrayString() {
           byte c = cs[i];
           int digit = (c >= 0x80) ? 36 : c2d[(int)c];
           if (digit >= radix) {
-            throw new NumberFormatException("Illegal character found");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Illegal character found");
+            }
           }
           if (haveSmallInt && smallInt < maxSafeInt) {
             smallInt = (smallInt * radix) + digit;
           } else {
             if (haveSmallInt) {
               bigint[0] = ((short)(smallInt &
-ShortMask));
+                    ShortMask));
               bigint[1] = ((short)((smallInt >> 16) &
-ShortMask));
+                    ShortMask));
               haveSmallInt = false;
             }
             // Multiply by the radix
@@ -388,7 +483,7 @@ ShortMask));
             for (int j = 0; j < n; ++j) {
               int p;
               p = ((((int)bigint[j]) & ShortMask) *
-radix);
+                  radix);
               int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
@@ -415,7 +510,7 @@ radix);
         if (haveSmallInt) {
           bigint[0] = ((short)(smallInt & ShortMask));
           bigint[1] = ((short)((smallInt >> 16) &
-ShortMask));
+                ShortMask));
         }
       }
       int count = EInteger.CountWords(bigint);
@@ -424,4 +519,4 @@ ShortMask));
           bigint,
           negative);
     }
-}
+  }

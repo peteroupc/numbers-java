@@ -9,33 +9,58 @@ private EDecimalTextString() {
       String chars,
       int offset,
       int length,
-      EContext ctx) {
+      EContext ctx,
+      boolean throwException) {
       int tmpoffset = offset;
       if (chars == null) {
-        throw new NullPointerException("chars");
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NullPointerException("chars");
+        }
       }
       if (tmpoffset < 0) {
-        throw new NumberFormatException("offset(" + tmpoffset + ") is less than " +
-          "0");
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+"\u0020less" + "\u0020than " + "0");
+}
       }
       if (tmpoffset > chars.length()) {
-        throw new NumberFormatException("offset(" + tmpoffset + ") is more than " +
-          chars.length());
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+"\u0020more" + "\u0020than " + chars.length());
+}
       }
       if (length <= 0) {
         if (length == 0) {
-          throw new NumberFormatException("length is 0");
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException("length is 0");
+          }
         }
-        throw new NumberFormatException("length(" + length + ") is less than " +
-          "0");
+        if (!throwException) {
+          return null;
+        } else {
+  throw new NumberFormatException("length(" + length + ") is less than " + "0");
+ }
       }
       if (length > chars.length()) {
-        throw new NumberFormatException("length(" + length + ") is more than " +
-          chars.length());
+        if (!throwException) {
+          return null;
+        } else {
+  throw new NumberFormatException("length(" + length + ") is more than " +
+chars.length());
+ }
       }
       if (chars.length() - tmpoffset < length) {
-        throw new NumberFormatException("chars's length minus " + tmpoffset + "(" +
-          (chars.length() - tmpoffset) + ") is less than " + length);
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("chars's length minus " +
+tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " + length);
+}
       }
       boolean negative = false;
       int endStr = tmpoffset + length;
@@ -44,19 +69,33 @@ private EDecimalTextString() {
         negative = true;
         ++tmpoffset;
         if (tmpoffset >= endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         c = chars.charAt(tmpoffset);
       } else if (chars.charAt(tmpoffset) == '+') {
         ++tmpoffset;
         if (tmpoffset >= endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         c = chars.charAt(tmpoffset);
       }
       int i = tmpoffset;
       if (c < '0' || c > '9') {
-        EDecimal ed = ParseSpecialValue(chars, i, endStr, negative, ctx);
+        EDecimal ed = ParseSpecialValue(
+          chars,
+          i,
+          endStr,
+          negative,
+          ctx,
+          throwException);
         if (ed != null) {
           return ed;
         }
@@ -64,13 +103,20 @@ private EDecimalTextString() {
       if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
         !ctx.isSimplified()) {
         return ParseOrdinaryNumberLimitedPrecision(
-            chars,
-            i,
-            endStr,
-            negative,
-            ctx);
+          chars,
+          i,
+          endStr,
+          negative,
+          ctx,
+          throwException);
       } else {
-        return ParseOrdinaryNumber(chars, i, endStr, negative, ctx);
+        return ParseOrdinaryNumber(
+          chars,
+          i,
+          endStr,
+          negative,
+          ctx,
+          throwException);
       }
     }
 
@@ -79,7 +125,8 @@ private EDecimalTextString() {
       int i,
       int endStr,
       boolean negative,
-      EContext ctx) {
+      EContext ctx,
+      boolean throwException) {
       int mantInt = 0;
       EInteger mant = null;
       boolean haveDigits = false;
@@ -89,38 +136,48 @@ private EDecimalTextString() {
           (chars.charAt(i + 1) == 'N' || chars.charAt(i + 1) == 'n') &&
           (chars.charAt(i + 2) == 'F' || chars.charAt(i + 2) == 'f') &&
           (chars.charAt(i + 3) == 'I' || chars.charAt(i + 3) == 'i') && (chars.charAt(i + 4) ==
-'N' ||
+            'N' ||
             chars.charAt(i + 4) == 'n') && (chars.charAt(i + 5) == 'I' || chars.charAt(i + 5) ==
-'i') &&
+            'i') &&
           (chars.charAt(i + 6) == 'T' || chars.charAt(i + 6) == 't') && (chars.charAt(i + 7) ==
-'Y' ||
-            chars.charAt(i + 7) == 'y')) {
+            'Y' || chars.charAt(i + 7) == 'y')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
-            throw new NumberFormatException("Infinity not allowed");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Infinity not allowed");
+            }
           }
           return negative ? EDecimal.NegativeInfinity :
-EDecimal.PositiveInfinity;
+            EDecimal.PositiveInfinity;
         }
       }
       if (i + 3 == endStr) {
         if ((chars.charAt(i) == 'I' || chars.charAt(i) == 'i') &&
           (chars.charAt(i + 1) == 'N' || chars.charAt(i + 1) == 'n') && (chars.charAt(i + 2) ==
-'F' ||
-            chars.charAt(i + 2) == 'f')) {
+            'F' || chars.charAt(i + 2) == 'f')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
-            throw new NumberFormatException("Infinity not allowed");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("Infinity not allowed");
+            }
           }
           return negative ? EDecimal.NegativeInfinity :
-EDecimal.PositiveInfinity;
+            EDecimal.PositiveInfinity;
         }
       }
       if (i + 3 <= endStr) {
         // Quiet NaN
         if ((chars.charAt(i) == 'N' || chars.charAt(i) == 'n') && (chars.charAt(i + 1) == 'A' ||
-chars.charAt(i +
+            chars.charAt(i +
               1) == 'a') && (chars.charAt(i + 2) == 'N' || chars.charAt(i + 2) == 'n')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
-            throw new NumberFormatException("NaN not allowed");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("NaN not allowed");
+            }
           }
           int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
             BigNumberFlags.FlagQuietNaN;
@@ -154,11 +211,19 @@ chars.charAt(i +
                 digitCount.Increment();
                 if (digitCount.compareTo(maxDigits) > 0) {
                   // NaN contains too many digits
-                  throw new NumberFormatException();
+                  if (!throwException) {
+                    return null;
+                  } else {
+                    throw new NumberFormatException();
+                  }
                 }
               }
             } else {
-              throw new NumberFormatException();
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException();
+              }
             }
           }
           if (mantInt > MaxSafeInt) {
@@ -177,11 +242,15 @@ chars.charAt(i +
       if (i + 4 <= endStr) {
         // Signaling NaN
         if ((chars.charAt(i) == 'S' || chars.charAt(i) == 's') && (chars.charAt(i + 1) == 'N' ||
-chars.charAt(i +
+            chars.charAt(i +
               1) == 'n') && (chars.charAt(i + 2) == 'A' || chars.charAt(i + 2) == 'a') &&
           (chars.charAt(i + 3) == 'N' || chars.charAt(i + 3) == 'n')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
-            throw new NumberFormatException("NaN not allowed");
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException("NaN not allowed");
+            }
           }
           if (i + 4 == endStr) {
             int flags2 = (negative ? BigNumberFlags.FlagNegative : 0) |
@@ -216,11 +285,19 @@ chars.charAt(i +
                 digitCount.Increment();
                 if (digitCount.compareTo(maxDigits) > 0) {
                   // NaN contains too many digits
-                  throw new NumberFormatException();
+                  if (!throwException) {
+                    return null;
+                  } else {
+                    throw new NumberFormatException();
+                  }
                 }
               }
             } else {
-              throw new NumberFormatException();
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException();
+              }
             }
           }
           if (mantInt > MaxSafeInt) {
@@ -244,13 +321,22 @@ chars.charAt(i +
       int offset,
       int endStr,
       boolean negative,
-      EContext ctx) {
+      EContext ctx,
+      boolean throwException) {
       int tmpoffset = offset;
       if (chars == null) {
-        throw new NullPointerException("chars");
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NullPointerException("chars");
+        }
       }
       if (ctx == null || !ctx.getHasMaxPrecision()) {
-        throw new IllegalStateException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new IllegalStateException();
+        }
       }
       boolean haveDecimalPoint = false;
       boolean haveDigits = false;
@@ -314,7 +400,11 @@ chars.charAt(i +
           }
         } else if (ch == '.') {
           if (haveDecimalPoint) {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
           haveDecimalPoint = true;
           decimalDigitStart = i + 1;
@@ -324,11 +414,19 @@ chars.charAt(i +
           ++i;
           break;
         } else {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (!haveDigits) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       int expInt = 0;
       int expoffset = 1;
@@ -339,7 +437,11 @@ chars.charAt(i +
       if (haveExponent) {
         haveDigits = false;
         if (i == endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         if (chars.charAt(i) == '+' || chars.charAt(i) == '-') {
           if (chars.charAt(i) == '-') {
@@ -364,11 +466,19 @@ chars.charAt(i +
               expInt = Integer.MAX_VALUE;
             }
           } else {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
         }
         if (!haveDigits) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         expInt *= expoffset;
         if (expPrec > 12) {
@@ -382,7 +492,11 @@ chars.charAt(i +
         }
       }
       if (i != endStr) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       if (expInt != Integer.MAX_VALUE && expInt > -Integer.MAX_VALUE &&
         mantissaLong != Long.MAX_VALUE) {
@@ -431,12 +545,12 @@ chars.charAt(i +
         return ef.RoundToPrecision(ctx);
       } else if (decimalDigitStart != decimalDigitEnd) {
         String ctmpstr = Extras.CharsConcat(
-          chars,
-          digitStart,
-          digitEnd - digitStart,
-          chars,
-          decimalDigitStart,
-          decimalDigitEnd - decimalDigitStart);
+            chars,
+            digitStart,
+            digitEnd - digitStart,
+            chars,
+            decimalDigitStart,
+            decimalDigitEnd - decimalDigitStart);
         mant = EInteger.FromString(ctmpstr);
       } else {
         mant = EInteger.FromSubstring(chars, digitStart, digitEnd);
@@ -455,7 +569,8 @@ chars.charAt(i +
       String chars,
       int i,
       int endStr,
-      boolean negative) {
+      boolean negative,
+      boolean throwException) {
       // NOTE: Negative sign at beginning was omitted
       // from the sequence portion
       int mantInt = 0;
@@ -520,7 +635,11 @@ chars.charAt(i +
           }
         } else if (ch == '.') {
           if (haveDecimalPoint) {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
           haveDecimalPoint = true;
           realDigitEnd = i;
@@ -532,11 +651,19 @@ chars.charAt(i +
           ++i;
           break;
         } else {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (!haveDigits) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       if (realDigitEnd < 0) {
         realDigitEnd = i;
@@ -554,7 +681,11 @@ chars.charAt(i +
       if (haveExponent) {
         haveDigits = false;
         if (i == endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         char ch = chars.charAt(i);
         if (ch == '+' || ch == '-') {
@@ -578,15 +709,27 @@ chars.charAt(i +
               expInt += thisdigit;
             }
           } else {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
         }
         if (!haveDigits) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (i != endStr) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       // Calculate newScale if exponent is "small"
       if (haveExponent && expInt <= MaxSafeInt) {
@@ -627,8 +770,8 @@ chars.charAt(i +
             char chvi = chars.charAt(vi);
 
             if (digitCount < 0 || digitCount >= 18) {
-               digitCount = -1;
-               break;
+              digitCount = -1;
+              break;
             } else if (digitCount > 0 || chvi != '0') {
               ++digitCount;
             }
@@ -638,8 +781,8 @@ chars.charAt(i +
             char chvi = chars.charAt(vi);
 
             if (digitCount < 0 || digitCount >= 18) {
-               digitCount = -1;
-               break;
+              digitCount = -1;
+              break;
             } else if (digitCount > 0 || chvi != '0') {
               ++digitCount;
             }
@@ -664,12 +807,12 @@ chars.charAt(i +
                 decimalDigitEnd);
           } else {
             String cdecstr = Extras.CharsConcat(
-              chars,
-              digitStart,
-              digitEnd - digitStart,
-              chars,
-              decimalDigitStart,
-              decimalDigitEnd - decimalDigitStart);
+                chars,
+                digitStart,
+                digitEnd - digitStart,
+                chars,
+                decimalDigitStart,
+                decimalDigitEnd - decimalDigitStart);
             mant = EInteger.FromString(cdecstr);
           }
         } else {
@@ -707,9 +850,15 @@ chars.charAt(i +
       int i,
       int endStr,
       boolean negative,
-      EContext ctx) {
+      EContext ctx,
+      boolean throwException) {
       if (ctx == null) {
-        return ParseOrdinaryNumberNoContext(chars, i, endStr, negative);
+        return ParseOrdinaryNumberNoContext(
+          chars,
+          i,
+          endStr,
+          negative,
+          throwException);
       }
       // NOTE: Negative sign at beginning was omitted
       // from the sequence portion
@@ -729,7 +878,7 @@ chars.charAt(i +
           EDecimal cret;
           int si = (int)(tch - '0');
           cret = negative ? ((si == 0) ? EDecimal.NegativeZero :
-EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
+              EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
           if (ctx != null) {
             cret = EDecimal.GetMathValue(ctx).RoundAfterConversion(cret, ctx);
           }
@@ -847,7 +996,11 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
           }
         } else if (ch == '.') {
           if (haveDecimalPoint) {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
           haveDecimalPoint = true;
           realDigitEnd = i;
@@ -859,11 +1012,19 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
           ++i;
           break;
         } else {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (!haveDigits) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       if (realDigitEnd < 0) {
         realDigitEnd = i;
@@ -949,7 +1110,11 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
       if (haveExponent) {
         haveDigits = false;
         if (i == endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         if (chars.charAt(i) == '+' || chars.charAt(i) == '-') {
           if (chars.charAt(i) == '-') {
@@ -972,15 +1137,27 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
               expInt += thisdigit;
             }
           } else {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
         }
         if (!haveDigits) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (i != endStr) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       // Calculate newScale if exponent is "small"
       if (haveExponent && expInt <= MaxSafeInt) {
@@ -1078,8 +1255,8 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
             char chvi = chars.charAt(vi);
 
             if (digitCount < 0 || digitCount >= 18) {
-               digitCount = -1;
-               break;
+              digitCount = -1;
+              break;
             } else if (digitCount > 0 || chvi != '0') {
               ++digitCount;
             }
@@ -1089,8 +1266,8 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
             char chvi = chars.charAt(vi);
 
             if (digitCount < 0 || digitCount >= 18) {
-               digitCount = -1;
-               break;
+              digitCount = -1;
+              break;
             } else if (digitCount > 0 || chvi != '0') {
               ++digitCount;
             }
@@ -1119,12 +1296,12 @@ EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
                 decimalDigitEnd);
           } else {
             String cdecstr = Extras.CharsConcat(
-              chars,
-              digitStart,
-              digitEnd - digitStart,
-              chars,
-              decimalDigitStart,
-              decimalDigitEnd - decimalDigitStart);
+                chars,
+                digitStart,
+                digitEnd - digitStart,
+                chars,
+                decimalDigitStart,
+                decimalDigitEnd - decimalDigitStart);
             mant = EInteger.FromString(cdecstr);
           }
         } else {

@@ -8,33 +8,58 @@ private ERationalCharArrayString() {
     public static ERational FromString(
       char[] chars,
       int offset,
-      int length) {
+      int length,
+      boolean throwException) {
       int tmpoffset = offset;
       if (chars == null) {
-        throw new NullPointerException("chars");
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NullPointerException("chars");
+        }
       }
       if (tmpoffset < 0) {
-        throw new NumberFormatException("offset(" + tmpoffset + ") is less than " +
-          "0");
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+"\u0020less" + "\u0020than " + "0");
+}
       }
       if (tmpoffset > chars.length) {
-        throw new NumberFormatException("offset(" + tmpoffset + ") is more than " +
-          chars.length);
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+"\u0020more" + "\u0020than " + chars.length);
+}
       }
       if (length < 0) {
-        throw new NumberFormatException("length(" + length + ") is less than " +
-          "0");
+        if (!throwException) {
+          return null;
+        } else {
+  throw new NumberFormatException("length(" + length + ") is less than " + "0");
+ }
       }
       if (length > chars.length) {
-        throw new NumberFormatException("length(" + length + ") is more than " +
-          chars.length);
+        if (!throwException) {
+          return null;
+        } else {
+  throw new NumberFormatException("length(" + length + ") is more than " +
+chars.length);
+ }
       }
       if (chars.length - tmpoffset < length) {
-        throw new NumberFormatException("chars's length minus " + tmpoffset + "(" +
-          (chars.length - tmpoffset) + ") is less than " + length);
+        if (!throwException) {
+          return null;
+        } else { throw new NumberFormatException("chars's length minus " +
+tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
+}
       }
       if (length == 0) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       boolean negative = false;
       int endStr = tmpoffset + length;
@@ -54,30 +79,28 @@ private ERationalCharArrayString() {
           (chars[i + 1] == 'N' || chars[i + 1] == 'n') &&
           (chars[i + 2] == 'F' || chars[i + 2] == 'f') &&
           (chars[i + 3] == 'I' || chars[i + 3] == 'i') && (chars[i + 4] ==
-'N' ||
+            'N' ||
             chars[i + 4] == 'n') && (chars[i + 5] == 'I' || chars[i + 5] ==
-'i') &&
+            'i') &&
           (chars[i + 6] == 'T' || chars[i + 6] == 't') && (chars[i + 7] ==
-'Y' ||
-            chars[i + 7] == 'y')) {
+            'Y' || chars[i + 7] == 'y')) {
           return negative ? ERational.NegativeInfinity :
-ERational.PositiveInfinity;
+            ERational.PositiveInfinity;
         }
       }
       if (i + 3 == endStr) {
         if ((chars[i] == 'I' || chars[i] == 'i') &&
           (chars[i + 1] == 'N' || chars[i + 1] == 'n') && (chars[i + 2] ==
-'F' ||
-            chars[i + 2] == 'f')) {
+            'F' || chars[i + 2] == 'f')) {
           return negative ? ERational.NegativeInfinity :
-ERational.PositiveInfinity;
+            ERational.PositiveInfinity;
         }
       }
       int numerStart = 0;
       if (i + 3 <= endStr) {
         // Quiet NaN
         if ((chars[i] == 'N' || chars[i] == 'n') && (chars[i + 1] == 'A' ||
-chars[i +
+            chars[i +
               1] == 'a') && (chars[i + 2] == 'N' || chars[i + 2] == 'n')) {
           if (i + 3 == endStr) {
             return (!negative) ? ERational.NaN : ERational.NaN.Negate();
@@ -92,7 +115,11 @@ chars[i +
                 numerInt += thisdigit;
               }
             } else {
-              throw new NumberFormatException();
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException();
+              }
             }
           }
           if (numerInt > MaxSafeInt) {
@@ -100,21 +127,21 @@ chars[i +
             return ERational.CreateNaN(numer, false, negative);
           } else {
             return ERational.CreateNaN(
-               EInteger.FromInt32(numerInt),
-               false,
-               negative);
+                EInteger.FromInt32(numerInt),
+                false,
+                negative);
           }
         }
       }
       if (i + 4 <= endStr) {
         // Signaling NaN
         if ((chars[i] == 'S' || chars[i] == 's') && (chars[i + 1] == 'N' ||
-chars[i +
+            chars[i +
               1] == 'n') && (chars[i + 2] == 'A' || chars[i + 2] == 'a') &&
           (chars[i + 3] == 'N' || chars[i + 3] == 'n')) {
           if (i + 4 == endStr) {
             return (!negative) ? ERational.SignalingNaN :
-ERational.SignalingNaN.Negate();
+              ERational.SignalingNaN.Negate();
           }
           i += 4;
           numerStart = i;
@@ -127,7 +154,11 @@ ERational.SignalingNaN.Negate();
                 numerInt += thisdigit;
               }
             } else {
-              throw new NumberFormatException();
+              if (!throwException) {
+                return null;
+              } else {
+                throw new NumberFormatException();
+              }
             }
           }
           int flags3 = (negative ? BigNumberFlags.FlagNegative : 0) |
@@ -137,9 +168,9 @@ ERational.SignalingNaN.Negate();
             return ERational.CreateNaN(numer, true, negative);
           } else {
             return ERational.CreateNaN(
-              EInteger.FromInt32(numerInt),
-              true,
-              negative);
+                EInteger.FromInt32(numerInt),
+                true,
+                negative);
           }
         }
       }
@@ -160,11 +191,19 @@ ERational.SignalingNaN.Negate();
           ++i;
           break;
         } else {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
       }
       if (!haveDigits) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       if (numerInt > MaxSafeInt) {
         numer = EInteger.FromSubstring(chars, numerStart, numerEnd);
@@ -175,7 +214,11 @@ ERational.SignalingNaN.Negate();
         tmpoffset = 1;
         haveDigits = false;
         if (i == endStr) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         numerStart = i;
         for (; i < endStr; ++i) {
@@ -188,11 +231,19 @@ ERational.SignalingNaN.Negate();
               denomInt += thisdigit;
             }
           } else {
-            throw new NumberFormatException();
+            if (!throwException) {
+              return null;
+            } else {
+              throw new NumberFormatException();
+            }
           }
         }
         if (!haveDigits) {
-          throw new NumberFormatException();
+          if (!throwException) {
+            return null;
+          } else {
+            throw new NumberFormatException();
+          }
         }
         if (denomInt > MaxSafeInt) {
           denom = EInteger.FromSubstring(chars, numerStart, numerEnd);
@@ -206,14 +257,22 @@ ERational.SignalingNaN.Negate();
         ndenomInt = 1;
       }
       if (i != endStr) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       if (ndenom == null ? (ndenomInt == 0) : ndenom.isZero()) {
-        throw new NumberFormatException();
+        if (!throwException) {
+          return null;
+        } else {
+          throw new NumberFormatException();
+        }
       }
       ERational erat = ERational.Create(
           numer == null ? EInteger.FromInt32(numerInt) : numer,
           ndenom == null ? EInteger.FromInt32(ndenomInt) : ndenom);
       return negative ? erat.Negate() : erat;
     }
-}
+  }
