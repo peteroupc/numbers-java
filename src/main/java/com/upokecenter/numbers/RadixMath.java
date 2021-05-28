@@ -2282,7 +2282,8 @@ http://creativecommons.org/publicdomain/zero/1.0/
                // thisValue is 1 and power is a negative integer, the reciprocal of 1
                // is used, which will have an exponent of 0, according to the
                // General Decimal Arithmetic Specification
-               return this.PowerIntegral(this.helper.ValueOf(1), signedMant, ctx);
+               return this.PowerIntegral(this.helper.ValueOf(1), signedMant,
+  ctx);
             } else {
                return this.PowerIntegral(thisValue, signedMant, ctx);
             }

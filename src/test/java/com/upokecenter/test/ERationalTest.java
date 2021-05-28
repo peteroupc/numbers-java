@@ -465,7 +465,7 @@ import com.upokecenter.numbers.*;
       if ((
         ERational.FromString("24/48")).equals(ERational.FromString("12/24"))) {
  Assert.fail((
-        ERational.FromString("24/48"))+" not equal to "+(ERational.FromString("12/24")));
+        ERational.FromString("24/48"))+" may not be equal to "+(ERational.FromString("12/24")));
 }
       ERational era = ERational.FromString("0/3920");
       ERational erb = ERational.FromString("0/3920");
