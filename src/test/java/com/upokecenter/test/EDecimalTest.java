@@ -6612,6 +6612,71 @@ EDecimal.FromString("-6.44157770841120149430189812635250244E+472921500817");
     }
 
     @Test
+    public void TestEDecimalEFloatWithHighExponent() {
+      String decstr = "0E100441809235791722330759976";
+      Assert.assertEquals(0L, EDecimal.FromString(decstr).ToDoubleBits());
+      Assert.assertEquals(0L, EFloat.FromString(decstr).ToDoubleBits());
+    {
+        Object objectTemp = 0L;
+        Object objectTemp2 = EDecimal.FromString(decstr,
+  EContext.Decimal32).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      {
+        Object objectTemp = 0L;
+        Object objectTemp2 = EFloat.FromString(decstr,
+  EContext.Binary64).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      decstr = "0E-100441809235791722330759976";
+      Assert.assertEquals(0L, EDecimal.FromString(decstr).ToDoubleBits());
+      Assert.assertEquals(0L, EFloat.FromString(decstr).ToDoubleBits());
+    {
+        Object objectTemp = 0L;
+        Object objectTemp2 = EDecimal.FromString(decstr,
+  EContext.Decimal32).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      {
+        Object objectTemp = 0L;
+        Object objectTemp2 = EFloat.FromString(decstr,
+  EContext.Binary64).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      decstr = "-0E100441809235791722330759976";
+      long negzero = 1L << 63;
+      Assert.assertEquals(negzero, EDecimal.FromString(decstr).ToDoubleBits());
+      Assert.assertEquals(negzero, EFloat.FromString(decstr).ToDoubleBits());
+    {
+        Object objectTemp = negzero;
+        Object objectTemp2 = EDecimal.FromString(decstr,
+  EContext.Decimal32).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      {
+        Object objectTemp = negzero;
+        Object objectTemp2 = EFloat.FromString(decstr,
+  EContext.Binary64).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      decstr = "-0E-100441809235791722330759976";
+      Assert.assertEquals(negzero, EDecimal.FromString(decstr).ToDoubleBits());
+      Assert.assertEquals(negzero, EFloat.FromString(decstr).ToDoubleBits());
+    {
+        Object objectTemp = negzero;
+        Object objectTemp2 = EDecimal.FromString(decstr,
+  EContext.Decimal32).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      {
+        Object objectTemp = negzero;
+        Object objectTemp2 = EFloat.FromString(decstr,
+  EContext.Binary64).ToDoubleBits();
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+    }
+
+    @Test
     public void TestRescaleInvalid() {
       HashMap<String, String> context = new HashMap<String, String>();
       context.put("precision","9");
