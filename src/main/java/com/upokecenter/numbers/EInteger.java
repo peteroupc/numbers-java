@@ -4935,11 +4935,10 @@ this.Pow(EInteger.FromInt64(longPower));
     }
 
     /**
-     * Does an OR NOT operation (or implication or IMP operation) between this
-     * arbitrary-precision integer and another one.<p>Each
-     * arbitrary-precision integer is treated as a two's-complement form
-     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
+     * Does an OR NOT operation between this arbitrary-precision integer and
+     * another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
      * @param second Another arbitrary-precision integer that participates in the
      * operation.
      * @return An arbitrary-precision integer in which each bit is set if the
@@ -4960,11 +4959,10 @@ this.Pow(EInteger.FromInt64(longPower));
     }
 
     /**
-     * Does an OR NOT operation (or implication or IMP operation) between this
-     * arbitrary-precision integer and another one.<p>Each
-     * arbitrary-precision integer is treated as a two's-complement form
-     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
-     * for the purposes of this operator.</p>
+     * Does an OR NOT operation between this arbitrary-precision integer and
+     * another one.<p>Each arbitrary-precision integer is treated as a
+     * two's-complement form (see {@link com.upokecenter.numbers.EDecimal
+     *  "Forms of numbers"}) for the purposes of this operator.</p>
      * @param second Another arbitrary-precision integer that participates in the
      * operation.
      * @return An arbitrary-precision integer in which each bit is set if the
@@ -4976,9 +4974,23 @@ this.Pow(EInteger.FromInt64(longPower));
      *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
      * -2).
      * @throws NullPointerException The parameter {@code second} is null.
-     */
+     * @deprecated Does the incorrect implication operation. Use Imply instead.
+ */
+@Deprecated
     public EInteger Imp(EInteger second) {
       return this.OrNot(second);
+    }
+
+  /**
+   * Not documented yet.
+   * @param second Not documented yet.
+   * @throws NullPointerException The parameter {@code second} is null.
+   */
+    public EInteger Imply(EInteger second) {
+      if (second == null) {
+        throw new NullPointerException("second");
+      }
+      return second.OrNot(this);
     }
 
     /**

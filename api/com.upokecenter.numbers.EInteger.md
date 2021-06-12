@@ -235,8 +235,11 @@ This method may overflow.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
 * `EInteger Imp​(EInteger second)`<br>
- Does an OR NOT operation (or implication or IMP operation) between this
- arbitrary-precision integer and another one.
+ Deprecated.
+Does the incorrect implication operation.
+ Does the incorrect implication operation.
+* `EInteger Imply​(EInteger second)`<br>
+ Not documented yet.
 * `EInteger Increment()`<br>
  Returns one added to this arbitrary-precision integer.
 * `boolean isEven()`<br>
@@ -294,8 +297,8 @@ This method may overflow.
  Does an OR operation between this arbitrary-precision integer and another
  one.
 * `EInteger OrNot​(EInteger second)`<br>
- Does an OR NOT operation (or implication or IMP operation) between this
- arbitrary-precision integer and another one.
+ Does an OR NOT operation between this arbitrary-precision integer and
+ another one.
 * `EInteger Pow​(int powerSmall)`<br>
  Raises an arbitrary-precision integer to a power.
 * `EInteger Pow​(long longPower)`<br>
@@ -2150,11 +2153,9 @@ Does an AND NOT operation between this arbitrary-precision integer and
 
 ### OrNot
     public EInteger OrNot​(EInteger second)
-Does an OR NOT operation (or implication or IMP operation) between this
- arbitrary-precision integer and another one.<p>Each
- arbitrary-precision integer is treated as a two's-complement form
-  (see <code>"Forms of numbers"</code>)
- for the purposes of this operator.</p>
+Does an OR NOT operation between this arbitrary-precision integer and
+ another one.<p>Each arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
 
 **Parameters:**
 
@@ -2176,12 +2177,9 @@ Does an OR NOT operation (or implication or IMP operation) between this
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### Imp
-    public EInteger Imp​(EInteger second)
-Does an OR NOT operation (or implication or IMP operation) between this
- arbitrary-precision integer and another one.<p>Each
- arbitrary-precision integer is treated as a two's-complement form
-  (see <code>"Forms of numbers"</code>)
- for the purposes of this operator.</p>
+    @Deprecated public EInteger Imp​(EInteger second)
+Deprecated.
+Does the incorrect implication operation. Use Imply instead.
 
 **Parameters:**
 
@@ -2197,6 +2195,18 @@ Does an OR NOT operation (or implication or IMP operation) between this
  uses the two's complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
 ...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
  -2).
+
+**Throws:**
+
+* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
+
+### Imply
+    public EInteger Imply​(EInteger second)
+Not documented yet.
+
+**Parameters:**
+
+* <code>second</code> - Not documented yet.
 
 **Throws:**
 
