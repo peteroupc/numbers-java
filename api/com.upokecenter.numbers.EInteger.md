@@ -2208,6 +2208,10 @@ Not documented yet.
 
 * <code>second</code> - Not documented yet.
 
+**Returns:**
+
+* The return value is not documented yet.
+
 **Throws:**
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.

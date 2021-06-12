@@ -4984,6 +4984,7 @@ this.Pow(EInteger.FromInt64(longPower));
   /**
    * Not documented yet.
    * @param second Not documented yet.
+   * @return The return value is not documented yet.
    * @throws NullPointerException The parameter {@code second} is null.
    */
     public EInteger Imply(EInteger second) {
