@@ -904,32 +904,36 @@ import com.upokecenter.numbers.*;
     }
 
      @Test
-     public void TestCloseToPowerOfOne() {
+     public void TestCloseToPowerOfTwo() {
         String[] variations = {
           "", ".0", ".00", ".000",
           ".4", ".40", ".6", ".60", ".5", ".50", ".500",
         };
-        for (int i = 52; i < 129; ++i) {
+        for (int i = 31; i < 129; ++i) {
            EInteger ei = EInteger.FromInt32(1).ShiftLeft(i);
            for (String vari : variations) {
               TestStringToDoubleSingleOne(ei.toString() + vari);
               TestStringToDoubleSingleOne(ei.Add(1).toString() + vari);
               TestStringToDoubleSingleOne(ei.Subtract(1).toString() + vari);
+              TestStringToDoubleSingleOne(ei.Add(2).toString() + vari);
+              TestStringToDoubleSingleOne(ei.Subtract(2).toString() + vari);
            }
         }
      }
 
     public static void TestParseNumberFxxLine(String line) {
+      // Parse test case format used in:
+      // https://github.com/nigeltao/parse-number-fxx-test-data
       String f16 = line.substring(0, 4);
       if (line.charAt(4) != ' ') {
         Assert.fail(line);
       }
       String f32 = line.substring(4 + 1, (4 + 1)+(8));
-      if (line.charAt(4+1 +8) != ' ') {
+      if (line.charAt(4 + 9) != ' ') {
         Assert.fail(line);
       }
       String f64 = line.substring(4 + 1 + 8 + 1, (4 + 1 + 8 + 1)+(16));
-      if (line.charAt(4+1+8+1 +16) != ' ') {
+      if (line.charAt(4+1+8 +1 + 16) != ' ') {
         Assert.fail(line);
       }
       String str = line.substring(4 + 1 + 8 + 1 + 16 + 1);
@@ -945,21 +949,18 @@ import com.upokecenter.numbers.*;
       int f32,
       long f64,
       String line) {
-       if (str.length() > 3000) {
-          // System.out.println("Skipping for now: lengt h "+ str.length());
-          // return;
-       }
        // TODO: Support f16 test
        // TODO: Add From/ToHalfBits in EDecimal/EFloat/ERational
        EFloat efsng = EFloat.FromSingleBits(f32);
        EFloat efdbl = EFloat.FromDoubleBits(f64);
        // Begin test
-       EFloat ef;
-       if (!str.contains("E") && !str.contains("e")) {
-          ef = EFloat.FromString(str);
-          Assert.assertEquals(line, f32, ef.ToSingleBits());
-          Assert.assertEquals(line, f64, ef.ToDoubleBits());
+       if (efsng.isFinite()) {
+         TestStringToSingleOne(str);
        }
+       if (efdbl.isFinite()) {
+         TestStringToDoubleOne(str);
+       }
+       EFloat ef;
        ef = EFloat.FromString(str, EContext.Binary64);
        Assert.assertEquals(line, f64, ef.ToDoubleBits());
        ef = EFloat.FromString(str, EContext.Binary32);
@@ -976,12 +977,6 @@ import com.upokecenter.numbers.*;
           str.length(),
           EContext.Binary32);
        Assert.assertEquals(line, f32, ef.ToSingleBits());
-       if (efsng.isFinite()) {
-         TestStringToSingleOne(str);
-       }
-       if (efdbl.isFinite()) {
-         TestStringToDoubleOne(str);
-       }
        EDecimal ed = EDecimal.FromString(str);
        Assert.assertEquals(str, ed.ToSingleBits(), f32);
        Assert.assertEquals(str, ed.ToDoubleBits(), f64);

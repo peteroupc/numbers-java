@@ -2206,7 +2206,7 @@ Not documented yet.
 
 **Parameters:**
 
-* <code>second</code> - Not documented yet.
+* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
 
 **Returns:**
 
