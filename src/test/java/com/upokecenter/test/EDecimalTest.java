@@ -291,15 +291,15 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestFromDoubleBitsNaN() {
-      long lbits = ((long)0xfff8000000000000);
+      long lbits = ((long)0xfff8000000000000L);
       Assert.assertEquals(lbits, EDecimal.FromDoubleBits(lbits).ToDoubleBits());
       lbits = 0x7ff8000000000000L;
       Assert.assertEquals(lbits, EDecimal.FromDoubleBits(lbits).ToDoubleBits());
-      lbits = ((long)0xfff8000000000000);
+      lbits = ((long)0xfff8000000000000L);
       Assert.assertEquals(lbits, EFloat.FromDoubleBits(lbits).ToDoubleBits());
       lbits = 0x7ff8000000000000L;
       Assert.assertEquals(lbits, EFloat.FromDoubleBits(lbits).ToDoubleBits());
-      lbits = ((long)0xfff8000000000000);
+      lbits = ((long)0xfff8000000000000L);
       Assert.assertEquals(lbits, ERational.FromDoubleBits(lbits).ToDoubleBits());
       lbits = 0x7ff8000000000000L;
       Assert.assertEquals(lbits, ERational.FromDoubleBits(lbits).ToDoubleBits());
