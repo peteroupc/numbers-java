@@ -4974,25 +4974,20 @@ this.Pow(EInteger.FromInt64(longPower));
      *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
      * -2).
      * @throws NullPointerException The parameter {@code second} is null.
-     * @deprecated Does the incorrect implication operation. Use Imply instead.
- */
-@Deprecated
+     */
     public EInteger Imp(EInteger second) {
+      // TODO: Make Obsolete("Does the incorrect implication operation. Use Imply
+      // instead.")
       return this.OrNot(second);
     }
-
-  /**
-   * Not documented yet.
-   * @param second The parameter {@code second} is a Numbers.EInteger object.
-   * @return The return value is not documented yet.
-   * @throws NullPointerException The parameter {@code second} is null.
-   */
-    public EInteger Imply(EInteger second) {
+    /*
+    private EInteger Imply(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
       }
       return second.OrNot(this);
     }
+    */
 
     /**
      * Does an XOR NOT operation (or equivalence operation, EQV operation, or

@@ -235,11 +235,8 @@ This method may overflow.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
 * `EInteger Imp​(EInteger second)`<br>
- Deprecated.
-Does the incorrect implication operation.
- Does the incorrect implication operation.
-* `EInteger Imply​(EInteger second)`<br>
- Not documented yet.
+ Does an OR NOT operation between this arbitrary-precision integer and
+ another one.
 * `EInteger Increment()`<br>
  Returns one added to this arbitrary-precision integer.
 * `boolean isEven()`<br>
@@ -2177,9 +2174,10 @@ Does an OR NOT operation between this arbitrary-precision integer and
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### Imp
-    @Deprecated public EInteger Imp​(EInteger second)
-Deprecated.
-Does the incorrect implication operation. Use Imply instead.
+    public EInteger Imp​(EInteger second)
+Does an OR NOT operation between this arbitrary-precision integer and
+ another one.<p>Each arbitrary-precision integer is treated as a
+ two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
 
 **Parameters:**
 
@@ -2195,22 +2193,6 @@ Does the incorrect implication operation. Use Imply instead.
  uses the two's complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
 ...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
  -2).
-
-**Throws:**
-
-* <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
-
-### Imply
-    public EInteger Imply​(EInteger second)
-Not documented yet.
-
-**Parameters:**
-
-* <code>second</code> - The parameter <code>second</code> is a Numbers.EInteger object.
-
-**Returns:**
-
-* The return value is not documented yet.
 
 **Throws:**
 

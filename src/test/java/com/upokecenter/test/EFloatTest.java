@@ -933,7 +933,7 @@ import com.upokecenter.numbers.*;
         Assert.fail(line);
       }
       String f64 = line.substring(4 + 1 + 8 + 1, (4 + 1 + 8 + 1)+(16));
-      if (line.charAt(4+1+8 +1 + 16) != ' ') {
+      if (line.charAt(4+1+8 + 17) != ' ') {
         Assert.fail(line);
       }
       String str = line.substring(4 + 1 + 8 + 1 + 16 + 1);
