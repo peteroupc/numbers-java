@@ -774,7 +774,7 @@ rather than properties
         lvalue = ((value[0] & 0xffffffffL) | ((long)value[1] << 32));
         int flags = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
             BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
-        return lvalue == 0 ? (quiet ? NaN : SignalingNaN) :
+        return (lvalue == 0 && !neg) ? (quiet ? NaN : SignalingNaN) :
           new EDecimal(
             FastIntegerFixed.FromInt64(lvalue),
             FastIntegerFixed.Zero,
@@ -1041,7 +1041,7 @@ rather than properties
         value = (neg ? BigNumberFlags.FlagNegative : 0) |
           (quiet ? BigNumberFlags.FlagQuietNaN :
             BigNumberFlags.FlagSignalingNaN);
-        return valueFpMantissa == 0 ? (quiet ? NaN : SignalingNaN) :
+        return (valueFpMantissa == 0 && !neg) ? (quiet ? NaN : SignalingNaN) :
           new EDecimal(
             FastIntegerFixed.FromInt32(valueFpMantissa),
             FastIntegerFixed.Zero,

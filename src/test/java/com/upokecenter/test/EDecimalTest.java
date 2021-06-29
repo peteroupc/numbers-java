@@ -274,6 +274,38 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestFromSingleBitsNaN() {
+      int bits = ((int)0xffc00000);
+      Assert.assertEquals(bits, EDecimal.FromSingleBits(bits).ToSingleBits());
+      bits = 0x7fc00000;
+      Assert.assertEquals(bits, EDecimal.FromSingleBits(bits).ToSingleBits());
+      bits = ((int)0xffc00000);
+      Assert.assertEquals(bits, EFloat.FromSingleBits(bits).ToSingleBits());
+      bits = 0x7fc00000;
+      Assert.assertEquals(bits, EFloat.FromSingleBits(bits).ToSingleBits());
+      bits = ((int)0xffc00000);
+      Assert.assertEquals(bits, ERational.FromSingleBits(bits).ToSingleBits());
+      bits = 0x7fc00000;
+      Assert.assertEquals(bits, ERational.FromSingleBits(bits).ToSingleBits());
+    }
+
+    @Test
+    public void TestFromDoubleBitsNaN() {
+      long lbits = ((long)0xfff8000000000000);
+      Assert.assertEquals(lbits, EDecimal.FromDoubleBits(lbits).ToDoubleBits());
+      lbits = 0x7ff8000000000000L;
+      Assert.assertEquals(lbits, EDecimal.FromDoubleBits(lbits).ToDoubleBits());
+      lbits = ((long)0xfff8000000000000);
+      Assert.assertEquals(lbits, EFloat.FromDoubleBits(lbits).ToDoubleBits());
+      lbits = 0x7ff8000000000000L;
+      Assert.assertEquals(lbits, EFloat.FromDoubleBits(lbits).ToDoubleBits());
+      lbits = ((long)0xfff8000000000000);
+      Assert.assertEquals(lbits, ERational.FromDoubleBits(lbits).ToDoubleBits());
+      lbits = 0x7ff8000000000000L;
+      Assert.assertEquals(lbits, ERational.FromDoubleBits(lbits).ToDoubleBits());
+    }
+
+    @Test
     public void TestCompareToBinarySpecific1A() {
       EFloat ef;
       EDecimal ed;
