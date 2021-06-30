@@ -1230,7 +1230,17 @@ Creates an arbitrary-precision decimal number from a 64-bit binary
   decimal will be the value of the closest "double" to 0.1, not 0.1
  exactly). To create an arbitrary-precision decimal number from a
  decimal value, use FromString instead in most cases (for example:
-  <code>EDecimal.FromString("0.1")</code>).
+  <code>EDecimal.FromString("0.1")</code>). <p>The input value can be a
+ not-a-number (NaN) value (such as <code>Double.NaN</code>); however, NaN
+ values have multiple forms that are equivalent for many
+ applications' purposes, and <code>Double.NaN</code> is only one of these
+ equivalent forms. In fact, <code>EDecimal.FromDouble(Double.NaN)</code>
+ could produce an object that is represented differently between
+ DotNet and Java, because <code>Double.NaN</code> may have a different form
+ in DotNet and Java (for example, the NaN value's sign may be
+ negative in DotNet, but positive in Java). Use `IsNaN()` to
+ determine whether an object from this class stores a NaN value of
+ any form.</p>
 
 **Parameters:**
 
@@ -1380,7 +1390,18 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
   closest "float" to 0.1, not 0.1 exactly). To create an
  arbitrary-precision decimal number from a decimal value, use
  FromString instead in most cases (for example:
-  <code>EDecimal.FromString("0.1")</code>).
+  <code>EDecimal.FromString("0.1")</code>). <p>The input value can be a
+ not-a-number (NaN) value (such as <code>Float.NaN</code> in DotNet or
+ Float.NaN in Java); however, NaN values have multiple forms that are
+ equivalent for many applications' purposes, and <code>Float.NaN</code> /
+ <code>Float.NaN</code> is only one of these equivalent forms. In fact,
+ <code>EDecimal.FromSingle(Float.NaN)</code> or
+ <code>EDecimal.FromSingle(Float.NaN)</code> could produce an object that
+ is represented differently between DotNet and Java, because
+ <code>Float.NaN</code> / <code>Float.NaN</code> may have a different form in
+ DotNet and Java (for example, the NaN value's sign may be negative
+ in DotNet, but positive in Java). Use `IsNaN()` to determine whether
+ an object from this class stores a NaN value of any form.</p>
 
 **Parameters:**
 
