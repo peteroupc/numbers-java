@@ -525,6 +525,40 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestFromToHalfBits() {
+      for (int i = 0; i < 65536; ++i) {
+        short s = ((short)i);
+        Assert.assertEquals(s, EFloat.FromHalfBits(s).ToHalfBits());
+        Assert.assertEquals(s, ERational.FromHalfBits(s).ToHalfBits());
+        Assert.assertEquals(s, EDecimal.FromHalfBits(s).ToHalfBits());
+      }
+    }
+
+    @Test
+    public void TestFromToSingleBits() {
+      for (int i = 0; i < 65536; ++i) {
+        Assert.assertEquals(i, EFloat.FromSingleBits(i).ToSingleBits());
+        Assert.assertEquals(i, ERational.FromSingleBits(i).ToSingleBits());
+        Assert.assertEquals(i, EDecimal.FromSingleBits(i).ToSingleBits());
+        Assert.assertEquals(
+          i,
+          EFloat.FromSingleBits(i + Integer.MIN_VALUE).ToSingleBits());
+        Assert.assertEquals(i,
+  ERational.FromSingleBits(i + Integer.MIN_VALUE).ToSingleBits());
+        Assert.assertEquals(
+          i,
+          EDecimal.FromSingleBits(i + Integer.MIN_VALUE).ToSingleBits());
+        Assert.assertEquals(i,
+  EFloat.FromSingleBits(Integer.MAX_VALUE - i).ToSingleBits());
+        Assert.assertEquals(
+          i,
+          ERational.FromSingleBits(Integer.MAX_VALUE - i).ToSingleBits());
+        Assert.assertEquals(i,
+  EDecimal.FromSingleBits(Integer.MAX_VALUE - i).ToSingleBits());
+      }
+    }
+
+    @Test
     public void TestFloatDecimalSpecific() {
       String str =
         "874952453585761710286297571153092638434027760916318352";
@@ -949,11 +983,9 @@ import com.upokecenter.numbers.*;
       int f32,
       long f64,
       String line) {
-      Assert.assertEquals(f16, f16);
-      // TODO: Support f16 test
-      // TODO: Add From/ToHalfBits in EDecimal/EFloat/ERational
       EFloat efsng = EFloat.FromSingleBits(f32);
       EFloat efdbl = EFloat.FromDoubleBits(f64);
+      EFloat efhalf = EFloat.FromHalfBits(f16);
       // Begin test
       if (efsng.isFinite()) {
         TestStringToSingleOne(str);
@@ -961,31 +993,49 @@ import com.upokecenter.numbers.*;
       if (efdbl.isFinite()) {
         TestStringToDoubleOne(str);
       }
+      if (efhalf.isFinite()) {
+        TestStringToHalfOne(str);
+      }
       EFloat ef;
       ef = EFloat.FromString(str, EContext.Binary64);
-      Assert.assertEquals(line, f64, ef.ToDoubleBits());
+      Assert.assertEquals(line + " ef.getToDoubleBits()",f64,ef.ToDoubleBits());
       ef = EFloat.FromString(str, EContext.Binary32);
-      Assert.assertEquals(line, f32, ef.ToSingleBits());
+      Assert.assertEquals(line + " ef.getToSingleBits()",f32,ef.ToSingleBits());
+      ef = EFloat.FromString(str, EContext.Binary16);
+      Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       ef = EFloat.FromString(
           "xxx" + str + "xxx",
           3,
           str.length(),
           EContext.Binary64);
-      Assert.assertEquals(line, f64, ef.ToDoubleBits());
+      Assert.assertEquals(line + " ef.getToDoubleBits()",f64,ef.ToDoubleBits());
       ef = EFloat.FromString(
           "xxx" + str + "xxx",
           3,
           str.length(),
           EContext.Binary32);
-      Assert.assertEquals(line, f32, ef.ToSingleBits());
+      Assert.assertEquals(line + " ef.getToSingleBits()",f32,ef.ToSingleBits());
+      ef = EFloat.FromString(
+          "xxx" + str + "xxx",
+          3,
+          str.length(),
+          EContext.Binary16);
+      Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       EDecimal ed = EDecimal.FromString(str);
       Assert.assertEquals(str, ed.ToSingleBits(), f32);
       Assert.assertEquals(str, ed.ToDoubleBits(), f64);
+      Assert.assertEquals(str + " Decimal.ToHalfBits",ed.ToHalfBits(),f16);
     }
 
     @Test(timeout = 20000)
     public void TestZeroHighExponents() {
-       String[] variations = {"", ".0", ".00", ".000", ".00000000"};
+       String[] variations = {
+         "",
+         ".0",
+         ".00",
+         ".000",
+         ".00000000",
+       };
        for (String vari : variations) {
          TestParseNumberFxxLine(
           "0000 00000000 0000000000000000 0" + vari +
@@ -2064,18 +2114,22 @@ import com.upokecenter.numbers.*;
         Assert.fail(str);
       }
       EFloat ef = EFloat.FromString(str, EContext.Binary32);
+      int significandBits = 24;
+      int exponentBits = 8;
+      int emin = -((1 << (exponentBits - 1)) - 2) - (significandBits - 1);
       if (ef.signum() == 0) {
         if (!(ed.isNegative() == ef.isNegative())) {
  Assert.fail();
  }
-        ERational half = PowerOfTwo(-149).Divide(2);
+        ERational half = PowerOfTwo(emin).Divide(2);
         if (half.CompareToDecimal(ed.Abs()) < 0) {
           String msg = "str=" + str + "\nef=" + OutputEF(ef);
           Assert.fail(msg);
         }
       } else if (ef.IsInfinity()) {
         EDecimal half = EDecimal.FromEInteger(
-            EInteger.FromInt32((1 << 25) - 1).ShiftLeft(103));
+            EInteger.FromInt32((1 << (significandBits + 1)) - 1)
+               .ShiftLeft((1 << (exponentBits-1)) -1 - significandBits));
         if (ed.Abs().compareTo(half) < 0) {
           String msg = "str=" + str + "\nef=" + OutputEF(ef);
           Assert.fail(msg);
@@ -2094,15 +2148,15 @@ import com.upokecenter.numbers.*;
         EInteger eimant = ef.Abs().getMantissa();
         long lmant = eimant.ToInt64Checked();
         int exp = ef.getExponent().ToInt32Checked();
-        while (lmant < (1 << 23) && exp > -149) {
+        while (lmant < (1 << (significandBits - 1)) && exp > emin) {
           --exp;
           lmant <<= 1;
         }
-        while (lmant >= (1 >> 24) && (lmant & 1) == 0) {
+        while (lmant >= (1 >> significandBits) && (lmant & 1) == 0) {
           ++exp;
           lmant >>= 1;
         }
-        if (!(lmant < (1 << 24))) {
+        if (!(lmant < (1 << significandBits))) {
  Assert.fail();
  }
         ERational ulp = PowerOfTwo(exp);
@@ -2110,7 +2164,88 @@ import com.upokecenter.numbers.*;
         ERational binValue = ERational.FromInt64(lmant).Multiply(ulp);
         ERational decValue = ERational.FromEDecimal(ed).Abs();
         ERational diffValue = decValue.Subtract(binValue);
-        if (IsPowerOfTwo(lmant) && exp != -149) {
+        if (IsPowerOfTwo(lmant) && exp != emin) {
+          // Different closeness check applies when approximate
+          // binary number is a power of 2
+          ERational negQuarter = PowerOfTwo(exp - 2).Negate();
+          // NOTE: Order of subtraction in diffValue is important here
+          if (negQuarter.compareTo(diffValue) > 0 ||
+            diffValue.compareTo(half) > 0) {
+            String msg = "str=" + str + "\nef=" + OutputEF(ef) +
+              "\nmant=" + lmant + "\nexp=" + exp +
+              "\nnegQuarter=" + negQuarter + "\n" +
+              "\ndiffValue=" + diffValue + "\n" + "\nhalf=" + half + "\n";
+            Assert.fail(msg);
+          }
+        } else {
+          int cmp = diffValue.Abs().compareTo(half);
+          if (cmp > 0 || (cmp == 0 && (lmant & 1) != 0)) {
+            String msg = "str=" + str + "\nef=" + OutputEF(ef) +
+              "\nmant=" + lmant + "\nexp=" + exp;
+            Assert.fail(msg);
+          }
+        }
+      }
+    }
+
+    private static void TestStringToHalfOne(String str) {
+      EDecimal ed = EDecimal.FromString(str);
+      if (ed.IsInfinity() || ed.IsNaN()) {
+        // Expected String to represent a finite number
+        Assert.fail(str);
+      }
+      EFloat ef = EFloat.FromString(str, EContext.Binary16);
+      int significandBits = 11;
+      int exponentBits = 5;
+      int emin = -((1 << (exponentBits - 1)) - 2) - (significandBits - 1);
+      if (ef.signum() == 0) {
+        if (!(ed.isNegative() == ef.isNegative())) {
+ Assert.fail();
+ }
+        ERational half = PowerOfTwo(emin).Divide(2);
+        if (half.CompareToDecimal(ed.Abs()) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
+      } else if (ef.IsInfinity()) {
+        EDecimal half = EDecimal.FromEInteger(
+            EInteger.FromInt32((1 << (significandBits + 1)) - 1)
+               .ShiftLeft((1 << (exponentBits-1)) -1 - significandBits));
+        if (ed.Abs().compareTo(half) < 0) {
+          String msg = "str=" + str + "\nef=" + OutputEF(ef);
+          Assert.fail(msg);
+        }
+      } else if (ef.IsNaN()) {
+        String msg = "str=" + str + "\nef=" + OutputEF(ef);
+        Assert.fail(msg);
+      } else {
+        if (ed.isNegative() != ef.isNegative()) {
+          if (!(
+            ed.isNegative() == ef.isNegative())) {
+ Assert.fail(
+            ed + "\nef=" + ef + "\nstr=" + str);
+ }
+        }
+        EInteger eimant = ef.Abs().getMantissa();
+        long lmant = eimant.ToInt64Checked();
+        int exp = ef.getExponent().ToInt32Checked();
+        while (lmant < (1 << (significandBits - 1)) && exp > emin) {
+          --exp;
+          lmant <<= 1;
+        }
+        while (lmant >= (1 >> significandBits) && (lmant & 1) == 0) {
+          ++exp;
+          lmant >>= 1;
+        }
+        if (!(lmant < (1 << significandBits))) {
+ Assert.fail();
+ }
+        ERational ulp = PowerOfTwo(exp);
+        ERational half = PowerOfTwo(exp - 1);
+        ERational binValue = ERational.FromInt64(lmant).Multiply(ulp);
+        ERational decValue = ERational.FromEDecimal(ed).Abs();
+        ERational diffValue = decValue.Subtract(binValue);
+        if (IsPowerOfTwo(lmant) && exp != emin) {
           // Different closeness check applies when approximate
           // binary number is a power of 2
           ERational negQuarter = PowerOfTwo(exp - 2).Negate();
@@ -2209,6 +2344,7 @@ import com.upokecenter.numbers.*;
     public static void TestStringToDoubleSingleOne(String str) {
       TestStringToDoubleOne(str);
       TestStringToSingleOne(str);
+      TestStringToHalfOne(str);
     }
 
     @Test
@@ -3328,17 +3464,29 @@ import com.upokecenter.numbers.*;
         ERational.NegativeInfinity,
         ERational.FromEFloat(EFloat.NegativeInfinity));
       if (!(
-        ((
-          ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail();
-      if (!(
-        ((
-          ERational.NegativeInfinity.ToDouble()) == Double.NEGATIVE_INFINITY)))Assert.fail();
-      if (!(
-        ((
-          ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY)))Assert.fail();
-      if (!(
-        ((
-          ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY)))Assert.fail();
+        ((ERational.PositiveInfinity.ToDouble()) == Double.POSITIVE_INFINITY)))Assert.fail(
+        ERational.PositiveInfinity.ToDouble() + "");
+      {
+        boolean objectTemp = ((
+          ERational.NegativeInfinity.ToDouble()) == Double.NEGATIVE_INFINITY);
+        if (!(objectTemp)) {
+ Assert.fail();
+ }
+}
+      {
+        boolean objectTemp = ((
+          ERational.PositiveInfinity.ToSingle()) == Float.POSITIVE_INFINITY);
+        if (!(objectTemp)) {
+ Assert.fail();
+ }
+      }
+      {
+        boolean objectTemp = ((
+          ERational.NegativeInfinity.ToSingle()) == Float.NEGATIVE_INFINITY);
+        if (!(objectTemp)) {
+ Assert.fail();
+ }
+}
     }
 
     @Test

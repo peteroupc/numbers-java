@@ -302,6 +302,10 @@ Renamed to DivRemNaturalScale.
 * `static EFloat FromEInteger​(EInteger bigint)`<br>
  Converts an arbitrary-precision integer to the same value as a binary
  floating-point number.
+* `static EFloat FromHalfBits​(short value)`<br>
+ Creates a binary floating-point number from a binary floating-point number
+ encoded in the IEEE 754 binary16 format (also known as a
+  "half-precision" floating-point number).
 * `static EFloat FromInt16​(short inputInt16)`<br>
  Converts a 16-bit signed integer to an arbitrary-precision binary
  floating-point number.
@@ -690,6 +694,10 @@ Renamed to ToEIntegerIfExact.
  Deprecated.
 Renamed to ToEDecimal.
  Renamed to ToEDecimal.
+* `short ToHalfBits()`<br>
+ Converts this value to its closest equivalent as a binary floating-point
+ number, expressed as an integer in the IEEE 754 binary16 format
+  (also known as a "half-precision" floating-point number).
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after converting it to an integer by
@@ -1091,24 +1099,6 @@ Converts an arbitrary-precision integer to the same value as a binary
 **Returns:**
 
 * An arbitrary-precision binary floating-point number.
-
-### FromSingleBits
-    public static EFloat FromSingleBits​(int value)
-Creates a binary floating-point number from a 32-bit floating-point number
- encoded in the IEEE 754 binary32 format. This method computes the
- exact value of the floating point number, not an approximation, as
- is often the case by converting the floating point number to a
- string first.
-
-**Parameters:**
-
-* <code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
- binary32 format.
-
-**Returns:**
-
-* A binary floating-point number with the same floating-point value as
- <code>value</code>.
 
 ### FromString
     public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
@@ -4123,6 +4113,43 @@ Converts this value to a 64-bit floating-point number encoded in the IEEE
  infinity or negative infinity if this value exceeds the range of a
  64-bit floating point number.
 
+### FromSingleBits
+    public static EFloat FromSingleBits​(int value)
+Creates a binary floating-point number from a 32-bit floating-point number
+ encoded in the IEEE 754 binary32 format. This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.
+
+**Parameters:**
+
+* <code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
+ binary32 format.
+
+**Returns:**
+
+* A binary floating-point number with the same floating-point value as
+ <code>value</code>.
+
+### FromHalfBits
+    public static EFloat FromHalfBits​(short value)
+Creates a binary floating-point number from a binary floating-point number
+ encoded in the IEEE 754 binary16 format (also known as a
+  "half-precision" floating-point number). This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.
+
+**Parameters:**
+
+* <code>value</code> - A binary floating-point number encoded in the IEEE 754 binary16
+ format.
+
+**Returns:**
+
+* A binary floating-point number with the same floating-point value as
+ <code>value</code>.
+
 ### ToSingleBits
     public int ToSingleBits()
 Converts this value to its closest equivalent as 32-bit floating-point
@@ -4141,6 +4168,26 @@ Converts this value to its closest equivalent as 32-bit floating-point
  expressed as an integer in the IEEE 754 binary32 format. The return
  value can be positive infinity or negative infinity if this value
  exceeds the range of a 32-bit floating point number.
+
+### ToHalfBits
+    public short ToHalfBits()
+Converts this value to its closest equivalent as a binary floating-point
+ number, expressed as an integer in the IEEE 754 binary16 format
+  (also known as a "half-precision" floating-point number). The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the binary16 number's significand area for a quiet NaN,
+ and clears it for a signaling NaN. Then the other bits of the
+ significand area are set to the lowest bits of this object's
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p>
+
+**Returns:**
+
+* The closest binary floating-point number to this value, expressed as
+ an integer in the IEEE 754 binary16 format. The return value can be
+ positive infinity or negative infinity if this value exceeds the
+ range of a floating-point number in the binary16 format.
 
 ### ToDoubleBits
     public long ToDoubleBits()
