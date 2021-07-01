@@ -4974,20 +4974,37 @@ this.Pow(EInteger.FromInt64(longPower));
      *...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
      * -2).
      * @throws NullPointerException The parameter {@code second} is null.
-     */
+     * @deprecated Does the incorrect implication operation. Use Imply instead.
+ */
+@Deprecated
     public EInteger Imp(EInteger second) {
-      // TODO: Make Obsolete("Does the incorrect implication operation. Use Imply
-      // instead.")
       return this.OrNot(second);
     }
-    /*
+
+    /**
+     * Does an implication or IMP operation between this arbitrary-precision
+     * integer and another one. Also means SECOND OR NOT FIRST.<p>Each
+     * arbitrary-precision integer is treated as a two's-complement form
+     *  (see {@link com.upokecenter.numbers.EDecimal "Forms of numbers"})
+     * for the purposes of this operator.</p>
+     * @param second Another arbitrary-precision integer that participates in the
+     * operation.
+     * @return An arbitrary-precision integer in which each bit is set if the
+     * corresponding bit of the other integer is set, this integer's
+     * corresponding bit is not set, or both. For example, in binary, 10110
+     * OR NOT 11010 = 11010 IMP 10110 = 00100 (or in decimal, 22 OR NOT 26
+     * = 23). This method uses the two's complement form of negative
+     * integers (see {@link com.upokecenter.numbers.EDecimal}). For
+     * example, in binary, ...11101110 OR NOT 01011 = 01011 IMP...11101110
+     * =...11111110 (or in decimal, -18 OR 11 = -2).
+     * @throws NullPointerException The parameter {@code second} is null.
+     */
     private EInteger Imply(EInteger second) {
       if (second == null) {
         throw new NullPointerException("second");
       }
       return second.OrNot(this);
     }
-    */
 
     /**
      * Does an XOR NOT operation (or equivalence operation, EQV operation, or
