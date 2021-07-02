@@ -481,6 +481,10 @@ Renamed to DivRemNaturalScale.
  Deprecated.
 Renamed to FromEFloat.
  Renamed to FromEFloat.
+* `static EDecimal FromHalfBits​(short value)`<br>
+ Creates a decimal floating-point number from a binary floating-point number
+ encoded in the IEEE 754 binary16 format (also known as a
+  "half-precision" floating-point number).
 * `static EDecimal FromInt16​(short inputInt16)`<br>
  Converts a 16-bit signed integer to an arbitrary-precision decimal number.
 * `static EDecimal FromInt32​(int valueSmaller)`<br>
@@ -895,6 +899,10 @@ Renamed to ToEIntegerIfExact.
  Deprecated.
 Renamed to ToEFloat.
  Renamed to ToEFloat.
+* `short ToHalfBits()`<br>
+ Converts this value to its closest equivalent as a binary floating-point
+ number, expressed as an integer in the IEEE 754 binary16 format
+  (also known as a "half-precision" floating-point number).
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after converting it to an integer by
@@ -1230,7 +1238,17 @@ Creates an arbitrary-precision decimal number from a 64-bit binary
   decimal will be the value of the closest "double" to 0.1, not 0.1
  exactly). To create an arbitrary-precision decimal number from a
  decimal value, use FromString instead in most cases (for example:
-  <code>EDecimal.FromString("0.1")</code>).
+  <code>EDecimal.FromString("0.1")</code>). <p>The input value can be a
+ not-a-number (NaN) value (such as <code>Double.NaN</code>); however, NaN
+ values have multiple forms that are equivalent for many
+ applications' purposes, and <code>Double.NaN</code> is only one of these
+ equivalent forms. In fact, <code>EDecimal.FromDouble(Double.NaN)</code>
+ could produce an object that is represented differently between
+ DotNet and Java, because <code>Double.NaN</code> may have a different form
+ in DotNet and Java (for example, the NaN value's sign may be
+ negative in DotNet, but positive in Java). Use `IsNaN()` to
+ determine whether an object from this class stores a NaN value of
+ any form.</p>
 
 **Parameters:**
 
@@ -1380,7 +1398,18 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
   closest "float" to 0.1, not 0.1 exactly). To create an
  arbitrary-precision decimal number from a decimal value, use
  FromString instead in most cases (for example:
-  <code>EDecimal.FromString("0.1")</code>).
+  <code>EDecimal.FromString("0.1")</code>). <p>The input value can be a
+ not-a-number (NaN) value (such as <code>Float.NaN</code> in DotNet or
+ Float.NaN in Java); however, NaN values have multiple forms that are
+ equivalent for many applications' purposes, and <code>Float.NaN</code> /
+ <code>Float.NaN</code> is only one of these equivalent forms. In fact,
+ <code>EDecimal.FromSingle(Float.NaN)</code> or
+ <code>EDecimal.FromSingle(Float.NaN)</code> could produce an object that
+ is represented differently between DotNet and Java, because
+ <code>Float.NaN</code> / <code>Float.NaN</code> may have a different form in
+ DotNet and Java (for example, the NaN value's sign may be negative
+ in DotNet, but positive in Java). Use `IsNaN()` to determine whether
+ an object from this class stores a NaN value of any form.</p>
 
 **Parameters:**
 
@@ -1416,6 +1445,25 @@ Creates an arbitrary-precision decimal number from a 32-bit binary
 
 * An arbitrary-precision decimal number with the same value as <code>
  value</code>.
+
+### FromHalfBits
+    public static EDecimal FromHalfBits​(short value)
+Creates a decimal floating-point number from a binary floating-point number
+ encoded in the IEEE 754 binary16 format (also known as a
+  "half-precision" floating-point number). This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.
+
+**Parameters:**
+
+* <code>value</code> - A binary floating-point number encoded in the IEEE 754 binary16
+ format.
+
+**Returns:**
+
+* A decimal floating-point number with the same floating-point value
+ as <code>value</code>.
 
 ### FromString
     public static EDecimal FromString​(char[] chars)
@@ -4839,6 +4887,26 @@ Converts this value to a string as though with the toString method, but
 **Returns:**
 
 * A text string.
+
+### ToHalfBits
+    public short ToHalfBits()
+Converts this value to its closest equivalent as a binary floating-point
+ number, expressed as an integer in the IEEE 754 binary16 format
+  (also known as a "half-precision" floating-point number). The
+ half-even rounding mode is used. <p>If this value is a NaN, sets the
+ high bit of the binary16 number's significand area for a quiet NaN,
+ and clears it for a signaling NaN. Then the other bits of the
+ significand area are set to the lowest bits of this object's
+ unsigned significand, and the next-highest bit of the significand
+ area is set if those bits are all zeros and this is a signaling
+ NaN.</p>
+
+**Returns:**
+
+* The closest binary floating-point number to this value, expressed as
+ an integer in the IEEE 754 binary16 format. The return value can be
+ positive infinity or negative infinity if this value exceeds the
+ range of a floating-point number in the binary16 format.
 
 ### ToSingleBits
     public int ToSingleBits()

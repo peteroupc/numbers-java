@@ -453,6 +453,7 @@ PositiveInfinity) : CreateNaN(
      * floating-point number.
      * @return An arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code ef} is null.
+     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0.
      */
     public static ERational FromEFloat(EFloat ef) {
       if (ef == null) {
@@ -535,6 +536,20 @@ PositiveInfinity) : CreateNaN(
      */
     public static ERational FromSingleBits(int value) {
       return FromEFloat(EFloat.FromSingleBits(value));
+    }
+
+    /**
+     * Creates a binary rational number from a binary floating-point number encoded
+     *  in the IEEE 754 binary16 format (also known as a "half-precision"
+     * floating-point number). This method computes the exact value of the
+     * floating point number, not an approximation, as is often the case by
+     * converting the number to a string.
+     * @param value A 16-bit integer encoded in the IEEE 754 binary16 format.
+     * @return A rational number with the same floating-point value as {@code
+     * value}.
+     */
+    public static ERational FromHalfBits(short value) {
+      return FromEFloat(EFloat.FromHalfBits(value));
     }
 
     /**
@@ -1811,6 +1826,34 @@ PositiveInfinity) : CreateNaN(
       return EFloat.FromEInteger(this.getNumerator())
         .Divide(EFloat.FromEInteger(this.getDenominator()), EContext.Binary32)
         .ToSingleBits();
+    }
+
+    /**
+     * Converts this value to its closest equivalent as a binary floating-point
+     * number, expressed as an integer in the IEEE 754 binary16 format
+     *  (also known as a "half-precision" floating-point number). The
+     * half-even rounding mode is used. <p>If this value is a NaN, sets the
+     * high bit of the binary16 number's significand area for a quiet NaN,
+     * and clears it for a signaling NaN. Then the other bits of the
+     * significand area are set to the lowest bits of this object's
+     * unsigned significand, and the next-highest bit of the significand
+     * area is set if those bits are all zeros and this is a signaling
+     * NaN.</p>
+     * @return The closest binary floating-point number to this value, expressed as
+     * an integer in the IEEE 754 binary16 format. The return value can be
+     * positive infinity or negative infinity if this value exceeds the
+     * range of a floating-point number in the binary16 format.
+     */
+    public short ToHalfBits() {
+      if (!this.isFinite()) {
+        return this.ToEFloat(EContext.Binary16).ToHalfBits();
+      }
+      if (this.isNegative() && this.isZero()) {
+        return EFloat.NegativeZero.ToHalfBits();
+      }
+      return EFloat.FromEInteger(this.getNumerator())
+        .Divide(EFloat.FromEInteger(this.getDenominator()), EContext.Binary16)
+        .ToHalfBits();
     }
 
     /**

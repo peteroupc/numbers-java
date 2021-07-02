@@ -525,6 +525,16 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestFromToHalfBits() {
+      for (int i = 0; i < 65536; ++i) {
+        short s = ((short)i);
+        Assert.assertEquals(s, EFloat.FromHalfBits(s).ToHalfBits());
+        Assert.assertEquals(s, ERational.FromHalfBits(s).ToHalfBits());
+        Assert.assertEquals(s, EDecimal.FromHalfBits(s).ToHalfBits());
+      }
+    }
+
+    @Test
     public void TestFromToSingleBits() {
       for (int i = 0; i < 65536; ++i) {
         Assert.assertEquals(i, EFloat.FromSingleBits(i).ToSingleBits());
@@ -545,6 +555,30 @@ import com.upokecenter.numbers.*;
           ERational.FromSingleBits(Integer.MAX_VALUE - i).ToSingleBits());
         Assert.assertEquals(Integer.MAX_VALUE - i,
   EDecimal.FromSingleBits(Integer.MAX_VALUE - i).ToSingleBits());
+      }
+    }
+
+    @Test
+    public void TestFromToDoubleBits() {
+      for (int i = 0; i < 65536; ++i) {
+        Assert.assertEquals(i, EFloat.FromDoubleBits(i).ToDoubleBits());
+        Assert.assertEquals(i, ERational.FromDoubleBits(i).ToDoubleBits());
+        Assert.assertEquals(i, EDecimal.FromDoubleBits(i).ToDoubleBits());
+        Assert.assertEquals(
+          i + Long.MIN_VALUE,
+          EFloat.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
+        Assert.assertEquals(i + Long.MIN_VALUE,
+  ERational.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
+        Assert.assertEquals(
+          i + Long.MIN_VALUE,
+          EDecimal.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
+        Assert.assertEquals(Long.MAX_VALUE - i,
+  EFloat.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
+        Assert.assertEquals(
+          Long.MAX_VALUE - i,
+          ERational.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
+        Assert.assertEquals(Long.MAX_VALUE - i,
+  EDecimal.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
       }
     }
 
@@ -596,30 +630,6 @@ import com.upokecenter.numbers.*;
       if (!(ed2.isNegative() && ed2.isZero())) {
  Assert.fail();
  }
-    }
-
-    @Test
-    public void TestFromToDoubleBits() {
-      for (int i = 0; i < 65536; ++i) {
-        Assert.assertEquals(i, EFloat.FromDoubleBits(i).ToDoubleBits());
-        Assert.assertEquals(i, ERational.FromDoubleBits(i).ToDoubleBits());
-        Assert.assertEquals(i, EDecimal.FromDoubleBits(i).ToDoubleBits());
-        Assert.assertEquals(
-          i + Long.MIN_VALUE,
-          EFloat.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
-        Assert.assertEquals(i + Long.MIN_VALUE,
-  ERational.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
-        Assert.assertEquals(
-          i + Long.MIN_VALUE,
-          EDecimal.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
-        Assert.assertEquals(Long.MAX_VALUE - i,
-  EFloat.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
-        Assert.assertEquals(
-          Long.MAX_VALUE - i,
-          ERational.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
-        Assert.assertEquals(Long.MAX_VALUE - i,
-  EDecimal.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
-      }
     }
 
     @Test
@@ -1049,7 +1059,7 @@ import com.upokecenter.numbers.*;
       String line) {
       EFloat efsng = EFloat.FromSingleBits(f32);
       EFloat efdbl = EFloat.FromDoubleBits(f64);
-      Assert.assertEquals(f16, f16);
+      EFloat efhalf = EFloat.FromHalfBits(f16);
       // Begin test
       if (efsng.isFinite()) {
         TestStringToSingleOne(str);
@@ -1057,11 +1067,16 @@ import com.upokecenter.numbers.*;
       if (efdbl.isFinite()) {
         TestStringToDoubleOne(str);
       }
+      if (efhalf.isFinite()) {
+        TestStringToHalfOne(str);
+      }
       EFloat ef;
       ef = EFloat.FromString(str, EContext.Binary64);
       Assert.assertEquals(line + " ef.getToDoubleBits()",f64,ef.ToDoubleBits());
       ef = EFloat.FromString(str, EContext.Binary32);
       Assert.assertEquals(line + " ef.getToSingleBits()",f32,ef.ToSingleBits());
+      ef = EFloat.FromString(str, EContext.Binary16);
+      Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       ef = EFloat.FromString(
           "xxx" + str + "xxx",
           3,
@@ -1074,9 +1089,16 @@ import com.upokecenter.numbers.*;
           str.length(),
           EContext.Binary32);
       Assert.assertEquals(line + " ef.getToSingleBits()",f32,ef.ToSingleBits());
+      ef = EFloat.FromString(
+          "xxx" + str + "xxx",
+          3,
+          str.length(),
+          EContext.Binary16);
+      Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       EDecimal ed = EDecimal.FromString(str);
       Assert.assertEquals(str, ed.ToSingleBits(), f32);
       Assert.assertEquals(str, ed.ToDoubleBits(), f64);
+      Assert.assertEquals(str + " Decimal.ToHalfBits",ed.ToHalfBits(),f16);
     }
 
     @Test(timeout = 20000)
@@ -2717,6 +2739,48 @@ import com.upokecenter.numbers.*;
       }
     }
 
+    public static boolean TestShortestStringOne(short halfbits) {
+      EFloat ef = EFloat.FromHalfBits(halfbits);
+      if (!ef.isFinite()) {
+        { return false;
+        }
+      }
+      if (!(ef.getMantissa().GetUnsignedBitLengthAsEInteger().compareTo(11)
+        <= 0)) {
+ Assert.fail();
+ }
+      Assert.assertEquals(ef, EFloat.FromHalfBits(ef.ToHalfBits()));
+      return EFloatTest.TestShortestStringOne(ef, EContext.Binary16);
+    }
+    public static boolean TestShortestStringOne(int sngbits) {
+      EFloat ef = EFloat.FromSingleBits(sngbits);
+      if (!ef.isFinite()) {
+        { return false;
+        }
+      }
+      if (!(ef.getMantissa().GetUnsignedBitLengthAsEInteger().compareTo(24)
+        <= 0)) {
+ Assert.fail();
+ }
+      Assert.assertEquals(ef, EFloat.FromSingle(ef.ToSingle()));
+      Assert.assertEquals(ef, EFloat.FromSingleBits(ef.ToSingleBits()));
+      return EFloatTest.TestShortestStringOne(ef, EContext.Binary32);
+    }
+    public static boolean TestShortestStringOne(long dblbits) {
+      EFloat ef = EFloat.FromDoubleBits(dblbits);
+      if (!ef.isFinite()) {
+        { return false;
+        }
+      }
+      if (!(ef.getMantissa().GetUnsignedBitLengthAsEInteger().compareTo(53)
+        <= 0)) {
+ Assert.fail();
+ }
+      Assert.assertEquals(ef, EFloat.FromDouble(ef.ToDouble()));
+      Assert.assertEquals(ef, EFloat.FromDoubleBits(ef.ToDoubleBits()));
+      return EFloatTest.TestShortestStringOne(ef, EContext.Binary64);
+    }
+
     public static boolean TestShortestStringOne(float sng) {
       EFloat ef = EFloat.FromSingle(sng);
       if (!ef.isFinite()) {
@@ -2806,6 +2870,14 @@ import com.upokecenter.numbers.*;
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1500; ++i) {
         TestDoubleRoundingOne(RandomObjects.RandomDouble(fr));
+      }
+    }
+
+    @Test
+    public void TestHalfShortestString() {
+      for (int i = 0; i < 0x10000; ++i) {
+        short s = ((short)i);
+        TestShortestStringOne(s);
       }
     }
 
