@@ -525,6 +525,16 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestFromToHalfBits() {
+      for (int i = 0; i < 65536; ++i) {
+        short s = ((short)i);
+        Assert.assertEquals(s, EFloat.FromHalfBits(s).ToHalfBits());
+        Assert.assertEquals(s, ERational.FromHalfBits(s).ToHalfBits());
+        Assert.assertEquals(s, EDecimal.FromHalfBits(s).ToHalfBits());
+      }
+    }
+
+    @Test
     public void TestFromToSingleBits() {
       for (int i = 0; i < 65536; ++i) {
         Assert.assertEquals(i, EFloat.FromSingleBits(i).ToSingleBits());
@@ -549,10 +559,34 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestFromToDoubleBits() {
+      for (int i = 0; i < 65536; ++i) {
+        Assert.assertEquals(i, EFloat.FromDoubleBits(i).ToDoubleBits());
+        Assert.assertEquals(i, ERational.FromDoubleBits(i).ToDoubleBits());
+        Assert.assertEquals(i, EDecimal.FromDoubleBits(i).ToDoubleBits());
+        Assert.assertEquals(
+          i + Long.MIN_VALUE,
+          EFloat.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
+        Assert.assertEquals(i + Long.MIN_VALUE,
+  ERational.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
+        Assert.assertEquals(
+          i + Long.MIN_VALUE,
+          EDecimal.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
+        Assert.assertEquals(Long.MAX_VALUE - i,
+  EFloat.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
+        Assert.assertEquals(
+          Long.MAX_VALUE - i,
+          ERational.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
+        Assert.assertEquals(Long.MAX_VALUE - i,
+  EDecimal.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
+      }
+    }
+
+    @Test
     public void TestNegativeZero() {
-      ERational er=ERational.FromString("-0/1");
-      EDecimal ed=EDecimal.FromString("-0.0");
-      EFloat ef=EFloat.FromString("-0.0");
+      ERational er = ERational.FromString("-0/1");
+      EDecimal ed = EDecimal.FromString("-0.0");
+      EFloat ef = EFloat.FromString("-0.0");
       if (!(er.isNegative() && er.isZero() && er.isFinite())) {
  Assert.fail();
  }
@@ -596,30 +630,6 @@ import com.upokecenter.numbers.*;
       if (!(ed2.isNegative() && ed2.isZero())) {
  Assert.fail();
  }
-    }
-
-    @Test
-    public void TestFromToDoubleBits() {
-      for (int i = 0; i < 65536; ++i) {
-        Assert.assertEquals(i, EFloat.FromDoubleBits(i).ToDoubleBits());
-        Assert.assertEquals(i, ERational.FromDoubleBits(i).ToDoubleBits());
-        Assert.assertEquals(i, EDecimal.FromDoubleBits(i).ToDoubleBits());
-        Assert.assertEquals(
-          i + Long.MIN_VALUE,
-          EFloat.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
-        Assert.assertEquals(i + Long.MIN_VALUE,
-  ERational.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
-        Assert.assertEquals(
-          i + Long.MIN_VALUE,
-          EDecimal.FromDoubleBits(i + Long.MIN_VALUE).ToDoubleBits());
-        Assert.assertEquals(Long.MAX_VALUE - i,
-  EFloat.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
-        Assert.assertEquals(
-          Long.MAX_VALUE - i,
-          ERational.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
-        Assert.assertEquals(Long.MAX_VALUE - i,
-  EDecimal.FromDoubleBits(Long.MAX_VALUE - i).ToDoubleBits());
-      }
     }
 
     @Test
@@ -1049,7 +1059,7 @@ import com.upokecenter.numbers.*;
       String line) {
       EFloat efsng = EFloat.FromSingleBits(f32);
       EFloat efdbl = EFloat.FromDoubleBits(f64);
-      Assert.assertEquals(f16, f16);
+      EFloat efhalf = EFloat.FromHalfBits(f16);
       // Begin test
       if (efsng.isFinite()) {
         TestStringToSingleOne(str);
@@ -1057,11 +1067,16 @@ import com.upokecenter.numbers.*;
       if (efdbl.isFinite()) {
         TestStringToDoubleOne(str);
       }
+      if (efhalf.isFinite()) {
+        TestStringToHalfOne(str);
+      }
       EFloat ef;
       ef = EFloat.FromString(str, EContext.Binary64);
       Assert.assertEquals(line + " ef.getToDoubleBits()",f64,ef.ToDoubleBits());
       ef = EFloat.FromString(str, EContext.Binary32);
       Assert.assertEquals(line + " ef.getToSingleBits()",f32,ef.ToSingleBits());
+      ef = EFloat.FromString(str, EContext.Binary16);
+      Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       ef = EFloat.FromString(
           "xxx" + str + "xxx",
           3,
@@ -1074,9 +1089,16 @@ import com.upokecenter.numbers.*;
           str.length(),
           EContext.Binary32);
       Assert.assertEquals(line + " ef.getToSingleBits()",f32,ef.ToSingleBits());
+      ef = EFloat.FromString(
+          "xxx" + str + "xxx",
+          3,
+          str.length(),
+          EContext.Binary16);
+      Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       EDecimal ed = EDecimal.FromString(str);
       Assert.assertEquals(str, ed.ToSingleBits(), f32);
       Assert.assertEquals(str, ed.ToDoubleBits(), f64);
+      Assert.assertEquals(str + " Decimal.ToHalfBits",ed.ToHalfBits(),f16);
     }
 
     @Test(timeout = 20000)

@@ -235,8 +235,9 @@ This method may overflow.
 * `int hashCode()`<br>
  Returns the hash code for this instance.
 * `EInteger Imp​(EInteger second)`<br>
- Does an OR NOT operation between this arbitrary-precision integer and
- another one.
+ Deprecated.
+Does the incorrect implication operation.
+ Does the incorrect implication operation.
 * `EInteger Increment()`<br>
  Returns one added to this arbitrary-precision integer.
 * `boolean isEven()`<br>
@@ -2174,10 +2175,9 @@ Does an OR NOT operation between this arbitrary-precision integer and
 * <code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### Imp
-    public EInteger Imp​(EInteger second)
-Does an OR NOT operation between this arbitrary-precision integer and
- another one.<p>Each arbitrary-precision integer is treated as a
- two's-complement form (see <code>"Forms of numbers"</code>) for the purposes of this operator.</p>
+    @Deprecated public EInteger Imp​(EInteger second)
+Deprecated.
+Does the incorrect implication operation. Use Imply instead.
 
 **Parameters:**
 
