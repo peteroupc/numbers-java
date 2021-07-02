@@ -148,10 +148,6 @@ Renamed to FromEDecimal.
  Deprecated.
 Renamed to FromEFloat.
  Renamed to FromEFloat.
-* `static ERational FromHalfBits​(short value)`<br>
- Creates a binary rational number from a binary floating-point number encoded
-  in the IEEE 754 binary16 format (also known as a "half-precision"
- floating-point number).
 * `static ERational FromInt16​(short inputInt16)`<br>
  Converts a 16-bit signed integer to an arbitrary-precision rational number.
 * `static ERational FromInt32​(int inputInt32)`<br>
@@ -336,10 +332,6 @@ Renamed to ToEFloat.
  Deprecated.
 Renamed to ToEFloatExactIfPossible.
  Renamed to ToEFloatExactIfPossible.
-* `short ToHalfBits()`<br>
- Converts this value to its closest equivalent as a binary floating-point
- number, expressed as an integer in the IEEE 754 binary16 format
-  (also known as a "half-precision" floating-point number).
 * `short ToInt16Checked()`<br>
  Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after converting it to an integer by
@@ -696,8 +688,6 @@ Converts an arbitrary-precision binary floating-point number to a rational
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>ef</code> is null.
 
-* <code>java.lang.IllegalArgumentException</code> - doesn't satisfy den.signum() &gt;= 0.
-
 ### FromEInteger
     public static ERational FromEInteger​(EInteger bigint)
 Converts an arbitrary-precision integer to a rational number.
@@ -747,23 +737,6 @@ Creates a binary rational number from a 32-bit floating-point number encoded
 **Parameters:**
 
 * <code>value</code> - A 32-bit integer encoded in the IEEE 754 binary32 format.
-
-**Returns:**
-
-* A rational number with the same floating-point value as <code>
- value</code>.
-
-### FromHalfBits
-    public static ERational FromHalfBits​(short value)
-Creates a binary rational number from a binary floating-point number encoded
-  in the IEEE 754 binary16 format (also known as a "half-precision"
- floating-point number). This method computes the exact value of the
- floating point number, not an approximation, as is often the case by
- converting the number to a string.
-
-**Parameters:**
-
-* <code>value</code> - A 16-bit integer encoded in the IEEE 754 binary16 format.
 
 **Returns:**
 
@@ -1544,26 +1517,6 @@ Converts this value to its closest equivalent as 32-bit floating-point
  expressed as an integer in the IEEE 754 binary32 format. The return
  value can be positive infinity or negative infinity if this value
  exceeds the range of a 32-bit floating point number.
-
-### ToHalfBits
-    public short ToHalfBits()
-Converts this value to its closest equivalent as a binary floating-point
- number, expressed as an integer in the IEEE 754 binary16 format
-  (also known as a "half-precision" floating-point number). The
- half-even rounding mode is used. <p>If this value is a NaN, sets the
- high bit of the binary16 number's significand area for a quiet NaN,
- and clears it for a signaling NaN. Then the other bits of the
- significand area are set to the lowest bits of this object's
- unsigned significand, and the next-highest bit of the significand
- area is set if those bits are all zeros and this is a signaling
- NaN.</p>
-
-**Returns:**
-
-* The closest binary floating-point number to this value, expressed as
- an integer in the IEEE 754 binary16 format. The return value can be
- positive infinity or negative infinity if this value exceeds the
- range of a floating-point number in the binary16 format.
 
 ### ToLowestTerms
     public ERational ToLowestTerms()
