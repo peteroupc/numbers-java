@@ -549,6 +549,56 @@ import com.upokecenter.numbers.*;
     }
 
     @Test
+    public void TestNegativeZero() {
+      ERational er=ERational.FromString("-0/1");
+      EDecimal ed=EDecimal.FromString("-0.0");
+      EFloat ef=EFloat.FromString("-0.0");
+      if (!(er.isNegative() && er.isZero() && er.isFinite())) {
+ Assert.fail();
+ }
+      if (!(ed.isNegative() && ed.isZero() && ed.isFinite())) {
+ Assert.fail();
+ }
+      if (!(ef.isNegative() && ef.isZero() && ef.isFinite())) {
+ Assert.fail();
+ }
+      ERational er2;
+      EDecimal ed2;
+      EFloat ef2;
+
+      er2 = ERational.FromEDecimal(ed);
+      if (!(er2.isNegative() && er2.isZero())) {
+ Assert.fail();
+ }
+      er2 = ERational.FromEFloat(ef);
+      if (!(er2.isNegative() && er2.isZero())) {
+ Assert.fail();
+ }
+
+      ef2 = ed.ToEFloat();
+      if (!(ef2.isNegative() && ef2.isZero())) {
+ Assert.fail();
+ }
+      ef2 = er.ToEFloat();
+      if (!(ef2.isNegative() && ef2.isZero())) {
+ Assert.fail();
+ }
+
+      ed2 = ef.ToEDecimal();
+      if (!(ed2.isNegative() && ed2.isZero())) {
+ Assert.fail();
+ }
+      ed2 = EDecimal.FromEFloat(ef);
+      if (!(ed2.isNegative() && ed2.isZero())) {
+ Assert.fail();
+ }
+      ed2 = er.ToEDecimal();
+      if (!(ed2.isNegative() && ed2.isZero())) {
+ Assert.fail();
+ }
+    }
+
+    @Test
     public void TestFromToDoubleBits() {
       for (int i = 0; i < 65536; ++i) {
         Assert.assertEquals(i, EFloat.FromDoubleBits(i).ToDoubleBits());
