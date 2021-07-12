@@ -74,7 +74,7 @@ private static final long serialVersionUID = 1L;
 initCause(innerException);;
       this.error = EContext.FlagInvalid;
       this.errors = EContext.FlagInvalid;
-      this.ctx = (this.ctx == null) ? null : this.ctx.Copy();
+      this.ctx = null;
       this.result = null;
     }
 

@@ -1,72 +1,5 @@
 # com.upokecenter.numbers.EFloat
 
-    public final class EFloat extends java.lang.Object implements java.lang.Comparable<EFloat>
-
-Represents an arbitrary-precision binary floating-point number. (The "E"
-  stands for "extended", meaning that instances of this class can be
- values other than numbers proper, such as infinity and not-a-number.)
- Each number consists of an integer significand and an integer
- exponent, both arbitrary-precision. The value of the number equals
- significand * 2^exponent. This class also supports values for negative
- zero, not-a-number (NaN) values, and infinity. <p>Passing a signaling
- NaN to any arithmetic operation shown here will signal the flag
- FlagInvalid and return a quiet NaN, even if another operand to that
- operation is a quiet NaN, unless the operation's documentation
- expressly states that another result happens when a signaling NaN is
- passed to that operation.</p> <p>Passing a quiet NaN to any arithmetic
- operation shown here will return a quiet NaN, unless the operation's
- documentation expressly states that another result happens when a
- quiet NaN is passed to that operation.</p> <p>Unless noted otherwise,
- passing a null arbitrary-precision binary floating-point number
- argument to any method here will throw an exception.</p> <p>When an
- arithmetic operation signals the flag FlagInvalid, FlagOverflow, or
- FlagDivideByZero, it will not throw an exception too, unless the
- operation's trap is enabled in the arithmetic context (see EContext's
- Traps property).</p> <p>An arbitrary-precision binary floating-point
- number value can be serialized in one of the following ways:</p> <ul>
- <li>By calling the toString() method. However, not all strings can be
- converted back to an arbitrary-precision binary floating-point number
- without loss, especially if the string has a fractional part.</li>
- <li>By calling the UnsignedMantissa, Exponent, and IsNegative
- properties, and calling the IsInfinity, IsQuietNaN, and IsSignalingNaN
- methods. The return values combined will uniquely identify a
- particular arbitrary-precision binary floating-point number
- value.</li></ul> <p>If an operation requires creating an intermediate
- value that might be too big to fit in memory (or might require more
- than 2 gigabytes of memory to store -- due to the current use of a
- 32-bit integer internally as a length), the operation may signal an
- invalid-operation flag and return not-a-number (NaN). In certain rare
- cases, the compareTo method may throw OutOfMemoryError (called
- OutOfMemoryError in Java) in the same circumstances.</p> <p><b>Thread
- safety</b></p> <p>Instances of this class are immutable, so they are
- inherently safe for use by multiple threads. Multiple instances of
- this object with the same properties are interchangeable, so they
-  should not be compared using the "==" operator (which might only check
- if each side of the operator is the same instance).</p>
- <p><b>Comparison considerations</b></p> <p>This class's natural
- ordering (under the compareTo method) is not consistent with the
- Equals method. This means that two values that compare as equal under
- the compareTo method might not be equal under the Equals method. The
- compareTo method compares the mathematical values of the two instances
- passed to it (and considers two different NaN values as equal), while
- two instances with the same mathematical value, but different
- exponents, will be considered unequal under the Equals method.</p>
- <p><b>Security note</b></p> <p>It is not recommended to implement
- security-sensitive algorithms using the methods in this class, for
- several reasons:</p> <ul> <li><code>EFloat</code> objects are immutable, so
- they can't be modified, and the memory they occupy is not guaranteed
- to be cleared in a timely fashion due to garbage collection. This is
- relevant for applications that use many-bit-long numbers as secret
- parameters.</li> <li>The methods in this class (especially those that
-  involve arithmetic) are not guaranteed to be "constant-time"
- (non-data-dependent) for all relevant inputs. Certain attacks that
- involve encrypted communications have exploited the timing and other
- aspects of such communications to derive keying material or cleartext
- indirectly.</li></ul> <p>Applications should instead use dedicated
- security libraries to handle big numbers in security-sensitive
- algorithms.</p> <p><b>Reproducibility note</b></p> <p>See the
- reproducibility note in the EDecimal class's documentation.</p>
-
 ## Fields
 
 * `static EFloat NaN`<br>
@@ -107,7 +40,7 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  arbitrary-precision binary floating-point number and returns the
  result.
 * `EFloat Add​(EFloat otherValue,
-   EContext ctx)`<br>
+EContext ctx)`<br>
  Adds this arbitrary-precision binary floating-point number and another
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -121,21 +54,21 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Compares the mathematical values of this object and another object,
  accepting NaN values.
 * `EFloat CompareToSignal​(EFloat other,
-               EContext ctx)`<br>
+EContext ctx)`<br>
  Compares the mathematical values of this object and another object, treating
  quiet NaN as signaling.
 * `int CompareToTotal​(EFloat other)`<br>
  Compares the values of this object and another object, imposing a total
  ordering on all possible values.
 * `int CompareToTotal​(EFloat other,
-              EContext ctx)`<br>
+EContext ctx)`<br>
  Compares the values of this object and another object, imposing a total
  ordering on all possible values.
 * `int CompareToTotalMagnitude​(EFloat other)`<br>
  Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs).
 * `int CompareToTotalMagnitude​(EFloat other,
-                       EContext ctx)`<br>
+EContext ctx)`<br>
  Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs).
 * `int CompareToValue​(int intOther)`<br>
@@ -148,7 +81,7 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Compares the mathematical values of this object and another object,
  accepting NaN values.
 * `EFloat CompareToWithContext​(EFloat other,
-                    EContext ctx)`<br>
+EContext ctx)`<br>
  Compares the mathematical values of this object and another object.
 * `EFloat Copy()`<br>
  Creates a copy of this arbitrary-precision binary number.
@@ -156,35 +89,35 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number.
 * `static EFloat Create​(int mantissaSmall,
-      int exponentSmall) exponent*2^significand`<br>
+int exponentSmall) exponent*2^significand`<br>
  Returns an arbitrary-precision number with the value
  exponent*2^significand.
 * `static EFloat Create​(long mantissaLong,
-      int exponentSmall) exponent*2^significand`<br>
+int exponentSmall) exponent*2^significand`<br>
  Returns an arbitrary-precision number with the value
  exponent*2^significand.
 * `static EFloat Create​(long mantissaLong,
-      long exponentLong) exponent*2^significand`<br>
+long exponentLong) exponent*2^significand`<br>
  Returns an arbitrary-precision number with the value
  exponent*2^significand.
 * `static EFloat Create​(EInteger mantissa,
-      int exponentSmall) exponent*2^significand`<br>
+int exponentSmall) exponent*2^significand`<br>
  Returns an arbitrary-precision number with the value
  exponent*2^significand.
 * `static EFloat Create​(EInteger mantissa,
-      long exponentLong) exponent*2^significand`<br>
+long exponentLong) exponent*2^significand`<br>
  Returns an arbitrary-precision number with the value
  exponent*2^significand.
 * `static EFloat Create​(EInteger mantissa,
-      EInteger exponent) exponent*2^significand`<br>
+EInteger exponent) exponent*2^significand`<br>
  Returns an arbitrary-precision number with the value
  exponent*2^significand.
 * `static EFloat CreateNaN​(EInteger diag)`<br>
  Creates a not-a-number arbitrary-precision binary number.
 * `static EFloat CreateNaN​(EInteger diag,
-         boolean signaling,
-         boolean negative,
-         EContext ctx)`<br>
+boolean signaling,
+boolean negative,
+EContext ctx)`<br>
  Creates a not-a-number arbitrary-precision binary number.
 * `EFloat Decrement()`<br>
  Returns one subtracted from this arbitrary-precision binary floating-point
@@ -209,7 +142,7 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
  so on); if this is not desired, use DivideToExponent, or use the
  Divide overload that takes an EContext.
 * `EFloat Divide​(EFloat divisor,
-      EContext ctx)`<br>
+EContext ctx)`<br>
  Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -218,28 +151,28 @@ Represents an arbitrary-precision binary floating-point number. (The "E"
 Renamed to DivRemNaturalScale.
  Renamed to DivRemNaturalScale.
 * `EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor,
-                              EContext ctx)`<br>
+EContext ctx)`<br>
  Deprecated.
 Renamed to DivRemNaturalScale.
  Renamed to DivRemNaturalScale.
 * `EFloat DivideToExponent​(EFloat divisor,
-                long desiredExponentSmall,
-                EContext ctx)`<br>
+long desiredExponentSmall,
+EContext ctx)`<br>
  Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 * `EFloat DivideToExponent​(EFloat divisor,
-                long desiredExponentSmall,
-                ERounding rounding)`<br>
+long desiredExponentSmall,
+ERounding rounding)`<br>
  Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 * `EFloat DivideToExponent​(EFloat divisor,
-                EInteger exponent,
-                EContext ctx)`<br>
+EInteger exponent,
+EContext ctx)`<br>
  Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 * `EFloat DivideToExponent​(EFloat divisor,
-                EInteger desiredExponent,
-                ERounding rounding)`<br>
+EInteger desiredExponent,
+ERounding rounding)`<br>
  Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 * `EFloat DivideToIntegerNaturalScale​(EFloat divisor)`<br>
@@ -247,16 +180,16 @@ Renamed to DivRemNaturalScale.
  the integer part of the result, rounded down, with the preferred
  exponent set to this value's exponent minus the divisor's exponent.
 * `EFloat DivideToIntegerNaturalScale​(EFloat divisor,
-                           EContext ctx)`<br>
+EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
  result (which is initially rounded down), with the preferred
  exponent set to this value's exponent minus the divisor's exponent.
 * `EFloat DivideToIntegerZeroScale​(EFloat divisor,
-                        EContext ctx)`<br>
+EContext ctx)`<br>
  Divides this object by another object, and returns the integer part of the
  result, with the exponent set to 0.
 * `EFloat DivideToSameExponent​(EFloat divisor,
-                    ERounding rounding)`<br>
+ERounding rounding)`<br>
  Divides this object by another binary floating-point number and returns a
  result with the same exponent as this object (the dividend).
 * `EFloat[] DivRemNaturalScale​(EFloat divisor)`<br>
@@ -265,7 +198,7 @@ Renamed to DivRemNaturalScale.
  two-item array containing the result of the division and the
  remainder, in that order.
 * `EFloat[] DivRemNaturalScale​(EFloat divisor,
-                  EContext ctx)`<br>
+EContext ctx)`<br>
  Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns a
  two-item array containing the result of the division and the
@@ -327,54 +260,54 @@ Renamed to DivRemNaturalScale.
  Creates a binary floating-point number from a sequence of bytes that
  represents a number, using an unlimited precision context.
 * `static EFloat FromString​(byte[] bytes,
-          int offset,
-          int length)`<br>
+int offset,
+int length)`<br>
  Creates a binary floating-point number from a sequence of bytes that
  represents a number.
 * `static EFloat FromString​(byte[] bytes,
-          int offset,
-          int length,
-          EContext ctx)`<br>
+int offset,
+int length,
+EContext ctx)`<br>
  Creates a binary floating-point number from a sequence of bytes that
  represents a number.
 * `static EFloat FromString​(byte[] bytes,
-          EContext ctx)`<br>
+EContext ctx)`<br>
  Creates a binary floating-point number from a sequence of bytes that
  represents a number.
 * `static EFloat FromString​(char[] chars) char`<br>
  Creates a binary floating-point number from a sequence of char s that
  represents a number, using an unlimited precision context.
 * `static EFloat FromString​(char[] chars,
-          int offset,
-          int length) char`<br>
+int offset,
+int length) char`<br>
  Creates a binary floating-point number from a sequence of char s that
  represents a number.
 * `static EFloat FromString​(char[] chars,
-          int offset,
-          int length,
-          EContext ctx) char`<br>
+int offset,
+int length,
+EContext ctx) char`<br>
  Creates a binary floating-point number from a sequence of char s that
  represents a number.
 * `static EFloat FromString​(char[] chars,
-          EContext ctx) char`<br>
+EContext ctx) char`<br>
  Creates a binary floating-point number from a sequence of char s that
  represents a number.
 * `static EFloat FromString​(java.lang.String str)`<br>
  Creates a binary floating-point number from a text string that represents a
  number, using an unlimited precision context.
 * `static EFloat FromString​(java.lang.String str,
-          int offset,
-          int length)`<br>
+int offset,
+int length)`<br>
  Creates a binary floating-point number from a text string that represents a
  number.
 * `static EFloat FromString​(java.lang.String str,
-          int offset,
-          int length,
-          EContext ctx)`<br>
+int offset,
+int length,
+EContext ctx)`<br>
  Creates a binary floating-point number from a text string that represents a
  number.
 * `static EFloat FromString​(java.lang.String str,
-          EContext ctx)`<br>
+EContext ctx)`<br>
  Creates a binary floating-point number from a text string that represents a
  number.
 * `EInteger getExponent()`<br>
@@ -425,64 +358,64 @@ Renamed to DivRemNaturalScale.
  in a way that avoids loss of precision when this object's value is
  between 0 and 1.
 * `EFloat LogN​(EFloat baseValue,
-    EContext ctx)`<br>
+EContext ctx)`<br>
  Finds the base-N logarithm of this object, that is, the power (exponent)
  that the number N must be raised to in order to equal this object's
  value.
 * `static EFloat Max​(EFloat first,
-   EFloat second)`<br>
+EFloat second)`<br>
  Gets the greater value between two binary floating-point numbers.
 * `static EFloat Max​(EFloat first,
-   EFloat second,
-   EContext ctx)`<br>
+EFloat second,
+EContext ctx)`<br>
  Gets the greater value between two binary floating-point numbers.
 * `static EFloat MaxMagnitude​(EFloat first,
-            EFloat second)`<br>
+EFloat second)`<br>
  Gets the greater value between two values, ignoring their signs.
 * `static EFloat MaxMagnitude​(EFloat first,
-            EFloat second,
-            EContext ctx)`<br>
+EFloat second,
+EContext ctx)`<br>
  Gets the greater value between two values, ignoring their signs.
 * `static EFloat Min​(EFloat first,
-   EFloat second)`<br>
+EFloat second)`<br>
  Gets the lesser value between two binary floating-point numbers.
 * `static EFloat Min​(EFloat first,
-   EFloat second,
-   EContext ctx)`<br>
+EFloat second,
+EContext ctx)`<br>
  Gets the lesser value between two binary floating-point numbers.
 * `static EFloat MinMagnitude​(EFloat first,
-            EFloat second)`<br>
+EFloat second)`<br>
  Gets the lesser value between two values, ignoring their signs.
 * `static EFloat MinMagnitude​(EFloat first,
-            EFloat second,
-            EContext ctx)`<br>
+EFloat second,
+EContext ctx)`<br>
  Gets the lesser value between two values, ignoring their signs.
 * `EFloat MovePointLeft​(int places)`<br>
  Returns a number similar to this number but with the radix point moved to
  the left.
 * `EFloat MovePointLeft​(int places,
-             EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a number similar to this number but with the radix point moved to
  the left.
 * `EFloat MovePointLeft​(EInteger bigPlaces)`<br>
  Returns a number similar to this number but with the radix point moved to
  the left.
 * `EFloat MovePointLeft​(EInteger bigPlaces,
-             EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a number similar to this number but with the radix point moved to
  the left.
 * `EFloat MovePointRight​(int places)`<br>
  Returns a number similar to this number but with the radix point moved to
  the right.
 * `EFloat MovePointRight​(int places,
-              EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a number similar to this number but with the radix point moved to
  the right.
 * `EFloat MovePointRight​(EInteger bigPlaces)`<br>
  Returns a number similar to this number but with the radix point moved to
  the right.
 * `EFloat MovePointRight​(EInteger bigPlaces,
-              EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a number similar to this number but with the radix point moved to
  the right.
 * `EFloat Multiply​(int intValue)`<br>
@@ -496,21 +429,21 @@ Renamed to DivRemNaturalScale.
  arbitrary-precision binary floating-point number and returns the
  result.
 * `EFloat Multiply​(EFloat op,
-        EContext ctx)`<br>
+EContext ctx)`<br>
  Multiplies this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
  result.
 * `EFloat MultiplyAndAdd​(EFloat multiplicand,
-              EFloat augend)`<br>
+EFloat augend)`<br>
  Multiplies by one binary floating-point number, and then adds another binary
  floating-point number.
 * `EFloat MultiplyAndAdd​(EFloat op,
-              EFloat augend,
-              EContext ctx)`<br>
+EFloat augend,
+EContext ctx)`<br>
  Multiplies by one value, and then adds another value.
 * `EFloat MultiplyAndSubtract​(EFloat op,
-                   EFloat subtrahend,
-                   EContext ctx)`<br>
+EFloat subtrahend,
+EContext ctx)`<br>
  Multiplies by one value, and then subtracts another value.
 * `EFloat Negate()`<br>
  Gets an object with the same value as this one, but with the sign reversed.
@@ -522,7 +455,7 @@ Renamed to DivRemNaturalScale.
 * `EFloat NextPlus​(EContext ctx)`<br>
  Finds the smallest value that's greater than the given value.
 * `EFloat NextToward​(EFloat otherValue,
-          EContext ctx)`<br>
+EContext ctx)`<br>
  Finds the next value that is closer to the other object's value than this
  object's value.
 * `static EFloat PI​(EContext ctx)`<br>
@@ -534,12 +467,12 @@ Renamed to DivRemNaturalScale.
 * `EFloat Pow​(int exponentSmall)`<br>
  Raises this object's value to the given exponent.
 * `EFloat Pow​(int exponentSmall,
-   EContext ctx)`<br>
+EContext ctx)`<br>
  Raises this object's value to the given exponent.
 * `EFloat Pow​(EFloat exponent)`<br>
  Raises this object's value to the given exponent, using unlimited precision.
 * `EFloat Pow​(EFloat exponent,
-   EContext ctx)`<br>
+EContext ctx)`<br>
  Raises this object's value to the given exponent.
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's significand.
@@ -548,22 +481,22 @@ Renamed to DivRemNaturalScale.
  maximum precision allowed if it has more significant digits than the
  maximum precision.
 * `EFloat Quantize​(int desiredExponentInt,
-        EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value but a new
  exponent.
 * `EFloat Quantize​(EFloat otherValue,
-        EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value as this object
  but with the same exponent as another binary floating-point number.
 * `EFloat Quantize​(EInteger desiredExponent,
-        EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value but a new
  exponent.
 * `EFloat Reduce​(EContext ctx)`<br>
  Returns an object with the same numerical value as this one but with
  trailing zeros removed from its significand.
 * `EFloat Remainder​(EFloat divisor,
-         EContext ctx)`<br>
+EContext ctx)`<br>
  Returns the remainder that would result when this arbitrary-precision binary
  floating-point number is divided by another arbitrary-precision
  binary floating-point number.
@@ -572,38 +505,38 @@ Renamed to DivRemNaturalScale.
  Calculates the remainder of a number by the formula "this" - (("this" /
   "divisor") * "divisor").
 * `EFloat RemainderNaturalScale​(EFloat divisor,
-                     EContext ctx)`<br>
+EContext ctx)`<br>
  Calculates the remainder of a number by the formula "this" - (("this" /
   "divisor") * "divisor").
 * `EFloat RemainderNear​(EFloat divisor,
-             EContext ctx)`<br>
+EContext ctx)`<br>
  Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object's value by another object's
  value.
 * `EFloat RemainderNoRoundAfterDivide​(EFloat divisor,
-                           EContext ctx)`<br>
+EContext ctx)`<br>
  Finds the remainder that results when dividing two arbitrary-precision
  binary floating-point numbers.
 * `EFloat RoundToExponent​(int exponentSmall,
-               EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value as this object
  but rounded to a new exponent if necessary.
 * `EFloat RoundToExponent​(EInteger exponent,
-               EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value as this object
  but rounded to a new exponent if necessary.
 * `EFloat RoundToExponentExact​(int exponentSmall,
-                    EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value as this object
  but rounded to the given exponent represented as a 32-bit signed
  integer, and signals an inexact flag if the result would be inexact.
 * `EFloat RoundToExponentExact​(EInteger exponent,
-                    EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a binary floating-point number with the same value as this object
  but rounded to the given exponent, and signals an inexact flag if
  the result would be inexact.
 * `EFloat RoundToExponentExact​(EInteger exponent,
-                    ERounding rounding)`<br>
+ERounding rounding)`<br>
  Returns a binary number with the same value as this object but rounded to
  the given exponent.
 * `EFloat RoundToIntegerExact​(EContext ctx)`<br>
@@ -628,12 +561,12 @@ Renamed to RoundToIntegerNoRoundedFlag.
 * `EFloat ScaleByPowerOfTwo​(int places)`<br>
  Returns a number similar to this number but with the scale adjusted.
 * `EFloat ScaleByPowerOfTwo​(int places,
-                 EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a number similar to this number but with the scale adjusted.
 * `EFloat ScaleByPowerOfTwo​(EInteger bigPlaces)`<br>
  Returns a number similar to this number but with the scale adjusted.
 * `EFloat ScaleByPowerOfTwo​(EInteger bigPlaces,
-                 EContext ctx)`<br>
+EContext ctx)`<br>
  Returns a number similar to this number but with its scale adjusted.
 * `int signum()`<br>
  Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
@@ -654,7 +587,7 @@ Renamed to Sqrt.
  arbitrary-precision binary floating-point number and returns the
  result.
 * `EFloat Subtract​(EFloat otherValue,
-        EContext ctx)`<br>
+EContext ctx)`<br>
  Subtracts an arbitrary-precision binary floating-point number from this
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -761,36 +694,36 @@ Renamed to ToEDecimal.
 
 ## Field Details
 
-### NaN
-    public static final EFloat NaN
+### <a id='NaN'>NaN</a>
+
 A not-a-number value.
-### NegativeInfinity
-    public static final EFloat NegativeInfinity
+### <a id='NegativeInfinity'>NegativeInfinity</a>
+
 Negative infinity, less than any other number.
-### NegativeZero
-    public static final EFloat NegativeZero
+### <a id='NegativeZero'>NegativeZero</a>
+
 Represents the number negative zero.
-### One
-    public static final EFloat One
+### <a id='One'>One</a>
+
 Represents the number 1.
-### PositiveInfinity
-    public static final EFloat PositiveInfinity
+### <a id='PositiveInfinity'>PositiveInfinity</a>
+
 Positive infinity, greater than any other number.
-### SignalingNaN
-    public static final EFloat SignalingNaN
+### <a id='SignalingNaN'>SignalingNaN</a>
+
 A not-a-number value that signals an invalid operation flag when it's passed
  as an argument to any arithmetic operation in arbitrary-precision
  binary floating-point number.
-### Ten
-    public static final EFloat Ten
+### <a id='Ten'>Ten</a>
+
 Represents the number 10.
-### Zero
-    public static final EFloat Zero
+### <a id='Zero'>Zero</a>
+
 Represents the number 0.
 ## Method Details
 
-### getExponent
-    public final EInteger getExponent()
+### <a id='getExponent()'>getExponent</a>
+
 Gets this object's exponent. This object's value will be an integer if the
  exponent is positive or zero.
 
@@ -799,8 +732,8 @@ Gets this object's exponent. This object's value will be an integer if the
 * This object's exponent. This object's value will be an integer if
  the exponent is positive or zero.
 
-### isFinite
-    public final boolean isFinite()
+### <a id='isFinite()'>isFinite</a>
+
 Gets a value indicating whether this object is finite (not infinity or
  not-a-number, NaN).
 
@@ -809,8 +742,8 @@ Gets a value indicating whether this object is finite (not infinity or
 * <code>true</code> if this object is finite (not infinity or not-a-number,
  NaN); otherwise, <code>false</code>.
 
-### isNegative
-    public final boolean isNegative()
+### <a id='isNegative()'>isNegative</a>
+
 Gets a value indicating whether this object is negative, including negative
  zero.
 
@@ -819,8 +752,8 @@ Gets a value indicating whether this object is negative, including negative
 * <code>true</code> if this object is negative, including negative zero;
  otherwise, <code>false</code>.
 
-### isZero
-    public final boolean isZero()
+### <a id='isZero()'>isZero</a>
+
 Gets a value indicating whether this object's value equals 0.
 
 **Returns:**
@@ -829,8 +762,8 @@ Gets a value indicating whether this object's value equals 0.
  false</code>. <code>true</code> if this object's value equals 0; otherwise,
  <code>false</code>.
 
-### getMantissa
-    public final EInteger getMantissa()
+### <a id='getMantissa()'>getMantissa</a>
+
 Gets this object's unscaled value, or significand, and makes it negative if
  this object is negative. If this value is not-a-number (NaN), that
   value's absolute value is the NaN's "payload" (diagnostic
@@ -841,16 +774,16 @@ Gets this object's unscaled value, or significand, and makes it negative if
 * This object's unscaled value. Will be negative if this object's
  value is negative (including a negative NaN).
 
-### signum
-    public final int signum()
+### <a id='signum()'>signum</a>
+
 Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
 
 **Returns:**
 
 * This value's sign: -1 if negative; 1 if positive; 0 if zero.
 
-### getUnsignedMantissa
-    public final EInteger getUnsignedMantissa()
+### <a id='getUnsignedMantissa()'>getUnsignedMantissa</a>
+
 Gets the absolute value of this object's unscaled value, or significand. If
   this value is not-a-number (NaN), that value is the NaN's "payload"
  (diagnostic information).
@@ -859,16 +792,16 @@ Gets the absolute value of this object's unscaled value, or significand. If
 
 * The absolute value of this object's unscaled value.
 
-### Copy
-    public EFloat Copy()
+### <a id='Copy()'>Copy</a>
+
 Creates a copy of this arbitrary-precision binary number.
 
 **Returns:**
 
 * An arbitrary-precision binary floating-point number.
 
-### Create
-    public static EFloat Create​(int mantissaSmall, int exponentSmall)
+### <a id='Create(int,int)'>Create</a>
+
 Returns an arbitrary-precision number with the value
  <code>exponent*2^significand</code>.
 
@@ -882,8 +815,8 @@ Returns an arbitrary-precision number with the value
 
 * An arbitrary-precision binary number.
 
-### Create
-    public static EFloat Create​(EInteger mantissa, int exponentSmall)
+### <a id='Create(com.upokecenter.numbers.EInteger,int)'>Create</a>
+
 Returns an arbitrary-precision number with the value
  <code>exponent*2^significand</code>.
 
@@ -901,8 +834,8 @@ Returns an arbitrary-precision number with the value
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.
 
-### Create
-    public static EFloat Create​(EInteger mantissa, long exponentLong)
+### <a id='Create(com.upokecenter.numbers.EInteger,long)'>Create</a>
+
 Returns an arbitrary-precision number with the value
  <code>exponent*2^significand</code>.
 
@@ -920,8 +853,8 @@ Returns an arbitrary-precision number with the value
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> is null.
 
-### Create
-    public static EFloat Create​(EInteger mantissa, EInteger exponent)
+### <a id='Create(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>Create</a>
+
 Returns an arbitrary-precision number with the value
  <code>exponent*2^significand</code>.
 
@@ -940,8 +873,8 @@ Returns an arbitrary-precision number with the value
 * <code>java.lang.NullPointerException</code> - The parameter <code>mantissa</code> or <code>
  exponent</code> is null.
 
-### Create
-    public static EFloat Create​(long mantissaLong, int exponentSmall)
+### <a id='Create(long,int)'>Create</a>
+
 Returns an arbitrary-precision number with the value
  <code>exponent*2^significand</code>.
 
@@ -955,8 +888,8 @@ Returns an arbitrary-precision number with the value
 
 * An arbitrary-precision binary number.
 
-### Create
-    public static EFloat Create​(long mantissaLong, long exponentLong)
+### <a id='Create(long,long)'>Create</a>
+
 Returns an arbitrary-precision number with the value
  <code>exponent*2^significand</code>.
 
@@ -970,8 +903,8 @@ Returns an arbitrary-precision number with the value
 
 * An arbitrary-precision binary number.
 
-### CreateNaN
-    public static EFloat CreateNaN​(EInteger diag)
+### <a id='CreateNaN(com.upokecenter.numbers.EInteger)'>CreateNaN</a>
+
 Creates a not-a-number arbitrary-precision binary number.
 
 **Parameters:**
@@ -986,8 +919,8 @@ Creates a not-a-number arbitrary-precision binary number.
 
 * A quiet not-a-number.
 
-### CreateNaN
-    public static EFloat CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
+### <a id='CreateNaN(com.upokecenter.numbers.EInteger,boolean,boolean,com.upokecenter.numbers.EContext)'>CreateNaN</a>
+
 Creates a not-a-number arbitrary-precision binary number.
 
 **Parameters:**
@@ -1019,8 +952,8 @@ Creates a not-a-number arbitrary-precision binary number.
 * <code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null or is less
  than 0.
 
-### FromDoubleBits
-    public static EFloat FromDoubleBits​(long dblBits)
+### <a id='FromDoubleBits(long)'>FromDoubleBits</a>
+
 Creates a binary floating-point number from a 64-bit floating-point number
  encoded in the IEEE 754 binary64 format. This method computes the
  exact value of the floating point number, not an approximation, as
@@ -1036,8 +969,8 @@ Creates a binary floating-point number from a 64-bit floating-point number
 * A binary floating-point number with the same value as the
  floating-point number encoded in <code>dblBits</code>.
 
-### FromSingle
-    public static EFloat FromSingle​(float flt)
+### <a id='FromSingle(float)'>FromSingle</a>
+
 Creates a binary floating-point number from a 32-bit floating-point number.
  This method computes the exact value of the floating point number,
  not an approximation, as is often the case by converting the
@@ -1062,8 +995,8 @@ Creates a binary floating-point number from a 32-bit floating-point number.
 
 * A binary floating-point number with the same value as <code>flt</code>.
 
-### FromDouble
-    public static EFloat FromDouble​(double dbl)
+### <a id='FromDouble(double)'>FromDouble</a>
+
 Creates a binary floating-point number from a 64-bit floating-point number.
  This method computes the exact value of the floating point number,
  not an approximation, as is often the case by converting the
@@ -1087,8 +1020,8 @@ Creates a binary floating-point number from a 64-bit floating-point number.
 
 * A binary floating-point number with the same value as <code>dbl</code>.
 
-### FromEInteger
-    public static EFloat FromEInteger​(EInteger bigint)
+### <a id='FromEInteger(com.upokecenter.numbers.EInteger)'>FromEInteger</a>
+
 Converts an arbitrary-precision integer to the same value as a binary
  floating-point number.
 
@@ -1100,8 +1033,8 @@ Converts an arbitrary-precision integer to the same value as a binary
 
 * An arbitrary-precision binary floating-point number.
 
-### FromString
-    public static EFloat FromString​(java.lang.String str, int offset, int length, EContext ctx)
+### <a id='FromString(java.lang.String,int,int,com.upokecenter.numbers.EContext)'>FromString</a>
+
 Creates a binary floating-point number from a text string that represents a
  number. Note that if the string contains a negative exponent, the
  resulting value might not be exact, in which case the resulting
@@ -1159,8 +1092,8 @@ Creates a binary floating-point number from a text string that represents a
  is less than 0 or greater than <code>str</code> 's length, or <code>str</code>
  's length minus <code>offset</code> is less than <code>length</code>.
 
-### FromString
-    public static EFloat FromString​(java.lang.String str)
+### <a id='FromString(java.lang.String)'>FromString</a>
+
 Creates a binary floating-point number from a text string that represents a
  number, using an unlimited precision context. For more information,
  see the <code>FromString(string, int, int, EContext)</code> method.
@@ -1181,8 +1114,8 @@ Creates a binary floating-point number from a text string that represents a
 * <code>java.lang.NumberFormatException</code> - The portion given of <code>str</code> is not a correctly
  formatted number string.
 
-### FromString
-    public static EFloat FromString​(java.lang.String str, EContext ctx)
+### <a id='FromString(java.lang.String,com.upokecenter.numbers.EContext)'>FromString</a>
+
 Creates a binary floating-point number from a text string that represents a
  number. For more information, see the <code>FromString(string, int,
  int, EContext)</code> method.
@@ -1209,8 +1142,8 @@ Creates a binary floating-point number from a text string that represents a
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.
 
-### FromString
-    public static EFloat FromString​(java.lang.String str, int offset, int length)
+### <a id='FromString(java.lang.String,int,int)'>FromString</a>
+
 Creates a binary floating-point number from a text string that represents a
  number. For more information, see the <code>FromString(string, int,
  int, EContext)</code> method.
@@ -1237,8 +1170,8 @@ Creates a binary floating-point number from a text string that represents a
  than 0 or greater than <code>str</code> 's length, or <code>str</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
-### FromString
-    public static EFloat FromString​(char[] chars, int offset, int length, EContext ctx)
+### <a id='FromString(char[],int,int,com.upokecenter.numbers.EContext)'>FromString</a>
+
 Creates a binary floating-point number from a sequence of <code>char</code> s that
  represents a number. Note that if the sequence contains a negative
  exponent, the resulting value might not be exact, in which case the
@@ -1298,8 +1231,8 @@ Creates a binary floating-point number from a sequence of <code>char</code> s th
  length, or <code>chars</code> 's length minus <code>offset</code> is less than
  <code>length</code>.
 
-### FromString
-    public static EFloat FromString​(char[] chars)
+### <a id='FromString(char[])'>FromString</a>
+
 Creates a binary floating-point number from a sequence of <code>char</code> s that
  represents a number, using an unlimited precision context. For more
  information, see the <code>FromString(string, int, int, EContext)</code>
@@ -1322,8 +1255,8 @@ Creates a binary floating-point number from a sequence of <code>char</code> s th
 * <code>java.lang.NumberFormatException</code> - The portion given of <code>chars</code> is not a
  correctly formatted number sequence.
 
-### FromString
-    public static EFloat FromString​(char[] chars, EContext ctx)
+### <a id='FromString(char[],com.upokecenter.numbers.EContext)'>FromString</a>
+
 Creates a binary floating-point number from a sequence of <code>char</code> s that
  represents a number. For more information, see the
  <code>FromString(string, int, int, EContext)</code> method.
@@ -1351,8 +1284,8 @@ Creates a binary floating-point number from a sequence of <code>char</code> s th
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>chars</code> is null.
 
-### FromString
-    public static EFloat FromString​(char[] chars, int offset, int length)
+### <a id='FromString(char[],int,int)'>FromString</a>
+
 Creates a binary floating-point number from a sequence of <code>char</code> s that
  represents a number. For more information, see the
  <code>FromString(string, int, int, EContext)</code> method.
@@ -1380,8 +1313,8 @@ Creates a binary floating-point number from a sequence of <code>char</code> s th
  than 0 or greater than <code>chars</code> 's length, or <code>chars</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
-### FromString
-    public static EFloat FromString​(byte[] bytes, int offset, int length, EContext ctx)
+### <a id='FromString(byte[],int,int,com.upokecenter.numbers.EContext)'>FromString</a>
+
 Creates a binary floating-point number from a sequence of bytes that
  represents a number. Note that if the sequence contains a negative
  exponent, the resulting value might not be exact, in which case the
@@ -1441,8 +1374,8 @@ Creates a binary floating-point number from a sequence of bytes that
  length, or <code>bytes</code> 's length minus <code>offset</code> is less than
  <code>length</code>.
 
-### FromString
-    public static EFloat FromString​(byte[] bytes)
+### <a id='FromString(byte[])'>FromString</a>
+
 Creates a binary floating-point number from a sequence of bytes that
  represents a number, using an unlimited precision context. For more
  information, see the <code>FromString(string, int, int, EContext)</code>
@@ -1465,8 +1398,8 @@ Creates a binary floating-point number from a sequence of bytes that
 * <code>java.lang.NumberFormatException</code> - The portion given of <code>bytes</code> is not a
  correctly formatted number sequence.
 
-### FromString
-    public static EFloat FromString​(byte[] bytes, EContext ctx)
+### <a id='FromString(byte[],com.upokecenter.numbers.EContext)'>FromString</a>
+
 Creates a binary floating-point number from a sequence of bytes that
  represents a number. For more information, see the
  <code>FromString(string, int, int, EContext)</code> method.
@@ -1494,8 +1427,8 @@ Creates a binary floating-point number from a sequence of bytes that
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.
 
-### FromString
-    public static EFloat FromString​(byte[] bytes, int offset, int length)
+### <a id='FromString(byte[],int,int)'>FromString</a>
+
 Creates a binary floating-point number from a sequence of bytes that
  represents a number. For more information, see the
  <code>FromString(string, int, int, EContext)</code> method.
@@ -1523,8 +1456,8 @@ Creates a binary floating-point number from a sequence of bytes that
  than 0 or greater than <code>bytes</code> 's length, or <code>bytes</code> 's
  length minus <code>offset</code> is less than <code>length</code>.
 
-### Max
-    public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
+### <a id='Max(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Max</a>
+
 Gets the greater value between two binary floating-point numbers.
 
 **Parameters:**
@@ -1552,8 +1485,8 @@ Gets the greater value between two binary floating-point numbers.
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### Max
-    public static EFloat Max​(EFloat first, EFloat second)
+### <a id='Max(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>Max</a>
+
 Gets the greater value between two binary floating-point numbers.
 
 **Parameters:**
@@ -1575,8 +1508,8 @@ Gets the greater value between two binary floating-point numbers.
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### MaxMagnitude
-    public static EFloat MaxMagnitude​(EFloat first, EFloat second, EContext ctx)
+### <a id='MaxMagnitude(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>MaxMagnitude</a>
+
 Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.
 
@@ -1601,8 +1534,8 @@ Gets the greater value between two values, ignoring their signs. If the
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### MaxMagnitude
-    public static EFloat MaxMagnitude​(EFloat first, EFloat second)
+### <a id='MaxMagnitude(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>MaxMagnitude</a>
+
 Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.
 
@@ -1621,8 +1554,8 @@ Gets the greater value between two values, ignoring their signs. If the
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### Min
-    public static EFloat Min​(EFloat first, EFloat second, EContext ctx)
+### <a id='Min(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Min</a>
+
 Gets the lesser value between two binary floating-point numbers.
 
 **Parameters:**
@@ -1650,8 +1583,8 @@ Gets the lesser value between two binary floating-point numbers.
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### Min
-    public static EFloat Min​(EFloat first, EFloat second)
+### <a id='Min(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>Min</a>
+
 Gets the lesser value between two binary floating-point numbers.
 
 **Parameters:**
@@ -1673,8 +1606,8 @@ Gets the lesser value between two binary floating-point numbers.
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### MinMagnitude
-    public static EFloat MinMagnitude​(EFloat first, EFloat second, EContext ctx)
+### <a id='MinMagnitude(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>MinMagnitude</a>
+
 Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.
 
@@ -1699,8 +1632,8 @@ Gets the lesser value between two values, ignoring their signs. If the
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### MinMagnitude
-    public static EFloat MinMagnitude​(EFloat first, EFloat second)
+### <a id='MinMagnitude(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>MinMagnitude</a>
+
 Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.
 
@@ -1719,8 +1652,8 @@ Gets the lesser value between two values, ignoring their signs. If the
 * <code>java.lang.NullPointerException</code> - The parameter <code>first</code> or <code>second</code>
  is null.
 
-### PI
-    public static EFloat PI​(EContext ctx)
+### <a id='PI(com.upokecenter.numbers.EContext)'>PI</a>
+
 Finds the constant π, the circumference of a circle divided by its diameter.
 
 **Parameters:**
@@ -1738,8 +1671,8 @@ Finds the constant π, the circumference of a circle divided by its diameter.
  or the precision is unlimited (the context's Precision property is
  0).
 
-### Abs
-    public EFloat Abs()
+### <a id='Abs()'>Abs</a>
+
 Finds the absolute value of this object (if it's negative, it becomes
  positive).
 
@@ -1751,8 +1684,8 @@ Finds the absolute value of this object (if it's negative, it becomes
  Arithmetic Specification, except this method does not necessarily
  return a copy of this object.).
 
-### Abs
-    public EFloat Abs​(EContext context)
+### <a id='Abs(com.upokecenter.numbers.EContext)'>Abs</a>
+
 Finds the absolute value of this object (if it's negative, it becomes
  positive).
 
@@ -1769,8 +1702,8 @@ Finds the absolute value of this object (if it's negative, it becomes
 * The absolute value of this object. Signals FlagInvalid and returns
  quiet NaN if this value is signaling NaN.
 
-### Add
-    public EFloat Add​(int intValue)
+### <a id='Add(int)'>Add</a>
+
 Adds this arbitrary-precision binary floating-point number and a 32-bit
  signed integer and returns the result. The exponent for the result
  is the lower of this arbitrary-precision binary floating-point
@@ -1787,8 +1720,8 @@ Adds this arbitrary-precision binary floating-point number and a 32-bit
  arbitrary-precision binary floating-point number is not-a-number
  (NaN), returns NaN.
 
-### Subtract
-    public EFloat Subtract​(int intValue)
+### <a id='Subtract(int)'>Subtract</a>
+
 Subtracts a 32-bit signed integer from this arbitrary-precision binary
  floating-point number and returns the result. The exponent for the
  result is the lower of this arbitrary-precision binary
@@ -1806,8 +1739,8 @@ Subtracts a 32-bit signed integer from this arbitrary-precision binary
  signed integer. If this arbitrary-precision binary floating-point
  number is not-a-number (NaN), returns NaN.
 
-### Multiply
-    public EFloat Multiply​(int intValue)
+### <a id='Multiply(int)'>Multiply</a>
+    EInteger result = EInteger.FromString("5").Multiply(200);
 Multiplies this arbitrary-precision binary floating-point number by a 32-bit
  signed integer and returns the result. The exponent for the result
  is this arbitrary-precision binary floating-point number's exponent
@@ -1822,8 +1755,8 @@ Multiplies this arbitrary-precision binary floating-point number by a 32-bit
 * The product of the two numbers, that is, this arbitrary-precision
  binary floating-point number times a 32-bit signed integer.
 
-### Divide
-    public EFloat Divide​(int intValue)
+### <a id='Divide(int)'>Divide</a>
+
 Divides this arbitrary-precision binary floating-point number by a 32-bit
  signed integer and returns the result; returns NaN instead if the
  result would have a nonterminating binary expansion (including 1/3,
@@ -1851,8 +1784,8 @@ Divides this arbitrary-precision binary floating-point number by a 32-bit
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
-### Add
-    public EFloat Add​(long longValue)
+### <a id='Add(long)'>Add</a>
+
 Adds this arbitrary-precision binary floating-point number and a 64-bit
  signed integer and returns the result. The exponent for the result
  is the lower of this arbitrary-precision binary floating-point
@@ -1869,8 +1802,8 @@ Adds this arbitrary-precision binary floating-point number and a 64-bit
  arbitrary-precision binary floating-point number is not-a-number
  (NaN), returns NaN.
 
-### Subtract
-    public EFloat Subtract​(long longValue)
+### <a id='Subtract(long)'>Subtract</a>
+
 Subtracts a 64-bit signed integer from this arbitrary-precision binary
  floating-point number and returns the result. The exponent for the
  result is the lower of this arbitrary-precision binary
@@ -1888,8 +1821,8 @@ Subtracts a 64-bit signed integer from this arbitrary-precision binary
  signed integer. If this arbitrary-precision binary floating-point
  number is not-a-number (NaN), returns NaN.
 
-### Multiply
-    public EFloat Multiply​(long longValue)
+### <a id='Multiply(long)'>Multiply</a>
+    EInteger result = EInteger.FromString("5").Multiply(200L);
 Multiplies this arbitrary-precision binary floating-point number by a 64-bit
  signed integer and returns the result. The exponent for the result
  is this arbitrary-precision binary floating-point number's exponent
@@ -1904,8 +1837,8 @@ Multiplies this arbitrary-precision binary floating-point number by a 64-bit
 * The product of the two numbers, that is, this arbitrary-precision
  binary floating-point number times a 64-bit signed integer.
 
-### Divide
-    public EFloat Divide​(long longValue)
+### <a id='Divide(long)'>Divide</a>
+
 Divides this arbitrary-precision binary floating-point number by a 64-bit
  signed integer and returns the result; returns NaN instead if the
  result would have a nonterminating binary expansion (including 1/3,
@@ -1933,8 +1866,8 @@ Divides this arbitrary-precision binary floating-point number by a 64-bit
 
 * <code>java.lang.ArithmeticException</code> - Attempted to divide by zero.
 
-### Add
-    public EFloat Add​(EFloat otherValue)
+### <a id='Add(com.upokecenter.numbers.EFloat)'>Add</a>
+
 Adds this arbitrary-precision binary floating-point number and another
  arbitrary-precision binary floating-point number and returns the
  result. The exponent for the result is the lower of this
@@ -1952,8 +1885,8 @@ Adds this arbitrary-precision binary floating-point number and another
  floating-point number. If this arbitrary-precision binary
  floating-point number is not-a-number (NaN), returns NaN.
 
-### Add
-    public EFloat Add​(EFloat otherValue, EContext ctx)
+### <a id='Add(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Add</a>
+
 Adds this arbitrary-precision binary floating-point number and another
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -1975,8 +1908,8 @@ Adds this arbitrary-precision binary floating-point number and another
  floating-point number. If this arbitrary-precision binary
  floating-point number is not-a-number (NaN), returns NaN.
 
-### compareTo
-    public int compareTo​(EFloat other)
+### <a id='compareTo(com.upokecenter.numbers.EFloat)'>compareTo</a>
+
 Compares the mathematical values of this object and another object,
  accepting NaN values. This method currently uses the rules given in
  the CompareToValue method, so that it it is not consistent with the
@@ -1997,8 +1930,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other
  value or if <code>other</code> is null, or 0 if both values are equal.
 
-### CompareToValue
-    public int CompareToValue​(EFloat other)
+### <a id='CompareToValue(com.upokecenter.numbers.EFloat)'>CompareToValue</a>
+
 Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
  Equals method because two different numbers with the same
@@ -2019,8 +1952,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other
  value or if <code>other</code> is null, or 0 if both values are equal.
 
-### compareTo
-    public int compareTo​(int intOther)
+### <a id='compareTo(int)'>compareTo</a>
+
 Compares the mathematical values of this object and another object,
  accepting NaN values. This method currently uses the rules given in
  the CompareToValue method, so that it it is not consistent with the
@@ -2037,8 +1970,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other
  value, or 0 if both values are equal.
 
-### CompareToValue
-    public int CompareToValue​(int intOther)
+### <a id='CompareToValue(int)'>CompareToValue</a>
+
 Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
  Equals method because two different numbers with the same
@@ -2058,8 +1991,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other
  value, or 0 if both values are equal.
 
-### CompareToValue
-    public int CompareToValue​(long intOther)
+### <a id='CompareToValue(long)'>CompareToValue</a>
+
 Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
  Equals method because two different numbers with the same
@@ -2079,8 +2012,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other
  value, or 0 if both values are equal.
 
-### compareTo
-    public int compareTo​(long intOther)
+### <a id='compareTo(long)'>compareTo</a>
+
 Compares the mathematical values of this object and another object,
  accepting NaN values. This method currently uses the rules given in
  the CompareToValue method, so that it it is not consistent with the
@@ -2097,8 +2030,8 @@ Compares the mathematical values of this object and another object,
  greater than 0 if this object's value is greater than the other
  value, or 0 if both values are equal.
 
-### CompareToSignal
-    public EFloat CompareToSignal​(EFloat other, EContext ctx)
+### <a id='CompareToSignal(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>CompareToSignal</a>
+
 Compares the mathematical values of this object and another object, treating
  quiet NaN as signaling. <p>In this method, negative zero and
  positive zero are considered equal.</p> <p>If this object or the
@@ -2121,8 +2054,8 @@ Compares the mathematical values of this object and another object, treating
  other value, or 1 if this object is greater. This implementation
  returns a positive number if.
 
-### CompareToTotal
-    public int CompareToTotal​(EFloat other, EContext ctx)
+### <a id='CompareToTotal(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>CompareToTotal</a>
+
 Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For
  objects with the same value, the one with the higher exponent has a
@@ -2152,8 +2085,8 @@ Compares the values of this object and another object, imposing a total
  Does not signal flags if either value is signaling NaN. This
  implementation returns a positive number if.
 
-### CompareToTotalMagnitude
-    public int CompareToTotalMagnitude​(EFloat other, EContext ctx)
+### <a id='CompareToTotalMagnitude(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>CompareToTotalMagnitude</a>
+
 Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs). In this
  method: <ul> <li>For objects with the same value, the one with the
@@ -2184,8 +2117,8 @@ Compares the values of this object and another object, imposing a total
  Does not signal flags if either value is signaling NaN. This
  implementation returns a positive number if.
 
-### CompareToTotal
-    public int CompareToTotal​(EFloat other)
+### <a id='CompareToTotal(com.upokecenter.numbers.EFloat)'>CompareToTotal</a>
+
 Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For
  objects with the same value, the one with the higher exponent has a
@@ -2209,8 +2142,8 @@ Compares the values of this object and another object, imposing a total
  object is less than the other value, or 1 if this object is greater.
  This implementation returns a positive number if.
 
-### CompareToTotalMagnitude
-    public int CompareToTotalMagnitude​(EFloat other)
+### <a id='CompareToTotalMagnitude(com.upokecenter.numbers.EFloat)'>CompareToTotalMagnitude</a>
+
 Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs). In
  this method: <ul> <li>For objects with the same value, the one with
@@ -2234,8 +2167,8 @@ Compares the absolute values of this object and another object, imposing a
  object is less than the other value, or 1 if this object is greater.
  This implementation returns a positive number if.
 
-### CompareToWithContext
-    public EFloat CompareToWithContext​(EFloat other, EContext ctx)
+### <a id='CompareToWithContext(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>CompareToWithContext</a>
+
 Compares the mathematical values of this object and another object. <p>In
  this method, negative zero and positive zero are considered
  equal.</p> <p>If this object or the other object is a quiet NaN or
@@ -2258,8 +2191,8 @@ Compares the mathematical values of this object and another object. <p>In
  other value, or 1 if this object is greater. This implementation
  returns a positive number if.
 
-### CopySign
-    public EFloat CopySign​(EFloat other)
+### <a id='CopySign(com.upokecenter.numbers.EFloat)'>CopySign</a>
+
 Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number. (This method is similar to
   the "copy-sign" operation in the General Decimal Arithmetic
@@ -2278,8 +2211,8 @@ Returns a number with the same value as this one, but copying the sign
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.
 
-### Divide
-    public EFloat Divide​(EFloat divisor)
+### <a id='Divide(com.upokecenter.numbers.EFloat)'>Divide</a>
+
 Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
  result; returns NaN instead if the result would have a
@@ -2306,8 +2239,8 @@ Divides this arbitrary-precision binary floating-point number by another
  that takes an <code>EContext</code> (such as <code>EContext.Binary64</code>)
  instead.
 
-### Divide
-    public EFloat Divide​(EFloat divisor, EContext ctx)
+### <a id='Divide(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Divide</a>
+
 Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -2336,10 +2269,10 @@ Divides this arbitrary-precision binary floating-point number by another
  divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding
  mode is ERounding.None and the result is not exact.
 
-### DivideAndRemainderNaturalScale
-    @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)
-Deprecated.
-Renamed to DivRemNaturalScale.
+### <a id='DivideAndRemainderNaturalScale(com.upokecenter.numbers.EFloat)'>DivideAndRemainderNaturalScale</a>
+
+Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.
 
 **Parameters:**
 
@@ -2350,10 +2283,10 @@ Renamed to DivRemNaturalScale.
 * A 2 element array consisting of the quotient and remainder in that
  order.
 
-### DivideAndRemainderNaturalScale
-    @Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor, EContext ctx)
-Deprecated.
-Renamed to DivRemNaturalScale.
+### <a id='DivideAndRemainderNaturalScale(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>DivideAndRemainderNaturalScale</a>
+
+Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.
 
 **Parameters:**
 
@@ -2375,8 +2308,8 @@ Renamed to DivRemNaturalScale.
 * A 2 element array consisting of the quotient and remainder in that
  order.
 
-### DivideToExponent
-    public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, EContext ctx)
+### <a id='DivideToExponent(com.upokecenter.numbers.EFloat,long,com.upokecenter.numbers.EContext)'>DivideToExponent</a>
+
 Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 
@@ -2411,8 +2344,8 @@ Divides two arbitrary-precision binary floating-point numbers, and gives a
  not-a-number (NaN) if the rounding mode is ERounding.None and the
  result is not exact.
 
-### DivideToExponent
-    public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, ERounding rounding)
+### <a id='DivideToExponent(com.upokecenter.numbers.EFloat,long,com.upokecenter.numbers.ERounding)'>DivideToExponent</a>
+
 Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 
@@ -2438,8 +2371,8 @@ Divides two arbitrary-precision binary floating-point numbers, and gives a
  (NaN) if the rounding mode is ERounding.None and the result is not
  exact.
 
-### DivideToExponent
-    public EFloat DivideToExponent​(EFloat divisor, EInteger exponent, EContext ctx)
+### <a id='DivideToExponent(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>DivideToExponent</a>
+
 Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 
@@ -2473,8 +2406,8 @@ Divides two arbitrary-precision binary floating-point numbers, and gives a
  not-a-number (NaN) if the rounding mode is ERounding.None and the
  result is not exact.
 
-### DivideToExponent
-    public EFloat DivideToExponent​(EFloat divisor, EInteger desiredExponent, ERounding rounding)
+### <a id='DivideToExponent(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EInteger,com.upokecenter.numbers.ERounding)'>DivideToExponent</a>
+
 Divides two arbitrary-precision binary floating-point numbers, and gives a
  particular exponent to the result.
 
@@ -2499,8 +2432,8 @@ Divides two arbitrary-precision binary floating-point numbers, and gives a
  Returns NaN if the rounding mode is ERounding.None and the result is
  not exact.
 
-### DivideToIntegerNaturalScale
-    public EFloat DivideToIntegerNaturalScale​(EFloat divisor)
+### <a id='DivideToIntegerNaturalScale(com.upokecenter.numbers.EFloat)'>DivideToIntegerNaturalScale</a>
+
 Divides two arbitrary-precision binary floating-point numbers, and returns
  the integer part of the result, rounded down, with the preferred
  exponent set to this value's exponent minus the divisor's exponent.
@@ -2516,8 +2449,8 @@ Divides two arbitrary-precision binary floating-point numbers, and returns
  dividend is nonzero. Signals FlagInvalid and returns not-a-number
  (NaN) if the divisor and the dividend are 0.
 
-### DivideToIntegerNaturalScale
-    public EFloat DivideToIntegerNaturalScale​(EFloat divisor, EContext ctx)
+### <a id='DivideToIntegerNaturalScale(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>DivideToIntegerNaturalScale</a>
+
 Divides this object by another object, and returns the integer part of the
  result (which is initially rounded down), with the preferred
  exponent set to this value's exponent minus the divisor's exponent.
@@ -2538,8 +2471,8 @@ Divides this object by another object, and returns the integer part of the
  dividend are 0. Signals FlagInvalid and returns not-a-number (NaN)
  if the rounding mode is ERounding.None and the result is not exact.
 
-### DivideToIntegerZeroScale
-    public EFloat DivideToIntegerZeroScale​(EFloat divisor, EContext ctx)
+### <a id='DivideToIntegerZeroScale(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>DivideToIntegerZeroScale</a>
+
 Divides this object by another object, and returns the integer part of the
  result, with the exponent set to 0.
 
@@ -2562,8 +2495,8 @@ Divides this object by another object, and returns the integer part of the
  and returns not-a-number (NaN) if the divisor and the dividend are
  0, or if the result doesn't fit the given precision.
 
-### DivideToSameExponent
-    public EFloat DivideToSameExponent​(EFloat divisor, ERounding rounding)
+### <a id='DivideToSameExponent(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.ERounding)'>DivideToSameExponent</a>
+
 Divides this object by another binary floating-point number and returns a
  result with the same exponent as this object (the dividend).
 
@@ -2583,8 +2516,8 @@ Divides this object by another binary floating-point number and returns a
  (NaN) if the rounding mode is ERounding.None and the result is not
  exact.
 
-### DivRemNaturalScale
-    public EFloat[] DivRemNaturalScale​(EFloat divisor)
+### <a id='DivRemNaturalScale(com.upokecenter.numbers.EFloat)'>DivRemNaturalScale</a>
+
 Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns a
  two-item array containing the result of the division and the
@@ -2605,8 +2538,8 @@ Divides this arbitrary-precision binary floating-point number by another
  two operands, and the remainder is the result of the Remainder
  method on the two operands.
 
-### DivRemNaturalScale
-    public EFloat[] DivRemNaturalScale​(EFloat divisor, EContext ctx)
+### <a id='DivRemNaturalScale(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>DivRemNaturalScale</a>
+
 Divides this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns a
  two-item array containing the result of the division and the
@@ -2638,8 +2571,8 @@ Divides this arbitrary-precision binary floating-point number by another
  two operands, and the remainder is the result of the Remainder
  method on the two operands.
 
-### equals
-    public boolean equals​(EFloat other)
+### <a id='equals(com.upokecenter.numbers.EFloat)'>equals</a>
+
 Determines whether this object's significand, exponent, and properties are
  equal to those of another object. Not-a-number values are considered
  equal if the rest of their properties are equal.
@@ -2653,8 +2586,8 @@ Determines whether this object's significand, exponent, and properties are
 * <code>true</code> if this object's significand and exponent are equal to
  those of another object; otherwise, <code>false</code>.
 
-### equals
-    public boolean equals​(java.lang.Object obj)
+### <a id='equals(java.lang.Object)'>equals</a>
+
 Determines whether this object's significand, exponent, and properties are
  equal to those of another object and that other object is an
  arbitrary-precision binary floating-point number. Not-a-number
@@ -2675,8 +2608,8 @@ Determines whether this object's significand, exponent, and properties are
  this method, two objects are not equal if they don't have the same
  type or if one is null and the other isn't.
 
-### EqualsInternal
-    public boolean EqualsInternal​(EFloat otherValue)
+### <a id='EqualsInternal(com.upokecenter.numbers.EFloat)'>EqualsInternal</a>
+
 Determines whether this object's significand and exponent are equal to those
  of another object.
 
@@ -2689,8 +2622,8 @@ Determines whether this object's significand and exponent are equal to those
 * <code>true</code> if this object's significand and exponent are equal to
  those of another object; otherwise, <code>false</code>.
 
-### Exp
-    public EFloat Exp​(EContext ctx)
+### <a id='Exp(com.upokecenter.numbers.EContext)'>Exp</a>
+
 Finds e (the base of natural logarithms) raised to the power of this
  object's value.
 
@@ -2712,8 +2645,8 @@ Finds e (the base of natural logarithms) raised to the power of this
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
 
-### ExpM1
-    public EFloat ExpM1​(EContext ctx)
+### <a id='ExpM1(com.upokecenter.numbers.EContext)'>ExpM1</a>
+
 Finds e (the base of natural logarithms) raised to the power of this
  object's value, and subtracts the result by 1 and returns the final
  result, in a way that avoids loss of precision if the true result is
@@ -2735,8 +2668,8 @@ Finds e (the base of natural logarithms) raised to the power of this
  not-a-number (NaN) if the parameter <code>ctx</code> is null or the
  precision is unlimited (the context's Precision property is 0).
 
-### hashCode
-    public int hashCode()
+### <a id='hashCode()'>hashCode</a>
+
 Calculates this object's hash code. No application or process IDs are used
  in the hash code calculation.
 
@@ -2748,8 +2681,8 @@ Calculates this object's hash code. No application or process IDs are used
 
 * A 32-bit signed integer.
 
-### IsInfinity
-    public boolean IsInfinity()
+### <a id='IsInfinity()'>IsInfinity</a>
+
 Gets a value indicating whether this object is positive or negative
  infinity.
 
@@ -2758,8 +2691,8 @@ Gets a value indicating whether this object is positive or negative
 * <code>true</code> if this object is positive or negative infinity;
  otherwise, <code>false</code>.
 
-### IsNaN
-    public boolean IsNaN()
+### <a id='IsNaN()'>IsNaN</a>
+
 Gets a value indicating whether this object is not a number (NaN).
 
 **Returns:**
@@ -2767,8 +2700,8 @@ Gets a value indicating whether this object is not a number (NaN).
 * <code>true</code> if this object is not a number (NaN); otherwise, <code>
  false</code>.
 
-### IsNegativeInfinity
-    public boolean IsNegativeInfinity()
+### <a id='IsNegativeInfinity()'>IsNegativeInfinity</a>
+
 Returns whether this object is negative infinity.
 
 **Returns:**
@@ -2776,8 +2709,8 @@ Returns whether this object is negative infinity.
 * <code>true</code> if this object is negative infinity; otherwise, <code>
  false</code>.
 
-### IsPositiveInfinity
-    public boolean IsPositiveInfinity()
+### <a id='IsPositiveInfinity()'>IsPositiveInfinity</a>
+
 Returns whether this object is positive infinity.
 
 **Returns:**
@@ -2785,8 +2718,8 @@ Returns whether this object is positive infinity.
 * <code>true</code> if this object is positive infinity; otherwise, <code>
  false</code>.
 
-### IsQuietNaN
-    public boolean IsQuietNaN()
+### <a id='IsQuietNaN()'>IsQuietNaN</a>
+
 Gets a value indicating whether this object is a quiet not-a-number value.
 
 **Returns:**
@@ -2794,8 +2727,8 @@ Gets a value indicating whether this object is a quiet not-a-number value.
 * <code>true</code> if this object is a quiet not-a-number value;
  otherwise, <code>false</code>.
 
-### IsSignalingNaN
-    public boolean IsSignalingNaN()
+### <a id='IsSignalingNaN()'>IsSignalingNaN</a>
+
 Gets a value indicating whether this object is a signaling not-a-number
  value.
 
@@ -2804,8 +2737,8 @@ Gets a value indicating whether this object is a signaling not-a-number
 * <code>true</code> if this object is a signaling not-a-number value;
  otherwise, <code>false</code>.
 
-### Log
-    public EFloat Log​(EContext ctx)
+### <a id='Log(com.upokecenter.numbers.EContext)'>Log</a>
+
 Finds the natural logarithm of this object, that is, the power (exponent)
  that e (the base of natural logarithms) must be raised to in order
  to equal this object's value.
@@ -2831,8 +2764,8 @@ Finds the natural logarithm of this object, that is, the power (exponent)
  Precision property is 0). Signals no flags and returns negative
  infinity if this object's value is 0.
 
-### Log10
-    public EFloat Log10​(EContext ctx)
+### <a id='Log10(com.upokecenter.numbers.EContext)'>Log10</a>
+
 Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this object's
  value.
@@ -2855,8 +2788,8 @@ Finds the base-10 logarithm of this object, that is, the power (exponent)
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0).
 
-### Log1P
-    public EFloat Log1P​(EContext ctx)
+### <a id='Log1P(com.upokecenter.numbers.EContext)'>Log1P</a>
+
 Adds 1 to this object's value and finds the natural logarithm of the result,
  in a way that avoids loss of precision when this object's value is
  between 0 and 1.
@@ -2882,8 +2815,8 @@ Adds 1 to this object's value and finds the natural logarithm of the result,
  context's Precision property is 0). Signals no flags and returns
  negative infinity if this object's value is 0.
 
-### LogN
-    public EFloat LogN​(EFloat baseValue, EContext ctx)
+### <a id='LogN(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>LogN</a>
+
 Finds the base-N logarithm of this object, that is, the power (exponent)
  that the number N must be raised to in order to equal this object's
  value.
@@ -2906,8 +2839,8 @@ Finds the base-N logarithm of this object, that is, the power (exponent)
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>baseValue</code> is null.
 
-### MovePointLeft
-    public EFloat MovePointLeft​(int places)
+### <a id='MovePointLeft(int)'>MovePointLeft</a>
+
 Returns a number similar to this number but with the radix point moved to
  the left.
 
@@ -2922,8 +2855,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is decreased by <code>places</code>, but not to
  more than 0.
 
-### MovePointLeft
-    public EFloat MovePointLeft​(int places, EContext ctx)
+### <a id='MovePointLeft(int,com.upokecenter.numbers.EContext)'>MovePointLeft</a>
+
 Returns a number similar to this number but with the radix point moved to
  the left.
 
@@ -2944,8 +2877,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is decreased by <code>places</code>, but not to
  more than 0.
 
-### MovePointLeft
-    public EFloat MovePointLeft​(EInteger bigPlaces)
+### <a id='MovePointLeft(com.upokecenter.numbers.EInteger)'>MovePointLeft</a>
+
 Returns a number similar to this number but with the radix point moved to
  the left.
 
@@ -2960,8 +2893,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is decreased by <code>bigPlaces</code>, but not
  to more than 0.
 
-### MovePointLeft
-    public EFloat MovePointLeft​(EInteger bigPlaces, EContext ctx)
+### <a id='MovePointLeft(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>MovePointLeft</a>
+
 Returns a number similar to this number but with the radix point moved to
  the left.
 
@@ -2982,8 +2915,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is decreased by <code>bigPlaces</code>, but not
  to more than 0.
 
-### MovePointRight
-    public EFloat MovePointRight​(int places)
+### <a id='MovePointRight(int)'>MovePointRight</a>
+
 Returns a number similar to this number but with the radix point moved to
  the right.
 
@@ -2998,8 +2931,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is increased by <code>places</code>, but not to
  more than 0.
 
-### MovePointRight
-    public EFloat MovePointRight​(int places, EContext ctx)
+### <a id='MovePointRight(int,com.upokecenter.numbers.EContext)'>MovePointRight</a>
+
 Returns a number similar to this number but with the radix point moved to
  the right.
 
@@ -3020,8 +2953,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is increased by <code>places</code>, but not to
  more than 0.
 
-### MovePointRight
-    public EFloat MovePointRight​(EInteger bigPlaces)
+### <a id='MovePointRight(com.upokecenter.numbers.EInteger)'>MovePointRight</a>
+
 Returns a number similar to this number but with the radix point moved to
  the right.
 
@@ -3036,8 +2969,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is increased by <code>bigPlaces</code>, but not
  to more than 0.
 
-### MovePointRight
-    public EFloat MovePointRight​(EInteger bigPlaces, EContext ctx)
+### <a id='MovePointRight(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>MovePointRight</a>
+
 Returns a number similar to this number but with the radix point moved to
  the right.
 
@@ -3058,8 +2991,8 @@ Returns a number similar to this number but with the radix point moved to
 * A number whose exponent is increased by <code>bigPlaces</code>, but not
  to more than 0.
 
-### Multiply
-    public EFloat Multiply​(EFloat otherValue)
+### <a id='Multiply(com.upokecenter.numbers.EFloat)'>Multiply</a>
+
 Multiplies this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
  result. The exponent for the result is this arbitrary-precision
@@ -3080,8 +3013,8 @@ Multiplies this arbitrary-precision binary floating-point number by another
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
-### Multiply
-    public EFloat Multiply​(EFloat op, EContext ctx)
+### <a id='Multiply(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Multiply</a>
+
 Multiplies this arbitrary-precision binary floating-point number by another
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -3102,8 +3035,8 @@ Multiplies this arbitrary-precision binary floating-point number by another
  binary floating-point number times another arbitrary-precision
  binary floating-point number.
 
-### MultiplyAndAdd
-    public EFloat MultiplyAndAdd​(EFloat multiplicand, EFloat augend)
+### <a id='MultiplyAndAdd(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>MultiplyAndAdd</a>
+
 Multiplies by one binary floating-point number, and then adds another binary
  floating-point number.
 
@@ -3117,8 +3050,8 @@ Multiplies by one binary floating-point number, and then adds another binary
 
 * An arbitrary-precision binary floating-point number.
 
-### MultiplyAndAdd
-    public EFloat MultiplyAndAdd​(EFloat op, EFloat augend, EContext ctx)
+### <a id='MultiplyAndAdd(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>MultiplyAndAdd</a>
+
 Multiplies by one value, and then adds another value.
 
 **Parameters:**
@@ -3140,8 +3073,8 @@ Multiplies by one value, and then adds another value.
 
 * The result thisValue * multiplicand + augend.
 
-### MultiplyAndSubtract
-    public EFloat MultiplyAndSubtract​(EFloat op, EFloat subtrahend, EContext ctx)
+### <a id='MultiplyAndSubtract(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>MultiplyAndSubtract</a>
+
 Multiplies by one value, and then subtracts another value.
 
 **Parameters:**
@@ -3168,8 +3101,8 @@ Multiplies by one value, and then subtracts another value.
 * <code>java.lang.NullPointerException</code> - The parameter <code>op</code> or <code>subtrahend</code>
  is null.
 
-### Negate
-    public EFloat Negate()
+### <a id='Negate()'>Negate</a>
+
 Gets an object with the same value as this one, but with the sign reversed.
 
 **Returns:**
@@ -3181,8 +3114,8 @@ Gets an object with the same value as this one, but with the sign reversed.
  Specification, except this method does not necessarily return a copy
  of this object.).
 
-### Negate
-    public EFloat Negate​(EContext context)
+### <a id='Negate(com.upokecenter.numbers.EContext)'>Negate</a>
+
 Returns a binary floating-point number with the same value as this object
  but with the sign reversed.
 
@@ -3200,8 +3133,8 @@ Returns a binary floating-point number with the same value as this object
  is positive zero, returns positive zero. Signals FlagInvalid and
  returns quiet NaN if this value is signaling NaN.
 
-### NextMinus
-    public EFloat NextMinus​(EContext ctx)
+### <a id='NextMinus(com.upokecenter.numbers.EContext)'>NextMinus</a>
+
 Finds the largest value that's smaller than the given value.
 
 **Parameters:**
@@ -3220,8 +3153,8 @@ Finds the largest value that's smaller than the given value.
  ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
  exponent range.
 
-### NextPlus
-    public EFloat NextPlus​(EContext ctx)
+### <a id='NextPlus(com.upokecenter.numbers.EContext)'>NextPlus</a>
+
 Finds the smallest value that's greater than the given value.
 
 **Parameters:**
@@ -3239,8 +3172,8 @@ Finds the smallest value that's greater than the given value.
  parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code>
  has an unlimited exponent range.
 
-### NextToward
-    public EFloat NextToward​(EFloat otherValue, EContext ctx)
+### <a id='NextToward(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>NextToward</a>
+
 Finds the next value that is closer to the other object's value than this
  object's value. Returns a copy of this value with the same sign as
  the other value if both values are equal.
@@ -3263,8 +3196,8 @@ Finds the next value that is closer to the other object's value than this
  parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code>
  has an unlimited exponent range.
 
-### Plus
-    public EFloat Plus​(EContext ctx)
+### <a id='Plus(com.upokecenter.numbers.EContext)'>Plus</a>
+
 Rounds this object's value to a given precision, using the given rounding
  mode and range of exponent, and also converts negative zero to
  positive zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is
@@ -3284,8 +3217,8 @@ Rounds this object's value to a given precision, using the given rounding
  range are unlimited, returns the same value as this object (or a
  quiet NaN if this object is a signaling NaN).
 
-### Pow
-    public EFloat Pow​(EFloat exponent)
+### <a id='Pow(com.upokecenter.numbers.EFloat)'>Pow</a>
+
 Raises this object's value to the given exponent, using unlimited precision.
 
 **Parameters:**
@@ -3298,8 +3231,8 @@ Raises this object's value to the given exponent, using unlimited precision.
 * This^exponent. Returns not-a-number (NaN) if the exponent has a
  fractional part.
 
-### Pow
-    public EFloat Pow​(EFloat exponent, EContext ctx)
+### <a id='Pow(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Pow</a>
+
 Raises this object's value to the given exponent.
 
 **Parameters:**
@@ -3322,8 +3255,8 @@ Raises this object's value to the given exponent.
  ctx</code> is null or the precision is unlimited (the context's Precision
  property is 0), and the exponent has a fractional part.
 
-### Pow
-    public EFloat Pow​(int exponentSmall, EContext ctx)
+### <a id='Pow(int,com.upokecenter.numbers.EContext)'>Pow</a>
+
 Raises this object's value to the given exponent.
 
 **Parameters:**
@@ -3341,8 +3274,8 @@ Raises this object's value to the given exponent.
 * This^exponent. Signals the flag FlagInvalid and returns NaN if this
  object and exponent are both 0.
 
-### Pow
-    public EFloat Pow​(int exponentSmall)
+### <a id='Pow(int)'>Pow</a>
+
 Raises this object's value to the given exponent.
 
 **Parameters:**
@@ -3354,8 +3287,8 @@ Raises this object's value to the given exponent.
 * This^exponent. Returns not-a-number (NaN) if this object and
  exponent are both 0.
 
-### Precision
-    public EInteger Precision()
+### <a id='Precision()'>Precision</a>
+
 Finds the number of digits in this number's significand. Returns 1 if this
  value is 0, and 0 if this value is infinity or not-a-number (NaN).
 
@@ -3363,8 +3296,8 @@ Finds the number of digits in this number's significand. Returns 1 if this
 
 * An arbitrary-precision integer.
 
-### IsInteger
-    public boolean IsInteger()
+### <a id='IsInteger()'>IsInteger</a>
+
 Returns whether this object's value is an integer.
 
 **Returns:**
@@ -3372,8 +3305,8 @@ Returns whether this object's value is an integer.
 * <code>true</code> if this object's value is an integer; otherwise, <code>
  false</code>.
 
-### Quantize
-    public EFloat Quantize​(EInteger desiredExponent, EContext ctx)
+### <a id='Quantize(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>Quantize</a>
+    /* After performing arithmetic operations, adjust /* the number to 5 /* */*/*/ digits after the radix point number = number.Quantize(EInteger.FromInt32(-5), /* five digits after the radix point*/ EContext.ForPrecision(25) /* 25-digit precision);*/
 Returns a binary floating-point number with the same value but a new
  exponent. <p>Note that this is not always the same as rounding to a
  given number of binary digit places, since it can fail if the
@@ -3412,8 +3345,8 @@ Returns a binary floating-point number with the same value but a new
  can't fit the given precision, or if the context defines an exponent
  range and the given exponent is outside that range.
 
-### Quantize
-    public EFloat Quantize​(int desiredExponentInt, EContext ctx)
+### <a id='Quantize(int,com.upokecenter.numbers.EContext)'>Quantize</a>
+    /* After performing arithmetic operations, adjust /* the number to 5*/*/ digits after the radix point number = number.Quantize(-5, /* five digits*/ after the radix point EContext.ForPrecision(25) /* 25-digit precision);*/
 Returns a binary floating-point number with the same value but a new
  exponent. <p>Note that this is not always the same as rounding to a
  given number of binary digit places, since it can fail if the
@@ -3452,8 +3385,8 @@ Returns a binary floating-point number with the same value but a new
  can't fit the given precision, or if the context defines an exponent
  range and the given exponent is outside that range.
 
-### Quantize
-    public EFloat Quantize​(EFloat otherValue, EContext ctx)
+### <a id='Quantize(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Quantize</a>
+
 Returns a binary floating-point number with the same value as this object
  but with the same exponent as another binary floating-point number.
  <p>Note that this is not always the same as rounding to a given
@@ -3492,8 +3425,8 @@ Returns a binary floating-point number with the same value as this object
  without rounding, or if the arithmetic context defines an exponent
  range and the given exponent is outside that range.
 
-### Reduce
-    public EFloat Reduce​(EContext ctx)
+### <a id='Reduce(com.upokecenter.numbers.EContext)'>Reduce</a>
+
 Returns an object with the same numerical value as this one but with
  trailing zeros removed from its significand. For example, 1.00
  becomes 1. <p>If this object's value is 0, changes the exponent to
@@ -3513,8 +3446,8 @@ Returns an object with the same numerical value as this one but with
  a very high exponent and the context says to clamp high exponents,
  there may still be some trailing zeros in the significand.
 
-### Remainder
-    public EFloat Remainder​(EFloat divisor, EContext ctx)
+### <a id='Remainder(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Remainder</a>
+
 Returns the remainder that would result when this arbitrary-precision binary
  floating-point number is divided by another arbitrary-precision
  binary floating-point number. The remainder is the number that
@@ -3543,8 +3476,8 @@ Returns the remainder that would result when this arbitrary-precision binary
  and the dividend are 0, or if the result of the division doesn't fit
  the given precision.
 
-### RemainderNoRoundAfterDivide
-    public EFloat RemainderNoRoundAfterDivide​(EFloat divisor, EContext ctx)
+### <a id='RemainderNoRoundAfterDivide(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>RemainderNoRoundAfterDivide</a>
+
 Finds the remainder that results when dividing two arbitrary-precision
  binary floating-point numbers. The remainder is the value that
  remains when the absolute value of this object is divided by the
@@ -3563,8 +3496,8 @@ Finds the remainder that results when dividing two arbitrary-precision
  not-a-number (NaN) if the divisor is 0, or if the result doesn't fit
  the given precision.
 
-### RemainderNaturalScale
-    public EFloat RemainderNaturalScale​(EFloat divisor)
+### <a id='RemainderNaturalScale(com.upokecenter.numbers.EFloat)'>RemainderNaturalScale</a>
+
 Calculates the remainder of a number by the formula <code>"this" - (("this" /
   "divisor") * "divisor")</code>.
 
@@ -3576,8 +3509,8 @@ Calculates the remainder of a number by the formula <code>"this" - (("this" /
 
 * An arbitrary-precision binary floating-point number.
 
-### RemainderNaturalScale
-    public EFloat RemainderNaturalScale​(EFloat divisor, EContext ctx)
+### <a id='RemainderNaturalScale(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>RemainderNaturalScale</a>
+
 Calculates the remainder of a number by the formula "this" - (("this" /
   "divisor") * "divisor").
 
@@ -3600,8 +3533,8 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 
 * An arbitrary-precision binary floating-point number.
 
-### RemainderNear
-    public EFloat RemainderNear​(EFloat divisor, EContext ctx)
+### <a id='RemainderNear(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>RemainderNear</a>
+
 Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object's value by another object's
  value. <ul> <li>If this and the other object divide evenly, the
@@ -3638,8 +3571,8 @@ Finds the distance to the closest multiple of the given divisor, based on
  of integer division (the quotient) or the remainder wouldn't fit the
  given precision.
 
-### RoundToExponent
-    public EFloat RoundToExponent​(EInteger exponent, EContext ctx)
+### <a id='RoundToExponent(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>RoundToExponent</a>
+
 Returns a binary floating-point number with the same value as this object
  but rounded to a new exponent if necessary. The resulting number's
  Exponent property will not necessarily be the given exponent; use
@@ -3671,8 +3604,8 @@ Returns a binary floating-point number with the same value as this object
  given exponent when rounding, and the given exponent is outside of
  the valid range of the arithmetic context.
 
-### RoundToExponent
-    public EFloat RoundToExponent​(int exponentSmall, EContext ctx)
+### <a id='RoundToExponent(int,com.upokecenter.numbers.EContext)'>RoundToExponent</a>
+
 Returns a binary floating-point number with the same value as this object
  but rounded to a new exponent if necessary. The resulting number's
  Exponent property will not necessarily be the given exponent; use
@@ -3704,8 +3637,8 @@ Returns a binary floating-point number with the same value as this object
  given exponent when rounding, and the given exponent is outside of
  the valid range of the arithmetic context.
 
-### RoundToExponentExact
-    public EFloat RoundToExponentExact​(EInteger exponent, EContext ctx)
+### <a id='RoundToExponentExact(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>RoundToExponentExact</a>
+
 Returns a binary floating-point number with the same value as this object
  but rounded to the given exponent, and signals an inexact flag if
  the result would be inexact. The resulting number's Exponent
@@ -3738,8 +3671,8 @@ Returns a binary floating-point number with the same value as this object
  rounding, and the given exponent is outside of the valid range of
  the arithmetic context.
 
-### RoundToExponentExact
-    public EFloat RoundToExponentExact​(EInteger exponent, ERounding rounding)
+### <a id='RoundToExponentExact(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.ERounding)'>RoundToExponentExact</a>
+
 Returns a binary number with the same value as this object but rounded to
  the given exponent. The resulting number's Exponent property will
  not necessarily be the given exponent; use the Quantize method
@@ -3761,8 +3694,8 @@ Returns a binary number with the same value as this object but rounded to
 * A binary number rounded to the closest value representable in the
  given precision.
 
-### RoundToExponentExact
-    public EFloat RoundToExponentExact​(int exponentSmall, EContext ctx)
+### <a id='RoundToExponentExact(int,com.upokecenter.numbers.EContext)'>RoundToExponentExact</a>
+
 Returns a binary floating-point number with the same value as this object
  but rounded to the given exponent represented as a 32-bit signed
  integer, and signals an inexact flag if the result would be inexact.
@@ -3796,8 +3729,8 @@ Returns a binary floating-point number with the same value as this object
  rounding, and the given exponent is outside of the valid range of
  the arithmetic context.
 
-### RoundToIntegerExact
-    public EFloat RoundToIntegerExact​(EContext ctx)
+### <a id='RoundToIntegerExact(com.upokecenter.numbers.EContext)'>RoundToIntegerExact</a>
+
 Returns a binary floating-point number with the same value as this object
  but rounded to an integer, and signals an inexact flag if the result
  would be inexact. The resulting number's Exponent property will not
@@ -3822,8 +3755,8 @@ Returns a binary floating-point number with the same value as this object
  range, the new exponent must be changed to 0 when rounding, and 0 is
  outside of the valid range of the arithmetic context.
 
-### RoundToIntegerNoRoundedFlag
-    public EFloat RoundToIntegerNoRoundedFlag​(EContext ctx)
+### <a id='RoundToIntegerNoRoundedFlag(com.upokecenter.numbers.EContext)'>RoundToIntegerNoRoundedFlag</a>
+
 Returns a binary floating-point number with the same value as this object
  but rounded to an integer, without adding the <code>FlagInexact</code> or
  <code>FlagRounded</code> flags. The resulting number's Exponent property
@@ -3850,10 +3783,11 @@ Returns a binary floating-point number with the same value as this object
  when rounding, and 0 is outside of the valid range of the arithmetic
  context.
 
-### RoundToIntegralExact
-    @Deprecated public EFloat RoundToIntegralExact​(EContext ctx)
-Deprecated.
-Renamed to RoundToIntegerExact.
+### <a id='RoundToIntegralExact(com.upokecenter.numbers.EContext)'>RoundToIntegralExact</a>
+
+Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, and signals an inexact flag if the result
+ would be inexact.
 
 **Parameters:**
 
@@ -3873,10 +3807,11 @@ Renamed to RoundToIntegerExact.
  range, the new exponent must be changed to 0 when rounding, and 0 is
  outside of the valid range of the arithmetic context.
 
-### RoundToIntegralNoRoundedFlag
-    @Deprecated public EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)
-Deprecated.
-Renamed to RoundToIntegerNoRoundedFlag.
+### <a id='RoundToIntegralNoRoundedFlag(com.upokecenter.numbers.EContext)'>RoundToIntegralNoRoundedFlag</a>
+
+Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, without adding the <code>FlagInexact</code> or
+ <code>FlagRounded</code> flags.
 
 **Parameters:**
 
@@ -3898,8 +3833,8 @@ Renamed to RoundToIntegerNoRoundedFlag.
  when rounding, and 0 is outside of the valid range of the arithmetic
  context.
 
-### RoundToPrecision
-    public EFloat RoundToPrecision​(EContext ctx)
+### <a id='RoundToPrecision(com.upokecenter.numbers.EContext)'>RoundToPrecision</a>
+
 Rounds this object's value to a given precision, using the given rounding
  mode and range of exponent.
 
@@ -3917,8 +3852,8 @@ Rounds this object's value to a given precision, using the given rounding
  precision. Returns the same value as this object if <code>ctx</code> is
  null or the precision and exponent range are unlimited.
 
-### PreRound
-    public EFloat PreRound​(EContext ctx)
+### <a id='PreRound(com.upokecenter.numbers.EContext)'>PreRound</a>
+
 Returns a number in which the value of this object is rounded to fit the
  maximum precision allowed if it has more significant digits than the
  maximum precision. The maximum precision allowed is given in an
@@ -3946,8 +3881,8 @@ Returns a number in which the value of this object is rounded to fit the
  signaling NaN), or if the number's value has no more significant
  digits than the maximum precision given in <code>ctx</code>.
 
-### ScaleByPowerOfTwo
-    public EFloat ScaleByPowerOfTwo​(int places)
+### <a id='ScaleByPowerOfTwo(int)'>ScaleByPowerOfTwo</a>
+
 Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
@@ -3958,8 +3893,8 @@ Returns a number similar to this number but with the scale adjusted.
 
 * An arbitrary-precision binary floating-point number.
 
-### ScaleByPowerOfTwo
-    public EFloat ScaleByPowerOfTwo​(int places, EContext ctx)
+### <a id='ScaleByPowerOfTwo(int,com.upokecenter.numbers.EContext)'>ScaleByPowerOfTwo</a>
+
 Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
@@ -3975,8 +3910,8 @@ Returns a number similar to this number but with the scale adjusted.
 
 * An arbitrary-precision binary floating-point number.
 
-### ScaleByPowerOfTwo
-    public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces)
+### <a id='ScaleByPowerOfTwo(com.upokecenter.numbers.EInteger)'>ScaleByPowerOfTwo</a>
+
 Returns a number similar to this number but with the scale adjusted.
 
 **Parameters:**
@@ -3987,8 +3922,8 @@ Returns a number similar to this number but with the scale adjusted.
 
 * A number whose exponent is increased by <code>bigPlaces</code>.
 
-### ScaleByPowerOfTwo
-    public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces, EContext ctx)
+### <a id='ScaleByPowerOfTwo(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EContext)'>ScaleByPowerOfTwo</a>
+
 Returns a number similar to this number but with its scale adjusted.
 
 **Parameters:**
@@ -4008,8 +3943,8 @@ Returns a number similar to this number but with its scale adjusted.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>bigPlaces</code> is null.
 
-### Sqrt
-    public EFloat Sqrt​(EContext ctx)
+### <a id='Sqrt(com.upokecenter.numbers.EContext)'>Sqrt</a>
+
 Finds the square root of this object's value.
 
 **Parameters:**
@@ -4030,10 +3965,9 @@ Finds the square root of this object's value.
  returns not-a-number (NaN) if the parameter <code>ctx</code> is null or
  the precision is unlimited (the context's Precision property is 0).
 
-### SquareRoot
-    @Deprecated public EFloat SquareRoot​(EContext ctx)
-Deprecated.
-Renamed to Sqrt.
+### <a id='SquareRoot(com.upokecenter.numbers.EContext)'>SquareRoot</a>
+
+Finds the square root of this object's value.
 
 **Parameters:**
 
@@ -4053,8 +3987,8 @@ Renamed to Sqrt.
  returns not-a-number (NaN) if the parameter <code>ctx</code> is null or
  the precision is unlimited (the context's Precision property is 0).
 
-### Subtract
-    public EFloat Subtract​(EFloat otherValue)
+### <a id='Subtract(com.upokecenter.numbers.EFloat)'>Subtract</a>
+
 Subtracts an arbitrary-precision binary floating-point number from this
  arbitrary-precision binary floating-point number and returns the
  result. The exponent for the result is the lower of this
@@ -4073,8 +4007,8 @@ Subtracts an arbitrary-precision binary floating-point number from this
  arbitrary-precision binary floating-point number is not-a-number
  (NaN), returns NaN.
 
-### Subtract
-    public EFloat Subtract​(EFloat otherValue, EContext ctx)
+### <a id='Subtract(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Subtract</a>
+
 Subtracts an arbitrary-precision binary floating-point number from this
  arbitrary-precision binary floating-point number and returns the
  result.
@@ -4101,8 +4035,8 @@ Subtracts an arbitrary-precision binary floating-point number from this
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.
 
-### ToDouble
-    public double ToDouble()
+### <a id='ToDouble()'>ToDouble</a>
+
 Converts this value to a 64-bit floating-point number encoded in the IEEE
  754 binary64 format.
 
@@ -4113,8 +4047,8 @@ Converts this value to a 64-bit floating-point number encoded in the IEEE
  infinity or negative infinity if this value exceeds the range of a
  64-bit floating point number.
 
-### FromSingleBits
-    public static EFloat FromSingleBits​(int value)
+### <a id='FromSingleBits(int)'>FromSingleBits</a>
+
 Creates a binary floating-point number from a 32-bit floating-point number
  encoded in the IEEE 754 binary32 format. This method computes the
  exact value of the floating point number, not an approximation, as
@@ -4131,8 +4065,8 @@ Creates a binary floating-point number from a 32-bit floating-point number
 * A binary floating-point number with the same floating-point value as
  <code>value</code>.
 
-### FromHalfBits
-    public static EFloat FromHalfBits​(short value)
+### <a id='FromHalfBits(short)'>FromHalfBits</a>
+
 Creates a binary floating-point number from a binary floating-point number
  encoded in the IEEE 754 binary16 format (also known as a
   "half-precision" floating-point number). This method computes the
@@ -4150,8 +4084,8 @@ Creates a binary floating-point number from a binary floating-point number
 * A binary floating-point number with the same floating-point value as
  <code>value</code>.
 
-### ToSingleBits
-    public int ToSingleBits()
+### <a id='ToSingleBits()'>ToSingleBits</a>
+
 Converts this value to its closest equivalent as 32-bit floating-point
  number, expressed as an integer in the IEEE 754 binary32 format. The
  half-even rounding mode is used. <p>If this value is a NaN, sets the
@@ -4169,8 +4103,8 @@ Converts this value to its closest equivalent as 32-bit floating-point
  value can be positive infinity or negative infinity if this value
  exceeds the range of a 32-bit floating point number.
 
-### ToHalfBits
-    public short ToHalfBits()
+### <a id='ToHalfBits()'>ToHalfBits</a>
+
 Converts this value to its closest equivalent as a binary floating-point
  number, expressed as an integer in the IEEE 754 binary16 format
   (also known as a "half-precision" floating-point number). The
@@ -4189,8 +4123,8 @@ Converts this value to its closest equivalent as a binary floating-point
  positive infinity or negative infinity if this value exceeds the
  range of a floating-point number in the binary16 format.
 
-### ToDoubleBits
-    public long ToDoubleBits()
+### <a id='ToDoubleBits()'>ToDoubleBits</a>
+
 Converts this value to its closest equivalent as a 64-bit floating-point
  number, expressed as an integer in the IEEE 754 binary64 format. The
  half-even rounding mode is used. <p>If this value is a NaN, sets the
@@ -4208,16 +4142,16 @@ Converts this value to its closest equivalent as a 64-bit floating-point
  value can be positive infinity or negative infinity if this value
  exceeds the range of a 64-bit floating point number.
 
-### ToEDecimal
-    public EDecimal ToEDecimal()
+### <a id='ToEDecimal()'>ToEDecimal</a>
+
 Converts this value to an arbitrary-precision decimal number.
 
 **Returns:**
 
 * This number, converted to an arbitrary-precision decimal number.
 
-### ToEInteger
-    public EInteger ToEInteger()
+### <a id='ToEInteger()'>ToEInteger</a>
+
 Converts this value to an arbitrary-precision integer. Any fractional part
  of this value will be discarded when converting to an
  arbitrary-precision integer. Note that depending on the value,
@@ -4235,24 +4169,8 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 * <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
  (NaN).
 
-### ToEIntegerExact
-    @Deprecated public EInteger ToEIntegerExact()
-Deprecated.
-Renamed to ToEIntegerIfExact.
+### <a id='ToEIntegerExact()'>ToEIntegerExact</a>
 
-**Returns:**
-
-* An arbitrary-precision integer.
-
-**Throws:**
-
-* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
- (NaN).
-
-* <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
-
-### ToEIntegerIfExact
-    public EInteger ToEIntegerIfExact()
 Converts this value to an arbitrary-precision integer, checking whether the
  value contains a fractional part. Note that depending on the value,
  especially the exponent, generating the arbitrary-precision integer
@@ -4272,8 +4190,29 @@ Converts this value to an arbitrary-precision integer, checking whether the
 
 * <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
 
-### ToEngineeringString
-    public java.lang.String ToEngineeringString()
+### <a id='ToEIntegerIfExact()'>ToEIntegerIfExact</a>
+
+Converts this value to an arbitrary-precision integer, checking whether the
+ value contains a fractional part. Note that depending on the value,
+ especially the exponent, generating the arbitrary-precision integer
+ may require a huge amount of memory. Use the ToSizedEIntegerIfExact
+ method to convert a number to an EInteger only if the integer fits
+ in a bounded bit range; that method will throw an exception on
+ overflow.
+
+**Returns:**
+
+* An arbitrary-precision integer.
+
+**Throws:**
+
+* <code>java.lang.ArithmeticException</code> - This object's value is infinity or not-a-number
+ (NaN).
+
+* <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
+
+### <a id='ToEngineeringString()'>ToEngineeringString</a>
+
 Converts this value to an arbitrary-precision decimal number, then returns
  the value of that decimal's ToEngineeringString method.
 
@@ -4281,25 +4220,24 @@ Converts this value to an arbitrary-precision decimal number, then returns
 
 * A text string.
 
-### ToExtendedDecimal
-    @Deprecated public EDecimal ToExtendedDecimal()
-Deprecated.
-Renamed to ToEDecimal.
+### <a id='ToExtendedDecimal()'>ToExtendedDecimal</a>
+
+Converts this value to an arbitrary-precision decimal number.
 
 **Returns:**
 
 * An arbitrary-precision decimal number.
 
-### ToPlainString
-    public java.lang.String ToPlainString()
+### <a id='ToPlainString()'>ToPlainString</a>
+
 Converts this value to a string, but without exponential notation.
 
 **Returns:**
 
 * A text string.
 
-### ToShortestString
-    public java.lang.String ToShortestString​(EContext ctx)
+### <a id='ToShortestString(com.upokecenter.numbers.EContext)'>ToShortestString</a>
+    string str = efloat.ToShortestString(EContext.Binary64);
 Returns a string representation of this number's value after rounding that
  value to the given precision (using the given arithmetic context,
  such as <code>EContext.Binary64</code>). If the number after rounding is
@@ -4330,8 +4268,8 @@ Returns a string representation of this number's value after rounding that
  digits after the decimal point, or if the number's exponent is
  greater than 0 and its value is 10, 000, 000 or greater.
 
-### ToSingle
-    public float ToSingle()
+### <a id='ToSingle()'>ToSingle</a>
+
 Converts this value to its closest equivalent as a 32-bit floating-point
  number. The half-even rounding mode is used. <p>If this value is a
  NaN, sets the high bit of the 32-bit floating point number's
@@ -4349,8 +4287,8 @@ Converts this value to its closest equivalent as a 32-bit floating-point
  return value can be positive infinity or negative infinity if this
  value exceeds the range of a 32-bit floating point number.
 
-### toString
-    public java.lang.String toString()
+### <a id='toString()'>toString</a>
+
 Converts this number's value to a text string.
 
 **Overrides:**
@@ -4368,8 +4306,8 @@ Converts this number's value to a text string.
  or if the number's first nonzero decimal digit is more than five
  digits after the decimal point.
 
-### Ulp
-    public EFloat Ulp()
+### <a id='Ulp()'>Ulp</a>
+
 Returns the unit in the last place. The significand will be 1 and the
  exponent will be this number's exponent. Returns 1 with an exponent
  of 0 if this number is infinity or not-a-number (NaN).
@@ -4378,8 +4316,8 @@ Returns the unit in the last place. The significand will be 1 and the
 
 * An arbitrary-precision binary floating-point number.
 
-### ToSizedEInteger
-    public EInteger ToSizedEInteger​(int maxBitLength)
+### <a id='ToSizedEInteger(int)'>ToSizedEInteger</a>
+
 Converts this value to an arbitrary-precision integer by discarding its
  fractional part and checking whether the resulting integer overflows
  the given signed bit count.
@@ -4401,8 +4339,8 @@ Converts this value to an arbitrary-precision integer by discarding its
  discarding its fractional part, is less than -(2^maxBitLength) or
  greater than (2^maxBitLength) - 1.
 
-### ToSizedEIntegerIfExact
-    public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
+### <a id='ToSizedEIntegerIfExact(int)'>ToSizedEIntegerIfExact</a>
+
 Converts this value to an arbitrary-precision integer, only if this number's
  value is an exact integer and that integer does not overflow the
  given signed bit count.
@@ -4426,16 +4364,16 @@ Converts this value to an arbitrary-precision integer, only if this number's
 
 * <code>java.lang.ArithmeticException</code> - This object's value is not an exact integer.
 
-### Increment
-    public EFloat Increment()
+### <a id='Increment()'>Increment</a>
+
 Returns one added to this arbitrary-precision binary floating-point number.
 
 **Returns:**
 
 * The given arbitrary-precision binary floating-point number plus one.
 
-### Decrement
-    public EFloat Decrement()
+### <a id='Decrement()'>Decrement</a>
+
 Returns one subtracted from this arbitrary-precision binary floating-point
  number.
 
@@ -4444,8 +4382,8 @@ Returns one subtracted from this arbitrary-precision binary floating-point
 * The given arbitrary-precision binary floating-point number minus
  one.
 
-### ToByteChecked
-    public byte ToByteChecked()
+### <a id='ToByteChecked()'>ToByteChecked</a>
+
 Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after converting it to an integer by discarding
  its fractional part.
@@ -4460,8 +4398,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
  number, once converted to an integer by discarding its fractional
  part, is less than 0 or greater than 255.
 
-### ToByteUnchecked
-    public byte ToByteUnchecked()
+### <a id='ToByteUnchecked()'>ToByteUnchecked</a>
+
 Converts this number's value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two's-complement
  form as a byte (from 0 to 255).
@@ -4471,8 +4409,8 @@ Converts this number's value to an integer by discarding its fractional
 * This number, converted to a byte (from 0 to 255). Returns 0 if this
  value is infinity or not-a-number.
 
-### ToByteIfExact
-    public byte ToByteIfExact()
+### <a id='ToByteIfExact()'>ToByteIfExact</a>
+
 Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) without rounding to a different numerical
  value.
@@ -4486,8 +4424,8 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than 0 or greater than 255.
 
-### FromByte
-    public static EFloat FromByte​(byte inputByte)
+### <a id='FromByte(byte)'>FromByte</a>
+
 Converts a byte (from 0 to 255) to an arbitrary-precision binary
  floating-point number.
 
@@ -4500,8 +4438,8 @@ Converts a byte (from 0 to 255) to an arbitrary-precision binary
 * This number's value as an arbitrary-precision binary floating-point
  number.
 
-### ToInt16Checked
-    public short ToInt16Checked()
+### <a id='ToInt16Checked()'>ToInt16Checked</a>
+
 Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after converting it to an integer by
  discarding its fractional part.
@@ -4516,8 +4454,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
  number, once converted to an integer by discarding its fractional
  part, is less than -32768 or greater than 32767.
 
-### ToInt16Unchecked
-    public short ToInt16Unchecked()
+### <a id='ToInt16Unchecked()'>ToInt16Unchecked</a>
+
 Converts this number's value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two's-complement
  form as a 16-bit signed integer.
@@ -4527,8 +4465,8 @@ Converts this number's value to an integer by discarding its fractional
 * This number, converted to a 16-bit signed integer. Returns 0 if this
  value is infinity or not-a-number.
 
-### ToInt16IfExact
-    public short ToInt16IfExact()
+### <a id='ToInt16IfExact()'>ToInt16IfExact</a>
+
 Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer without rounding to a different numerical
  value.
@@ -4542,8 +4480,8 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
 * <code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
  an exact integer, or is less than -32768 or greater than 32767.
 
-### FromInt16
-    public static EFloat FromInt16​(short inputInt16)
+### <a id='FromInt16(short)'>FromInt16</a>
+
 Converts a 16-bit signed integer to an arbitrary-precision binary
  floating-point number.
 
@@ -4556,8 +4494,8 @@ Converts a 16-bit signed integer to an arbitrary-precision binary
 * This number's value as an arbitrary-precision binary floating-point
  number.
 
-### ToInt32Checked
-    public int ToInt32Checked()
+### <a id='ToInt32Checked()'>ToInt32Checked</a>
+
 Converts this number's value to a 32-bit signed integer if it can fit in a
  32-bit signed integer after converting it to an integer by
  discarding its fractional part.
@@ -4572,8 +4510,8 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
  number, once converted to an integer by discarding its fractional
  part, is less than -2147483648 or greater than 2147483647.
 
-### ToInt32Unchecked
-    public int ToInt32Unchecked()
+### <a id='ToInt32Unchecked()'>ToInt32Unchecked</a>
+
 Converts this number's value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two's-complement
  form as a 32-bit signed integer.
@@ -4583,8 +4521,8 @@ Converts this number's value to an integer by discarding its fractional
 * This number, converted to a 32-bit signed integer. Returns 0 if this
  value is infinity or not-a-number.
 
-### ToInt32IfExact
-    public int ToInt32IfExact()
+### <a id='ToInt32IfExact()'>ToInt32IfExact</a>
+
 Converts this number's value to a 32-bit signed integer if it can fit in a
  32-bit signed integer without rounding to a different numerical
  value.
@@ -4599,8 +4537,8 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
  an exact integer, or is less than -2147483648 or greater than
  2147483647.
 
-### FromBoolean
-    public static EFloat FromBoolean​(boolean boolValue)
+### <a id='FromBoolean(boolean)'>FromBoolean</a>
+
 Converts a boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
 
@@ -4612,8 +4550,8 @@ Converts a boolean value (either true or false) to an arbitrary-precision
 
 * The number 1 if <code>boolValue</code> is true, otherwise, 0.
 
-### FromInt32
-    public static EFloat FromInt32​(int inputInt32)
+### <a id='FromInt32(int)'>FromInt32</a>
+
 Converts a 32-bit signed integer to an arbitrary-precision binary
  floating-point number.
 
@@ -4626,8 +4564,8 @@ Converts a 32-bit signed integer to an arbitrary-precision binary
 * This number's value as an arbitrary-precision binary floating-point
  number.
 
-### ToInt64Checked
-    public long ToInt64Checked()
+### <a id='ToInt64Checked()'>ToInt64Checked</a>
+
 Converts this number's value to a 64-bit signed integer if it can fit in a
  64-bit signed integer after converting it to an integer by
  discarding its fractional part.
@@ -4643,8 +4581,8 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
  part, is less than -9223372036854775808 or greater than
  9223372036854775807.
 
-### ToInt64Unchecked
-    public long ToInt64Unchecked()
+### <a id='ToInt64Unchecked()'>ToInt64Unchecked</a>
+
 Converts this number's value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two's-complement
  form as a 64-bit signed integer.
@@ -4654,8 +4592,8 @@ Converts this number's value to an integer by discarding its fractional
 * This number, converted to a 64-bit signed integer. Returns 0 if this
  value is infinity or not-a-number.
 
-### ToInt64IfExact
-    public long ToInt64IfExact()
+### <a id='ToInt64IfExact()'>ToInt64IfExact</a>
+
 Converts this number's value to a 64-bit signed integer if it can fit in a
  64-bit signed integer without rounding to a different numerical
  value.
@@ -4670,8 +4608,8 @@ Converts this number's value to a 64-bit signed integer if it can fit in a
  an exact integer, or is less than -9223372036854775808 or greater
  than 9223372036854775807.
 
-### FromInt64AsUnsigned
-    public static EFloat FromInt64AsUnsigned​(long longerValue)
+### <a id='FromInt64AsUnsigned(long)'>FromInt64AsUnsigned</a>
+
 Converts an unsigned integer expressed as a 64-bit signed integer to an
  arbitrary-precision binary number.
 
@@ -4688,8 +4626,8 @@ Converts an unsigned integer expressed as a 64-bit signed integer to an
  it. If <code>longerValue</code> is less than 0, the return value will
  store 2^64 plus this value instead.
 
-### FromInt64
-    public static EFloat FromInt64​(long inputInt64)
+### <a id='FromInt64(long)'>FromInt64</a>
+
 Converts a 64-bit signed integer to an arbitrary-precision binary
  floating-point number.
 
