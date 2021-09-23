@@ -5018,7 +5018,7 @@ rather than properties
             // can fit exactly in a double)
             long am = Math.abs(m);
             int expshift = 0;
-            while (am < (1 << 52)) {
+            while (am < (1L << 52)) {
               am <<= 1;
               --expshift;
             }
