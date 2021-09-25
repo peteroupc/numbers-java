@@ -6159,7 +6159,7 @@ import com.upokecenter.numbers.*;
       if (str == null) {
         throw new NullPointerException("str");
       }
-      //System.out.println("str "+str);
+      // System.out.println("EFloat size="+str.length());
       String leadingZeros = TestCommon.Repeat('0', 800);
       int[] counts = {
         0, 1, 2, 50, 200, 600, 800,
@@ -6168,7 +6168,6 @@ import com.upokecenter.numbers.*;
       if (ed == null) {
         Assert.fail();
       }
-
       EFloat ef = ed.ToEFloat(ec);
       for (int i = 0; i < counts.length; ++i) {
         // Parse a String with leading zeros (to test whether
@@ -6211,9 +6210,6 @@ import com.upokecenter.numbers.*;
         ed.compareTo(edef2) != 0) {
         System.out.println("# ERounding.None fails to detect rounding was" +
           "\u0020necessary");
-        if (str == null) {
-          throw new NullPointerException("str");
-        }
         System.out.println("# str = " + str.substring(0,Math.min(str.length(),
               200)) + (str.length() > 200 ? "..." : "") + "\n# ec = " +
           ECString(ec));
@@ -6222,9 +6218,6 @@ import com.upokecenter.numbers.*;
         ed.compareTo(edef2) == 0) {
         System.out.println("# ERounding.None fails to detect rounding was" +
           "\u0020unnecessary");
-        if (str == null) {
-          throw new NullPointerException("str");
-        }
         System.out.println("# str = " + str.substring(0,Math.min(str.length(),
               200)) + (str.length() > 200 ? "..." : "") + "\n# ec = " +
           ECString(ec));
@@ -6236,12 +6229,6 @@ import com.upokecenter.numbers.*;
         return;
       }
       if (ef.compareTo(ef2) != 0) {
-        if (ec == null) {
-          throw new NullPointerException("ec");
-        }
-        if (str == null) {
-          throw new NullPointerException("str");
-        }
         String bstr = "";
         if (ec.getHasMaxPrecision()) {
           EContext ecf = ec.WithBlankFlags();

@@ -5865,11 +5865,12 @@ EFloat.Binary32SignifAreaBits;
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. The precision is in bits, and an
      * example of this parameter is {@code EContext.Binary64}. Can be null.
-     * @return An arbitrary-precision float floating-point number.
+     * @return An arbitrary-precision floating-point number.
      */
     public EFloat ToEFloat(EContext ec) {
       EInteger bigintExp = this.getExponent();
       EInteger bigUnsignedMantissa = this.getUnsignedMantissa();
+      System.out.println("ToEFloat " + this.getExponent() + "," + this.getMantissa());
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
             this.getUnsignedMantissa(),
@@ -5916,14 +5917,18 @@ EFloat.Binary32SignifAreaBits;
               eTiny);
           return ret.RoundToPrecision(ec);
         } else if (adjexpLowerBound.compareTo(309) > 0) {
+          // System.out.println("Overflow A");
           return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
         }
         EInteger digitCountLower = bounds[0];
+        // System.out.println("DCL " + digitCountLower + "," + bigintExp);
         if (bigintExp.signum() >= 0 &&
           digitCountLower.Subtract(2).compareTo(309) > 0) {
+          // System.out.println("Overflow B");
           return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
-        } else if (digitCountLower.Add(bigintExp).Subtract(2).compareTo(309) >
-          0) {
+        } else if (ec.getAdjustExponent() &&
+              digitCountLower.Add(bigintExp).Subtract(2).compareTo(309) > 0) {
+          // System.out.println("Overflow C");
           return EFloat.GetMathValue().SignalOverflow(ec, this.isNegative());
         }
       }
@@ -5937,6 +5942,7 @@ EFloat.Binary32SignifAreaBits;
           }
         } else if (ec == EContext.Binary64) {
           if (bigintExp.compareTo(309) > 0) {
+            // System.out.println("Overflow D");
             return this.isNegative() ? EFloat.NegativeInfinity :
               EFloat.PositiveInfinity;
           }
