@@ -6159,7 +6159,7 @@ import com.upokecenter.numbers.*;
       if (str == null) {
         throw new NullPointerException("str");
       }
-      // System.out.println("EFloat size="+str.length());
+      //System.out.println("str "+str);
       String leadingZeros = TestCommon.Repeat('0', 800);
       int[] counts = {
         0, 1, 2, 50, 200, 600, 800,
@@ -6168,6 +6168,7 @@ import com.upokecenter.numbers.*;
       if (ed == null) {
         Assert.fail();
       }
+
       EFloat ef = ed.ToEFloat(ec);
       for (int i = 0; i < counts.length; ++i) {
         // Parse a String with leading zeros (to test whether
