@@ -5870,7 +5870,7 @@ EFloat.Binary32SignifAreaBits;
     public EFloat ToEFloat(EContext ec) {
       EInteger bigintExp = this.getExponent();
       EInteger bigUnsignedMantissa = this.getUnsignedMantissa();
-      System.out.println("ToEFloat " + this.getExponent() + "," + this.getMantissa());
+      // System.out.println("ToEFloat " + this.getExponent() + "," + this.getMantissa());
       if (this.IsNaN()) {
         return EFloat.CreateNaN(
             this.getUnsignedMantissa(),
