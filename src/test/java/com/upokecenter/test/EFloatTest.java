@@ -1096,8 +1096,8 @@ import com.upokecenter.numbers.*;
           EContext.Binary16);
       Assert.assertEquals(line + " ef.getToHalfBits()",f16,ef.ToHalfBits());
       EDecimal ed = EDecimal.FromString(str);
-      Assert.assertEquals(str, ed.ToSingleBits(), f32);
-      Assert.assertEquals(str, ed.ToDoubleBits(), f64);
+      Assert.assertEquals(str + " ef.getToSingleBits()",ed.ToSingleBits(),f32);
+      Assert.assertEquals(str + " ef.getToDoubleBits()",ed.ToDoubleBits(),f64);
       Assert.assertEquals(str + " Decimal.ToHalfBits",ed.ToHalfBits(),f16);
     }
 
@@ -1789,6 +1789,49 @@ import com.upokecenter.numbers.*;
       ef2 = EFloat.Create(-1, -1075);
       if (!(EFloat.FromDouble(ef2.ToDouble()).isZero()))Assert.fail();
     }
+
+@Test
+public void TestHalfBitsFiveSixZerosAfterPoint() {
+String str;
+EDecimal ed;
+EFloat ef;
+for (int i = 1; i < 16; ++i) {
+  str = TestCommon.IntToString(i) + "e-6";
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+  str = TestCommon.IntToString(i) + ".000e-6";
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+  str = TestCommon.IntToString(i) + "e-5";
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+  str = TestCommon.IntToString(i) + ".000e-5";
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+}
+for (int i = 1; i < 100; ++i) {
+  str = "0.00000" + TestCommon.IntToString(i);
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+  str += "000";
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+  str = "0.000000" + TestCommon.IntToString(i);
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+  str += "000";
+  ed = EDecimal.FromString(str);
+  ef = EFloat.FromString(str, EContext.Binary16);
+  Assert.assertEquals(ef.ToHalfBits(), ed.ToHalfBits());
+}
+}
 
     @Test
     public void TestPI() {
