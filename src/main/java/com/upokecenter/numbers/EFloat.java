@@ -1857,7 +1857,7 @@ Binary16SignifAreaBits;
      * floating-point number) is nonzero. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor and the dividend are 0; or, either
      * {@code ctx} is null or {@code ctx} 's precision is 0, and the result
-     * would have a nonterminating decimal expansion (examples include 1
+     * would have a nonterminating binary expansion (examples include 1
      * divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding
      * mode is ERounding.None and the result is not exact.
      */
