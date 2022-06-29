@@ -3053,14 +3053,14 @@ https://creativecommons.org/publicdomain/zero/1.0/
         // System.out.println("eia->" + eia.ToRadixString(16));
         // System.out.println("eib->" + eib.ToRadixString(16));
         if (eia.signum() < 0 || eib.signum() < 0) {
-          StringBuilder sb = new StringBuilder();
+          /*StringBuilder sb = new StringBuilder();
           sb.append("eia=" + ret[0] + "\n");
           sb.append("eib=" + ret[1] + "\n");
           for (int k = 0; k < 6; ++k) {
             sb.append("hgcd_" + k + "=" + hgcd[k].ToRadixString(16));
             sb.append("\n");
-          }
-          throw new IllegalStateException("Internal error\n" + sb);
+          }*/
+          throw new IllegalStateException("Internal error\n");
         }
         if (ret[0].equals(eia) && ret[1].equals(eib)) {
           // Didn't change
