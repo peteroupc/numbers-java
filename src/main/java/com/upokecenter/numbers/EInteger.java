@@ -1490,7 +1490,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
     /**
      * <p>Multiplies this arbitrary-precision integer by a 32-bit signed integer
-     * and returns the result.</p><p> </p><pre>EInteger result =
+     * and returns the result.</p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200);</pre> .
      * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
      * integer.</p>

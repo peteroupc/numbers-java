@@ -1351,7 +1351,7 @@ Binary16SignifAreaBits;
      * <p>Multiplies this arbitrary-precision binary floating-point number by a
      * 32-bit signed integer and returns the result. The exponent for the result is
      * this arbitrary-precision binary floating-point number's exponent plus the
-     * other 32-bit signed integer's exponent.</p><p> </p><pre>EInteger result =
+     * other 32-bit signed integer's exponent.</p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200);</pre> .
      * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
      * integer.</p>
@@ -1424,7 +1424,7 @@ Binary16SignifAreaBits;
      * <p>Multiplies this arbitrary-precision binary floating-point number by a
      * 64-bit signed integer and returns the result. The exponent for the result is
      * this arbitrary-precision binary floating-point number's exponent plus the
-     * other 64-bit signed integer's exponent.</p><p> </p><pre>EInteger result =
+     * other 64-bit signed integer's exponent.</p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200L);</pre> .
      * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
      * integer.</p>
@@ -4404,10 +4404,10 @@ Binary16SignifBits;
      * number's value (in terms of decimal digits starting with the first nonzero
      * digit and ending with the last nonzero digit) that results in the rounded
      * number after the decimal form is converted to binary floating-point format
-     * (using the given arithmetic context).</p><p> </p><p>The following example
-     * converts an EFloat number to its shortest round-tripping decimal form using
-     * the same precision as the {@code double} type in Java and.NET:</p> <pre>
-     * string str = efloat.ToShortestString(EContext.Binary64); </pre>
+     * (using the given arithmetic context).</p><p>The following example converts
+     * an EFloat number to its shortest round-tripping decimal form using the same
+     * precision as the {@code double} type in Java and.NET:</p> <pre> string str =
+     * efloat.ToShortestString(EContext.Binary64); </pre>
      * @param ctx <p>An arithmetic context to control precision (in bits),
      * rounding, and exponent range of the rounded number. If {@code HasFlags} of
      * the context is true, will also store the flags resulting from the operation
