@@ -3408,7 +3408,7 @@ maxDigitEstimate : retval +
      * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
      * the least significant bit, 1 is the next least significant bit, and so on.
      * @return {@code true} if the given bit is set in the two' s-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal}) of this object's value;
+     * (see {@code com.upokecenter.numbers.EDecimal}) of this object's value;
      * otherwise, {@code false}.
      * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
@@ -3456,7 +3456,7 @@ maxDigitEstimate : retval +
      * @param index The index, starting at 0, of the bit to test, where 0 is the
      * least significant bit, 1 is the next least significant bit, and so on.
      * @return {@code true} if the given bit is set in the two' s-complement form
-     * (see {@link com.upokecenter.numbers.EDecimal}) of this object's value;
+     * (see {@code com.upokecenter.numbers.EDecimal}) of this object's value;
      * otherwise, {@code false}.
      */
     public boolean GetSignedBit(int index) {
@@ -4564,7 +4564,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * complement representation is set if the corresponding bit of this integer is
      * clear, and vice versa. Returns -1 if this integer is 0. If this integer is
      * positive, the return value is negative, and vice versa. This method uses the
-     * two's complement form of negative integers (see {@link
+     * two's complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 = -21). In binary, NOT...11100110 =
      * 11001 (or in decimal, NOT -26 = 25).
      */
@@ -4734,7 +4734,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bits of this integer and the other integer (in their
      * two's-complement representation) are both set. For example, in binary, 10110
      * AND 01100 = 00100 (or in decimal, 22 AND 12 = 4). This method uses the two's
-     * complement form of negative integers (see {@link
+     * complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, ...11100111 AND
      * 01100 = 00100 (or in decimal, -25 AND 12 = 4).
      * @throws NullPointerException The parameter {@code other} is null.
@@ -4803,7 +4803,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of this integer is set, the other integer's corresponding
      * bit is set, or both. For example, in binary, 10110 OR 11010 = 11110 (or in
      * decimal, 22 OR 26 = 30). This method uses the two's complement form of
-     * negative integers (see {@link com.upokecenter.numbers.EDecimal}). For
+     * negative integers (see {@code com.upokecenter.numbers.EDecimal}). For
      * example, in binary, ...11101110 OR 01011 =...11101111 (or in decimal, -18
      * OR 11 = -17).
      * @throws NullPointerException The parameter {@code second} is null.
@@ -4881,7 +4881,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of this integer is set, and the other integer's
      * corresponding bit is not set. For example, in binary, 10110 AND NOT 11010 =
      * 00100 (or in decimal, 22 AND NOT 26 = 4). This method uses the two's
-     * complement form of negative integers (see {@link
+     * complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, ...11101110 AND
      * NOT 01011 = 00100 (or in decimal, -18 OR 11 = 4).
      * @throws NullPointerException The parameter {@code second} is null.
@@ -4904,7 +4904,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of this integer is set, the other integer's corresponding
      * bit is not set, or both. For example, in binary, 10110 OR NOT 11010 = 00100
      * (or in decimal, 22 OR NOT 26 = 23). This method uses the two's complement
-     * form of negative integers (see {@link com.upokecenter.numbers.EDecimal}).
+     * form of negative integers (see {@code com.upokecenter.numbers.EDecimal}).
      * For example, in binary, ...11101110 OR NOT 01011 =...11111110 (or in
      * decimal, -18 OR 11 = -2).
      * @throws NullPointerException The parameter {@code second} is null.
@@ -4927,7 +4927,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of this integer is set, the other integer's corresponding
      * bit is not set, or both. For example, in binary, 10110 OR NOT 11010 = 00100
      * (or in decimal, 22 OR NOT 26 = 23). This method uses the two's complement
-     * form of negative integers (see {@link com.upokecenter.numbers.EDecimal}).
+     * form of negative integers (see {@code com.upokecenter.numbers.EDecimal}).
      * For example, in binary, ...11101110 OR NOT 01011 =...11111110 (or in
      * decimal, -18 OR 11 = -2).
      * @throws NullPointerException The parameter {@code second} is null.
@@ -4950,7 +4950,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of the other integer is set, this integer's corresponding
      * bit is not set, or both. For example, in binary, 10110 OR NOT 11010 = 11010
      * IMP 10110 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method uses the
-     * two's complement form of negative integers (see {@link
+     * two's complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, ...11101110 OR
      * NOT 01011 = 01011 IMP...11101110 =...11111110 (or in decimal, -18 OR 11 =
      * -2).
@@ -4975,7 +4975,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of this integer is set or the other integer's
      * corresponding bit is not set, but not both. For example, in binary, 10110
      * XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19). This method uses
-     * the two's complement form of negative integers (see {@link
+     * the two's complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, ...11101110 XOR
      * NOT 01011 =...11111010 (or in decimal, -18 OR 11 = -6).
      * @throws NullPointerException The parameter {@code second} is null.
@@ -4999,7 +4999,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * corresponding bit of this integer is set or the other integer's
      * corresponding bit is not set, but not both. For example, in binary, 10110
      * XOR NOT 11010 = 10011 (or in decimal, 22 XOR NOT 26 = 19). This method uses
-     * the two's complement form of negative integers (see {@link
+     * the two's complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, ...11101110 XOR
      * NOT 01011 =...11111010 (or in decimal, -18 OR 11 = -6).
      * @throws NullPointerException The parameter {@code second} is null.
@@ -5019,7 +5019,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * @return An arbitrary-precision integer in which each bit is set if the
      * corresponding bit is set in one input integer but not in the other. For
      * example, in binary, 11010 XOR 01001 = 10011 (or in decimal, 26 XOR 9 = 19).
-     * This method uses the two's complement form of negative integers (see {@link
+     * This method uses the two's complement form of negative integers (see {@code
      * com.upokecenter.numbers.EDecimal}). For example, in binary, ...11101101 XOR
      * 00011 =...11101110 (or in decimal, -19 XOR 3 = -18).
      * @throws NullPointerException The parameter {@code other} is null.
