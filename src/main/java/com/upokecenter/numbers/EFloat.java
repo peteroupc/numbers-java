@@ -69,7 +69,6 @@ https://creativecommons.org/publicdomain/zero/1.0/
    * big numbers in security-sensitive algorithms.</p> <p><b>Reproducibility
    * note</b></p> <p>See the reproducibility note in the EDecimal class's
    * documentation.</p>
-   *
    */
 
   public final class EFloat implements Comparable<EFloat> {
@@ -99,8 +98,7 @@ Binary16SignifAreaBits;
 ((1 << Binary16ExponentArea) - 1) << Binary16SignifAreaBits;
 
     /**
-     * <p>A not-a-number value.</p>
-     *
+     * A not-a-number value.
      */
 
     public static final EFloat NaN = new EFloat(
@@ -109,8 +107,7 @@ Binary16SignifAreaBits;
       (byte)BigNumberFlags.FlagQuietNaN);
 
     /**
-     * <p>Negative infinity, less than any other number.</p>
-     *
+     * Negative infinity, less than any other number.
      */
 
     public static final EFloat NegativeInfinity = new EFloat(
@@ -119,8 +116,7 @@ Binary16SignifAreaBits;
       (byte)(BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative));
 
     /**
-     * <p>Represents the number negative zero.</p>
-     *
+     * Represents the number negative zero.
      */
 
     public static final EFloat NegativeZero = new EFloat(
@@ -129,8 +125,7 @@ Binary16SignifAreaBits;
       (byte)BigNumberFlags.FlagNegative);
 
     /**
-     * <p>Represents the number 1.</p>
-     *
+     * Represents the number 1.
      */
 
     public static final EFloat One = new EFloat(
@@ -139,8 +134,7 @@ Binary16SignifAreaBits;
       (byte)0);
 
     /**
-     * <p>Positive infinity, greater than any other number.</p>
-     *
+     * Positive infinity, greater than any other number.
      */
 
     public static final EFloat PositiveInfinity = new EFloat(
@@ -149,10 +143,9 @@ Binary16SignifAreaBits;
       (byte)BigNumberFlags.FlagInfinity);
 
     /**
-     * <p>A not-a-number value that signals an invalid operation flag when it's
-     * passed as an argument to any arithmetic operation in arbitrary-precision
-     * binary floating-point number.</p>
-     *
+     * A not-a-number value that signals an invalid operation flag when it's passed
+     * as an argument to any arithmetic operation in arbitrary-precision binary
+     * floating-point number.
      */
 
     public static final EFloat SignalingNaN = new EFloat(
@@ -161,8 +154,7 @@ Binary16SignifAreaBits;
       (byte)BigNumberFlags.FlagSignalingNaN);
 
     /**
-     * <p>Represents the number 10.</p>
-     *
+     * Represents the number 10.
      */
 
     public static final EFloat Ten = new EFloat(
@@ -171,8 +163,7 @@ Binary16SignifAreaBits;
       (byte)0);
 
     /**
-     * <p>Represents the number 0.</p>
-     *
+     * Represents the number 0.
      */
 
     public static final EFloat Zero = new EFloat(
@@ -226,22 +217,20 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets this object's exponent. This object's value will be an integer if
-     * the exponent is positive or zero.</p>
-     * @return <p>This object's exponent. This object's value will be an integer if
-     * the exponent is positive or zero.</p>
-     *
+     * Gets this object's exponent. This object's value will be an integer if the
+     * exponent is positive or zero.
+     * @return This object's exponent. This object's value will be an integer if
+     * the exponent is positive or zero.
      */
     public final EInteger getExponent() {
         return this.exponent.ToEInteger();
       }
 
     /**
-     * <p>Gets a value indicating whether this object is finite (not infinity or
-     * not-a-number, NaN).</p>
-     * @return <p> {@code true} if this object is finite (not infinity or
-     * not-a-number, NaN); otherwise, {@code false}.</p>
-     *
+     * Gets a value indicating whether this object is finite (not infinity or
+     * not-a-number, NaN).
+     * @return {@code true} if this object is finite (not infinity or not-a-number,
+     * NaN); otherwise, {@code false}.
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -249,22 +238,20 @@ Binary16SignifAreaBits;
       }
 
     /**
-     * <p>Gets a value indicating whether this object is negative, including
-     * negative zero.</p>
-     * @return <p> {@code true} if this object is negative, including negative zero;
-     * otherwise, {@code false}.</p>
-     *
+     * Gets a value indicating whether this object is negative, including negative
+     * zero.
+     * @return {@code true} if this object is negative, including negative zero;
+     * otherwise, {@code false}.
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
       }
 
     /**
-     * <p>Gets a value indicating whether this object's value equals 0.</p>
-     * @return <p>{@code true} if this object's value equals 0; otherwise, {@code
+     * Gets a value indicating whether this object's value equals 0.
+     * @return {@code true} if this object's value equals 0; otherwise, {@code
      * false}. {@code true} if this object's value equals 0; otherwise, {@code
-     * false}.</p>
-     *
+     * false}.
      */
     public final boolean isZero() {
         return ((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -272,12 +259,11 @@ Binary16SignifAreaBits;
       }
 
     /**
-     * <p>Gets this object's unscaled value, or significand, and makes it negative
-     * if this object is negative. If this value is not-a-number (NaN), that
-     * value's absolute value is the NaN's "payload" (diagnostic information).</p>
-     * @return <p>This object's unscaled value. Will be negative if this object's
-     * value is negative (including a negative NaN).</p>
-     *
+     * Gets this object's unscaled value, or significand, and makes it negative if
+     * this object is negative. If this value is not-a-number (NaN), that value's
+     * absolute value is the NaN's "payload" (diagnostic information).
+     * @return This object's unscaled value. Will be negative if this object's
+     * value is negative (including a negative NaN).
      */
     public final EInteger getMantissa() {
         return this.isNegative() ? this.unsignedMantissa.ToEInteger().Negate() :
@@ -285,9 +271,8 @@ Binary16SignifAreaBits;
       }
 
     /**
-     * <p>Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.</p>
-     * @return <p>This value's sign: -1 if negative; 1 if positive; 0 if zero.</p>
-     *
+     * Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
+     * @return This value's sign: -1 if negative; 1 if positive; 0 if zero.
      */
     public final int signum() {
         return (((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
@@ -296,32 +281,29 @@ Binary16SignifAreaBits;
       }
 
     /**
-     * <p>Gets the absolute value of this object's unscaled value, or significand.
-     * If this value is not-a-number (NaN), that value is the NaN's "payload"
-     * (diagnostic information).</p>
-     * @return <p>The absolute value of this object's unscaled value.</p>
-     *
+     * Gets the absolute value of this object's unscaled value, or significand. If
+     * this value is not-a-number (NaN), that value is the NaN's "payload"
+     * (diagnostic information).
+     * @return The absolute value of this object's unscaled value.
      */
     public final EInteger getUnsignedMantissa() {
         return this.unsignedMantissa.ToEInteger();
       }
 
     /**
-     * <p>Creates a copy of this arbitrary-precision binary number.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * Creates a copy of this arbitrary-precision binary number.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Copy() {
       return new EFloat(this.unsignedMantissa, this.exponent, this.flags);
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the value {@code
-     * exponent*2^significand}.</p>
-     * @param mantissaSmall <p>Desired value for the significand.</p>
-     * @param exponentSmall <p>Desired value for the exponent.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     *
+     * Returns an arbitrary-precision number with the value {@code
+     * exponent*2^significand}.
+     * @param mantissaSmall Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary number.
      */
     public static EFloat Create(int mantissaSmall, int exponentSmall) {
       if (exponentSmall == 0 && mantissaSmall >= CacheFirst &&
@@ -354,13 +336,12 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the value {@code
-     * exponent*2^significand}.</p>
-     * @param mantissa <p>Desired value for the significand.</p>
-     * @param exponentSmall <p>Desired value for the exponent.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     * @throws NullPointerException <p>The parameter {@code mantissa} is null.</p>
-     *
+     * Returns an arbitrary-precision number with the value {@code
+     * exponent*2^significand}.
+     * @param mantissa Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
      */
     public static EFloat Create(
       EInteger mantissa,
@@ -381,13 +362,12 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the value {@code
-     * exponent*2^significand}.</p>
-     * @param mantissa <p>Desired value for the significand.</p>
-     * @param exponentLong <p>Desired value for the exponent.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     * @throws NullPointerException <p>The parameter {@code mantissa} is null.</p>
-     *
+     * Returns an arbitrary-precision number with the value {@code
+     * exponent*2^significand}.
+     * @param mantissa Desired value for the significand.
+     * @param exponentLong Desired value for the exponent.
+     * @return An arbitrary-precision binary number.
+     * @throws NullPointerException The parameter {@code mantissa} is null.
      */
     public static EFloat Create(
       EInteger mantissa,
@@ -408,14 +388,13 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the value {@code
-     * exponent*2^significand}.</p>
-     * @param mantissa <p>Desired value for the significand.</p>
-     * @param exponent <p>Desired value for the exponent.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     * @throws NullPointerException <p>The parameter {@code mantissa} or {@code
-     * exponent} is null.</p>
-     *
+     * Returns an arbitrary-precision number with the value {@code
+     * exponent*2^significand}.
+     * @param mantissa Desired value for the significand.
+     * @param exponent Desired value for the exponent.
+     * @return An arbitrary-precision binary number.
+     * @throws NullPointerException The parameter {@code mantissa} or {@code
+     * exponent} is null.
      */
     public static EFloat Create(
       EInteger mantissa,
@@ -439,12 +418,11 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the value {@code
-     * exponent*2^significand}.</p>
-     * @param mantissaLong <p>Desired value for the significand.</p>
-     * @param exponentSmall <p>Desired value for the exponent.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     *
+     * Returns an arbitrary-precision number with the value {@code
+     * exponent*2^significand}.
+     * @param mantissaLong Desired value for the significand.
+     * @param exponentSmall Desired value for the exponent.
+     * @return An arbitrary-precision binary number.
      */
     public static EFloat Create(
       long mantissaLong,
@@ -453,12 +431,11 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the value {@code
-     * exponent*2^significand}.</p>
-     * @param mantissaLong <p>Desired value for the significand.</p>
-     * @param exponentLong <p>Desired value for the exponent.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     *
+     * Returns an arbitrary-precision number with the value {@code
+     * exponent*2^significand}.
+     * @param mantissaLong Desired value for the significand.
+     * @param exponentLong Desired value for the exponent.
+     * @return An arbitrary-precision binary number.
      */
     public static EFloat Create(
       long mantissaLong,
@@ -483,39 +460,34 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a not-a-number arbitrary-precision binary number.</p>
-     * @param diag <p>An integer, 0 or greater, to use as diagnostic information
+     * Creates a not-a-number arbitrary-precision binary number.
+     * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To get the
      * diagnostic information from another arbitrary-precision binary
-     * floating-point number, use that object's {@code UnsignedMantissa}
-     * property.</p>
-     * @return <p>A quiet not-a-number.</p>
-     *
+     * floating-point number, use that object's {@code UnsignedMantissa} property.
+     * @return A quiet not-a-number.
      */
     public static EFloat CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false, null);
     }
 
     /**
-     * <p>Creates a not-a-number arbitrary-precision binary number.</p>
-     * @param diag <p>An integer, 0 or greater, to use as diagnostic information
+     * Creates a not-a-number arbitrary-precision binary number.
+     * @param diag An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To get the
      * diagnostic information from another arbitrary-precision binary
-     * floating-point number, use that object's {@code UnsignedMantissa}
-     * property.</p>
-     * @param signaling <p>Whether the return value will be signaling (true) or
-     * quiet (false).</p>
-     * @param negative <p>Whether the return value is negative.</p>
-     * @param ctx <p>An arithmetic context to control the precision (in binary
-     * digits) of the diagnostic information. The rounding and exponent range of
-     * this context will be ignored. Can be null. The only flag that can be
-     * signaled in this context is FlagInvalid, which happens if diagnostic
-     * information needs to be truncated and too much memory is required to do
-     * so.</p>
-     * @return <p>An arbitrary-precision binary number.</p>
-     * @throws NullPointerException <p>The parameter {@code diag} is null or is
-     * less than 0.</p>
-     *
+     * floating-point number, use that object's {@code UnsignedMantissa} property.
+     * @param signaling Whether the return value will be signaling (true) or quiet
+     * (false).
+     * @param negative Whether the return value is negative.
+     * @param ctx An arithmetic context to control the precision (in binary digits)
+     * of the diagnostic information. The rounding and exponent range of this
+     * context will be ignored. Can be null. The only flag that can be signaled in
+     * this context is FlagInvalid, which happens if diagnostic information needs
+     * to be truncated and too much memory is required to do so.
+     * @return An arbitrary-precision binary number.
+     * @throws NullPointerException The parameter {@code diag} is null or is less
+     * than 0.
      */
     public static EFloat CreateNaN(
       EInteger diag,
@@ -561,15 +533,13 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a binary floating-point number from a 64-bit floating-point
-     * number encoded in the IEEE 754 binary64 format. This method computes the
-     * exact value of the floating point number, not an approximation, as is often
-     * the case by converting the floating point number to a string first.</p>
-     * @param dblBits <p>The parameter {@code dblBits} is a 64-bit signed
-     * integer.</p>
-     * @return <p>A binary floating-point number with the same value as the
-     * floating-point number encoded in {@code dblBits}.</p>
-     *
+     * Creates a binary floating-point number from a 64-bit floating-point number
+     * encoded in the IEEE 754 binary64 format. This method computes the exact
+     * value of the floating point number, not an approximation, as is often the
+     * case by converting the floating point number to a string first.
+     * @param dblBits The parameter {@code dblBits} is a 64-bit signed integer.
+     * @return A binary floating-point number with the same value as the
+     * floating-point number encoded in {@code dblBits}.
      */
     public static EFloat FromDoubleBits(long dblBits) {
       int floatExponent = (int)((dblBits >> 52) & 0x7ff);
@@ -629,11 +599,8 @@ Binary16SignifAreaBits;
      * DotNet and Java (for example, the NaN value's sign may be negative in
      * DotNet, but positive in Java). Use `IsNaN()` to determine whether an object
      * from this class stores a NaN value of any form.</p>
-     * @param flt <p>The parameter {@code flt} is a 64-bit floating-point
-     * number.</p>
-     * @return <p>A binary floating-point number with the same value as {@code
-     * flt}.</p>
-     *
+     * @param flt The parameter {@code flt} is a 64-bit floating-point number.
+     * @return A binary floating-point number with the same value as {@code flt}.
      */
     public static EFloat FromSingle(float flt) {
       return FromSingleBits(
@@ -653,11 +620,8 @@ Binary16SignifAreaBits;
      * different form in DotNet and Java (for example, the NaN value's sign may be
      * negative in DotNet, but positive in Java). Use `IsNaN()` to determine
      * whether an object from this class stores a NaN value of any form.</p>
-     * @param dbl <p>The parameter {@code dbl} is a 64-bit floating-point
-     * number.</p>
-     * @return <p>A binary floating-point number with the same value as {@code
-     * dbl}.</p>
-     *
+     * @param dbl The parameter {@code dbl} is a 64-bit floating-point number.
+     * @return A binary floating-point number with the same value as {@code dbl}.
      */
     public static EFloat FromDouble(double dbl) {
       long lvalue = Double.doubleToRawLongBits(dbl);
@@ -665,11 +629,10 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Converts an arbitrary-precision integer to the same value as a binary
-     * floating-point number.</p>
-     * @param bigint <p>An arbitrary-precision integer.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * Converts an arbitrary-precision integer to the same value as a binary
+     * floating-point number.
+     * @param bigint An arbitrary-precision integer.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public static EFloat FromEInteger(EInteger bigint) {
       return EFloat.Create(bigint, (int)0);
@@ -723,27 +686,25 @@ Binary16SignifAreaBits;
      * the corresponding characters in the Basic Latin range. In particular, the
      * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
      * allowed to contain white space characters, including spaces.</p>
-     * @param str <p>The parameter {@code str} is a text string.</p>
-     * @param offset <p>An index starting at 0 showing where the desired portion of
-     * {@code str} begins.</p>
-     * @param length <p>The length, in code units, of the desired portion of {@code
-     * str} (but not more than {@code str} 's length).</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * @param str The parameter {@code str} is a text string.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * str} (but not more than {@code str} 's length).
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
      * unlimited. Note that providing a context is often much faster than creating
      * an EDecimal without a context then calling ToEFloat on that EDecimal,
-     * especially if the context specifies a precision limit and exponent
-     * range.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code str} is null.</p>
-     * @throws NumberFormatException <p>The portion given of {@code str} is not a
-     * correctly formatted number string; or either {@code offset} or {@code
-     * length} is less than 0 or greater than {@code str} 's length, or {@code str}
-     * 's length minus {@code offset} is less than {@code length}.</p>
-     *
+     * especially if the context specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws NumberFormatException The portion given of {@code str} is not a correctly
+     * formatted number string; or either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's length minus
+     * {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
       String str,
@@ -754,63 +715,57 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a binary floating-point number from a text string that represents
-     * a number, using an unlimited precision context. For more information, see
-     * the {@code FromString(string, int, int, EContext)} method.</p>
-     * @param str <p>A text string to convert to a binary floating-point
-     * number.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code str} is null.</p>
-     * @throws NumberFormatException <p>The portion given of {@code str} is not a
-     * correctly formatted number string.</p>
-     *
+     * Creates a binary floating-point number from a text string that represents a
+     * number, using an unlimited precision context. For more information, see the
+     * {@code FromString(string, int, int, EContext)} method.
+     * @param str A text string to convert to a binary floating-point number.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws NumberFormatException The portion given of {@code str} is not a correctly
+     * formatted number string.
      */
     public static EFloat FromString(String str) {
       return FromString(str, 0, str == null ? 0 : str.length(), null);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a text string that represents
-     * a number. For more information, see the {@code FromString(string, int, int,
-     * EContext)} method.</p>
-     * @param str <p>A text string to convert to a binary floating-point
-     * number.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Creates a binary floating-point number from a text string that represents a
+     * number. For more information, see the {@code FromString(string, int, int,
+     * EContext)} method.
+     * @param str A text string to convert to a binary floating-point number.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
      * unlimited. Note that providing a context is often much faster than creating
      * an EDecimal without a context then calling ToEFloat on that EDecimal,
-     * especially if the context specifies a precision limit and exponent
-     * range.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code str} is null.</p>
-     *
+     * especially if the context specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EFloat FromString(String str, EContext ctx) {
       return FromString(str, 0, str == null ? 0 : str.length(), ctx);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a text string that represents
-     * a number. For more information, see the {@code FromString(string, int, int,
-     * EContext)} method.</p>
-     * @param str <p>The parameter {@code str} is a text string.</p>
-     * @param offset <p>An index starting at 0 showing where the desired portion of
-     * {@code str} begins.</p>
-     * @param length <p>The length, in code units, of the desired portion of {@code
-     * str} (but not more than {@code str} 's length).</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     * @throws T:IllegalArgumentException <p>Either {@code offset} or {@code
-     * length} is less than 0 or greater than {@code str} 's length, or {@code str}
-     * 's length minus {@code offset} is less than {@code length}.</p>
-     * @throws NullPointerException <p>The parameter {@code str} is null.</p>
-     * @throws IllegalArgumentException <p>Either {@code offset} or {@code length} is less
+     * Creates a binary floating-point number from a text string that represents a
+     * number. For more information, see the {@code FromString(string, int, int,
+     * EContext)} method.
+     * @param str The parameter {@code str} is a text string.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code str} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * str} (but not more than {@code str} 's length).
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws T:IllegalArgumentException Either {@code offset} or {@code length}
+     * is less than 0 or greater than {@code str} 's length, or {@code str} 's
+     * length minus {@code offset} is less than {@code length}.
+     * @throws NullPointerException The parameter {@code str} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code str} 's length, or {@code str} 's length minus
-     * {@code offset} is less than {@code length}.</p>
-     *
+     * {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(String str, int offset, int length) {
       return FromString(str, offset, length, null);
@@ -838,28 +793,26 @@ Binary16SignifAreaBits;
      * Latin range. In particular, the digits must be the basic digits 0 to 9
      * (U+0030 to U+0039). The sequence is not allowed to contain white space
      * characters, including spaces.</p>
-     * @param chars <p>A sequence of {@code char} s to convert to a binary
-     * floating-point number.</p>
-     * @param offset <p>An index starting at 0 showing where the desired portion of
-     * {@code chars} begins.</p>
-     * @param length <p>The length, in code units, of the desired portion of {@code
-     * chars} (but not more than {@code chars} 's length).</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code chars} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * chars} (but not more than {@code chars} 's length).
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
      * unlimited. Note that providing a context is often much faster than creating
      * an EDecimal without a context then calling ToEFloat on that EDecimal,
-     * especially if the context specifies a precision limit and exponent
-     * range.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code chars} is null.</p>
-     * @throws NumberFormatException <p>The portion given of {@code chars} is not a
+     * especially if the context specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws NumberFormatException The portion given of {@code chars} is not a
      * correctly formatted number sequence; or either {@code offset} or {@code
      * length} is less than 0 or greater than {@code chars} 's length, or {@code
-     * chars} 's length minus {@code offset} is less than {@code length}.</p>
-     *
+     * chars} 's length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
       char[] chars,
@@ -870,62 +823,57 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a binary floating-point number from a sequence of {@code char} s
+     * Creates a binary floating-point number from a sequence of {@code char} s
      * that represents a number, using an unlimited precision context. For more
-     * information, see the {@code FromString(string, int, int, EContext)}
-     * method.</p>
-     * @param chars <p>A sequence of {@code char} s to convert to a binary
-     * floating-point number.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code chars} is null.</p>
-     * @throws NumberFormatException <p>The portion given of {@code chars} is not a
-     * correctly formatted number sequence.</p>
-     *
+     * information, see the {@code FromString(string, int, int, EContext)} method.
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws NumberFormatException The portion given of {@code chars} is not a
+     * correctly formatted number sequence.
      */
     public static EFloat FromString(char[] chars) {
       return FromString(chars, 0, chars == null ? 0 : chars.length, null);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a sequence of {@code char} s
+     * Creates a binary floating-point number from a sequence of {@code char} s
      * that represents a number. For more information, see the {@code
-     * FromString(string, int, int, EContext)} method.</p>
-     * @param chars <p>A sequence of {@code char} s to convert to a binary
-     * floating-point number.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * FromString(string, int, int, EContext)} method.
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
      * unlimited. Note that providing a context is often much faster than creating
      * an EDecimal without a context then calling ToEFloat on that EDecimal,
-     * especially if the context specifies a precision limit and exponent
-     * range.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code chars} is null.</p>
-     *
+     * especially if the context specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
      */
     public static EFloat FromString(char[] chars, EContext ctx) {
       return FromString(chars, 0, chars == null ? 0 : chars.length, ctx);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a sequence of {@code char} s
+     * Creates a binary floating-point number from a sequence of {@code char} s
      * that represents a number. For more information, see the {@code
-     * FromString(string, int, int, EContext)} method.</p>
-     * @param chars <p>A sequence of {@code char} s to convert to a binary
-     * floating-point number.</p>
-     * @param offset <p>An index starting at 0 showing where the desired portion of
-     * {@code chars} begins.</p>
-     * @param length <p>The length, in code units, of the desired portion of {@code
-     * chars} (but not more than {@code chars} 's length).</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code chars} is null.</p>
-     * @throws IllegalArgumentException <p>Either {@code offset} or {@code length} is less
+     * FromString(string, int, int, EContext)} method.
+     * @param chars A sequence of {@code char} s to convert to a binary
+     * floating-point number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code chars} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * chars} (but not more than {@code chars} 's length).
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code chars} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code chars} 's length, or {@code chars} 's length
-     * minus {@code offset} is less than {@code length}.</p>
-     *
+     * minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(char[] chars, int offset, int length) {
       return FromString(chars, offset, length, null);
@@ -952,28 +900,26 @@ Binary16SignifAreaBits;
      * the corresponding characters in the Basic Latin range. In particular, the
      * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is
      * not allowed to contain white space characters, including spaces.</p>
-     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
-     * number.</p>
-     * @param offset <p>An index starting at 0 showing where the desired portion of
-     * {@code bytes} begins.</p>
-     * @param length <p>The length, in code units, of the desired portion of {@code
-     * bytes} (but not more than {@code bytes} 's length).</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * bytes} (but not more than {@code bytes} 's length).
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
      * unlimited. Note that providing a context is often much faster than creating
      * an EDecimal without a context then calling ToEFloat on that EDecimal,
-     * especially if the context specifies a precision limit and exponent
-     * range.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code bytes} is null.</p>
-     * @throws NumberFormatException <p>The portion given of {@code bytes} is not a
+     * especially if the context specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The portion given of {@code bytes} is not a
      * correctly formatted number sequence; or either {@code offset} or {@code
      * length} is less than 0 or greater than {@code bytes} 's length, or {@code
-     * bytes} 's length minus {@code offset} is less than {@code length}.</p>
-     *
+     * bytes} 's length minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(
       byte[] bytes,
@@ -984,84 +930,78 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a binary floating-point number from a sequence of bytes that
+     * Creates a binary floating-point number from a sequence of bytes that
      * represents a number, using an unlimited precision context. For more
-     * information, see the {@code FromString(string, int, int, EContext)}
-     * method.</p>
-     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
-     * number.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code bytes} is null.</p>
-     * @throws NumberFormatException <p>The portion given of {@code bytes} is not a
-     * correctly formatted number sequence.</p>
-     *
+     * information, see the {@code FromString(string, int, int, EContext)} method.
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws NumberFormatException The portion given of {@code bytes} is not a
+     * correctly formatted number sequence.
      */
     public static EFloat FromString(byte[] bytes) {
       return FromString(bytes, 0, bytes == null ? 0 : bytes.length, null);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a sequence of bytes that
+     * Creates a binary floating-point number from a sequence of bytes that
      * represents a number. For more information, see the {@code FromString(string,
-     * int, int, EContext)} method.</p>
-     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
-     * number.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * int, int, EContext)} method.
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
      * unlimited. Note that providing a context is often much faster than creating
      * an EDecimal without a context then calling ToEFloat on that EDecimal,
-     * especially if the context specifies a precision limit and exponent
-     * range.</p>
-     * @return <p>The parsed number, converted to arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code bytes} is null.</p>
-     *
+     * especially if the context specifies a precision limit and exponent range.
+     * @return The parsed number, converted to arbitrary-precision binary
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
      */
     public static EFloat FromString(byte[] bytes, EContext ctx) {
       return FromString(bytes, 0, bytes == null ? 0 : bytes.length, ctx);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a sequence of bytes that
+     * Creates a binary floating-point number from a sequence of bytes that
      * represents a number. For more information, see the {@code FromString(string,
-     * int, int, EContext)} method.</p>
-     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
-     * number.</p>
-     * @param offset <p>An index starting at 0 showing where the desired portion of
-     * {@code bytes} begins.</p>
-     * @param length <p>The length, in code units, of the desired portion of {@code
-     * bytes} (but not more than {@code bytes} 's length).</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code bytes} is null.</p>
-     * @throws IllegalArgumentException <p>Either {@code offset} or {@code length} is less
+     * int, int, EContext)} method.
+     * @param bytes A sequence of bytes to convert to a binary floating-point
+     * number.
+     * @param offset An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.
+     * @param length The length, in code units, of the desired portion of {@code
+     * bytes} (but not more than {@code bytes} 's length).
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code bytes} is null.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's length
-     * minus {@code offset} is less than {@code length}.</p>
-     *
+     * minus {@code offset} is less than {@code length}.
      */
     public static EFloat FromString(byte[] bytes, int offset, int length) {
       return FromString(bytes, offset, length, null);
     }
 
     /**
-     * <p>Gets the greater value between two binary floating-point numbers.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Gets the greater value between two binary floating-point numbers.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>The larger value of the two numbers. If one is positive zero and
-     * the other is negative zero, returns the positive zero. If the two numbers
-     * are positive and have the same value, returns the one with the larger
-     * exponent. If the two numbers are negative and have the same value, returns
-     * the one with the smaller exponent.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two numbers are
+     * positive and have the same value, returns the one with the larger exponent.
+     * If the two numbers are negative and have the same value, returns the one
+     * with the smaller exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Max(
       EFloat first,
@@ -1077,17 +1017,16 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the greater value between two binary floating-point numbers.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @return <p>The larger value of the two numbers. If one is positive zero and
-     * the other is negative zero, returns the positive zero. If the two numbers
-     * are positive and have the same value, returns the one with the larger
-     * exponent. If the two numbers are negative and have the same value, returns
-     * the one with the smaller exponent.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * Gets the greater value between two binary floating-point numbers.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The larger value of the two numbers. If one is positive zero and the
+     * other is negative zero, returns the positive zero. If the two numbers are
+     * positive and have the same value, returns the one with the larger exponent.
+     * If the two numbers are negative and have the same value, returns the one
+     * with the smaller exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Max(
       EFloat first,
@@ -1102,19 +1041,18 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the greater value between two values, ignoring their signs. If the
-     * absolute values are equal, has the same effect as Max.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Gets the greater value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Max.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>The larger value of the two numbers, ignoring their signs.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MaxMagnitude(
       EFloat first,
@@ -1130,14 +1068,13 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the greater value between two values, ignoring their signs. If the
-     * absolute values are equal, has the same effect as Max.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @return <p>The larger value of the two numbers, ignoring their signs.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * Gets the greater value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Max.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The larger value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MaxMagnitude(
       EFloat first,
@@ -1152,22 +1089,21 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the lesser value between two binary floating-point numbers.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Gets the lesser value between two binary floating-point numbers.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>The smaller value of the two numbers. If one is positive zero and
+     * precision is unlimited and rounding isn't needed.
+     * @return The smaller value of the two numbers. If one is positive zero and
      * the other is negative zero, returns the negative zero. If the two numbers
      * are positive and have the same value, returns the one with the smaller
      * exponent. If the two numbers are negative and have the same value, returns
-     * the one with the larger exponent.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * the one with the larger exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Min(
       EFloat first,
@@ -1183,17 +1119,16 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the lesser value between two binary floating-point numbers.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @return <p>The smaller value of the two numbers. If one is positive zero and
+     * Gets the lesser value between two binary floating-point numbers.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The smaller value of the two numbers. If one is positive zero and
      * the other is negative zero, returns the negative zero. If the two numbers
      * are positive and have the same value, returns the one with the smaller
      * exponent. If the two numbers are negative and have the same value, returns
-     * the one with the larger exponent.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * the one with the larger exponent.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat Min(
       EFloat first,
@@ -1208,19 +1143,18 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the lesser value between two values, ignoring their signs. If the
-     * absolute values are equal, has the same effect as Min.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Gets the lesser value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Min.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>The smaller value of the two numbers, ignoring their signs.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MinMagnitude(
       EFloat first,
@@ -1236,14 +1170,13 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets the lesser value between two values, ignoring their signs. If the
-     * absolute values are equal, has the same effect as Min.</p>
-     * @param first <p>The first value to compare.</p>
-     * @param second <p>The second value to compare.</p>
-     * @return <p>The smaller value of the two numbers, ignoring their signs.</p>
-     * @throws NullPointerException <p>The parameter {@code first} or {@code
-     * second} is null.</p>
-     *
+     * Gets the lesser value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Min.
+     * @param first The first value to compare.
+     * @param second The second value to compare.
+     * @return The smaller value of the two numbers, ignoring their signs.
+     * @throws NullPointerException The parameter {@code first} or {@code second}
+     * is null.
      */
     public static EFloat MinMagnitude(
       EFloat first,
@@ -1258,32 +1191,28 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Finds the constant π, the circumference of a circle divided by its
-     * diameter.</p>
+     * Finds the constant π, the circumference of a circle divided by its diameter.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as π
      * can never be represented exactly.</i>.</p>
-     * @return <p>The constant π rounded to the given precision. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
-     * null or the precision is unlimited (the context's Precision property is
-     * 0).</p>
-     *
+     * @return The constant π rounded to the given precision. Signals FlagInvalid
+     * and returns not-a-number (NaN) if the parameter {@code ctx} is null or the
+     * precision is unlimited (the context's Precision property is 0).
      */
     public static EFloat PI(EContext ctx) {
       return MathValue.Pi(ctx);
     }
 
     /**
-     * <p>Finds the absolute value of this object (if it's negative, it becomes
-     * positive).</p>
-     * @return <p>An arbitrary-precision binary floating-point number. Returns
+     * Finds the absolute value of this object (if it's negative, it becomes
+     * positive).
+     * @return An arbitrary-precision binary floating-point number. Returns
      * signaling NaN if this value is signaling NaN. (In this sense, this method is
      * similar to the "copy-abs" operation in the General Decimal Arithmetic
      * Specification, except this method does not necessarily return a copy of this
-     * object.).</p>
-     *
+     * object.).
      */
     public EFloat Abs() {
       if (this.isNegative()) {
@@ -1297,50 +1226,45 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Finds the absolute value of this object (if it's negative, it becomes
-     * positive).</p>
-     * @param context <p>An arithmetic context to control the precision, rounding,
-     * and exponent range of the result. If {@code HasFlags} of the context is
-     * true, will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.</p>
-     * @return <p>The absolute value of this object. Signals FlagInvalid and
-     * returns quiet NaN if this value is signaling NaN.</p>
-     *
+     * Finds the absolute value of this object (if it's negative, it becomes
+     * positive).
+     * @param context An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is true,
+     * will also store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and no rounding is needed.
+     * @return The absolute value of this object. Signals FlagInvalid and returns
+     * quiet NaN if this value is signaling NaN.
      */
     public EFloat Abs(EContext context) {
       return MathValue.Abs(this, context);
     }
 
     /**
-     * <p>Adds this arbitrary-precision binary floating-point number and a 32-bit
+     * Adds this arbitrary-precision binary floating-point number and a 32-bit
      * signed integer and returns the result. The exponent for the result is the
      * lower of this arbitrary-precision binary floating-point number's exponent
-     * and the other 32-bit signed integer's exponent.</p>
-     * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
-     * integer.</p>
-     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
-     * binary floating-point number plus a 32-bit signed integer. If this
+     * and the other 32-bit signed integer's exponent.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus a 32-bit signed integer. If this
      * arbitrary-precision binary floating-point number is not-a-number (NaN),
-     * returns NaN.</p>
-     *
+     * returns NaN.
      */
     public EFloat Add(int intValue) {
       return this.Add(EFloat.FromInt32(intValue));
     }
 
     /**
-     * <p>Subtracts a 32-bit signed integer from this arbitrary-precision binary
+     * Subtracts a 32-bit signed integer from this arbitrary-precision binary
      * floating-point number and returns the result. The exponent for the result is
      * the lower of this arbitrary-precision binary floating-point number's
-     * exponent and the other 32-bit signed integer's exponent.</p>
-     * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
-     * integer.</p>
-     * @return <p>The difference between the two numbers, that is, this
+     * exponent and the other 32-bit signed integer's exponent.
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus a 32-bit signed
      * integer. If this arbitrary-precision binary floating-point number is
-     * not-a-number (NaN), returns NaN.</p>
-     *
+     * not-a-number (NaN), returns NaN.
      */
     public EFloat Subtract(int intValue) {
       return (intValue == Integer.MIN_VALUE) ?
@@ -1353,24 +1277,22 @@ Binary16SignifAreaBits;
      * this arbitrary-precision binary floating-point number's exponent plus the
      * other 32-bit signed integer's exponent.</p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200);</pre> .
-     * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
-     * integer.</p>
-     * @return <p>The product of the two numbers, that is, this arbitrary-precision
-     * binary floating-point number times a 32-bit signed integer.</p>
-     *
+     * @param intValue The parameter {@code intValue} is a 32-bit signed integer.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * binary floating-point number times a 32-bit signed integer.
      */
     public EFloat Multiply(int intValue) {
       return this.Multiply(EFloat.FromInt32(intValue));
     }
 
     /**
-     * <p>Divides this arbitrary-precision binary floating-point number by a 32-bit
+     * Divides this arbitrary-precision binary floating-point number by a 32-bit
      * signed integer and returns the result; returns NaN instead if the result
      * would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,
      * and so on); if this is not desired, use DivideToExponent, or use the Divide
-     * overload that takes an EContext.</p>
-     * @param intValue <p>The divisor.</p>
-     * @return <p>The result of dividing this arbitrary-precision binary
+     * overload that takes an EContext.
+     * @param intValue The divisor.
+     * @return The result of dividing this arbitrary-precision binary
      * floating-point number by a 32-bit signed integer. Returns infinity if the
      * divisor (this arbitrary-precision binary floating-point number) is 0 and the
      * dividend (the other 32-bit signed integer) is nonzero. Returns not-a-number
@@ -1378,43 +1300,38 @@ Binary16SignifAreaBits;
      * be exact because it would have a nonterminating binary expansion (examples
      * include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not
      * desired, use DivideToExponent instead, or use the Divide overload that takes
-     * an {@code EContext} (such as {@code EContext.Binary64}) instead.</p>
-     * @throws ArithmeticException <p>Attempted to divide by zero.</p>
-     *
+     * an {@code EContext} (such as {@code EContext.Binary64}) instead.
+     * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(int intValue) {
       return this.Divide(EFloat.FromInt32(intValue));
     }
 
     /**
-     * <p>Adds this arbitrary-precision binary floating-point number and a 64-bit
+     * Adds this arbitrary-precision binary floating-point number and a 64-bit
      * signed integer and returns the result. The exponent for the result is the
      * lower of this arbitrary-precision binary floating-point number's exponent
-     * and the other 64-bit signed integer's exponent.</p>
-     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
-     * integer.</p>
-     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
-     * binary floating-point number plus a 64-bit signed integer. If this
+     * and the other 64-bit signed integer's exponent.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus a 64-bit signed integer. If this
      * arbitrary-precision binary floating-point number is not-a-number (NaN),
-     * returns NaN.</p>
-     *
+     * returns NaN.
      */
     public EFloat Add(long longValue) {
       return this.Add(EFloat.FromInt64(longValue));
     }
 
     /**
-     * <p>Subtracts a 64-bit signed integer from this arbitrary-precision binary
+     * Subtracts a 64-bit signed integer from this arbitrary-precision binary
      * floating-point number and returns the result. The exponent for the result is
      * the lower of this arbitrary-precision binary floating-point number's
-     * exponent and the other 64-bit signed integer's exponent.</p>
-     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
-     * integer.</p>
-     * @return <p>The difference between the two numbers, that is, this
+     * exponent and the other 64-bit signed integer's exponent.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus a 64-bit signed
      * integer. If this arbitrary-precision binary floating-point number is
-     * not-a-number (NaN), returns NaN.</p>
-     *
+     * not-a-number (NaN), returns NaN.
      */
     public EFloat Subtract(long longValue) {
       return this.Subtract(EFloat.FromInt64(longValue));
@@ -1426,25 +1343,22 @@ Binary16SignifAreaBits;
      * this arbitrary-precision binary floating-point number's exponent plus the
      * other 64-bit signed integer's exponent.</p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200L);</pre> .
-     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
-     * integer.</p>
-     * @return <p>The product of the two numbers, that is, this arbitrary-precision
-     * binary floating-point number times a 64-bit signed integer.</p>
-     *
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The product of the two numbers, that is, this arbitrary-precision
+     * binary floating-point number times a 64-bit signed integer.
      */
     public EFloat Multiply(long longValue) {
       return this.Multiply(EFloat.FromInt64(longValue));
     }
 
     /**
-     * <p>Divides this arbitrary-precision binary floating-point number by a 64-bit
+     * Divides this arbitrary-precision binary floating-point number by a 64-bit
      * signed integer and returns the result; returns NaN instead if the result
      * would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,
      * and so on); if this is not desired, use DivideToExponent, or use the Divide
-     * overload that takes an EContext.</p>
-     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
-     * integer.</p>
-     * @return <p>The result of dividing this arbitrary-precision binary
+     * overload that takes an EContext.
+     * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
+     * @return The result of dividing this arbitrary-precision binary
      * floating-point number by a 64-bit signed integer. Returns infinity if the
      * divisor (this arbitrary-precision binary floating-point number) is 0 and the
      * dividend (the other 64-bit signed integer) is nonzero. Returns not-a-number
@@ -1452,46 +1366,42 @@ Binary16SignifAreaBits;
      * be exact because it would have a nonterminating binary expansion (examples
      * include 1 divided by any multiple of 3, such as 1/3 or 1/12). If this is not
      * desired, use DivideToExponent instead, or use the Divide overload that takes
-     * an {@code EContext} (such as {@code EContext.Binary64}) instead.</p>
-     * @throws ArithmeticException <p>Attempted to divide by zero.</p>
-     *
+     * an {@code EContext} (such as {@code EContext.Binary64}) instead.
+     * @throws ArithmeticException Attempted to divide by zero.
      */
     public EFloat Divide(long longValue) {
       return this.Divide(EFloat.FromInt64(longValue));
     }
 
     /**
-     * <p>Adds this arbitrary-precision binary floating-point number and another
+     * Adds this arbitrary-precision binary floating-point number and another
      * arbitrary-precision binary floating-point number and returns the result. The
      * exponent for the result is the lower of this arbitrary-precision binary
      * floating-point number's exponent and the other arbitrary-precision binary
-     * floating-point number's exponent.</p>
-     * @param otherValue <p>An arbitrary-precision binary floating-point
-     * number.</p>
-     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
-     * binary floating-point number plus another arbitrary-precision binary
-     * floating-point number. If this arbitrary-precision binary floating-point
-     * number is not-a-number (NaN), returns NaN.</p>
-     *
+     * floating-point number's exponent.
+     * @param otherValue An arbitrary-precision binary floating-point number.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus another arbitrary-precision binary floating-point
+     * number. If this arbitrary-precision binary floating-point number is
+     * not-a-number (NaN), returns NaN.
      */
     public EFloat Add(EFloat otherValue) {
       return this.Add(otherValue, EContext.UnlimitedHalfEven);
     }
 
     /**
-     * <p>Adds this arbitrary-precision binary floating-point number and another
-     * arbitrary-precision binary floating-point number and returns the result.</p>
-     * @param otherValue <p>The number to add to.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Adds this arbitrary-precision binary floating-point number and another
+     * arbitrary-precision binary floating-point number and returns the result.
+     * @param otherValue The number to add to.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.</p>
-     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
-     * binary floating-point number plus another arbitrary-precision binary
-     * floating-point number. If this arbitrary-precision binary floating-point
-     * number is not-a-number (NaN), returns NaN.</p>
-     *
+     * precision is unlimited and no rounding is needed.
+     * @return The sum of the two numbers, that is, this arbitrary-precision binary
+     * floating-point number plus another arbitrary-precision binary floating-point
+     * number. If this arbitrary-precision binary floating-point number is
+     * not-a-number (NaN), returns NaN.
      */
     public EFloat Add(
       EFloat otherValue,
@@ -1500,16 +1410,15 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Compares the mathematical values of this object and another object,
+     * Compares the mathematical values of this object and another object,
      * accepting NaN values. This method currently uses the rules given in the
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
-     * CompareToTotal method instead.</p>
-     * @param other <p>An arbitrary-precision binary floating-point number.</p>
-     * @return <p>Less than 0 if this object's value is less than the other value,
-     * or greater than 0 if this object's value is greater than the other value or
-     * if {@code other} is null, or 0 if both values are equal.</p>
-     *
+     * CompareToTotal method instead.
+     * @param other An arbitrary-precision binary floating-point number.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other value or if
+     * {@code other} is null, or 0 if both values are equal.
      */
     public int compareTo(EFloat other) {
       return MathValue.compareTo(this, other);
@@ -1524,28 +1433,25 @@ Binary16SignifAreaBits;
      * other object is a quiet NaN or signaling NaN, this method will not trigger
      * an error. Instead, NaN will compare greater than any other number, including
      * infinity. Two different NaN values will be considered equal.</p>
-     * @param other <p>An arbitrary-precision binary floating-point number.</p>
-     * @return <p>Less than 0 if this object's value is less than the other value,
-     * or greater than 0 if this object's value is greater than the other value or
-     * if {@code other} is null, or 0 if both values are equal.</p>
-     *
+     * @param other An arbitrary-precision binary floating-point number.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other value or if
+     * {@code other} is null, or 0 if both values are equal.
      */
     public int CompareToValue(EFloat other) {
       return MathValue.compareTo(this, other);
     }
 
     /**
-     * <p>Compares the mathematical values of this object and another object,
+     * Compares the mathematical values of this object and another object,
      * accepting NaN values. This method currently uses the rules given in the
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
-     * CompareToTotal method instead.</p>
-     * @param intOther <p>The parameter {@code intOther} is a 32-bit signed
-     * integer.</p>
-     * @return <p>Less than 0 if this object's value is less than the other value,
-     * or greater than 0 if this object's value is greater than the other value, or
-     * 0 if both values are equal.</p>
-     *
+     * CompareToTotal method instead.
+     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other value, or 0
+     * if both values are equal.
      */
     public int compareTo(int intOther) {
       return this.CompareToValue(EFloat.FromInt32(intOther));
@@ -1559,12 +1465,10 @@ Binary16SignifAreaBits;
      * zero and positive zero are considered equal.</p> <p>If this object is a
      * quiet NaN or signaling NaN, this method will not trigger an error. Instead,
      * NaN will compare greater than any other number.</p>
-     * @param intOther <p>The parameter {@code intOther} is a 32-bit signed
-     * integer.</p>
-     * @return <p>Less than 0 if this object's value is less than the other value,
-     * or greater than 0 if this object's value is greater than the other value, or
-     * 0 if both values are equal.</p>
-     *
+     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other value, or 0
+     * if both values are equal.
      */
     public int CompareToValue(int intOther) {
       return this.CompareToValue(EFloat.FromInt32(intOther));
@@ -1578,29 +1482,25 @@ Binary16SignifAreaBits;
      * zero and positive zero are considered equal.</p> <p>If this object is a
      * quiet NaN or signaling NaN, this method will not trigger an error. Instead,
      * NaN will compare greater than any other number, including infinity.</p>
-     * @param intOther <p>The parameter {@code intOther} is a 64-bit signed
-     * integer.</p>
-     * @return <p>Less than 0 if this object's value is less than the other value,
-     * or greater than 0 if this object's value is greater than the other value, or
-     * 0 if both values are equal.</p>
-     *
+     * @param intOther The parameter {@code intOther} is a 64-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other value, or 0
+     * if both values are equal.
      */
     public int CompareToValue(long intOther) {
       return this.CompareToValue(FromInt64(intOther));
     }
 
     /**
-     * <p>Compares the mathematical values of this object and another object,
+     * Compares the mathematical values of this object and another object,
      * accepting NaN values. This method currently uses the rules given in the
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
-     * CompareToTotal method instead.</p>
-     * @param intOther <p>The parameter {@code intOther} is a 64-bit signed
-     * integer.</p>
-     * @return <p>Less than 0 if this object's value is less than the other value,
-     * or greater than 0 if this object's value is greater than the other value, or
-     * 0 if both values are equal.</p>
-     *
+     * CompareToTotal method instead.
+     * @param intOther The parameter {@code intOther} is a 64-bit signed integer.
+     * @return Less than 0 if this object's value is less than the other value, or
+     * greater than 0 if this object's value is greater than the other value, or 0
+     * if both values are equal.
      */
     public int compareTo(long intOther) {
       return this.CompareToValue(FromInt64(intOther));
@@ -1612,16 +1512,15 @@ Binary16SignifAreaBits;
      * positive zero are considered equal.</p> <p>If this object or the other
      * object is a quiet NaN or signaling NaN, this method will return a quiet NaN
      * and will signal a FlagInvalid flag.</p>
-     * @param other <p>An arbitrary-precision binary floating-point number.</p>
-     * @param ctx <p>An arithmetic context. The precision, rounding, and exponent
+     * @param other An arbitrary-precision binary floating-point number.
+     * @param ctx An arithmetic context. The precision, rounding, and exponent
      * range are ignored. If {@code HasFlags} of the context is true, will store
      * the flags resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null.</p>
-     * @return <p>Quiet NaN if this object or the other object is NaN, or 0 if both
+     * pre-existing flags). Can be null.
+     * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the other
      * value, or 1 if this object is greater. This implementation returns a
-     * positive number if.</p>
-     *
+     * positive number if.
      */
     public EFloat CompareToSignal(
       EFloat other,
@@ -1640,17 +1539,16 @@ Binary16SignifAreaBits;
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * @param other <p>An arbitrary-precision binary floating-point number to
-     * compare with this one.</p>
-     * @param ctx <p>An arithmetic context. Flags will be set in this context only
-     * if {@code HasFlags} and {@code IsSimplified} of the context are true and
-     * only if an operand needed to be rounded before carrying out the operation.
-     * Can be null.</p>
-     * @return <p>The number 0 if both objects have the same value, or -1 if this
+     * @param other An arbitrary-precision binary floating-point number to compare
+     * with this one.
+     * @param ctx An arithmetic context. Flags will be set in this context only if
+     * {@code HasFlags} and {@code IsSimplified} of the context are true and only
+     * if an operand needed to be rounded before carrying out the operation. Can be
+     * null.
+     * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. Does
      * not signal flags if either value is signaling NaN. This implementation
-     * returns a positive number if.</p>
-     *
+     * returns a positive number if.
      */
     public int CompareToTotal(EFloat other, EContext ctx) {
       if (other == null) {
@@ -1678,18 +1576,17 @@ Binary16SignifAreaBits;
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * @param other <p>An arbitrary-precision binary floating-point number to
-     * compare with this one.</p>
-     * @param ctx <p>An arithmetic context. Flags will be set in this context only
-     * if {@code HasFlags} and {@code IsSimplified} of the context are true and
-     * only if an operand needed to be rounded before carrying out the operation.
-     * Can be null.</p>
-     * @return <p>The number 0 if both objects have the same value (ignoring their
+     * @param other An arbitrary-precision binary floating-point number to compare
+     * with this one.
+     * @param ctx An arithmetic context. Flags will be set in this context only if
+     * {@code HasFlags} and {@code IsSimplified} of the context are true and only
+     * if an operand needed to be rounded before carrying out the operation. Can be
+     * null.
+     * @return The number 0 if both objects have the same value (ignoring their
      * signs), or -1 if this object is less than the other value (ignoring their
      * signs), or 1 if this object is greater (ignoring their signs). Does not
      * signal flags if either value is signaling NaN. This implementation returns a
-     * positive number if.</p>
-     *
+     * positive number if.
      */
     public int CompareToTotalMagnitude(EFloat other, EContext ctx) {
       if (other == null) {
@@ -1717,12 +1614,11 @@ Binary16SignifAreaBits;
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * @param other <p>An arbitrary-precision binary floating-point number to
-     * compare with this one.</p>
-     * @return <p>The number 0 if both objects have the same value, or -1 if this
+     * @param other An arbitrary-precision binary floating-point number to compare
+     * with this one.
+     * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. This
-     * implementation returns a positive number if.</p>
-     *
+     * implementation returns a positive number if.
      */
     public int CompareToTotal(EFloat other) {
       if (other == null) {
@@ -1783,12 +1679,11 @@ Binary16SignifAreaBits;
      * "absolute value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li></ul>
-     * @param other <p>An arbitrary-precision binary floating-point number to
-     * compare with this one.</p>
-     * @return <p>The number 0 if both objects have the same value, or -1 if this
+     * @param other An arbitrary-precision binary floating-point number to compare
+     * with this one.
+     * @return The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. This
-     * implementation returns a positive number if.</p>
-     *
+     * implementation returns a positive number if.
      */
     public int CompareToTotalMagnitude(EFloat other) {
       if (other == null) {
@@ -1839,16 +1734,15 @@ Binary16SignifAreaBits;
      * equal.</p> <p>If this object or the other object is a quiet NaN or signaling
      * NaN, this method returns a quiet NaN, and will signal a FlagInvalid flag if
      * either is a signaling NaN.</p>
-     * @param other <p>An arbitrary-precision binary floating-point number.</p>
-     * @param ctx <p>An arithmetic context. The precision, rounding, and exponent
+     * @param other An arbitrary-precision binary floating-point number.
+     * @param ctx An arithmetic context. The precision, rounding, and exponent
      * range are ignored. If {@code HasFlags} of the context is true, will store
      * the flags resulting from the operation (the flags are in addition to the
-     * pre-existing flags). Can be null.</p>
-     * @return <p>Quiet NaN if this object or the other object is NaN, or 0 if both
+     * pre-existing flags). Can be null.
+     * @return Quiet NaN if this object or the other object is NaN, or 0 if both
      * objects have the same value, or -1 if this object is less than the other
      * value, or 1 if this object is greater. This implementation returns a
-     * positive number if.</p>
-     *
+     * positive number if.
      */
     public EFloat CompareToWithContext(
       EFloat other,
@@ -1857,14 +1751,13 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a number with the same value as this one, but copying the sign
+     * Returns a number with the same value as this one, but copying the sign
      * (positive or negative) of another number. (This method is similar to the
      * "copy-sign" operation in the General Decimal Arithmetic Specification,
-     * except this method does not necessarily return a copy of this object.).</p>
-     * @param other <p>A number whose sign will be copied.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code other} is null.</p>
-     *
+     * except this method does not necessarily return a copy of this object.).
+     * @param other A number whose sign will be copied.
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code other} is null.
      */
     public EFloat CopySign(EFloat other) {
       if (other == null) {
@@ -1878,14 +1771,14 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides this arbitrary-precision binary floating-point number by another
+     * Divides this arbitrary-precision binary floating-point number by another
      * arbitrary-precision binary floating-point number and returns the result;
      * returns NaN instead if the result would have a nonterminating binary
      * expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not
      * desired, use DivideToExponent, or use the Divide overload that takes an
-     * EContext.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @return <p>The result of dividing this arbitrary-precision binary
+     * EContext.
+     * @param divisor The number to divide by.
+     * @return The result of dividing this arbitrary-precision binary
      * floating-point number by another arbitrary-precision binary floating-point
      * number. Returns infinity if the divisor (this arbitrary-precision binary
      * floating-point number) is 0 and the dividend (the other arbitrary-precision
@@ -1894,8 +1787,7 @@ Binary16SignifAreaBits;
      * because it would have a nonterminating binary expansion (examples include 1
      * divided by any multiple of 3, such as 1/3 or 1/12). If this is not desired,
      * use DivideToExponent instead, or use the Divide overload that takes an
-     * {@code EContext} (such as {@code EContext.Binary64}) instead.</p>
-     *
+     * {@code EContext} (such as {@code EContext.Binary64}) instead.
      */
     public EFloat Divide(EFloat divisor) {
       return this.Divide(
@@ -1904,15 +1796,15 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides this arbitrary-precision binary floating-point number by another
-     * arbitrary-precision binary floating-point number and returns the result.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Divides this arbitrary-precision binary floating-point number by another
+     * arbitrary-precision binary floating-point number and returns the result.
+     * @param divisor The number to divide by.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.</p>
-     * @return <p>The result of dividing this arbitrary-precision binary
+     * precision is unlimited and no rounding is needed.
+     * @return The result of dividing this arbitrary-precision binary
      * floating-point number by another arbitrary-precision binary floating-point
      * number. Signals FlagDivideByZero and returns infinity if the divisor (this
      * arbitrary-precision binary floating-point number) is 0 and the dividend (the
@@ -1921,8 +1813,7 @@ Binary16SignifAreaBits;
      * are 0; or, either {@code ctx} is null or {@code ctx} 's precision is 0, and
      * the result would have a nonterminating binary expansion (examples include 1
      * divided by any multiple of 3, such as 1/3 or 1/12); or, the rounding mode is
-     * ERounding.None and the result is not exact.</p>
-     *
+     * ERounding.None and the result is not exact.
      */
     public EFloat Divide(
       EFloat divisor,
@@ -1931,12 +1822,11 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Calculates the quotient and remainder using the
-     * DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @return <p>A 2 element array consisting of the quotient and remainder in
-     * that order.</p>
-     *
+     * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+     * and the formula in RemainderNaturalScale.
+     * @param divisor The number to divide by.
+     * @return A 2 element array consisting of the quotient and remainder in that
+     * order.
      * @deprecated Renamed to DivRemNaturalScale.
  */
 @Deprecated
@@ -1946,21 +1836,20 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Calculates the quotient and remainder using the
-     * DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param ctx <p>An arithmetic context object to control the precision,
-     * rounding, and exponent range of the result. This context will be used only
-     * in the division portion of the remainder calculation; as a result, it's
-     * possible for the remainder to have a higher precision than given in this
-     * context. Flags will be set on the given context only if the context's {@code
+     * Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+     * and the formula in RemainderNaturalScale.
+     * @param divisor The number to divide by.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only in the
+     * division portion of the remainder calculation; as a result, it's possible
+     * for the remainder to have a higher precision than given in this context.
+     * Flags will be set on the given context only if the context's {@code
      * HasFlags} is true and the integer part of the division result doesn't fit
      * the precision and exponent range without rounding. Can be null, in which the
      * precision is unlimited and no additional rounding, other than the rounding
-     * down to an integer after division, is needed.</p>
-     * @return <p>A 2 element array consisting of the quotient and remainder in
-     * that order.</p>
-     *
+     * down to an integer after division, is needed.
+     * @return A 2 element array consisting of the quotient and remainder in that
+     * order.
      * @deprecated Renamed to DivRemNaturalScale.
  */
 @Deprecated
@@ -1971,30 +1860,29 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
-     * a particular exponent to the result.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param desiredExponentSmall <p>The desired exponent. A negative number
-     * places the cutoff point to the right of the usual radix point (so a negative
-     * number means the number of binary digit places to round to). A positive
-     * number places the cutoff point to the left of the usual radix point.</p>
-     * @param ctx <p>An arithmetic context object to control the rounding mode to
-     * use if the result must be scaled down to have the same exponent as this
-     * value. If the precision given in the context is other than 0, calls the
-     * Quantize method with both arguments equal to the result of the operation
-     * (and can signal FlagInvalid and return NaN if the result doesn't fit the
-     * given precision). If {@code HasFlags} of the context is true, will also
-     * store the flags resulting from the operation (the flags are in addition to
-     * the pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.</p>
-     * @return <p>The quotient of the two objects. Signals FlagDivideByZero and
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
+     * @param divisor The number to divide by.
+     * @param desiredExponentSmall The desired exponent. A negative number places
+     * the cutoff point to the right of the usual radix point (so a negative number
+     * means the number of binary digit places to round to). A positive number
+     * places the cutoff point to the left of the usual radix point.
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this value.
+     * If the precision given in the context is other than 0, calls the Quantize
+     * method with both arguments equal to the result of the operation (and can
+     * signal FlagInvalid and return NaN if the result doesn't fit the given
+     * precision). If {@code HasFlags} of the context is true, will also store the
+     * flags resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null, in which case the default rounding mode is
+     * HalfEven.
+     * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Signals
      * FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
      * are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context
      * defines an exponent range and the desired exponent is outside that range.
      * Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is
-     * ERounding.None and the result is not exact.</p>
-     *
+     * ERounding.None and the result is not exact.
      */
     public EFloat DivideToExponent(
       EFloat divisor,
@@ -2007,21 +1895,20 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
-     * a particular exponent to the result.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param desiredExponentSmall <p>The desired exponent. A negative number
-     * places the cutoff point to the right of the usual radix point (so a negative
-     * number means the number of binary digit places to round to). A positive
-     * number places the cutoff point to the left of the usual radix point.</p>
-     * @param rounding <p>The rounding mode to use if the result must be scaled
-     * down to have the same exponent as this value.</p>
-     * @return <p>The quotient of the two objects. Signals FlagDivideByZero and
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
+     * @param divisor The number to divide by.
+     * @param desiredExponentSmall The desired exponent. A negative number places
+     * the cutoff point to the right of the usual radix point (so a negative number
+     * means the number of binary digit places to round to). A positive number
+     * places the cutoff point to the left of the usual radix point.
+     * @param rounding The rounding mode to use if the result must be scaled down
+     * to have the same exponent as this value.
+     * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Signals
      * FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
      * are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding
-     * mode is ERounding.None and the result is not exact.</p>
-     *
+     * mode is ERounding.None and the result is not exact.
      */
     public EFloat DivideToExponent(
       EFloat divisor,
@@ -2034,30 +1921,29 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
-     * a particular exponent to the result.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param exponent <p>The desired exponent. A negative number places the cutoff
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
+     * @param divisor The number to divide by.
+     * @param exponent The desired exponent. A negative number places the cutoff
      * point to the right of the usual radix point (so a negative number means the
      * number of binary digit places to round to). A positive number places the
-     * cutoff point to the left of the usual radix point.</p>
-     * @param ctx <p>An arithmetic context object to control the rounding mode to
-     * use if the result must be scaled down to have the same exponent as this
-     * value. If the precision given in the context is other than 0, calls the
-     * Quantize method with both arguments equal to the result of the operation
-     * (and can signal FlagInvalid and return NaN if the result doesn't fit the
-     * given precision). If {@code HasFlags} of the context is true, will also
-     * store the flags resulting from the operation (the flags are in addition to
-     * the pre-existing flags). Can be null, in which case the default rounding
-     * mode is HalfEven.</p>
-     * @return <p>The quotient of the two objects. Signals FlagDivideByZero and
+     * cutoff point to the left of the usual radix point.
+     * @param ctx An arithmetic context object to control the rounding mode to use
+     * if the result must be scaled down to have the same exponent as this value.
+     * If the precision given in the context is other than 0, calls the Quantize
+     * method with both arguments equal to the result of the operation (and can
+     * signal FlagInvalid and return NaN if the result doesn't fit the given
+     * precision). If {@code HasFlags} of the context is true, will also store the
+     * flags resulting from the operation (the flags are in addition to the
+     * pre-existing flags). Can be null, in which case the default rounding mode is
+     * HalfEven.
+     * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Signals
      * FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
      * are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context
      * defines an exponent range and the desired exponent is outside that range.
      * Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is
-     * ERounding.None and the result is not exact.</p>
-     *
+     * ERounding.None and the result is not exact.
      */
     public EFloat DivideToExponent(
       EFloat divisor,
@@ -2067,20 +1953,19 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
-     * a particular exponent to the result.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param desiredExponent <p>The desired exponent. A negative number places the
+     * Divides two arbitrary-precision binary floating-point numbers, and gives a
+     * particular exponent to the result.
+     * @param divisor The number to divide by.
+     * @param desiredExponent The desired exponent. A negative number places the
      * cutoff point to the right of the usual radix point (so a negative number
      * means the number of binary digit places to round to). A positive number
-     * places the cutoff point to the left of the usual radix point.</p>
-     * @param rounding <p>The rounding mode to use if the result must be scaled
-     * down to have the same exponent as this value.</p>
-     * @return <p>The quotient of the two objects. Signals FlagDivideByZero and
+     * places the cutoff point to the left of the usual radix point.
+     * @param rounding The rounding mode to use if the result must be scaled down
+     * to have the same exponent as this value.
+     * @return The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Returns
      * not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the
-     * rounding mode is ERounding.None and the result is not exact.</p>
-     *
+     * rounding mode is ERounding.None and the result is not exact.
      */
     public EFloat DivideToExponent(
       EFloat divisor,
@@ -2093,15 +1978,14 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides two arbitrary-precision binary floating-point numbers, and
-     * returns the integer part of the result, rounded down, with the preferred
-     * exponent set to this value's exponent minus the divisor's exponent.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @return <p>The integer part of the quotient of the two objects. Signals
+     * Divides two arbitrary-precision binary floating-point numbers, and returns
+     * the integer part of the result, rounded down, with the preferred exponent
+     * set to this value's exponent minus the divisor's exponent.
+     * @param divisor The number to divide by.
+     * @return The integer part of the quotient of the two objects. Signals
      * FlagDivideByZero and returns infinity if the divisor is 0 and the dividend
      * is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the
-     * divisor and the dividend are 0.</p>
-     *
+     * divisor and the dividend are 0.
      */
     public EFloat DivideToIntegerNaturalScale(
       EFloat divisor) {
@@ -2111,19 +1995,18 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides this object by another object, and returns the integer part of
-     * the result (which is initially rounded down), with the preferred exponent
-     * set to this value's exponent minus the divisor's exponent.</p>
-     * @param divisor <p>An arbitrary-precision binary floating-point number.</p>
-     * @param ctx <p>The parameter {@code ctx} is an EContext object.</p>
-     * @return <p>The integer part of the quotient of the two objects. Signals
+     * Divides this object by another object, and returns the integer part of the
+     * result (which is initially rounded down), with the preferred exponent set to
+     * this value's exponent minus the divisor's exponent.
+     * @param divisor An arbitrary-precision binary floating-point number.
+     * @param ctx The parameter {@code ctx} is an EContext object.
+     * @return The integer part of the quotient of the two objects. Signals
      * FlagInvalid and returns not-a-number (NaN) if the return value would
      * overflow the exponent range. Signals FlagDivideByZero and returns infinity
      * if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
      * returns not-a-number (NaN) if the divisor and the dividend are 0. Signals
      * FlagInvalid and returns not-a-number (NaN) if the rounding mode is
-     * ERounding.None and the result is not exact.</p>
-     *
+     * ERounding.None and the result is not exact.
      */
     public EFloat DivideToIntegerNaturalScale(
       EFloat divisor,
@@ -2132,20 +2015,19 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides this object by another object, and returns the integer part of
-     * the result, with the exponent set to 0.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param ctx <p>An arithmetic context object to control the precision. The
+     * Divides this object by another object, and returns the integer part of the
+     * result, with the exponent set to 0.
+     * @param divisor The number to divide by.
+     * @param ctx An arithmetic context object to control the precision. The
      * rounding and exponent range settings of this context are ignored. If {@code
      * HasFlags} of the context is true, will also store the flags resulting from
      * the operation (the flags are in addition to the pre-existing flags). Can be
-     * null, in which case the precision is unlimited.</p>
-     * @return <p>The integer part of the quotient of the two objects. The exponent
+     * null, in which case the precision is unlimited.
+     * @return The integer part of the quotient of the two objects. The exponent
      * will be set to 0. Signals FlagDivideByZero and returns infinity if the
      * divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor and the dividend are 0, or if the result
-     * doesn't fit the given precision.</p>
-     *
+     * doesn't fit the given precision.
      */
     public EFloat DivideToIntegerZeroScale(
       EFloat divisor,
@@ -2154,17 +2036,16 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides this object by another binary floating-point number and returns a
-     * result with the same exponent as this object (the dividend).</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param rounding <p>The rounding mode to use if the result must be scaled
-     * down to have the same exponent as this value.</p>
-     * @return <p>The quotient of the two numbers. Signals FlagDivideByZero and
+     * Divides this object by another binary floating-point number and returns a
+     * result with the same exponent as this object (the dividend).
+     * @param divisor The number to divide by.
+     * @param rounding The rounding mode to use if the result must be scaled down
+     * to have the same exponent as this value.
+     * @return The quotient of the two numbers. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Signals
      * FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
      * are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding
-     * mode is ERounding.None and the result is not exact.</p>
-     *
+     * mode is ERounding.None and the result is not exact.
      */
     public EFloat DivideToSameExponent(
       EFloat divisor,
@@ -2176,47 +2057,45 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Divides this arbitrary-precision binary floating-point number by another
+     * Divides this arbitrary-precision binary floating-point number by another
      * arbitrary-precision binary floating-point number and returns a two-item
      * array containing the result of the division and the remainder, in that
      * order. The result of division is calculated as though by {@code
      * DivideToIntegerNaturalScale}, and the remainder is calculated as though by
-     * {@code RemainderNaturalScale}.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @return <p>An array of two items: the first is the result of the division as
-     * an arbitrary-precision binary floating-point number, and the second is the
+     * {@code RemainderNaturalScale}.
+     * @param divisor The number to divide by.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision binary floating-point number, and the second is the
      * remainder as an arbitrary-precision binary floating-point number. The result
      * of division is the result of the method on the two operands, and the
-     * remainder is the result of the Remainder method on the two operands.</p>
-     *
+     * remainder is the result of the Remainder method on the two operands.
      */
     public EFloat[] DivRemNaturalScale(EFloat divisor) {
       return this.DivRemNaturalScale(divisor, null);
     }
 
     /**
-     * <p>Divides this arbitrary-precision binary floating-point number by another
+     * Divides this arbitrary-precision binary floating-point number by another
      * arbitrary-precision binary floating-point number and returns a two-item
      * array containing the result of the division and the remainder, in that
      * order. The result of division is calculated as though by {@code
      * DivideToIntegerNaturalScale}, and the remainder is calculated as though by
-     * {@code RemainderNaturalScale}.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param ctx <p>An arithmetic context object to control the precision,
-     * rounding, and exponent range of the result. This context will be used only
-     * in the division portion of the remainder calculation; as a result, it's
-     * possible for the remainder to have a higher precision than given in this
-     * context. Flags will be set on the given context only if the context's {@code
+     * {@code RemainderNaturalScale}.
+     * @param divisor The number to divide by.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only in the
+     * division portion of the remainder calculation; as a result, it's possible
+     * for the remainder to have a higher precision than given in this context.
+     * Flags will be set on the given context only if the context's {@code
      * HasFlags} is true and the integer part of the division result doesn't fit
      * the precision and exponent range without rounding. Can be null, in which the
      * precision is unlimited and no additional rounding, other than the rounding
-     * down to an integer after division, is needed.</p>
-     * @return <p>An array of two items: the first is the result of the division as
-     * an arbitrary-precision binary floating-point number, and the second is the
+     * down to an integer after division, is needed.
+     * @return An array of two items: the first is the result of the division as an
+     * arbitrary-precision binary floating-point number, and the second is the
      * remainder as an arbitrary-precision binary floating-point number. The result
      * of division is the result of the method on the two operands, and the
-     * remainder is the result of the Remainder method on the two operands.</p>
-     *
+     * remainder is the result of the Remainder method on the two operands.
      */
     public EFloat[] DivRemNaturalScale(
       EFloat divisor,
@@ -2231,41 +2110,37 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Determines whether this object's significand, exponent, and properties
-     * are equal to those of another object. Not-a-number values are considered
-     * equal if the rest of their properties are equal.</p>
-     * @param other <p>An arbitrary-precision binary floating-point number.</p>
-     * @return <p>{@code true} if this object's significand and exponent are equal
-     * to those of another object; otherwise, {@code false}.</p>
-     *
+     * Determines whether this object's significand, exponent, and properties are
+     * equal to those of another object. Not-a-number values are considered equal
+     * if the rest of their properties are equal.
+     * @param other An arbitrary-precision binary floating-point number.
+     * @return {@code true} if this object's significand and exponent are equal to
+     * those of another object; otherwise, {@code false}.
      */
     public boolean equals(EFloat other) {
       return this.EqualsInternal(other);
     }
 
     /**
-     * <p>Determines whether this object's significand, exponent, and properties
-     * are equal to those of another object and that other object is an
+     * Determines whether this object's significand, exponent, and properties are
+     * equal to those of another object and that other object is an
      * arbitrary-precision binary floating-point number. Not-a-number values are
-     * considered equal if the rest of their properties are equal.</p>
-     * @param obj <p>The parameter {@code obj} is an arbitrary object.</p>
-     * @return <p> {@code true} if the objects are equal; otherwise, {@code false}.
-     * In this method, two objects are not equal if they don't have the same type
-     * or if one is null and the other isn't.</p>
-     *
+     * considered equal if the rest of their properties are equal.
+     * @param obj The parameter {@code obj} is an arbitrary object.
+     * @return {@code true} if the objects are equal; otherwise, {@code false}. In
+     * this method, two objects are not equal if they don't have the same type or
+     * if one is null and the other isn't.
      */
     @Override public boolean equals(Object obj) {
       return this.EqualsInternal(((obj instanceof EFloat) ? (EFloat)obj : null));
     }
 
     /**
-     * <p>Determines whether this object's significand and exponent are equal to
-     * those of another object.</p>
-     * @param otherValue <p>An arbitrary-precision binary floating-point
-     * number.</p>
-     * @return <p>{@code true} if this object's significand and exponent are equal
-     * to those of another object; otherwise, {@code false}.</p>
-     *
+     * Determines whether this object's significand and exponent are equal to those
+     * of another object.
+     * @param otherValue An arbitrary-precision binary floating-point number.
+     * @return {@code true} if this object's significand and exponent are equal to
+     * those of another object; otherwise, {@code false}.
      */
     public boolean EqualsInternal(EFloat otherValue) {
       if (otherValue == null) {
@@ -2277,39 +2152,37 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Finds e (the base of natural logarithms) raised to the power of this
-     * object's value.</p>
+     * Finds e (the base of natural logarithms) raised to the power of this
+     * object's value.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
      * exponential function's results are generally not exact.</i> (Unlike in the
      * General Binary Arithmetic Specification, any rounding mode is allowed.).</p>
-     * @return <p>Exponential of this object. If this object's value is 1, returns
-     * an approximation to " e" within the given precision. Signals FlagInvalid and
+     * @return Exponential of this object. If this object's value is 1, returns an
+     * approximation to " e" within the given precision. Signals FlagInvalid and
      * returns not-a-number (NaN) if the parameter {@code ctx} is null or the
-     * precision is unlimited (the context's Precision property is 0).</p>
-     *
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Exp(EContext ctx) {
       return MathValue.Exp(this, ctx);
     }
 
     /**
-     * <p>Finds e (the base of natural logarithms) raised to the power of this
+     * Finds e (the base of natural logarithms) raised to the power of this
      * object's value, and subtracts the result by 1 and returns the final result,
      * in a way that avoids loss of precision if the true result is very close to
-     * 0.</p>
+     * 0.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
      * exponential function's results are generally not exact.</i> (Unlike in the
      * General Binary Arithmetic Specification, any rounding mode is allowed.).</p>
-     * @return <p>Exponential of this object, minus 1. Signals FlagInvalid and
-     * returns not-a-number (NaN) if the parameter {@code ctx} is null or the
-     * precision is unlimited (the context's Precision property is 0).</p>
-     *
+     * @return Exponential of this object, minus 1. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the parameter {@code ctx} is null or the precision is
+     * unlimited (the context's Precision property is 0).
      */
     public EFloat ExpM1(EContext ctx) {
       EFloat value = this;
@@ -2377,10 +2250,9 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Calculates this object's hash code. No application or process IDs are
-     * used in the hash code calculation.</p>
-     * @return <p>A 32-bit signed integer.</p>
-     *
+     * Calculates this object's hash code. No application or process IDs are used
+     * in the hash code calculation.
+     * @return A 32-bit signed integer.
      */
     @Override public int hashCode() {
       int valueHashCode = 403796923;
@@ -2393,21 +2265,19 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets a value indicating whether this object is positive or negative
-     * infinity.</p>
-     * @return <p> {@code true} if this object is positive or negative infinity;
-     * otherwise, {@code false}.</p>
-     *
+     * Gets a value indicating whether this object is positive or negative
+     * infinity.
+     * @return {@code true} if this object is positive or negative infinity;
+     * otherwise, {@code false}.
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
     }
 
     /**
-     * <p>Gets a value indicating whether this object is not a number (NaN).</p>
-     * @return <p> {@code true} if this object is not a number (NaN); otherwise,
-     * {@code false}.</p>
-     *
+     * Gets a value indicating whether this object is not a number (NaN).
+     * @return {@code true} if this object is not a number (NaN); otherwise, {@code
+     * false}.
      */
     public boolean IsNaN() {
       return (this.flags & (BigNumberFlags.FlagQuietNaN |
@@ -2415,10 +2285,9 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns whether this object is negative infinity.</p>
-     * @return <p> {@code true} if this object is negative infinity; otherwise,
-     * {@code false}.</p>
-     *
+     * Returns whether this object is negative infinity.
+     * @return {@code true} if this object is negative infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -2427,10 +2296,9 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns whether this object is positive infinity.</p>
-     * @return <p> {@code true} if this object is positive infinity; otherwise,
-     * {@code false}.</p>
-     *
+     * Returns whether this object is positive infinity.
+     * @return {@code true} if this object is positive infinity; otherwise, {@code
+     * false}.
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -2438,89 +2306,81 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets a value indicating whether this object is a quiet not-a-number
-     * value.</p>
-     * @return <p> {@code true} if this object is a quiet not-a-number value;
-     * otherwise, {@code false}.</p>
-     *
+     * Gets a value indicating whether this object is a quiet not-a-number value.
+     * @return {@code true} if this object is a quiet not-a-number value;
+     * otherwise, {@code false}.
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
     }
 
     /**
-     * <p>Gets a value indicating whether this object is a signaling not-a-number
-     * value.</p>
-     * @return <p> {@code true} if this object is a signaling not-a-number value;
-     * otherwise, {@code false}.</p>
-     *
+     * Gets a value indicating whether this object is a signaling not-a-number
+     * value.
+     * @return {@code true} if this object is a signaling not-a-number value;
+     * otherwise, {@code false}.
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
     }
 
     /**
-     * <p>Finds the natural logarithm of this object, that is, the power (exponent)
+     * Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to equal
-     * this object's value.</p>
+     * this object's value.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
      * ln function's results are generally not exact.</i> (Unlike in the General
      * Binary Arithmetic Specification, any rounding mode is allowed.).</p>
-     * @return <p>Ln(this object). Signals the flag FlagInvalid and returns NaN if
+     * @return Ln(this object). Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the result would be a complex number with a real
      * part equal to Ln of this object's absolute value and an imaginary part equal
      * to pi, but the return value is still NaN.). Signals FlagInvalid and returns
      * not-a-number (NaN) if the parameter {@code ctx} is null or the precision is
      * unlimited (the context's Precision property is 0). Signals no flags and
-     * returns negative infinity if this object's value is 0.</p>
-     *
+     * returns negative infinity if this object's value is 0.
      */
     public EFloat Log(EContext ctx) {
       return MathValue.Ln(this, ctx);
     }
 
     /**
-     * <p>Finds the base-10 logarithm of this object, that is, the power (exponent)
-     * that the number 10 must be raised to in order to equal this object's
-     * value.</p>
+     * Finds the base-10 logarithm of this object, that is, the power (exponent)
+     * that the number 10 must be raised to in order to equal this object's value.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
      * ln function's results are generally not exact.</i> (Unlike in the General
      * Binary Arithmetic Specification, any rounding mode is allowed.).</p>
-     * @return <p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
+     * @return Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns
      * not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and
      * returns not-a-number (NaN) if the parameter {@code ctx} is null or the
-     * precision is unlimited (the context's Precision property is 0).</p>
-     *
+     * precision is unlimited (the context's Precision property is 0).
      */
     public EFloat Log10(EContext ctx) {
       return this.LogN(EFloat.FromInt32(10), ctx);
     }
 
     /**
-     * <p>Adds 1 to this object's value and finds the natural logarithm of the
-     * result, in a way that avoids loss of precision when this object's value is
-     * between 0 and 1.</p>
+     * Adds 1 to this object's value and finds the natural logarithm of the result,
+     * in a way that avoids loss of precision when this object's value is between 0
+     * and 1.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
      * ln function's results are generally not exact.</i> (Unlike in the General
      * Binary Arithmetic Specification, any rounding mode is allowed.).</p>
-     * @return <p>Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN
-     * if this object is less than -1 (the result would be a complex number with a
+     * @return Ln(1+(this object)). Signals the flag FlagInvalid and returns NaN if
+     * this object is less than -1 (the result would be a complex number with a
      * real part equal to Ln of 1 plus this object's absolute value and an
      * imaginary part equal to pi, but the return value is still NaN.). Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
      * null or the precision is unlimited (the context's Precision property is 0).
-     * Signals no flags and returns negative infinity if this object's value is
-     * 0.</p>
-     *
+     * Signals no flags and returns negative infinity if this object's value is 0.
      */
     public EFloat Log1P(EContext ctx) {
       EFloat value = this;
@@ -2581,20 +2441,15 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Finds the base-N logarithm of this object, that is, the power (exponent)
-     * that the number N must be raised to in order to equal this object's
-     * value.</p>
-     * @param baseValue <p>The parameter {@code baseValue} is a Numbers.EFloat
-     * object.</p>
-     * @param ctx <p>The parameter {@code ctx} is a Numbers.EContext object.</p>
-     * @return <p>Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
+     * Finds the base-N logarithm of this object, that is, the power (exponent)
+     * that the number N must be raised to in order to equal this object's value.
+     * @param baseValue The parameter {@code baseValue} is a Numbers.EFloat object.
+     * @param ctx The parameter {@code ctx} is a Numbers.EContext object.
+     * @return Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
      * returns not-a-number (NaN) if this object is less than 0. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
-     * null or the precision is unlimited (the context's Precision property is
-     * 0).</p>
-     * @throws NullPointerException <p>The parameter {@code baseValue} is
-     * null.</p>
-     *
+     * null or the precision is unlimited (the context's Precision property is 0).
+     * @throws NullPointerException The parameter {@code baseValue} is null.
      */
     public EFloat LogN(EFloat baseValue, EContext ctx) {
       EFloat value = this;
@@ -2672,66 +2527,62 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the left.</p>
-     * @param places <p>The number of binary digit places to move the radix point
-     * to the left. If this number is negative, instead moves the radix point to
-     * the right by this number's absolute value.</p>
-     * @return <p>A number whose exponent is decreased by {@code places}, but not
-     * to more than 0.</p>
-     *
+     * Returns a number similar to this number but with the radix point moved to
+     * the left.
+     * @param places The number of binary digit places to move the radix point to
+     * the left. If this number is negative, instead moves the radix point to the
+     * right by this number's absolute value.
+     * @return A number whose exponent is decreased by {@code places}, but not to
+     * more than 0.
      */
     public EFloat MovePointLeft(int places) {
       return this.MovePointLeft(EInteger.FromInt32(places), null);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the left.</p>
-     * @param places <p>The number of binary digit places to move the radix point
-     * to the left. If this number is negative, instead moves the radix point to
-     * the right by this number's absolute value.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Returns a number similar to this number but with the radix point moved to
+     * the left.
+     * @param places The number of binary digit places to move the radix point to
+     * the left. If this number is negative, instead moves the radix point to the
+     * right by this number's absolute value.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>A number whose exponent is decreased by {@code places}, but not
-     * to more than 0.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return A number whose exponent is decreased by {@code places}, but not to
+     * more than 0.
      */
     public EFloat MovePointLeft(int places, EContext ctx) {
       return this.MovePointLeft(EInteger.FromInt32(places), ctx);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the left.</p>
-     * @param bigPlaces <p>The number of binary digit places to move the radix
-     * point to the left. If this number is negative, instead moves the radix point
-     * to the right by this number's absolute value.</p>
-     * @return <p>A number whose exponent is decreased by {@code bigPlaces}, but
-     * not to more than 0.</p>
-     *
+     * Returns a number similar to this number but with the radix point moved to
+     * the left.
+     * @param bigPlaces The number of binary digit places to move the radix point
+     * to the left. If this number is negative, instead moves the radix point to
+     * the right by this number's absolute value.
+     * @return A number whose exponent is decreased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointLeft(EInteger bigPlaces) {
       return this.MovePointLeft(bigPlaces, null);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the left.</p>
-     * @param bigPlaces <p>The number of binary digit places to move the radix
-     * point to the left. If this number is negative, instead moves the radix point
-     * to the right by this number's absolute value.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Returns a number similar to this number but with the radix point moved to
+     * the left.
+     * @param bigPlaces The number of binary digit places to move the radix point
+     * to the left. If this number is negative, instead moves the radix point to
+     * the right by this number's absolute value.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>A number whose exponent is decreased by {@code bigPlaces}, but
-     * not to more than 0.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return A number whose exponent is decreased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointLeft(
       EInteger bigPlaces,
@@ -2741,66 +2592,62 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the right.</p>
-     * @param places <p>The number of binary digit places to move the radix point
-     * to the right. If this number is negative, instead moves the radix point to
-     * the left by this number's absolute value.</p>
-     * @return <p>A number whose exponent is increased by {@code places}, but not
-     * to more than 0.</p>
-     *
+     * Returns a number similar to this number but with the radix point moved to
+     * the right.
+     * @param places The number of binary digit places to move the radix point to
+     * the right. If this number is negative, instead moves the radix point to the
+     * left by this number's absolute value.
+     * @return A number whose exponent is increased by {@code places}, but not to
+     * more than 0.
      */
     public EFloat MovePointRight(int places) {
       return this.MovePointRight(EInteger.FromInt32(places), null);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the right.</p>
-     * @param places <p>The number of binary digit places to move the radix point
-     * to the right. If this number is negative, instead moves the radix point to
-     * the left by this number's absolute value.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Returns a number similar to this number but with the radix point moved to
+     * the right.
+     * @param places The number of binary digit places to move the radix point to
+     * the right. If this number is negative, instead moves the radix point to the
+     * left by this number's absolute value.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>A number whose exponent is increased by {@code places}, but not
-     * to more than 0.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return A number whose exponent is increased by {@code places}, but not to
+     * more than 0.
      */
     public EFloat MovePointRight(int places, EContext ctx) {
       return this.MovePointRight(EInteger.FromInt32(places), ctx);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the right.</p>
-     * @param bigPlaces <p>The number of binary digit places to move the radix
-     * point to the right. If this number is negative, instead moves the radix
-     * point to the left by this number's absolute value.</p>
-     * @return <p>A number whose exponent is increased by {@code bigPlaces}, but
-     * not to more than 0.</p>
-     *
+     * Returns a number similar to this number but with the radix point moved to
+     * the right.
+     * @param bigPlaces The number of binary digit places to move the radix point
+     * to the right. If this number is negative, instead moves the radix point to
+     * the left by this number's absolute value.
+     * @return A number whose exponent is increased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointRight(EInteger bigPlaces) {
       return this.MovePointRight(bigPlaces, null);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the radix point moved to
-     * the right.</p>
-     * @param bigPlaces <p>The number of binary digit places to move the radix
-     * point to the right. If this number is negative, instead moves the radix
-     * point to the left by this number's absolute value.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Returns a number similar to this number but with the radix point moved to
+     * the right.
+     * @param bigPlaces The number of binary digit places to move the radix point
+     * to the right. If this number is negative, instead moves the radix point to
+     * the left by this number's absolute value.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>A number whose exponent is increased by {@code bigPlaces}, but
-     * not to more than 0.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return A number whose exponent is increased by {@code bigPlaces}, but not
+     * to more than 0.
      */
     public EFloat MovePointRight(
       EInteger bigPlaces,
@@ -2824,18 +2671,16 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Multiplies this arbitrary-precision binary floating-point number by
-     * another arbitrary-precision binary floating-point number and returns the
-     * result. The exponent for the result is this arbitrary-precision binary
-     * floating-point number's exponent plus the other arbitrary-precision binary
-     * floating-point number's exponent.</p>
-     * @param otherValue <p>Another binary floating-point number.</p>
-     * @return <p>The product of the two numbers, that is, this arbitrary-precision
+     * Multiplies this arbitrary-precision binary floating-point number by another
+     * arbitrary-precision binary floating-point number and returns the result. The
+     * exponent for the result is this arbitrary-precision binary floating-point
+     * number's exponent plus the other arbitrary-precision binary floating-point
+     * number's exponent.
+     * @param otherValue Another binary floating-point number.
+     * @return The product of the two numbers, that is, this arbitrary-precision
      * binary floating-point number times another arbitrary-precision binary
-     * floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code otherValue} is
-     * null.</p>
-     *
+     * floating-point number.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EFloat Multiply(EFloat otherValue) {
       if (otherValue == null) {
@@ -2860,19 +2705,17 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Multiplies this arbitrary-precision binary floating-point number by
-     * another arbitrary-precision binary floating-point number and returns the
-     * result.</p>
-     * @param op <p>Another binary floating-point number.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Multiplies this arbitrary-precision binary floating-point number by another
+     * arbitrary-precision binary floating-point number and returns the result.
+     * @param op Another binary floating-point number.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>The product of the two numbers, that is, this arbitrary-precision
+     * precision is unlimited and rounding isn't needed.
+     * @return The product of the two numbers, that is, this arbitrary-precision
      * binary floating-point number times another arbitrary-precision binary
-     * floating-point number.</p>
-     *
+     * floating-point number.
      */
     public EFloat Multiply(
       EFloat op,
@@ -2881,12 +2724,11 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Multiplies by one binary floating-point number, and then adds another
-     * binary floating-point number.</p>
-     * @param multiplicand <p>The value to multiply.</p>
-     * @param augend <p>The value to add.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * Multiplies by one binary floating-point number, and then adds another binary
+     * floating-point number.
+     * @param multiplicand The value to multiply.
+     * @param augend The value to add.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat MultiplyAndAdd(
       EFloat multiplicand,
@@ -2895,18 +2737,17 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Multiplies by one value, and then adds another value.</p>
-     * @param op <p>The value to multiply.</p>
-     * @param augend <p>The value to add.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Multiplies by one value, and then adds another value.
+     * @param op The value to multiply.
+     * @param augend The value to add.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * precision is unlimited and rounding isn't needed. If the precision doesn't
      * indicate a simplified arithmetic, rounding and precision.Divide(exponent)
-     * adjustment is done only once, namely, after multiplying and adding.</p>
-     * @return <p>The result thisValue * multiplicand + augend.</p>
-     *
+     * adjustment is done only once, namely, after multiplying and adding.
+     * @return The result thisValue * multiplicand + augend.
      */
     public EFloat MultiplyAndAdd(
       EFloat op,
@@ -2916,20 +2757,19 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Multiplies by one value, and then subtracts another value.</p>
-     * @param op <p>The value to multiply.</p>
-     * @param subtrahend <p>The value to subtract.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Multiplies by one value, and then subtracts another value.
+     * @param op The value to multiply.
+     * @param subtrahend The value to subtract.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * precision is unlimited and rounding isn't needed. If the precision doesn't
      * indicate a simplified arithmetic, rounding and precision.Divide(exponent)
-     * adjustment is done only once, namely, after multiplying and subtracting.</p>
-     * @return <p>The result thisValue * multiplicand - subtrahend.</p>
-     * @throws NullPointerException <p>The parameter {@code op} or {@code
-     * subtrahend} is null.</p>
-     *
+     * adjustment is done only once, namely, after multiplying and subtracting.
+     * @return The result thisValue * multiplicand - subtrahend.
+     * @throws NullPointerException The parameter {@code op} or {@code subtrahend}
+     * is null.
      */
     public EFloat MultiplyAndSubtract(
       EFloat op,
@@ -2953,14 +2793,12 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Gets an object with the same value as this one, but with the sign
-     * reversed.</p>
-     * @return <p>An arbitrary-precision binary floating-point number. If this
-     * value is positive zero, returns negative zero. Returns signaling NaN if this
-     * value is signaling NaN. (In this sense, this method is similar to the
+     * Gets an object with the same value as this one, but with the sign reversed.
+     * @return An arbitrary-precision binary floating-point number. If this value
+     * is positive zero, returns negative zero. Returns signaling NaN if this value
+     * is signaling NaN. (In this sense, this method is similar to the
      * "copy-negate" operation in the General Decimal Arithmetic Specification,
-     * except this method does not necessarily return a copy of this object.).</p>
-     *
+     * except this method does not necessarily return a copy of this object.).
      */
     public EFloat Negate() {
       return new EFloat(
@@ -2970,73 +2808,68 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
-     * but with the sign reversed.</p>
-     * @param context <p>An arithmetic context to control the precision, rounding,
-     * and exponent range of the result. If {@code HasFlags} of the context is
-     * true, will also store the flags resulting from the operation (the flags are
-     * in addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>An arbitrary-precision binary floating-point number. If this
-     * value is positive zero, returns positive zero. Signals FlagInvalid and
-     * returns quiet NaN if this value is signaling NaN.</p>
-     *
+     * Returns a binary floating-point number with the same value as this object
+     * but with the sign reversed.
+     * @param context An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. If {@code HasFlags} of the context is true,
+     * will also store the flags resulting from the operation (the flags are in
+     * addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and rounding isn't needed.
+     * @return An arbitrary-precision binary floating-point number. If this value
+     * is positive zero, returns positive zero. Signals FlagInvalid and returns
+     * quiet NaN if this value is signaling NaN.
      */
     public EFloat Negate(EContext context) {
       return MathValue.Negate(this, context);
     }
 
     /**
-     * <p>Finds the largest value that's smaller than the given value.</p>
-     * @param ctx <p>An arithmetic context object to control the precision and
+     * Finds the largest value that's smaller than the given value.
+     * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
-     * pre-existing flags).</p>
-     * @return <p>Returns the largest value that's less than the given value.
-     * Returns negative infinity if the result is negative infinity. Signals
-     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
-     * null, the precision is 0, or {@code ctx} has an unlimited exponent
-     * range.</p>
-     *
+     * pre-existing flags).
+     * @return Returns the largest value that's less than the given value. Returns
+     * negative infinity if the result is negative infinity. Signals FlagInvalid
+     * and returns not-a-number (NaN) if the parameter {@code ctx} is null, the
+     * precision is 0, or {@code ctx} has an unlimited exponent range.
      */
     public EFloat NextMinus(EContext ctx) {
       return MathValue.NextMinus(this, ctx);
     }
 
     /**
-     * <p>Finds the smallest value that's greater than the given value.</p>
-     * @param ctx <p>An arithmetic context object to control the precision and
+     * Finds the smallest value that's greater than the given value.
+     * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
-     * pre-existing flags).</p>
-     * @return <p>Returns the smallest value that's greater than the given
+     * pre-existing flags).
+     * @return Returns the smallest value that's greater than the given
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter
      * {@code ctx} is null, the precision is 0, or {@code ctx} has an unlimited
-     * exponent range.</p>
-     *
+     * exponent range.
      */
     public EFloat NextPlus(EContext ctx) {
       return MathValue.NextPlus(this, ctx);
     }
 
     /**
-     * <p>Finds the next value that is closer to the other object's value than this
+     * Finds the next value that is closer to the other object's value than this
      * object's value. Returns a copy of this value with the same sign as the other
-     * value if both values are equal.</p>
-     * @param otherValue <p>An arbitrary-precision binary floating-point number
-     * that the return value will approach.</p>
-     * @param ctx <p>An arithmetic context object to control the precision and
+     * value if both values are equal.
+     * @param otherValue An arbitrary-precision binary floating-point number that
+     * the return value will approach.
+     * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
-     * pre-existing flags).</p>
-     * @return <p>Returns the next value that is closer to the other object' s
-     * value than this object's value. Signals FlagInvalid and returns NaN if the
+     * pre-existing flags).
+     * @return Returns the next value that is closer to the other object' s value
+     * than this object's value. Signals FlagInvalid and returns NaN if the
      * parameter {@code ctx} is null, the precision is 0, or {@code ctx} has an
-     * unlimited exponent range.</p>
-     *
+     * unlimited exponent range.
      */
     public EFloat NextToward(
       EFloat otherValue,
@@ -3045,90 +2878,83 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Rounds this object's value to a given precision, using the given rounding
+     * Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent, and also converts negative zero to positive
      * zero. The idiom {@code EDecimal.SignalingNaN.Plus(ctx)} is useful for
      * triggering an invalid operation and returning not-a-number (NaN) for custom
-     * arithmetic operations.</p>
-     * @param ctx <p>A context for controlling the precision, rounding mode, and
+     * arithmetic operations.
+     * @param ctx A context for controlling the precision, rounding mode, and
      * exponent range. Can be null, in which case the precision is unlimited and
-     * rounding isn't needed.</p>
-     * @return <p>The closest value to this object's value, rounded to the
-     * specified precision. If {@code ctx} is null or the precision and exponent
-     * range are unlimited, returns the same value as this object (or a quiet NaN
-     * if this object is a signaling NaN).</p>
-     *
+     * rounding isn't needed.
+     * @return The closest value to this object's value, rounded to the specified
+     * precision. If {@code ctx} is null or the precision and exponent range are
+     * unlimited, returns the same value as this object (or a quiet NaN if this
+     * object is a signaling NaN).
      */
     public EFloat Plus(EContext ctx) {
       return MathValue.Plus(this, ctx);
     }
 
     /**
-     * <p>Raises this object's value to the given exponent, using unlimited
-     * precision.</p>
-     * @param exponent <p>An arbitrary-precision binary floating-point number
-     * expressing the exponent to raise this object's value to.</p>
-     * @return <p>This^exponent. Returns not-a-number (NaN) if the exponent has a
-     * fractional part.</p>
-     *
+     * Raises this object's value to the given exponent, using unlimited precision.
+     * @param exponent An arbitrary-precision binary floating-point number
+     * expressing the exponent to raise this object's value to.
+     * @return This^exponent. Returns not-a-number (NaN) if the exponent has a
+     * fractional part.
      */
     public EFloat Pow(EFloat exponent) {
       return this.Pow(exponent, null);
     }
 
     /**
-     * <p>Raises this object's value to the given exponent.</p>
-     * @param exponent <p>An arbitrary-precision binary floating-point number
-     * expressing the exponent to raise this object's value to.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Raises this object's value to the given exponent.
+     * @param exponent An arbitrary-precision binary floating-point number
+     * expressing the exponent to raise this object's value to.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>This^exponent. Signals the flag FlagInvalid and returns NaN if
-     * this object and exponent are both 0; or if this value is less than 0 and the
+     * precision is unlimited and rounding isn't needed.
+     * @return This^exponent. Signals the flag FlagInvalid and returns NaN if this
+     * object and exponent are both 0; or if this value is less than 0 and the
      * exponent either has a fractional part or is infinity. Signals FlagInvalid
      * and returns not-a-number (NaN) if the parameter {@code ctx} is null or the
      * precision is unlimited (the context's Precision property is 0), and the
-     * exponent has a fractional part.</p>
-     *
+     * exponent has a fractional part.
      */
     public EFloat Pow(EFloat exponent, EContext ctx) {
       return MathValue.Power(this, exponent, ctx);
     }
 
     /**
-     * <p>Raises this object's value to the given exponent.</p>
-     * @param exponentSmall <p>The exponent to raise this object's value to.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Raises this object's value to the given exponent.
+     * @param exponentSmall The exponent to raise this object's value to.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>This^exponent. Signals the flag FlagInvalid and returns NaN if
-     * this object and exponent are both 0.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return This^exponent. Signals the flag FlagInvalid and returns NaN if this
+     * object and exponent are both 0.
      */
     public EFloat Pow(int exponentSmall, EContext ctx) {
       return this.Pow(EFloat.FromInt64(exponentSmall), ctx);
     }
 
     /**
-     * <p>Raises this object's value to the given exponent.</p>
-     * @param exponentSmall <p>The exponent to raise this object's value to.</p>
-     * @return <p>This^exponent. Returns not-a-number (NaN) if this object and
-     * exponent are both 0.</p>
-     *
+     * Raises this object's value to the given exponent.
+     * @param exponentSmall The exponent to raise this object's value to.
+     * @return This^exponent. Returns not-a-number (NaN) if this object and
+     * exponent are both 0.
      */
     public EFloat Pow(int exponentSmall) {
       return this.Pow(EFloat.FromInt64(exponentSmall), null);
     }
 
     /**
-     * <p>Finds the number of digits in this number's significand. Returns 1 if
-     * this value is 0, and 0 if this value is infinity or not-a-number (NaN).</p>
-     * @return <p>An arbitrary-precision integer.</p>
-     *
+     * Finds the number of digits in this number's significand. Returns 1 if this
+     * value is 0, and 0 if this value is infinity or not-a-number (NaN).
+     * @return An arbitrary-precision integer.
      */
     public EInteger Precision() {
       if (!this.isFinite()) {
@@ -3139,10 +2965,9 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns whether this object's value is an integer.</p>
-     * @return <p>{@code true} if this object's value is an integer; otherwise,
-     * {@code false}.</p>
-     *
+     * Returns whether this object's value is an integer.
+     * @return {@code true} if this object's value is an integer; otherwise, {@code
+     * false}.
      */
     public boolean IsInteger() {
       if (!this.isFinite()) {
@@ -3174,23 +2999,22 @@ Binary16SignifAreaBits;
      * radix point&#x2a;&#x2f; EContext.ForPrecision(25) /* 25-digit precision);&#x2a;&#x2f;</pre> <p>A
      * fixed-point binary arithmetic in which no digits come after the radix point
      * (a desired exponent of 0) is considered an "integer arithmetic".</p>
-     * @param desiredExponent <p>The desired exponent for the result. The exponent
-     * is the number of fractional digits in the result, expressed as a negative
+     * @param desiredExponent The desired exponent for the result. The exponent is
+     * the number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
-     * an integer.</p>
-     * @param ctx <p>An arithmetic context to control precision and rounding of the
+     * an integer.
+     * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
-     * HalfEven.</p>
-     * @return <p>A binary floating-point number with the same value as this object
+     * HalfEven.
+     * @return A binary floating-point number with the same value as this object
      * but with the exponent changed. Signals FlagInvalid and returns not-a-number
      * (NaN) if this object is infinity, if the rounded result can't fit the given
      * precision, or if the context defines an exponent range and the given
-     * exponent is outside that range.</p>
-     *
+     * exponent is outside that range.
      */
     public EFloat Quantize(
       EInteger desiredExponent,
@@ -3217,23 +3041,22 @@ Binary16SignifAreaBits;
      * EContext.ForPrecision(25) /* 25-digit precision);&#x2a;&#x2f;</pre> <p>A fixed-point
      * binary arithmetic in which no digits come after the radix point (a desired
      * exponent of 0) is considered an "integer arithmetic".</p>
-     * @param desiredExponentInt <p>The desired exponent for the result. The
-     * exponent is the number of fractional digits in the result, expressed as a
-     * negative number. Can also be positive, which eliminates lower-order places
-     * from the number. For example, -3 means round to the thousandth (10^-3,
-     * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds
-     * the number to an integer.</p>
-     * @param ctx <p>An arithmetic context to control precision and rounding of the
+     * @param desiredExponentInt The desired exponent for the result. The exponent
+     * is the number of fractional digits in the result, expressed as a negative
+     * number. Can also be positive, which eliminates lower-order places from the
+     * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
+     * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
+     * an integer.
+     * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
-     * HalfEven.</p>
-     * @return <p>A binary floating-point number with the same value as this object
+     * HalfEven.
+     * @return A binary floating-point number with the same value as this object
      * but with the exponent changed. Signals FlagInvalid and returns not-a-number
      * (NaN) if this object is infinity, if the rounded result can't fit the given
      * precision, or if the context defines an exponent range and the given
-     * exponent is outside that range.</p>
-     *
+     * exponent is outside that range.
      */
     public EFloat Quantize(
       int desiredExponentInt,
@@ -3256,24 +3079,23 @@ Binary16SignifAreaBits;
      * the radix point. A fixed-point binary arithmetic in which no digits come
      * after the radix point (a desired exponent of 0) is considered an "integer
      * arithmetic" .</p>
-     * @param otherValue <p>A binary floating-point number containing the desired
+     * @param otherValue A binary floating-point number containing the desired
      * exponent of the result. The significand is ignored. The exponent is the
      * number of fractional digits in the result, expressed as a negative number.
      * Can also be positive, which eliminates lower-order places from the number.
      * For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means
      * round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to
-     * an integer.</p>
-     * @param ctx <p>An arithmetic context to control precision and rounding of the
+     * an integer.
+     * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
-     * HalfEven.</p>
-     * @return <p>A binary floating-point number with the same value as this object
+     * HalfEven.
+     * @return A binary floating-point number with the same value as this object
      * but with the exponent changed. Signals FlagInvalid and returns not-a-number
      * (NaN) if the result can't fit the given precision without rounding, or if
      * the arithmetic context defines an exponent range and the given exponent is
-     * outside that range.</p>
-     *
+     * outside that range.
      */
     public EFloat Quantize(
       EFloat otherValue,
@@ -3285,40 +3107,38 @@ Binary16SignifAreaBits;
      * <p>Returns an object with the same numerical value as this one but with
      * trailing zeros removed from its significand. For example, 1.00 becomes 1.
      * </p> <p>If this object's value is 0, changes the exponent to 0.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and rounding isn't needed.</p>
-     * @return <p>This value with trailing zeros removed. Note that if the result
-     * has a very high exponent and the context says to clamp high exponents, there
-     * may still be some trailing zeros in the significand.</p>
-     *
+     * precision is unlimited and rounding isn't needed.
+     * @return This value with trailing zeros removed. Note that if the result has
+     * a very high exponent and the context says to clamp high exponents, there may
+     * still be some trailing zeros in the significand.
      */
     public EFloat Reduce(EContext ctx) {
       return MathValue.Reduce(this, ctx);
     }
 
     /**
-     * <p>Returns the remainder that would result when this arbitrary-precision
-     * binary floating-point number is divided by another arbitrary-precision
-     * binary floating-point number. The remainder is the number that remains when
-     * the absolute value of this arbitrary-precision binary floating-point number
-     * is divided (as though by DivideToIntegerZeroScale) by the absolute value of
-     * the other arbitrary-precision binary floating-point number; the remainder
-     * has the same sign (positive or negative) as this arbitrary-precision binary
-     * floating-point number.</p>
-     * @param divisor <p>An arbitrary-precision binary floating-point number.</p>
-     * @param ctx <p>The parameter {@code ctx} is an EContext object.</p>
-     * @return <p>The remainder that would result when this arbitrary-precision
-     * binary floating-point number is divided by another arbitrary-precision
-     * binary floating-point number. Signals FlagDivideByZero and returns infinity
-     * if the divisor (this arbitrary-precision binary floating-point number) is 0
-     * and the dividend (the other arbitrary-precision binary floating-point
-     * number) is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if
-     * the divisor and the dividend are 0, or if the result of the division doesn't
-     * fit the given precision.</p>
-     *
+     * Returns the remainder that would result when this arbitrary-precision binary
+     * floating-point number is divided by another arbitrary-precision binary
+     * floating-point number. The remainder is the number that remains when the
+     * absolute value of this arbitrary-precision binary floating-point number is
+     * divided (as though by DivideToIntegerZeroScale) by the absolute value of the
+     * other arbitrary-precision binary floating-point number; the remainder has
+     * the same sign (positive or negative) as this arbitrary-precision binary
+     * floating-point number.
+     * @param divisor An arbitrary-precision binary floating-point number.
+     * @param ctx The parameter {@code ctx} is an EContext object.
+     * @return The remainder that would result when this arbitrary-precision binary
+     * floating-point number is divided by another arbitrary-precision binary
+     * floating-point number. Signals FlagDivideByZero and returns infinity if the
+     * divisor (this arbitrary-precision binary floating-point number) is 0 and the
+     * dividend (the other arbitrary-precision binary floating-point number) is
+     * nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor
+     * and the dividend are 0, or if the result of the division doesn't fit the
+     * given precision.
      */
     public EFloat Remainder(
       EFloat divisor,
@@ -3327,17 +3147,16 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Finds the remainder that results when dividing two arbitrary-precision
+     * Finds the remainder that results when dividing two arbitrary-precision
      * binary floating-point numbers. The remainder is the value that remains when
      * the absolute value of this object is divided by the absolute value of the
      * other object; the remainder has the same sign (positive or negative) as this
-     * object's value.</p>
-     * @param divisor <p>An arbitrary-precision binary floating-point number.</p>
-     * @param ctx <p>The parameter {@code ctx} is an EContext object.</p>
-     * @return <p>The remainder of the two numbers. Signals FlagInvalid and returns
+     * object's value.
+     * @param divisor An arbitrary-precision binary floating-point number.
+     * @param ctx The parameter {@code ctx} is an EContext object.
+     * @return The remainder of the two numbers. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit the
-     * given precision.</p>
-     *
+     * given precision.
      */
     public EFloat RemainderNoRoundAfterDivide(
       EFloat divisor,
@@ -3346,11 +3165,10 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Calculates the remainder of a number by the formula {@code "this" -
-     * (("this" / "divisor") * "divisor")}.</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * Calculates the remainder of a number by the formula {@code "this" - (("this"
+     * / "divisor") * "divisor")}.
+     * @param divisor The number to divide by.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RemainderNaturalScale(
       EFloat divisor) {
@@ -3358,20 +3176,19 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Calculates the remainder of a number by the formula "this" - (("this" /
-     * "divisor") * "divisor").</p>
-     * @param divisor <p>The number to divide by.</p>
-     * @param ctx <p>An arithmetic context object to control the precision,
-     * rounding, and exponent range of the result. This context will be used only
-     * in the division portion of the remainder calculation; as a result, it's
-     * possible for the return value to have a higher precision than given in this
-     * context. Flags will be set on the given context only if the context's {@code
+     * Calculates the remainder of a number by the formula "this" - (("this" /
+     * "divisor") * "divisor").
+     * @param divisor The number to divide by.
+     * @param ctx An arithmetic context object to control the precision, rounding,
+     * and exponent range of the result. This context will be used only in the
+     * division portion of the remainder calculation; as a result, it's possible
+     * for the return value to have a higher precision than given in this context.
+     * Flags will be set on the given context only if the context's {@code
      * HasFlags} is true and the integer part of the division result doesn't fit
      * the precision and exponent range without rounding. Can be null, in which the
      * precision is unlimited and no additional rounding, other than the rounding
-     * down to an integer after division, is needed.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * down to an integer after division, is needed.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat RemainderNaturalScale(
       EFloat divisor,
@@ -3396,18 +3213,17 @@ Binary16SignifAreaBits;
      * the quotient, rounded down, is even, and the result's absolute value is half
      * of the divisor's absolute value.</li></ul> This function is also known as
      * the "IEEE Remainder" function.
-     * @param divisor <p>The number to divide by.</p>
-     * @param ctx <p>An arithmetic context object to control the precision. The
+     * @param divisor The number to divide by.
+     * @param ctx An arithmetic context object to control the precision. The
      * rounding and exponent range settings of this context are ignored (the
      * rounding mode is always treated as HalfEven). If {@code HasFlags} of the
      * context is true, will also store the flags resulting from the operation (the
      * flags are in addition to the pre-existing flags). Can be null, in which the
-     * precision is unlimited.</p>
-     * @return <p>The distance of the closest multiple. Signals FlagInvalid and
+     * precision is unlimited.
+     * @return The distance of the closest multiple. Signals FlagInvalid and
      * returns not-a-number (NaN) if the divisor is 0, or either the result of
      * integer division (the quotient) or the remainder wouldn't fit the given
-     * precision.</p>
-     *
+     * precision.
      */
     public EFloat RemainderNear(
       EFloat divisor,
@@ -3416,29 +3232,28 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to a new exponent if necessary. The resulting number's Exponent
      * property will not necessarily be the given exponent; use the Quantize method
-     * instead to give the result a particular exponent.</p>
-     * @param exponent <p>The minimum exponent the result can have. This is the
+     * instead to give the result a particular exponent.
+     * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
-     * an integer.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * an integer.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
-     * rounding mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest value
+     * rounding mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest value
      * representable in the given precision. If the result can't fit the precision,
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when rounding,
      * and the given exponent is outside of the valid range of the arithmetic
-     * context.</p>
-     *
+     * context.
      */
     public EFloat RoundToExponent(
       EInteger exponent,
@@ -3447,29 +3262,28 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to a new exponent if necessary. The resulting number's Exponent
      * property will not necessarily be the given exponent; use the Quantize method
-     * instead to give the result a particular exponent.</p>
-     * @param exponentSmall <p>The minimum exponent the result can have. This is
-     * the maximum number of fractional digits in the result, expressed as a
-     * negative number. Can also be positive, which eliminates lower-order places
-     * from the number. For example, -3 means round to the thousandth (10^-3,
-     * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds
-     * the number to an integer.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * instead to give the result a particular exponent.
+     * @param exponentSmall The minimum exponent the result can have. This is the
+     * maximum number of fractional digits in the result, expressed as a negative
+     * number. Can also be positive, which eliminates lower-order places from the
+     * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
+     * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
+     * an integer.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
-     * rounding mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest value
+     * rounding mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest value
      * representable in the given precision. If the result can't fit the precision,
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when rounding,
      * and the given exponent is outside of the valid range of the arithmetic
-     * context.</p>
-     *
+     * context.
      */
     public EFloat RoundToExponent(
       int exponentSmall,
@@ -3478,30 +3292,29 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to the given exponent, and signals an inexact flag if the result
      * would be inexact. The resulting number's Exponent property will not
      * necessarily be the given exponent; use the Quantize method instead to give
-     * the result a particular exponent.</p>
-     * @param exponent <p>The minimum exponent the result can have. This is the
+     * the result a particular exponent.
+     * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
-     * an integer.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * an integer.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
-     * rounding mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest value
+     * rounding mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest value
      * representable in the given precision. Signals FlagInvalid and returns
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to the given exponent when rounding, and the given exponent is
-     * outside of the valid range of the arithmetic context.</p>
-     *
+     * outside of the valid range of the arithmetic context.
      */
     public EFloat RoundToExponentExact(
       EInteger exponent,
@@ -3510,20 +3323,18 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary number with the same value as this object but rounded to
+     * Returns a binary number with the same value as this object but rounded to
      * the given exponent. The resulting number's Exponent property will not
      * necessarily be the given exponent; use the Quantize method instead to give
-     * the result a particular exponent.</p>
-     * @param exponent <p>The minimum exponent the result can have. This is the
+     * the result a particular exponent.
+     * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the eighth (10^-1, 1/8), and 3 means
-     * round to the eight (2^3, 8). A value of 0 rounds the number to an
-     * integer.</p>
-     * @param rounding <p>Desired mode for rounding this object's value.</p>
-     * @return <p>A binary number rounded to the closest value representable in the
-     * given precision.</p>
-     *
+     * round to the eight (2^3, 8). A value of 0 rounds the number to an integer.
+     * @param rounding Desired mode for rounding this object's value.
+     * @return A binary number rounded to the closest value representable in the
+     * given precision.
      */
     public EFloat RoundToExponentExact(
       EInteger exponent,
@@ -3535,30 +3346,29 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to the given exponent represented as a 32-bit signed integer,
      * and signals an inexact flag if the result would be inexact. The resulting
      * number's Exponent property will not necessarily be the given exponent; use
-     * the Quantize method instead to give the result a particular exponent.</p>
-     * @param exponentSmall <p>The minimum exponent the result can have. This is
-     * the maximum number of fractional digits in the result, expressed as a
-     * negative number. Can also be positive, which eliminates lower-order places
-     * from the number. For example, -3 means round to the thousandth (10^-3,
-     * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds
-     * the number to an integer.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * the Quantize method instead to give the result a particular exponent.
+     * @param exponentSmall The minimum exponent the result can have. This is the
+     * maximum number of fractional digits in the result, expressed as a negative
+     * number. Can also be positive, which eliminates lower-order places from the
+     * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
+     * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
+     * an integer.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
-     * rounding mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest value
+     * rounding mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest value
      * representable in the given precision. Signals FlagInvalid and returns
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to the given exponent when rounding, and the given exponent is
-     * outside of the valid range of the arithmetic context.</p>
-     *
+     * outside of the valid range of the arithmetic context.
      */
     public EFloat RoundToExponentExact(
       int exponentSmall,
@@ -3567,70 +3377,67 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to an integer, and signals an inexact flag if the result would
      * be inexact. The resulting number's Exponent property will not necessarily be
-     * 0; use the Quantize method instead to give the result an exponent of 0.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * 0; use the Quantize method instead to give the result an exponent of 0.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
-     * rounding mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest integer
+     * rounding mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest integer
      * representable in the given precision. Signals FlagInvalid and returns
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to 0 when rounding, and 0 is outside of the valid range of the
-     * arithmetic context.</p>
-     *
+     * arithmetic context.
      */
     public EFloat RoundToIntegerExact(EContext ctx) {
       return MathValue.RoundToExponentExact(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to an integer, without adding the {@code FlagInexact} or {@code
      * FlagRounded} flags. The resulting number's Exponent property will not
      * necessarily be 0; use the Quantize method instead to give the result an
-     * exponent of 0.</p>
-     * @param ctx <p>An arithmetic context to control precision and rounding of the
+     * exponent of 0.
+     * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags), except that this function will never add the {@code
      * FlagRounded} and {@code FlagInexact} flags (the only difference between this
      * and RoundToExponentExact). Can be null, in which case the default rounding
-     * mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest integer
+     * mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest integer
      * representable in the given precision. If the result can't fit the precision,
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is outside
-     * of the valid range of the arithmetic context.</p>
-     *
+     * of the valid range of the arithmetic context.
      */
     public EFloat RoundToIntegerNoRoundedFlag(EContext ctx) {
       return MathValue.RoundToExponentNoRoundedFlag(this, EInteger.FromInt32(0), ctx);
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to an integer, and signals an inexact flag if the result would
-     * be inexact.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * be inexact.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
-     * rounding mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest integer
+     * rounding mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest integer
      * representable in the given precision. Signals FlagInvalid and returns
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to 0 when rounding, and 0 is outside of the valid range of the
-     * arithmetic context.</p>
-     *
+     * arithmetic context.
      * @deprecated Renamed to RoundToIntegerExact.
  */
 @Deprecated
@@ -3639,23 +3446,22 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Returns a binary floating-point number with the same value as this object
+     * Returns a binary floating-point number with the same value as this object
      * but rounded to an integer, without adding the {@code FlagInexact} or {@code
-     * FlagRounded} flags.</p>
-     * @param ctx <p>An arithmetic context to control precision and rounding of the
+     * FlagRounded} flags.
+     * @param ctx An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags), except that this function will never add the {@code
      * FlagRounded} and {@code FlagInexact} flags (the only difference between this
      * and RoundToExponentExact). Can be null, in which case the default rounding
-     * mode is HalfEven.</p>
-     * @return <p>A binary floating-point number rounded to the closest integer
+     * mode is HalfEven.
+     * @return A binary floating-point number rounded to the closest integer
      * representable in the given precision. If the result can't fit the precision,
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is outside
-     * of the valid range of the arithmetic context.</p>
-     *
+     * of the valid range of the arithmetic context.
      * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
  */
 @Deprecated
@@ -3664,94 +3470,85 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Rounds this object's value to a given precision, using the given rounding
-     * mode and range of exponent.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Rounds this object's value to a given precision, using the given rounding
+     * mode and range of exponent.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.</p>
-     * @return <p>The closest value to this object's value, rounded to the
-     * specified precision. Returns the same value as this object if {@code ctx} is
-     * null or the precision and exponent range are unlimited.</p>
-     *
+     * precision is unlimited and no rounding is needed.
+     * @return The closest value to this object's value, rounded to the specified
+     * precision. Returns the same value as this object if {@code ctx} is null or
+     * the precision and exponent range are unlimited.
      */
     public EFloat RoundToPrecision(EContext ctx) {
       return MathValue.RoundToPrecision(this, ctx);
     }
 
     /**
-     * <p>Returns a number in which the value of this object is rounded to fit the
+     * Returns a number in which the value of this object is rounded to fit the
      * maximum precision allowed if it has more significant digits than the maximum
      * precision. The maximum precision allowed is given in an arithmetic context.
      * This method is designed for preparing operands to a custom arithmetic
      * operation in accordance with the "simplified" arithmetic given in Appendix A
-     * of the General Decimal Arithmetic Specification.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * of the General Decimal Arithmetic Specification.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
      * precision is unlimited. Signals the flag LostDigits if the input number has
      * greater precision than allowed and was rounded to a different numerical
-     * value in order to fit the precision.</p>
-     * @return <p>This object rounded to the given precision. Returns this object
-     * and signals no flags if {@code ctx} is null or specifies an unlimited
-     * precision, if this object is infinity or not-a-number (including signaling
-     * NaN), or if the number's value has no more significant digits than the
-     * maximum precision given in {@code ctx}.</p>
-     *
+     * value in order to fit the precision.
+     * @return This object rounded to the given precision. Returns this object and
+     * signals no flags if {@code ctx} is null or specifies an unlimited precision,
+     * if this object is infinity or not-a-number (including signaling NaN), or if
+     * the number's value has no more significant digits than the maximum precision
+     * given in {@code ctx}.
      */
     public EFloat PreRound(EContext ctx) {
       return NumberUtility.PreRound(this, ctx, MathValue);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the scale adjusted.</p>
-     * @param places <p>The parameter {@code places} is a 32-bit signed
-     * integer.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * Returns a number similar to this number but with the scale adjusted.
+     * @param places The parameter {@code places} is a 32-bit signed integer.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(int places) {
       return this.ScaleByPowerOfTwo(EInteger.FromInt32(places), null);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the scale adjusted.</p>
-     * @param places <p>The parameter {@code places} is a 32-bit signed
-     * integer.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Returns a number similar to this number but with the scale adjusted.
+     * @param places The parameter {@code places} is a 32-bit signed integer.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * addition to the pre-existing flags). Can be null.
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat ScaleByPowerOfTwo(int places, EContext ctx) {
       return this.ScaleByPowerOfTwo(EInteger.FromInt32(places), ctx);
     }
 
     /**
-     * <p>Returns a number similar to this number but with the scale adjusted.</p>
-     * @param bigPlaces <p>An arbitrary-precision integer.</p>
-     * @return <p>A number whose exponent is increased by {@code bigPlaces}.</p>
-     *
+     * Returns a number similar to this number but with the scale adjusted.
+     * @param bigPlaces An arbitrary-precision integer.
+     * @return A number whose exponent is increased by {@code bigPlaces}.
      */
     public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) {
       return this.ScaleByPowerOfTwo(bigPlaces, null);
     }
 
     /**
-     * <p>Returns a number similar to this number but with its scale adjusted.</p>
-     * @param bigPlaces <p>An arbitrary-precision integer.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Returns a number similar to this number but with its scale adjusted.
+     * @param bigPlaces An arbitrary-precision integer.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
-     * addition to the pre-existing flags). Can be null.</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     * @throws NullPointerException <p>The parameter {@code bigPlaces} is
-     * null.</p>
-     *
+     * addition to the pre-existing flags). Can be null.
+     * @return An arbitrary-precision binary floating-point number.
+     * @throws NullPointerException The parameter {@code bigPlaces} is null.
      */
     public EFloat ScaleByPowerOfTwo(
       EInteger bigPlaces,
@@ -3774,7 +3571,7 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Finds the square root of this object's value.</p>
+     * Finds the square root of this object's value.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
@@ -3782,19 +3579,18 @@ Binary16SignifAreaBits;
      * square root function's results are generally not exact for many inputs.</i>
      * (Unlike in the General Binary Arithmetic Specification, any rounding mode is
      * allowed.).</p>
-     * @return <p>The square root. Signals the flag FlagInvalid and returns NaN if
+     * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex number, but
      * the return value is still NaN). Signals FlagInvalid and returns not-a-number
      * (NaN) if the parameter {@code ctx} is null or the precision is unlimited
-     * (the context's Precision property is 0).</p>
-     *
+     * (the context's Precision property is 0).
      */
     public EFloat Sqrt(EContext ctx) {
       return MathValue.SquareRoot(this, ctx);
     }
 
     /**
-     * <p>Finds the square root of this object's value.</p>
+     * Finds the square root of this object's value.
      * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
@@ -3802,12 +3598,11 @@ Binary16SignifAreaBits;
      * square root function's results are generally not exact for many inputs.</i>
      * (Unlike in the General Binary Arithmetic Specification, any rounding mode is
      * allowed.).</p>
-     * @return <p>The square root. Signals the flag FlagInvalid and returns NaN if
+     * @return The square root. Signals the flag FlagInvalid and returns NaN if
      * this object is less than 0 (the square root would be a complex number, but
      * the return value is still NaN). Signals FlagInvalid and returns not-a-number
      * (NaN) if the parameter {@code ctx} is null or the precision is unlimited
-     * (the context's Precision property is 0).</p>
-     *
+     * (the context's Precision property is 0).
      * @deprecated Renamed to Sqrt.
  */
 @Deprecated
@@ -3816,40 +3611,37 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Subtracts an arbitrary-precision binary floating-point number from this
+     * Subtracts an arbitrary-precision binary floating-point number from this
      * arbitrary-precision binary floating-point number and returns the result. The
      * exponent for the result is the lower of this arbitrary-precision binary
      * floating-point number's exponent and the other arbitrary-precision binary
-     * floating-point number's exponent.</p>
-     * @param otherValue <p>The number to subtract from this instance's value.</p>
-     * @return <p>The difference between the two numbers, that is, this
+     * floating-point number's exponent.
+     * @param otherValue The number to subtract from this instance's value.
+     * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus another
      * arbitrary-precision binary floating-point number. If this
      * arbitrary-precision binary floating-point number is not-a-number (NaN),
-     * returns NaN.</p>
-     *
+     * returns NaN.
      */
     public EFloat Subtract(EFloat otherValue) {
       return this.Subtract(otherValue, null);
     }
 
     /**
-     * <p>Subtracts an arbitrary-precision binary floating-point number from this
-     * arbitrary-precision binary floating-point number and returns the result.</p>
-     * @param otherValue <p>The number to subtract from this instance's value.</p>
-     * @param ctx <p>An arithmetic context to control the precision, rounding, and
+     * Subtracts an arbitrary-precision binary floating-point number from this
+     * arbitrary-precision binary floating-point number and returns the result.
+     * @param otherValue The number to subtract from this instance's value.
+     * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
-     * precision is unlimited and no rounding is needed.</p>
-     * @return <p>The difference between the two numbers, that is, this
+     * precision is unlimited and no rounding is needed.
+     * @return The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus another
      * arbitrary-precision binary floating-point number. If this
      * arbitrary-precision binary floating-point number is not-a-number (NaN),
-     * returns NaN.</p>
-     * @throws NullPointerException <p>The parameter {@code otherValue} is
-     * null.</p>
-     *
+     * returns NaN.
+     * @throws NullPointerException The parameter {@code otherValue} is null.
      */
     public EFloat Subtract(
       EFloat otherValue,
@@ -3869,13 +3661,12 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Converts this value to a 64-bit floating-point number encoded in the IEEE
-     * 754 binary64 format.</p>
-     * @return <p>This number, converted to a 64-bit floating-point number encoded
-     * in the IEEE 754 binary64 format. The return value can be positive infinity
-     * or negative infinity if this value exceeds the range of a 64-bit floating
-     * point number.</p>
-     *
+     * Converts this value to a 64-bit floating-point number encoded in the IEEE
+     * 754 binary64 format.
+     * @return This number, converted to a 64-bit floating-point number encoded in
+     * the IEEE 754 binary64 format. The return value can be positive infinity or
+     * negative infinity if this value exceeds the range of a 64-bit floating point
+     * number.
      */
     public double ToDouble() {
       long value = this.ToDoubleBits();
@@ -3883,15 +3674,14 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a binary floating-point number from a 32-bit floating-point
-     * number encoded in the IEEE 754 binary32 format. This method computes the
-     * exact value of the floating point number, not an approximation, as is often
-     * the case by converting the floating point number to a string first.</p>
-     * @param value <p>A 32-bit binary floating-point number encoded in the IEEE
-     * 754 binary32 format.</p>
-     * @return <p>A binary floating-point number with the same floating-point value
-     * as {@code value}.</p>
-     *
+     * Creates a binary floating-point number from a 32-bit floating-point number
+     * encoded in the IEEE 754 binary32 format. This method computes the exact
+     * value of the floating point number, not an approximation, as is often the
+     * case by converting the floating point number to a string first.
+     * @param value A 32-bit binary floating-point number encoded in the IEEE 754
+     * binary32 format.
+     * @return A binary floating-point number with the same floating-point value as
+     * {@code value}.
      */
     public static EFloat FromSingleBits(int value) {
       boolean neg = (value >> (Binary32Bits - 1)) != 0;
@@ -3940,16 +3730,15 @@ Binary16SignifAreaBits;
     }
 
     /**
-     * <p>Creates a binary floating-point number from a binary floating-point
-     * number encoded in the IEEE 754 binary16 format (also known as a
-     * "half-precision" floating-point number). This method computes the exact
-     * value of the floating point number, not an approximation, as is often the
-     * case by converting the floating point number to a string first.</p>
-     * @param value <p>A binary floating-point number encoded in the IEEE 754
-     * binary16 format.</p>
-     * @return <p>A binary floating-point number with the same floating-point value
-     * as {@code value}.</p>
-     *
+     * Creates a binary floating-point number from a binary floating-point number
+     * encoded in the IEEE 754 binary16 format (also known as a "half-precision"
+     * floating-point number). This method computes the exact value of the floating
+     * point number, not an approximation, as is often the case by converting the
+     * floating point number to a string first.
+     * @param value A binary floating-point number encoded in the IEEE 754 binary16
+     * format.
+     * @return A binary floating-point number with the same floating-point value as
+     * {@code value}.
      */
     public static EFloat FromHalfBits(short value) {
       int ivalue = ((int)value) & 0xffff;
@@ -4007,11 +3796,10 @@ Binary16SignifAreaBits;
      * significand area are set to the lowest bits of this object's unsigned
      * significand, and the next-highest bit of the significand area is set if
      * those bits are all zeros and this is a signaling NaN.</p>
-     * @return <p>The closest 32-bit binary floating-point number to this value,
+     * @return The closest 32-bit binary floating-point number to this value,
      * expressed as an integer in the IEEE 754 binary32 format. The return value
      * can be positive infinity or negative infinity if this value exceeds the
-     * range of a 32-bit floating point number.</p>
-     *
+     * range of a 32-bit floating point number.
      */
     public int ToSingleBits() {
       if (this.IsPositiveInfinity()) {
@@ -4107,11 +3895,10 @@ Binary32SignifBits;
      * of this object's unsigned significand, and the next-highest bit of the
      * significand area is set if those bits are all zeros and this is a signaling
      * NaN.</p>
-     * @return <p>The closest binary floating-point number to this value, expressed
-     * as an integer in the IEEE 754 binary16 format. The return value can be
-     * positive infinity or negative infinity if this value exceeds the range of a
-     * floating-point number in the binary16 format.</p>
-     *
+     * @return The closest binary floating-point number to this value, expressed as
+     * an integer in the IEEE 754 binary16 format. The return value can be positive
+     * infinity or negative infinity if this value exceeds the range of a
+     * floating-point number in the binary16 format.
      */
     public short ToHalfBits() {
       if (this.IsPositiveInfinity()) {
@@ -4206,11 +3993,10 @@ Binary16SignifBits;
      * significand area are set to the lowest bits of this object's unsigned
      * significand, and the next-highest bit of the significand area is set if
      * those bits are all zeros and this is a signaling NaN.</p>
-     * @return <p>The closest 64-bit binary floating-point number to this value,
+     * @return The closest 64-bit binary floating-point number to this value,
      * expressed as an integer in the IEEE 754 binary64 format. The return value
      * can be positive infinity or negative infinity if this value exceeds the
-     * range of a 64-bit floating point number.</p>
-     *
+     * range of a 64-bit floating point number.
      */
     public long ToDoubleBits() {
       if (this.IsPositiveInfinity()) {
@@ -4296,45 +4082,40 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision decimal number.</p>
-     * @return <p>This number, converted to an arbitrary-precision decimal
-     * number.</p>
-     *
+     * Converts this value to an arbitrary-precision decimal number.
+     * @return This number, converted to an arbitrary-precision decimal number.
      */
     public EDecimal ToEDecimal() {
       return EDecimal.FromEFloat(this);
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision integer. Any fractional
-     * part of this value will be discarded when converting to an
-     * arbitrary-precision integer. Note that depending on the value, especially
-     * the exponent, generating the arbitrary-precision integer may require a huge
-     * amount of memory. Use the ToSizedEInteger method to convert a number to an
-     * EInteger only if the integer fits in a bounded bit range; that method will
-     * throw an exception on overflow.</p>
-     * @return <p>An arbitrary-precision integer.</p>
-     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
-     * (NaN).</p>
-     *
+     * Converts this value to an arbitrary-precision integer. Any fractional part
+     * of this value will be discarded when converting to an arbitrary-precision
+     * integer. Note that depending on the value, especially the exponent,
+     * generating the arbitrary-precision integer may require a huge amount of
+     * memory. Use the ToSizedEInteger method to convert a number to an EInteger
+     * only if the integer fits in a bounded bit range; that method will throw an
+     * exception on overflow.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
      */
     public EInteger ToEInteger() {
       return this.ToEIntegerInternal(false);
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision integer, checking whether
-     * the value contains a fractional part. Note that depending on the value,
+     * Converts this value to an arbitrary-precision integer, checking whether the
+     * value contains a fractional part. Note that depending on the value,
      * especially the exponent, generating the arbitrary-precision integer may
      * require a huge amount of memory. Use the ToSizedEIntegerIfExact method to
      * convert a number to an EInteger only if the integer fits in a bounded bit
-     * range; that method will throw an exception on overflow.</p>
-     * @return <p>An arbitrary-precision integer.</p>
-     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
-     * (NaN).</p>
-     * @throws ArithmeticException <p>This object's value is not an exact
-     * integer.</p>
-     *
+     * range; that method will throw an exception on overflow.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
+     * @throws ArithmeticException This object's value is not an exact integer.
      * @deprecated Renamed to ToEIntegerIfExact.
  */
 @Deprecated
@@ -4343,37 +4124,33 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision integer, checking whether
-     * the value contains a fractional part. Note that depending on the value,
+     * Converts this value to an arbitrary-precision integer, checking whether the
+     * value contains a fractional part. Note that depending on the value,
      * especially the exponent, generating the arbitrary-precision integer may
      * require a huge amount of memory. Use the ToSizedEIntegerIfExact method to
      * convert a number to an EInteger only if the integer fits in a bounded bit
-     * range; that method will throw an exception on overflow.</p>
-     * @return <p>An arbitrary-precision integer.</p>
-     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
-     * (NaN).</p>
-     * @throws ArithmeticException <p>This object's value is not an exact
-     * integer.</p>
-     *
+     * range; that method will throw an exception on overflow.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
+     * (NaN).
+     * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToEIntegerIfExact() {
       return this.ToEIntegerInternal(true);
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision decimal number, then
-     * returns the value of that decimal's ToEngineeringString method.</p>
-     * @return <p>A text string.</p>
-     *
+     * Converts this value to an arbitrary-precision decimal number, then returns
+     * the value of that decimal's ToEngineeringString method.
+     * @return A text string.
      */
     public String ToEngineeringString() {
       return this.ToEDecimal().ToEngineeringString();
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision decimal number.</p>
-     * @return <p>An arbitrary-precision decimal number.</p>
-     *
+     * Converts this value to an arbitrary-precision decimal number.
+     * @return An arbitrary-precision decimal number.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -4382,9 +4159,8 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this value to a string, but without exponential notation.</p>
-     * @return <p>A text string.</p>
-     *
+     * Converts this value to a string, but without exponential notation.
+     * @return A text string.
      */
     public String ToPlainString() {
       return this.ToEDecimal().ToPlainString();
@@ -4408,19 +4184,18 @@ Binary16SignifBits;
      * an EFloat number to its shortest round-tripping decimal form using the same
      * precision as the {@code double} type in Java and.NET:</p> <pre> string str =
      * efloat.ToShortestString(EContext.Binary64); </pre>
-     * @param ctx <p>An arithmetic context to control precision (in bits),
-     * rounding, and exponent range of the rounded number. If {@code HasFlags} of
-     * the context is true, will also store the flags resulting from the operation
-     * (the flags are in addition to the pre-existing flags). Can be null. If this
-     * parameter is null or defines no maximum precision, returns the same value as
-     * the toString() method.</p>
-     * @return <p>Shortest decimal form of this number's value for the given
+     * @param ctx An arithmetic context to control precision (in bits), rounding,
+     * and exponent range of the rounded number. If {@code HasFlags} of the context
+     * is true, will also store the flags resulting from the operation (the flags
+     * are in addition to the pre-existing flags). Can be null. If this parameter
+     * is null or defines no maximum precision, returns the same value as the
+     * toString() method.
+     * @return Shortest decimal form of this number's value for the given
      * arithmetic context. The text string will be in exponential notation
      * (expressed as a number 1 or greater, but less than 10, times a power of 10)
      * if the number's first nonzero decimal digit is more than five digits after
      * the decimal point, or if the number's exponent is greater than 0 and its
-     * value is 10, 000, 000 or greater.</p>
-     *
+     * value is 10, 000, 000 or greater.
      */
     public String ToShortestString(EContext ctx) {
       if (ctx == null || !ctx.getHasMaxPrecision()) {
@@ -4508,10 +4283,9 @@ Binary16SignifBits;
      * those bits are all zeros and this is a signaling NaN. Unfortunately, in
      * the.NET implementation, the return value of this method may be a quiet NaN
      * even if a signaling NaN would otherwise be generated.</p>
-     * @return <p>The closest 32-bit binary floating-point number to this value.
-     * The return value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 32-bit floating point number.</p>
-     *
+     * @return The closest 32-bit binary floating-point number to this value. The
+     * return value can be positive infinity or negative infinity if this value
+     * exceeds the range of a 32-bit floating point number.
      */
     public float ToSingle() {
       int sb = this.ToSingleBits();
@@ -4519,26 +4293,24 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to a text string.</p>
-     * @return <p>A string representation of this object. The value is converted to
-     * a decimal number (using the EDecimal.FromEFloat method) and the decimal form
+     * Converts this number's value to a text string.
+     * @return A string representation of this object. The value is converted to a
+     * decimal number (using the EDecimal.FromEFloat method) and the decimal form
      * of this number's value is returned. The text string will be in exponential
      * notation (expressed as a number 1 or greater, but less than 10, times a
      * power of 10) if the converted decimal number's exponent (EDecimal's Exponent
      * property) is greater than 0 or if the number's first nonzero decimal digit
-     * is more than five digits after the decimal point.</p>
-     *
+     * is more than five digits after the decimal point.
      */
     @Override public String toString() {
       return EDecimal.FromEFloat(this).toString();
     }
 
     /**
-     * <p>Returns the unit in the last place. The significand will be 1 and the
+     * Returns the unit in the last place. The significand will be 1 and the
      * exponent will be this number's exponent. Returns 1 with an exponent of 0 if
-     * this number is infinity or not-a-number (NaN).</p>
-     * @return <p>An arbitrary-precision binary floating-point number.</p>
-     *
+     * this number is infinity or not-a-number (NaN).
+     * @return An arbitrary-precision binary floating-point number.
      */
     public EFloat Ulp() {
       return (!this.isFinite()) ? EFloat.One :
@@ -4633,38 +4405,35 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision integer by discarding its
+     * Converts this value to an arbitrary-precision integer by discarding its
      * fractional part and checking whether the resulting integer overflows the
-     * given signed bit count.</p>
-     * @param maxBitLength <p>The maximum number of signed bits the integer can
-     * have. The integer's value may not be less than -(2^maxBitLength) or greater
-     * than (2^maxBitLength) - 1.</p>
-     * @return <p>An arbitrary-precision integer.</p>
-     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * given signed bit count.
+     * @param maxBitLength The maximum number of signed bits the integer can have.
+     * The integer's value may not be less than -(2^maxBitLength) or greater than
+     * (2^maxBitLength) - 1.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN), or this number's value, once converted to an integer by discarding
      * its fractional part, is less than -(2^maxBitLength) or greater than
-     * (2^maxBitLength) - 1.</p>
-     *
+     * (2^maxBitLength) - 1.
      */
     public EInteger ToSizedEInteger(int maxBitLength) {
       return this.ToSizedEInteger(maxBitLength, false);
     }
 
     /**
-     * <p>Converts this value to an arbitrary-precision integer, only if this
-     * number's value is an exact integer and that integer does not overflow the
-     * given signed bit count.</p>
-     * @param maxBitLength <p>The maximum number of signed bits the integer can
-     * have. The integer's value may not be less than -(2^maxBitLength) or greater
-     * than (2^maxBitLength) - 1.</p>
-     * @return <p>An arbitrary-precision integer.</p>
-     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * Converts this value to an arbitrary-precision integer, only if this number's
+     * value is an exact integer and that integer does not overflow the given
+     * signed bit count.
+     * @param maxBitLength The maximum number of signed bits the integer can have.
+     * The integer's value may not be less than -(2^maxBitLength) or greater than
+     * (2^maxBitLength) - 1.
+     * @return An arbitrary-precision integer.
+     * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN), or this number's value, once converted to an integer by discarding
      * its fractional part, is less than -(2^maxBitLength) or greater than
-     * (2^maxBitLength) - 1.</p>
-     * @throws ArithmeticException <p>This object's value is not an exact
-     * integer.</p>
-     *
+     * (2^maxBitLength) - 1.
+     * @throws ArithmeticException This object's value is not an exact integer.
      */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
       return this.ToSizedEInteger(maxBitLength, true);
@@ -4746,39 +4515,35 @@ Binary16SignifBits;
 
     private static final class BinaryMathHelper implements IRadixMathHelper<EFloat> {
       /**
-       * <p>This is an internal method.</p>
-       * @return <p>A 32-bit signed integer.</p>
-       *
+       * This is an internal method.
+       * @return A 32-bit signed integer.
        */
       public int GetRadix() {
         return 2;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param value <p>An arbitrary-precision binary floating-point number.</p>
-       * @return <p>A 32-bit signed integer.</p>
-       *
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return A 32-bit signed integer.
        */
       public int GetSign(EFloat value) {
         return value.signum();
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param value <p>An arbitrary-precision binary floating-point number.</p>
-       * @return <p>An arbitrary-precision integer.</p>
-       *
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return An arbitrary-precision integer.
        */
       public EInteger GetMantissa(EFloat value) {
         return value.unsignedMantissa.ToEInteger();
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param value <p>An arbitrary-precision binary floating-point number.</p>
-       * @return <p>An arbitrary-precision integer.</p>
-       *
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return An arbitrary-precision integer.
        */
       public EInteger GetExponent(EFloat value) {
         return value.exponent.ToEInteger();
@@ -4797,14 +4562,12 @@ Binary16SignifBits;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param bigint <p>An arbitrary-precision integer.</p>
-       * @param lastDigit <p>The parameter {@code lastDigit} is a 32-bit signed
-       * integer.</p>
-       * @param olderDigits <p>The parameter {@code olderDigits} is a 32-bit signed
-       * integer.</p>
-       * @return <p>An IShiftAccumulator object.</p>
-       *
+       * This is an internal method.
+       * @param bigint An arbitrary-precision integer.
+       * @param lastDigit The parameter {@code lastDigit} is a 32-bit signed integer.
+       * @param olderDigits The parameter {@code olderDigits} is a 32-bit signed
+       * integer.
+       * @return An IShiftAccumulator object.
        */
       public IShiftAccumulator CreateShiftAccumulatorWithDigits(
         EInteger bigint,
@@ -4831,11 +4594,10 @@ Binary16SignifBits;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param num <p>An arbitrary-precision integer.</p>
-       * @param den <p>Another arbitrary-precision integer.</p>
-       * @return <p>A FastInteger object.</p>
-       *
+       * This is an internal method.
+       * @param num An arbitrary-precision integer.
+       * @param den Another arbitrary-precision integer.
+       * @return A FastInteger object.
        */
       public FastInteger DivisionShift(EInteger num, EInteger den) {
         if (den.isZero()) {
@@ -4851,11 +4613,10 @@ Binary16SignifBits;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param bigint <p>Another arbitrary-precision integer.</p>
-       * @param power <p>A fast integer.</p>
-       * @return <p>An arbitrary-precision integer.</p>
-       *
+       * This is an internal method.
+       * @param bigint Another arbitrary-precision integer.
+       * @param power A fast integer.
+       * @return An arbitrary-precision integer.
        */
       public EInteger MultiplyByRadixPower(
         EInteger bigint,
@@ -4886,24 +4647,20 @@ Binary16SignifBits;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param value <p>An arbitrary-precision binary floating-point number.</p>
-       * @return <p>A 32-bit signed integer.</p>
-       *
+       * This is an internal method.
+       * @param value An arbitrary-precision binary floating-point number.
+       * @return A 32-bit signed integer.
        */
       public int GetFlags(EFloat value) {
         return value.flags;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param mantissa <p>The parameter {@code mantissa} is a Numbers.EInteger
-       * object.</p>
-       * @param exponent <p>The parameter {@code exponent} is an internal
-       * parameter.</p>
-       * @param flags <p>The parameter {@code flags} is an internal parameter.</p>
-       * @return <p>An arbitrary-precision binary floating-point number.</p>
-       *
+       * This is an internal method.
+       * @param mantissa The parameter {@code mantissa} is a Numbers.EInteger object.
+       * @param exponent The parameter {@code exponent} is an internal parameter.
+       * @param flags The parameter {@code flags} is an internal parameter.
+       * @return An arbitrary-precision binary floating-point number.
        */
       public EFloat CreateNewWithFlags(
         EInteger mantissa,
@@ -4925,19 +4682,17 @@ Binary16SignifBits;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @return <p>A 32-bit signed integer.</p>
-       *
+       * This is an internal method.
+       * @return A 32-bit signed integer.
        */
       public int GetArithmeticSupport() {
         return BigNumberFlags.FiniteAndNonFinite;
       }
 
       /**
-       * <p>This is an internal method.</p>
-       * @param val <p>The parameter {@code val} is a 32-bit signed integer.</p>
-       * @return <p>An arbitrary-precision binary floating-point number.</p>
-       *
+       * This is an internal method.
+       * @param val The parameter {@code val} is a 32-bit signed integer.
+       * @return An arbitrary-precision binary floating-point number.
        */
       public EFloat ValueOf(int val) {
         return FromInt32(val);
@@ -4945,22 +4700,18 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Returns one added to this arbitrary-precision binary floating-point
-     * number.</p>
-     * @return <p>The given arbitrary-precision binary floating-point number plus
-     * one.</p>
-     *
+     * Returns one added to this arbitrary-precision binary floating-point number.
+     * @return The given arbitrary-precision binary floating-point number plus one.
      */
     public EFloat Increment() {
       return this.Add(1);
     }
 
     /**
-     * <p>Returns one subtracted from this arbitrary-precision binary
-     * floating-point number.</p>
-     * @return <p>The given arbitrary-precision binary floating-point number minus
-     * one.</p>
-     *
+     * Returns one subtracted from this arbitrary-precision binary floating-point
+     * number.
+     * @return The given arbitrary-precision binary floating-point number minus
+     * one.
      */
     public EFloat Decrement() {
       return this.Subtract(1);
@@ -4969,14 +4720,13 @@ Binary16SignifBits;
     // Begin integer conversions
 
     /**
-     * <p>Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
      * byte (from 0 to 255) after converting it to an integer by discarding its
-     * fractional part.</p>
-     * @return <p>This number's value, truncated to a byte (from 0 to 255).</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * fractional part.
+     * @return This number's value, truncated to a byte (from 0 to 255).
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional part, is
-     * less than 0 or greater than 255.</p>
-     *
+     * less than 0 or greater than 255.
      */
     public byte ToByteChecked() {
       if (!this.isFinite()) {
@@ -4987,24 +4737,22 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to an integer by discarding its fractional
+     * Converts this number's value to an integer by discarding its fractional
      * part, and returns the least-significant bits of its two's-complement form as
-     * a byte (from 0 to 255).</p>
-     * @return <p>This number, converted to a byte (from 0 to 255). Returns 0 if
-     * this value is infinity or not-a-number.</p>
-     *
+     * a byte (from 0 to 255).
+     * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
+     * value is infinity or not-a-number.
      */
     public byte ToByteUnchecked() {
       return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
     }
 
     /**
-     * <p>Converts this number's value to a byte (from 0 to 255) if it can fit in a
-     * byte (from 0 to 255) without rounding to a different numerical value.</p>
-     * @return <p>This number's value as a byte (from 0 to 255).</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
-     * not an exact integer, or is less than 0 or greater than 255.</p>
-     *
+     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) without rounding to a different numerical value.
+     * @return This number's value as a byte (from 0 to 255).
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than 0 or greater than 255.
      */
     public byte ToByteIfExact() {
       if (!this.isFinite()) {
@@ -5014,12 +4762,11 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts a byte (from 0 to 255) to an arbitrary-precision binary
-     * floating-point number.</p>
-     * @param inputByte <p>The number to convert as a byte (from 0 to 255).</p>
-     * @return <p>This number's value as an arbitrary-precision binary
-     * floating-point number.</p>
-     *
+     * Converts a byte (from 0 to 255) to an arbitrary-precision binary
+     * floating-point number.
+     * @param inputByte The number to convert as a byte (from 0 to 255).
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
     public static EFloat FromByte(byte inputByte) {
       int val = ((int)inputByte) & 0xff;
@@ -5027,14 +4774,13 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to a 16-bit signed integer if it can fit in
-     * a 16-bit signed integer after converting it to an integer by discarding its
-     * fractional part.</p>
-     * @return <p>This number's value, truncated to a 16-bit signed integer.</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer after converting it to an integer by discarding its
+     * fractional part.
+     * @return This number's value, truncated to a 16-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional part, is
-     * less than -32768 or greater than 32767.</p>
-     *
+     * less than -32768 or greater than 32767.
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -5045,24 +4791,22 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to an integer by discarding its fractional
+     * Converts this number's value to an integer by discarding its fractional
      * part, and returns the least-significant bits of its two's-complement form as
-     * a 16-bit signed integer.</p>
-     * @return <p>This number, converted to a 16-bit signed integer. Returns 0 if
-     * this value is infinity or not-a-number.</p>
-     *
+     * a 16-bit signed integer.
+     * @return This number, converted to a 16-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
      */
     public short ToInt16Unchecked() {
       return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
     }
 
     /**
-     * <p>Converts this number's value to a 16-bit signed integer if it can fit in
-     * a 16-bit signed integer without rounding to a different numerical value.</p>
-     * @return <p>This number's value as a 16-bit signed integer.</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
-     * not an exact integer, or is less than -32768 or greater than 32767.</p>
-     *
+     * Converts this number's value to a 16-bit signed integer if it can fit in a
+     * 16-bit signed integer without rounding to a different numerical value.
+     * @return This number's value as a 16-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -32768 or greater than 32767.
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {
@@ -5073,12 +4817,11 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts a 16-bit signed integer to an arbitrary-precision binary
-     * floating-point number.</p>
-     * @param inputInt16 <p>The number to convert as a 16-bit signed integer.</p>
-     * @return <p>This number's value as an arbitrary-precision binary
-     * floating-point number.</p>
-     *
+     * Converts a 16-bit signed integer to an arbitrary-precision binary
+     * floating-point number.
+     * @param inputInt16 The number to convert as a 16-bit signed integer.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
     public static EFloat FromInt16(short inputInt16) {
       int val = (int)inputInt16;
@@ -5086,14 +4829,13 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to a 32-bit signed integer if it can fit in
-     * a 32-bit signed integer after converting it to an integer by discarding its
-     * fractional part.</p>
-     * @return <p>This number's value, truncated to a 32-bit signed integer.</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer after converting it to an integer by discarding its
+     * fractional part.
+     * @return This number's value, truncated to a 32-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional part, is
-     * less than -2147483648 or greater than 2147483647.</p>
-     *
+     * less than -2147483648 or greater than 2147483647.
      */
     public int ToInt32Checked() {
       if (!this.isFinite()) {
@@ -5104,25 +4846,22 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to an integer by discarding its fractional
+     * Converts this number's value to an integer by discarding its fractional
      * part, and returns the least-significant bits of its two's-complement form as
-     * a 32-bit signed integer.</p>
-     * @return <p>This number, converted to a 32-bit signed integer. Returns 0 if
-     * this value is infinity or not-a-number.</p>
-     *
+     * a 32-bit signed integer.
+     * @return This number, converted to a 32-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
      */
     public int ToInt32Unchecked() {
       return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
     }
 
     /**
-     * <p>Converts this number's value to a 32-bit signed integer if it can fit in
-     * a 32-bit signed integer without rounding to a different numerical value.</p>
-     * @return <p>This number's value as a 32-bit signed integer.</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
-     * not an exact integer, or is less than -2147483648 or greater than
-     * 2147483647.</p>
-     *
+     * Converts this number's value to a 32-bit signed integer if it can fit in a
+     * 32-bit signed integer without rounding to a different numerical value.
+     * @return This number's value as a 32-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -2147483648 or greater than 2147483647.
      */
     public int ToInt32IfExact() {
       if (!this.isFinite()) {
@@ -5132,23 +4871,21 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts a boolean value (either true or false) to an arbitrary-precision
-     * binary floating-point number.</p>
-     * @param boolValue <p>Either true or false.</p>
-     * @return <p>The number 1 if {@code boolValue} is true, otherwise, 0.</p>
-     *
+     * Converts a boolean value (either true or false) to an arbitrary-precision
+     * binary floating-point number.
+     * @param boolValue Either true or false.
+     * @return The number 1 if {@code boolValue} is true, otherwise, 0.
      */
     public static EFloat FromBoolean(boolean boolValue) {
       return boolValue ? EFloat.One : EFloat.Zero;
     }
 
     /**
-     * <p>Converts a 32-bit signed integer to an arbitrary-precision binary
-     * floating-point number.</p>
-     * @param inputInt32 <p>The number to convert as a 32-bit signed integer.</p>
-     * @return <p>This number's value as an arbitrary-precision binary
-     * floating-point number.</p>
-     *
+     * Converts a 32-bit signed integer to an arbitrary-precision binary
+     * floating-point number.
+     * @param inputInt32 The number to convert as a 32-bit signed integer.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number.
      */
     public static EFloat FromInt32(int inputInt32) {
       if (inputInt32 >= CacheFirst && inputInt32 <= CacheLast) {
@@ -5164,14 +4901,13 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to a 64-bit signed integer if it can fit in
-     * a 64-bit signed integer after converting it to an integer by discarding its
-     * fractional part.</p>
-     * @return <p>This number's value, truncated to a 64-bit signed integer.</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer after converting it to an integer by discarding its
+     * fractional part.
+     * @return This number's value, truncated to a 64-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, or the
      * number, once converted to an integer by discarding its fractional part, is
-     * less than -9223372036854775808 or greater than 9223372036854775807.</p>
-     *
+     * less than -9223372036854775808 or greater than 9223372036854775807.
      */
     public long ToInt64Checked() {
       if (!this.isFinite()) {
@@ -5182,25 +4918,23 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts this number's value to an integer by discarding its fractional
+     * Converts this number's value to an integer by discarding its fractional
      * part, and returns the least-significant bits of its two's-complement form as
-     * a 64-bit signed integer.</p>
-     * @return <p>This number, converted to a 64-bit signed integer. Returns 0 if
-     * this value is infinity or not-a-number.</p>
-     *
+     * a 64-bit signed integer.
+     * @return This number, converted to a 64-bit signed integer. Returns 0 if this
+     * value is infinity or not-a-number.
      */
     public long ToInt64Unchecked() {
       return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
     }
 
     /**
-     * <p>Converts this number's value to a 64-bit signed integer if it can fit in
-     * a 64-bit signed integer without rounding to a different numerical value.</p>
-     * @return <p>This number's value as a 64-bit signed integer.</p>
-     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
-     * not an exact integer, or is less than -9223372036854775808 or greater than
-     * 9223372036854775807.</p>
-     *
+     * Converts this number's value to a 64-bit signed integer if it can fit in a
+     * 64-bit signed integer without rounding to a different numerical value.
+     * @return This number's value as a 64-bit signed integer.
+     * @throws ArithmeticException This value is infinity or not-a-number, is not
+     * an exact integer, or is less than -9223372036854775808 or greater than
+     * 9223372036854775807.
      */
     public long ToInt64IfExact() {
       if (!this.isFinite()) {
@@ -5210,16 +4944,15 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts an unsigned integer expressed as a 64-bit signed integer to an
-     * arbitrary-precision binary number.</p>
-     * @param longerValue <p>A 64-bit signed integer. If this value is 0 or
-     * greater, the return value will represent it. If this value is less than 0,
-     * the return value will store 2^64 plus this value instead.</p>
-     * @return <p>An arbitrary-precision binary number with the exponent set to 0.
-     * If {@code longerValue} is 0 or greater, the return value will represent it.
-     * If {@code longerValue} is less than 0, the return value will store 2^64 plus
-     * this value instead.</p>
-     *
+     * Converts an unsigned integer expressed as a 64-bit signed integer to an
+     * arbitrary-precision binary number.
+     * @param longerValue A 64-bit signed integer. If this value is 0 or greater,
+     * the return value will represent it. If this value is less than 0, the return
+     * value will store 2^64 plus this value instead.
+     * @return An arbitrary-precision binary number with the exponent set to 0. If
+     * {@code longerValue} is 0 or greater, the return value will represent it. If
+     * {@code longerValue} is less than 0, the return value will store 2^64 plus
+     * this value instead.
      */
     public static EFloat FromInt64AsUnsigned(long longerValue) {
       return longerValue >= 0 ? FromInt64(longerValue) :
@@ -5227,12 +4960,11 @@ Binary16SignifBits;
     }
 
     /**
-     * <p>Converts a 64-bit signed integer to an arbitrary-precision binary
-     * floating-point number.</p>
-     * @param inputInt64 <p>The number to convert as a 64-bit signed integer.</p>
-     * @return <p>This number's value as an arbitrary-precision binary
-     * floating-point number with the exponent set to 0.</p>
-     *
+     * Converts a 64-bit signed integer to an arbitrary-precision binary
+     * floating-point number.
+     * @param inputInt64 The number to convert as a 64-bit signed integer.
+     * @return This number's value as an arbitrary-precision binary floating-point
+     * number with the exponent set to 0.
      */
     public static EFloat FromInt64(long inputInt64) {
       if (inputInt64 >= CacheFirst && inputInt64 <= CacheLast) {

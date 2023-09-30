@@ -363,9 +363,8 @@ this.largeValue.CanFitInInt32();
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @return <p>A text string.</p>
-     *
+     * This is an internal API.
+     * @return A text string.
      */
     @Override public String toString() {
       switch (this.integerMode) {

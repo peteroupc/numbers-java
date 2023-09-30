@@ -579,10 +579,9 @@ switch (this.integerMode) {
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @param val <p>The parameter {@code val} is an internal value.</p>
-     * @return <p>A FastInteger object.</p>
-     *
+     * This is an internal API.
+     * @param val The parameter {@code val} is an internal value.
+     * @return A FastInteger object.
      */
     FastInteger Multiply(int val) {
       if (val == 0) {
@@ -631,9 +630,8 @@ switch (this.integerMode) {
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @return <p>A FastInteger object.</p>
-     *
+     * This is an internal API.
+     * @return A FastInteger object.
      */
     FastInteger Negate() {
       switch (this.integerMode) {
@@ -662,10 +660,9 @@ switch (this.integerMode) {
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @param val <p>The parameter {@code val} is an internal value.</p>
-     * @return <p>A FastInteger object.</p>
-     *
+     * This is an internal API.
+     * @param val The parameter {@code val} is an internal value.
+     * @return A FastInteger object.
      */
     FastInteger Subtract(FastInteger val) {
       EInteger valValue;
@@ -713,10 +710,9 @@ switch (this.integerMode) {
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @param val <p>The parameter {@code val} is an internal value.</p>
-     * @return <p>A FastInteger object.</p>
-     *
+     * This is an internal API.
+     * @param val The parameter {@code val} is an internal value.
+     * @return A FastInteger object.
      */
     FastInteger SubtractInt(int val) {
       if (val == Integer.MIN_VALUE) {
@@ -738,11 +734,9 @@ switch (this.integerMode) {
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @param bigintVal <p>The parameter {@code bigintVal} is an internal
-     * value.</p>
-     * @return <p>A FastInteger object.</p>
-     *
+     * This is an internal API.
+     * @param bigintVal The parameter {@code bigintVal} is an internal value.
+     * @return A FastInteger object.
      */
     FastInteger AddBig(EInteger bigintVal) {
       switch (this.integerMode) {
@@ -765,11 +759,9 @@ switch (this.integerMode) {
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @param bigintVal <p>The parameter {@code bigintVal} is an internal
-     * value.</p>
-     * @return <p>A FastInteger object.</p>
-     *
+     * This is an internal API.
+     * @param bigintVal The parameter {@code bigintVal} is an internal value.
+     * @return A FastInteger object.
      */
     FastInteger SubtractBig(EInteger bigintVal) {
       if (this.integerMode == 2) {
@@ -1155,9 +1147,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
     }
 
     /**
-     * <p>This is an internal API.</p>
-     * @return <p>A text string.</p>
-     *
+     * This is an internal API.
+     * @return A text string.
      */
     @Override public String toString() {
       switch (this.integerMode) {
@@ -1172,9 +1163,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
     }
 
     /**
-     * <p>Gets an internal value.</p>
-     * @return <p>An internal value.</p>
-     *
+     * Gets an internal value.
+     * @return An internal value.
      */
     final int signum() {
         switch (this.integerMode) {

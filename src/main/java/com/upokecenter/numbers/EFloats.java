@@ -1,9 +1,8 @@
 package com.upokecenter.numbers;
 
   /**
-   * <p>A class that implements additional operations on arbitrary-precision
-   * binary floating-point numbers.</p>
-   *
+   * A class that implements additional operations on arbitrary-precision binary
+   * floating-point numbers.
    */
   public final class EFloats {
 private EFloats() {
@@ -11,25 +10,23 @@ private EFloats() {
     private static final int BinaryRadix = 2;
 
     /**
-     * <p>Returns the number 2, the binary radix.</p>
-     * @param ec <p>Specifies an arithmetic context for rounding the number 2. Can
-     * be null.</p>
-     * @return <p>The number 2, or the closest representable number to 2 in the
-     * arithmetic context.</p>
-     *
+     * Returns the number 2, the binary radix.
+     * @param ec Specifies an arithmetic context for rounding the number 2. Can be
+     * null.
+     * @return The number 2, or the closest representable number to 2 in the
+     * arithmetic context.
      */
     public static EFloat Radix(EContext ec) {
       return EFloat.FromInt32(BinaryRadix).RoundToPrecision(ec);
     }
 
     /**
-     * <p>Creates a binary floating-point number from a 32-bit signed integer.</p>
-     * @param i32 <p>The parameter {@code i32} is a 32-bit signed integer.</p>
-     * @param ec <p>An arithmetic context to control the precision, rounding, and
-     * exponent range of the result. Can be null.</p>
-     * @return <p>An arbitrary-precision binary floating-point number with the
-     * closest representable value to the given integer.</p>
-     *
+     * Creates a binary floating-point number from a 32-bit signed integer.
+     * @param i32 The parameter {@code i32} is a 32-bit signed integer.
+     * @param ec An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. Can be null.
+     * @return An arbitrary-precision binary floating-point number with the closest
+     * representable value to the given integer.
      */
     public static EFloat Int32ToEFloat(int i32, EContext ec) {
       // NOTE: Not a miscellaneous operation in the General Decimal
@@ -39,13 +36,12 @@ private EFloats() {
     }
 
     /**
-     * <p>Converts a boolean value (either true or false) to an arbitrary-precision
-     * binary floating-point number.</p>
-     * @param b <p>Either true or false.</p>
-     * @param ec <p>A context used for rounding the result. Can be null.</p>
-     * @return <p>Either 1 if {@code b} is true, or 0 if {@code b} is false.. The
-     * result will be rounded as specified by the given context, if any.</p>
-     *
+     * Converts a boolean value (either true or false) to an arbitrary-precision
+     * binary floating-point number.
+     * @param b Either true or false.
+     * @param ec A context used for rounding the result. Can be null.
+     * @return Either 1 if {@code b} is true, or 0 if {@code b} is false.. The
+     * result will be rounded as specified by the given context, if any.
      */
     public static EFloat BooleanToEFloat(boolean b, EContext ec) {
       // NOTE: Not a miscellaneous operation in the General Decimal
@@ -55,12 +51,11 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is in a
+     * Returns whether the given arbitrary-precision number object is in a
      * canonical form. For the current version of EFloat, all EFloat objects are in
-     * a canonical form.</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Always {@code true}.</p>
-     *
+     * a canonical form.
+     * @param ed An arbitrary-precision number object.
+     * @return Always {@code true}.
      */
 
     public static boolean IsCanonical(EFloat ed) {
@@ -72,36 +67,33 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is neither
-     * null nor infinity nor not-a-number (NaN).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Either {@code true} if the given arbitrary-precision number
-     * object is neither null nor infinity nor not-a-number (NaN), or {@code false}
-     * otherwise.</p>
-     *
+     * Returns whether the given arbitrary-precision number object is neither null
+     * nor infinity nor not-a-number (NaN).
+     * @param ed An arbitrary-precision number object.
+     * @return Either {@code true} if the given arbitrary-precision number object
+     * is neither null nor infinity nor not-a-number (NaN), or {@code false}
+     * otherwise.
      */
     public static boolean IsFinite(EFloat ed) {
       return ed != null && ed.isFinite();
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is positive
-     * or negative infinity.</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Either {@code true} if the given arbitrary-precision number
-     * object is positive or negative infinity, or {@code false} otherwise.</p>
-     *
+     * Returns whether the given arbitrary-precision number object is positive or
+     * negative infinity.
+     * @param ed An arbitrary-precision number object.
+     * @return Either {@code true} if the given arbitrary-precision number object
+     * is positive or negative infinity, or {@code false} otherwise.
      */
     public static boolean IsInfinite(EFloat ed) {
       return ed != null && ed.IsInfinity();
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is a
-     * not-a-number (NaN).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Either {@code true} or {@code false}.</p>
-     *
+     * Returns whether the given arbitrary-precision number object is a
+     * not-a-number (NaN).
+     * @param ed An arbitrary-precision number object.
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsNaN(EFloat ed) {
       return ed != null && ed.IsNaN();
@@ -114,7 +106,7 @@ private EFloats() {
      * notation with one digit before the radix point) is less than the minimum
      * possible exponent for that number. A <i>normal number</i> is nonzero and
      * finite, but not subnormal.</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
+     * @param ed An arbitrary-precision number object.
      * @param ec <p>A context specifying the exponent range of arbitrary-precision
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is normal if the number's exponent (when that number
@@ -125,79 +117,72 @@ private EFloats() {
      * number is subnormal if the number's Exponent property is at least given
      * context's EMax property (e.g., if EMax is -100, 23456 * 10 <sup>-99</sup> is
      * normal, but 23456 * 10 <sup>-102</sup> is not).</p>
-     * @return <p>Either {@code true} if the given number is subnormal, or {@code
+     * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code true} if the given context is null or
-     * HasExponentRange of the given context is {@code false}.</p>
-     *
+     * HasExponentRange of the given context is {@code false}.
      */
     public static boolean IsNormal(EFloat ed, EContext ec) {
       return ed != null && ed.isFinite() && !ed.isZero() && !IsSubnormal(ed, ec);
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is a quiet
-     * not-a-number (NaN).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Either {@code true} or {@code false}.</p>
-     *
+     * Returns whether the given arbitrary-precision number object is a quiet
+     * not-a-number (NaN).
+     * @param ed An arbitrary-precision number object.
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsQuietNaN(EFloat ed) {
       return ed != null && ed.IsQuietNaN();
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is negative
+     * Returns whether the given arbitrary-precision number object is negative
      * (including negative infinity, negative not-a-number.get(NaN), or negative
-     * zero).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Either {@code true} or {@code false}.</p>
-     *
+     * zero).
+     * @param ed An arbitrary-precision number object.
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsSigned(EFloat ed) {
       return ed != null && ed.isNegative();
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is a
-     * signaling not-a-number (NaN).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>Either {@code true} or {@code false}.</p>
-     *
+     * Returns whether the given arbitrary-precision number object is a signaling
+     * not-a-number (NaN).
+     * @param ed An arbitrary-precision number object.
+     * @return Either {@code true} or {@code false}.
      */
     public static boolean IsSignalingNaN(EFloat ed) {
       return ed != null && ed.IsSignalingNaN();
     }
 
     /**
-     * <p>Converts a number class identifier (ranging from 0 through 9) to a text
+     * Converts a number class identifier (ranging from 0 through 9) to a text
      * string. An arbitrary-precision number object can belong in one of ten number
-     * classes.</p>
-     * @param nc <p>An integer identifying a number class.</p>
-     * @return <p>A text string identifying the given number class as follows: 0 =
+     * classes.
+     * @param nc An integer identifying a number class.
+     * @return A text string identifying the given number class as follows: 0 =
      * "+Normal"; 1 = "-Normal", 2 = "+Subnormal", 3 = "-Subnormal", 4 = "+Zero", 5
-     * = "-Zero", 6 = "+Infinity", 7 = "-Infinity", 8 = "NaN", 9 = "sNaN".</p>
-     * @throws IllegalArgumentException <p>The parameter {@code nc} is less than 0 or
-     * greater than 9.</p>
-     *
+     * = "-Zero", 6 = "+Infinity", 7 = "-Infinity", 8 = "NaN", 9 = "sNaN".
+     * @throws IllegalArgumentException The parameter {@code nc} is less than 0 or greater
+     * than 9.
      */
     public static String NumberClassString(int nc) {
       return EDecimals.NumberClassString(nc);
     }
 
     /**
-     * <p>Finds the number class for an arbitrary-precision binary number
-     * object.</p>
-     * @param ed <p>An arbitrary-precision binary number object.</p>
-     * @param ec <p>A context object that specifies the precision and exponent
-     * range of arbitrary-precision numbers. This is used only to distinguish
-     * between normal and subnormal numbers. Can be null.</p>
-     * @return <p>A 32-bit signed integer identifying the given number object,
-     * number class as follows: 0 = positive normal; 1 = negative normal, 2 =
-     * positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative
-     * zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet not-a-number
-     * (NaN), 9 = signaling NaN.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
-     *
+     * Finds the number class for an arbitrary-precision binary number object.
+     * @param ed An arbitrary-precision binary number object.
+     * @param ec A context object that specifies the precision and exponent range
+     * of arbitrary-precision numbers. This is used only to distinguish between
+     * normal and subnormal numbers. Can be null.
+     * @return A 32-bit signed integer identifying the given number object, number
+     * class as follows: 0 = positive normal; 1 = negative normal, 2 = positive
+     * subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative zero, 6 =
+     * positive infinity, 7 = negative infinity, 8 = quiet not-a-number (NaN), 9 =
+     * signaling NaN.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static int NumberClass(EFloat ed, EContext ec) {
       if (ed == null) {
@@ -225,7 +210,7 @@ private EFloats() {
      * (or the number's exponent when that number is expressed in scientific
      * notation with one digit before the radix point) is less than the minimum
      * possible exponent for that number.</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
+     * @param ed An arbitrary-precision number object.
      * @param ec <p>A context specifying the exponent range of arbitrary-precision
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is subnormal if the number's exponent (when that
@@ -236,11 +221,10 @@ private EFloats() {
      * false}, a nonzero number is subnormal if the number's Exponent property is
      * less than the given context's EMax property (e.g., if EMax is -100, 23456 *
      * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is not).</p>
-     * @return <p>Either {@code true} if the given number is subnormal, or {@code
+     * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code false} if the given context is null or
-     * HasExponentRange of the given context is {@code false}.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
-     *
+     * HasExponentRange of the given context is {@code false}.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static boolean IsSubnormal(EFloat ed, EContext ec) {
       if (ed == null) {
@@ -258,32 +242,30 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns whether the given arbitrary-precision number object is zero
-     * (positive zero or negative zero).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p> {@code true} if the given number has a value of zero (positive
-     * zero or negative zero); otherwise, {@code false}.</p>
-     *
+     * Returns whether the given arbitrary-precision number object is zero
+     * (positive zero or negative zero).
+     * @param ed An arbitrary-precision number object.
+     * @return {@code true} if the given number has a value of zero (positive zero
+     * or negative zero); otherwise, {@code false}.
      */
     public static boolean IsZero(EFloat ed) {
       return ed != null && ed.isZero();
     }
 
     /**
-     * <p>Returns the base-2 exponent of an arbitrary-precision binary number (when
+     * Returns the base-2 exponent of an arbitrary-precision binary number (when
      * that number is expressed in scientific notation with one nonzero digit
      * before the radix point). For example, returns 3 for the numbers {@code 1.11b
-     * * 2^3} and {@code 111 * 2^1}.</p>
-     * @param ed <p>An arbitrary-precision binary number.</p>
-     * @param ec <p>An arithmetic context to control the precision, rounding, and
-     * exponent range of the result. Can be null.</p>
-     * @return <p>The base-2 exponent of the given number (when that number is
+     * * 2^3} and {@code 111 * 2^1}.
+     * @param ed An arbitrary-precision binary number.
+     * @param ec An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. Can be null.
+     * @return The base-2 exponent of the given number (when that number is
      * expressed in scientific notation with one nonzero digit before the radix
      * point). Signals DivideByZero and returns negative infinity if {@code ed} is
      * zero. Returns positive infinity if {@code ed} is positive infinity or
-     * negative infinity.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
-     *
+     * negative infinity.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EFloat LogB(EFloat ed, EContext ec) {
       if (ed == null) {
@@ -303,23 +285,22 @@ private EFloats() {
     }
 
     /**
-     * <p>Finds an arbitrary-precision binary number whose binary point is moved a
-     * given number of places.</p>
-     * @param ed <p>An arbitrary-precision binary number.</p>
-     * @param ed2 <p>The number of binary places to move the binary point of "ed".
-     * This must be an integer with an exponent of 0.</p>
-     * @param ec <p>An arithmetic context to control the precision, rounding, and
-     * exponent range of the result. Can be null.</p>
-     * @return <p>The given arbitrary-precision binary number whose binary point is
+     * Finds an arbitrary-precision binary number whose binary point is moved a
+     * given number of places.
+     * @param ed An arbitrary-precision binary number.
+     * @param ed2 The number of binary places to move the binary point of "ed".
+     * This must be an integer with an exponent of 0.
+     * @param ec An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. Can be null.
+     * @return The given arbitrary-precision binary number whose binary point is
      * moved the given number of places. Signals an invalid operation and returns
      * not-a-number (NaN) if {@code ed2} is infinity or NaN, has an Exponent
      * property other than 0. Signals an invalid operation and returns not-a-number
      * (NaN) if {@code ec} defines a limited precision and exponent range and if
      * {@code ed2} 's absolute value is greater than twice the sum of the context's
-     * EMax property and its Precision property.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} or {@code ed2} is
-     * null.</p>
-     *
+     * EMax property and its Precision property.
+     * @throws NullPointerException The parameter {@code ed} or {@code ed2} is
+     * null.
      */
     public static EFloat ScaleB(EFloat ed, EFloat ed2, EContext ec) {
       if (ed == null) {
@@ -357,25 +338,24 @@ private EFloats() {
     }
 
     /**
-     * <p>Shifts the bits of an arbitrary-precision binary floating point number's
-     * significand.</p>
-     * @param ed <p>An arbitrary-precision binary floating point number containing
-     * the significand to shift.</p>
-     * @param ed2 <p>An arbitrary-precision number indicating the number of bits to
+     * Shifts the bits of an arbitrary-precision binary floating point number's
+     * significand.
+     * @param ed An arbitrary-precision binary floating point number containing the
+     * significand to shift.
+     * @param ed2 An arbitrary-precision number indicating the number of bits to
      * shift the first operand's significand. Must be an integer with an exponent
      * of 0. If this parameter is positive, the significand is shifted to the left
      * by the given number of bits. If this parameter is negative, the significand
-     * is shifted to the right by the given number of bits.</p>
-     * @param ec <p>An arithmetic context to control the precision of
-     * arbitrary-precision numbers. Can be null.</p>
-     * @return <p>An arbitrary-precision binary number whose significand is shifted
+     * is shifted to the right by the given number of bits.
+     * @param ec An arithmetic context to control the precision of
+     * arbitrary-precision numbers. Can be null.
+     * @return An arbitrary-precision binary number whose significand is shifted
      * the given number of bits. Signals an invalid operation and returns NaN
      * (not-a-number) if {@code ed2} is a signaling NaN or if {@code ed2} is not an
      * integer, is negative, has an exponent other than 0, or has an absolute value
-     * that exceeds the maximum precision specified in the context.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} or {@code ed2} is
-     * null.</p>
-     *
+     * that exceeds the maximum precision specified in the context.
+     * @throws NullPointerException The parameter {@code ed} or {@code ed2} is
+     * null.
      */
     public static EFloat Shift(EFloat ed, EFloat ed2, EContext ec) {
       if (ed == null) {
@@ -429,30 +409,28 @@ private EFloats() {
     }
 
     /**
-     * <p>Rotates the bits of an arbitrary-precision binary number's
-     * significand.</p>
-     * @param ed <p>An arbitrary-precision number containing the significand to
+     * Rotates the bits of an arbitrary-precision binary number's significand.
+     * @param ed An arbitrary-precision number containing the significand to
      * rotate. If this significand contains more bits than the precision, the
-     * most-significant bits are chopped off the significand.</p>
-     * @param ed2 <p>An arbitrary-precision number indicating the number of bits to
+     * most-significant bits are chopped off the significand.
+     * @param ed2 An arbitrary-precision number indicating the number of bits to
      * rotate the first operand's significand. Must be an integer with an exponent
      * of 0. If this parameter is positive, the significand is shifted to the left
      * by the given number of bits and the most-significant bits shifted out of the
      * significand become the least-significant bits instead. If this parameter is
      * negative, the number is shifted by the given number of bits and the
      * least-significant bits shifted out of the significand become the
-     * most-significant bits instead.</p>
-     * @param ec <p>An arithmetic context to control the precision of
+     * most-significant bits instead.
+     * @param ec An arithmetic context to control the precision of
      * arbitrary-precision numbers. If this parameter is null or specifies an
-     * unlimited precision, this method has the same behavior as {@code Shift}.</p>
-     * @return <p>An arbitrary-precision binary number whose significand is rotated
+     * unlimited precision, this method has the same behavior as {@code Shift}.
+     * @return An arbitrary-precision binary number whose significand is rotated
      * the given number of bits. Signals an invalid operation and returns NaN
      * (not-a-number) if {@code ed2} is a signaling NaN or if {@code ed2} is not an
      * integer, is negative, has an exponent other than 0, or has an absolute value
-     * that exceeds the maximum precision specified in the context.</p>
-     * @throws NullPointerException <p>The parameter {@code ed2} or {@code ed} is
-     * null.</p>
-     *
+     * that exceeds the maximum precision specified in the context.
+     * @throws NullPointerException The parameter {@code ed2} or {@code ed} is
+     * null.
      */
     public static EFloat Rotate(EFloat ed, EFloat ed2, EContext ec) {
       if (ec == null || !ec.getHasMaxPrecision()) {
@@ -528,17 +506,16 @@ private EFloats() {
      * value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li><li>Negative numbers are less than positive numbers.</li></ul>
-     * @param ed <p>The first arbitrary-precision number to compare.</p>
-     * @param other <p>The second arbitrary-precision number to compare.</p>
-     * @param ec <p>An arithmetic context. Flags will be set in this context only
-     * if {@code HasFlags} and {@code IsSimplified} of the context are true and
-     * only if an operand needed to be rounded before carrying out the operation.
-     * Can be null.</p>
-     * @return <p>The number 0 if both objects are null or equal, or -1 if the
-     * first object is null or less than the other object, or 1 if the first object
-     * is greater or the other object is null. Does not signal flags if either
-     * value is signaling NaN.</p>
-     *
+     * @param ed The first arbitrary-precision number to compare.
+     * @param other The second arbitrary-precision number to compare.
+     * @param ec An arithmetic context. Flags will be set in this context only if
+     * {@code HasFlags} and {@code IsSimplified} of the context are true and only
+     * if an operand needed to be rounded before carrying out the operation. Can be
+     * null.
+     * @return The number 0 if both objects are null or equal, or -1 if the first
+     * object is null or less than the other object, or 1 if the first object is
+     * greater or the other object is null. Does not signal flags if either value
+     * is signaling NaN.
      */
     public static int CompareTotal(EFloat ed, EFloat other, EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
@@ -556,18 +533,17 @@ private EFloats() {
      * "absolute value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li></ul>
-     * @param ed <p>The first arbitrary-precision number to compare.</p>
-     * @param other <p>The second arbitrary-precision number to compare.</p>
-     * @param ec <p>An arithmetic context. Flags will be set in this context only
-     * if {@code HasFlags} and {@code IsSimplified} of the context are true and
-     * only if an operand needed to be rounded before carrying out the operation.
-     * Can be null.</p>
-     * @return <p>The number 0 if both objects are null or equal (ignoring their
+     * @param ed The first arbitrary-precision number to compare.
+     * @param other The second arbitrary-precision number to compare.
+     * @param ec An arithmetic context. Flags will be set in this context only if
+     * {@code HasFlags} and {@code IsSimplified} of the context are true and only
+     * if an operand needed to be rounded before carrying out the operation. Can be
+     * null.
+     * @return The number 0 if both objects are null or equal (ignoring their
      * signs), or -1 if the first object is null or less than the other object
      * (ignoring their signs), or 1 if the first object is greater (ignoring their
      * signs) or the other object is null. Does not signal flags if either value is
-     * signaling NaN.</p>
-     *
+     * signaling NaN.
      */
     public static int CompareTotalMagnitude(
       EFloat ed,
@@ -578,11 +554,10 @@ private EFloats() {
     }
 
     /**
-     * <p>Creates a copy of the given arbitrary-precision number object.</p>
-     * @param ed <p>An arbitrary-precision number object to copy.</p>
-     * @return <p>A copy of the given arbitrary-precision number object.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
-     *
+     * Creates a copy of the given arbitrary-precision number object.
+     * @param ed An arbitrary-precision number object to copy.
+     * @return A copy of the given arbitrary-precision number object.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EFloat Copy(EFloat ed) {
       if (ed == null) {
@@ -592,25 +567,23 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns a canonical version of the given arbitrary-precision number
-     * object. In this method, this method behaves like the Copy method.</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>A copy of the parameter {@code ed}.</p>
-     *
+     * Returns a canonical version of the given arbitrary-precision number object.
+     * In this method, this method behaves like the Copy method.
+     * @param ed An arbitrary-precision number object.
+     * @return A copy of the parameter {@code ed}.
      */
     public static EFloat Canonical(EFloat ed) {
       return Copy(ed);
     }
 
     /**
-     * <p>Returns an arbitrary-precision number object with the same value as the
+     * Returns an arbitrary-precision number object with the same value as the
      * given number object but with a nonnegative sign (that is, the given number
-     * object's absolute value).</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>An arbitrary-precision number object with the same value as the
-     * given number object but with a nonnegative sign.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
-     *
+     * object's absolute value).
+     * @param ed An arbitrary-precision number object.
+     * @return An arbitrary-precision number object with the same value as the
+     * given number object but with a nonnegative sign.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EFloat CopyAbs(EFloat ed) {
       if (ed == null) {
@@ -620,13 +593,12 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns an arbitrary-precision number object with the sign reversed from
-     * the given number object.</p>
-     * @param ed <p>An arbitrary-precision number object.</p>
-     * @return <p>An arbitrary-precision number object with the sign reversed from
-     * the given number object.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
-     *
+     * Returns an arbitrary-precision number object with the sign reversed from the
+     * given number object.
+     * @param ed An arbitrary-precision number object.
+     * @return An arbitrary-precision number object with the sign reversed from the
+     * given number object.
+     * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EFloat CopyNegate(EFloat ed) {
       if (ed == null) {
@@ -636,19 +608,18 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns an arbitrary-precision number object with the same value as the
+     * Returns an arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or negative) as
-     * the second given number object.</p>
-     * @param ed <p>An arbitrary-precision number object with the value the result
-     * will have.</p>
-     * @param other <p>The parameter {@code other} is an arbitrary-precision binary
-     * floating-point number.</p>
-     * @return <p>An arbitrary-precision number object with the same value as the
+     * the second given number object.
+     * @param ed An arbitrary-precision number object with the value the result
+     * will have.
+     * @param other The parameter {@code other} is an arbitrary-precision binary
+     * floating-point number.
+     * @return An arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or negative) as
-     * the second given number object.</p>
-     * @throws NullPointerException <p>The parameter {@code ed} or {@code other}
-     * is null.</p>
-     *
+     * the second given number object.
+     * @throws NullPointerException The parameter {@code ed} or {@code other} is
+     * null.
      */
     public static EFloat CopySign(EFloat ed, EFloat other) {
       if (ed == null) {
@@ -665,15 +636,14 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns whether two arbitrary-precision numbers have the same exponent,
-     * they both are not-a-number (NaN), or they both are infinity (positive and/or
-     * negative).</p>
-     * @param ed1 <p>The first arbitrary-precision number.</p>
-     * @param ed2 <p>The second arbitrary-precision number.</p>
-     * @return <p>Either {@code true} if the given arbitrary-precision numbers have
+     * Returns whether two arbitrary-precision numbers have the same exponent, they
+     * both are not-a-number (NaN), or they both are infinity (positive and/or
+     * negative).
+     * @param ed1 The first arbitrary-precision number.
+     * @param ed2 The second arbitrary-precision number.
+     * @return Either {@code true} if the given arbitrary-precision numbers have
      * the same exponent, they both are not-a-number (NaN), or they both are
-     * infinity (positive and/or negative); otherwise, {@code false}.</p>
-     *
+     * infinity (positive and/or negative); otherwise, {@code false}.
      */
     public static boolean SameQuantum(EFloat ed1, EFloat ed2) {
       if (ed1 == null || ed2 == null) {
@@ -688,20 +658,19 @@ private EFloats() {
     }
 
     /**
-     * <p>Returns an arbitrary-precision number with the same value as this one but
+     * Returns an arbitrary-precision number with the same value as this one but
      * with certain trailing zeros removed from its significand. If the number's
      * exponent is 0, it is returned unchanged (but may be rounded depending on the
      * arithmetic context); if that exponent is greater 0, its trailing zeros are
      * removed from the significand (then rounded if necessary); if that exponent
      * is less than 0, its trailing zeros are removed from the significand until
-     * the exponent reaches 0 (then the number is rounded if necessary).</p>
-     * @param ed1 <p>An arbitrary-precision number.</p>
-     * @param ec <p>An arithmetic context to control the precision, rounding, and
-     * exponent range of the result. Can be null.</p>
-     * @return <p>An arbitrary-precision number with the same value as this one but
+     * the exponent reaches 0 (then the number is rounded if necessary).
+     * @param ed1 An arbitrary-precision number.
+     * @param ec An arithmetic context to control the precision, rounding, and
+     * exponent range of the result. Can be null.
+     * @return An arbitrary-precision number with the same value as this one but
      * with certain trailing zeros removed from its significand. If {@code ed1} is
-     * not-a-number (NaN) or infinity, it is generally returned unchanged.</p>
-     *
+     * not-a-number (NaN) or infinity, it is generally returned unchanged.
      */
     public static EFloat Trim(EFloat ed1, EContext ec) {
       EFloat ed = ed1;
@@ -765,26 +734,24 @@ private EFloats() {
      * arithmetic, in which a fixed number of digits come after the binary point. A
      * fixed-point binary arithmetic in which no digits come after the binary point
      * (a desired exponent of 0) is considered an "integer arithmetic" .</p>
-     * @param ed <p>An arbitrary-precision binary number whose exponent is to be
-     * changed.</p>
-     * @param scale <p>The desired exponent of the result, expressed as an
+     * @param ed An arbitrary-precision binary number whose exponent is to be
+     * changed.
+     * @param scale The desired exponent of the result, expressed as an
      * arbitrary-precision binary number. The exponent is the number of fractional
      * digits in the result, expressed as a negative number. Can also be positive,
      * which eliminates lower-order places from the number. For example, -3 means
      * round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the
-     * sixteens-place (10b^3, 1000b). A value of 0 rounds the number to an
-     * integer.</p>
-     * @param ec <p>An arithmetic context to control precision and rounding of the
+     * sixteens-place (10b^3, 1000b). A value of 0 rounds the number to an integer.
+     * @param ec An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
-     * HalfEven.</p>
-     * @return <p>An arbitrary-precision binary number with the same value as this
+     * HalfEven.
+     * @return An arbitrary-precision binary number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and returns
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding, or if the arithmetic context defines an exponent range and the
-     * given exponent is outside that range.</p>
-     *
+     * given exponent is outside that range.
      */
     public static EFloat Rescale(EFloat ed, EFloat scale, EContext ec) {
       if (ed == null || scale == null) {
@@ -822,17 +789,16 @@ private EFloats() {
      * {@code 01001} and {@code 111001}). The logical AND operation sets each bit
      * of the result to 1 if the corresponding bits of each logical operand are
      * both 1, and to 0 otherwise. For example, {@code 01001 AND 111010 = 01000}.</p>
-     * @param ed1 <p>The first logical operand to the logical AND operation.</p>
-     * @param ed2 <p>The second logical operand to the logical AND operation.</p>
-     * @param ec <p>An arithmetic context to control the maximum precision of
+     * @param ed1 The first logical operand to the logical AND operation.
+     * @param ed2 The second logical operand to the logical AND operation.
+     * @param ec An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more bits than the maximum precision specified in this context, the
      * operand's most significant bits that exceed that precision are discarded.
-     * This parameter can be null.</p>
-     * @return <p>The result of the logical AND operation as a logical operand.
+     * This parameter can be null.
+     * @return The result of the logical AND operation as a logical operand.
      * Signals an invalid operation and returns not-a-number (NaN) if {@code ed1},
-     * {@code ed2}, or both are not logical operands.</p>
-     *
+     * {@code ed2}, or both are not logical operands.
      */
     public static EFloat And(EFloat ed1, EFloat ed2, EContext ec) {
       byte[] logi1 = EDecimals.FromLogical(ed1, ec, 2);
@@ -862,17 +828,16 @@ private EFloats() {
      * if the corresponding bit is 0, and to 0 otherwise; it can set no more bits
      * than the maximum precision, however. For example, if the maximum precision
      * is 8 bits, then {@code NOT 111010 = 11000101}.</p>
-     * @param ed1 <p>The operand to the logical NOT operation.</p>
-     * @param ec <p>An arithmetic context to control the maximum precision of
+     * @param ed1 The operand to the logical NOT operation.
+     * @param ec An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more bits than the maximum precision specified in this context, the
      * operand's most significant bits that exceed that precision are discarded.
      * This parameter cannot be null and must specify a maximum precision
-     * (unlimited precision contexts are not allowed).</p>
-     * @return <p>The result of the logical NOT operation as a logical operand.
+     * (unlimited precision contexts are not allowed).
+     * @return The result of the logical NOT operation as a logical operand.
      * Signals an invalid operation and returns not-a-number (NaN) if {@code ed1}
-     * is not a logical operand.</p>
-     *
+     * is not a logical operand.
      */
     public static EFloat Invert(EFloat ed1, EContext ec) {
       if (ec == null || !ec.getHasMaxPrecision()) {
@@ -902,19 +867,16 @@ private EFloats() {
      * exclusive-OR operation sets each digit of the result to 1 if either
      * corresponding digit of the logical operands, but not both, is 1, and to 0
      * otherwise. For example, {@code 01001 XOR 111010 = 101010}.</p>
-     * @param ed1 <p>The first logical operand to the logical exclusive-OR
-     * operation.</p>
-     * @param ed2 <p>The second logical operand to the logical exclusive-OR
-     * operation.</p>
-     * @param ec <p>An arithmetic context to control the maximum precision of
+     * @param ed1 The first logical operand to the logical exclusive-OR operation.
+     * @param ed2 The second logical operand to the logical exclusive-OR operation.
+     * @param ec An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more bits than the maximum precision specified in this context, the
      * operand's most significant bits that exceed that precision are discarded.
-     * This parameter can be null.</p>
-     * @return <p>The result of the logical exclusive-OR operation as a logical
+     * This parameter can be null.
+     * @return The result of the logical exclusive-OR operation as a logical
      * operand. Signals an invalid operation and returns not-a-number (NaN) if
-     * {@code ed1}, {@code ed2}, or both are not logical operands.</p>
-     *
+     * {@code ed1}, {@code ed2}, or both are not logical operands.
      */
     public static EFloat Xor(EFloat ed1, EFloat ed2, EContext ec) {
       byte[] logi1 = EDecimals.FromLogical(ed1, ec, 2);
@@ -944,17 +906,16 @@ private EFloats() {
      * of the result to 1 if either or both of the corresponding bits of each
      * logical operand are 1, and to 0 otherwise. For example, {@code 01001 OR
      * 111010 = 111011}.</p>
-     * @param ed1 <p>The first logical operand to the logical OR operation.</p>
-     * @param ed2 <p>The second logical operand to the logical OR operation.</p>
-     * @param ec <p>An arithmetic context to control the maximum precision of
+     * @param ed1 The first logical operand to the logical OR operation.
+     * @param ed2 The second logical operand to the logical OR operation.
+     * @param ec An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more bits than the maximum precision specified in this context, the
      * operand's most significant bits that exceed that precision are discarded.
-     * This parameter can be null.</p>
-     * @return <p>The result of the logical OR operation as a logical operand.
-     * Signals an invalid operation and returns not-a-number (NaN) if {@code ed1},
-     * {@code ed2}, or both are not logical operands.</p>
-     *
+     * This parameter can be null.
+     * @return The result of the logical OR operation as a logical operand. Signals
+     * an invalid operation and returns not-a-number (NaN) if {@code ed1}, {@code
+     * ed2}, or both are not logical operands.
      */
     public static EFloat Or(EFloat ed1, EFloat ed2, EContext ec) {
       byte[] logi1 = EDecimals.FromLogical(ed1, ec, 2);

@@ -8,7 +8,6 @@ package com.upokecenter.util;
    * safety:</b> The methods in this class are safe for concurrent use by
    * multiple threads, as long as the underlying random byte generator is as
    * well.</p>
-   *
    */
   public final class RandomGenerator implements IRandomGenExtended {
     private boolean valueHaveLastNormal;
@@ -17,28 +16,25 @@ package com.upokecenter.util;
     private Object valueNormalLock = new Object();
 
     /**
-     * <p>Initializes a new instance of the RandomGenerator class.</p>
-     *
+     * Initializes a new instance of the RandomGenerator class.
      */
     public RandomGenerator() {
  this(new XorShift128Plus());
     }
 
     /**
-     * <p>Initializes a new instance of the RandomGenerator class.</p>
-     * @param valueIrg <p>An IRandomGen object.</p>
-     *
+     * Initializes a new instance of the RandomGenerator class.
+     * @param valueIrg An IRandomGen object.
      */
     public RandomGenerator(IRandomGen valueIrg) {
       this.valueIrg = valueIrg;
     }
 
     /**
-     * <p>Returns either true or false, depending on the given probability.</p>
-     * @param p <p>A probability from 0 through 1. 0 means always false, and 1
-     * means always true.</p>
-     * @return <p>A Boolean object.</p>
-     *
+     * Returns either true or false, depending on the given probability.
+     * @param p A probability from 0 through 1. 0 means always false, and 1 means
+     * always true.
+     * @return A Boolean object.
      */
     public boolean Bernoulli(double p) {
       if (p < 0) {
@@ -51,21 +47,18 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Returns either true or false at a 50% chance each.</p>
-     * @return <p>A Boolean object.</p>
-     *
+     * Returns either true or false at a 50% chance each.
+     * @return A Boolean object.
      */
     public boolean Bernoulli() {
       return this.UniformInt(2) == 0;
     }
 
     /**
-     * <p>Conceptually, generates either 1 or 0 the given number of times, where
-     * either number is equally likely, and counts the number of 1's generated.</p>
-     * @param trials <p>The number of times to generate a random number,
-     * conceptually.</p>
-     * @return <p>A 32-bit signed integer.</p>
-     *
+     * Conceptually, generates either 1 or 0 the given number of times, where
+     * either number is equally likely, and counts the number of 1's generated.
+     * @param trials The number of times to generate a random number, conceptually.
+     * @return A 32-bit signed integer.
      */
     public int Binomial(int trials) {
       return this.Binomial(trials, 0.5);
@@ -76,15 +69,13 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Conceptually, generates either 1 or 0 the given number of times, where a
-     * 1 is generated at the given probability, and counts the number of 1's
-     * generated.</p>
-     * @param trials <p>The number of times to generate a random number,
-     * conceptually.</p>
-     * @param p <p>The probability for each trial to succeed, from 0 (never) to 1
-     * (always).</p>
-     * @return <p>The number of successes in a given number of trials.</p>
-     *
+     * Conceptually, generates either 1 or 0 the given number of times, where a 1
+     * is generated at the given probability, and counts the number of 1's
+     * generated.
+     * @param trials The number of times to generate a random number, conceptually.
+     * @param p The probability for each trial to succeed, from 0 (never) to 1
+     * (always).
+     * @return The number of successes in a given number of trials.
      */
     public int Binomial(int trials, double p) {
       if (p < 0) {
@@ -125,13 +116,12 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Generates a random number that is the sum of the squares of "df"
+     * Generates a random number that is the sum of the squares of "df"
      * normally-distributed random numbers with a mean of 0 and a standard
-     * deviation of 1.</p>
-     * @param df <p>Degrees of freedom (the number of independently chosen
-     * normally-distributed numbers).</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * deviation of 1.
+     * @param df Degrees of freedom (the number of independently chosen
+     * normally-distributed numbers).
+     * @return A 64-bit floating-point number.
      */
     public double ChiSquared(int df) {
       if (df <= 0) {
@@ -141,20 +131,18 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Not documented yet.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Not documented yet.
+     * @return A 64-bit floating-point number.
      */
     public double Exponential() {
       return -Math.log(1.0 - this.Uniform());
     }
 
     /**
-     * <p>Not documented yet.</p>
-     * @param a <p>Another 64-bit floating-point number.</p>
-     * @param b <p>A 64-bit floating-point number. (3).</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Not documented yet.
+     * @param a Another 64-bit floating-point number.
+     * @param b A 64-bit floating-point number. (3).
+     * @return A 64-bit floating-point number.
      */
     public double Gamma(double a, double b) {
       if (b <= 0) {
@@ -164,10 +152,9 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Not documented yet.</p>
-     * @param a <p>Another 64-bit floating-point number.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Not documented yet.
+     * @param a Another 64-bit floating-point number.
+     * @return A 64-bit floating-point number.
      */
     public double Gamma(double a) {
       if (a <= 0) {
@@ -193,37 +180,33 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Conceptually, generates either 1 or 0 until a 1 is generated, and counts
-     * the number of 0's generated. Either number has an equal probability of being
-     * generated.</p>
-     * @return <p>The number of failures until a success happens.</p>
-     *
+     * Conceptually, generates either 1 or 0 until a 1 is generated, and counts the
+     * number of 0's generated. Either number has an equal probability of being
+     * generated.
+     * @return The number of failures until a success happens.
      */
     public int Geometric() {
       return this.NegativeBinomial(1, 0.5);
     }
 
     /**
-     * <p>Conceptually, generates either 1 or 0 until a 1 is generated, and counts
-     * the number of 0's generated. A 1 is generated at the given probability.</p>
-     * @param p <p>A 64-bit floating-point number.</p>
-     * @return <p>The number of failures until a success happens.</p>
-     *
+     * Conceptually, generates either 1 or 0 until a 1 is generated, and counts the
+     * number of 0's generated. A 1 is generated at the given probability.
+     * @param p A 64-bit floating-point number.
+     * @return The number of failures until a success happens.
      */
     public int Geometric(double p) {
       return this.NegativeBinomial(1, p);
     }
 
     /**
-     * <p>Conceptually, given a set of tokens, some of which are labeled 1 and the
+     * Conceptually, given a set of tokens, some of which are labeled 1 and the
      * others labeled 0, draws "trials" tokens at random without replacement and
-     * then counts the number of 1's drawn.</p>
-     * @param trials <p>The number of tokens drawn at random without
-     * replacement.</p>
-     * @param ones <p>The number of tokens labeled 1.</p>
-     * @param count <p>The number of tokens labeled 1 or 0.</p>
-     * @return <p>A 32-bit signed integer.</p>
-     *
+     * then counts the number of 1's drawn.
+     * @param trials The number of tokens drawn at random without replacement.
+     * @param ones The number of tokens labeled 1.
+     * @param count The number of tokens labeled 1 or 0.
+     * @return A 32-bit signed integer.
      */
     public int Hypergeometric(int trials, int ones, int count) {
       if (ones < 0) {
@@ -257,27 +240,25 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Generates a logarithmic normally-distributed number with the given mean
-     * and standard deviation.</p>
-     * @param mean <p>The desired mean.</p>
-     * @param sd <p>Standard deviation.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Generates a logarithmic normally-distributed number with the given mean and
+     * standard deviation.
+     * @param mean The desired mean.
+     * @param sd Standard deviation.
+     * @return A 64-bit floating-point number.
      */
     public double LogNormal(double mean, double sd) {
       return Math.exp(this.Normal(mean, sd));
     }
 
     /**
-     * <p>Conceptually, generates either 1 or 0 until the given number of 1's are
+     * Conceptually, generates either 1 or 0 until the given number of 1's are
      * generated, and counts the number of 0's generated. A 1 is generated at the
-     * given probability.</p>
-     * @param trials <p>The number of 1's to generate before the process stops.</p>
-     * @param p <p>The probability for each trial to succeed, from 0 (never) to 1
-     * (always).</p>
-     * @return <p>The number of 0's generated. Returns Integer.MAX_VALUE if {@code p}
-     * is 0.</p>
-     *
+     * given probability.
+     * @param trials The number of 1's to generate before the process stops.
+     * @param p The probability for each trial to succeed, from 0 (never) to 1
+     * (always).
+     * @return The number of 0's generated. Returns Integer.MAX_VALUE if {@code p} is
+     * 0.
      */
     public int NegativeBinomial(int trials, double p) {
       if (p < 0) {
@@ -330,13 +311,11 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Conceptually, generates either 1 or 0 the given number of times until the
+     * Conceptually, generates either 1 or 0 the given number of times until the
      * given number of 1's are generated, and counts the number of 0's generated.
-     * Either number has an equal probability of being generated.</p>
-     * @param trials <p>The number of 1's to generate before the process stops.</p>
-     * @return <p>The number of 0's generated. Returns Integer.MAX_VALUE if "p" is
-     * 0.</p>
-     *
+     * Either number has an equal probability of being generated.
+     * @param trials The number of 1's to generate before the process stops.
+     * @return The number of 0's generated. Returns Integer.MAX_VALUE if "p" is 0.
      */
     public int NegativeBinomial(int trials) {
       return this.NegativeBinomial(trials, 0.5);
@@ -346,10 +325,9 @@ package com.upokecenter.util;
     // from a third-party public-domain JavaScript file.
 
     /**
-     * <p>Generates a normally-distributed number with mean 0 and standard
-     * deviation 1.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Generates a normally-distributed number with mean 0 and standard deviation
+     * 1.
+     * @return A 64-bit floating-point number.
      */
     public double Normal() {
       synchronized (this.valueNormalLock) {
@@ -371,24 +349,22 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Generates a normally-distributed number with the given mean and standard
-     * deviation.</p>
-     * @param mean <p>The desired mean.</p>
-     * @param sd <p>Standard deviation.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Generates a normally-distributed number with the given mean and standard
+     * deviation.
+     * @param mean The desired mean.
+     * @param sd Standard deviation.
+     * @return A 64-bit floating-point number.
      */
     public double Normal(double mean, double sd) {
       return (this.Normal() * sd) + mean;
     }
 
     /**
-     * <p>Generates a random integer such that the average of random numbers
+     * Generates a random integer such that the average of random numbers
      * approaches the given mean number when this method is called repeatedly with
-     * the same mean.</p>
-     * @param mean <p>The expected mean of the random numbers.</p>
-     * @return <p>A 32-bit signed integer.</p>
-     *
+     * the same mean.
+     * @param mean The expected mean of the random numbers.
+     * @return A 32-bit signed integer.
      */
     public int Poisson(double mean) {
       if (mean < 0) {
@@ -408,12 +384,10 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Not documented yet.</p>
-     * @param min <p>Smallest possible number that will be generated.</p>
-     * @param max <p>Number that the randomly-generated number will be less
-     * than.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Not documented yet.
+     * @param min Smallest possible number that will be generated.
+     * @param max Number that the randomly-generated number will be less than.
+     * @return A 64-bit floating-point number.
      */
     public double Uniform(double min, double max) {
       if (min >= max) {
@@ -424,44 +398,39 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Returns a uniformly-distributed 64-bit floating-point number from 0 and
-     * up, but less than the given number.</p>
-     * @param max <p>Number that the randomly-generated number will be less
-     * than.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Returns a uniformly-distributed 64-bit floating-point number from 0 and up,
+     * but less than the given number.
+     * @param max Number that the randomly-generated number will be less than.
+     * @return A 64-bit floating-point number.
      */
     public double Uniform(double max) {
       return this.Uniform(0.0, max);
     }
 
     /**
-     * <p>Returns a uniformly-distributed 64-bit floating-point number from 0 and
-     * up, but less than 1.</p>
-     * @return <p>A 64-bit floating-point number.</p>
-     *
+     * Returns a uniformly-distributed 64-bit floating-point number from 0 and up,
+     * but less than 1.
+     * @return A 64-bit floating-point number.
      */
     public double Uniform() {
       return this.UniformLong(9007199254740992L) / 9007199254740992.0;
     }
 
     /**
-     * <p>Returns a uniformly-distributed 32-bit floating-point number from 0 and
-     * up, but less than 1.</p>
-     * @return <p>A 32-bit floating-point number.</p>
-     *
+     * Returns a uniformly-distributed 32-bit floating-point number from 0 and up,
+     * but less than 1.
+     * @return A 32-bit floating-point number.
      */
     public double UniformSingle() {
       return this.UniformInt(16777216) / 16777216.0f;
     }
 
     /**
-     * <p>Generates a random 32-bit signed integer within a given range.</p>
-     * @param minInclusive <p>Smallest possible value of the random number.</p>
-     * @param maxExclusive <p>One plus the largest possible value of the random
-     * number.</p>
-     * @return <p>A 32-bit signed integer.</p>
-     *
+     * Generates a random 32-bit signed integer within a given range.
+     * @param minInclusive Smallest possible value of the random number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
+     * @return A 32-bit signed integer.
      */
     public int UniformInt(int minInclusive, int maxExclusive) {
       if (minInclusive > maxExclusive) {
@@ -484,12 +453,11 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Generates a random 64-bit signed integer within a given range.</p>
-     * @param minInclusive <p>Smallest possible value of the random number.</p>
-     * @param maxExclusive <p>One plus the largest possible value of the random
-     * number.</p>
-     * @return <p>A 64-bit signed integer.</p>
-     *
+     * Generates a random 64-bit signed integer within a given range.
+     * @param minInclusive Smallest possible value of the random number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
+     * @return A 64-bit signed integer.
      */
     public long UniformLong(long minInclusive, long maxExclusive) {
       if (minInclusive > maxExclusive) {
@@ -530,12 +498,11 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Generates a random 32-bit signed integer 0 or greater and less than the
-     * given number.</p>
-     * @param maxExclusive <p>One plus the largest possible value of the random
-     * number.</p>
-     * @return <p>A 32-bit signed integer.</p>
-     *
+     * Generates a random 32-bit signed integer 0 or greater and less than the
+     * given number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
+     * @return A 32-bit signed integer.
      */
     public int UniformInt(int maxExclusive) {
       if (maxExclusive < 0) {
@@ -601,12 +568,11 @@ package com.upokecenter.util;
     }
 
     /**
-     * <p>Generates a random 32-bit signed integer 0 or greater and less than the
-     * given number.</p>
-     * @param maxExclusive <p>One plus the largest possible value of the random
-     * number.</p>
-     * @return <p>A 64-bit signed integer.</p>
-     *
+     * Generates a random 32-bit signed integer 0 or greater and less than the
+     * given number.
+     * @param maxExclusive One plus the largest possible value of the random
+     * number.
+     * @return A 64-bit signed integer.
      */
     public long UniformLong(long maxExclusive) {
       if (maxExclusive < 0) {

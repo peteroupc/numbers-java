@@ -19,7 +19,6 @@ https://creativecommons.org/publicdomain/zero/1.0/
    * humans to help diagnose the error (or other cause of the exception); they
    * are not intended to be parsed by computer programs, and the exact text of
    * the messages may change at any time between versions of this library.</p>
-   *
    */
 
   public final class ETrapException extends ArithmeticException {
@@ -28,11 +27,10 @@ private static final long serialVersionUID = 1L;
     private final EContext ctx;
 
     /**
-     * <p>Gets the arithmetic context used during the operation that triggered the
-     * trap. May be null.</p>
-     * @return <p>The arithmetic context used during the operation that triggered
-     * the trap. May be null.</p>
-     *
+     * Gets the arithmetic context used during the operation that triggered the
+     * trap. May be null.
+     * @return The arithmetic context used during the operation that triggered the
+     * trap. May be null.
      */
     public final EContext getContext() {
         return this.ctx;
@@ -43,19 +41,17 @@ private static final long serialVersionUID = 1L;
     private final int errors;
 
     /**
-     * <p>Initializes a new instance of the {@link
-     * com.upokecenter.numbers.ETrapException} class.</p>
-     *
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
      */
     public ETrapException() {
  this(FlagToMessage(EContext.FlagInvalid));
     }
 
     /**
-     * <p>Initializes a new instance of the {@link
-     * com.upokecenter.numbers.ETrapException} class.</p>
-     * @param message <p>The parameter {@code message} is a text string.</p>
-     *
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
+     * @param message The parameter {@code message} is a text string.
      */
     public ETrapException(String message) {
  super(message);
@@ -66,12 +62,11 @@ private static final long serialVersionUID = 1L;
     }
 
     /**
-     * <p>Initializes a new instance of the {@link
-     * com.upokecenter.numbers.ETrapException} class.</p>
-     * @param message <p>The parameter {@code message} is a text string.</p>
-     * @param innerException <p>The parameter {@code innerException} is an
-     * Exception object.</p>
-     *
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
+     * @param message The parameter {@code message} is a text string.
+     * @param innerException The parameter {@code innerException} is an Exception
+     * object.
      */
     public ETrapException(String message, Throwable innerException) {
  super(message);
@@ -83,49 +78,44 @@ initCause(innerException);;
     }
 
     /**
-     * <p>Gets the defined result of the operation that caused the trap.</p>
-     * @return <p>The defined result of the operation that caused the trap.</p>
-     *
+     * Gets the defined result of the operation that caused the trap.
+     * @return The defined result of the operation that caused the trap.
      */
     public final Object getResult() {
         return this.result;
       }
 
     /**
-     * <p>Gets the flag that specifies the primary kind of error in one or more
+     * Gets the flag that specifies the primary kind of error in one or more
      * operations (EContext.FlagXXX). This will only be one flag, such as {@code
-     * FlagInexact} or FlagSubnormal.</p>
-     * @return <p>The flag that specifies the primary kind of error in one or more
-     * operations.</p>
-     *
+     * FlagInexact} or FlagSubnormal.
+     * @return The flag that specifies the primary kind of error in one or more
+     * operations.
      */
     public final int getError() {
         return this.error;
       }
 
     /**
-     * <p>Gets the flags that were signaled as the result of one or more
-     * operations. This includes the flag specified in the "flag" parameter, but
-     * can include other flags. For instance, if "flag" is {@code
-     * EContext.FlagInexact}, this parameter might be {@code EContext.FlagInexact |
-     * EContext.FlagRounded}.</p>
-     * @return <p>The flags that specify the errors in one or more operations.</p>
-     *
+     * Gets the flags that were signaled as the result of one or more operations.
+     * This includes the flag specified in the "flag" parameter, but can include
+     * other flags. For instance, if "flag" is {@code EContext.FlagInexact}, this
+     * parameter might be {@code EContext.FlagInexact | EContext.FlagRounded}.
+     * @return The flags that specify the errors in one or more operations.
      */
     public final int getErrors() {
         return this.errors;
       }
 
     /**
-     * <p>Returns whether this trap exception specifies all the flags given. (Flags
+     * Returns whether this trap exception specifies all the flags given. (Flags
      * are signaled in a trap exception as the result of one or more operations
      * involving arbitrary-precision numbers, such as multiplication of two
-     * EDecimals.).</p>
-     * @param flag <p>A combination of one or more flags, such as {@code
-     * EContext.FlagInexact | EContext.FlagRounded}.</p>
-     * @return <p>True if this exception pertains to all of the flags given in
-     * {@code flag} ; otherwise, false.</p>
-     *
+     * EDecimals.).
+     * @param flag A combination of one or more flags, such as {@code
+     * EContext.FlagInexact | EContext.FlagRounded}.
+     * @return True if this exception pertains to all of the flags given in {@code
+     * flag} ; otherwise, false.
      */
     public boolean HasError(int flag) {
       return (this.getError() & flag) == flag;
@@ -157,39 +147,35 @@ initCause(innerException);;
     }
 
     /**
-     * <p>Initializes a new instance of the {@link
-     * com.upokecenter.numbers.ETrapException} class.</p>
-     * @param flag <p>The flag that specifies the kind of error from one or more
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
+     * @param flag The flag that specifies the kind of error from one or more
      * operations (EContext.FlagXXX). This will only be one flag, such as {@code
-     * FlagInexact} or FlagSubnormal.</p>
-     * @param ctx <p>The arithmetic context used during the operation that
-     * triggered the trap. Can be null.</p>
-     * @param result <p>The defined result of the operation that caused the
-     * trap.</p>
-     *
+     * FlagInexact} or FlagSubnormal.
+     * @param ctx The arithmetic context used during the operation that triggered
+     * the trap. Can be null.
+     * @param result The defined result of the operation that caused the trap.
      */
     public ETrapException(int flag, EContext ctx, Object result) {
  this(flag, flag, ctx, result);
     }
 
     /**
-     * <p>Initializes a new instance of the {@link
-     * com.upokecenter.numbers.ETrapException} class.</p>
-     * @param flags <p>Specifies the flags that were signaled as the result of one
-     * or more operations. This includes the flag specified in the "flag"
-     * parameter, but can include other flags. For instance, if "flag" is {@code
+     * Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ETrapException} class.
+     * @param flags Specifies the flags that were signaled as the result of one or
+     * more operations. This includes the flag specified in the "flag" parameter,
+     * but can include other flags. For instance, if "flag" is {@code
      * EContext.FlagInexact}, this parameter might be {@code EContext.FlagInexact |
-     * EContext.FlagRounded}.</p>
-     * @param flag <p>Specifies the flag that specifies the primary kind of error
-     * from one or more operations (EContext.FlagXXX). This will only be one flag,
-     * such as {@code FlagInexact} or FlagSubnormal.</p>
-     * @param ctx <p>The arithmetic context used during the operation that
-     * triggered the trap. Can be null.</p>
-     * @param result <p>The defined result of the operation that caused the
-     * trap.</p>
-     * @throws IllegalArgumentException <p>The parameter {@code flags} doesn't include all
-     * the flags in the {@code flag} parameter.</p>
-     *
+     * EContext.FlagRounded}.
+     * @param flag Specifies the flag that specifies the primary kind of error from
+     * one or more operations (EContext.FlagXXX). This will only be one flag, such
+     * as {@code FlagInexact} or FlagSubnormal.
+     * @param ctx The arithmetic context used during the operation that triggered
+     * the trap. Can be null.
+     * @param result The defined result of the operation that caused the trap.
+     * @throws IllegalArgumentException The parameter {@code flags} doesn't include all
+     * the flags in the {@code flag} parameter.
      */
     public ETrapException(int flags, int flag, EContext ctx, Object result) {
  super(FlagToMessage(flags));
