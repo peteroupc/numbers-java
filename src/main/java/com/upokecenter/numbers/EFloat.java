@@ -318,10 +318,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns an arbitrary-precision number with the value {@code
      * exponent*2^significand}.</p>
-     * <p>@param mantissaSmall </p>
-     * <p>Desired value for the significand.</p>
-     * <p>@param exponentSmall </p>
-     * <p>Desired value for the exponent.</p>
+     * @param mantissaSmall <p>Desired value for the significand.</p>
+     * @param exponentSmall <p>Desired value for the exponent.</p>
      * @return <p>An arbitrary-precision binary number.</p>
      *
      */
@@ -358,10 +356,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns an arbitrary-precision number with the value {@code
      * exponent*2^significand}.</p>
-     * <p>@param mantissa </p>
-     * <p>Desired value for the significand.</p>
-     * <p>@param exponentSmall </p>
-     * <p>Desired value for the exponent.</p>
+     * @param mantissa <p>Desired value for the significand.</p>
+     * @param exponentSmall <p>Desired value for the exponent.</p>
      * @return <p>An arbitrary-precision binary number.</p>
      * @throws NullPointerException <p>The parameter {@code mantissa} is null.</p>
      *
@@ -387,10 +383,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns an arbitrary-precision number with the value {@code
      * exponent*2^significand}.</p>
-     * <p>@param mantissa </p>
-     * <p>Desired value for the significand.</p>
-     * <p>@param exponentLong </p>
-     * <p>Desired value for the exponent.</p>
+     * @param mantissa <p>Desired value for the significand.</p>
+     * @param exponentLong <p>Desired value for the exponent.</p>
      * @return <p>An arbitrary-precision binary number.</p>
      * @throws NullPointerException <p>The parameter {@code mantissa} is null.</p>
      *
@@ -416,10 +410,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns an arbitrary-precision number with the value {@code
      * exponent*2^significand}.</p>
-     * <p>@param mantissa </p>
-     * <p>Desired value for the significand.</p>
-     * <p>@param exponent </p>
-     * <p>Desired value for the exponent.</p>
+     * @param mantissa <p>Desired value for the significand.</p>
+     * @param exponent <p>Desired value for the exponent.</p>
      * @return <p>An arbitrary-precision binary number.</p>
      * @throws NullPointerException <p>The parameter {@code mantissa} or {@code
      * exponent} is null.</p>
@@ -449,10 +441,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns an arbitrary-precision number with the value {@code
      * exponent*2^significand}.</p>
-     * <p>@param mantissaLong </p>
-     * <p>Desired value for the significand.</p>
-     * <p>@param exponentSmall </p>
-     * <p>Desired value for the exponent.</p>
+     * @param mantissaLong <p>Desired value for the significand.</p>
+     * @param exponentSmall <p>Desired value for the exponent.</p>
      * @return <p>An arbitrary-precision binary number.</p>
      *
      */
@@ -465,10 +455,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns an arbitrary-precision number with the value {@code
      * exponent*2^significand}.</p>
-     * <p>@param mantissaLong </p>
-     * <p>Desired value for the significand.</p>
-     * <p>@param exponentLong </p>
-     * <p>Desired value for the exponent.</p>
+     * @param mantissaLong <p>Desired value for the significand.</p>
+     * @param exponentLong <p>Desired value for the exponent.</p>
      * @return <p>An arbitrary-precision binary number.</p>
      *
      */
@@ -496,8 +484,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Creates a not-a-number arbitrary-precision binary number.</p>
-     * <p>@param diag </p>
-     * <p>An integer, 0 or greater, to use as diagnostic information
+     * @param diag <p>An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To get the
      * diagnostic information from another arbitrary-precision binary
      * floating-point number, use that object's {@code UnsignedMantissa}
@@ -511,19 +498,15 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Creates a not-a-number arbitrary-precision binary number.</p>
-     * <p>@param diag </p>
-     * <p>An integer, 0 or greater, to use as diagnostic information
+     * @param diag <p>An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To get the
      * diagnostic information from another arbitrary-precision binary
      * floating-point number, use that object's {@code UnsignedMantissa}
      * property.</p>
-     * <p>@param signaling </p>
-     * <p>Whether the return value will be signaling (true) or
+     * @param signaling <p>Whether the return value will be signaling (true) or
      * quiet (false).</p>
-     * <p>@param negative </p>
-     * <p>Whether the return value is negative.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision (in binary
+     * @param negative <p>Whether the return value is negative.</p>
+     * @param ctx <p>An arithmetic context to control the precision (in binary
      * digits) of the diagnostic information. The rounding and exponent range of
      * this context will be ignored. Can be null. The only flag that can be
      * signaled in this context is FlagInvalid, which happens if diagnostic
@@ -582,8 +565,7 @@ Binary16SignifAreaBits;
      * number encoded in the IEEE 754 binary64 format. This method computes the
      * exact value of the floating point number, not an approximation, as is often
      * the case by converting the floating point number to a string first.</p>
-     * <p>@param dblBits </p>
-     * <p>The parameter {@code dblBits} is a 64-bit signed
+     * @param dblBits <p>The parameter {@code dblBits} is a 64-bit signed
      * integer.</p>
      * @return <p>A binary floating-point number with the same value as the
      * floating-point number encoded in {@code dblBits}.</p>
@@ -647,8 +629,7 @@ Binary16SignifAreaBits;
      * DotNet and Java (for example, the NaN value's sign may be negative in
      * DotNet, but positive in Java). Use `IsNaN()` to determine whether an object
      * from this class stores a NaN value of any form.</p>
-     * <p>@param flt </p>
-     * <p>The parameter {@code flt} is a 64-bit floating-point
+     * @param flt <p>The parameter {@code flt} is a 64-bit floating-point
      * number.</p>
      * @return <p>A binary floating-point number with the same value as {@code
      * flt}.</p>
@@ -672,8 +653,7 @@ Binary16SignifAreaBits;
      * different form in DotNet and Java (for example, the NaN value's sign may be
      * negative in DotNet, but positive in Java). Use `IsNaN()` to determine
      * whether an object from this class stores a NaN value of any form.</p>
-     * <p>@param dbl </p>
-     * <p>The parameter {@code dbl} is a 64-bit floating-point
+     * @param dbl <p>The parameter {@code dbl} is a 64-bit floating-point
      * number.</p>
      * @return <p>A binary floating-point number with the same value as {@code
      * dbl}.</p>
@@ -687,8 +667,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Converts an arbitrary-precision integer to the same value as a binary
      * floating-point number.</p>
-     * <p>@param bigint </p>
-     * <p>An arbitrary-precision integer.</p>
+     * @param bigint <p>An arbitrary-precision integer.</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      *
      */
@@ -744,16 +723,12 @@ Binary16SignifAreaBits;
      * the corresponding characters in the Basic Latin range. In particular, the
      * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
      * allowed to contain white space characters, including spaces.</p>
-     * <p>@param str </p>
-     * <p>The parameter {@code str} is a text string.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param str <p>The parameter {@code str} is a text string.</p>
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code str} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
@@ -782,8 +757,7 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a text string that represents
      * a number, using an unlimited precision context. For more information, see
      * the {@code FromString(string, int, int, EContext)} method.</p>
-     * <p>@param str </p>
-     * <p>A text string to convert to a binary floating-point
+     * @param str <p>A text string to convert to a binary floating-point
      * number.</p>
      * @return <p>The parsed number, converted to arbitrary-precision binary
      * floating-point number.</p>
@@ -800,11 +774,9 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a text string that represents
      * a number. For more information, see the {@code FromString(string, int, int,
      * EContext)} method.</p>
-     * <p>@param str </p>
-     * <p>A text string to convert to a binary floating-point
+     * @param str <p>A text string to convert to a binary floating-point
      * number.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
@@ -825,13 +797,10 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a text string that represents
      * a number. For more information, see the {@code FromString(string, int, int,
      * EContext)} method.</p>
-     * <p>@param str </p>
-     * <p>The parameter {@code str} is a text string.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param str <p>The parameter {@code str} is a text string.</p>
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code str} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      * @throws T:IllegalArgumentException <p>Either {@code offset} or {@code
@@ -869,17 +838,13 @@ Binary16SignifAreaBits;
      * Latin range. In particular, the digits must be the basic digits 0 to 9
      * (U+0030 to U+0039). The sequence is not allowed to contain white space
      * characters, including spaces.</p>
-     * <p>@param chars </p>
-     * <p>A sequence of {@code char} s to convert to a binary
+     * @param chars <p>A sequence of {@code char} s to convert to a binary
      * floating-point number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code chars} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * chars} (but not more than {@code chars} 's length).</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
@@ -909,8 +874,7 @@ Binary16SignifAreaBits;
      * that represents a number, using an unlimited precision context. For more
      * information, see the {@code FromString(string, int, int, EContext)}
      * method.</p>
-     * <p>@param chars </p>
-     * <p>A sequence of {@code char} s to convert to a binary
+     * @param chars <p>A sequence of {@code char} s to convert to a binary
      * floating-point number.</p>
      * @return <p>The parsed number, converted to arbitrary-precision binary
      * floating-point number.</p>
@@ -927,11 +891,9 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a sequence of {@code char} s
      * that represents a number. For more information, see the {@code
      * FromString(string, int, int, EContext)} method.</p>
-     * <p>@param chars </p>
-     * <p>A sequence of {@code char} s to convert to a binary
+     * @param chars <p>A sequence of {@code char} s to convert to a binary
      * floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
@@ -952,14 +914,11 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a sequence of {@code char} s
      * that represents a number. For more information, see the {@code
      * FromString(string, int, int, EContext)} method.</p>
-     * <p>@param chars </p>
-     * <p>A sequence of {@code char} s to convert to a binary
+     * @param chars <p>A sequence of {@code char} s to convert to a binary
      * floating-point number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code chars} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * chars} (but not more than {@code chars} 's length).</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      * @throws NullPointerException <p>The parameter {@code chars} is null.</p>
@@ -993,17 +952,13 @@ Binary16SignifAreaBits;
      * the corresponding characters in the Basic Latin range. In particular, the
      * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is
      * not allowed to contain white space characters, including spaces.</p>
-     * <p>@param bytes </p>
-     * <p>A sequence of bytes to convert to a binary floating-point
+     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
      * number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code bytes} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * bytes} (but not more than {@code bytes} 's length).</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
@@ -1033,8 +988,7 @@ Binary16SignifAreaBits;
      * represents a number, using an unlimited precision context. For more
      * information, see the {@code FromString(string, int, int, EContext)}
      * method.</p>
-     * <p>@param bytes </p>
-     * <p>A sequence of bytes to convert to a binary floating-point
+     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
      * number.</p>
      * @return <p>The parsed number, converted to arbitrary-precision binary
      * floating-point number.</p>
@@ -1051,11 +1005,9 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a sequence of bytes that
      * represents a number. For more information, see the {@code FromString(string,
      * int, int, EContext)} method.</p>
-     * <p>@param bytes </p>
-     * <p>A sequence of bytes to convert to a binary floating-point
+     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
      * number.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If HasFlags of the context is true, will also
      * store the flags resulting from the operation (the flags are in addition to
      * the pre-existing flags). Can be null, in which case the precision is
@@ -1076,14 +1028,11 @@ Binary16SignifAreaBits;
      * <p>Creates a binary floating-point number from a sequence of bytes that
      * represents a number. For more information, see the {@code FromString(string,
      * int, int, EContext)} method.</p>
-     * <p>@param bytes </p>
-     * <p>A sequence of bytes to convert to a binary floating-point
+     * @param bytes <p>A sequence of bytes to convert to a binary floating-point
      * number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code bytes} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * bytes} (but not more than {@code bytes} 's length).</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      * @throws NullPointerException <p>The parameter {@code bytes} is null.</p>
@@ -1098,12 +1047,9 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Gets the greater value between two binary floating-point numbers.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -1132,10 +1078,8 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Gets the greater value between two binary floating-point numbers.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The larger value of the two numbers. If one is positive zero and
      * the other is negative zero, returns the positive zero. If the two numbers
      * are positive and have the same value, returns the one with the larger
@@ -1160,12 +1104,9 @@ Binary16SignifAreaBits;
     /**
      * <p>Gets the greater value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Max.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -1191,10 +1132,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Gets the greater value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Max.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The larger value of the two numbers, ignoring their signs.</p>
      * @throws NullPointerException <p>The parameter {@code first} or {@code
      * second} is null.</p>
@@ -1214,12 +1153,9 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Gets the lesser value between two binary floating-point numbers.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -1248,10 +1184,8 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Gets the lesser value between two binary floating-point numbers.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The smaller value of the two numbers. If one is positive zero and
      * the other is negative zero, returns the negative zero. If the two numbers
      * are positive and have the same value, returns the one with the smaller
@@ -1276,12 +1210,9 @@ Binary16SignifAreaBits;
     /**
      * <p>Gets the lesser value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Min.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -1307,10 +1238,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Gets the lesser value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Min.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The smaller value of the two numbers, ignoring their signs.</p>
      * @throws NullPointerException <p>The parameter {@code first} or {@code
      * second} is null.</p>
@@ -1331,8 +1260,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Finds the constant π, the circumference of a circle divided by its
      * diameter.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as π
@@ -1371,8 +1299,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Finds the absolute value of this object (if it's negative, it becomes
      * positive).</p>
-     * <p>@param context </p>
-     * <p>An arithmetic context to control the precision, rounding,
+     * @param context <p>An arithmetic context to control the precision, rounding,
      * and exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case the
@@ -1390,8 +1317,7 @@ Binary16SignifAreaBits;
      * signed integer and returns the result. The exponent for the result is the
      * lower of this arbitrary-precision binary floating-point number's exponent
      * and the other 32-bit signed integer's exponent.</p>
-     * <p>@param intValue </p>
-     * <p>The parameter {@code intValue} is a 32-bit signed
+     * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
      * integer.</p>
      * @return <p>The sum of the two numbers, that is, this arbitrary-precision
      * binary floating-point number plus a 32-bit signed integer. If this
@@ -1408,8 +1334,7 @@ Binary16SignifAreaBits;
      * floating-point number and returns the result. The exponent for the result is
      * the lower of this arbitrary-precision binary floating-point number's
      * exponent and the other 32-bit signed integer's exponent.</p>
-     * <p>@param intValue </p>
-     * <p>The parameter {@code intValue} is a 32-bit signed
+     * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
      * integer.</p>
      * @return <p>The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus a 32-bit signed
@@ -1428,8 +1353,7 @@ Binary16SignifAreaBits;
      * this arbitrary-precision binary floating-point number's exponent plus the
      * other 32-bit signed integer's exponent.</p><p> </p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200);</pre> .
-     * <p>@param intValue </p>
-     * <p>The parameter {@code intValue} is a 32-bit signed
+     * @param intValue <p>The parameter {@code intValue} is a 32-bit signed
      * integer.</p>
      * @return <p>The product of the two numbers, that is, this arbitrary-precision
      * binary floating-point number times a 32-bit signed integer.</p>
@@ -1445,8 +1369,7 @@ Binary16SignifAreaBits;
      * would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,
      * and so on); if this is not desired, use DivideToExponent, or use the Divide
      * overload that takes an EContext.</p>
-     * <p>@param intValue </p>
-     * <p>The divisor.</p>
+     * @param intValue <p>The divisor.</p>
      * @return <p>The result of dividing this arbitrary-precision binary
      * floating-point number by a 32-bit signed integer. Returns infinity if the
      * divisor (this arbitrary-precision binary floating-point number) is 0 and the
@@ -1468,8 +1391,7 @@ Binary16SignifAreaBits;
      * signed integer and returns the result. The exponent for the result is the
      * lower of this arbitrary-precision binary floating-point number's exponent
      * and the other 64-bit signed integer's exponent.</p>
-     * <p>@param longValue </p>
-     * <p>The parameter {@code longValue} is a 64-bit signed
+     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
      * integer.</p>
      * @return <p>The sum of the two numbers, that is, this arbitrary-precision
      * binary floating-point number plus a 64-bit signed integer. If this
@@ -1486,8 +1408,7 @@ Binary16SignifAreaBits;
      * floating-point number and returns the result. The exponent for the result is
      * the lower of this arbitrary-precision binary floating-point number's
      * exponent and the other 64-bit signed integer's exponent.</p>
-     * <p>@param longValue </p>
-     * <p>The parameter {@code longValue} is a 64-bit signed
+     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
      * integer.</p>
      * @return <p>The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus a 64-bit signed
@@ -1505,8 +1426,7 @@ Binary16SignifAreaBits;
      * this arbitrary-precision binary floating-point number's exponent plus the
      * other 64-bit signed integer's exponent.</p><p> </p><pre>EInteger result =
      * EInteger.FromString("5").Multiply(200L);</pre> .
-     * <p>@param longValue </p>
-     * <p>The parameter {@code longValue} is a 64-bit signed
+     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
      * integer.</p>
      * @return <p>The product of the two numbers, that is, this arbitrary-precision
      * binary floating-point number times a 64-bit signed integer.</p>
@@ -1522,8 +1442,7 @@ Binary16SignifAreaBits;
      * would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,
      * and so on); if this is not desired, use DivideToExponent, or use the Divide
      * overload that takes an EContext.</p>
-     * <p>@param longValue </p>
-     * <p>The parameter {@code longValue} is a 64-bit signed
+     * @param longValue <p>The parameter {@code longValue} is a 64-bit signed
      * integer.</p>
      * @return <p>The result of dividing this arbitrary-precision binary
      * floating-point number by a 64-bit signed integer. Returns infinity if the
@@ -1547,8 +1466,7 @@ Binary16SignifAreaBits;
      * exponent for the result is the lower of this arbitrary-precision binary
      * floating-point number's exponent and the other arbitrary-precision binary
      * floating-point number's exponent.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision binary floating-point
+     * @param otherValue <p>An arbitrary-precision binary floating-point
      * number.</p>
      * @return <p>The sum of the two numbers, that is, this arbitrary-precision
      * binary floating-point number plus another arbitrary-precision binary
@@ -1563,10 +1481,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Adds this arbitrary-precision binary floating-point number and another
      * arbitrary-precision binary floating-point number and returns the result.</p>
-     * <p>@param otherValue </p>
-     * <p>The number to add to.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param otherValue <p>The number to add to.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -1589,8 +1505,7 @@ Binary16SignifAreaBits;
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
      * CompareToTotal method instead.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
+     * @param other <p>An arbitrary-precision binary floating-point number.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value or
      * if {@code other} is null, or 0 if both values are equal.</p>
@@ -1609,8 +1524,7 @@ Binary16SignifAreaBits;
      * other object is a quiet NaN or signaling NaN, this method will not trigger
      * an error. Instead, NaN will compare greater than any other number, including
      * infinity. Two different NaN values will be considered equal.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
+     * @param other <p>An arbitrary-precision binary floating-point number.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value or
      * if {@code other} is null, or 0 if both values are equal.</p>
@@ -1626,8 +1540,7 @@ Binary16SignifAreaBits;
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
      * CompareToTotal method instead.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 32-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 32-bit signed
      * integer.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value, or
@@ -1646,8 +1559,7 @@ Binary16SignifAreaBits;
      * zero and positive zero are considered equal.</p> <p>If this object is a
      * quiet NaN or signaling NaN, this method will not trigger an error. Instead,
      * NaN will compare greater than any other number.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 32-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 32-bit signed
      * integer.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value, or
@@ -1666,8 +1578,7 @@ Binary16SignifAreaBits;
      * zero and positive zero are considered equal.</p> <p>If this object is a
      * quiet NaN or signaling NaN, this method will not trigger an error. Instead,
      * NaN will compare greater than any other number, including infinity.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 64-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 64-bit signed
      * integer.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value, or
@@ -1684,8 +1595,7 @@ Binary16SignifAreaBits;
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
      * CompareToTotal method instead.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 64-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 64-bit signed
      * integer.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value, or
@@ -1702,10 +1612,8 @@ Binary16SignifAreaBits;
      * positive zero are considered equal.</p> <p>If this object or the other
      * object is a quiet NaN or signaling NaN, this method will return a quiet NaN
      * and will signal a FlagInvalid flag.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context. The precision, rounding, and exponent
+     * @param other <p>An arbitrary-precision binary floating-point number.</p>
+     * @param ctx <p>An arithmetic context. The precision, rounding, and exponent
      * range are ignored. If {@code HasFlags} of the context is true, will store
      * the flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null.</p>
@@ -1732,11 +1640,9 @@ Binary16SignifAreaBits;
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number to
+     * @param other <p>An arbitrary-precision binary floating-point number to
      * compare with this one.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context. Flags will be set in this context only
+     * @param ctx <p>An arithmetic context. Flags will be set in this context only
      * if {@code HasFlags} and {@code IsSimplified} of the context are true and
      * only if an operand needed to be rounded before carrying out the operation.
      * Can be null.</p>
@@ -1772,11 +1678,9 @@ Binary16SignifAreaBits;
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number to
+     * @param other <p>An arbitrary-precision binary floating-point number to
      * compare with this one.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context. Flags will be set in this context only
+     * @param ctx <p>An arithmetic context. Flags will be set in this context only
      * if {@code HasFlags} and {@code IsSimplified} of the context are true and
      * only if an operand needed to be rounded before carrying out the operation.
      * Can be null.</p>
@@ -1813,8 +1717,7 @@ Binary16SignifAreaBits;
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number to
+     * @param other <p>An arbitrary-precision binary floating-point number to
      * compare with this one.</p>
      * @return <p>The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. This
@@ -1880,8 +1783,7 @@ Binary16SignifAreaBits;
      * "absolute value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li></ul>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number to
+     * @param other <p>An arbitrary-precision binary floating-point number to
      * compare with this one.</p>
      * @return <p>The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. This
@@ -1937,10 +1839,8 @@ Binary16SignifAreaBits;
      * equal.</p> <p>If this object or the other object is a quiet NaN or signaling
      * NaN, this method returns a quiet NaN, and will signal a FlagInvalid flag if
      * either is a signaling NaN.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context. The precision, rounding, and exponent
+     * @param other <p>An arbitrary-precision binary floating-point number.</p>
+     * @param ctx <p>An arithmetic context. The precision, rounding, and exponent
      * range are ignored. If {@code HasFlags} of the context is true, will store
      * the flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null.</p>
@@ -1961,8 +1861,7 @@ Binary16SignifAreaBits;
      * (positive or negative) of another number. (This method is similar to the
      * "copy-sign" operation in the General Decimal Arithmetic Specification,
      * except this method does not necessarily return a copy of this object.).</p>
-     * <p>@param other </p>
-     * <p>A number whose sign will be copied.</p>
+     * @param other <p>A number whose sign will be copied.</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      * @throws NullPointerException <p>The parameter {@code other} is null.</p>
      *
@@ -1985,8 +1884,7 @@ Binary16SignifAreaBits;
      * expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not
      * desired, use DivideToExponent, or use the Divide overload that takes an
      * EContext.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
+     * @param divisor <p>The number to divide by.</p>
      * @return <p>The result of dividing this arbitrary-precision binary
      * floating-point number by another arbitrary-precision binary floating-point
      * number. Returns infinity if the divisor (this arbitrary-precision binary
@@ -2008,10 +1906,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides this arbitrary-precision binary floating-point number by another
      * arbitrary-precision binary floating-point number and returns the result.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param divisor <p>The number to divide by.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -2037,8 +1933,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Calculates the quotient and remainder using the
      * DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
+     * @param divisor <p>The number to divide by.</p>
      * @return <p>A 2 element array consisting of the quotient and remainder in
      * that order.</p>
      *
@@ -2053,10 +1948,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Calculates the quotient and remainder using the
      * DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param divisor <p>The number to divide by.</p>
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * in the division portion of the remainder calculation; as a result, it's
      * possible for the remainder to have a higher precision than given in this
@@ -2080,15 +1973,12 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
      * a particular exponent to the result.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param desiredExponentSmall </p>
-     * <p>The desired exponent. A negative number
+     * @param divisor <p>The number to divide by.</p>
+     * @param desiredExponentSmall <p>The desired exponent. A negative number
      * places the cutoff point to the right of the usual radix point (so a negative
      * number means the number of binary digit places to round to). A positive
      * number places the cutoff point to the left of the usual radix point.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the rounding mode to
+     * @param ctx <p>An arithmetic context object to control the rounding mode to
      * use if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls the
      * Quantize method with both arguments equal to the result of the operation
@@ -2119,15 +2009,12 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
      * a particular exponent to the result.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param desiredExponentSmall </p>
-     * <p>The desired exponent. A negative number
+     * @param divisor <p>The number to divide by.</p>
+     * @param desiredExponentSmall <p>The desired exponent. A negative number
      * places the cutoff point to the right of the usual radix point (so a negative
      * number means the number of binary digit places to round to). A positive
      * number places the cutoff point to the left of the usual radix point.</p>
-     * <p>@param rounding </p>
-     * <p>The rounding mode to use if the result must be scaled
+     * @param rounding <p>The rounding mode to use if the result must be scaled
      * down to have the same exponent as this value.</p>
      * @return <p>The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Signals
@@ -2149,15 +2036,12 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
      * a particular exponent to the result.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param exponent </p>
-     * <p>The desired exponent. A negative number places the cutoff
+     * @param divisor <p>The number to divide by.</p>
+     * @param exponent <p>The desired exponent. A negative number places the cutoff
      * point to the right of the usual radix point (so a negative number means the
      * number of binary digit places to round to). A positive number places the
      * cutoff point to the left of the usual radix point.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the rounding mode to
+     * @param ctx <p>An arithmetic context object to control the rounding mode to
      * use if the result must be scaled down to have the same exponent as this
      * value. If the precision given in the context is other than 0, calls the
      * Quantize method with both arguments equal to the result of the operation
@@ -2185,15 +2069,12 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides two arbitrary-precision binary floating-point numbers, and gives
      * a particular exponent to the result.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param desiredExponent </p>
-     * <p>The desired exponent. A negative number places the
+     * @param divisor <p>The number to divide by.</p>
+     * @param desiredExponent <p>The desired exponent. A negative number places the
      * cutoff point to the right of the usual radix point (so a negative number
      * means the number of binary digit places to round to). A positive number
      * places the cutoff point to the left of the usual radix point.</p>
-     * <p>@param rounding </p>
-     * <p>The rounding mode to use if the result must be scaled
+     * @param rounding <p>The rounding mode to use if the result must be scaled
      * down to have the same exponent as this value.</p>
      * @return <p>The quotient of the two objects. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Returns
@@ -2215,8 +2096,7 @@ Binary16SignifAreaBits;
      * <p>Divides two arbitrary-precision binary floating-point numbers, and
      * returns the integer part of the result, rounded down, with the preferred
      * exponent set to this value's exponent minus the divisor's exponent.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
+     * @param divisor <p>The number to divide by.</p>
      * @return <p>The integer part of the quotient of the two objects. Signals
      * FlagDivideByZero and returns infinity if the divisor is 0 and the dividend
      * is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the
@@ -2234,10 +2114,8 @@ Binary16SignifAreaBits;
      * <p>Divides this object by another object, and returns the integer part of
      * the result (which is initially rounded down), with the preferred exponent
      * set to this value's exponent minus the divisor's exponent.</p>
-     * <p>@param divisor </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>The parameter {@code ctx} is an EContext object.</p>
+     * @param divisor <p>An arbitrary-precision binary floating-point number.</p>
+     * @param ctx <p>The parameter {@code ctx} is an EContext object.</p>
      * @return <p>The integer part of the quotient of the two objects. Signals
      * FlagInvalid and returns not-a-number (NaN) if the return value would
      * overflow the exponent range. Signals FlagDivideByZero and returns infinity
@@ -2256,10 +2134,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides this object by another object, and returns the integer part of
      * the result, with the exponent set to 0.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision. The
+     * @param divisor <p>The number to divide by.</p>
+     * @param ctx <p>An arithmetic context object to control the precision. The
      * rounding and exponent range settings of this context are ignored. If {@code
      * HasFlags} of the context is true, will also store the flags resulting from
      * the operation (the flags are in addition to the pre-existing flags). Can be
@@ -2280,10 +2156,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Divides this object by another binary floating-point number and returns a
      * result with the same exponent as this object (the dividend).</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param rounding </p>
-     * <p>The rounding mode to use if the result must be scaled
+     * @param divisor <p>The number to divide by.</p>
+     * @param rounding <p>The rounding mode to use if the result must be scaled
      * down to have the same exponent as this value.</p>
      * @return <p>The quotient of the two numbers. Signals FlagDivideByZero and
      * returns infinity if the divisor is 0 and the dividend is nonzero. Signals
@@ -2308,8 +2182,7 @@ Binary16SignifAreaBits;
      * order. The result of division is calculated as though by {@code
      * DivideToIntegerNaturalScale}, and the remainder is calculated as though by
      * {@code RemainderNaturalScale}.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
+     * @param divisor <p>The number to divide by.</p>
      * @return <p>An array of two items: the first is the result of the division as
      * an arbitrary-precision binary floating-point number, and the second is the
      * remainder as an arbitrary-precision binary floating-point number. The result
@@ -2328,10 +2201,8 @@ Binary16SignifAreaBits;
      * order. The result of division is calculated as though by {@code
      * DivideToIntegerNaturalScale}, and the remainder is calculated as though by
      * {@code RemainderNaturalScale}.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param divisor <p>The number to divide by.</p>
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * in the division portion of the remainder calculation; as a result, it's
      * possible for the remainder to have a higher precision than given in this
@@ -2363,8 +2234,7 @@ Binary16SignifAreaBits;
      * <p>Determines whether this object's significand, exponent, and properties
      * are equal to those of another object. Not-a-number values are considered
      * equal if the rest of their properties are equal.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
+     * @param other <p>An arbitrary-precision binary floating-point number.</p>
      * @return <p>{@code true} if this object's significand and exponent are equal
      * to those of another object; otherwise, {@code false}.</p>
      *
@@ -2378,8 +2248,7 @@ Binary16SignifAreaBits;
      * are equal to those of another object and that other object is an
      * arbitrary-precision binary floating-point number. Not-a-number values are
      * considered equal if the rest of their properties are equal.</p>
-     * <p>@param obj </p>
-     * <p>The parameter {@code obj} is an arbitrary object.</p>
+     * @param obj <p>The parameter {@code obj} is an arbitrary object.</p>
      * @return <p> {@code true} if the objects are equal; otherwise, {@code false}.
      * In this method, two objects are not equal if they don't have the same type
      * or if one is null and the other isn't.</p>
@@ -2392,8 +2261,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Determines whether this object's significand and exponent are equal to
      * those of another object.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision binary floating-point
+     * @param otherValue <p>An arbitrary-precision binary floating-point
      * number.</p>
      * @return <p>{@code true} if this object's significand and exponent are equal
      * to those of another object; otherwise, {@code false}.</p>
@@ -2411,8 +2279,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Finds e (the base of natural logarithms) raised to the power of this
      * object's value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -2433,8 +2300,7 @@ Binary16SignifAreaBits;
      * object's value, and subtracts the result by 1 and returns the final result,
      * in a way that avoids loss of precision if the true result is very close to
      * 0.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -2597,8 +2463,7 @@ Binary16SignifAreaBits;
      * <p>Finds the natural logarithm of this object, that is, the power (exponent)
      * that e (the base of natural logarithms) must be raised to in order to equal
      * this object's value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -2621,8 +2486,7 @@ Binary16SignifAreaBits;
      * <p>Finds the base-10 logarithm of this object, that is, the power (exponent)
      * that the number 10 must be raised to in order to equal this object's
      * value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -2642,8 +2506,7 @@ Binary16SignifAreaBits;
      * <p>Adds 1 to this object's value and finds the natural logarithm of the
      * result, in a way that avoids loss of precision when this object's value is
      * between 0 and 1.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -2721,11 +2584,9 @@ Binary16SignifAreaBits;
      * <p>Finds the base-N logarithm of this object, that is, the power (exponent)
      * that the number N must be raised to in order to equal this object's
      * value.</p>
-     * <p>@param baseValue </p>
-     * <p>The parameter {@code baseValue} is a Numbers.EFloat
+     * @param baseValue <p>The parameter {@code baseValue} is a Numbers.EFloat
      * object.</p>
-     * <p>@param ctx </p>
-     * <p>The parameter {@code ctx} is a Numbers.EContext object.</p>
+     * @param ctx <p>The parameter {@code ctx} is a Numbers.EContext object.</p>
      * @return <p>Ln(this object)/Ln(baseValue). Signals the flag FlagInvalid and
      * returns not-a-number (NaN) if this object is less than 0. Signals
      * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
@@ -2813,8 +2674,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the left.</p>
-     * <p>@param places </p>
-     * <p>The number of binary digit places to move the radix point
+     * @param places <p>The number of binary digit places to move the radix point
      * to the left. If this number is negative, instead moves the radix point to
      * the right by this number's absolute value.</p>
      * @return <p>A number whose exponent is decreased by {@code places}, but not
@@ -2828,12 +2688,10 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the left.</p>
-     * <p>@param places </p>
-     * <p>The number of binary digit places to move the radix point
+     * @param places <p>The number of binary digit places to move the radix point
      * to the left. If this number is negative, instead moves the radix point to
      * the right by this number's absolute value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -2849,8 +2707,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the left.</p>
-     * <p>@param bigPlaces </p>
-     * <p>The number of binary digit places to move the radix
+     * @param bigPlaces <p>The number of binary digit places to move the radix
      * point to the left. If this number is negative, instead moves the radix point
      * to the right by this number's absolute value.</p>
      * @return <p>A number whose exponent is decreased by {@code bigPlaces}, but
@@ -2864,12 +2721,10 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the left.</p>
-     * <p>@param bigPlaces </p>
-     * <p>The number of binary digit places to move the radix
+     * @param bigPlaces <p>The number of binary digit places to move the radix
      * point to the left. If this number is negative, instead moves the radix point
      * to the right by this number's absolute value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -2888,8 +2743,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the right.</p>
-     * <p>@param places </p>
-     * <p>The number of binary digit places to move the radix point
+     * @param places <p>The number of binary digit places to move the radix point
      * to the right. If this number is negative, instead moves the radix point to
      * the left by this number's absolute value.</p>
      * @return <p>A number whose exponent is increased by {@code places}, but not
@@ -2903,12 +2757,10 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the right.</p>
-     * <p>@param places </p>
-     * <p>The number of binary digit places to move the radix point
+     * @param places <p>The number of binary digit places to move the radix point
      * to the right. If this number is negative, instead moves the radix point to
      * the left by this number's absolute value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -2924,8 +2776,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the right.</p>
-     * <p>@param bigPlaces </p>
-     * <p>The number of binary digit places to move the radix
+     * @param bigPlaces <p>The number of binary digit places to move the radix
      * point to the right. If this number is negative, instead moves the radix
      * point to the left by this number's absolute value.</p>
      * @return <p>A number whose exponent is increased by {@code bigPlaces}, but
@@ -2939,12 +2790,10 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a number similar to this number but with the radix point moved to
      * the right.</p>
-     * <p>@param bigPlaces </p>
-     * <p>The number of binary digit places to move the radix
+     * @param bigPlaces <p>The number of binary digit places to move the radix
      * point to the right. If this number is negative, instead moves the radix
      * point to the left by this number's absolute value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -2980,8 +2829,7 @@ Binary16SignifAreaBits;
      * result. The exponent for the result is this arbitrary-precision binary
      * floating-point number's exponent plus the other arbitrary-precision binary
      * floating-point number's exponent.</p>
-     * <p>@param otherValue </p>
-     * <p>Another binary floating-point number.</p>
+     * @param otherValue <p>Another binary floating-point number.</p>
      * @return <p>The product of the two numbers, that is, this arbitrary-precision
      * binary floating-point number times another arbitrary-precision binary
      * floating-point number.</p>
@@ -3015,10 +2863,8 @@ Binary16SignifAreaBits;
      * <p>Multiplies this arbitrary-precision binary floating-point number by
      * another arbitrary-precision binary floating-point number and returns the
      * result.</p>
-     * <p>@param op </p>
-     * <p>Another binary floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param op <p>Another binary floating-point number.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3037,10 +2883,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Multiplies by one binary floating-point number, and then adds another
      * binary floating-point number.</p>
-     * <p>@param multiplicand </p>
-     * <p>The value to multiply.</p>
-     * <p>@param augend </p>
-     * <p>The value to add.</p>
+     * @param multiplicand <p>The value to multiply.</p>
+     * @param augend <p>The value to add.</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      *
      */
@@ -3052,12 +2896,9 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Multiplies by one value, and then adds another value.</p>
-     * <p>@param op </p>
-     * <p>The value to multiply.</p>
-     * <p>@param augend </p>
-     * <p>The value to add.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param op <p>The value to multiply.</p>
+     * @param augend <p>The value to add.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3076,12 +2917,9 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Multiplies by one value, and then subtracts another value.</p>
-     * <p>@param op </p>
-     * <p>The value to multiply.</p>
-     * <p>@param subtrahend </p>
-     * <p>The value to subtract.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param op <p>The value to multiply.</p>
+     * @param subtrahend <p>The value to subtract.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3134,8 +2972,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Returns a binary floating-point number with the same value as this object
      * but with the sign reversed.</p>
-     * <p>@param context </p>
-     * <p>An arithmetic context to control the precision, rounding,
+     * @param context <p>An arithmetic context to control the precision, rounding,
      * and exponent range of the result. If {@code HasFlags} of the context is
      * true, will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case the
@@ -3151,8 +2988,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Finds the largest value that's smaller than the given value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision and
+     * @param ctx <p>An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
@@ -3170,8 +3006,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Finds the smallest value that's greater than the given value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision and
+     * @param ctx <p>An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
@@ -3190,11 +3025,9 @@ Binary16SignifAreaBits;
      * <p>Finds the next value that is closer to the other object's value than this
      * object's value. Returns a copy of this value with the same sign as the other
      * value if both values are equal.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision binary floating-point number
+     * @param otherValue <p>An arbitrary-precision binary floating-point number
      * that the return value will approach.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision and
+     * @param ctx <p>An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
@@ -3217,8 +3050,7 @@ Binary16SignifAreaBits;
      * zero. The idiom {@code EDecimal.SignalingNaN.Plus(ctx)} is useful for
      * triggering an invalid operation and returning not-a-number (NaN) for custom
      * arithmetic operations.</p>
-     * <p>@param ctx </p>
-     * <p>A context for controlling the precision, rounding mode, and
+     * @param ctx <p>A context for controlling the precision, rounding mode, and
      * exponent range. Can be null, in which case the precision is unlimited and
      * rounding isn't needed.</p>
      * @return <p>The closest value to this object's value, rounded to the
@@ -3234,8 +3066,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Raises this object's value to the given exponent, using unlimited
      * precision.</p>
-     * <p>@param exponent </p>
-     * <p>An arbitrary-precision binary floating-point number
+     * @param exponent <p>An arbitrary-precision binary floating-point number
      * expressing the exponent to raise this object's value to.</p>
      * @return <p>This^exponent. Returns not-a-number (NaN) if the exponent has a
      * fractional part.</p>
@@ -3247,11 +3078,9 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Raises this object's value to the given exponent.</p>
-     * <p>@param exponent </p>
-     * <p>An arbitrary-precision binary floating-point number
+     * @param exponent <p>An arbitrary-precision binary floating-point number
      * expressing the exponent to raise this object's value to.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3270,10 +3099,8 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Raises this object's value to the given exponent.</p>
-     * <p>@param exponentSmall </p>
-     * <p>The exponent to raise this object's value to.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param exponentSmall <p>The exponent to raise this object's value to.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3288,8 +3115,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Raises this object's value to the given exponent.</p>
-     * <p>@param exponentSmall </p>
-     * <p>The exponent to raise this object's value to.</p>
+     * @param exponentSmall <p>The exponent to raise this object's value to.</p>
      * @return <p>This^exponent. Returns not-a-number (NaN) if this object and
      * exponent are both 0.</p>
      *
@@ -3348,15 +3174,13 @@ Binary16SignifAreaBits;
      * radix point&#x2a;&#x2f; EContext.ForPrecision(25) /* 25-digit precision);&#x2a;&#x2f;</pre> <p>A
      * fixed-point binary arithmetic in which no digits come after the radix point
      * (a desired exponent of 0) is considered an "integer arithmetic".</p>
-     * <p>@param desiredExponent </p>
-     * <p>The desired exponent for the result. The exponent
+     * @param desiredExponent <p>The desired exponent for the result. The exponent
      * is the number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control precision and rounding of the
+     * @param ctx <p>An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3393,15 +3217,13 @@ Binary16SignifAreaBits;
      * EContext.ForPrecision(25) /* 25-digit precision);&#x2a;&#x2f;</pre> <p>A fixed-point
      * binary arithmetic in which no digits come after the radix point (a desired
      * exponent of 0) is considered an "integer arithmetic".</p>
-     * <p>@param desiredExponentInt </p>
-     * <p>The desired exponent for the result. The
+     * @param desiredExponentInt <p>The desired exponent for the result. The
      * exponent is the number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order places
      * from the number. For example, -3 means round to the thousandth (10^-3,
      * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds
      * the number to an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control precision and rounding of the
+     * @param ctx <p>An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3434,16 +3256,14 @@ Binary16SignifAreaBits;
      * the radix point. A fixed-point binary arithmetic in which no digits come
      * after the radix point (a desired exponent of 0) is considered an "integer
      * arithmetic" .</p>
-     * <p>@param otherValue </p>
-     * <p>A binary floating-point number containing the desired
+     * @param otherValue <p>A binary floating-point number containing the desired
      * exponent of the result. The significand is ignored. The exponent is the
      * number of fractional digits in the result, expressed as a negative number.
      * Can also be positive, which eliminates lower-order places from the number.
      * For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means
      * round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to
      * an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control precision and rounding of the
+     * @param ctx <p>An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3465,8 +3285,7 @@ Binary16SignifAreaBits;
      * <p>Returns an object with the same numerical value as this one but with
      * trailing zeros removed from its significand. For example, 1.00 becomes 1.
      * </p> <p>If this object's value is 0, changes the exponent to 0.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3489,10 +3308,8 @@ Binary16SignifAreaBits;
      * the other arbitrary-precision binary floating-point number; the remainder
      * has the same sign (positive or negative) as this arbitrary-precision binary
      * floating-point number.</p>
-     * <p>@param divisor </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>The parameter {@code ctx} is an EContext object.</p>
+     * @param divisor <p>An arbitrary-precision binary floating-point number.</p>
+     * @param ctx <p>The parameter {@code ctx} is an EContext object.</p>
      * @return <p>The remainder that would result when this arbitrary-precision
      * binary floating-point number is divided by another arbitrary-precision
      * binary floating-point number. Signals FlagDivideByZero and returns infinity
@@ -3515,10 +3332,8 @@ Binary16SignifAreaBits;
      * the absolute value of this object is divided by the absolute value of the
      * other object; the remainder has the same sign (positive or negative) as this
      * object's value.</p>
-     * <p>@param divisor </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
-     * <p>@param ctx </p>
-     * <p>The parameter {@code ctx} is an EContext object.</p>
+     * @param divisor <p>An arbitrary-precision binary floating-point number.</p>
+     * @param ctx <p>The parameter {@code ctx} is an EContext object.</p>
      * @return <p>The remainder of the two numbers. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit the
      * given precision.</p>
@@ -3533,8 +3348,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Calculates the remainder of a number by the formula {@code "this" -
      * (("this" / "divisor") * "divisor")}.</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
+     * @param divisor <p>The number to divide by.</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      *
      */
@@ -3546,10 +3360,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Calculates the remainder of a number by the formula "this" - (("this" /
      * "divisor") * "divisor").</p>
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param divisor <p>The number to divide by.</p>
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * in the division portion of the remainder calculation; as a result, it's
      * possible for the return value to have a higher precision than given in this
@@ -3584,10 +3396,8 @@ Binary16SignifAreaBits;
      * the quotient, rounded down, is even, and the result's absolute value is half
      * of the divisor's absolute value.</li></ul> This function is also known as
      * the "IEEE Remainder" function.
-     * <p>@param divisor </p>
-     * <p>The number to divide by.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision. The
+     * @param divisor <p>The number to divide by.</p>
+     * @param ctx <p>An arithmetic context object to control the precision. The
      * rounding and exponent range settings of this context are ignored (the
      * rounding mode is always treated as HalfEven). If {@code HasFlags} of the
      * context is true, will also store the flags resulting from the operation (the
@@ -3610,15 +3420,13 @@ Binary16SignifAreaBits;
      * but rounded to a new exponent if necessary. The resulting number's Exponent
      * property will not necessarily be the given exponent; use the Quantize method
      * instead to give the result a particular exponent.</p>
-     * <p>@param exponent </p>
-     * <p>The minimum exponent the result can have. This is the
+     * @param exponent <p>The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
@@ -3643,15 +3451,13 @@ Binary16SignifAreaBits;
      * but rounded to a new exponent if necessary. The resulting number's Exponent
      * property will not necessarily be the given exponent; use the Quantize method
      * instead to give the result a particular exponent.</p>
-     * <p>@param exponentSmall </p>
-     * <p>The minimum exponent the result can have. This is
+     * @param exponentSmall <p>The minimum exponent the result can have. This is
      * the maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order places
      * from the number. For example, -3 means round to the thousandth (10^-3,
      * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds
      * the number to an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
@@ -3677,15 +3483,13 @@ Binary16SignifAreaBits;
      * would be inexact. The resulting number's Exponent property will not
      * necessarily be the given exponent; use the Quantize method instead to give
      * the result a particular exponent.</p>
-     * <p>@param exponent </p>
-     * <p>The minimum exponent the result can have. This is the
+     * @param exponent <p>The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
@@ -3710,15 +3514,13 @@ Binary16SignifAreaBits;
      * the given exponent. The resulting number's Exponent property will not
      * necessarily be the given exponent; use the Quantize method instead to give
      * the result a particular exponent.</p>
-     * <p>@param exponent </p>
-     * <p>The minimum exponent the result can have. This is the
+     * @param exponent <p>The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
      * number. For example, -3 means round to the eighth (10^-1, 1/8), and 3 means
      * round to the eight (2^3, 8). A value of 0 rounds the number to an
      * integer.</p>
-     * <p>@param rounding </p>
-     * <p>Desired mode for rounding this object's value.</p>
+     * @param rounding <p>Desired mode for rounding this object's value.</p>
      * @return <p>A binary number rounded to the closest value representable in the
      * given precision.</p>
      *
@@ -3738,15 +3540,13 @@ Binary16SignifAreaBits;
      * and signals an inexact flag if the result would be inexact. The resulting
      * number's Exponent property will not necessarily be the given exponent; use
      * the Quantize method instead to give the result a particular exponent.</p>
-     * <p>@param exponentSmall </p>
-     * <p>The minimum exponent the result can have. This is
+     * @param exponentSmall <p>The minimum exponent the result can have. This is
      * the maximum number of fractional digits in the result, expressed as a
      * negative number. Can also be positive, which eliminates lower-order places
      * from the number. For example, -3 means round to the thousandth (10^-3,
      * 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds
      * the number to an integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
@@ -3771,8 +3571,7 @@ Binary16SignifAreaBits;
      * but rounded to an integer, and signals an inexact flag if the result would
      * be inexact. The resulting number's Exponent property will not necessarily be
      * 0; use the Quantize method instead to give the result an exponent of 0.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
@@ -3796,8 +3595,7 @@ Binary16SignifAreaBits;
      * FlagRounded} flags. The resulting number's Exponent property will not
      * necessarily be 0; use the Quantize method instead to give the result an
      * exponent of 0.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control precision and rounding of the
+     * @param ctx <p>An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags), except that this function will never add the {@code
@@ -3820,8 +3618,7 @@ Binary16SignifAreaBits;
      * <p>Returns a binary floating-point number with the same value as this object
      * but rounded to an integer, and signals an inexact flag if the result would
      * be inexact.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the default
@@ -3845,8 +3642,7 @@ Binary16SignifAreaBits;
      * <p>Returns a binary floating-point number with the same value as this object
      * but rounded to an integer, without adding the {@code FlagInexact} or {@code
      * FlagRounded} flags.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control precision and rounding of the
+     * @param ctx <p>An arithmetic context to control precision and rounding of the
      * result. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags), except that this function will never add the {@code
@@ -3870,8 +3666,7 @@ Binary16SignifAreaBits;
     /**
      * <p>Rounds this object's value to a given precision, using the given rounding
      * mode and range of exponent.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3892,8 +3687,7 @@ Binary16SignifAreaBits;
      * This method is designed for preparing operands to a custom arithmetic
      * operation in accordance with the "simplified" arithmetic given in Appendix A
      * of the General Decimal Arithmetic Specification.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -3913,8 +3707,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Returns a number similar to this number but with the scale adjusted.</p>
-     * <p>@param places </p>
-     * <p>The parameter {@code places} is a 32-bit signed
+     * @param places <p>The parameter {@code places} is a 32-bit signed
      * integer.</p>
      * @return <p>An arbitrary-precision binary floating-point number.</p>
      *
@@ -3925,11 +3718,9 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Returns a number similar to this number but with the scale adjusted.</p>
-     * <p>@param places </p>
-     * <p>The parameter {@code places} is a 32-bit signed
+     * @param places <p>The parameter {@code places} is a 32-bit signed
      * integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null.</p>
@@ -3942,8 +3733,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Returns a number similar to this number but with the scale adjusted.</p>
-     * <p>@param bigPlaces </p>
-     * <p>An arbitrary-precision integer.</p>
+     * @param bigPlaces <p>An arbitrary-precision integer.</p>
      * @return <p>A number whose exponent is increased by {@code bigPlaces}.</p>
      *
      */
@@ -3953,10 +3743,8 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Returns a number similar to this number but with its scale adjusted.</p>
-     * <p>@param bigPlaces </p>
-     * <p>An arbitrary-precision integer.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param bigPlaces <p>An arbitrary-precision integer.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null.</p>
@@ -3987,8 +3775,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Finds the square root of this object's value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -4008,8 +3795,7 @@ Binary16SignifAreaBits;
 
     /**
      * <p>Finds the square root of this object's value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as the
@@ -4035,8 +3821,7 @@ Binary16SignifAreaBits;
      * exponent for the result is the lower of this arbitrary-precision binary
      * floating-point number's exponent and the other arbitrary-precision binary
      * floating-point number's exponent.</p>
-     * <p>@param otherValue </p>
-     * <p>The number to subtract from this instance's value.</p>
+     * @param otherValue <p>The number to subtract from this instance's value.</p>
      * @return <p>The difference between the two numbers, that is, this
      * arbitrary-precision binary floating-point number minus another
      * arbitrary-precision binary floating-point number. If this
@@ -4051,10 +3836,8 @@ Binary16SignifAreaBits;
     /**
      * <p>Subtracts an arbitrary-precision binary floating-point number from this
      * arbitrary-precision binary floating-point number and returns the result.</p>
-     * <p>@param otherValue </p>
-     * <p>The number to subtract from this instance's value.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param otherValue <p>The number to subtract from this instance's value.</p>
+     * @param ctx <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). Can be null, in which case the
@@ -4104,8 +3887,7 @@ Binary16SignifAreaBits;
      * number encoded in the IEEE 754 binary32 format. This method computes the
      * exact value of the floating point number, not an approximation, as is often
      * the case by converting the floating point number to a string first.</p>
-     * <p>@param value </p>
-     * <p>A 32-bit binary floating-point number encoded in the IEEE
+     * @param value <p>A 32-bit binary floating-point number encoded in the IEEE
      * 754 binary32 format.</p>
      * @return <p>A binary floating-point number with the same floating-point value
      * as {@code value}.</p>
@@ -4163,8 +3945,7 @@ Binary16SignifAreaBits;
      * "half-precision" floating-point number). This method computes the exact
      * value of the floating point number, not an approximation, as is often the
      * case by converting the floating point number to a string first.</p>
-     * <p>@param value </p>
-     * <p>A binary floating-point number encoded in the IEEE 754
+     * @param value <p>A binary floating-point number encoded in the IEEE 754
      * binary16 format.</p>
      * @return <p>A binary floating-point number with the same floating-point value
      * as {@code value}.</p>
@@ -4627,8 +4408,7 @@ Binary16SignifBits;
      * converts an EFloat number to its shortest round-tripping decimal form using
      * the same precision as the {@code double} type in Java and.NET:</p> <pre>
      * string str = efloat.ToShortestString(EContext.Binary64); </pre>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context to control precision (in bits),
+     * @param ctx <p>An arithmetic context to control precision (in bits),
      * rounding, and exponent range of the rounded number. If {@code HasFlags} of
      * the context is true, will also store the flags resulting from the operation
      * (the flags are in addition to the pre-existing flags). Can be null. If this
@@ -4856,8 +4636,7 @@ Binary16SignifBits;
      * <p>Converts this value to an arbitrary-precision integer by discarding its
      * fractional part and checking whether the resulting integer overflows the
      * given signed bit count.</p>
-     * <p>@param maxBitLength </p>
-     * <p>The maximum number of signed bits the integer can
+     * @param maxBitLength <p>The maximum number of signed bits the integer can
      * have. The integer's value may not be less than -(2^maxBitLength) or greater
      * than (2^maxBitLength) - 1.</p>
      * @return <p>An arbitrary-precision integer.</p>
@@ -4875,8 +4654,7 @@ Binary16SignifBits;
      * <p>Converts this value to an arbitrary-precision integer, only if this
      * number's value is an exact integer and that integer does not overflow the
      * given signed bit count.</p>
-     * <p>@param maxBitLength </p>
-     * <p>The maximum number of signed bits the integer can
+     * @param maxBitLength <p>The maximum number of signed bits the integer can
      * have. The integer's value may not be less than -(2^maxBitLength) or greater
      * than (2^maxBitLength) - 1.</p>
      * @return <p>An arbitrary-precision integer.</p>
@@ -4978,8 +4756,7 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param value </p>
-       * <p>An arbitrary-precision binary floating-point number.</p>
+       * @param value <p>An arbitrary-precision binary floating-point number.</p>
        * @return <p>A 32-bit signed integer.</p>
        *
        */
@@ -4989,8 +4766,7 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param value </p>
-       * <p>An arbitrary-precision binary floating-point number.</p>
+       * @param value <p>An arbitrary-precision binary floating-point number.</p>
        * @return <p>An arbitrary-precision integer.</p>
        *
        */
@@ -5000,8 +4776,7 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param value </p>
-       * <p>An arbitrary-precision binary floating-point number.</p>
+       * @param value <p>An arbitrary-precision binary floating-point number.</p>
        * @return <p>An arbitrary-precision integer.</p>
        *
        */
@@ -5023,13 +4798,10 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param bigint </p>
-       * <p>An arbitrary-precision integer.</p>
-       * <p>@param lastDigit </p>
-       * <p>The parameter {@code lastDigit} is a 32-bit signed
+       * @param bigint <p>An arbitrary-precision integer.</p>
+       * @param lastDigit <p>The parameter {@code lastDigit} is a 32-bit signed
        * integer.</p>
-       * <p>@param olderDigits </p>
-       * <p>The parameter {@code olderDigits} is a 32-bit signed
+       * @param olderDigits <p>The parameter {@code olderDigits} is a 32-bit signed
        * integer.</p>
        * @return <p>An IShiftAccumulator object.</p>
        *
@@ -5060,10 +4832,8 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param num </p>
-       * <p>An arbitrary-precision integer.</p>
-       * <p>@param den </p>
-       * <p>Another arbitrary-precision integer.</p>
+       * @param num <p>An arbitrary-precision integer.</p>
+       * @param den <p>Another arbitrary-precision integer.</p>
        * @return <p>A FastInteger object.</p>
        *
        */
@@ -5082,10 +4852,8 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param bigint </p>
-       * <p>Another arbitrary-precision integer.</p>
-       * <p>@param power </p>
-       * <p>A fast integer.</p>
+       * @param bigint <p>Another arbitrary-precision integer.</p>
+       * @param power <p>A fast integer.</p>
        * @return <p>An arbitrary-precision integer.</p>
        *
        */
@@ -5119,8 +4887,7 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param value </p>
-       * <p>An arbitrary-precision binary floating-point number.</p>
+       * @param value <p>An arbitrary-precision binary floating-point number.</p>
        * @return <p>A 32-bit signed integer.</p>
        *
        */
@@ -5130,14 +4897,11 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param mantissa </p>
-       * <p>The parameter {@code mantissa} is a Numbers.EInteger
+       * @param mantissa <p>The parameter {@code mantissa} is a Numbers.EInteger
        * object.</p>
-       * <p>@param exponent </p>
-       * <p>The parameter {@code exponent} is an internal
+       * @param exponent <p>The parameter {@code exponent} is an internal
        * parameter.</p>
-       * <p>@param flags </p>
-       * <p>The parameter {@code flags} is an internal parameter.</p>
+       * @param flags <p>The parameter {@code flags} is an internal parameter.</p>
        * @return <p>An arbitrary-precision binary floating-point number.</p>
        *
        */
@@ -5171,8 +4935,7 @@ Binary16SignifBits;
 
       /**
        * <p>This is an internal method.</p>
-       * <p>@param val </p>
-       * <p>The parameter {@code val} is a 32-bit signed integer.</p>
+       * @param val <p>The parameter {@code val} is a 32-bit signed integer.</p>
        * @return <p>An arbitrary-precision binary floating-point number.</p>
        *
        */
@@ -5253,8 +5016,7 @@ Binary16SignifBits;
     /**
      * <p>Converts a byte (from 0 to 255) to an arbitrary-precision binary
      * floating-point number.</p>
-     * <p>@param inputByte </p>
-     * <p>The number to convert as a byte (from 0 to 255).</p>
+     * @param inputByte <p>The number to convert as a byte (from 0 to 255).</p>
      * @return <p>This number's value as an arbitrary-precision binary
      * floating-point number.</p>
      *
@@ -5313,8 +5075,7 @@ Binary16SignifBits;
     /**
      * <p>Converts a 16-bit signed integer to an arbitrary-precision binary
      * floating-point number.</p>
-     * <p>@param inputInt16 </p>
-     * <p>The number to convert as a 16-bit signed integer.</p>
+     * @param inputInt16 <p>The number to convert as a 16-bit signed integer.</p>
      * @return <p>This number's value as an arbitrary-precision binary
      * floating-point number.</p>
      *
@@ -5373,8 +5134,7 @@ Binary16SignifBits;
     /**
      * <p>Converts a boolean value (either true or false) to an arbitrary-precision
      * binary floating-point number.</p>
-     * <p>@param boolValue </p>
-     * <p>Either true or false.</p>
+     * @param boolValue <p>Either true or false.</p>
      * @return <p>The number 1 if {@code boolValue} is true, otherwise, 0.</p>
      *
      */
@@ -5385,8 +5145,7 @@ Binary16SignifBits;
     /**
      * <p>Converts a 32-bit signed integer to an arbitrary-precision binary
      * floating-point number.</p>
-     * <p>@param inputInt32 </p>
-     * <p>The number to convert as a 32-bit signed integer.</p>
+     * @param inputInt32 <p>The number to convert as a 32-bit signed integer.</p>
      * @return <p>This number's value as an arbitrary-precision binary
      * floating-point number.</p>
      *
@@ -5453,8 +5212,7 @@ Binary16SignifBits;
     /**
      * <p>Converts an unsigned integer expressed as a 64-bit signed integer to an
      * arbitrary-precision binary number.</p>
-     * <p>@param longerValue </p>
-     * <p>A 64-bit signed integer. If this value is 0 or
+     * @param longerValue <p>A 64-bit signed integer. If this value is 0 or
      * greater, the return value will represent it. If this value is less than 0,
      * the return value will store 2^64 plus this value instead.</p>
      * @return <p>An arbitrary-precision binary number with the exponent set to 0.
@@ -5471,8 +5229,7 @@ Binary16SignifBits;
     /**
      * <p>Converts a 64-bit signed integer to an arbitrary-precision binary
      * floating-point number.</p>
-     * <p>@param inputInt64 </p>
-     * <p>The number to convert as a 64-bit signed integer.</p>
+     * @param inputInt64 <p>The number to convert as a 64-bit signed integer.</p>
      * @return <p>This number's value as an arbitrary-precision binary
      * floating-point number with the exponent set to 0.</p>
      *

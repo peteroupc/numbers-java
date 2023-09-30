@@ -13,8 +13,7 @@ private EDecimals() {
 
     /**
      * <p>Returns the number 10, the decimal radix.</p>
-     * <p>@param ec </p>
-     * <p>Specifies an arithmetic context for rounding the number 10. Can
+     * @param ec <p>Specifies an arithmetic context for rounding the number 10. Can
      * be null.</p>
      * @return <p>The number 10, or the closest representable number to 10 in the
      * arithmetic context.</p>
@@ -27,10 +26,8 @@ private EDecimals() {
     /**
      * <p>Creates an arbitrary-precision decimal number from a 32-bit signed
      * integer.</p>
-     * <p>@param i32 </p>
-     * <p>The parameter {@code i32} is a 32-bit signed integer.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param i32 <p>The parameter {@code i32} is a 32-bit signed integer.</p>
+     * @param ec <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.</p>
      * @return <p>An arbitrary-precision decimal number with the closest
      * representable value to the given integer.</p>
@@ -46,10 +43,8 @@ private EDecimals() {
     /**
      * <p>Converts a boolean value (either true or false) to an arbitrary-precision
      * decimal number.</p>
-     * <p>@param b </p>
-     * <p>Either true or false.</p>
-     * <p>@param ec </p>
-     * <p>A context used for rounding the result. Can be null.</p>
+     * @param b <p>Either true or false.</p>
+     * @param ec <p>A context used for rounding the result. Can be null.</p>
      * @return <p>Either 1 if {@code b} is true, or 0 if {@code b} is false.. The
      * result will be rounded as specified by the given context, if any.</p>
      *
@@ -65,8 +60,7 @@ private EDecimals() {
      * <p>Returns whether the given arbitrary-precision number object is in a
      * canonical form. For the current version of EDecimal, all EDecimal objects
      * are in a canonical form.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Always {@code true}.</p>
      *
      */
@@ -82,8 +76,7 @@ private EDecimals() {
     /**
      * <p>Returns whether the given arbitrary-precision number object is neither
      * null nor infinity nor not-a-number (NaN).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Either {@code true} if the given arbitrary-precision number
      * object is neither null nor infinity nor not-a-number (NaN), or {@code false}
      * otherwise.</p>
@@ -96,8 +89,7 @@ private EDecimals() {
     /**
      * <p>Returns whether the given arbitrary-precision number object is positive
      * or negative infinity.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Either {@code true} if the given arbitrary-precision number
      * object is positive or negative infinity, or {@code false} otherwise.</p>
      *
@@ -109,8 +101,7 @@ private EDecimals() {
     /**
      * <p>Returns whether the given arbitrary-precision number object is a
      * not-a-number (NaN).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Either {@code true} or {@code false}.</p>
      *
      */
@@ -125,10 +116,8 @@ private EDecimals() {
      * notation with one digit before the radix point) is less than the minimum
      * possible exponent for that number. A <i>normal number</i> is nonzero and
      * finite, but not subnormal.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
-     * <p>@param ec </p>
-     * <p>A context specifying the exponent range of arbitrary-precision
+     * @param ed <p>An arbitrary-precision number object.</p>
+     * @param ec <p>A context specifying the exponent range of arbitrary-precision
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is normal if the number's exponent (when that number
      * is expressed in scientific notation with one nonzero digit before the radix
@@ -150,8 +139,7 @@ private EDecimals() {
     /**
      * <p>Returns whether the given arbitrary-precision number object is a quiet
      * not-a-number (NaN).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Either {@code true} or {@code false}.</p>
      *
      */
@@ -163,8 +151,7 @@ private EDecimals() {
      * <p>Returns whether the given arbitrary-precision number object is negative
      * (including negative infinity, negative not-a-number.get(NaN), or negative
      * zero).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Either {@code true} or {@code false}.</p>
      *
      */
@@ -175,8 +162,7 @@ private EDecimals() {
     /**
      * <p>Returns whether the given arbitrary-precision number object is a
      * signaling not-a-number (NaN).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>Either {@code true} or {@code false}.</p>
      *
      */
@@ -196,8 +182,7 @@ private EDecimals() {
      * <p>Converts a number class identifier (ranging from 0 through 9) to a text
      * string. An arbitrary-precision number object can belong in one of ten number
      * classes.</p>
-     * <p>@param nc </p>
-     * <p>An integer identifying a number class.</p>
+     * @param nc <p>An integer identifying a number class.</p>
      * @return <p>A text string identifying the given number class as follows: 0 =
      * "+Normal"; 1 = "-Normal", 2 = "+Subnormal", 3 = "-Subnormal", 4 = "+Zero", 5
      * = "-Zero", 6 = "+Infinity", 7 = "-Infinity", 8 = "NaN", 9 = "sNaN".</p>
@@ -220,10 +205,8 @@ private EDecimals() {
     /**
      * <p>Finds the number class for an arbitrary-precision decimal number
      * object.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision decimal number object.</p>
-     * <p>@param ec </p>
-     * <p>A context object that specifies the precision and exponent
+     * @param ed <p>An arbitrary-precision decimal number object.</p>
+     * @param ec <p>A context object that specifies the precision and exponent
      * range of arbitrary-precision numbers. This is used only to distinguish
      * between normal and subnormal numbers. Can be null.</p>
      * @return <p>A 32-bit signed integer identifying the given number object,
@@ -260,10 +243,8 @@ private EDecimals() {
      * (or the number's exponent when that number is expressed in scientific
      * notation with one digit before the radix point) is less than the minimum
      * possible exponent for that number.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
-     * <p>@param ec </p>
-     * <p>A context specifying the exponent range of arbitrary-precision
+     * @param ed <p>An arbitrary-precision number object.</p>
+     * @param ec <p>A context specifying the exponent range of arbitrary-precision
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is subnormal if the number's exponent (when that
      * number is expressed in scientific notation with one nonzero digit before the
@@ -297,8 +278,7 @@ private EDecimals() {
     /**
      * <p>Returns whether the given arbitrary-precision number object is zero
      * (positive zero or negative zero).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p> {@code true} if the given number has a value of zero (positive
      * zero or negative zero); otherwise, {@code false}.</p>
      *
@@ -312,10 +292,8 @@ private EDecimals() {
      * (when that number is expressed in scientific notation with one digit before
      * the radix point). For example, returns 3 for the numbers {@code 6.66E + 3}
      * and {@code 666E + 1}.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision decimal number.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ed <p>An arbitrary-precision decimal number.</p>
+     * @param ec <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.</p>
      * @return <p>The base-10 exponent of the given number (when that number is
      * expressed in scientific notation with one nonzero digit before the radix
@@ -345,13 +323,10 @@ private EDecimals() {
     /**
      * <p>Finds an arbitrary-precision decimal number whose decimal point is moved
      * a given number of places.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision decimal number.</p>
-     * <p>@param ed2 </p>
-     * <p>The number of decimal places to move the decimal point of
+     * @param ed <p>An arbitrary-precision decimal number.</p>
+     * @param ed2 <p>The number of decimal places to move the decimal point of
      * "ed". This must be an integer with an exponent of 0.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ec <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.</p>
      * @return <p>The given arbitrary-precision decimal number whose decimal point
      * is moved the given number of places. Signals an invalid operation and
@@ -402,17 +377,14 @@ private EDecimals() {
     /**
      * <p>Shifts the digits of an arbitrary-precision decimal number's
      * significand.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number containing the significand to
+     * @param ed <p>An arbitrary-precision number containing the significand to
      * shift.</p>
-     * <p>@param ed2 </p>
-     * <p>An arbitrary-precision number indicating the number of digits
+     * @param ed2 <p>An arbitrary-precision number indicating the number of digits
      * to shift the first operand's significand. Must be an integer with an
      * exponent of 0. If this parameter is positive, the significand is shifted to
      * the left by the given number of digits. If this parameter is negative, the
      * significand is shifted to the right by the given number of digits.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the precision of
+     * @param ec <p>An arithmetic context to control the precision of
      * arbitrary-precision numbers. Can be null.</p>
      * @return <p>An arbitrary-precision decimal number whose significand is
      * shifted the given number of digits. Signals an invalid operation and returns
@@ -479,13 +451,11 @@ private EDecimals() {
     /**
      * <p>Rotates the digits of an arbitrary-precision decimal number's
      * significand.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number containing the significand to
+     * @param ed <p>An arbitrary-precision number containing the significand to
      * rotate. If this significand contains more digits than the precision, the
      * most-significant digits are chopped off the significand before the rotation
      * begins.</p>
-     * <p>@param ed2 </p>
-     * <p>An arbitrary-precision number indicating the number of digits
+     * @param ed2 <p>An arbitrary-precision number indicating the number of digits
      * to rotate the first operand's significand. Must be an integer with an
      * exponent of 0. If this parameter is positive, the significand is shifted to
      * the left by the given number of digits and the most-significant digits
@@ -493,8 +463,7 @@ private EDecimals() {
      * If this parameter is negative, the significand is shifted to the right by
      * the given number of digits and the least-significant digits shifted out of
      * the significand become the most-significant digits instead.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the precision of
+     * @param ec <p>An arithmetic context to control the precision of
      * arbitrary-precision numbers. If this parameter is null or specifies an
      * unlimited precision, this method has the same behavior as {@code Shift}.</p>
      * @return <p>An arbitrary-precision decimal number whose significand is
@@ -583,12 +552,9 @@ private EDecimals() {
      * value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li><li>Negative numbers are less than positive numbers.</li></ul>
-     * <p>@param ed </p>
-     * <p>The first arbitrary-precision number to compare.</p>
-     * <p>@param other </p>
-     * <p>The second arbitrary-precision number to compare.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context. Flags will be set in this context only
+     * @param ed <p>The first arbitrary-precision number to compare.</p>
+     * @param other <p>The second arbitrary-precision number to compare.</p>
+     * @param ec <p>An arithmetic context. Flags will be set in this context only
      * if {@code HasFlags} and {@code IsSimplified} of the context are true and
      * only if an operand needed to be rounded before carrying out the operation.
      * Can be null.</p>
@@ -614,12 +580,9 @@ private EDecimals() {
      * "absolute value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li></ul>
-     * <p>@param ed </p>
-     * <p>The first arbitrary-precision number to compare.</p>
-     * <p>@param other </p>
-     * <p>The second arbitrary-precision number to compare.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context. Flags will be set in this context only
+     * @param ed <p>The first arbitrary-precision number to compare.</p>
+     * @param other <p>The second arbitrary-precision number to compare.</p>
+     * @param ec <p>An arithmetic context. Flags will be set in this context only
      * if {@code HasFlags} and {@code IsSimplified} of the context are true and
      * only if an operand needed to be rounded before carrying out the operation.
      * Can be null.</p>
@@ -640,8 +603,7 @@ private EDecimals() {
 
     /**
      * <p>Creates a copy of the given arbitrary-precision number object.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object to copy.</p>
+     * @param ed <p>An arbitrary-precision number object to copy.</p>
      * @return <p>A copy of the given arbitrary-precision number object.</p>
      * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
      *
@@ -656,8 +618,7 @@ private EDecimals() {
     /**
      * <p>Returns a canonical version of the given arbitrary-precision number
      * object. In this method, this method behaves like the Copy method.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>A copy of the parameter {@code ed}.</p>
      *
      */
@@ -669,8 +630,7 @@ private EDecimals() {
      * <p>Returns an arbitrary-precision number object with the same value as the
      * given number object but with a nonnegative sign (that is, the given number
      * object's absolute value).</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>An arbitrary-precision number object with the same value as the
      * given number object but with a nonnegative sign.</p>
      * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
@@ -686,8 +646,7 @@ private EDecimals() {
     /**
      * <p>Returns an arbitrary-precision number object with the sign reversed from
      * the given number object.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object.</p>
+     * @param ed <p>An arbitrary-precision number object.</p>
      * @return <p>An arbitrary-precision number object with the sign reversed from
      * the given number object.</p>
      * @throws NullPointerException <p>The parameter {@code ed} is null.</p>
@@ -704,11 +663,9 @@ private EDecimals() {
      * <p>Returns an arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or negative) as
      * the second given number object.</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision number object with the value the result
+     * @param ed <p>An arbitrary-precision number object with the value the result
      * will have.</p>
-     * <p>@param other </p>
-     * <p>The parameter {@code other} is an arbitrary-precision
+     * @param other <p>The parameter {@code other} is an arbitrary-precision
      * decimal floating-point number.</p>
      * @return <p>An arbitrary-precision number object with the same value as the
      * first given number object but with a the same sign (positive or negative) as
@@ -735,10 +692,8 @@ private EDecimals() {
      * <p>Returns whether two arbitrary-precision numbers have the same exponent,
      * they both are not-a-number (NaN), or they both are infinity (positive and/or
      * negative).</p>
-     * <p>@param ed1 </p>
-     * <p>The first arbitrary-precision number.</p>
-     * <p>@param ed2 </p>
-     * <p>The second arbitrary-precision number.</p>
+     * @param ed1 <p>The first arbitrary-precision number.</p>
+     * @param ed2 <p>The second arbitrary-precision number.</p>
      * @return <p>Either {@code true} if the given arbitrary-precision numbers have
      * the same exponent, they both are not-a-number (NaN), or they both are
      * infinity (positive and/or negative); otherwise, {@code false}.</p>
@@ -764,10 +719,8 @@ private EDecimals() {
      * removed from the significand (then rounded if necessary); if that exponent
      * is less than 0, its trailing zeros are removed from the significand until
      * the exponent reaches 0 (then the number is rounded if necessary).</p>
-     * <p>@param ed1 </p>
-     * <p>An arbitrary-precision number.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the precision, rounding, and
+     * @param ed1 <p>An arbitrary-precision number.</p>
+     * @param ec <p>An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.</p>
      * @return <p>An arbitrary-precision number with the same value as this one but
      * with certain trailing zeros removed from its significand. If {@code ed1} is
@@ -837,19 +790,16 @@ private EDecimals() {
      * the decimal point. A fixed-point decimal arithmetic in which no digits come
      * after the decimal point (a desired exponent of 0) is considered an "integer
      * arithmetic" .</p>
-     * <p>@param ed </p>
-     * <p>An arbitrary-precision decimal number whose exponent is to be
+     * @param ed <p>An arbitrary-precision decimal number whose exponent is to be
      * changed.</p>
-     * <p>@param scale </p>
-     * <p>The desired exponent of the result, expressed as an
+     * @param scale <p>The desired exponent of the result, expressed as an
      * arbitrary-precision decimal number. The exponent is the number of fractional
      * digits in the result, expressed as a negative number. Can also be positive,
      * which eliminates lower-order places from the number. For example, -3 means
      * round to the thousandth (10^-3, 0.0001), and 3 means round to the
      * thousands-place (10^3, 1000). A value of 0 rounds the number to an
      * integer.</p>
-     * <p>@param ec </p>
-     * <p>The parameter {@code ec} is an EContext object.</p>
+     * @param ec <p>The parameter {@code ec} is an EContext object.</p>
      * @return <p>An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and returns
      * not-a-number (NaN) if the result can't fit the given precision without
@@ -894,12 +844,9 @@ private EDecimals() {
      * or {@code 99999}). The logical AND operation sets each digit of the result
      * to 1 if the corresponding digits of each logical operand are both 1, and to
      * 0 otherwise. For example, {@code 01001 AND 111010 = 01000}.</p>
-     * <p>@param ed1 </p>
-     * <p>The first logical operand to the logical AND operation.</p>
-     * <p>@param ed2 </p>
-     * <p>The second logical operand to the logical AND operation.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the maximum precision of
+     * @param ed1 <p>The first logical operand to the logical AND operation.</p>
+     * @param ed2 <p>The second logical operand to the logical AND operation.</p>
+     * @param ec <p>An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more digits than the maximum precision specified in this context, the
      * operand's most significant digits that exceed that precision are discarded.
@@ -937,10 +884,8 @@ private EDecimals() {
      * 0, and to 0 otherwise; it can set no more digits than the maximum precision,
      * however. For example, if the maximum precision is 8 digits, then {@code NOT
      * 111010 = 11000101}.</p>
-     * <p>@param ed1 </p>
-     * <p>The logical operand to the logical NOT operation.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the maximum precision of
+     * @param ed1 <p>The logical operand to the logical NOT operation.</p>
+     * @param ec <p>An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more digits than the maximum precision specified in this context, the
      * operand's most significant digits that exceed that precision are discarded.
@@ -978,14 +923,11 @@ private EDecimals() {
      * sets each digit of the result to 1 if either corresponding digit of the
      * logical operands, but not both, is 1, and to 0 otherwise. For example,
      * {@code 01001 XOR 111010 = 101010}.</p>
-     * <p>@param ed1 </p>
-     * <p>The first logical operand to the logical exclusive-OR
+     * @param ed1 <p>The first logical operand to the logical exclusive-OR
      * operation.</p>
-     * <p>@param ed2 </p>
-     * <p>The second logical operand to the logical exclusive-OR
+     * @param ed2 <p>The second logical operand to the logical exclusive-OR
      * operation.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the maximum precision of
+     * @param ec <p>An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more digits than the maximum precision specified in this context, the
      * operand's most significant digits that exceed that precision are discarded.
@@ -1019,12 +961,9 @@ private EDecimals() {
      * or {@code 99999}). The logical OR operation sets each digit of the result
      * to 1 if either or both of the corresponding digits of the logical operands
      * are 1, and to 0 otherwise. For example, {@code 01001 OR 111010 = 111011}.</p>
-     * <p>@param ed1 </p>
-     * <p>The first logical operand to the logical OR operation.</p>
-     * <p>@param ed2 </p>
-     * <p>The second logical operand to the logical OR operation.</p>
-     * <p>@param ec </p>
-     * <p>An arithmetic context to control the maximum precision of
+     * @param ed1 <p>The first logical operand to the logical OR operation.</p>
+     * @param ed2 <p>The second logical operand to the logical OR operation.</p>
+     * @param ec <p>An arithmetic context to control the maximum precision of
      * arbitrary-precision numbers. If a logical operand passed to this method has
      * more digits than the maximum precision specified in this context, the
      * operand's most significant digits that exceed that precision are discarded.

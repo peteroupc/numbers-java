@@ -580,8 +580,7 @@ switch (this.integerMode) {
 
     /**
      * <p>This is an internal API.</p>
-     * <p>@param val </p>
-     * <p>The parameter {@code val} is an internal value.</p>
+     * @param val <p>The parameter {@code val} is an internal value.</p>
      * @return <p>A FastInteger object.</p>
      *
      */
@@ -664,8 +663,7 @@ switch (this.integerMode) {
 
     /**
      * <p>This is an internal API.</p>
-     * <p>@param val </p>
-     * <p>The parameter {@code val} is an internal value.</p>
+     * @param val <p>The parameter {@code val} is an internal value.</p>
      * @return <p>A FastInteger object.</p>
      *
      */
@@ -716,8 +714,7 @@ switch (this.integerMode) {
 
     /**
      * <p>This is an internal API.</p>
-     * <p>@param val </p>
-     * <p>The parameter {@code val} is an internal value.</p>
+     * @param val <p>The parameter {@code val} is an internal value.</p>
      * @return <p>A FastInteger object.</p>
      *
      */
@@ -742,8 +739,7 @@ switch (this.integerMode) {
 
     /**
      * <p>This is an internal API.</p>
-     * <p>@param bigintVal </p>
-     * <p>The parameter {@code bigintVal} is an internal
+     * @param bigintVal <p>The parameter {@code bigintVal} is an internal
      * value.</p>
      * @return <p>A FastInteger object.</p>
      *
@@ -770,8 +766,7 @@ switch (this.integerMode) {
 
     /**
      * <p>This is an internal API.</p>
-     * <p>@param bigintVal </p>
-     * <p>The parameter {@code bigintVal} is an internal
+     * @param bigintVal <p>The parameter {@code bigintVal} is an internal
      * value.</p>
      * @return <p>A FastInteger object.</p>
      *

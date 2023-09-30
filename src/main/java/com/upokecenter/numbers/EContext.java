@@ -276,16 +276,11 @@ https://creativecommons.org/publicdomain/zero/1.0/
     /**
      * <p>Initializes a new instance of the {@link
      * com.upokecenter.numbers.EContext} class.</p>
-     * <p>@param precision </p>
-     * <p>The value of the Precision property.</p>
-     * <p>@param rounding </p>
-     * <p>The value of the Rounding property.</p>
-     * <p>@param exponentMinSmall </p>
-     * <p>The value of the EMin property.</p>
-     * <p>@param exponentMaxSmall </p>
-     * <p>The value of the EMax property.</p>
-     * <p>@param clampNormalExponents </p>
-     * <p>The value of the ClampNormalExponents
+     * @param precision <p>The value of the Precision property.</p>
+     * @param rounding <p>The value of the Rounding property.</p>
+     * @param exponentMinSmall <p>The value of the EMin property.</p>
+     * @param exponentMaxSmall <p>The value of the EMax property.</p>
+     * @param clampNormalExponents <p>The value of the ClampNormalExponents
      * property.</p>
      *
      */
@@ -313,16 +308,11 @@ https://creativecommons.org/publicdomain/zero/1.0/
     /**
      * <p>Initializes a new instance of the {@link
      * com.upokecenter.numbers.EContext} class, .</p>
-     * <p>@param bigintPrecision </p>
-     * <p>The value of the Precision property.</p>
-     * <p>@param rounding </p>
-     * <p>The value of the Rounding property.</p>
-     * <p>@param exponentMin </p>
-     * <p>The value of the EMin property.</p>
-     * <p>@param exponentMax </p>
-     * <p>The value of the EMax property.</p>
-     * <p>@param clampNormalExponents </p>
-     * <p>The value of the ClampNormalExponents
+     * @param bigintPrecision <p>The value of the Precision property.</p>
+     * @param rounding <p>The value of the Rounding property.</p>
+     * @param exponentMin <p>The value of the EMin property.</p>
+     * @param exponentMax <p>The value of the EMax property.</p>
+     * @param clampNormalExponents <p>The value of the ClampNormalExponents
      * property.</p>
      *
      */
@@ -553,8 +543,7 @@ public final void setFlags(int value) {
     /**
      * <p>Creates a new arithmetic context using the given maximum number of
      * digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
-     * <p>@param precision </p>
-     * <p>Maximum number of digits (precision).</p>
+     * @param precision <p>Maximum number of digits (precision).</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -570,10 +559,8 @@ public final void setFlags(int value) {
     /**
      * <p>Creates a new EContext object initialized with an unlimited exponent
      * range, and the given rounding mode and maximum precision.</p>
-     * <p>@param precision </p>
-     * <p>Maximum number of digits (precision).</p>
-     * <p>@param rounding </p>
-     * <p>The parameter {@code rounding} is an ERounding
+     * @param precision <p>Maximum number of digits (precision).</p>
+     * @param rounding <p>The parameter {@code rounding} is an ERounding
      * object.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
@@ -606,8 +593,7 @@ public final void setFlags(int value) {
     /**
      * <p>Creates a new EContext object initialized with an unlimited precision, an
      * unlimited exponent range, and the given rounding mode.</p>
-     * <p>@param rounding </p>
-     * <p>The rounding mode for the new precision context.</p>
+     * @param rounding <p>The rounding mode for the new precision context.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -650,8 +636,7 @@ public final void setFlags(int value) {
     /**
      * <p>Determines whether a number can have the given Exponent property under
      * this arithmetic context.</p>
-     * <p>@param exponent </p>
-     * <p>An arbitrary-precision integer indicating the desired
+     * @param exponent <p>An arbitrary-precision integer indicating the desired
      * exponent.</p>
      * @return <p> {@code true} if a number can have the given Exponent property
      * under this arithmetic context; otherwise, {@code false}. If this context
@@ -718,8 +703,7 @@ this.simplified +
     /**
      * <p>Copies this EContext and sets the copy's "AdjustExponent" property to the
      * given value.</p>
-     * <p>@param adjustExponent </p>
-     *     <p>The new value of the "AdjustExponent" property for
+     * @param adjustExponent <p>The new value of the "AdjustExponent" property for
      * the copy.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
@@ -742,10 +726,8 @@ this.simplified +
 
     /**
      * <p>Copies this arithmetic context and sets the copy's exponent range.</p>
-     * <p>@param exponentMin </p>
-     * <p>Desired minimum exponent (EMin).</p>
-     * <p>@param exponentMax </p>
-     * <p>Desired maximum exponent (EMax).</p>
+     * @param exponentMin <p>Desired minimum exponent (EMin).</p>
+     * @param exponentMax <p>Desired maximum exponent (EMax).</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      * @throws NullPointerException <p>The parameter {@code exponentMin} is
      * null.</p>
@@ -794,8 +776,7 @@ this.simplified +
 
     /**
      * <p>Copies this EContext and gives it a particular precision value.</p>
-     * <p>@param bigintPrecision </p>
-     * <p>Desired precision. 0 means unlimited
+     * @param bigintPrecision <p>Desired precision. 0 means unlimited
      * precision.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      * @throws NullPointerException <p>The parameter {@code bigintPrecision} is
@@ -843,8 +824,7 @@ this.simplified +
     /**
      * <p>Copies this arithmetic context and sets the copy's "ClampNormalExponents"
      * flag to the given value.</p>
-     * <p>@param clamp </p>
-     *     <p>The desired value of the "ClampNormalExponents" flag.</p>
+     * @param clamp <p>The desired value of the "ClampNormalExponents" flag.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -866,10 +846,8 @@ this.simplified +
 
     /**
      * <p>Copies this arithmetic context and sets the copy's exponent range.</p>
-     * <p>@param exponentMinSmall </p>
-     * <p>Desired minimum exponent (EMin).</p>
-     * <p>@param exponentMaxSmall </p>
-     * <p>Desired maximum exponent (EMax).</p>
+     * @param exponentMinSmall <p>Desired minimum exponent (EMin).</p>
+     * @param exponentMaxSmall <p>Desired maximum exponent (EMax).</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -905,8 +883,7 @@ this.simplified +
 
     /**
      * <p>Copies this EContext and gives it a particular precision value.</p>
-     * <p>@param precision </p>
-     * <p>Desired precision. 0 means unlimited precision.</p>
+     * @param precision <p>Desired precision. 0 means unlimited precision.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -917,8 +894,7 @@ this.simplified +
     /**
      * <p>Copies this EContext and sets the copy's "IsPrecisionInBits" property to
      * the given value.</p>
-     * <p>@param isPrecisionBits </p>
-     *     <p>The new value of the "IsPrecisionInBits" property
+     * @param isPrecisionBits <p>The new value of the "IsPrecisionInBits" property
      * for the copy.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
@@ -941,8 +917,7 @@ this.simplified +
 
     /**
      * <p>Copies this EContext with the specified rounding mode.</p>
-     * <p>@param rounding </p>
-     * <p>Desired value of the Rounding property.</p>
+     * @param rounding <p>Desired value of the Rounding property.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -965,8 +940,7 @@ this.simplified +
     /**
      * <p>Copies this EContext and sets the copy's "IsSimplified" property to the
      * given value.</p>
-     * <p>@param simplified </p>
-     * <p>Desired value of the IsSimplified property.</p>
+     * @param simplified <p>Desired value of the IsSimplified property.</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
      */
@@ -990,8 +964,7 @@ this.simplified +
      * <p>Copies this EContext with Traps set to the given value. (Also sets
      * HasFlags on the copy to {@code True}, but this may change in version 2.0 of
      * this library.).</p>
-     * <p>@param traps </p>
-     * <p>Flags representing the traps to enable. See the property
+     * @param traps <p>Flags representing the traps to enable. See the property
      * "Traps".</p>
      * @return <p>A context object for arbitrary-precision arithmetic settings.</p>
      *
@@ -1054,12 +1027,10 @@ this.simplified +
    * to this context if HasFlags for this context is true. This is not a
    * general-purpose method; it is intended to support custom implementations of
    * arithmetic operations.</p>
-   * <p>@param result </p>
-   * <p>The result of the operation.</p>
-   * <p>@param trappableContext </p>
-   * <p>An arithmetic context, usually a context returned
+   * @param result <p>The result of the operation.</p>
+   * @param trappableContext <p>An arithmetic context, usually a context returned
    * by the GetNontrapping method. Can be null.</p>
-   * <p>@param <t> <p>Data type for the result of the operation.</p></t></p>
+   * @param <T> <p>Data type for the result of the operation.</p>
    * @return <p>The parameter {@code result} if no trap exceptions were
    * thrown.</p>
    *

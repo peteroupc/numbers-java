@@ -116,11 +116,9 @@ https://creativecommons.org/publicdomain/zero/1.0/
     /**
      * <p>Initializes a new instance of the {@link
      * com.upokecenter.numbers.ERational} class.</p>
-     * <p>@param numerator </p>
-     * <p>An arbitrary-precision integer serving as the
+     * @param numerator <p>An arbitrary-precision integer serving as the
      * numerator.</p>
-     * <p>@param denominator </p>
-     * <p>An arbitrary-precision integer serving as the
+     * @param denominator <p>An arbitrary-precision integer serving as the
      * denominator.</p>
      * @throws NullPointerException <p>The parameter {@code numerator} or {@code
      * denominator} is null.</p>
@@ -264,10 +262,8 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Creates a rational number with the given numerator and denominator.</p>
-     * <p>@param numeratorSmall </p>
-     * <p>The numerator.</p>
-     * <p>@param denominatorSmall </p>
-     * <p>The denominator.</p>
+     * @param numeratorSmall <p>The numerator.</p>
+     * @param denominatorSmall <p>The denominator.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws IllegalArgumentException <p>The denominator is zero.</p>
      *
@@ -280,10 +276,8 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Creates a rational number with the given numerator and denominator.</p>
-     * <p>@param numeratorLong </p>
-     * <p>The numerator.</p>
-     * <p>@param denominatorLong </p>
-     * <p>The denominator.</p>
+     * @param numeratorLong <p>The numerator.</p>
+     * @param denominatorLong <p>The denominator.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws IllegalArgumentException <p>The denominator is zero.</p>
      *
@@ -296,10 +290,8 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Creates a rational number with the given numerator and denominator.</p>
-     * <p>@param numerator </p>
-     * <p>The numerator.</p>
-     * <p>@param denominator </p>
-     * <p>The denominator.</p>
+     * @param numerator <p>The numerator.</p>
+     * @param denominator <p>The denominator.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws IllegalArgumentException <p>The denominator is zero.</p>
      * @throws NullPointerException <p>The parameter {@code numerator} or {@code
@@ -336,8 +328,7 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Creates a not-a-number arbitrary-precision rational number.</p>
-     * <p>@param diag </p>
-     * <p>An integer, 0 or greater, to use as diagnostic information
+     * @param diag <p>An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To get the
      * diagnostic information from another arbitrary-precision rational number, use
      * that object's {@code UnsignedNumerator} property.</p>
@@ -351,16 +342,13 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Creates a not-a-number arbitrary-precision rational number.</p>
-     * <p>@param diag </p>
-     * <p>An integer, 0 or greater, to use as diagnostic information
+     * @param diag <p>An integer, 0 or greater, to use as diagnostic information
      * associated with this object. If none is needed, should be zero. To get the
      * diagnostic information from another arbitrary-precision rational number, use
      * that object's {@code UnsignedNumerator} property.</p>
-     * <p>@param signaling </p>
-     * <p>Whether the return value will be signaling (true) or
+     * @param signaling <p>Whether the return value will be signaling (true) or
      * quiet (false).</p>
-     * <p>@param negative </p>
-     * <p>Whether the return value is negative.</p>
+     * @param negative <p>Whether the return value is negative.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws IllegalArgumentException <p>The parameter {@code diag} is less than 0.</p>
      * @throws NullPointerException <p>The parameter {@code diag} is null.</p>
@@ -404,8 +392,7 @@ this.unsignedNumerator.isValueZero();
      * example, the NaN value's sign may be negative in DotNet, but positive in
      * Java). Use `IsNaN()` to determine whether an object from this class stores a
      * NaN value of any form.</p>
-     * <p>@param flt </p>
-     * <p>The parameter {@code flt} is a 64-bit floating-point
+     * @param flt <p>The parameter {@code flt} is a 64-bit floating-point
      * number.</p>
      * @return <p>A rational number with the same value as {@code flt}.</p>
      *
@@ -416,8 +403,7 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Converts an arbitrary-precision decimal number to a rational number.</p>
-     * <p>@param ef </p>
-     * <p>The number to convert as an arbitrary-precision decimal
+     * @param ef <p>The number to convert as an arbitrary-precision decimal
      * number.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      *
@@ -431,8 +417,7 @@ this.unsignedNumerator.isValueZero();
     /**
      * <p>Converts an arbitrary-precision binary floating-point number to a
      * rational number.</p>
-     * <p>@param ef </p>
-     * <p>The number to convert as an arbitrary-precision binary
+     * @param ef <p>The number to convert as an arbitrary-precision binary
      * floating-point number.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      *
@@ -445,8 +430,7 @@ this.unsignedNumerator.isValueZero();
 
     /**
      * <p>Converts an arbitrary-precision decimal number to a rational number.</p>
-     * <p>@param ef </p>
-     * <p>The number to convert as an arbitrary-precision decimal
+     * @param ef <p>The number to convert as an arbitrary-precision decimal
      * number.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws NullPointerException <p>The parameter {@code ef} is null.</p>
@@ -494,8 +478,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts an arbitrary-precision binary floating-point number to a
      * rational number.</p>
-     * <p>@param ef </p>
-     * <p>The number to convert as an arbitrary-precision binary
+     * @param ef <p>The number to convert as an arbitrary-precision binary
      * floating-point number.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws NullPointerException <p>The parameter {@code ef} is null.</p>
@@ -541,8 +524,7 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * <p>Converts an arbitrary-precision integer to a rational number.</p>
-     * <p>@param bigint </p>
-     * <p>The number to convert as an arbitrary-precision
+     * @param bigint <p>The number to convert as an arbitrary-precision
      * integer.</p>
      * @return <p>The exact value of the integer as a rational number.</p>
      *
@@ -566,8 +548,7 @@ PositiveInfinity) : CreateNaN(
      * NaN value's sign may be negative in DotNet, but positive in Java). Use
      * `IsNaN()` to determine whether an object from this class stores a NaN value
      * of any form.</p>
-     * <p>@param flt </p>
-     * <p>The parameter {@code flt} is a 32-bit binary floating-point
+     * @param flt <p>The parameter {@code flt} is a 32-bit binary floating-point
      * number.</p>
      * @return <p>A rational number with the same value as {@code flt}.</p>
      *
@@ -581,8 +562,7 @@ PositiveInfinity) : CreateNaN(
      * encoded in the IEEE 754 binary32 format. This method computes the exact
      * value of the floating point number, not an approximation, as is often the
      * case by converting the number to a string.</p>
-     * <p>@param value </p>
-     * <p>A 32-bit integer encoded in the IEEE 754 binary32
+     * @param value <p>A 32-bit integer encoded in the IEEE 754 binary32
      * format.</p>
      * @return <p>A rational number with the same floating-point value as {@code
      * value}.</p>
@@ -598,8 +578,7 @@ PositiveInfinity) : CreateNaN(
      * floating-point number). This method computes the exact value of the floating
      * point number, not an approximation, as is often the case by converting the
      * number to a string.</p>
-     * <p>@param value </p>
-     * <p>A 16-bit integer encoded in the IEEE 754 binary16
+     * @param value <p>A 16-bit integer encoded in the IEEE 754 binary16
      * format.</p>
      * @return <p>A rational number with the same floating-point value as {@code
      * value}.</p>
@@ -614,8 +593,7 @@ PositiveInfinity) : CreateNaN(
      * encoded in the IEEE 754 binary64 format. This method computes the exact
      * value of the floating point number, not an approximation, as is often the
      * case by converting the number to a string.</p>
-     * <p>@param value </p>
-     * <p>A 64-bit integer encoded in the IEEE 754 binary64
+     * @param value <p>A 64-bit integer encoded in the IEEE 754 binary64
      * format.</p>
      * @return <p>A rational number with the same floating-point value as {@code
      * value}.</p>
@@ -628,8 +606,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Creates a rational number from a text string that represents a number.
      * See {@code FromString(string, int, int)} for more information.</p>
-     * <p>@param str </p>
-     * <p>A string that represents a number.</p>
+     * @param str <p>A string that represents a number.</p>
      * @return <p>An arbitrary-precision rational number with the same value as the
      * given string.</p>
      * @throws NumberFormatException <p>The parameter {@code str} is not a correctly
@@ -656,13 +633,10 @@ PositiveInfinity) : CreateNaN(
      * in the Basic Latin range. In particular, the digits must be the basic digits
      * 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space
      * characters, including spaces.</p>
-     * <p>@param str </p>
-     * <p>A text string, a portion of which represents a number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param str <p>A text string, a portion of which represents a number.</p>
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code str} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws NumberFormatException <p>The parameter {@code str} is not a correctly
@@ -684,8 +658,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Creates a rational number from a sequence of {@code char} s that
      * represents a number. See {@code FromString(string, int, int)} for more
      * information.</p>
-     * <p>@param chars </p>
-     * <p>A sequence of {@code char} s that represents a number.</p>
+     * @param chars <p>A sequence of {@code char} s that represents a number.</p>
      * @return <p>An arbitrary-precision rational number with the same value as the
      * given sequence of {@code char} s.</p>
      * @throws NumberFormatException <p>The parameter {@code chars} is not a correctly
@@ -713,14 +686,11 @@ PositiveInfinity) : CreateNaN(
      * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence
      * of {@code char} s is not allowed to contain white space characters,
      * including spaces.</p>
-     * <p>@param chars </p>
-     * <p>A sequence of {@code char} s, a portion of which represents
+     * @param chars <p>A sequence of {@code char} s, a portion of which represents
      * a number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code chars} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * chars} (but not more than {@code chars} 's length).</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws NumberFormatException <p>The parameter {@code chars} is not a correctly
@@ -741,8 +711,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Creates a rational number from a sequence of bytes that represents a
      * number. See {@code FromString(string, int, int)} for more information.</p>
-     * <p>@param bytes </p>
-     * <p>A sequence of bytes that represents a number.</p>
+     * @param bytes <p>A sequence of bytes that represents a number.</p>
      * @return <p>An arbitrary-precision rational number with the same value as the
      * given sequence of bytes.</p>
      * @throws NumberFormatException <p>The parameter {@code bytes} is not a correctly
@@ -769,14 +738,11 @@ PositiveInfinity) : CreateNaN(
      * characters in the Basic Latin range. In particular, the digits must be the
      * basic digits 0 to 9 (U+0030 to U+0039). The sequence of bytes is not allowed
      * to contain white space characters, including spaces.</p>
-     * <p>@param bytes </p>
-     * <p>A sequence of bytes, a portion of which represents a
+     * @param bytes <p>A sequence of bytes, a portion of which represents a
      * number.</p>
-     * <p>@param offset </p>
-     * <p>An index starting at 0 showing where the desired portion of
+     * @param offset <p>An index starting at 0 showing where the desired portion of
      * {@code bytes} begins.</p>
-     * <p>@param length </p>
-     * <p>The length, in code units, of the desired portion of {@code
+     * @param length <p>The length, in code units, of the desired portion of {@code
      * bytes} (but not more than {@code bytes} 's length).</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws NumberFormatException <p>The parameter {@code bytes} is not a correctly
@@ -805,8 +771,7 @@ PositiveInfinity) : CreateNaN(
      * "absolute value".</li><li>NaN has a higher "absolute value" than
      * infinity.</li><li>Infinity has a higher "absolute value" than any finite
      * number.</li></ul>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision rational number to compare with this
+     * @param other <p>An arbitrary-precision rational number to compare with this
      * one.</p>
      * @return <p>The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. This
@@ -867,8 +832,7 @@ PositiveInfinity) : CreateNaN(
      * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
      * "absolute value" than any finite number.</li><li>Negative numbers are less
      * than positive numbers.</li></ul>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision rational number to compare with this
+     * @param other <p>An arbitrary-precision rational number to compare with this
      * one.</p>
      * @return <p>The number 0 if both objects have the same value, or -1 if this
      * object is less than the other value, or 1 if this object is greater. This
@@ -942,8 +906,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Adds this arbitrary-precision rational number and another
      * arbitrary-precision rational number and returns the result.</p>
-     * <p>@param otherValue </p>
-     * <p>Another arbitrary-precision rational number.</p>
+     * @param otherValue <p>Another arbitrary-precision rational number.</p>
      * @return <p>The sum of the two numbers, that is, this arbitrary-precision
      * rational number plus another arbitrary-precision rational number.</p>
      * @throws NullPointerException <p>The parameter {@code otherValue} is
@@ -989,8 +952,7 @@ PositiveInfinity) : CreateNaN(
      * the CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
      * CompareToTotal method instead.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision rational number.</p>
+     * @param other <p>An arbitrary-precision rational number.</p>
      * @return <p>Zero if the values are equal; a negative number if this instance
      * is less, or a positive number if this instance is greater. This
      * implementation returns a positive number if.</p>
@@ -1006,8 +968,7 @@ PositiveInfinity) : CreateNaN(
      * other ERational value, and two NaN values (even if their payloads differ)
      * are treated as equal by this method. This method is not consistent with the
      * Equals method.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision rational number.</p>
+     * @param other <p>An arbitrary-precision rational number.</p>
      * @return <p>Zero if the values are equal; a negative number if this instance
      * is less, or a positive number if this instance is greater. This
      * implementation returns a positive number if.</p>
@@ -1106,10 +1067,8 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * <p>Gets the greater value between two rational numbers.</p>
-     * <p>@param first </p>
-     * <p>An arbitrary-precision rational number.</p>
-     * <p>@param second </p>
-     * <p>Another arbitrary-precision rational number.</p>
+     * @param first <p>An arbitrary-precision rational number.</p>
+     * @param second <p>Another arbitrary-precision rational number.</p>
      * @return <p>The larger value of the two numbers. If one is positive zero and
      * the other is negative zero, returns the positive zero. If the two numbers
      * are positive and have the same value, returns the one with the larger
@@ -1148,10 +1107,8 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Gets the greater value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Max.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The larger value of the two numbers, ignoring their signs.</p>
      * @throws NullPointerException <p>The parameter {@code first} or {@code
      * second} is null.</p>
@@ -1172,10 +1129,8 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * <p>Gets the lesser value between two rational numbers.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The smaller value of the two numbers. If one is positive zero and
      * the other is negative zero, returns the negative zero. If the two numbers
      * are positive and have the same value, returns the one with the smaller
@@ -1212,10 +1167,8 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Gets the lesser value between two values, ignoring their signs. If the
      * absolute values are equal, has the same effect as Min.</p>
-     * <p>@param first </p>
-     * <p>The first value to compare.</p>
-     * <p>@param second </p>
-     * <p>The second value to compare.</p>
+     * @param first <p>The first value to compare.</p>
+     * @param second <p>The second value to compare.</p>
      * @return <p>The smaller value of the two numbers, ignoring their signs.</p>
      * @throws NullPointerException <p>The parameter {@code first} or {@code
      * second} is null.</p>
@@ -1240,8 +1193,7 @@ PositiveInfinity) : CreateNaN(
      * the CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
      * CompareToTotal method instead.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 32-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 32-bit signed
      * integer.</p>
      * @return <p>Zero if the values are equal; a negative number if this instance
      * is less, or a positive number if this instance is greater.</p>
@@ -1257,8 +1209,7 @@ PositiveInfinity) : CreateNaN(
      * other ERational value, and two NaN values (even if their payloads differ)
      * are treated as equal by this method. This method is not consistent with the
      * Equals method.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 32-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 32-bit signed
      * integer.</p>
      * @return <p>Zero if the values are equal; a negative number if this instance
      * is less, or a positive number if this instance is greater.</p>
@@ -1276,8 +1227,7 @@ PositiveInfinity) : CreateNaN(
      * zero and positive zero are considered equal.</p> <p>If this object is a
      * quiet NaN or signaling NaN, this method will not trigger an error. Instead,
      * NaN will compare greater than any other number, including infinity.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 64-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 64-bit signed
      * integer.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value, or
@@ -1294,8 +1244,7 @@ PositiveInfinity) : CreateNaN(
      * CompareToValue method, so that it it is not consistent with the Equals
      * method, but it may change in a future version to use the rules for the
      * CompareToTotal method instead.</p>
-     * <p>@param intOther </p>
-     * <p>The parameter {@code intOther} is a 64-bit signed
+     * @param intOther <p>The parameter {@code intOther} is a 64-bit signed
      * integer.</p>
      * @return <p>Less than 0 if this object's value is less than the other value,
      * or greater than 0 if this object's value is greater than the other value, or
@@ -1311,8 +1260,7 @@ PositiveInfinity) : CreateNaN(
      * instance. In this method, NaN values are greater than any other ERational or
      * EFloat value, and two NaN values (even if their payloads differ) are treated
      * as equal by this method.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision binary floating-point number.</p>
+     * @param other <p>An arbitrary-precision binary floating-point number.</p>
      * @return <p>Zero if the values are equal; a negative number if this instance
      * is less, or a positive number if this instance is greater. This
      * implementation returns a positive number if.</p>
@@ -1425,8 +1373,7 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * <p>Compares an arbitrary-precision decimal number with this instance.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision decimal number.</p>
+     * @param other <p>An arbitrary-precision decimal number.</p>
      * @return <p>Zero if the values are equal; a negative number if this instance
      * is less, or a positive number if this instance is greater. This
      * implementation returns a positive number if.</p>
@@ -1537,8 +1484,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Returns a number with the same value as this one, but copying the sign
      * (positive or negative) of another number.</p>
-     * <p>@param other </p>
-     * <p>A number whose sign will be copied.</p>
+     * @param other <p>A number whose sign will be copied.</p>
      * @return <p>An arbitrary-precision rational number.</p>
      * @throws NullPointerException <p>The parameter {@code other} is null.</p>
      *
@@ -1557,8 +1503,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Divides this arbitrary-precision rational number by another
      * arbitrary-precision rational number and returns the result.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision rational number.</p>
+     * @param otherValue <p>An arbitrary-precision rational number.</p>
      * @return <p>The result of dividing this arbitrary-precision rational number
      * by another arbitrary-precision rational number.</p>
      * @throws NullPointerException <p>The parameter {@code otherValue} is
@@ -1612,8 +1557,7 @@ PositiveInfinity) : CreateNaN(
      * value equality. Notably, two ERationals with the same value, but of which
      * one is in lowest terms and the other is not, are compared as unequal by this
      * method (example: 1/2 vs. 5/10).</p>
-     * <p>@param obj </p>
-     * <p>The parameter {@code obj} is an arbitrary object.</p>
+     * @param obj <p>The parameter {@code obj} is an arbitrary object.</p>
      * @return <p> {@code true} if the objects are equal; otherwise, {@code false}.
      * In this method, two objects are not equal if they don't have the same type
      * or if one is null and the other isn't.</p>
@@ -1634,8 +1578,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Determines whether this object's numerator, denominator, and properties
      * are equal to those of another object. Not-a-number values are considered
      * equal if the rest of their properties are equal.</p>
-     * <p>@param other </p>
-     * <p>An arbitrary-precision rational number to compare to.</p>
+     * @param other <p>An arbitrary-precision rational number to compare to.</p>
      * @return <p>Either {@code true} or {@code false}.</p>
      *
      */
@@ -1732,8 +1675,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Multiplies this arbitrary-precision rational number by another
      * arbitrary-precision rational number and returns the result.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision rational number.</p>
+     * @param otherValue <p>An arbitrary-precision rational number.</p>
      * @return <p>The product of the two numbers, that is, this arbitrary-precision
      * rational number times another arbitrary-precision rational number.</p>
      * @throws NullPointerException <p>The parameter {@code otherValue} is
@@ -1791,8 +1733,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Returns the remainder that would result when this arbitrary-precision
      * rational number is divided by another arbitrary-precision rational
      * number.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision rational number.</p>
+     * @param otherValue <p>An arbitrary-precision rational number.</p>
      * @return <p>The remainder that would result when this arbitrary-precision
      * rational number is divided by another arbitrary-precision rational
      * number.</p>
@@ -1847,8 +1788,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Subtracts an arbitrary-precision rational number from this
      * arbitrary-precision rational number and returns the result.</p>
-     * <p>@param otherValue </p>
-     * <p>An arbitrary-precision rational number.</p>
+     * @param otherValue <p>An arbitrary-precision rational number.</p>
      * @return <p>The difference between the two numbers, that is, this
      * arbitrary-precision rational number minus another arbitrary-precision
      * rational number.</p>
@@ -2022,8 +1962,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Converts this value to an arbitrary-precision integer by dividing the
      * numerator by the denominator, discarding its fractional part, and checking
      * whether the resulting integer overflows the given signed bit count.</p>
-     * <p>@param maxBitLength </p>
-     * <p>The maximum number of signed bits the integer can
+     * @param maxBitLength <p>The maximum number of signed bits the integer can
      * have. The integer's value may not be less than -(2^maxBitLength) or greater
      * than (2^maxBitLength) - 1.</p>
      * @return <p>An arbitrary-precision integer.</p>
@@ -2063,8 +2002,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Converts this value to an arbitrary-precision integer, only if this
      * number's value is an exact integer and that integer does not overflow the
      * given signed bit count.</p>
-     * <p>@param maxBitLength </p>
-     * <p>The maximum number of signed bits the integer can
+     * @param maxBitLength <p>The maximum number of signed bits the integer can
      * have. The integer's value may not be less than -(2^maxBitLength) or greater
      * than (2^maxBitLength) - 1.</p>
      * @return <p>An arbitrary-precision integer.</p>
@@ -2177,8 +2115,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts this rational number to an arbitrary-precision decimal number
      * and rounds the result to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. If HasFlags of the context is
      * true, will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case the
@@ -2211,8 +2148,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Converts this rational number to an arbitrary-precision decimal number,
      * but if the result would have a nonterminating decimal expansion, rounds that
      * result to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * if the exact result would have a nonterminating decimal expansion. If
      * HasFlags of the context is true, will also store the flags resulting from
@@ -2276,8 +2212,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts this rational number to an arbitrary-precision decimal number
      * and rounds the result to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. If HasFlags of the context is
      * true, will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case the
@@ -2297,8 +2232,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Converts this rational number to an arbitrary-precision decimal number,
      * but if the result would have a nonterminating decimal expansion, rounds that
      * result to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * if the exact result would have a nonterminating decimal expansion. If
      * HasFlags of the context is true, will also store the flags resulting from
@@ -2331,8 +2265,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts this rational number to a binary floating-point number and
      * rounds that result to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. If HasFlags of the context is
      * true, will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case the
@@ -2365,8 +2298,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Converts this rational number to a binary floating-point number, but if
      * the result would have a nonterminating binary expansion, rounds that result
      * to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * if the exact result would have a nonterminating binary expansion. If
      * HasFlags of the context is true, will also store the flags resulting from
@@ -2427,8 +2359,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts this rational number to a binary floating-point number and
      * rounds that result to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. If HasFlags of the context is
      * true, will also store the flags resulting from the operation (the flags are
      * in addition to the pre-existing flags). Can be null, in which case the
@@ -2448,8 +2379,7 @@ PositiveInfinity) : CreateNaN(
      * <p>Converts this rational number to a binary floating-point number, but if
      * the result would have a nonterminating binary expansion, rounds that result
      * to the given precision.</p>
-     * <p>@param ctx </p>
-     * <p>An arithmetic context object to control the precision,
+     * @param ctx <p>An arithmetic context object to control the precision,
      * rounding, and exponent range of the result. This context will be used only
      * if the exact result would have a nonterminating binary expansion. If
      * HasFlags of the context is true, will also store the flags resulting from
@@ -2541,8 +2471,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Adds this arbitrary-precision rational number and a 32-bit signed integer
      * and returns the result.</p>
-     * <p>@param v </p>
-     * <p>A 32-bit signed integer.</p>
+     * @param v <p>A 32-bit signed integer.</p>
      * @return <p>The sum of the two numbers, that is, this arbitrary-precision
      * rational number plus a 32-bit signed integer.</p>
      *
@@ -2554,8 +2483,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Subtracts a 32-bit signed integer from this arbitrary-precision rational
      * number and returns the result.</p>
-     * <p>@param v </p>
-     * <p>The parameter {@code v} is a 32-bit signed integer.</p>
+     * @param v <p>The parameter {@code v} is a 32-bit signed integer.</p>
      * @return <p>The difference between the two numbers, that is, this
      * arbitrary-precision rational number minus a 32-bit signed integer.</p>
      *
@@ -2567,8 +2495,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Multiplies this arbitrary-precision rational number by a 32-bit signed
      * integer and returns the result.</p>
-     * <p>@param v </p>
-     * <p>The parameter {@code v} is a 32-bit signed integer.</p>
+     * @param v <p>The parameter {@code v} is a 32-bit signed integer.</p>
      * @return <p>The product of the two numbers, that is, this arbitrary-precision
      * rational number times a 32-bit signed integer.</p>
      *
@@ -2580,8 +2507,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Divides this arbitrary-precision rational number by a 32-bit signed
      * integer and returns the result.</p>
-     * <p>@param v </p>
-     * <p>The parameter {@code v} is a 32-bit signed integer.</p>
+     * @param v <p>The parameter {@code v} is a 32-bit signed integer.</p>
      * @return <p>The result of dividing this arbitrary-precision rational number
      * by a 32-bit signed integer.</p>
      * @throws ArithmeticException <p>The parameter {@code v} is zero.</p>
@@ -2594,8 +2520,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Returns the remainder that would result when this arbitrary-precision
      * rational number is divided by a 32-bit signed integer.</p>
-     * <p>@param v </p>
-     * <p>The divisor.</p>
+     * @param v <p>The divisor.</p>
      * @return <p>The remainder that would result when this arbitrary-precision
      * rational number is divided by a 32-bit signed integer.</p>
      * @throws IllegalArgumentException <p>The parameter {@code v} is zero.</p>
@@ -2608,8 +2533,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Adds this arbitrary-precision rational number and a 64-bit signed integer
      * and returns the result.</p>
-     * <p>@param v </p>
-     * <p>A 64-bit signed integer.</p>
+     * @param v <p>A 64-bit signed integer.</p>
      * @return <p>The sum of the two numbers, that is, this arbitrary-precision
      * rational number plus a 64-bit signed integer.</p>
      *
@@ -2621,8 +2545,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Subtracts a 64-bit signed integer from this arbitrary-precision rational
      * number and returns the result.</p>
-     * <p>@param v </p>
-     * <p>The parameter {@code v} is a 64-bit signed integer.</p>
+     * @param v <p>The parameter {@code v} is a 64-bit signed integer.</p>
      * @return <p>The difference between the two numbers, that is, this
      * arbitrary-precision rational number minus a 64-bit signed integer.</p>
      *
@@ -2634,8 +2557,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Multiplies this arbitrary-precision rational number by a 64-bit signed
      * integer and returns the result.</p>
-     * <p>@param v </p>
-     * <p>The parameter {@code v} is a 64-bit signed integer.</p>
+     * @param v <p>The parameter {@code v} is a 64-bit signed integer.</p>
      * @return <p>The product of the two numbers, that is, this arbitrary-precision
      * rational number times a 64-bit signed integer.</p>
      *
@@ -2647,8 +2569,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Divides this arbitrary-precision rational number by a 64-bit signed
      * integer and returns the result.</p>
-     * <p>@param v </p>
-     * <p>The parameter {@code v} is a 64-bit signed integer.</p>
+     * @param v <p>The parameter {@code v} is a 64-bit signed integer.</p>
      * @return <p>The result of dividing this arbitrary-precision rational number
      * by a 64-bit signed integer.</p>
      * @throws ArithmeticException <p>The parameter {@code v} is zero.</p>
@@ -2661,8 +2582,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Returns the remainder that would result when this arbitrary-precision
      * rational number is divided by a 64-bit signed integer.</p>
-     * <p>@param v </p>
-     * <p>The divisor.</p>
+     * @param v <p>The divisor.</p>
      * @return <p>The remainder that would result when this arbitrary-precision
      * rational number is divided by a 64-bit signed integer.</p>
      * @throws IllegalArgumentException <p>The parameter {@code v} is zero.</p>
@@ -2746,8 +2666,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts a byte (from 0 to 255) to an arbitrary-precision rational
      * number.</p>
-     * <p>@param inputByte </p>
-     * <p>The number to convert as a byte (from 0 to 255).</p>
+     * @param inputByte <p>The number to convert as a byte (from 0 to 255).</p>
      * @return <p>This number's value as an arbitrary-precision rational
      * number.</p>
      *
@@ -2807,8 +2726,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts a 16-bit signed integer to an arbitrary-precision rational
      * number.</p>
-     * <p>@param inputInt16 </p>
-     * <p>The number to convert as a 16-bit signed integer.</p>
+     * @param inputInt16 <p>The number to convert as a 16-bit signed integer.</p>
      * @return <p>This number's value as an arbitrary-precision rational
      * number.</p>
      *
@@ -2868,8 +2786,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts a boolean value (true or false) to an arbitrary-precision
      * rational number.</p>
-     * <p>@param boolValue </p>
-     * <p>Either true or false.</p>
+     * @param boolValue <p>Either true or false.</p>
      * @return <p>The number 1 if {@code boolValue} is true; otherwise, 0.</p>
      *
      */
@@ -2880,8 +2797,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts a 32-bit signed integer to an arbitrary-precision rational
      * number.</p>
-     * <p>@param inputInt32 </p>
-     * <p>The number to convert as a 32-bit signed integer.</p>
+     * @param inputInt32 <p>The number to convert as a 32-bit signed integer.</p>
      * @return <p>This number's value as an arbitrary-precision rational
      * number.</p>
      *
@@ -2940,8 +2856,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts an unsigned integer expressed as a 64-bit signed integer to an
      * arbitrary-precision rational number.</p>
-     * <p>@param longerValue </p>
-     * <p>A 64-bit signed integer. If this value is 0 or
+     * @param longerValue <p>A 64-bit signed integer. If this value is 0 or
      * greater, the return value will represent it. If this value is less than 0,
      * the return value will store 2^64 plus this value instead.</p>
      * @return <p>An arbitrary-precision rational number. If {@code longerValue} is
@@ -2957,8 +2872,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * <p>Converts a 64-bit signed integer to an arbitrary-precision rational
      * number.</p>
-     * <p>@param inputInt64 </p>
-     * <p>The number to convert as a 64-bit signed integer.</p>
+     * @param inputInt64 <p>The number to convert as a 64-bit signed integer.</p>
      * @return <p>This number's value as an arbitrary-precision rational
      * number.</p>
      *

@@ -26,8 +26,7 @@ package com.upokecenter.util;
 
     /**
      * <p>Initializes a new instance of the RandomGenerator class.</p>
-     * <p>@param valueIrg </p>
-     * <p>An IRandomGen object.</p>
+     * @param valueIrg <p>An IRandomGen object.</p>
      *
      */
     public RandomGenerator(IRandomGen valueIrg) {
@@ -36,8 +35,7 @@ package com.upokecenter.util;
 
     /**
      * <p>Returns either true or false, depending on the given probability.</p>
-     * <p>@param p </p>
-     * <p>A probability from 0 through 1. 0 means always false, and 1
+     * @param p <p>A probability from 0 through 1. 0 means always false, and 1
      * means always true.</p>
      * @return <p>A Boolean object.</p>
      *
@@ -64,8 +62,7 @@ package com.upokecenter.util;
     /**
      * <p>Conceptually, generates either 1 or 0 the given number of times, where
      * either number is equally likely, and counts the number of 1's generated.</p>
-     * <p>@param trials </p>
-     * <p>The number of times to generate a random number,
+     * @param trials <p>The number of times to generate a random number,
      * conceptually.</p>
      * @return <p>A 32-bit signed integer.</p>
      *
@@ -82,11 +79,9 @@ package com.upokecenter.util;
      * <p>Conceptually, generates either 1 or 0 the given number of times, where a
      * 1 is generated at the given probability, and counts the number of 1's
      * generated.</p>
-     * <p>@param trials </p>
-     * <p>The number of times to generate a random number,
+     * @param trials <p>The number of times to generate a random number,
      * conceptually.</p>
-     * <p>@param p </p>
-     * <p>The probability for each trial to succeed, from 0 (never) to 1
+     * @param p <p>The probability for each trial to succeed, from 0 (never) to 1
      * (always).</p>
      * @return <p>The number of successes in a given number of trials.</p>
      *
@@ -133,8 +128,7 @@ package com.upokecenter.util;
      * <p>Generates a random number that is the sum of the squares of "df"
      * normally-distributed random numbers with a mean of 0 and a standard
      * deviation of 1.</p>
-     * <p>@param df </p>
-     * <p>Degrees of freedom (the number of independently chosen
+     * @param df <p>Degrees of freedom (the number of independently chosen
      * normally-distributed numbers).</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
@@ -157,10 +151,8 @@ package com.upokecenter.util;
 
     /**
      * <p>Not documented yet.</p>
-     * <p>@param a </p>
-     * <p>Another 64-bit floating-point number.</p>
-     * <p>@param b </p>
-     * <p>A 64-bit floating-point number. (3).</p>
+     * @param a <p>Another 64-bit floating-point number.</p>
+     * @param b <p>A 64-bit floating-point number. (3).</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
      */
@@ -173,8 +165,7 @@ package com.upokecenter.util;
 
     /**
      * <p>Not documented yet.</p>
-     * <p>@param a </p>
-     * <p>Another 64-bit floating-point number.</p>
+     * @param a <p>Another 64-bit floating-point number.</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
      */
@@ -215,8 +206,7 @@ package com.upokecenter.util;
     /**
      * <p>Conceptually, generates either 1 or 0 until a 1 is generated, and counts
      * the number of 0's generated. A 1 is generated at the given probability.</p>
-     * <p>@param p </p>
-     * <p>A 64-bit floating-point number.</p>
+     * @param p <p>A 64-bit floating-point number.</p>
      * @return <p>The number of failures until a success happens.</p>
      *
      */
@@ -228,13 +218,10 @@ package com.upokecenter.util;
      * <p>Conceptually, given a set of tokens, some of which are labeled 1 and the
      * others labeled 0, draws "trials" tokens at random without replacement and
      * then counts the number of 1's drawn.</p>
-     * <p>@param trials </p>
-     * <p>The number of tokens drawn at random without
+     * @param trials <p>The number of tokens drawn at random without
      * replacement.</p>
-     * <p>@param ones </p>
-     * <p>The number of tokens labeled 1.</p>
-     * <p>@param count </p>
-     * <p>The number of tokens labeled 1 or 0.</p>
+     * @param ones <p>The number of tokens labeled 1.</p>
+     * @param count <p>The number of tokens labeled 1 or 0.</p>
      * @return <p>A 32-bit signed integer.</p>
      *
      */
@@ -272,10 +259,8 @@ package com.upokecenter.util;
     /**
      * <p>Generates a logarithmic normally-distributed number with the given mean
      * and standard deviation.</p>
-     * <p>@param mean </p>
-     * <p>The desired mean.</p>
-     * <p>@param sd </p>
-     * <p>Standard deviation.</p>
+     * @param mean <p>The desired mean.</p>
+     * @param sd <p>Standard deviation.</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
      */
@@ -287,10 +272,8 @@ package com.upokecenter.util;
      * <p>Conceptually, generates either 1 or 0 until the given number of 1's are
      * generated, and counts the number of 0's generated. A 1 is generated at the
      * given probability.</p>
-     * <p>@param trials </p>
-     * <p>The number of 1's to generate before the process stops.</p>
-     * <p>@param p </p>
-     * <p>The probability for each trial to succeed, from 0 (never) to 1
+     * @param trials <p>The number of 1's to generate before the process stops.</p>
+     * @param p <p>The probability for each trial to succeed, from 0 (never) to 1
      * (always).</p>
      * @return <p>The number of 0's generated. Returns Integer.MAX_VALUE if {@code p}
      * is 0.</p>
@@ -350,8 +333,7 @@ package com.upokecenter.util;
      * <p>Conceptually, generates either 1 or 0 the given number of times until the
      * given number of 1's are generated, and counts the number of 0's generated.
      * Either number has an equal probability of being generated.</p>
-     * <p>@param trials </p>
-     * <p>The number of 1's to generate before the process stops.</p>
+     * @param trials <p>The number of 1's to generate before the process stops.</p>
      * @return <p>The number of 0's generated. Returns Integer.MAX_VALUE if "p" is
      * 0.</p>
      *
@@ -391,10 +373,8 @@ package com.upokecenter.util;
     /**
      * <p>Generates a normally-distributed number with the given mean and standard
      * deviation.</p>
-     * <p>@param mean </p>
-     * <p>The desired mean.</p>
-     * <p>@param sd </p>
-     * <p>Standard deviation.</p>
+     * @param mean <p>The desired mean.</p>
+     * @param sd <p>Standard deviation.</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
      */
@@ -406,8 +386,7 @@ package com.upokecenter.util;
      * <p>Generates a random integer such that the average of random numbers
      * approaches the given mean number when this method is called repeatedly with
      * the same mean.</p>
-     * <p>@param mean </p>
-     * <p>The expected mean of the random numbers.</p>
+     * @param mean <p>The expected mean of the random numbers.</p>
      * @return <p>A 32-bit signed integer.</p>
      *
      */
@@ -430,10 +409,8 @@ package com.upokecenter.util;
 
     /**
      * <p>Not documented yet.</p>
-     * <p>@param min </p>
-     * <p>Smallest possible number that will be generated.</p>
-     * <p>@param max </p>
-     * <p>Number that the randomly-generated number will be less
+     * @param min <p>Smallest possible number that will be generated.</p>
+     * @param max <p>Number that the randomly-generated number will be less
      * than.</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
@@ -449,8 +426,7 @@ package com.upokecenter.util;
     /**
      * <p>Returns a uniformly-distributed 64-bit floating-point number from 0 and
      * up, but less than the given number.</p>
-     * <p>@param max </p>
-     * <p>Number that the randomly-generated number will be less
+     * @param max <p>Number that the randomly-generated number will be less
      * than.</p>
      * @return <p>A 64-bit floating-point number.</p>
      *
@@ -481,10 +457,8 @@ package com.upokecenter.util;
 
     /**
      * <p>Generates a random 32-bit signed integer within a given range.</p>
-     * <p>@param minInclusive </p>
-     * <p>Smallest possible value of the random number.</p>
-     * <p>@param maxExclusive </p>
-     * <p>One plus the largest possible value of the random
+     * @param minInclusive <p>Smallest possible value of the random number.</p>
+     * @param maxExclusive <p>One plus the largest possible value of the random
      * number.</p>
      * @return <p>A 32-bit signed integer.</p>
      *
@@ -511,10 +485,8 @@ package com.upokecenter.util;
 
     /**
      * <p>Generates a random 64-bit signed integer within a given range.</p>
-     * <p>@param minInclusive </p>
-     * <p>Smallest possible value of the random number.</p>
-     * <p>@param maxExclusive </p>
-     * <p>One plus the largest possible value of the random
+     * @param minInclusive <p>Smallest possible value of the random number.</p>
+     * @param maxExclusive <p>One plus the largest possible value of the random
      * number.</p>
      * @return <p>A 64-bit signed integer.</p>
      *
@@ -560,8 +532,7 @@ package com.upokecenter.util;
     /**
      * <p>Generates a random 32-bit signed integer 0 or greater and less than the
      * given number.</p>
-     * <p>@param maxExclusive </p>
-     * <p>One plus the largest possible value of the random
+     * @param maxExclusive <p>One plus the largest possible value of the random
      * number.</p>
      * @return <p>A 32-bit signed integer.</p>
      *
@@ -632,8 +603,7 @@ package com.upokecenter.util;
     /**
      * <p>Generates a random 32-bit signed integer 0 or greater and less than the
      * given number.</p>
-     * <p>@param maxExclusive </p>
-     * <p>One plus the largest possible value of the random
+     * @param maxExclusive <p>One plus the largest possible value of the random
      * number.</p>
      * @return <p>A 64-bit signed integer.</p>
      *
