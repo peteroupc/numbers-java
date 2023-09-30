@@ -9,23 +9,24 @@ https://creativecommons.org/publicdomain/zero/1.0/
  */
 
   /**
-   * Represents an arbitrary-precision rational number. This class can't be
-   *  inherited. (The "E" stands for "extended", meaning that instances of
-   * this class can be values other than numbers proper, such as infinity
-   * and not-a-number.) In this class, a rational number consists of a
-   * numerator and denominator, each an arbitrary-precision integer
-   * (EInteger), and this class does not automatically convert rational
-   * numbers to lowest terms. <p><b>Thread safety:</b> Instances of this
-   * class are immutable, so they are inherently safe for use by multiple
-   * threads. Multiple instances of this object with the same properties
-   *  are interchangeable, so they should not be compared using the "=="
-   * operator (which might only check if each side of the operator is the
-   * same instance).</p>
+   * <p>Represents an arbitrary-precision rational number. This class can't be
+   * inherited. (The "E" stands for "extended", meaning that instances of this
+   * class can be values other than numbers proper, such as infinity and
+   * not-a-number.) In this class, a rational number consists of a numerator and
+   * denominator, each an arbitrary-precision integer (EInteger), and this class
+   * does not automatically convert rational numbers to lowest terms. </p>
+   * <p><b>Thread safety:</b> Instances of this class are immutable, so they are
+   * inherently safe for use by multiple threads. Multiple instances of this
+   * object with the same properties are interchangeable, so they should not be
+   * compared using the "==" operator (which might only check if each side of the
+   * operator is the same instance).</p>
+   *
    */
 
   public final class ERational implements Comparable<ERational> {
     /**
-     * A not-a-number value.
+     * <p>A not-a-number value.</p>
+     *
      */
 
     public static final ERational NaN = new ERational(
@@ -34,7 +35,8 @@ https://creativecommons.org/publicdomain/zero/1.0/
       (byte)BigNumberFlags.FlagQuietNaN);
 
     /**
-     * Negative infinity, less than any other number.
+     * <p>Negative infinity, less than any other number.</p>
+     *
      */
 
     public static final ERational NegativeInfinity =
@@ -44,7 +46,8 @@ https://creativecommons.org/publicdomain/zero/1.0/
         (byte)(BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative));
 
     /**
-     * A rational number for negative zero.
+     * <p>A rational number for negative zero.</p>
+     *
      */
 
     public static final ERational NegativeZero =
@@ -54,13 +57,15 @@ https://creativecommons.org/publicdomain/zero/1.0/
           (byte)BigNumberFlags.FlagNegative);
 
     /**
-     * The rational number one.
+     * <p>The rational number one.</p>
+     *
      */
 
     public static final ERational One = FromEInteger(EInteger.FromInt32(1));
 
     /**
-     * Positive infinity, greater than any other number.
+     * <p>Positive infinity, greater than any other number.</p>
+     *
      */
 
     public static final ERational PositiveInfinity =
@@ -70,7 +75,8 @@ https://creativecommons.org/publicdomain/zero/1.0/
         (byte)BigNumberFlags.FlagInfinity);
 
     /**
-     * A signaling not-a-number value.
+     * <p>A signaling not-a-number value.</p>
+     *
      */
 
     public static final ERational SignalingNaN =
@@ -80,13 +86,15 @@ https://creativecommons.org/publicdomain/zero/1.0/
         (byte)BigNumberFlags.FlagSignalingNaN);
 
     /**
-     * The rational number ten.
+     * <p>The rational number ten.</p>
+     *
      */
 
     public static final ERational Ten = FromEInteger(EInteger.FromInt32(10));
 
     /**
-     * A rational number for zero.
+     * <p>A rational number for zero.</p>
+     *
      */
 
     public static final ERational Zero = FromEInteger(EInteger.FromInt32(0));
@@ -106,14 +114,18 @@ https://creativecommons.org/publicdomain/zero/1.0/
     }
 
     /**
-     * Initializes a new instance of the {@link com.upokecenter.numbers.ERational}
-     * class.
-     * @param numerator An arbitrary-precision integer serving as the numerator.
-     * @param denominator An arbitrary-precision integer serving as the
-     * denominator.
-     * @throws NullPointerException The parameter {@code numerator} or {@code
-     * denominator} is null.
-     * @throws IllegalArgumentException Denominator is zero.
+     * <p>Initializes a new instance of the {@link
+     * com.upokecenter.numbers.ERational} class.</p>
+     * <p>@param numerator </p>
+     * <p>An arbitrary-precision integer serving as the
+     * numerator.</p>
+     * <p>@param denominator </p>
+     * <p>An arbitrary-precision integer serving as the
+     * denominator.</p>
+     * @throws NullPointerException <p>The parameter {@code numerator} or {@code
+     * denominator} is null.</p>
+     * @throws IllegalArgumentException <p>Denominator is zero.</p>
+     *
      * @deprecated Use the Create method instead.
  */
 @Deprecated
@@ -142,8 +154,9 @@ https://creativecommons.org/publicdomain/zero/1.0/
     }
 
     /**
-     * Creates a copy of this arbitrary-precision rational number.
-     * @return An arbitrary-precision rational number.
+     * <p>Creates a copy of this arbitrary-precision rational number.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     *
      */
     public ERational Copy() {
       return new ERational(
@@ -153,38 +166,43 @@ https://creativecommons.org/publicdomain/zero/1.0/
     }
 
     /**
-     * Gets this object's denominator.
-     * @return This object's denominator.
+     * <p>Gets this object's denominator.</p>
+     * @return <p>This object's denominator.</p>
+     *
      */
     public final EInteger getDenominator() {
         return this.denominator.ToEInteger();
       }
 
     /**
-     * Gets a value indicating whether this object is finite (not infinity or NaN).
-     * @return {@code true} if this object is finite (not infinity or NaN);
-     * otherwise, {@code false}.
+     * <p>Gets a value indicating whether this object is finite (not infinity or
+     * NaN).</p>
+     * @return <p> {@code true} if this object is finite (not infinity or NaN);
+     * otherwise, {@code false}.</p>
+     *
      */
     public final boolean isFinite() {
         return !this.IsNaN() && !this.IsInfinity();
       }
 
     /**
-     * Gets a value indicating whether this object's value is negative (including
-     * negative zero).
-     * @return {@code true} if this object's value is negative (including negative
-     * zero); otherwise, {@code false}. {@code true} if this object's value
-     * is negative; otherwise, {@code false}.
+     * <p>Gets a value indicating whether this object's value is negative
+     * (including negative zero).</p>
+     * @return <p>{@code true} if this object's value is negative (including
+     * negative zero); otherwise, {@code false}. {@code true} if this object's
+     * value is negative; otherwise, {@code false}.</p>
+     *
      */
     public final boolean isNegative() {
         return (this.flags & BigNumberFlags.FlagNegative) != 0;
       }
 
     /**
-     * Gets a value indicating whether this object's value equals 0.
-     * @return {@code true} if this object's value equals 0; otherwise, {@code
-     * false}. {@code true} if this object's value equals 0; otherwise,
-     * {@code false}.
+     * <p>Gets a value indicating whether this object's value equals 0.</p>
+     * @return <p>{@code true} if this object's value equals 0; otherwise, {@code
+     * false}. {@code true} if this object's value equals 0; otherwise, {@code
+     * false}.</p>
+     *
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -193,9 +211,10 @@ this.unsignedNumerator.isValueZero();
       }
 
     /**
-     * Returns whether this object's value is an integer.
-     * @return {@code true} if this object's value is an integer; otherwise, {@code
-     * false}.
+     * <p>Returns whether this object's value is an integer.</p>
+     * @return <p>{@code true} if this object's value is an integer; otherwise,
+     * {@code false}.</p>
+     *
      */
     public boolean IsInteger() {
       if (!this.isFinite()) {
@@ -211,10 +230,11 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Gets this object's numerator.
-     * @return This object's numerator. If this object is a not-a-number value,
-     * returns the diagnostic information (which will be negative if this
-     * object is negative).
+     * <p>Gets this object's numerator.</p>
+     * @return <p>This object's numerator. If this object is a not-a-number value,
+     * returns the diagnostic information (which will be negative if this object is
+     * negative).</p>
+     *
      */
     public final EInteger getNumerator() {
         return this.isNegative() ? this.unsignedNumerator.Negate().ToEInteger() :
@@ -222,8 +242,9 @@ this.unsignedNumerator.isValueZero();
       }
 
     /**
-     * Gets the sign of this rational number.
-     * @return The sign of this rational number.
+     * <p>Gets the sign of this rational number.</p>
+     * @return <p>The sign of this rational number.</p>
+     *
      */
     public final int signum() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
@@ -232,20 +253,24 @@ this.unsignedNumerator.isValueZero();
       }
 
     /**
-     * Gets this object's numerator with the sign removed.
-     * @return This object's numerator. If this object is a not-a-number value,
-     * returns the diagnostic information.
+     * <p>Gets this object's numerator with the sign removed.</p>
+     * @return <p>This object's numerator. If this object is a not-a-number value,
+     * returns the diagnostic information.</p>
+     *
      */
     public final EInteger getUnsignedNumerator() {
         return this.unsignedNumerator.ToEInteger();
       }
 
     /**
-     * Creates a rational number with the given numerator and denominator.
-     * @param numeratorSmall The numerator.
-     * @param denominatorSmall The denominator.
-     * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The denominator is zero.
+     * <p>Creates a rational number with the given numerator and denominator.</p>
+     * <p>@param numeratorSmall </p>
+     * <p>The numerator.</p>
+     * <p>@param denominatorSmall </p>
+     * <p>The denominator.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws IllegalArgumentException <p>The denominator is zero.</p>
+     *
      */
     public static ERational Create(
       int numeratorSmall,
@@ -254,11 +279,14 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Creates a rational number with the given numerator and denominator.
-     * @param numeratorLong The numerator.
-     * @param denominatorLong The denominator.
-     * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The denominator is zero.
+     * <p>Creates a rational number with the given numerator and denominator.</p>
+     * <p>@param numeratorLong </p>
+     * <p>The numerator.</p>
+     * <p>@param denominatorLong </p>
+     * <p>The denominator.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws IllegalArgumentException <p>The denominator is zero.</p>
+     *
      */
     public static ERational Create(
       long numeratorLong,
@@ -267,13 +295,16 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Creates a rational number with the given numerator and denominator.
-     * @param numerator The numerator.
-     * @param denominator The denominator.
-     * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The denominator is zero.
-     * @throws NullPointerException The parameter {@code numerator} or {@code
-     * denominator} is null.
+     * <p>Creates a rational number with the given numerator and denominator.</p>
+     * <p>@param numerator </p>
+     * <p>The numerator.</p>
+     * <p>@param denominator </p>
+     * <p>The denominator.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws IllegalArgumentException <p>The denominator is zero.</p>
+     * @throws NullPointerException <p>The parameter {@code numerator} or {@code
+     * denominator} is null.</p>
+     *
      */
     public static ERational Create(
       EInteger numerator,
@@ -304,32 +335,36 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Creates a not-a-number arbitrary-precision rational number.
-     * @param diag An integer, 0 or greater, to use as diagnostic information
-     * associated with this object. If none is needed, should be zero. To
-     * get the diagnostic information from another arbitrary-precision
-     * rational number, use that object's {@code UnsignedNumerator}
-     * property.
-     * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
+     * <p>Creates a not-a-number arbitrary-precision rational number.</p>
+     * <p>@param diag </p>
+     * <p>An integer, 0 or greater, to use as diagnostic information
+     * associated with this object. If none is needed, should be zero. To get the
+     * diagnostic information from another arbitrary-precision rational number, use
+     * that object's {@code UnsignedNumerator} property.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws IllegalArgumentException <p>The parameter {@code diag} is less than 0.</p>
+     *
      */
     public static ERational CreateNaN(EInteger diag) {
       return CreateNaN(diag, false, false);
     }
 
     /**
-     * Creates a not-a-number arbitrary-precision rational number.
-     * @param diag An integer, 0 or greater, to use as diagnostic information
-     * associated with this object. If none is needed, should be zero. To
-     * get the diagnostic information from another arbitrary-precision
-     * rational number, use that object's {@code UnsignedNumerator}
-     * property.
-     * @param signaling Whether the return value will be signaling (true) or quiet
-     * (false).
-     * @param negative Whether the return value is negative.
-     * @return An arbitrary-precision rational number.
-     * @throws IllegalArgumentException The parameter {@code diag} is less than 0.
-     * @throws NullPointerException The parameter {@code diag} is null.
+     * <p>Creates a not-a-number arbitrary-precision rational number.</p>
+     * <p>@param diag </p>
+     * <p>An integer, 0 or greater, to use as diagnostic information
+     * associated with this object. If none is needed, should be zero. To get the
+     * diagnostic information from another arbitrary-precision rational number, use
+     * that object's {@code UnsignedNumerator} property.</p>
+     * <p>@param signaling </p>
+     * <p>Whether the return value will be signaling (true) or
+     * quiet (false).</p>
+     * <p>@param negative </p>
+     * <p>Whether the return value is negative.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws IllegalArgumentException <p>The parameter {@code diag} is less than 0.</p>
+     * @throws NullPointerException <p>The parameter {@code diag} is null.</p>
+     *
      */
     public static ERational CreateNaN(
       EInteger diag,
@@ -357,30 +392,35 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Converts a 64-bit floating-point number to a rational number. This method
-     * computes the exact value of the floating point number, not an
-     * approximation, as is often the case by converting the number to a
-     * string. <p>The input value can be a not-a-number (NaN) value (such
-     * as <code>Double.NaN</code>); however, NaN values have multiple forms that
-     * are equivalent for many applications' purposes, and
-     * <code>Double.NaN</code> is only one of these equivalent forms. In fact,
-     * <code>ERational.FromDouble(Double.NaN)</code> could produce an object that
-     * is represented differently between DotNet and Java, because
-     * <code>Double.NaN</code> may have a different form in DotNet and Java (for
-     * example, the NaN value's sign may be negative in DotNet, but
-     * positive in Java). Use `IsNaN()` to determine whether an object from
-     * this class stores a NaN value of any form.</p>
-     * @param flt The parameter {@code flt} is a 64-bit floating-point number.
-     * @return A rational number with the same value as {@code flt}.
+     * <p>Converts a 64-bit floating-point number to a rational number. This method
+     * computes the exact value of the floating point number, not an approximation,
+     * as is often the case by converting the number to a string. </p> <p>The input
+     * value can be a not-a-number (NaN) value (such as {@code Double.NaN});
+     * however, NaN values have multiple forms that are equivalent for many
+     * applications' purposes, and {@code Double.NaN} is only one of these
+     * equivalent forms. In fact, {@code ERational.FromDouble(Double.NaN)} could
+     * produce an object that is represented differently between DotNet and Java,
+     * because {@code Double.NaN} may have a different form in DotNet and Java (for
+     * example, the NaN value's sign may be negative in DotNet, but positive in
+     * Java). Use `IsNaN()` to determine whether an object from this class stores a
+     * NaN value of any form.</p>
+     * <p>@param flt </p>
+     * <p>The parameter {@code flt} is a 64-bit floating-point
+     * number.</p>
+     * @return <p>A rational number with the same value as {@code flt}.</p>
+     *
      */
     public static ERational FromDouble(double flt) {
       return FromEFloat(EFloat.FromDouble(flt));
     }
 
     /**
-     * Converts an arbitrary-precision decimal number to a rational number.
-     * @param ef The number to convert as an arbitrary-precision decimal number.
-     * @return An arbitrary-precision rational number.
+     * <p>Converts an arbitrary-precision decimal number to a rational number.</p>
+     * <p>@param ef </p>
+     * <p>The number to convert as an arbitrary-precision decimal
+     * number.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     *
      * @deprecated Renamed to FromEDecimal.
  */
 @Deprecated
@@ -389,11 +429,13 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Converts an arbitrary-precision binary floating-point number to a rational
-     * number.
-     * @param ef The number to convert as an arbitrary-precision binary
-     * floating-point number.
-     * @return An arbitrary-precision rational number.
+     * <p>Converts an arbitrary-precision binary floating-point number to a
+     * rational number.</p>
+     * <p>@param ef </p>
+     * <p>The number to convert as an arbitrary-precision binary
+     * floating-point number.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     *
      * @deprecated Renamed to FromEFloat.
  */
 @Deprecated
@@ -402,11 +444,14 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Converts an arbitrary-precision decimal number to a rational number.
-     * @param ef The number to convert as an arbitrary-precision decimal number.
-     * @return An arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code ef} is null.
-     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0.
+     * <p>Converts an arbitrary-precision decimal number to a rational number.</p>
+     * <p>@param ef </p>
+     * <p>The number to convert as an arbitrary-precision decimal
+     * number.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code ef} is null.</p>
+     * @throws IllegalArgumentException <p>doesn't satisfy den.signum() &gt;= 0.</p>
+     *
      */
     public static ERational FromEDecimal(EDecimal ef) {
       if (ef == null) {
@@ -447,13 +492,15 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts an arbitrary-precision binary floating-point number to a rational
-     * number.
-     * @param ef The number to convert as an arbitrary-precision binary
-     * floating-point number.
-     * @return An arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code ef} is null.
-     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0.
+     * <p>Converts an arbitrary-precision binary floating-point number to a
+     * rational number.</p>
+     * <p>@param ef </p>
+     * <p>The number to convert as an arbitrary-precision binary
+     * floating-point number.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code ef} is null.</p>
+     * @throws IllegalArgumentException <p>doesn't satisfy den.signum() &gt;= 0.</p>
+     *
      */
     public static ERational FromEFloat(EFloat ef) {
       if (ef == null) {
@@ -493,86 +540,101 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts an arbitrary-precision integer to a rational number.
-     * @param bigint The number to convert as an arbitrary-precision integer.
-     * @return The exact value of the integer as a rational number.
+     * <p>Converts an arbitrary-precision integer to a rational number.</p>
+     * <p>@param bigint </p>
+     * <p>The number to convert as an arbitrary-precision
+     * integer.</p>
+     * @return <p>The exact value of the integer as a rational number.</p>
+     *
      */
     public static ERational FromEInteger(EInteger bigint) {
       return ERational.Create(bigint, EInteger.FromInt32(1));
     }
 
     /**
-     * Converts a 32-bit binary floating-point number to a rational number. This
+     * <p>Converts a 32-bit binary floating-point number to a rational number. This
      * method computes the exact value of the floating point number, not an
-     * approximation, as is often the case by converting the number to a
-     * string. <p>The input value can be a not-a-number (NaN) value (such
-     * as <code>Float.NaN</code> in DotNet or Float.NaN in Java); however, NaN
-     * values have multiple forms that are equivalent for many
-     * applications' purposes, and <code>Float.NaN</code> / <code>Float.NaN</code> is
-     * only one of these equivalent forms. In fact,
-     * <code>ERational.FromSingle(Float.NaN)</code> or
-     * <code>ERational.FromSingle(Float.NaN)</code> could produce an object that
-     * is represented differently between DotNet and Java, because
-     * <code>Float.NaN</code> / <code>Float.NaN</code> may have a different form in
-     * DotNet and Java (for example, the NaN value's sign may be negative
-     * in DotNet, but positive in Java). Use `IsNaN()` to determine whether
-     * an object from this class stores a NaN value of any form.</p>
-     * @param flt The parameter {@code flt} is a 32-bit binary floating-point
-     * number.
-     * @return A rational number with the same value as {@code flt}.
+     * approximation, as is often the case by converting the number to a string.
+     * </p> <p>The input value can be a not-a-number (NaN) value (such as {@code
+     * Float.NaN} in DotNet or Float.NaN in Java); however, NaN values have
+     * multiple forms that are equivalent for many applications' purposes, and
+     * {@code Float.NaN} / {@code Float.NaN} is only one of these equivalent
+     * forms. In fact, {@code ERational.FromSingle(Float.NaN)} or {@code
+     * ERational.FromSingle(Float.NaN)} could produce an object that is represented
+     * differently between DotNet and Java, because {@code Float.NaN} / {@code
+     * Float.NaN} may have a different form in DotNet and Java (for example, the
+     * NaN value's sign may be negative in DotNet, but positive in Java). Use
+     * `IsNaN()` to determine whether an object from this class stores a NaN value
+     * of any form.</p>
+     * <p>@param flt </p>
+     * <p>The parameter {@code flt} is a 32-bit binary floating-point
+     * number.</p>
+     * @return <p>A rational number with the same value as {@code flt}.</p>
+     *
      */
     public static ERational FromSingle(float flt) {
       return FromEFloat(EFloat.FromSingle(flt));
     }
 
     /**
-     * Creates a binary rational number from a 32-bit floating-point number encoded
-     * in the IEEE 754 binary32 format. This method computes the exact
-     * value of the floating point number, not an approximation, as is
-     * often the case by converting the number to a string.
-     * @param value A 32-bit integer encoded in the IEEE 754 binary32 format.
-     * @return A rational number with the same floating-point value as {@code
-     * value}.
+     * <p>Creates a binary rational number from a 32-bit floating-point number
+     * encoded in the IEEE 754 binary32 format. This method computes the exact
+     * value of the floating point number, not an approximation, as is often the
+     * case by converting the number to a string.</p>
+     * <p>@param value </p>
+     * <p>A 32-bit integer encoded in the IEEE 754 binary32
+     * format.</p>
+     * @return <p>A rational number with the same floating-point value as {@code
+     * value}.</p>
+     *
      */
     public static ERational FromSingleBits(int value) {
       return FromEFloat(EFloat.FromSingleBits(value));
     }
 
     /**
-     * Creates a binary rational number from a binary floating-point number encoded
-     *  in the IEEE 754 binary16 format (also known as a "half-precision"
-     * floating-point number). This method computes the exact value of the
-     * floating point number, not an approximation, as is often the case by
-     * converting the number to a string.
-     * @param value A 16-bit integer encoded in the IEEE 754 binary16 format.
-     * @return A rational number with the same floating-point value as {@code
-     * value}.
+     * <p>Creates a binary rational number from a binary floating-point number
+     * encoded in the IEEE 754 binary16 format (also known as a "half-precision"
+     * floating-point number). This method computes the exact value of the floating
+     * point number, not an approximation, as is often the case by converting the
+     * number to a string.</p>
+     * <p>@param value </p>
+     * <p>A 16-bit integer encoded in the IEEE 754 binary16
+     * format.</p>
+     * @return <p>A rational number with the same floating-point value as {@code
+     * value}.</p>
+     *
      */
     public static ERational FromHalfBits(short value) {
       return FromEFloat(EFloat.FromHalfBits(value));
     }
 
     /**
-     * Creates a binary rational number from a 64-bit floating-point number encoded
-     * in the IEEE 754 binary64 format. This method computes the exact
-     * value of the floating point number, not an approximation, as is
-     * often the case by converting the number to a string.
-     * @param value A 64-bit integer encoded in the IEEE 754 binary64 format.
-     * @return A rational number with the same floating-point value as {@code
-     * value}.
+     * <p>Creates a binary rational number from a 64-bit floating-point number
+     * encoded in the IEEE 754 binary64 format. This method computes the exact
+     * value of the floating point number, not an approximation, as is often the
+     * case by converting the number to a string.</p>
+     * <p>@param value </p>
+     * <p>A 64-bit integer encoded in the IEEE 754 binary64
+     * format.</p>
+     * @return <p>A rational number with the same floating-point value as {@code
+     * value}.</p>
+     *
      */
     public static ERational FromDoubleBits(long value) {
       return FromEFloat(EFloat.FromDoubleBits(value));
     }
 
     /**
-     * Creates a rational number from a text string that represents a number. See
-     * <code>FromString(string, int, int)</code> for more information.
-     * @param str A string that represents a number.
-     * @return An arbitrary-precision rational number with the same value as the
-     * given string.
-     * @throws NumberFormatException The parameter {@code str} is not a correctly
-     * formatted number string.
+     * <p>Creates a rational number from a text string that represents a number.
+     * See {@code FromString(string, int, int)} for more information.</p>
+     * <p>@param str </p>
+     * <p>A string that represents a number.</p>
+     * @return <p>An arbitrary-precision rational number with the same value as the
+     * given string.</p>
+     * @throws NumberFormatException <p>The parameter {@code str} is not a correctly
+     * formatted number string.</p>
+     *
      */
     public static ERational FromString(String str) {
       return FromString(str, 0, str == null ? 0 : str.length());
@@ -580,33 +642,36 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * <p>Creates a rational number from a text string that represents a
-     * number.</p> <p>The format of the string generally consists of:</p>
-     *  <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
-     * U+002D) (if '-' , the value is negative.)</li> <li>The numerator in
-     * the form of one or more digits (these digits may begin with any
-     *  number of zeros).</li> <li>Optionally, "/" followed by the
-     * denominator in the form of one or more digits (these digits may
-     * begin with any number of zeros). If a denominator is not given, it's
-     *  equal to 1.</li></ul> <p>The string can also be "-INF", "-Infinity",
-     *  "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed by any number
-     *  of digits, or signaling NaN ("sNaN" /"-sNaN") followed by any number
-     * of digits, all in any combination of upper and lower case.</p>
-     * <p>All characters mentioned above are the corresponding characters
-     * in the Basic Latin range. In particular, the digits must be the
-     * basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to
-     * contain white space characters, including spaces.</p>
-     * @param str A text string, a portion of which represents a number.
-     * @param offset An index starting at 0 showing where the desired portion of
-     * {@code str} begins.
-     * @param length The length, in code units, of the desired portion of {@code
-     * str} (but not more than {@code str} 's length).
-     * @return An arbitrary-precision rational number.
-     * @throws NumberFormatException The parameter {@code str} is not a correctly
-     * formatted number string.
-     * @throws NullPointerException The parameter {@code str} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code str} 's length, or {@code str} 's
-     * length minus {@code offset} is less than {@code length}.
+     * number.</p> <p>The format of the string generally consists of:</p> <ul>
+     * <li>An optional plus sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-'
+     * , the value is negative.)</li><li>The numerator in the form of one or more
+     * digits (these digits may begin with any number of
+     * zeros).</li><li>Optionally, "/" followed by the denominator in the form of
+     * one or more digits (these digits may begin with any number of zeros). If a
+     * denominator is not given, it's equal to 1.</li></ul> <p>The string can also
+     * be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
+     * followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
+     * followed by any number of digits, all in any combination of upper and lower
+     * case.</p> <p>All characters mentioned above are the corresponding characters
+     * in the Basic Latin range. In particular, the digits must be the basic digits
+     * 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space
+     * characters, including spaces.</p>
+     * <p>@param str </p>
+     * <p>A text string, a portion of which represents a number.</p>
+     * <p>@param offset </p>
+     * <p>An index starting at 0 showing where the desired portion of
+     * {@code str} begins.</p>
+     * <p>@param length </p>
+     * <p>The length, in code units, of the desired portion of {@code
+     * str} (but not more than {@code str} 's length).</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws NumberFormatException <p>The parameter {@code str} is not a correctly
+     * formatted number string.</p>
+     * @throws NullPointerException <p>The parameter {@code str} is null.</p>
+     * @throws IllegalArgumentException <p>Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code str} 's length, or {@code str} 's length minus
+     * {@code offset} is less than {@code length}.</p>
+     *
      */
     public static ERational FromString(
       String str,
@@ -616,51 +681,55 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Creates a rational number from a sequence of <code>char</code> s that represents a
-     * number. See <code>FromString(string, int, int)</code> for more
-     * information.
-     * @param chars A sequence of {@code char} s that represents a number.
-     * @return An arbitrary-precision rational number with the same value as the
-     * given sequence of {@code char} s.
-     * @throws NumberFormatException The parameter {@code chars} is not a correctly
-     * formatted sequence of {@code char} s.
+     * <p>Creates a rational number from a sequence of {@code char} s that
+     * represents a number. See {@code FromString(string, int, int)} for more
+     * information.</p>
+     * <p>@param chars </p>
+     * <p>A sequence of {@code char} s that represents a number.</p>
+     * @return <p>An arbitrary-precision rational number with the same value as the
+     * given sequence of {@code char} s.</p>
+     * @throws NumberFormatException <p>The parameter {@code chars} is not a correctly
+     * formatted sequence of {@code char} s.</p>
+     *
      */
     public static ERational FromString(char[] chars) {
       return FromString(chars, 0, chars == null ? 0 : chars.length);
     }
 
     /**
-     * <p>Creates a rational number from a sequence of <code>char</code> s that
-     * represents a number.</p> <p>The format of the sequence of
-     * <code>char</code> s generally consists of:</p> <ul> <li>An optional plus
-     *  sign ("+" , U+002B) or minus sign ("-", U+002D) (if '-' , the value
-     * is negative.)</li> <li>The numerator in the form of one or more
-     * digits (these digits may begin with any number of zeros).</li>
-     *  <li>Optionally, "/" followed by the denominator in the form of one
-     * or more digits (these digits may begin with any number of zeros). If
-     * a denominator is not given, it's equal to 1.</li></ul> <p>The
-     *  sequence of <code>char</code> s can also be "-INF", "-Infinity",
-     *  "Infinity", "INF", quiet NaN ("NaN" /"-NaN") followed by any number
-     *  of digits, or signaling NaN ("sNaN" /"-sNaN") followed by any number
-     * of digits, all in any combination of upper and lower case.</p>
-     * <p>All characters mentioned above are the corresponding characters
-     * in the Basic Latin range. In particular, the digits must be the
-     * basic digits 0 to 9 (U+0030 to U+0039). The sequence of <code>char</code>
-     * s is not allowed to contain white space characters, including
-     * spaces.</p>
-     * @param chars A sequence of {@code char} s, a portion of which represents a
-     * number.
-     * @param offset An index starting at 0 showing where the desired portion of
-     * {@code chars} begins.
-     * @param length The length, in code units, of the desired portion of {@code
-     * chars} (but not more than {@code chars} 's length).
-     * @return An arbitrary-precision rational number.
-     * @throws NumberFormatException The parameter {@code chars} is not a correctly
-     * formatted sequence of {@code char} s.
-     * @throws NullPointerException The parameter {@code chars} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code chars} 's length, or {@code chars} 's
-     * length minus {@code offset} is less than {@code length}.
+     * <p>Creates a rational number from a sequence of {@code char} s that
+     * represents a number.</p> <p>The format of the sequence of {@code char} s
+     * generally consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
+     * minus sign ("-", U+002D) (if '-' , the value is negative.)</li><li>The
+     * numerator in the form of one or more digits (these digits may begin with any
+     * number of zeros).</li><li>Optionally, "/" followed by the denominator in the
+     * form of one or more digits (these digits may begin with any number of
+     * zeros). If a denominator is not given, it's equal to 1.</li></ul> <p>The
+     * sequence of {@code char} s can also be "-INF", "-Infinity", "Infinity",
+     * "INF", quiet NaN ("NaN" /"-NaN") followed by any number of digits, or
+     * signaling NaN ("sNaN" /"-sNaN") followed by any number of digits, all in any
+     * combination of upper and lower case.</p> <p>All characters mentioned above
+     * are the corresponding characters in the Basic Latin range. In particular,
+     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence
+     * of {@code char} s is not allowed to contain white space characters,
+     * including spaces.</p>
+     * <p>@param chars </p>
+     * <p>A sequence of {@code char} s, a portion of which represents
+     * a number.</p>
+     * <p>@param offset </p>
+     * <p>An index starting at 0 showing where the desired portion of
+     * {@code chars} begins.</p>
+     * <p>@param length </p>
+     * <p>The length, in code units, of the desired portion of {@code
+     * chars} (but not more than {@code chars} 's length).</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws NumberFormatException <p>The parameter {@code chars} is not a correctly
+     * formatted sequence of {@code char} s.</p>
+     * @throws NullPointerException <p>The parameter {@code chars} is null.</p>
+     * @throws IllegalArgumentException <p>Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code chars} 's length, or {@code chars} 's length
+     * minus {@code offset} is less than {@code length}.</p>
+     *
      */
     public static ERational FromString(
       char[] chars,
@@ -670,13 +739,15 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Creates a rational number from a sequence of bytes that represents a number.
-     * See <code>FromString(string, int, int)</code> for more information.
-     * @param bytes A sequence of bytes that represents a number.
-     * @return An arbitrary-precision rational number with the same value as the
-     * given sequence of bytes.
-     * @throws NumberFormatException The parameter {@code bytes} is not a correctly
-     * formatted sequence of bytes.
+     * <p>Creates a rational number from a sequence of bytes that represents a
+     * number. See {@code FromString(string, int, int)} for more information.</p>
+     * <p>@param bytes </p>
+     * <p>A sequence of bytes that represents a number.</p>
+     * @return <p>An arbitrary-precision rational number with the same value as the
+     * given sequence of bytes.</p>
+     * @throws NumberFormatException <p>The parameter {@code bytes} is not a correctly
+     * formatted sequence of bytes.</p>
+     *
      */
     public static ERational FromString(byte[] bytes) {
       return FromString(bytes, 0, bytes == null ? 0 : bytes.length);
@@ -684,34 +755,37 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * <p>Creates a rational number from a sequence of bytes that represents a
-     * number.</p> <p>The format of the sequence of bytes generally
-     *  consists of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or
-     *  minus sign ("-", U+002D) (if '-' , the value is negative.)</li>
-     * <li>The numerator in the form of one or more digits (these digits
-     *  may begin with any number of zeros).</li> <li>Optionally, "/"
-     * followed by the denominator in the form of one or more digits (these
-     * digits may begin with any number of zeros). If a denominator is not
-     * given, it's equal to 1.</li></ul> <p>The sequence of bytes can also
-     *  be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN" /"-NaN")
-     *  followed by any number of digits, or signaling NaN ("sNaN" /"-sNaN")
-     * followed by any number of digits, all in any combination of upper
-     * and lower case.</p> <p>All characters mentioned above are the
-     * corresponding characters in the Basic Latin range. In particular,
-     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The
-     * sequence of bytes is not allowed to contain white space characters,
-     * including spaces.</p>
-     * @param bytes A sequence of bytes, a portion of which represents a number.
-     * @param offset An index starting at 0 showing where the desired portion of
-     * {@code bytes} begins.
-     * @param length The length, in code units, of the desired portion of {@code
-     * bytes} (but not more than {@code bytes} 's length).
-     * @return An arbitrary-precision rational number.
-     * @throws NumberFormatException The parameter {@code bytes} is not a correctly
-     * formatted sequence of bytes.
-     * @throws NullPointerException The parameter {@code bytes} is null.
-     * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's
-     * length minus {@code offset} is less than {@code length}.
+     * number.</p> <p>The format of the sequence of bytes generally consists
+     * of:</p> <ul> <li>An optional plus sign ("+" , U+002B) or minus sign ("-",
+     * U+002D) (if '-' , the value is negative.)</li><li>The numerator in the form
+     * of one or more digits (these digits may begin with any number of
+     * zeros).</li><li>Optionally, "/" followed by the denominator in the form of
+     * one or more digits (these digits may begin with any number of zeros). If a
+     * denominator is not given, it's equal to 1.</li></ul> <p>The sequence of
+     * bytes can also be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN"
+     * /"-NaN") followed by any number of digits, or signaling NaN ("sNaN"
+     * /"-sNaN") followed by any number of digits, all in any combination of upper
+     * and lower case.</p> <p>All characters mentioned above are the corresponding
+     * characters in the Basic Latin range. In particular, the digits must be the
+     * basic digits 0 to 9 (U+0030 to U+0039). The sequence of bytes is not allowed
+     * to contain white space characters, including spaces.</p>
+     * <p>@param bytes </p>
+     * <p>A sequence of bytes, a portion of which represents a
+     * number.</p>
+     * <p>@param offset </p>
+     * <p>An index starting at 0 showing where the desired portion of
+     * {@code bytes} begins.</p>
+     * <p>@param length </p>
+     * <p>The length, in code units, of the desired portion of {@code
+     * bytes} (but not more than {@code bytes} 's length).</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws NumberFormatException <p>The parameter {@code bytes} is not a correctly
+     * formatted sequence of bytes.</p>
+     * @throws NullPointerException <p>The parameter {@code bytes} is null.</p>
+     * @throws IllegalArgumentException <p>Either {@code offset} or {@code length} is less
+     * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's length
+     * minus {@code offset} is less than {@code length}.</p>
+     *
      */
     public static ERational FromString(
       byte[] bytes,
@@ -721,22 +795,23 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Compares the absolute values of this object and another object, imposing a
-     * total ordering on all possible values (ignoring their signs). In
-     * this method: <ul> <li>For objects with the same value, the one with
-     *  the higher denominator has a greater "absolute value".</li>
-     * <li>Negative zero and positive zero are considered equal.</li>
-     *  <li>Quiet NaN has a higher "absolute value" than signaling NaN. If
-     * both objects are quiet NaN or both are signaling NaN, the one with
-     *  the higher diagnostic information has a greater "absolute
-     *  value".</li> <li>NaN has a higher "absolute value" than
-     *  infinity.</li> <li>Infinity has a higher "absolute value" than any
-     * finite number.</li></ul>
-     * @param other An arbitrary-precision rational number to compare with this
-     * one.
-     * @return The number 0 if both objects have the same value, or -1 if this
-     * object is less than the other value, or 1 if this object is greater.
-     * This implementation returns a positive number if.
+     * <p>Compares the absolute values of this object and another object, imposing
+     * a total ordering on all possible values (ignoring their signs). In this
+     * method: </p> <ul> <li>For objects with the same value, the one with the
+     * higher denominator has a greater "absolute value".</li><li>Negative zero and
+     * positive zero are considered equal.</li><li>Quiet NaN has a higher "absolute
+     * value" than signaling NaN. If both objects are quiet NaN or both are
+     * signaling NaN, the one with the higher diagnostic information has a greater
+     * "absolute value".</li><li>NaN has a higher "absolute value" than
+     * infinity.</li><li>Infinity has a higher "absolute value" than any finite
+     * number.</li></ul>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision rational number to compare with this
+     * one.</p>
+     * @return <p>The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater. This
+     * implementation returns a positive number if.</p>
+     *
      */
     public int CompareToTotalMagnitude(ERational other) {
       if (other == null) {
@@ -782,22 +857,23 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Compares the values of this object and another object, imposing a total
-     * ordering on all possible values. In this method: <ul> <li>For
-     * objects with the same value, the one with the higher denominator has
-     *  a greater "absolute value".</li> <li>Negative zero is less than
-     *  positive zero.</li> <li>Quiet NaN has a higher "absolute value" than
-     * signaling NaN. If both objects are quiet NaN or both are signaling
-     * NaN, the one with the higher diagnostic information has a greater
-     *  "absolute value".</li> <li>NaN has a higher "absolute value" than
-     *  infinity.</li> <li>Infinity has a higher "absolute value" than any
-     * finite number.</li> <li>Negative numbers are less than positive
-     * numbers.</li></ul>
-     * @param other An arbitrary-precision rational number to compare with this
-     * one.
-     * @return The number 0 if both objects have the same value, or -1 if this
-     * object is less than the other value, or 1 if this object is greater.
-     * This implementation returns a positive number if.
+     * <p>Compares the values of this object and another object, imposing a total
+     * ordering on all possible values. In this method: </p> <ul> <li>For objects
+     * with the same value, the one with the higher denominator has a greater
+     * "absolute value".</li><li>Negative zero is less than positive
+     * zero.</li><li>Quiet NaN has a higher "absolute value" than signaling NaN. If
+     * both objects are quiet NaN or both are signaling NaN, the one with the
+     * higher diagnostic information has a greater "absolute value".</li><li>NaN
+     * has a higher "absolute value" than infinity.</li><li>Infinity has a higher
+     * "absolute value" than any finite number.</li><li>Negative numbers are less
+     * than positive numbers.</li></ul>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision rational number to compare with this
+     * one.</p>
+     * @return <p>The number 0 if both objects have the same value, or -1 if this
+     * object is less than the other value, or 1 if this object is greater. This
+     * implementation returns a positive number if.</p>
+     *
      */
     public int CompareToTotal(ERational other) {
       if (other == null) {
@@ -848,9 +924,10 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Returns the absolute value of this rational number, that is, a number with
-     * the same value as this one but as a nonnegative number.
-     * @return An arbitrary-precision rational number.
+     * <p>Returns the absolute value of this rational number, that is, a number
+     * with the same value as this one but as a nonnegative number.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     *
      */
     public ERational Abs() {
       if (this.isNegative()) {
@@ -863,12 +940,15 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Adds this arbitrary-precision rational number and another
-     * arbitrary-precision rational number and returns the result.
-     * @param otherValue Another arbitrary-precision rational number.
-     * @return The sum of the two numbers, that is, this arbitrary-precision
-     * rational number plus another arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code otherValue} is null.
+     * <p>Adds this arbitrary-precision rational number and another
+     * arbitrary-precision rational number and returns the result.</p>
+     * <p>@param otherValue </p>
+     * <p>Another arbitrary-precision rational number.</p>
+     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
+     * rational number plus another arbitrary-precision rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code otherValue} is
+     * null.</p>
+     *
      */
     public ERational Add(ERational otherValue) {
       if (otherValue == null) {
@@ -904,30 +984,34 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Compares the mathematical value of an arbitrary-precision rational number
-     * with that of this instance. This method currently uses the rules
-     * given in the CompareToValue method, so that it it is not consistent
-     * with the Equals method, but it may change in a future version to use
-     * the rules for the CompareToTotal method instead.
-     * @param other An arbitrary-precision rational number.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater. This
-     * implementation returns a positive number if.
+     * <p>Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. This method currently uses the rules given in
+     * the CompareToValue method, so that it it is not consistent with the Equals
+     * method, but it may change in a future version to use the rules for the
+     * CompareToTotal method instead.</p>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * @return <p>Zero if the values are equal; a negative number if this instance
+     * is less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.</p>
+     *
      */
     public int compareTo(ERational other) {
       return this.CompareToValue(other);
     }
 
     /**
-     * Compares the mathematical value of an arbitrary-precision rational number
-     * with that of this instance. In this method, NaN values are greater
-     * than any other ERational value, and two NaN values (even if their
-     * payloads differ) are treated as equal by this method. This method is
-     * not consistent with the Equals method.
-     * @param other An arbitrary-precision rational number.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater. This
-     * implementation returns a positive number if.
+     * <p>Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. In this method, NaN values are greater than any
+     * other ERational value, and two NaN values (even if their payloads differ)
+     * are treated as equal by this method. This method is not consistent with the
+     * Equals method.</p>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * @return <p>Zero if the values are equal; a negative number if this instance
+     * is less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.</p>
+     *
      */
     public int CompareToValue(ERational other) {
       if (other == null) {
@@ -1021,16 +1105,19 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Gets the greater value between two rational numbers.
-     * @param first An arbitrary-precision rational number.
-     * @param second Another arbitrary-precision rational number.
-     * @return The larger value of the two numbers. If one is positive zero and the
-     * other is negative zero, returns the positive zero. If the two
-     * numbers are positive and have the same value, returns the one with
-     * the larger denominator. If the two numbers are negative and have the
-     * same value, returns the one with the smaller denominator.
-     * @throws NullPointerException The parameter {@code first} or {@code second}
-     * is null.
+     * <p>Gets the greater value between two rational numbers.</p>
+     * <p>@param first </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * <p>@param second </p>
+     * <p>Another arbitrary-precision rational number.</p>
+     * @return <p>The larger value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the positive zero. If the two numbers
+     * are positive and have the same value, returns the one with the larger
+     * denominator. If the two numbers are negative and have the same value,
+     * returns the one with the smaller denominator.</p>
+     * @throws NullPointerException <p>The parameter {@code first} or {@code
+     * second} is null.</p>
+     *
      */
     public static ERational Max(
       ERational first,
@@ -1059,13 +1146,16 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Gets the greater value between two values, ignoring their signs. If the
-     * absolute values are equal, has the same effect as Max.
-     * @param first The first value to compare.
-     * @param second The second value to compare.
-     * @return The larger value of the two numbers, ignoring their signs.
-     * @throws NullPointerException The parameter {@code first} or {@code second}
-     * is null.
+     * <p>Gets the greater value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Max.</p>
+     * <p>@param first </p>
+     * <p>The first value to compare.</p>
+     * <p>@param second </p>
+     * <p>The second value to compare.</p>
+     * @return <p>The larger value of the two numbers, ignoring their signs.</p>
+     * @throws NullPointerException <p>The parameter {@code first} or {@code
+     * second} is null.</p>
+     *
      */
     public static ERational MaxMagnitude(
       ERational first,
@@ -1081,16 +1171,19 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Gets the lesser value between two rational numbers.
-     * @param first The first value to compare.
-     * @param second The second value to compare.
-     * @return The smaller value of the two numbers. If one is positive zero and
-     * the other is negative zero, returns the negative zero. If the two
-     * numbers are positive and have the same value, returns the one with
-     * the smaller denominator. If the two numbers are negative and have
-     * the same value, returns the one with the larger denominator.
-     * @throws NullPointerException The parameter {@code first} or {@code second}
-     * is null.
+     * <p>Gets the lesser value between two rational numbers.</p>
+     * <p>@param first </p>
+     * <p>The first value to compare.</p>
+     * <p>@param second </p>
+     * <p>The second value to compare.</p>
+     * @return <p>The smaller value of the two numbers. If one is positive zero and
+     * the other is negative zero, returns the negative zero. If the two numbers
+     * are positive and have the same value, returns the one with the smaller
+     * denominator. If the two numbers are negative and have the same value,
+     * returns the one with the larger denominator.</p>
+     * @throws NullPointerException <p>The parameter {@code first} or {@code
+     * second} is null.</p>
+     *
      */
     public static ERational Min(
       ERational first,
@@ -1117,13 +1210,16 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Gets the lesser value between two values, ignoring their signs. If the
-     * absolute values are equal, has the same effect as Min.
-     * @param first The first value to compare.
-     * @param second The second value to compare.
-     * @return The smaller value of the two numbers, ignoring their signs.
-     * @throws NullPointerException The parameter {@code first} or {@code second}
-     * is null.
+     * <p>Gets the lesser value between two values, ignoring their signs. If the
+     * absolute values are equal, has the same effect as Min.</p>
+     * <p>@param first </p>
+     * <p>The first value to compare.</p>
+     * <p>@param second </p>
+     * <p>The second value to compare.</p>
+     * @return <p>The smaller value of the two numbers, ignoring their signs.</p>
+     * @throws NullPointerException <p>The parameter {@code first} or {@code
+     * second} is null.</p>
+     *
      */
     public static ERational MinMagnitude(
       ERational first,
@@ -1139,75 +1235,88 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Compares the mathematical value of an arbitrary-precision rational number
-     * with that of this instance. This method currently uses the rules
-     * given in the CompareToValue method, so that it it is not consistent
-     * with the Equals method, but it may change in a future version to use
-     * the rules for the CompareToTotal method instead.
-     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
+     * <p>Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. This method currently uses the rules given in
+     * the CompareToValue method, so that it it is not consistent with the Equals
+     * method, but it may change in a future version to use the rules for the
+     * CompareToTotal method instead.</p>
+     * <p>@param intOther </p>
+     * <p>The parameter {@code intOther} is a 32-bit signed
+     * integer.</p>
+     * @return <p>Zero if the values are equal; a negative number if this instance
+     * is less, or a positive number if this instance is greater.</p>
+     *
      */
     public int compareTo(int intOther) {
       return this.CompareToValue(ERational.FromInt32(intOther));
     }
 
     /**
-     * Compares the mathematical value of an arbitrary-precision rational number
-     * with that of this instance. In this method, NaN values are greater
-     * than any other ERational value, and two NaN values (even if their
-     * payloads differ) are treated as equal by this method. This method is
-     * not consistent with the Equals method.
-     * @param intOther The parameter {@code intOther} is a 32-bit signed integer.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater.
+     * <p>Compares the mathematical value of an arbitrary-precision rational number
+     * with that of this instance. In this method, NaN values are greater than any
+     * other ERational value, and two NaN values (even if their payloads differ)
+     * are treated as equal by this method. This method is not consistent with the
+     * Equals method.</p>
+     * <p>@param intOther </p>
+     * <p>The parameter {@code intOther} is a 32-bit signed
+     * integer.</p>
+     * @return <p>Zero if the values are equal; a negative number if this instance
+     * is less, or a positive number if this instance is greater.</p>
+     *
      */
     public int CompareToValue(int intOther) {
       return this.CompareToValue(ERational.FromInt32(intOther));
     }
 
     /**
-     * Compares the mathematical values of this object and another object,
-     * accepting NaN values. <p>This method is not consistent with the
-     * Equals method because two different numbers with the same
-     * mathematical value, but different exponents, will compare as
-     * equal.</p> <p>In this method, negative zero and positive zero are
-     * considered equal.</p> <p>If this object is a quiet NaN or signaling
-     * NaN, this method will not trigger an error. Instead, NaN will
-     * compare greater than any other number, including infinity.</p>
-     * @param intOther The parameter {@code intOther} is a 64-bit signed integer.
-     * @return Less than 0 if this object's value is less than the other value, or
-     * greater than 0 if this object's value is greater than the other
-     * value, or 0 if both values are equal.
+     * <p>Compares the mathematical values of this object and another object,
+     * accepting NaN values. </p><p>This method is not consistent with the Equals
+     * method because two different numbers with the same mathematical value, but
+     * different exponents, will compare as equal.</p> <p>In this method, negative
+     * zero and positive zero are considered equal.</p> <p>If this object is a
+     * quiet NaN or signaling NaN, this method will not trigger an error. Instead,
+     * NaN will compare greater than any other number, including infinity.</p>
+     * <p>@param intOther </p>
+     * <p>The parameter {@code intOther} is a 64-bit signed
+     * integer.</p>
+     * @return <p>Less than 0 if this object's value is less than the other value,
+     * or greater than 0 if this object's value is greater than the other value, or
+     * 0 if both values are equal.</p>
+     *
      */
     public int CompareToValue(long intOther) {
       return this.CompareToValue(FromInt64(intOther));
     }
 
     /**
-     * Compares the mathematical values of this object and another object,
-     * accepting NaN values. This method currently uses the rules given in
-     * the CompareToValue method, so that it it is not consistent with the
-     * Equals method, but it may change in a future version to use the
-     * rules for the CompareToTotal method instead.
-     * @param intOther The parameter {@code intOther} is a 64-bit signed integer.
-     * @return Less than 0 if this object's value is less than the other value, or
-     * greater than 0 if this object's value is greater than the other
-     * value, or 0 if both values are equal.
+     * <p>Compares the mathematical values of this object and another object,
+     * accepting NaN values. This method currently uses the rules given in the
+     * CompareToValue method, so that it it is not consistent with the Equals
+     * method, but it may change in a future version to use the rules for the
+     * CompareToTotal method instead.</p>
+     * <p>@param intOther </p>
+     * <p>The parameter {@code intOther} is a 64-bit signed
+     * integer.</p>
+     * @return <p>Less than 0 if this object's value is less than the other value,
+     * or greater than 0 if this object's value is greater than the other value, or
+     * 0 if both values are equal.</p>
+     *
      */
     public int compareTo(long intOther) {
       return this.CompareToValue(FromInt64(intOther));
     }
 
     /**
-     * Compares an arbitrary-precision binary floating-point number with this
-     * instance. In this method, NaN values are greater than any other
-     * ERational or EFloat value, and two NaN values (even if their
-     * payloads differ) are treated as equal by this method.
-     * @param other An arbitrary-precision binary floating-point number.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater. This
-     * implementation returns a positive number if.
+     * <p>Compares an arbitrary-precision binary floating-point number with this
+     * instance. In this method, NaN values are greater than any other ERational or
+     * EFloat value, and two NaN values (even if their payloads differ) are treated
+     * as equal by this method.</p>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision binary floating-point number.</p>
+     * @return <p>Zero if the values are equal; a negative number if this instance
+     * is less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.</p>
+     *
      */
     public int CompareToBinary(EFloat other) {
       if (other == null) {
@@ -1315,11 +1424,13 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Compares an arbitrary-precision decimal number with this instance.
-     * @param other An arbitrary-precision decimal number.
-     * @return Zero if the values are equal; a negative number if this instance is
-     * less, or a positive number if this instance is greater. This
-     * implementation returns a positive number if.
+     * <p>Compares an arbitrary-precision decimal number with this instance.</p>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision decimal number.</p>
+     * @return <p>Zero if the values are equal; a negative number if this instance
+     * is less, or a positive number if this instance is greater. This
+     * implementation returns a positive number if.</p>
+     *
      */
     public int CompareToDecimal(EDecimal other) {
       if (other == null) {
@@ -1424,11 +1535,13 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Returns a number with the same value as this one, but copying the sign
-     * (positive or negative) of another number.
-     * @param other A number whose sign will be copied.
-     * @return An arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code other} is null.
+     * <p>Returns a number with the same value as this one, but copying the sign
+     * (positive or negative) of another number.</p>
+     * <p>@param other </p>
+     * <p>A number whose sign will be copied.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code other} is null.</p>
+     *
      */
     public ERational CopySign(ERational other) {
       if (other == null) {
@@ -1442,12 +1555,15 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Divides this arbitrary-precision rational number by another
-     * arbitrary-precision rational number and returns the result.
-     * @param otherValue An arbitrary-precision rational number.
-     * @return The result of dividing this arbitrary-precision rational number by
-     * another arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code otherValue} is null.
+     * <p>Divides this arbitrary-precision rational number by another
+     * arbitrary-precision rational number and returns the result.</p>
+     * <p>@param otherValue </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * @return <p>The result of dividing this arbitrary-precision rational number
+     * by another arbitrary-precision rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code otherValue} is
+     * null.</p>
+     *
      */
     public ERational Divide(ERational otherValue) {
       if (otherValue == null) {
@@ -1489,17 +1605,19 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Determines whether this object's numerator, denominator, and properties are
-     * equal to those of another object and that other object is an
-     * arbitrary-precision rational number. Not-a-number values are
-     * considered equal if the rest of their properties are equal. This is
-     * not the same as value equality. Notably, two ERationals with the
-     * same value, but of which one is in lowest terms and the other is
-     * not, are compared as unequal by this method (example: 1/2 vs. 5/10).
-     * @param obj The parameter {@code obj} is an arbitrary object.
-     * @return {@code true} if the objects are equal; otherwise, {@code false}. In
-     * this method, two objects are not equal if they don't have the same
-     * type or if one is null and the other isn't.
+     * <p>Determines whether this object's numerator, denominator, and properties
+     * are equal to those of another object and that other object is an
+     * arbitrary-precision rational number. Not-a-number values are considered
+     * equal if the rest of their properties are equal. This is not the same as
+     * value equality. Notably, two ERationals with the same value, but of which
+     * one is in lowest terms and the other is not, are compared as unequal by this
+     * method (example: 1/2 vs. 5/10).</p>
+     * <p>@param obj </p>
+     * <p>The parameter {@code obj} is an arbitrary object.</p>
+     * @return <p> {@code true} if the objects are equal; otherwise, {@code false}.
+     * In this method, two objects are not equal if they don't have the same type
+     * or if one is null and the other isn't.</p>
+     *
      */
     @Override public boolean equals(Object obj) {
       ERational other = ((obj instanceof ERational) ? (ERational)obj : null);
@@ -1513,20 +1631,23 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Determines whether this object's numerator, denominator, and properties are
-     * equal to those of another object. Not-a-number values are considered
-     * equal if the rest of their properties are equal.
-     * @param other An arbitrary-precision rational number to compare to.
-     * @return Either {@code true} or {@code false}.
+     * <p>Determines whether this object's numerator, denominator, and properties
+     * are equal to those of another object. Not-a-number values are considered
+     * equal if the rest of their properties are equal.</p>
+     * <p>@param other </p>
+     * <p>An arbitrary-precision rational number to compare to.</p>
+     * @return <p>Either {@code true} or {@code false}.</p>
+     *
      */
     public boolean equals(ERational other) {
       return this.equals((Object)other);
     }
 
     /**
-     * Returns the hash code for this instance. No application or process IDs are
-     * used in the hash code calculation.
-     * @return A 32-bit signed integer.
+     * <p>Returns the hash code for this instance. No application or process IDs
+     * are used in the hash code calculation.</p>
+     * @return <p>A 32-bit signed integer.</p>
+     *
      */
     @Override public int hashCode() {
       int valueHashCode = 1857066527;
@@ -1543,27 +1664,30 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Gets a value indicating whether this object's value is infinity.
-     * @return {@code true} if this object's value is infinity; otherwise, {@code
-     * false}.
+     * <p>Gets a value indicating whether this object's value is infinity.</p>
+     * @return <p>{@code true} if this object's value is infinity; otherwise,
+     * {@code false}.</p>
+     *
      */
     public boolean IsInfinity() {
       return (this.flags & BigNumberFlags.FlagInfinity) != 0;
     }
 
     /**
-     * Returns whether this object is a not-a-number value.
-     * @return {@code true} if this object is a not-a-number value; otherwise,
-     * {@code false}.
+     * <p>Returns whether this object is a not-a-number value.</p>
+     * @return <p> {@code true} if this object is a not-a-number value; otherwise,
+     * {@code false}.</p>
+     *
      */
     public boolean IsNaN() {
       return (this.flags & BigNumberFlags.FlagNaN) != 0;
     }
 
     /**
-     * Returns whether this object is negative infinity.
-     * @return {@code true} if this object is negative infinity; otherwise, {@code
-     * false}.
+     * <p>Returns whether this object is negative infinity.</p>
+     * @return <p> {@code true} if this object is negative infinity; otherwise,
+     * {@code false}.</p>
+     *
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1572,9 +1696,10 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Returns whether this object is positive infinity.
-     * @return {@code true} if this object is positive infinity; otherwise, {@code
-     * false}.
+     * <p>Returns whether this object is positive infinity.</p>
+     * @return <p> {@code true} if this object is positive infinity; otherwise,
+     * {@code false}.</p>
+     *
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
@@ -1582,33 +1707,38 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Returns whether this object is a quiet not-a-number value.
-     * @return {@code true} if this object is a quiet not-a-number value;
-     * otherwise, {@code false}.
+     * <p>Returns whether this object is a quiet not-a-number value.</p>
+     * @return <p> {@code true} if this object is a quiet not-a-number value;
+     * otherwise, {@code false}.</p>
+     *
      */
     public boolean IsQuietNaN() {
       return (this.flags & BigNumberFlags.FlagQuietNaN) != 0;
     }
 
     /**
-     * Returns whether this object is a signaling not-a-number value (which causes
-     * an error if the value is passed to any arithmetic operation in this
-     * class).
-     * @return {@code true} if this object is a signaling not-a-number value (which
-     * causes an error if the value is passed to any arithmetic operation
-     * in this class); otherwise, {@code false}.
+     * <p>Returns whether this object is a signaling not-a-number value (which
+     * causes an error if the value is passed to any arithmetic operation in this
+     * class).</p>
+     * @return <p> {@code true} if this object is a signaling not-a-number value
+     * (which causes an error if the value is passed to any arithmetic operation in
+     * this class); otherwise, {@code false}.</p>
+     *
      */
     public boolean IsSignalingNaN() {
       return (this.flags & BigNumberFlags.FlagSignalingNaN) != 0;
     }
 
     /**
-     * Multiplies this arbitrary-precision rational number by another
-     * arbitrary-precision rational number and returns the result.
-     * @param otherValue An arbitrary-precision rational number.
-     * @return The product of the two numbers, that is, this arbitrary-precision
-     * rational number times another arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code otherValue} is null.
+     * <p>Multiplies this arbitrary-precision rational number by another
+     * arbitrary-precision rational number and returns the result.</p>
+     * <p>@param otherValue </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * @return <p>The product of the two numbers, that is, this arbitrary-precision
+     * rational number times another arbitrary-precision rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code otherValue} is
+     * null.</p>
+     *
      */
     public ERational Multiply(ERational otherValue) {
       if (otherValue == null) {
@@ -1645,9 +1775,10 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Returns a rational number with the same value as this one but with the sign
-     * reversed.
-     * @return An arbitrary-precision rational number.
+     * <p>Returns a rational number with the same value as this one but with the
+     * sign reversed.</p>
+     * @return <p>An arbitrary-precision rational number.</p>
+     *
      */
     public ERational Negate() {
       return new ERational(
@@ -1657,14 +1788,17 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Returns the remainder that would result when this arbitrary-precision
+     * <p>Returns the remainder that would result when this arbitrary-precision
      * rational number is divided by another arbitrary-precision rational
-     * number.
-     * @param otherValue An arbitrary-precision rational number.
-     * @return The remainder that would result when this arbitrary-precision
+     * number.</p>
+     * <p>@param otherValue </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * @return <p>The remainder that would result when this arbitrary-precision
      * rational number is divided by another arbitrary-precision rational
-     * number.
-     * @throws NullPointerException The parameter {@code otherValue} is null.
+     * number.</p>
+     * @throws NullPointerException <p>The parameter {@code otherValue} is
+     * null.</p>
+     *
      */
     public ERational Remainder(ERational otherValue) {
       if (otherValue == null) {
@@ -1711,13 +1845,16 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Subtracts an arbitrary-precision rational number from this
-     * arbitrary-precision rational number and returns the result.
-     * @param otherValue An arbitrary-precision rational number.
-     * @return The difference between the two numbers, that is, this
-     * arbitrary-precision rational number minus another
-     * arbitrary-precision rational number.
-     * @throws NullPointerException The parameter {@code otherValue} is null.
+     * <p>Subtracts an arbitrary-precision rational number from this
+     * arbitrary-precision rational number and returns the result.</p>
+     * <p>@param otherValue </p>
+     * <p>An arbitrary-precision rational number.</p>
+     * @return <p>The difference between the two numbers, that is, this
+     * arbitrary-precision rational number minus another arbitrary-precision
+     * rational number.</p>
+     * @throws NullPointerException <p>The parameter {@code otherValue} is
+     * null.</p>
+     *
      */
     public ERational Subtract(ERational otherValue) {
       if (otherValue == null) {
@@ -1756,11 +1893,12 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to a 64-bit floating-point number. The half-even
-     * rounding mode is used.
-     * @return The closest 64-bit floating-point number to this value. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 64-bit floating point number.
+     * <p>Converts this value to a 64-bit floating-point number. The half-even
+     * rounding mode is used.</p>
+     * @return <p>The closest 64-bit floating-point number to this value. The
+     * return value can be positive infinity or negative infinity if this value
+     * exceeds the range of a 64-bit floating point number.</p>
+     *
      */
     public double ToDouble() {
       if (!this.isFinite()) {
@@ -1775,19 +1913,19 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to its closest equivalent as a 64-bit floating-point
+     * <p>Converts this value to its closest equivalent as a 64-bit floating-point
      * number, expressed as an integer in the IEEE 754 binary64 format. The
-     * half-even rounding mode is used. <p>If this value is a NaN, sets the
-     * high bit of the 64-bit floating point number's significand area for
-     * a quiet NaN, and clears it for a signaling NaN. Then the other bits
-     * of the significand area are set to the lowest bits of this object's
-     * unsigned significand, and the next-highest bit of the significand
-     * area is set if those bits are all zeros and this is a signaling
-     * NaN.</p>
-     * @return The closest 64-bit binary floating-point number to this value,
-     * expressed as an integer in the IEEE 754 binary64 format. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 64-bit floating point number.
+     * half-even rounding mode is used. </p> <p>If this value is a NaN, sets the
+     * high bit of the 64-bit floating point number's significand area for a quiet
+     * NaN, and clears it for a signaling NaN. Then the other bits of the
+     * significand area are set to the lowest bits of this object's unsigned
+     * significand, and the next-highest bit of the significand area is set if
+     * those bits are all zeros and this is a signaling NaN.</p>
+     * @return <p>The closest 64-bit binary floating-point number to this value,
+     * expressed as an integer in the IEEE 754 binary64 format. The return value
+     * can be positive infinity or negative infinity if this value exceeds the
+     * range of a 64-bit floating point number.</p>
+     *
      */
     public long ToDoubleBits() {
       if (!this.isFinite()) {
@@ -1802,19 +1940,19 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to its closest equivalent as 32-bit floating-point
+     * <p>Converts this value to its closest equivalent as 32-bit floating-point
      * number, expressed as an integer in the IEEE 754 binary32 format. The
-     * half-even rounding mode is used. <p>If this value is a NaN, sets the
-     * high bit of the 32-bit floating point number's significand area for
-     * a quiet NaN, and clears it for a signaling NaN. Then the other bits
-     * of the significand area are set to the lowest bits of this object's
-     * unsigned significand, and the next-highest bit of the significand
-     * area is set if those bits are all zeros and this is a signaling
-     * NaN.</p>
-     * @return The closest 32-bit binary floating-point number to this value,
-     * expressed as an integer in the IEEE 754 binary32 format. The return
-     * value can be positive infinity or negative infinity if this value
-     * exceeds the range of a 32-bit floating point number.
+     * half-even rounding mode is used. </p> <p>If this value is a NaN, sets the
+     * high bit of the 32-bit floating point number's significand area for a quiet
+     * NaN, and clears it for a signaling NaN. Then the other bits of the
+     * significand area are set to the lowest bits of this object's unsigned
+     * significand, and the next-highest bit of the significand area is set if
+     * those bits are all zeros and this is a signaling NaN.</p>
+     * @return <p>The closest 32-bit binary floating-point number to this value,
+     * expressed as an integer in the IEEE 754 binary32 format. The return value
+     * can be positive infinity or negative infinity if this value exceeds the
+     * range of a 32-bit floating point number.</p>
+     *
      */
     public int ToSingleBits() {
       if (!this.isFinite()) {
@@ -1829,20 +1967,20 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to its closest equivalent as a binary floating-point
-     * number, expressed as an integer in the IEEE 754 binary16 format
-     *  (also known as a "half-precision" floating-point number). The
-     * half-even rounding mode is used. <p>If this value is a NaN, sets the
-     * high bit of the binary16 number's significand area for a quiet NaN,
-     * and clears it for a signaling NaN. Then the other bits of the
-     * significand area are set to the lowest bits of this object's
-     * unsigned significand, and the next-highest bit of the significand
-     * area is set if those bits are all zeros and this is a signaling
+     * <p>Converts this value to its closest equivalent as a binary floating-point
+     * number, expressed as an integer in the IEEE 754 binary16 format (also known
+     * as a "half-precision" floating-point number). The half-even rounding mode is
+     * used. </p> <p>If this value is a NaN, sets the high bit of the binary16
+     * number's significand area for a quiet NaN, and clears it for a signaling
+     * NaN. Then the other bits of the significand area are set to the lowest bits
+     * of this object's unsigned significand, and the next-highest bit of the
+     * significand area is set if those bits are all zeros and this is a signaling
      * NaN.</p>
-     * @return The closest binary floating-point number to this value, expressed as
-     * an integer in the IEEE 754 binary16 format. The return value can be
-     * positive infinity or negative infinity if this value exceeds the
-     * range of a floating-point number in the binary16 format.
+     * @return <p>The closest binary floating-point number to this value, expressed
+     * as an integer in the IEEE 754 binary16 format. The return value can be
+     * positive infinity or negative infinity if this value exceeds the range of a
+     * floating-point number in the binary16 format.</p>
+     *
      */
     public short ToHalfBits() {
       if (!this.isFinite()) {
@@ -1857,14 +1995,15 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to its form in lowest terms. For example, (8/4) becomes
-     * (4/1).
-     * @return An arbitrary-precision rational with the same value as this one but
-     * in lowest terms. Returns this object if it is infinity or NaN.
-     * Returns ERational.NegativeZero if this object is a negative zero.
-     * Returns ERational.Zero if this object is a positive zero.
-     * @throws ArithmeticException This object's value is infinity or not-a-number
-     * (NaN).
+     * <p>Converts this value to its form in lowest terms. For example, (8/4)
+     * becomes (4/1).</p>
+     * @return <p>An arbitrary-precision rational with the same value as this one
+     * but in lowest terms. Returns this object if it is infinity or NaN. Returns
+     * ERational.NegativeZero if this object is a negative zero. Returns
+     * ERational.Zero if this object is a positive zero.</p>
+     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * (NaN).</p>
+     *
      */
     public ERational ToLowestTerms() {
       if (!this.isFinite()) {
@@ -1880,19 +2019,19 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to an arbitrary-precision integer by dividing the
-     * numerator by the denominator, discarding its fractional part, and
-     * checking whether the resulting integer overflows the given signed
-     * bit count.
-     * @param maxBitLength The maximum number of signed bits the integer can have.
-     * The integer's value may not be less than -(2^maxBitLength) or
-     * greater than (2^maxBitLength) - 1.
-     * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or not-a-number
-     * (NaN), or this number's value, once converted to an integer by
-     * dividing the numerator by the denominator and discarding its
-     * fractional part, is less than -(2^maxBitLength) or greater than
-     * (2^maxBitLength) - 1.
+     * <p>Converts this value to an arbitrary-precision integer by dividing the
+     * numerator by the denominator, discarding its fractional part, and checking
+     * whether the resulting integer overflows the given signed bit count.</p>
+     * <p>@param maxBitLength </p>
+     * <p>The maximum number of signed bits the integer can
+     * have. The integer's value may not be less than -(2^maxBitLength) or greater
+     * than (2^maxBitLength) - 1.</p>
+     * @return <p>An arbitrary-precision integer.</p>
+     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * (NaN), or this number's value, once converted to an integer by dividing the
+     * numerator by the denominator and discarding its fractional part, is less
+     * than -(2^maxBitLength) or greater than (2^maxBitLength) - 1.</p>
+     *
      */
     public EInteger ToSizedEInteger(int maxBitLength) {
       if (maxBitLength < 0) {
@@ -1921,17 +2060,20 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to an arbitrary-precision integer, only if this number's
-     * value is an exact integer and that integer does not overflow the
-     * given signed bit count.
-     * @param maxBitLength The maximum number of signed bits the integer can have.
-     * The integer's value may not be less than -(2^maxBitLength) or
-     * greater than (2^maxBitLength) - 1.
-     * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or not-a-number
-     * (NaN), or this number's value as an integer is less than
-     * -(2^maxBitLength) or greater than (2^maxBitLength) - 1.
-     * @throws ArithmeticException This object's value is not an exact integer.
+     * <p>Converts this value to an arbitrary-precision integer, only if this
+     * number's value is an exact integer and that integer does not overflow the
+     * given signed bit count.</p>
+     * <p>@param maxBitLength </p>
+     * <p>The maximum number of signed bits the integer can
+     * have. The integer's value may not be less than -(2^maxBitLength) or greater
+     * than (2^maxBitLength) - 1.</p>
+     * @return <p>An arbitrary-precision integer.</p>
+     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * (NaN), or this number's value as an integer is less than -(2^maxBitLength)
+     * or greater than (2^maxBitLength) - 1.</p>
+     * @throws ArithmeticException <p>This object's value is not an exact
+     * integer.</p>
+     *
      */
     public EInteger ToSizedEIntegerIfExact(int maxBitLength) {
       if (maxBitLength < 0) {
@@ -1963,12 +2105,13 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to an arbitrary-precision integer by dividing the
-     * numerator by the denominator and discarding the fractional part of
-     * the result.
-     * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or not-a-number
-     * (NaN).
+     * <p>Converts this value to an arbitrary-precision integer by dividing the
+     * numerator by the denominator and discarding the fractional part of the
+     * result.</p>
+     * @return <p>An arbitrary-precision integer.</p>
+     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * (NaN).</p>
+     *
      */
     public EInteger ToEInteger() {
       if (!this.isFinite()) {
@@ -1978,11 +2121,12 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to an arbitrary-precision integer, checking whether the
-     * value is an exact integer.
-     * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or not-a-number
-     * (NaN).
+     * <p>Converts this value to an arbitrary-precision integer, checking whether
+     * the value is an exact integer.</p>
+     * @return <p>An arbitrary-precision integer.</p>
+     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * (NaN).</p>
+     *
      * @deprecated Renamed to ToEIntegerIfExact.
  */
 @Deprecated
@@ -1991,11 +2135,12 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to an arbitrary-precision integer, checking whether the
-     * value is an exact integer.
-     * @return An arbitrary-precision integer.
-     * @throws ArithmeticException This object's value is infinity or not-a-number
-     * (NaN).
+     * <p>Converts this value to an arbitrary-precision integer, checking whether
+     * the value is an exact integer.</p>
+     * @return <p>An arbitrary-precision integer.</p>
+     * @throws ArithmeticException <p>This object's value is infinity or not-a-number
+     * (NaN).</p>
+     *
      */
     public EInteger ToEIntegerIfExact() {
       if (!this.isFinite()) {
@@ -2018,26 +2163,30 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to an arbitrary-precision decimal number.
-     * @return The exact value of the rational number, or not-a-number (NaN) if the
-     * result can't be exact because it has a nonterminating decimal
-     * expansion.
+     * <p>Converts this rational number to an arbitrary-precision decimal
+     * number.</p>
+     * @return <p>The exact value of the rational number, or not-a-number (NaN) if
+     * the result can't be exact because it has a nonterminating decimal
+     * expansion.</p>
+     *
      */
     public EDecimal ToEDecimal() {
       return this.ToEDecimal(null);
     }
 
     /**
-     * Converts this rational number to an arbitrary-precision decimal number and
-     * rounds the result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. If HasFlags of the context is
-     * true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case the precision is unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result
-     * can't be exact because it has a nonterminating decimal expansion.
+     * <p>Converts this rational number to an arbitrary-precision decimal number
+     * and rounds the result to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. If HasFlags of the context is
+     * true, will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and no rounding is needed.</p>
+     * @return <p>The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.</p>
+     *
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
@@ -2059,20 +2208,22 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to an arbitrary-precision decimal number, but
-     * if the result would have a nonterminating decimal expansion, rounds
-     * that result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. This context will be used only if
-     * the exact result would have a nonterminating decimal expansion. If
-     * HasFlags of the context is true, will also store the flags resulting
-     * from the operation (the flags are in addition to the pre-existing
-     * flags). Can be null, in which case the precision is unlimited and no
-     * rounding is needed.
-     * @return The exact value of the rational number if possible; otherwise, the
-     * rounded version of the result if a context is given. Returns
-     * not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating decimal expansion.
+     * <p>Converts this rational number to an arbitrary-precision decimal number,
+     * but if the result would have a nonterminating decimal expansion, rounds that
+     * result to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. This context will be used only
+     * if the exact result would have a nonterminating decimal expansion. If
+     * HasFlags of the context is true, will also store the flags resulting from
+     * the operation (the flags are in addition to the pre-existing flags). Can be
+     * null, in which case the precision is unlimited and no rounding is
+     * needed.</p>
+     * @return <p>The exact value of the rational number if possible; otherwise,
+     * the rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be exact
+     * because it has a nonterminating decimal expansion.</p>
+     *
      */
     public EDecimal ToEDecimalExactIfPossible(EContext
       ctx) {
@@ -2109,10 +2260,12 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to an arbitrary-precision decimal number.
-     * @return The exact value of the rational number, or not-a-number (NaN) if the
-     * result can't be exact because it has a nonterminating decimal
-     * expansion.
+     * <p>Converts this rational number to an arbitrary-precision decimal
+     * number.</p>
+     * @return <p>The exact value of the rational number, or not-a-number (NaN) if
+     * the result can't be exact because it has a nonterminating decimal
+     * expansion.</p>
+     *
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -2121,16 +2274,18 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to an arbitrary-precision decimal number and
-     * rounds the result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. If HasFlags of the context is
-     * true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case the precision is unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result
-     * can't be exact because it has a nonterminating decimal expansion.
+     * <p>Converts this rational number to an arbitrary-precision decimal number
+     * and rounds the result to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. If HasFlags of the context is
+     * true, will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and no rounding is needed.</p>
+     * @return <p>The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating decimal expansion.</p>
+     *
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -2139,20 +2294,22 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to an arbitrary-precision decimal number, but
-     * if the result would have a nonterminating decimal expansion, rounds
-     * that result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. This context will be used only if
-     * the exact result would have a nonterminating decimal expansion. If
-     * HasFlags of the context is true, will also store the flags resulting
-     * from the operation (the flags are in addition to the pre-existing
-     * flags). Can be null, in which case the precision is unlimited and no
-     * rounding is needed.
-     * @return The exact value of the rational number if possible; otherwise, the
-     * rounded version of the result if a context is given. Returns
-     * not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating decimal expansion.
+     * <p>Converts this rational number to an arbitrary-precision decimal number,
+     * but if the result would have a nonterminating decimal expansion, rounds that
+     * result to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. This context will be used only
+     * if the exact result would have a nonterminating decimal expansion. If
+     * HasFlags of the context is true, will also store the flags resulting from
+     * the operation (the flags are in addition to the pre-existing flags). Can be
+     * null, in which case the precision is unlimited and no rounding is
+     * needed.</p>
+     * @return <p>The exact value of the rational number if possible; otherwise,
+     * the rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be exact
+     * because it has a nonterminating decimal expansion.</p>
+     *
      * @deprecated Renamed to ToEDecimalExactIfPossible.
  */
 @Deprecated
@@ -2161,26 +2318,29 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to a binary floating-point number.
-     * @return The exact value of the rational number, or not-a-number (NaN) if the
-     * result can't be exact because it has a nonterminating binary
-     * expansion.
+     * <p>Converts this rational number to a binary floating-point number.</p>
+     * @return <p>The exact value of the rational number, or not-a-number (NaN) if
+     * the result can't be exact because it has a nonterminating binary
+     * expansion.</p>
+     *
      */
     public EFloat ToEFloat() {
       return this.ToEFloat(null);
     }
 
     /**
-     * Converts this rational number to a binary floating-point number and rounds
-     * that result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. If HasFlags of the context is
-     * true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case the precision is unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result
-     * can't be exact because it has a nonterminating binary expansion.
+     * <p>Converts this rational number to a binary floating-point number and
+     * rounds that result to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. If HasFlags of the context is
+     * true, will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and no rounding is needed.</p>
+     * @return <p>The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.</p>
+     *
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
@@ -2202,20 +2362,22 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to a binary floating-point number, but if the
-     * result would have a nonterminating binary expansion, rounds that
-     * result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. This context will be used only if
-     * the exact result would have a nonterminating binary expansion. If
-     * HasFlags of the context is true, will also store the flags resulting
-     * from the operation (the flags are in addition to the pre-existing
-     * flags). Can be null, in which case the precision is unlimited and no
-     * rounding is needed.
-     * @return The exact value of the rational number if possible; otherwise, the
-     * rounded version of the result if a context is given. Returns
-     * not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating binary expansion.
+     * <p>Converts this rational number to a binary floating-point number, but if
+     * the result would have a nonterminating binary expansion, rounds that result
+     * to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. This context will be used only
+     * if the exact result would have a nonterminating binary expansion. If
+     * HasFlags of the context is true, will also store the flags resulting from
+     * the operation (the flags are in addition to the pre-existing flags). Can be
+     * null, in which case the precision is unlimited and no rounding is
+     * needed.</p>
+     * @return <p>The exact value of the rational number if possible; otherwise,
+     * the rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be exact
+     * because it has a nonterminating binary expansion.</p>
+     *
      */
     public EFloat ToEFloatExactIfPossible(EContext ctx) {
       if (ctx == null) {
@@ -2250,10 +2412,11 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to a binary floating-point number.
-     * @return The exact value of the rational number, or not-a-number (NaN) if the
-     * result can't be exact because it has a nonterminating binary
-     * expansion.
+     * <p>Converts this rational number to a binary floating-point number.</p>
+     * @return <p>The exact value of the rational number, or not-a-number (NaN) if
+     * the result can't be exact because it has a nonterminating binary
+     * expansion.</p>
+     *
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -2262,16 +2425,18 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to a binary floating-point number and rounds
-     * that result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. If HasFlags of the context is
-     * true, will also store the flags resulting from the operation (the
-     * flags are in addition to the pre-existing flags). Can be null, in
-     * which case the precision is unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result
-     * can't be exact because it has a nonterminating binary expansion.
+     * <p>Converts this rational number to a binary floating-point number and
+     * rounds that result to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. If HasFlags of the context is
+     * true, will also store the flags resulting from the operation (the flags are
+     * in addition to the pre-existing flags). Can be null, in which case the
+     * precision is unlimited and no rounding is needed.</p>
+     * @return <p>The value of the rational number, rounded to the given precision.
+     * Returns not-a-number (NaN) if the context is null and the result can't be
+     * exact because it has a nonterminating binary expansion.</p>
+     *
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -2280,20 +2445,22 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this rational number to a binary floating-point number, but if the
-     * result would have a nonterminating binary expansion, rounds that
-     * result to the given precision.
-     * @param ctx An arithmetic context object to control the precision, rounding,
-     * and exponent range of the result. This context will be used only if
-     * the exact result would have a nonterminating binary expansion. If
-     * HasFlags of the context is true, will also store the flags resulting
-     * from the operation (the flags are in addition to the pre-existing
-     * flags). Can be null, in which case the precision is unlimited and no
-     * rounding is needed.
-     * @return The exact value of the rational number if possible; otherwise, the
-     * rounded version of the result if a context is given. Returns
-     * not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating binary expansion.
+     * <p>Converts this rational number to a binary floating-point number, but if
+     * the result would have a nonterminating binary expansion, rounds that result
+     * to the given precision.</p>
+     * <p>@param ctx </p>
+     * <p>An arithmetic context object to control the precision,
+     * rounding, and exponent range of the result. This context will be used only
+     * if the exact result would have a nonterminating binary expansion. If
+     * HasFlags of the context is true, will also store the flags resulting from
+     * the operation (the flags are in addition to the pre-existing flags). Can be
+     * null, in which case the precision is unlimited and no rounding is
+     * needed.</p>
+     * @return <p>The exact value of the rational number if possible; otherwise,
+     * the rounded version of the result if a context is given. Returns
+     * not-a-number (NaN) if the context is null and the result can't be exact
+     * because it has a nonterminating binary expansion.</p>
+     *
      * @deprecated Renamed to ToEFloatExactIfPossible.
  */
 @Deprecated
@@ -2302,11 +2469,12 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this value to a 32-bit binary floating-point number. The half-even
-     * rounding mode is used.
-     * @return The closest 32-bit binary floating-point number to this value. The
-     * return value can be positive infinity or negative infinity if this
-     * value exceeds the range of a 32-bit floating point number.
+     * <p>Converts this value to a 32-bit binary floating-point number. The
+     * half-even rounding mode is used.</p>
+     * @return <p>The closest 32-bit binary floating-point number to this value.
+     * The return value can be positive infinity or negative infinity if this value
+     * exceeds the range of a 32-bit floating point number.</p>
+     *
      */
     public float ToSingle() {
       if (!this.isFinite()) {
@@ -2321,11 +2489,12 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this object to a text string.
-     * @return A string representation of this object. If this object's value is
-     * infinity or not-a-number, the result is the analogous return value
-     * of the {@code EDecimal.toString} method. Otherwise, the return value
-     * has the following form: {@code [-]numerator.Divide(denominator)}.
+     * <p>Converts this object to a text string.</p>
+     * @return <p>A string representation of this object. If this object's value is
+     * infinity or not-a-number, the result is the analogous return value of the
+     * {@code EDecimal.toString} method. Otherwise, the return value has the
+     * following form: {@code [-]numerator.Divide(denominator)}.</p>
+     *
      */
     @Override public String toString() {
       if (!this.isFinite()) {
@@ -2352,130 +2521,152 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Adds one to an arbitrary-precision rational number.
-     * @return The given arbitrary-precision rational number plus one.
+     * <p>Adds one to an arbitrary-precision rational number.</p>
+     * @return <p>The given arbitrary-precision rational number plus one.</p>
+     *
      */
     public ERational Increment() {
       return this.Add(FromInt32(1));
     }
 
     /**
-     * Subtracts one from an arbitrary-precision rational number.
-     * @return The given arbitrary-precision rational number minus one.
+     * <p>Subtracts one from an arbitrary-precision rational number.</p>
+     * @return <p>The given arbitrary-precision rational number minus one.</p>
+     *
      */
     public ERational Decrement() {
       return this.Subtract(FromInt32(1));
     }
 
     /**
-     * Adds this arbitrary-precision rational number and a 32-bit signed integer
-     * and returns the result.
-     * @param v A 32-bit signed integer.
-     * @return The sum of the two numbers, that is, this arbitrary-precision
-     * rational number plus a 32-bit signed integer.
+     * <p>Adds this arbitrary-precision rational number and a 32-bit signed integer
+     * and returns the result.</p>
+     * <p>@param v </p>
+     * <p>A 32-bit signed integer.</p>
+     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
+     * rational number plus a 32-bit signed integer.</p>
+     *
      */
     public ERational Add(int v) {
       return this.Add(FromInt32(v));
     }
 
     /**
-     * Subtracts a 32-bit signed integer from this arbitrary-precision rational
-     * number and returns the result.
-     * @param v The parameter {@code v} is a 32-bit signed integer.
-     * @return The difference between the two numbers, that is, this
-     * arbitrary-precision rational number minus a 32-bit signed integer.
+     * <p>Subtracts a 32-bit signed integer from this arbitrary-precision rational
+     * number and returns the result.</p>
+     * <p>@param v </p>
+     * <p>The parameter {@code v} is a 32-bit signed integer.</p>
+     * @return <p>The difference between the two numbers, that is, this
+     * arbitrary-precision rational number minus a 32-bit signed integer.</p>
+     *
      */
     public ERational Subtract(int v) {
       return this.Subtract(FromInt32(v));
     }
 
     /**
-     * Multiplies this arbitrary-precision rational number by a 32-bit signed
-     * integer and returns the result.
-     * @param v The parameter {@code v} is a 32-bit signed integer.
-     * @return The product of the two numbers, that is, this arbitrary-precision
-     * rational number times a 32-bit signed integer.
+     * <p>Multiplies this arbitrary-precision rational number by a 32-bit signed
+     * integer and returns the result.</p>
+     * <p>@param v </p>
+     * <p>The parameter {@code v} is a 32-bit signed integer.</p>
+     * @return <p>The product of the two numbers, that is, this arbitrary-precision
+     * rational number times a 32-bit signed integer.</p>
+     *
      */
     public ERational Multiply(int v) {
       return this.Multiply(FromInt32(v));
     }
 
     /**
-     * Divides this arbitrary-precision rational number by a 32-bit signed integer
-     * and returns the result.
-     * @param v The parameter {@code v} is a 32-bit signed integer.
-     * @return The result of dividing this arbitrary-precision rational number by a
-     * 32-bit signed integer.
-     * @throws ArithmeticException The parameter {@code v} is zero.
+     * <p>Divides this arbitrary-precision rational number by a 32-bit signed
+     * integer and returns the result.</p>
+     * <p>@param v </p>
+     * <p>The parameter {@code v} is a 32-bit signed integer.</p>
+     * @return <p>The result of dividing this arbitrary-precision rational number
+     * by a 32-bit signed integer.</p>
+     * @throws ArithmeticException <p>The parameter {@code v} is zero.</p>
+     *
      */
     public ERational Divide(int v) {
       return this.Divide(FromInt32(v));
     }
 
     /**
-     * Returns the remainder that would result when this arbitrary-precision
-     * rational number is divided by a 32-bit signed integer.
-     * @param v The divisor.
-     * @return The remainder that would result when this arbitrary-precision
-     * rational number is divided by a 32-bit signed integer.
-     * @throws IllegalArgumentException The parameter {@code v} is zero.
+     * <p>Returns the remainder that would result when this arbitrary-precision
+     * rational number is divided by a 32-bit signed integer.</p>
+     * <p>@param v </p>
+     * <p>The divisor.</p>
+     * @return <p>The remainder that would result when this arbitrary-precision
+     * rational number is divided by a 32-bit signed integer.</p>
+     * @throws IllegalArgumentException <p>The parameter {@code v} is zero.</p>
+     *
      */
     public ERational Remainder(int v) {
       return this.Remainder(FromInt32(v));
     }
 
     /**
-     * Adds this arbitrary-precision rational number and a 64-bit signed integer
-     * and returns the result.
-     * @param v A 64-bit signed integer.
-     * @return The sum of the two numbers, that is, this arbitrary-precision
-     * rational number plus a 64-bit signed integer.
+     * <p>Adds this arbitrary-precision rational number and a 64-bit signed integer
+     * and returns the result.</p>
+     * <p>@param v </p>
+     * <p>A 64-bit signed integer.</p>
+     * @return <p>The sum of the two numbers, that is, this arbitrary-precision
+     * rational number plus a 64-bit signed integer.</p>
+     *
      */
     public ERational Add(long v) {
       return this.Add(FromInt64(v));
     }
 
     /**
-     * Subtracts a 64-bit signed integer from this arbitrary-precision rational
-     * number and returns the result.
-     * @param v The parameter {@code v} is a 64-bit signed integer.
-     * @return The difference between the two numbers, that is, this
-     * arbitrary-precision rational number minus a 64-bit signed integer.
+     * <p>Subtracts a 64-bit signed integer from this arbitrary-precision rational
+     * number and returns the result.</p>
+     * <p>@param v </p>
+     * <p>The parameter {@code v} is a 64-bit signed integer.</p>
+     * @return <p>The difference between the two numbers, that is, this
+     * arbitrary-precision rational number minus a 64-bit signed integer.</p>
+     *
      */
     public ERational Subtract(long v) {
       return this.Subtract(FromInt64(v));
     }
 
     /**
-     * Multiplies this arbitrary-precision rational number by a 64-bit signed
-     * integer and returns the result.
-     * @param v The parameter {@code v} is a 64-bit signed integer.
-     * @return The product of the two numbers, that is, this arbitrary-precision
-     * rational number times a 64-bit signed integer.
+     * <p>Multiplies this arbitrary-precision rational number by a 64-bit signed
+     * integer and returns the result.</p>
+     * <p>@param v </p>
+     * <p>The parameter {@code v} is a 64-bit signed integer.</p>
+     * @return <p>The product of the two numbers, that is, this arbitrary-precision
+     * rational number times a 64-bit signed integer.</p>
+     *
      */
     public ERational Multiply(long v) {
       return this.Multiply(FromInt64(v));
     }
 
     /**
-     * Divides this arbitrary-precision rational number by a 64-bit signed integer
-     * and returns the result.
-     * @param v The parameter {@code v} is a 64-bit signed integer.
-     * @return The result of dividing this arbitrary-precision rational number by a
-     * 64-bit signed integer.
-     * @throws ArithmeticException The parameter {@code v} is zero.
+     * <p>Divides this arbitrary-precision rational number by a 64-bit signed
+     * integer and returns the result.</p>
+     * <p>@param v </p>
+     * <p>The parameter {@code v} is a 64-bit signed integer.</p>
+     * @return <p>The result of dividing this arbitrary-precision rational number
+     * by a 64-bit signed integer.</p>
+     * @throws ArithmeticException <p>The parameter {@code v} is zero.</p>
+     *
      */
     public ERational Divide(long v) {
       return this.Divide(FromInt64(v));
     }
 
     /**
-     * Returns the remainder that would result when this arbitrary-precision
-     * rational number is divided by a 64-bit signed integer.
-     * @param v The divisor.
-     * @return The remainder that would result when this arbitrary-precision
-     * rational number is divided by a 64-bit signed integer.
-     * @throws IllegalArgumentException The parameter {@code v} is zero.
+     * <p>Returns the remainder that would result when this arbitrary-precision
+     * rational number is divided by a 64-bit signed integer.</p>
+     * <p>@param v </p>
+     * <p>The divisor.</p>
+     * @return <p>The remainder that would result when this arbitrary-precision
+     * rational number is divided by a 64-bit signed integer.</p>
+     * @throws IllegalArgumentException <p>The parameter {@code v} is zero.</p>
+     *
      */
     public ERational Remainder(long v) {
       return this.Remainder(FromInt64(v));
@@ -2499,13 +2690,14 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
-     * byte (from 0 to 255) after converting it to an integer by discarding
-     * its fractional part.
-     * @return This number's value, truncated to a byte (from 0 to 255).
-     * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * number, once converted to an integer by discarding its fractional
-     * part, is less than 0 or greater than 255.
+     * <p>Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) after converting it to an integer by discarding its
+     * fractional part.</p>
+     * @return <p>This number's value, truncated to a byte (from 0 to 255).</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * number, once converted to an integer by discarding its fractional part, is
+     * less than 0 or greater than 255.</p>
+     *
      */
     public byte ToByteChecked() {
       if (!this.isFinite()) {
@@ -2520,23 +2712,24 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to an integer (using ToEInteger), and returns
-     * the least-significant bits of that integer's two's-complement form
-     * as a byte (from 0 to 255).
-     * @return This number, converted to a byte (from 0 to 255). Returns 0 if this
-     * value is infinity or not-a-number.
+     * <p>Converts this number's value to an integer (using ToEInteger), and
+     * returns the least-significant bits of that integer's two's-complement form
+     * as a byte (from 0 to 255).</p>
+     * @return <p>This number, converted to a byte (from 0 to 255). Returns 0 if
+     * this value is infinity or not-a-number.</p>
+     *
      */
     public byte ToByteUnchecked() {
       return this.isFinite() ? this.ToEInteger().ToByteUnchecked() : (byte)0;
     }
 
     /**
-     * Converts this number's value to a byte (from 0 to 255) if it can fit in a
-     * byte (from 0 to 255) without rounding to a different numerical
-     * value.
-     * @return This number's value as a byte (from 0 to 255).
-     * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than 0 or greater than 255.
+     * <p>Converts this number's value to a byte (from 0 to 255) if it can fit in a
+     * byte (from 0 to 255) without rounding to a different numerical value.</p>
+     * @return <p>This number's value as a byte (from 0 to 255).</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
+     * not an exact integer, or is less than 0 or greater than 255.</p>
+     *
      */
     public byte ToByteIfExact() {
       if (!this.isFinite()) {
@@ -2551,9 +2744,13 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
-     * @param inputByte The number to convert as a byte (from 0 to 255).
-     * @return This number's value as an arbitrary-precision rational number.
+     * <p>Converts a byte (from 0 to 255) to an arbitrary-precision rational
+     * number.</p>
+     * <p>@param inputByte </p>
+     * <p>The number to convert as a byte (from 0 to 255).</p>
+     * @return <p>This number's value as an arbitrary-precision rational
+     * number.</p>
+     *
      */
     public static ERational FromByte(byte inputByte) {
       int val = ((int)inputByte) & 0xff;
@@ -2561,13 +2758,14 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to a 16-bit signed integer if it can fit in a
-     * 16-bit signed integer after converting it to an integer by
-     * discarding its fractional part.
-     * @return This number's value, truncated to a 16-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * number, once converted to an integer by discarding its fractional
-     * part, is less than -32768 or greater than 32767.
+     * <p>Converts this number's value to a 16-bit signed integer if it can fit in
+     * a 16-bit signed integer after converting it to an integer by discarding its
+     * fractional part.</p>
+     * @return <p>This number's value, truncated to a 16-bit signed integer.</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * number, once converted to an integer by discarding its fractional part, is
+     * less than -32768 or greater than 32767.</p>
+     *
      */
     public short ToInt16Checked() {
       if (!this.isFinite()) {
@@ -2578,23 +2776,24 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to an integer by discarding its fractional
-     * part, and returns the least-significant bits of its two's-complement
-     * form as a 16-bit signed integer.
-     * @return This number, converted to a 16-bit signed integer. Returns 0 if this
-     * value is infinity or not-a-number.
+     * <p>Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement form as
+     * a 16-bit signed integer.</p>
+     * @return <p>This number, converted to a 16-bit signed integer. Returns 0 if
+     * this value is infinity or not-a-number.</p>
+     *
      */
     public short ToInt16Unchecked() {
       return this.isFinite() ? this.ToEInteger().ToInt16Unchecked() : (short)0;
     }
 
     /**
-     * Converts this number's value to a 16-bit signed integer if it can fit in a
-     * 16-bit signed integer without rounding to a different numerical
-     * value.
-     * @return This number's value as a 16-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -32768 or greater than 32767.
+     * <p>Converts this number's value to a 16-bit signed integer if it can fit in
+     * a 16-bit signed integer without rounding to a different numerical value.</p>
+     * @return <p>This number's value as a 16-bit signed integer.</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
+     * not an exact integer, or is less than -32768 or greater than 32767.</p>
+     *
      */
     public short ToInt16IfExact() {
       if (!this.isFinite()) {
@@ -2606,9 +2805,13 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts a 16-bit signed integer to an arbitrary-precision rational number.
-     * @param inputInt16 The number to convert as a 16-bit signed integer.
-     * @return This number's value as an arbitrary-precision rational number.
+     * <p>Converts a 16-bit signed integer to an arbitrary-precision rational
+     * number.</p>
+     * <p>@param inputInt16 </p>
+     * <p>The number to convert as a 16-bit signed integer.</p>
+     * @return <p>This number's value as an arbitrary-precision rational
+     * number.</p>
+     *
      */
     public static ERational FromInt16(short inputInt16) {
       int val = (int)inputInt16;
@@ -2616,13 +2819,14 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to a 32-bit signed integer if it can fit in a
-     * 32-bit signed integer after converting it to an integer by
-     * discarding its fractional part.
-     * @return This number's value, truncated to a 32-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * number, once converted to an integer by discarding its fractional
-     * part, is less than -2147483648 or greater than 2147483647.
+     * <p>Converts this number's value to a 32-bit signed integer if it can fit in
+     * a 32-bit signed integer after converting it to an integer by discarding its
+     * fractional part.</p>
+     * @return <p>This number's value, truncated to a 32-bit signed integer.</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * number, once converted to an integer by discarding its fractional part, is
+     * less than -2147483648 or greater than 2147483647.</p>
+     *
      */
     public int ToInt32Checked() {
       if (!this.isFinite()) {
@@ -2633,24 +2837,25 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to an integer by discarding its fractional
-     * part, and returns the least-significant bits of its two's-complement
-     * form as a 32-bit signed integer.
-     * @return This number, converted to a 32-bit signed integer. Returns 0 if this
-     * value is infinity or not-a-number.
+     * <p>Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement form as
+     * a 32-bit signed integer.</p>
+     * @return <p>This number, converted to a 32-bit signed integer. Returns 0 if
+     * this value is infinity or not-a-number.</p>
+     *
      */
     public int ToInt32Unchecked() {
       return this.isFinite() ? this.ToEInteger().ToInt32Unchecked() : (int)0;
     }
 
     /**
-     * Converts this number's value to a 32-bit signed integer if it can fit in a
-     * 32-bit signed integer without rounding to a different numerical
-     * value.
-     * @return This number's value as a 32-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -2147483648 or greater than
-     * 2147483647.
+     * <p>Converts this number's value to a 32-bit signed integer if it can fit in
+     * a 32-bit signed integer without rounding to a different numerical value.</p>
+     * @return <p>This number's value as a 32-bit signed integer.</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
+     * not an exact integer, or is less than -2147483648 or greater than
+     * 2147483647.</p>
+     *
      */
     public int ToInt32IfExact() {
       if (!this.isFinite()) {
@@ -2661,33 +2866,39 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts a boolean value (true or false) to an arbitrary-precision rational
-     * number.
-     * @param boolValue Either true or false.
-     * @return The number 1 if {@code boolValue} is true; otherwise, 0.
+     * <p>Converts a boolean value (true or false) to an arbitrary-precision
+     * rational number.</p>
+     * <p>@param boolValue </p>
+     * <p>Either true or false.</p>
+     * @return <p>The number 1 if {@code boolValue} is true; otherwise, 0.</p>
+     *
      */
     public static ERational FromBoolean(boolean boolValue) {
       return FromInt32(boolValue ? 1 : 0);
     }
 
     /**
-     * Converts a 32-bit signed integer to an arbitrary-precision rational number.
-     * @param inputInt32 The number to convert as a 32-bit signed integer.
-     * @return This number's value as an arbitrary-precision rational number.
+     * <p>Converts a 32-bit signed integer to an arbitrary-precision rational
+     * number.</p>
+     * <p>@param inputInt32 </p>
+     * <p>The number to convert as a 32-bit signed integer.</p>
+     * @return <p>This number's value as an arbitrary-precision rational
+     * number.</p>
+     *
      */
     public static ERational FromInt32(int inputInt32) {
       return FromEInteger(EInteger.FromInt32(inputInt32));
     }
 
     /**
-     * Converts this number's value to a 64-bit signed integer if it can fit in a
-     * 64-bit signed integer after converting it to an integer by
-     * discarding its fractional part.
-     * @return This number's value, truncated to a 64-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, or the
-     * number, once converted to an integer by discarding its fractional
-     * part, is less than -9223372036854775808 or greater than
-     * 9223372036854775807.
+     * <p>Converts this number's value to a 64-bit signed integer if it can fit in
+     * a 64-bit signed integer after converting it to an integer by discarding its
+     * fractional part.</p>
+     * @return <p>This number's value, truncated to a 64-bit signed integer.</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, or the
+     * number, once converted to an integer by discarding its fractional part, is
+     * less than -9223372036854775808 or greater than 9223372036854775807.</p>
+     *
      */
     public long ToInt64Checked() {
       if (!this.isFinite()) {
@@ -2698,24 +2909,25 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts this number's value to an integer by discarding its fractional
-     * part, and returns the least-significant bits of its two's-complement
-     * form as a 64-bit signed integer.
-     * @return This number, converted to a 64-bit signed integer. Returns 0 if this
-     * value is infinity or not-a-number.
+     * <p>Converts this number's value to an integer by discarding its fractional
+     * part, and returns the least-significant bits of its two's-complement form as
+     * a 64-bit signed integer.</p>
+     * @return <p>This number, converted to a 64-bit signed integer. Returns 0 if
+     * this value is infinity or not-a-number.</p>
+     *
      */
     public long ToInt64Unchecked() {
       return this.isFinite() ? this.ToEInteger().ToInt64Unchecked() : 0L;
     }
 
     /**
-     * Converts this number's value to a 64-bit signed integer if it can fit in a
-     * 64-bit signed integer without rounding to a different numerical
-     * value.
-     * @return This number's value as a 64-bit signed integer.
-     * @throws ArithmeticException This value is infinity or not-a-number, is not
-     * an exact integer, or is less than -9223372036854775808 or greater
-     * than 9223372036854775807.
+     * <p>Converts this number's value to a 64-bit signed integer if it can fit in
+     * a 64-bit signed integer without rounding to a different numerical value.</p>
+     * @return <p>This number's value as a 64-bit signed integer.</p>
+     * @throws ArithmeticException <p>This value is infinity or not-a-number, is
+     * not an exact integer, or is less than -9223372036854775808 or greater than
+     * 9223372036854775807.</p>
+     *
      */
     public long ToInt64IfExact() {
       if (!this.isFinite()) {
@@ -2726,15 +2938,16 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts an unsigned integer expressed as a 64-bit signed integer to an
-     * arbitrary-precision rational number.
-     * @param longerValue A 64-bit signed integer. If this value is 0 or greater,
-     * the return value will represent it. If this value is less than 0,
-     * the return value will store 2^64 plus this value instead.
-     * @return An arbitrary-precision rational number. If {@code longerValue} is 0
-     * or greater, the return value will represent it. If {@code
-     * longerValue} is less than 0, the return value will store 2^64 plus
-     * this value instead.
+     * <p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+     * arbitrary-precision rational number.</p>
+     * <p>@param longerValue </p>
+     * <p>A 64-bit signed integer. If this value is 0 or
+     * greater, the return value will represent it. If this value is less than 0,
+     * the return value will store 2^64 plus this value instead.</p>
+     * @return <p>An arbitrary-precision rational number. If {@code longerValue} is
+     * 0 or greater, the return value will represent it. If {@code longerValue} is
+     * less than 0, the return value will store 2^64 plus this value instead.</p>
+     *
      */
     public static ERational FromInt64AsUnsigned(long longerValue) {
       return longerValue >= 0 ? FromInt64(longerValue) :
@@ -2742,9 +2955,13 @@ PositiveInfinity) : CreateNaN(
     }
 
     /**
-     * Converts a 64-bit signed integer to an arbitrary-precision rational number.
-     * @param inputInt64 The number to convert as a 64-bit signed integer.
-     * @return This number's value as an arbitrary-precision rational number.
+     * <p>Converts a 64-bit signed integer to an arbitrary-precision rational
+     * number.</p>
+     * <p>@param inputInt64 </p>
+     * <p>The number to convert as a 64-bit signed integer.</p>
+     * @return <p>This number's value as an arbitrary-precision rational
+     * number.</p>
+     *
      */
     public static ERational FromInt64(long inputInt64) {
       return FromEInteger(EInteger.FromInt64(inputInt64));

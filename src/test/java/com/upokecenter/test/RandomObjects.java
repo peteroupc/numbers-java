@@ -14,9 +14,10 @@ import com.upokecenter.util.*;
 import com.upokecenter.numbers.*;
 
   /**
-   * Generates random objects of various kinds for purposes of testing code that
-   * uses them. The methods will not necessarily sample uniformly from all
-   * objects of a particular kind.
+   * <p>Generates random objects of various kinds for purposes of testing code
+   * that uses them. The methods will not necessarily sample uniformly from all
+   * objects of a particular kind.</p>
+   *
    */
   public final class RandomObjects {
 private RandomObjects() {
