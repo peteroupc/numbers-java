@@ -759,9 +759,9 @@ Binary16SignifAreaBits;
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision binary floating-point number.
-     * @throws T:IllegalArgumentException Either {@code offset} or {@code length}
-     * is less than 0 or greater than {@code str} 's length, or {@code str} 's
-     * length minus {@code offset} is less than {@code length}.
+     * @throws IllegalArgumentException Either {@code offset} or {@code length} is
+     * less than 0 or greater than {@code str} 's length, or {@code str} 's length
+     * minus {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code str} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code str} 's length, or {@code str} 's length minus

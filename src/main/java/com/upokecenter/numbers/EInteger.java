@@ -1152,7 +1152,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws T:ArithmeticException This object's value is too big to fit a
+     * @throws ArithmeticException This object's value is too big to fit a
      * 32-bit signed integer.
      * @deprecated Renamed to ToInt32Checked.
  */
@@ -1179,7 +1179,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws T:ArithmeticException This object's value is too big to fit a
+     * @throws ArithmeticException This object's value is too big to fit a
      * 64-bit signed integer.
      * @deprecated Renamed to ToInt64Checked.
  */
@@ -5526,7 +5526,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * Converts this object's value to a 32-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 32-bit signed integer.
-     * @throws T:ArithmeticException This object's value is too big to fit a
+     * @throws ArithmeticException This object's value is too big to fit a
      * 32-bit signed integer.
      */
     public int ToInt32Checked() {
@@ -5575,7 +5575,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * Converts this object's value to a 64-bit signed integer, throwing an
      * exception if it can't fit.
      * @return A 64-bit signed integer.
-     * @throws T:ArithmeticException This object's value is too big to fit a
+     * @throws ArithmeticException This object's value is too big to fit a
      * 64-bit signed integer.
      */
     public long ToInt64Checked() {
