@@ -40,9 +40,9 @@ package com.upokecenter.util;
      * @return A Boolean object.
      */
     public boolean Bernoulli(double p) {
-      return p < 0 ?
-        throw new IllegalArgumentException("p(" + p + ") is less than 0") :
-        p > 1 ? throw new IllegalArgumentException("p(" + p + ") is more than 1") :
+      return p < 0?
+        throw new IllegalArgumentException("p(" + p + ") is less than 0"):
+        p > 1 ? throw new IllegalArgumentException("p(" + p + ") is more than 1"):
 this.Uniform() < p;
     }
 
@@ -387,7 +387,7 @@ this.Uniform() < p;
      * @return A 64-bit floating-point number.
      */
     public double Uniform(double min, double max) {
-      return min >= max ?
+      return min >= max?
         throw new IllegalArgumentException("min(" + min + ") is not less than " +
           max) : min + ((max - min) * this.Uniform());
     }
