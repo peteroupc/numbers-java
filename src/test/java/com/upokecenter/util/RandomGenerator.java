@@ -9,21 +9,24 @@ package com.upokecenter.util;
    * multiple threads, as long as the underlying random byte generator is as
    * well.</p>
    */
-  public final class RandomGenerator implements IRandomGenExtended {
+  public final class RandomGenerator implements IRandomGenExtended
+  {
+    private final IRandomGen valueIrg;
+    private final Object valueNormalLock = new();
     private boolean valueHaveLastNormal;
-    private IRandomGen valueIrg;
     private double valueLastNormal;
-    private Object valueNormalLock = new Object();
 
     /**
-     * Initializes a new instance of the RandomGenerator class.
+     * Initializes a new instance of the {@link RandomGenerator} class.getInitializes()
+     * a new instance of the RandomGenerator class.
      */
     public RandomGenerator() {
  this(new XorShift128Plus());
     }
 
     /**
-     * Initializes a new instance of the RandomGenerator class.
+     * Initializes a new instance of the {@link RandomGenerator} class.getInitializes()
+     * a new instance of the RandomGenerator class.
      * @param valueIrg An IRandomGen object.
      */
     public RandomGenerator(IRandomGen valueIrg) {
@@ -37,13 +40,10 @@ package com.upokecenter.util;
      * @return A Boolean object.
      */
     public boolean Bernoulli(double p) {
-      if (p < 0) {
-        throw new IllegalArgumentException("p(" + p + ") is less than 0");
-      }
-      if (p > 1) {
-        throw new IllegalArgumentException("p(" + p + ") is more than 1");
-      }
-      return this.Uniform() < p;
+      return p < 0 ?
+        throw new IllegalArgumentException("p(" + p + ") is less than 0") :
+        p > 1 ? throw new IllegalArgumentException("p(" + p + ") is more than 1") :
+this.Uniform() < p;
     }
 
     /**
@@ -64,6 +64,11 @@ package com.upokecenter.util;
       return this.Binomial(trials, 0.5);
     }
 
+    /**
+     * @param bytes Not documented yet.
+     * @param offset Not documented yet.
+     * @param count Not documented yet.
+     */
     public int GetBytes(byte[] bytes, int offset, int count) {
       return this.valueIrg.GetBytes(bytes, offset, count);
     }
@@ -95,7 +100,7 @@ package com.upokecenter.util;
       if (p == 0.5) {
         byte[] bytes = new byte[1];
         for (int i = 0; i < trials && i >= 0;) {
-          this.valueIrg.GetBytes(bytes, 0, 1);
+          _ = this.valueIrg.GetBytes(bytes, 0, 1);
           int b = bytes[0];
           while (i < trials && i >= 0) {
             if ((b & 1) == 1) {
@@ -124,10 +129,8 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double ChiSquared(int df) {
-      if (df <= 0) {
-        throw new IllegalArgumentException("df(" + df + ") is not greater than 0");
-      }
-      return this.Gamma(df * 0.5, 2);
+      return df <= 0 ? throw new IllegalArgumentException("df(" + df + ") is not" +
+"\u0020greater than 0") : this.Gamma(df * 0.5, 2);
     }
 
     /**
@@ -145,10 +148,8 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double Gamma(double a, double b) {
-      if (b <= 0) {
-        throw new IllegalArgumentException("b(" + b + ") is not greater than 0");
-      }
-      return this.Gamma(a) * b;
+      return b <= 0 ? throw new IllegalArgumentException("b(" + b + ") is not" +
+"\u0020greater than 0") : this.Gamma(a) * b;
     }
 
     /**
@@ -172,11 +173,7 @@ package com.upokecenter.util;
         x2 = x * x;
       } while (u >= 1 - (0.0331 * x2 * x2) &&
         Math.log(u) >= (0.5 * x2) + (d * (1 - v + Math.log(v))));
-      if (a < 1) {
-        return d * v * Math.exp(this.Exponential() / -a);
-      } else {
-        return d * v;
-      }
+      return a < 1 ? d * v * Math.exp(this.Exponential() / -a) : d * v;
     }
 
     /**
@@ -275,13 +272,13 @@ package com.upokecenter.util;
         return 0;
       }
       if (p == 0.0) {
-        return Integer.MAX_VALUE;
+        return int.getMaxValue();
       }
       int count = 0;
       if (p == 0.5) {
         byte[] bytes = new byte[1];
         while (true) {
-          this.valueIrg.GetBytes(bytes, 0, 1);
+          _ = this.valueIrg.GetBytes(bytes, 0, 1);
           int b = bytes[0];
           for (int i = 0; i < 8; ++i) {
             if ((b & 1) == 1) {
@@ -390,11 +387,9 @@ package com.upokecenter.util;
      * @return A 64-bit floating-point number.
      */
     public double Uniform(double min, double max) {
-      if (min >= max) {
+      return min >= max ?
         throw new IllegalArgumentException("min(" + min + ") is not less than " +
-          max);
-      }
-      return min + ((max - min) * this.Uniform());
+          max) : min + ((max - min) * this.Uniform());
     }
 
     /**
@@ -444,11 +439,8 @@ package com.upokecenter.util;
         return minInclusive + this.UniformInt(maxExclusive - minInclusive);
       } else {
         long diff = maxExclusive - minInclusive;
-        if (diff <= Integer.MAX_VALUE) {
-          return minInclusive + this.UniformInt((int)diff);
-        } else {
-          return (int)(minInclusive + this.UniformLong(diff));
-        }
+        return diff <= int.getMaxValue() ? minInclusive +
+this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
       }
     }
 
@@ -470,16 +462,15 @@ package com.upokecenter.util;
       if (minInclusive >= 0) {
         return minInclusive + this.UniformLong(maxExclusive - minInclusive);
       } else {
-        if ((maxExclusive < 0 && Long.MAX_VALUE + maxExclusive <
+        if ((maxExclusive < 0 && long.getMaxValue() + maxExclusive <
             minInclusive) ||
-          (maxExclusive > 0 && Long.MIN_VALUE + maxExclusive > minInclusive) ||
+          (maxExclusive > 0 && long.getMinValue() + maxExclusive > minInclusive) ||
           minInclusive - maxExclusive < 0) {
-          // Difference is greater than MaxValue
-          long lb = 0;
           byte[] b = new byte[8];
           while (true) {
-            this.valueIrg.GetBytes(b, 0, 8);
-            lb = b[0] & 0xffL;
+            _ = this.valueIrg.GetBytes(b, 0, 8);
+            // Difference is greater than MaxValue
+            long lb = b[0] & 0xffL;
             lb |= (b[1] & 0xffL) << 8;
             lb |= (b[2] & 0xffL) << 16;
             lb |= (b[3] & 0xffL) << 24;
@@ -512,57 +503,62 @@ package com.upokecenter.util;
       if (maxExclusive <= 1) {
         return 0;
       }
-      IRandomGenExtended rge = ((this.valueIrg instanceof IRandomGenExtended) ? (IRandomGenExtended)this.valueIrg : null);
-      if (rge != null) {
+      if (this.valueIrg is IRandomGenExtended rge) {
         return rge.GetInt32(maxExclusive);
       }
       byte[] b = new byte[4];
       switch (maxExclusive) {
         case 2: {
-          this.valueIrg.GetBytes(b, 0, 1);
-          return b[0] & 1;
-        }
+            _ = this.valueIrg.GetBytes(b, 0, 1);
+            return b[0] & 1;
+          }
         case 256: {
-          this.valueIrg.GetBytes(b, 0, 1);
-          return (int)b[0] & 1;
-        }
+            _ = this.valueIrg.GetBytes(b, 0, 1);
+            return b[0] & 1;
+          }
         default: {
-          while (true) {
-            int ib = 0;
-            if (maxExclusive == 0x1000000) {
-              this.valueIrg.GetBytes(b, 0, 3);
-              ib = b[0] & 0xff;
-              ib |= (b[1] & 0xff) << 8;
-              ib |= (b[2] & 0xff) << 16;
-              return ib;
-            }
-            if (maxExclusive == 0x10000) {
-              this.valueIrg.GetBytes(b, 0, 2);
-              ib = b[0] & 0xff;
-              ib |= (b[1] & 0xff) << 8;
-              return ib;
-            }
-            int maxexc;
-            maxexc = (Integer.MAX_VALUE / maxExclusive) * maxExclusive;
             while (true) {
-              this.valueIrg.GetBytes(b, 0, 4);
-              ib = b[0] & 0xff;
-              ib |= (b[1] & 0xff) << 8;
-              ib |= (b[2] & 0xff) << 16;
-              ib |= (b[3] & 0x7f) << 24;
-              if (ib < maxexc) {
-                return ib % maxExclusive;
+              int ib;
+              if (maxExclusive == 0x1000000) {
+                _ = this.valueIrg.GetBytes(b, 0, 3);
+                ib = b[0] & 0xff;
+                ib |= (b[1] & 0xff) << 8;
+                ib |= (b[2] & 0xff) << 16;
+                return ib;
+              }
+              if (maxExclusive == 0x10000) {
+                _ = this.valueIrg.GetBytes(b, 0, 2);
+                ib = b[0] & 0xff;
+                ib |= (b[1] & 0xff) << 8;
+                return ib;
+              }
+              int maxexc;
+              maxexc = int.getMaxValue() / maxExclusive * maxExclusive;
+              while (true) {
+                _ = this.valueIrg.GetBytes(b, 0, 4);
+                ib = b[0] & 0xff;
+                ib |= (b[1] & 0xff) << 8;
+                ib |= (b[2] & 0xff) << 16;
+                ib |= (b[3] & 0x7f) << 24;
+                if (ib < maxexc) {
+                  return ib % maxExclusive;
+                }
               }
             }
           }
-        }
       }
     }
 
+    /**
+     * @param maxExclusive Not documented yet.
+     */
     public long GetInt64(long maxExclusive) {
       return this.UniformLong(maxExclusive);
     }
 
+    /**
+     * @param maxExclusive Not documented yet.
+     */
     public int GetInt32(int maxExclusive) {
       return this.UniformInt(maxExclusive);
     }
@@ -579,20 +575,19 @@ package com.upokecenter.util;
         throw new IllegalArgumentException("maxExclusive(" + maxExclusive +
           ") is less than 0");
       }
-      if (maxExclusive <= Integer.MAX_VALUE) {
+      if (maxExclusive <= int.getMaxValue()) {
         return this.UniformInt((int)maxExclusive);
       }
-      IRandomGenExtended rge = ((this.valueIrg instanceof IRandomGenExtended) ? (IRandomGenExtended)this.valueIrg : null);
-      if (rge != null) {
+      if (this.valueIrg is IRandomGenExtended rge) {
         return rge.GetInt64(maxExclusive);
       }
-      long lb = 0;
+
       long maxexc;
       byte[] b = new byte[8];
-      maxexc = (Long.MAX_VALUE / maxExclusive) * maxExclusive;
+      maxexc = long.getMaxValue() / maxExclusive * maxExclusive;
       while (true) {
-        this.valueIrg.GetBytes(b, 0, 8);
-        lb = b[0] & 0xffL;
+        _ = this.valueIrg.GetBytes(b, 0, 8);
+        long lb = b[0] & 0xffL;
         lb |= (b[1] & 0xffL) << 8;
         lb |= (b[2] & 0xffL) << 16;
         lb |= (b[3] & 0xffL) << 24;

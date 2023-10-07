@@ -32,7 +32,7 @@ private TestCommon() {
       while (i < str.length()) {
         int c = str.charAt(i);
         ++i;
-        if (c >= '0' && c <= '9') {
+        if (c instanceof >= '0' and <= '9') {
           int x = c - '0';
           if (ret > 214748364) {
             throw new NumberFormatException();
@@ -40,10 +40,8 @@ private TestCommon() {
           ret *= 10;
           if (ret == 2147483640) {
             if (neg && x == 8) {
-              if (i != str.length()) {
-                throw new NumberFormatException();
-              }
-              return Integer.MIN_VALUE;
+              return i != str.length() ? throw new NumberFormatException() :
+int.getMinValue();
             }
             if (x > 7) {
               throw new NumberFormatException();
@@ -74,18 +72,16 @@ private TestCommon() {
       while (i < str.length()) {
         int c = str.charAt(i);
         ++i;
-        if (c >= '0' && c <= '9') {
+        if (c instanceof >= '0' and <= '9') {
           int x = c - '0';
-          if ((long)ret > 922337203685477580L) {
+          if (ret > 922337203685477580L) {
             throw new NumberFormatException();
           }
           ret *= 10;
-          if ((long)ret == 9223372036854775800L) {
+          if (ret == 9223372036854775800L) {
             if (neg && x == 8) {
-              if (i != str.length()) {
-                throw new NumberFormatException();
-              }
-              return Long.MIN_VALUE;
+              return i != str.length() ? throw new NumberFormatException() :
+long.getMinValue();
             }
             if (x > 7) {
               throw new NumberFormatException();
@@ -227,13 +223,13 @@ private TestCommon() {
         }
         // At least check that hashCode doesn't throw
         try {
-          o.hashCode();
+          _ = o.hashCode();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
         }
         try {
-          o2.hashCode();
+          _ = o2.hashCode();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -460,7 +456,7 @@ private TestCommon() {
       if (value == 0) {
         return "0";
       }
-      if (value == Integer.MIN_VALUE) {
+      if (value == int.getMinValue()) {
         return "-2147483648";
       }
       boolean neg = value < 0;
@@ -471,20 +467,20 @@ private TestCommon() {
       int count;
       if (value < 100000) {
         if (neg) {
-         chars = new char[6];
-         count = 5;
+          chars = new char[6];
+          count = 5;
         } else {
-         chars = new char[5];
-         count = 4;
+          chars = new char[5];
+          count = 4;
         }
         while (value > 9) {
           int intdivvalue = ((((value >> 1) * 52429) >> 18) & 16383);
-          char digit = Digits.charAt((int)(value - (intdivvalue * 10)));
+          char digit = Digits.charAt(value - (intdivvalue * 10));
           chars[count--] = digit;
           value = intdivvalue;
         }
         if (value != 0) {
-          chars[count--] = Digits.charAt((int)value);
+          chars[count--] = Digits.charAt(value);
         }
         if (neg) {
           chars[count] = '-';
@@ -497,18 +493,18 @@ private TestCommon() {
       count = 11;
       while (value >= 163840) {
         int intdivvalue = value / 10;
-        char digit = Digits.charAt((int)(value - (intdivvalue * 10)));
+        char digit = Digits.charAt(value - (intdivvalue * 10));
         chars[count--] = digit;
         value = intdivvalue;
       }
       while (value > 9) {
         int intdivvalue = ((((value >> 1) * 52429) >> 18) & 16383);
-        char digit = Digits.charAt((int)(value - (intdivvalue * 10)));
+        char digit = Digits.charAt(value - (intdivvalue * 10));
         chars[count--] = digit;
         value = intdivvalue;
       }
       if (value != 0) {
-        chars[count--] = Digits.charAt((int)value);
+        chars[count--] = Digits.charAt(value);
       }
       if (neg) {
         chars[count] = '-';
@@ -519,21 +515,20 @@ private TestCommon() {
     }
 
     public static String LongToString(long longValue) {
-      if (longValue == Long.MIN_VALUE) {
+      if (longValue == long.getMinValue()) {
         return "-9223372036854775808";
       }
       if (longValue == 0L) {
         return "0";
       }
       boolean neg = longValue < 0;
-      int count = 0;
       char[] chars;
       int intlongValue = ((int)longValue);
-      if ((long)intlongValue == longValue) {
+      if (intlongValue == longValue) {
         return IntToString(intlongValue);
       } else {
         chars = new char[24];
-        count = 23;
+        int count = 23;
         if (neg) {
           longValue = -longValue;
         }
@@ -589,14 +584,14 @@ private TestCommon() {
         int count = num / RepeatDivideThreshold;
         int rem = num % RepeatDivideThreshold;
         for (int i = 0; i < count; ++i) {
-          sb.append(sb2);
+          _ = sb.append(sb2);
         }
         for (int i = 0; i < rem; ++i) {
-          sb.append(c);
+          _ = sb.append(c);
         }
       } else {
         for (int i = 0; i < num; ++i) {
-          sb.append(c);
+          _ = sb.append(c);
         }
       }
       return sb.toString();
@@ -615,7 +610,7 @@ private TestCommon() {
       }
       StringBuilder sb = new StringBuilder(num * str.length());
       for (int i = 0; i < num; ++i) {
-        sb.append(str);
+        _ = sb.append(str);
       }
       return sb.toString();
     }
@@ -660,20 +655,17 @@ length);
       }
       StringBuilder sb = new StringBuilder();
       String ValueHex = "0123456789ABCDEF";
-      sb.append("new byte[] { ");
+      _ = sb.append("new byte[] { ");
       for (int i = 0; i < length; ++i) {
         if (i > 0) {
-          sb.append(',');
+          _ = sb.append(',');
         }
-        if ((bytes[offset + i] & 0x80) != 0) {
-          sb.append("(byte)0x");
-        } else {
-          sb.append("0x");
-        }
-        sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
-        sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));
+        _ = (bytes[offset + i] & 0x80) != 0 ? sb.append("(byte)0x") :
+sb.append("0x");
+        _ = sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
+        _ = sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));
       }
-      sb.append('}');
+      _ = sb.append('}');
       return sb.toString();
     }
 
