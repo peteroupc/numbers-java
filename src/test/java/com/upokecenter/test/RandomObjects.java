@@ -102,8 +102,7 @@ private RandomObjects() {
     }
 
     public static byte[] RandomByteStringShort(IRandomGenExtended rand) {
-      return rand == null?
-        throw new NullPointerException("rand"):
+      return rand == null ? throw new NullPointerException("rand") :
         RandomByteString(
           rand,
           rand.GetInt32(MaxExclusiveShortStringLength));
@@ -431,7 +430,7 @@ maxExc) {
           return EFloat.NaN;
         }
       }
-      return r.GetInt32(100) == 3?
+      return r.GetInt32(100) == 3 ?
         CloseToPowerOfTwo(r) : EFloat.Create(
           RandomEInteger(r),
           EInteger.FromInt64(r.GetInt32(400) - 200));
