@@ -41,7 +41,7 @@ private TestCommon() {
           if (ret == 2147483640) {
             if (neg && x == 8) {
               if (i != str.length()) {
- throw new NumberFormatException() ;
+ throw new NumberFormatException();
  }
  return int.getMinValue();
             }
@@ -83,7 +83,7 @@ private TestCommon() {
           if (ret == 9223372036854775800L) {
             if (neg && x == 8) {
               if (i != str.length()) {
- throw new NumberFormatException() ;
+ throw new NumberFormatException();
  }
  return long.getMinValue();
             }

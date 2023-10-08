@@ -103,7 +103,7 @@ private RandomObjects() {
 
     public static byte[] RandomByteStringShort(IRandomGenExtended rand) {
       if (rand == null) {
- throw new NullPointerException("rand") ;
+ throw new NullPointerException("rand");
  }
  return RandomByteString(
           rand,
