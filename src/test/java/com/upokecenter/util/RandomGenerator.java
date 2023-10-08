@@ -261,8 +261,8 @@ this.Uniform() < p;
      * @param trials The number of 1's to generate before the process stops.
      * @param p The probability for each trial to succeed, from 0 (never) to 1
      * (always).
-     * @return The number of 0's generated. Returns Integer.MAX_VALUE if {@code p} is
-     * 0.
+     * @return The number of 0's generated. Returns Integer.MAX_VALUE if {@code p}
+     * is 0.
      */
     public int NegativeBinomial(int trials, double p) {
       if (p < 0) {
@@ -279,7 +279,7 @@ this.Uniform() < p;
         return 0;
       }
       if (p == 0.0) {
-        return int.getMaxValue();
+        return Integer.MAX_VALUE;
       }
       int count = 0;
       if (p == 0.5) {
@@ -448,7 +448,7 @@ this.Uniform() < p;
         return minInclusive + this.UniformInt(maxExclusive - minInclusive);
       } else {
         long diff = maxExclusive - minInclusive;
-        return diff <= int.getMaxValue() ? minInclusive +
+        return diff <= Integer.MAX_VALUE ? minInclusive +
 this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
       }
     }
@@ -471,9 +471,9 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
       if (minInclusive >= 0) {
         return minInclusive + this.UniformLong(maxExclusive - minInclusive);
       } else {
-        if ((maxExclusive < 0 && long.getMaxValue() + maxExclusive <
+        if ((maxExclusive < 0 && Long.MAX_VALUE + maxExclusive <
             minInclusive) ||
-          (maxExclusive > 0 && long.getMinValue() + maxExclusive > minInclusive) ||
+          (maxExclusive > 0 && Long.MIN_VALUE + maxExclusive > minInclusive) ||
           minInclusive - maxExclusive < 0) {
           byte[] b = new byte[8];
           while (true) {
@@ -542,7 +542,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
                 return ib;
               }
               int maxexc;
-              maxexc = int.getMaxValue() / maxExclusive * maxExclusive;
+              maxexc = Integer.MAX_VALUE / maxExclusive * maxExclusive;
               while (true) {
                 this = this.valueIrg.GetBytes(b, 0, 4);
                 ib = b[0] & 0xff;
@@ -584,7 +584,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
         throw new IllegalArgumentException("maxExclusive(" + maxExclusive +
           ") is less than 0");
       }
-      if (maxExclusive <= int.getMaxValue()) {
+      if (maxExclusive <= Integer.MAX_VALUE) {
         return this.UniformInt((int)maxExclusive);
       }
       if (this.valueIrg is IRandomGenExtended rge) {
@@ -593,7 +593,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
 
       long maxexc;
       byte[] b = new byte[8];
-      maxexc = long.getMaxValue() / maxExclusive * maxExclusive;
+      maxexc = Long.MAX_VALUE / maxExclusive * maxExclusive;
       while (true) {
         this = this.valueIrg.GetBytes(b, 0, 8);
         long lb = b[0] & 0xffL;

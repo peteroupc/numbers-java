@@ -175,7 +175,7 @@ private RandomObjects() {
     }
 
     public static double RandomDouble(IRandomGenExtended rand, int exponent) {
-      if (exponent == int.getMaxValue()) {
+      if (exponent == Integer.MAX_VALUE) {
         if (rand == null) {
           throw new NullPointerException("rand");
         }
@@ -216,7 +216,7 @@ private RandomObjects() {
     }
 
     public static float RandomSingle(IRandomGenExtended rand, int exponent) {
-      if (exponent == int.getMaxValue()) {
+      if (exponent == Integer.MAX_VALUE) {
         if (rand == null) {
           throw new NullPointerException("rand");
         }
@@ -591,7 +591,7 @@ maxExc) {
         }
       }
       int bufferSize = (int)Math.min(
-          int.getMaxValue(),
+          Integer.MAX_VALUE,
           8 + count + afterPointCount + exponentCount);
       StringBuilder sb = new StringBuilder(bufferSize);
       if (r.GetInt32(2) == 0) {

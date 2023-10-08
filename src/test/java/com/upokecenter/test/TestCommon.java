@@ -43,7 +43,7 @@ private TestCommon() {
               if (i != str.length()) {
  throw new NumberFormatException();
  }
- return int.getMinValue();
+ return Integer.MIN_VALUE;
             }
             if (x > 7) {
               throw new NumberFormatException();
@@ -85,7 +85,7 @@ private TestCommon() {
               if (i != str.length()) {
  throw new NumberFormatException();
  }
- return long.getMinValue();
+ return Long.MIN_VALUE;
             }
             if (x > 7) {
               throw new NumberFormatException();
@@ -460,7 +460,7 @@ private TestCommon() {
       if (value == 0) {
         return "0";
       }
-      if (value == int.getMinValue()) {
+      if (value == Integer.MIN_VALUE) {
         return "-2147483648";
       }
       boolean neg = value < 0;
@@ -519,7 +519,7 @@ private TestCommon() {
     }
 
     public static String LongToString(long longValue) {
-      if (longValue == long.getMinValue()) {
+      if (longValue == Long.MIN_VALUE) {
         return "-9223372036854775808";
       }
       if (longValue == 0L) {
