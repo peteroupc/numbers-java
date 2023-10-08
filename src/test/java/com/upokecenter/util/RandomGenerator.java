@@ -40,9 +40,10 @@ package com.upokecenter.util;
      * @return A Boolean object.
      */
     public boolean Bernoulli(double p) {
-      return p < 0 ?
-        throw new IllegalArgumentException("p(" + p + ") is less than 0") :
-        p > 1 ? throw new IllegalArgumentException("p(" + p + ") is more than 1") :
+      if (p < 0) {
+ throw new IllegalArgumentException("p(" + p + ") is less than 0") ;
+ }
+ return p > 1 ? throw new IllegalArgumentException("p(" + p + ") is more than 1") :
 this.Uniform() < p;
     }
 
@@ -100,7 +101,7 @@ this.Uniform() < p;
       if (p == 0.5) {
         byte[] bytes = new byte[1];
         for (int i = 0; i < trials && i >= 0;) {
-          _ = this.valueIrg.GetBytes(bytes, 0, 1);
+          this = this.valueIrg.GetBytes(bytes, 0, 1);
           int b = bytes[0];
           while (i < trials && i >= 0) {
             if ((b & 1) == 1) {
@@ -129,8 +130,11 @@ this.Uniform() < p;
      * @return A 64-bit floating-point number.
      */
     public double ChiSquared(int df) {
-      return df <= 0 ? throw new IllegalArgumentException("df(" + df + ") is not" +
-"\u0020greater than 0") : this.Gamma(df * 0.5, 2);
+      if (df <= 0) {
+ throw new IllegalArgumentException("df(" + df + ") is not" +
+"\u0020greater than 0") ;
+ }
+ return this.Gamma(df * 0.5, 2);
     }
 
     /**
@@ -148,8 +152,11 @@ this.Uniform() < p;
      * @return A 64-bit floating-point number.
      */
     public double Gamma(double a, double b) {
-      return b <= 0 ? throw new IllegalArgumentException("b(" + b + ") is not" +
-"\u0020greater than 0") : this.Gamma(a) * b;
+      if (b <= 0) {
+ throw new IllegalArgumentException("b(" + b + ") is not" +
+"\u0020greater than 0") ;
+ }
+ return this.Gamma(a) * b;
     }
 
     /**
@@ -278,7 +285,7 @@ this.Uniform() < p;
       if (p == 0.5) {
         byte[] bytes = new byte[1];
         while (true) {
-          _ = this.valueIrg.GetBytes(bytes, 0, 1);
+          this = this.valueIrg.GetBytes(bytes, 0, 1);
           int b = bytes[0];
           for (int i = 0; i < 8; ++i) {
             if ((b & 1) == 1) {
@@ -387,9 +394,11 @@ this.Uniform() < p;
      * @return A 64-bit floating-point number.
      */
     public double Uniform(double min, double max) {
-      return min >= max ?
-        throw new IllegalArgumentException("min(" + min + ") is not less than " +
-          max) : min + ((max - min) * this.Uniform());
+      if (min >= max) {
+ throw new IllegalArgumentException("min(" + min + ") is not less than " +
+          max) ;
+ }
+ return min + ((max - min) * this.Uniform());
     }
 
     /**
@@ -468,7 +477,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
           minInclusive - maxExclusive < 0) {
           byte[] b = new byte[8];
           while (true) {
-            _ = this.valueIrg.GetBytes(b, 0, 8);
+            this = this.valueIrg.GetBytes(b, 0, 8);
             // Difference is greater than MaxValue
             long lb = b[0] & 0xffL;
             lb |= (b[1] & 0xffL) << 8;
@@ -509,25 +518,25 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
       byte[] b = new byte[4];
       switch (maxExclusive) {
         case 2: {
-            _ = this.valueIrg.GetBytes(b, 0, 1);
+            this = this.valueIrg.GetBytes(b, 0, 1);
             return b[0] & 1;
           }
         case 256: {
-            _ = this.valueIrg.GetBytes(b, 0, 1);
+            this = this.valueIrg.GetBytes(b, 0, 1);
             return b[0] & 1;
           }
         default: {
             while (true) {
               int ib;
               if (maxExclusive == 0x1000000) {
-                _ = this.valueIrg.GetBytes(b, 0, 3);
+                this = this.valueIrg.GetBytes(b, 0, 3);
                 ib = b[0] & 0xff;
                 ib |= (b[1] & 0xff) << 8;
                 ib |= (b[2] & 0xff) << 16;
                 return ib;
               }
               if (maxExclusive == 0x10000) {
-                _ = this.valueIrg.GetBytes(b, 0, 2);
+                this = this.valueIrg.GetBytes(b, 0, 2);
                 ib = b[0] & 0xff;
                 ib |= (b[1] & 0xff) << 8;
                 return ib;
@@ -535,7 +544,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
               int maxexc;
               maxexc = int.getMaxValue() / maxExclusive * maxExclusive;
               while (true) {
-                _ = this.valueIrg.GetBytes(b, 0, 4);
+                this = this.valueIrg.GetBytes(b, 0, 4);
                 ib = b[0] & 0xff;
                 ib |= (b[1] & 0xff) << 8;
                 ib |= (b[2] & 0xff) << 16;
@@ -586,7 +595,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
       byte[] b = new byte[8];
       maxexc = long.getMaxValue() / maxExclusive * maxExclusive;
       while (true) {
-        _ = this.valueIrg.GetBytes(b, 0, 8);
+        this = this.valueIrg.GetBytes(b, 0, 8);
         long lb = b[0] & 0xffL;
         lb |= (b[1] & 0xffL) << 8;
         lb |= (b[2] & 0xffL) << 16;

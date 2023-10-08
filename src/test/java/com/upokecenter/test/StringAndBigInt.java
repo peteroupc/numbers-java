@@ -37,7 +37,7 @@ private final EInteger propVarbigintvalue;
       boolean negative = false;
       StringBuilder builder = new StringBuilder();
       if (rand.GetInt32(2) == 0) {
-        _ = builder.append('-');
+        builder = builder.append('-');
         negative = true;
       }
       int radixpowint = radix * radix * radix * radix;
@@ -71,7 +71,7 @@ builder.append(ValueDigitsLower.charAt(digit4));
       }
       for (int i = count; i < numDigits; ++i) {
         int digit = rand.GetInt32(radix);
-        _ = rand.GetInt32(2) == 0 ? builder.append(ValueDigits.charAt(digit)) :
+        rand = rand.GetInt32(2) == 0 ? builder.append(ValueDigits.charAt(digit)) :
 builder.append(ValueDigitsLower.charAt(digit));
         bv = bv.Multiply(radixpow1);
         EInteger bigintTmp = EInteger.FromInt32(digit);

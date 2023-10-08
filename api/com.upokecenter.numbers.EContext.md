@@ -462,7 +462,7 @@ Gets a value indicating whether this context's Precision property is in
  simplified arithmetic, infinity, not-a-number, and subnormal numbers are not
  allowed, and negative zero is treated the same as positive zero. For further
  details, see <code>
- [http://speleotrove.com/decimal/dax3274.html</code>](http://speleotrove.com/decimal/dax3274.html</code>) .</p>
+ http://speleotrove.com/decimal/dax3274.html</code> .</p>
 ### getPrecision
     public final EInteger getPrecision()
 <p>Gets the maximum length of a converted number in digits, ignoring the

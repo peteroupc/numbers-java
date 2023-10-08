@@ -40,8 +40,10 @@ private TestCommon() {
           ret *= 10;
           if (ret == 2147483640) {
             if (neg && x == 8) {
-              return i != str.length() ? throw new NumberFormatException() :
-int.getMinValue();
+              if (i != str.length()) {
+ throw new NumberFormatException() ;
+ }
+ return int.getMinValue();
             }
             if (x > 7) {
               throw new NumberFormatException();
@@ -80,8 +82,10 @@ int.getMinValue();
           ret *= 10;
           if (ret == 9223372036854775800L) {
             if (neg && x == 8) {
-              return i != str.length() ? throw new NumberFormatException() :
-long.getMinValue();
+              if (i != str.length()) {
+ throw new NumberFormatException() ;
+ }
+ return long.getMinValue();
             }
             if (x > 7) {
               throw new NumberFormatException();
@@ -223,13 +227,13 @@ long.getMinValue();
         }
         // At least check that hashCode doesn't throw
         try {
-          _ = o.hashCode();
+          o = o.hashCode();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
         }
         try {
-          _ = o2.hashCode();
+          o2 = o2.hashCode();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -584,14 +588,14 @@ long.getMinValue();
         int count = num / RepeatDivideThreshold;
         int rem = num % RepeatDivideThreshold;
         for (int i = 0; i < count; ++i) {
-          _ = sb.append(sb2);
+          sb = sb.append(sb2);
         }
         for (int i = 0; i < rem; ++i) {
-          _ = sb.append(c);
+          sb = sb.append(c);
         }
       } else {
         for (int i = 0; i < num; ++i) {
-          _ = sb.append(c);
+          sb = sb.append(c);
         }
       }
       return sb.toString();
@@ -610,7 +614,7 @@ long.getMinValue();
       }
       StringBuilder sb = new StringBuilder(num * str.length());
       for (int i = 0; i < num; ++i) {
-        _ = sb.append(str);
+        sb = sb.append(str);
       }
       return sb.toString();
     }
@@ -655,17 +659,17 @@ length);
       }
       StringBuilder sb = new StringBuilder();
       String ValueHex = "0123456789ABCDEF";
-      _ = sb.append("new byte[] { ");
+      sb = sb.append("new byte[] { ");
       for (int i = 0; i < length; ++i) {
         if (i > 0) {
-          _ = sb.append(',');
+          sb = sb.append(',');
         }
         _ = (bytes[offset + i] & 0x80) != 0 ? sb.append("(byte)0x") :
 sb.append("0x");
-        _ = sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
-        _ = sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));
+        sb = sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
+        sb = sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));
       }
-      _ = sb.append('}');
+      sb = sb.append('}');
       return sb.toString();
     }
 

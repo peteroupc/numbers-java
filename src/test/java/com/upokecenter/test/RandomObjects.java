@@ -88,7 +88,7 @@ private RandomObjects() {
       }
       int x = rand.GetInt32(MaxExclusiveStringLength);
       byte[] bytes = new byte[x];
-      _ = rand.GetBytes(bytes, 0, bytes.length);
+      rand = rand.GetBytes(bytes, 0, bytes.length);
       return bytes;
     }
 
@@ -97,13 +97,15 @@ private RandomObjects() {
         throw new NullPointerException("rand");
       }
       byte[] bytes = new byte[length];
-      _ = rand.GetBytes(bytes, 0, bytes.length);
+      rand = rand.GetBytes(bytes, 0, bytes.length);
       return bytes;
     }
 
     public static byte[] RandomByteStringShort(IRandomGenExtended rand) {
-      return rand == null ? throw new NullPointerException("rand") :
-        RandomByteString(
+      if (rand == null) {
+ throw new NullPointerException("rand") ;
+ }
+ return RandomByteString(
           rand,
           rand.GetInt32(MaxExclusiveShortStringLength));
     }
@@ -127,16 +129,16 @@ private RandomObjects() {
         int x = rand.GetInt32(100);
         if (x < 95) {
           // ASCII
-          _ = sb.append((char)(0x20 + rand.GetInt32(0x60)));
+          sb = sb.append((char)(0x20 + rand.GetInt32(0x60)));
         } else if (x < 98) {
           // Supplementary character
           x = rand.GetInt32(0x400) + 0xd800;
-          _ = sb.append((char)x);
+          sb = sb.append((char)x);
           x = rand.GetInt32(0x400) + 0xdc00;
-          _ = sb.append((char)x);
+          sb = sb.append((char)x);
         } else if (rand.GetInt32(100) < 5) {
           // 0x80, to help detect ASCII off-by-one errors
-          _ = sb.append((char)0x80);
+          sb = sb.append((char)0x80);
         } else {
           // BMP character
           x = 0x20 + rand.GetInt32(0xffe0);
@@ -144,7 +146,7 @@ private RandomObjects() {
             // surrogate code unit, generate ASCII instead
             x = 0x20 + rand.GetInt32(0x60);
           }
-          _ = sb.append((char)x);
+          sb = sb.append((char)x);
         }
       }
       return sb.toString();
@@ -241,16 +243,16 @@ private RandomObjects() {
       }
       int len = 1 + wrapper.GetInt32(4);
       if (!extended) {
-        _ = sb.append((char)('1' + wrapper.GetInt32(9)));
+        sb = sb.append((char)('1' + wrapper.GetInt32(9)));
         --len;
       }
       AppendRandomDecimals(wrapper, sb, len);
-      _ = sb.append('.');
+      sb = sb.append('.');
       len = 1 + wrapper.GetInt32(36);
       AppendRandomDecimals(wrapper, sb, len);
-      _ = sb.append('E');
+      sb = sb.append('E');
       len = wrapper.GetInt32(25) - 12;
-      _ = sb.append(TestCommon.IntToString(len));
+      sb = sb.append(TestCommon.IntToString(len));
       return sb.toString();
     }
 
@@ -333,7 +335,7 @@ private RandomObjects() {
       };
       int oneChance = oneChances[rg.GetInt32(oneChances.length)];
       for (int i = 0; i < count; ++i) {
-        _ = sb.append((rg.GetInt32(1000) >= oneChance) ? '0' : '1');
+        sb = sb.append((rg.GetInt32(1000) >= oneChance) ? '0' : '1');
       }
       return EInteger.FromRadixString(sb.toString(), 2);
     }
@@ -347,7 +349,7 @@ count) {
       };
       int oneChance = oneChances[rg.GetInt32(oneChances.length)];
       for (int i = 0; i < count; ++i) {
-        _ = sb.append((rg.GetInt32(1000) >= oneChance) ? '0' : '9');
+        sb = sb.append((rg.GetInt32(1000) >= oneChance) ? '0' : '9');
       }
       return EInteger.FromRadixString(sb.toString(), 10);
     }
@@ -443,9 +445,9 @@ maxExc) {
       int count = r.GetInt32(MaxShortNumberLength) + 1;
       StringBuilder sb = new StringBuilder();
       if (r.GetInt32(2) == 0) {
-        _ = sb.append('-');
+        sb = sb.append('-');
       }
-      _ = sb.append((char)('1' + r.GetInt32(9)));
+      sb = sb.append((char)('1' + r.GetInt32(9)));
       --count;
       AppendRandomDecimals(r, sb, count);
       return sb.toString();
@@ -458,9 +460,9 @@ maxExc) {
       int count = r.GetInt32(MaxShortNumberLength / 2) + 1;
       StringBuilder sb = new StringBuilder();
       if (r.GetInt32(2) == 0) {
-        _ = sb.append('-');
+        sb = sb.append('-');
       }
-      _ = sb.append((char)('1' + r.GetInt32(9)));
+      sb = sb.append((char)('1' + r.GetInt32(9)));
       --count;
       AppendRandomDecimals(r, sb, count);
       return EInteger.FromString(sb.toString());
@@ -513,22 +515,22 @@ maxExc) {
         int buflen = (int)Math.min(0x10000, Math.max(count + 8, 64));
         byte[] buffer = new byte[buflen];
         while (count > 0) {
-          _ = r.GetBytes(buffer, 0, buflen);
+          r = r.GetBytes(buffer, 0, buflen);
           int i = 0;
           while (i < buflen && count > 0) {
             int x = buffer[i] & 31;
             if (x < 30) {
-              _ = sb.append(CharTable[x]);
+              sb = sb.append(CharTable[x]);
               --count;
               ++i;
             } else if (count >= 40 && i + 1 < buflen) {
               int y = (buffer[i + 1] & 0xff) % ValueSpecialDecimals2.length;
-              _ = sb.append(ValueSpecialDecimals2[y]);
+              sb = sb.append(ValueSpecialDecimals2[y]);
               count -= 40;
               i += 2;
             } else if (count >= 10 && i + 1 < buflen) {
               int y = (buffer[i + 1] & 0xff) % ValueSpecialDecimals.length;
-              _ = sb.append(ValueSpecialDecimals[y]);
+              sb = sb.append(ValueSpecialDecimals[y]);
               count -= 10;
               i += 2;
             } else {
@@ -593,28 +595,28 @@ maxExc) {
           8 + count + afterPointCount + exponentCount);
       StringBuilder sb = new StringBuilder(bufferSize);
       if (r.GetInt32(2) == 0) {
-        _ = sb.append('-');
+        sb = sb.append('-');
       }
       if (!extended) {
-        _ = sb.append((char)('1' + r.GetInt32(9)));
+        sb = sb.append((char)('1' + r.GetInt32(9)));
         --count;
       }
       AppendRandomDecimalsLong(r, sb, count);
       if (afterPointCount > 0) {
-        _ = sb.append('.');
+        sb = sb.append('.');
         AppendRandomDecimalsLong(r, sb, afterPointCount);
       }
       if (exponentCount > 0) {
         int rr = r.GetInt32(3);
         if (rr == 0) {
-          _ = sb.append('E');
+          sb = sb.append('E');
         } else if (rr == 1) {
-          _ = sb.append("E+");
+          sb = sb.append("E+");
         } else if (rr == 2) {
-          _ = sb.append("E-");
+          sb = sb.append("E-");
         }
         if (smallExponent) {
-          _ = sb.append(TestCommon.IntToString(r.GetInt32(10000)));
+          sb = sb.append(TestCommon.IntToString(r.GetInt32(10000)));
         } else {
           AppendRandomDecimalsLong(r, sb, exponentCount);
         }
