@@ -43,8 +43,10 @@ package com.upokecenter.util;
       if (p < 0) {
  throw new IllegalArgumentException("p(" + p + ") is less than 0");
  }
- return p > 1 ? throw new IllegalArgumentException("p(" + p + ") is more than 1") :
-this.Uniform() < p;
+ if (p > 1) {
+ throw new IllegalArgumentException("p(" + p + ") is more than 1");
+ }
+ return this.Uniform() < p;
     }
 
     /**
