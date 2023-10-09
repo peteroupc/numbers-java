@@ -42,10 +42,10 @@ package com.upokecenter.util;
     public boolean Bernoulli(double p) {
       if (p < 0) {
  throw new IllegalArgumentException("p(" + p + ") is less than 0");
- }
+}
  if (p > 1) {
  throw new IllegalArgumentException("p(" + p + ") is more than 1");
- }
+}
  return this.Uniform() < p;
     }
 
@@ -135,7 +135,7 @@ package com.upokecenter.util;
       if (df <= 0) {
  throw new IllegalArgumentException("df(" + df + ") is not" +
 "\u0020greater than 0");
- }
+}
  return this.Gamma(df * 0.5, 2);
     }
 
@@ -157,7 +157,7 @@ package com.upokecenter.util;
       if (b <= 0) {
  throw new IllegalArgumentException("b(" + b + ") is not" +
 "\u0020greater than 0");
- }
+}
  return this.Gamma(a) * b;
     }
 
@@ -399,7 +399,7 @@ package com.upokecenter.util;
       if (min >= max) {
  throw new IllegalArgumentException("min(" + min + ") is not less than " +
           max);
- }
+}
  return min + ((max - min) * this.Uniform());
     }
 
