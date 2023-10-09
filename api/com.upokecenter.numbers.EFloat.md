@@ -1210,13 +1210,13 @@ Creates a binary floating-point number from a 64-bit floating-point number
  (NaN) value (such as <code>Float.NaN</code> in DotNet or Float.NaN in Java);
  however, NaN values have multiple forms that are equivalent for many
  applications' purposes, and <code>Float.NaN</code> / <code>Float.NaN</code> is only
- one of these equivalent forms. In fact, <code>
- EFloat.FromSingle(Float.NaN)</code> or <code>EFloat.FromSingle(Float.NaN)</code> could
- produce an object that is represented differently between DotNet and Java,
- because <code>Float.NaN</code> / <code>Float.NaN</code> may have a different form in
- DotNet and Java (for example, the NaN value's sign may be negative in
- DotNet, but positive in Java). Use `IsNaN()` to determine whether an object
- from this class stores a NaN value of any form.</p>
+ one of these equivalent forms. In fact, <code>EFloat.FromSingle(Float.NaN)</code>
+ or <code>EFloat.FromSingle(Float.NaN)</code> could produce an object that is
+ represented differently between DotNet and Java, because <code>Float.NaN</code> /
+ <code>Float.NaN</code> may have a different form in DotNet and Java (for example,
+ the NaN value's sign may be negative in DotNet, but positive in Java). Use
+ `IsNaN()` to determine whether an object from this class stores a NaN value
+ of any form.</p>
 
 **Parameters:**
 

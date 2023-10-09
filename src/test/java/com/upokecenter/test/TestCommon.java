@@ -664,7 +664,7 @@ length);
         if (i > 0) {
           sb = sb.append(',');
         }
-        _ = (bytes[offset + i] & 0x80) != 0 ? sb.append("(byte)0x") :
+        (bytes[offset + i] & 0x80) != 0 ? sb.append("(byte)0x") :
 sb.append("0x");
         sb = sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
         sb = sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));

@@ -504,8 +504,8 @@ PositiveInfinity) : CreateNaN(
      * </p> <p>The input value can be a not-a-number (NaN) value (such as {@code
      * Float.NaN} in DotNet or Float.NaN in Java); however, NaN values have
      * multiple forms that are equivalent for many applications' purposes, and
-     * {@code Float.NaN} / {@code Float.NaN} is only one of these equivalent
-     * forms. In fact, {@code ERational.FromSingle(Float.NaN)} or {@code
+     * {@code Float.NaN} / {@code Float.NaN} is only one of these equivalent forms.
+     * In fact, {@code ERational.FromSingle(Float.NaN)} or {@code
      * ERational.FromSingle(Float.NaN)} could produce an object that is represented
      * differently between DotNet and Java, because {@code Float.NaN} / {@code
      * Float.NaN} may have a different form in DotNet and Java (for example, the
