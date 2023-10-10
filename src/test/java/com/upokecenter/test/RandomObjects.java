@@ -256,7 +256,7 @@ private RandomObjects() {
         throw new NullPointerException("wrapper");
       }
       if (wrapper.GetInt32(2) == 0) {
-        var eix = EInteger.FromBytes(
+        EInteger eix = EInteger.FromBytes(
             RandomByteString(wrapper, 1 + wrapper.GetInt32(36)),
             true);
         int exp = wrapper.GetInt32(25) - 12;

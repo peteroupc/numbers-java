@@ -41,8 +41,8 @@ private final EInteger propVarbigintvalue;
         negative = true;
       }
       int radixpowint = radix * radix * radix * radix;
-      var radixpow4 = EInteger.FromInt32(radixpowint);
-      var radixpow1 = EInteger.FromInt32(radix);
+      EInteger radixpow4 = EInteger.FromInt32(radixpowint);
+      EInteger radixpow1 = EInteger.FromInt32(radix);
       int count = 0;
       for (int i = 0; i < numDigits - 4; i += 4) {
         int digitvalues = rand.GetInt32(radixpowint);
