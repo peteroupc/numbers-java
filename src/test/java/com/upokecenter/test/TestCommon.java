@@ -227,13 +227,13 @@ private TestCommon() {
         }
         // At least check that hashCode doesn't throw
         try {
-          o = o.hashCode();
+          o.hashCode();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
         }
         try {
-          o2 = o2.hashCode();
+          o2.hashCode();
         } catch (Exception ex) {
           Assert.fail(ex.toString());
           throw new IllegalStateException("", ex);
@@ -588,14 +588,14 @@ private TestCommon() {
         int count = num / RepeatDivideThreshold;
         int rem = num % RepeatDivideThreshold;
         for (int i = 0; i < count; ++i) {
-          sb = sb.append(sb2);
+          sb.append(sb2);
         }
         for (int i = 0; i < rem; ++i) {
-          sb = sb.append(c);
+          sb.append(c);
         }
       } else {
         for (int i = 0; i < num; ++i) {
-          sb = sb.append(c);
+          sb.append(c);
         }
       }
       return sb.toString();
@@ -614,7 +614,7 @@ private TestCommon() {
       }
       StringBuilder sb = new StringBuilder(num * str.length());
       for (int i = 0; i < num; ++i) {
-        sb = sb.append(str);
+        sb.append(str);
       }
       return sb.toString();
     }
@@ -659,17 +659,17 @@ length);
       }
       StringBuilder sb = new StringBuilder();
       String ValueHex = "0123456789ABCDEF";
-      sb = sb.append("new byte[] { ");
+      sb.append("new byte[] { ");
       for (int i = 0; i < length; ++i) {
         if (i > 0) {
-          sb = sb.append(',');
+          sb.append(',');
         }
         (bytes[offset + i] & 0x80) != 0 ? sb.append("(byte)0x") :
 sb.append("0x");
-        sb = sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
-        sb = sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));
+        sb.append(ValueHex.charAt((bytes[offset + i] >> 4) & 0xf));
+        sb.append(ValueHex.charAt(bytes[offset + i] & 0xf));
       }
-      sb = sb.append('}');
+      sb.append('}');
       return sb.toString();
     }
 
