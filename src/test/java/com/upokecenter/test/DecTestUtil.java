@@ -86,7 +86,7 @@ private DecTestUtil() {
           index = index2 + delimLength;
         }
       }
-      return strings.toArray(new String[] { });
+      return (String[])strings.toArray(new String[] { });
     }
 
     public static String[] SplitAtSpaceRuns(String str) {
@@ -119,7 +119,7 @@ private DecTestUtil() {
           }
         }
       }
-      return strings.toArray(new String[] { });
+      return (String[])strings.toArray(new String[] { });
     }
 
     public static String ToLowerCaseAscii(String str) {
