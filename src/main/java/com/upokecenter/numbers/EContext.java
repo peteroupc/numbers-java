@@ -445,11 +445,16 @@ public final void setFlags(int value) {
       }
 
     /**
-     * <p>Gets a value indicating whether to use a "simplified" arithmetic. In the
+     * Gets a value indicating whether to use a "simplified" arithmetic. In the
      * simplified arithmetic, infinity, not-a-number, and subnormal numbers are not
      * allowed, and negative zero is treated the same as positive zero. For further
-     * details, see <a href="http://speleotrove.com/decimal/dax3274.html">{@code
-     * http://speleotrove.com/decimal/dax3274.html}</a> .</p>
+     * details, see {@code speleotrove.com/decimal/dax3274.html}.
+     * @return {@code true} if to use a "simplified" arithmetic; otherwise, {@code
+     * false} In the simplified arithmetic, infinity, not-a-number, and subnormal
+     * numbers are not allowed, and negative zero is treated the same as positive
+     * zero. For further details, see {@code speleotrove.com/decimal/dax3274.html}.
+     * {@code true} if a "simplified" arithmetic will be used; otherwise, {@code
+     * false} .
      */
     public final boolean isSimplified() {
         return this.simplified;
