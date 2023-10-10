@@ -362,6 +362,10 @@ IntegerMode.SmallValue) {
 this.largeValue.CanFitInInt32();
     }
 
+    /**
+     * This is an internal API.
+     * @return A text string.
+     */
     @Override public String toString() {
       switch (this.integerMode) {
         case SmallValue:

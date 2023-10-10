@@ -8,6 +8,10 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
  */
 
+  /**
+   * Common interface for classes that shift a number of digits and record
+   * information on whether a non-zero digit was discarded this way.
+   */
   interface IShiftAccumulator {
     EInteger getShiftedInt();
 
