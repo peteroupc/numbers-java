@@ -365,7 +365,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
         if ((precision & 1) == 1) {
           otherPower = ValuePowerOfFiveCache.GetCachedPowerInt(powprec);
           if (otherPower == null) {
-            // NOTE: Assumes powprec is 2 or greater and is a power of 2
+            // NOTE: Assumes powprec == 2 || greater and is a power of 2
             EInteger prevPower = FindPowerOfFive(powprec >> 1);
             otherPower = prevPower.Multiply(prevPower);
             ValuePowerOfFiveCache.AddPower(powprec, otherPower);
@@ -401,7 +401,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
         if (!diff.isEven()) {
           EInteger otherPower = ValuePowerOfFiveCache.GetCachedPower(epowprec);
           if (otherPower == null) {
-            // NOTE: Assumes powprec is 2 or greater and is a power of 2
+            // NOTE: Assumes powprec == 2 || greater and is a power of 2
             EInteger prevPower = FindPowerOfFiveFromBig(epowprec.ShiftRight(
                   1));
             otherPower = prevPower.Multiply(prevPower);
@@ -480,7 +480,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
             ValuePowerOfFiveCache.GetCachedPowerInt(powprec);
           // System.out.println("pow="+powprec+",precision="+precision);
           if (otherPower == null) {
-            // NOTE: Assumes powprec is 2 or greater and is a power of 2
+            // NOTE: Assumes powprec == 2 || greater and is a power of 2
             EInteger prevPower = FindPowerOfFive(powprec >> 1);
             otherPower = prevPower.Multiply(prevPower);
             ValuePowerOfFiveCache.AddPower(powprec, otherPower);
@@ -833,7 +833,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
        EInteger expo = helper.GetExponent(val);
        EInteger mant = helper.GetMantissa(val).Abs();
        if (expo.signum() <= 0) {
-          // Exponent Y in X*digits^Y is 0 or negative, so upper bound
+          // Exponent Y in X*digits^Y == 0 || negative, so upper bound
           // of significand's digit count works by itself.
           return DigitLengthUpperBound(helper, mant).ToEInteger();
        } else {

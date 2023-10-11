@@ -74,7 +74,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
     Odd,
 
     /**
-     * If there is a fractional part and if the last digit before rounding is 0 or
+     * If there is a fractional part and if the last digit before rounding == 0 ||
      * half the radix, the number is rounded to the closest representable number
      * away from zero; otherwise the fractional part is discarded. In overflow, the
      * fractional part is always discarded.
