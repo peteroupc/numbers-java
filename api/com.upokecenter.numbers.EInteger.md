@@ -1682,7 +1682,7 @@ Gets the bit position of the lowest set bit in this number's absolute value,
 **Returns:**
 
 * The bit position of the lowest bit set in the number's absolute
- value, starting at 0. Returns -1 if this value == 0 || odd. Returns 2^63 - 1
+ value, starting at 0. Returns -1 if this value is 0 or odd. Returns 2^63 - 1
  (<code>Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java) if this
  number is other than zero but the lowest set bit is at 2^63 - 1 or greater.
  (Use <code>GetLowBitAsEInteger</code> instead if the application relies on the
@@ -1698,7 +1698,7 @@ Gets the bit position of the lowest set bit in this number's absolute value,
 **Returns:**
 
 * The bit position of the lowest bit set in the number's absolute
- value, starting at 0. Returns -1 if this value == 0 || odd.
+ value, starting at 0. Returns -1 if this value is 0 or odd.
 
 ### GetSignedBit
     public boolean GetSignedBit(EInteger bigIndex)
@@ -1750,7 +1750,7 @@ Finds the minimum number of bits needed to represent this object's value,
 **Returns:**
 
 * The number of bits in this object's value, except for its sign.
- Returns 0 if this object's value == 0 || negative 1.
+ Returns 0 if this object's value is 0 or negative 1.
 
 ### GetSignedBitLengthAsInt64
     public long GetSignedBitLengthAsInt64()
@@ -1766,7 +1766,7 @@ Finds the minimum number of bits needed to represent this object's value,
 **Returns:**
 
 * The number of bits in this object's value, except for its sign.
- Returns 0 if this object's value == 0 || negative 1. If the return value
+ Returns 0 if this object's value is 0 or negative 1. If the return value
  would be greater than 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET or <code>
  Long.MAX_VALUE</code> in Java), returns 2^63 - 1 instead. (Use <code>
  GetSignedBitLengthAsEInteger</code> instead of this method if the application
@@ -1785,7 +1785,7 @@ Finds the minimum number of bits needed to represent this object's value,
 **Returns:**
 
 * The number of bits in this object's value, except for its sign.
- Returns 0 if this object's value == 0 || negative 1.
+ Returns 0 if this object's value is 0 or negative 1.
 
 **Throws:**
 
@@ -2401,8 +2401,8 @@ Finds the square root of this instance's value, rounded down.
 
 **Returns:**
 
-* The square root of this object's value. Returns 0 if this value == 0
- || less.
+* The square root of this object's value. Returns 0 if this value is 0
+ or less.
 
 ### SqrtRem
     public EInteger[] SqrtRem()
@@ -2412,7 +2412,7 @@ Calculates the square root and the remainder.
 
 * An array of two arbitrary-precision integers: the first integer is
  the square root, and the second is the difference between this value and the
- square of the first integer. Returns two zeros if this value == 0 || less,
+ square of the first integer. Returns two zeros if this value is 0 or less,
  or one and zero if this value equals 1.
 
 ### Root
@@ -2426,8 +2426,8 @@ Finds the nth root of this instance's value, rounded down.
 
 **Returns:**
 
-* The square root of this object's value. Returns 0 if this value == 0
- || less.
+* The square root of this object's value. Returns 0 if this value is 0
+ or less.
 
 **Throws:**
 
@@ -2446,7 +2446,7 @@ Calculates the nth root and the remainder.
 
 * An array of two arbitrary-precision integers: the first integer is
  the nth root, and the second is the difference between this value and the
- nth power of the first integer. Returns two zeros if this value == 0 ||
+ nth power of the first integer. Returns two zeros if this value is 0 or
  less, or one and zero if this value equals 1.
 
 **Throws:**
@@ -2464,8 +2464,8 @@ Finds the nth root of this instance's value, rounded down.
 
 **Returns:**
 
-* The square root of this object's value. Returns 0 if this value == 0
- || less.
+* The square root of this object's value. Returns 0 if this value is 0
+ or less.
 
 ### RootRem
     public EInteger[] RootRem(int root)
@@ -2480,7 +2480,7 @@ Calculates the nth root and the remainder.
 
 * An array of two arbitrary-precision integers: the first integer is
  the nth root, and the second is the difference between this value and the
- nth power of the first integer. Returns two zeros if this value == 0 ||
+ nth power of the first integer. Returns two zeros if this value is 0 or
  less, or one and zero if this value equals 1.
 
 ### Subtract

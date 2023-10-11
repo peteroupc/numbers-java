@@ -392,37 +392,59 @@ Renamed to DivRemNaturalScale.
 
 * `EDecimal DivideToExponent(EDecimal divisor,
  int desiredExponentInt)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  int desiredExponentInt,
  EContext ctx)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  int desiredExponentInt,
  ERounding rounding)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  long desiredExponentSmall)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 64-bit signed integer) to the result, using the
+ half-even rounding mode.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  long desiredExponentSmall,
  EContext ctx)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  long desiredExponentSmall,
  ERounding rounding)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  EInteger exponent)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result, using the half-even rounding mode.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  EInteger exponent,
  EContext ctx)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
 * `EDecimal DivideToExponent(EDecimal divisor,
  EInteger desiredExponent,
  ERounding rounding)`<br>
-  
+ Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
 * `EDecimal DivideToIntegerNaturalScale(EDecimal divisor)`<br>
  Divides two arbitrary-precision decimal numbers, and returns the integer
  part of the result, rounded down, with the preferred exponent set to this
@@ -430,13 +452,20 @@ Renamed to DivRemNaturalScale.
 
 * `EDecimal DivideToIntegerNaturalScale(EDecimal divisor,
  EContext ctx)`<br>
-  
+ Divides this object by another object, and returns the integer part of the
+ result (which is initially rounded down), with the preferred exponent set to
+ this value's exponent minus the divisor's exponent.
+
 * `EDecimal DivideToIntegerZeroScale(EDecimal divisor,
  EContext ctx)`<br>
-  
+ Divides this object by another object, and returns the integer part of the
+ result, with the exponent set to 0.
+
 * `EDecimal DivideToSameExponent(EDecimal divisor,
  ERounding rounding)`<br>
-  
+ Divides this object by another decimal number and returns a result with the
+ same exponent as this object (the dividend).
+
 * `EDecimal[] DivRemNaturalScale(EDecimal divisor)`<br>
  Divides this arbitrary-precision decimal floating-point number by another
  arbitrary-precision decimal floating-point number and returns a two-item
@@ -2752,22 +2781,247 @@ Divides this arbitrary-precision decimal floating-point number by another
 
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, EContext ctx)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponentSmall</code> - The desired exponent. A negative number places
+ the cutoff point to the right of the usual decimal point (so a negative
+ number means the number of decimal places to round to). A positive number
+ places the cutoff point to the left of the usual decimal point.
+
+* <code>ctx</code> - An arithmetic context object to control the rounding mode to use
+ if the result must be scaled down to have the same exponent as this value.
+ If the precision given in the context is other than 0, calls the Quantize
+ method with both arguments equal to the result of the operation (and can
+ signal FlagInvalid and return NaN if the result doesn't fit the given
+ precision). If <code>HasFlags</code> of the context is true, will also store the
+ flags resulting from the operation (the flags are in addition to the
+ pre-existing flags). Can be null, in which case the default rounding mode is
+ HalfEven.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context
+ defines an exponent range and the desired exponent is outside that range.
+ Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is
+ ERounding.None and the result is not exact.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, EContext ctx)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponentInt</code> - The desired exponent. A negative number places the
+ cutoff point to the right of the usual decimal point (so a negative number
+ means the number of decimal places to round to). A positive number places
+ the cutoff point to the left of the usual decimal point.
+
+* <code>ctx</code> - An arithmetic context object to control the rounding mode to use
+ if the result must be scaled down to have the same exponent as this value.
+ If the precision given in the context is other than 0, calls the Quantize
+ method with both arguments equal to the result of the operation (and can
+ signal FlagInvalid and return NaN if the result doesn't fit the given
+ precision). If <code>HasFlags</code> of the context is true, will also store the
+ flags resulting from the operation (the flags are in addition to the
+ pre-existing flags). Can be null, in which case the default rounding mode is
+ HalfEven.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context
+ defines an exponent range and the desired exponent is outside that range.
+ Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is
+ ERounding.None and the result is not exact.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, ERounding rounding)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponentSmall</code> - The desired exponent. A negative number places
+ the cutoff point to the right of the usual decimal point (so a negative
+ number means the number of decimal places to round to). A positive number
+ places the cutoff point to the left of the usual decimal point.
+
+* <code>rounding</code> - The rounding mode to use if the result must be scaled down
+ to have the same exponent as this value.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding
+ mode is ERounding.None and the result is not exact.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, ERounding rounding)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponentInt</code> - The desired exponent. A negative number places the
+ cutoff point to the right of the usual decimal point (so a negative number
+ means the number of decimal places to round to). A positive number places
+ the cutoff point to the left of the usual decimal point.
+
+* <code>rounding</code> - The rounding mode to use if the result must be scaled down
+ to have the same exponent as this value.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding
+ mode is ERounding.None and the result is not exact.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent, EContext ctx)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>exponent</code> - The desired exponent. A negative number places the cutoff
+ point to the right of the usual decimal point (so a negative number means
+ the number of decimal places to round to). A positive number places the
+ cutoff point to the left of the usual decimal point.
+
+* <code>ctx</code> - An arithmetic context object to control the rounding mode to use
+ if the result must be scaled down to have the same exponent as this value.
+ If the precision given in the context is other than 0, calls the Quantize
+ method with both arguments equal to the result of the operation (and can
+ signal FlagInvalid and return NaN if the result doesn't fit the given
+ precision). If <code>HasFlags</code> of the context is true, will also store the
+ flags resulting from the operation (the flags are in addition to the
+ pre-existing flags). Can be null, in which case the default rounding mode is
+ HalfEven.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context
+ defines an exponent range and the desired exponent is outside that range.
+ Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is
+ ERounding.None and the result is not exact.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result, using the half-even rounding mode.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>exponent</code> - The desired exponent. A negative number places the cutoff
+ point to the right of the usual decimal point (so a negative number means
+ the number of decimal places to round to). A positive number places the
+ cutoff point to the left of the usual decimal point.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 64-bit signed integer) to the result, using the
+ half-even rounding mode.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponentSmall</code> - The desired exponent. A negative number places
+ the cutoff point to the right of the usual decimal point (so a negative
+ number means the number of decimal places to round to). A positive number
+ places the cutoff point to the left of the usual decimal point.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponentInt</code> - The desired exponent. A negative number places the
+ cutoff point to the right of the usual decimal point (so a negative number
+ means the number of decimal places to round to). A positive number places
+ the cutoff point to the left of the usual decimal point.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0.
+
 ### DivideToExponent
     public EDecimal DivideToExponent(EDecimal divisor, EInteger desiredExponent, ERounding rounding)
+Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>desiredExponent</code> - The desired exponent. A negative number places the
+ cutoff point to the right of the usual decimal point (so a negative number
+ means the number of decimal places to round to). A positive number places
+ the cutoff point to the left of the usual decimal point.
+
+* <code>rounding</code> - The rounding mode to use if the result must be scaled down
+ to have the same exponent as this value.
+
+**Returns:**
+
+* The quotient of the two objects. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Returns
+ not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the
+ rounding mode is ERounding.None and the result is not exact.
+
 ### DivideToIntegerNaturalScale
     public EDecimal DivideToIntegerNaturalScale(EDecimal divisor)
 Divides two arbitrary-precision decimal numbers, and returns the integer
@@ -2787,10 +3041,70 @@ Divides two arbitrary-precision decimal numbers, and returns the integer
 
 ### DivideToIntegerNaturalScale
     public EDecimal DivideToIntegerNaturalScale(EDecimal divisor, EContext ctx)
+Divides this object by another object, and returns the integer part of the
+ result (which is initially rounded down), with the preferred exponent set to
+ this value's exponent minus the divisor's exponent.
+
+**Parameters:**
+
+* <code>divisor</code> - The parameter <code>divisor</code> is an arbitrary-precision
+ decimal floating-point number.
+
+* <code>ctx</code> - The parameter <code>ctx</code> is an EContext object.
+
+**Returns:**
+
+* The integer part of the quotient of the two objects. Signals
+ FlagInvalid and returns not-a-number (NaN) if the return value would
+ overflow the exponent range. Signals FlagDivideByZero and returns infinity
+ if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and
+ returns not-a-number (NaN) if the divisor and the dividend are 0. Signals
+ FlagInvalid and returns not-a-number (NaN) if the rounding mode is
+ ERounding.None and the result is not exact.
+
 ### DivideToIntegerZeroScale
     public EDecimal DivideToIntegerZeroScale(EDecimal divisor, EContext ctx)
+Divides this object by another object, and returns the integer part of the
+ result, with the exponent set to 0.
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>ctx</code> - An arithmetic context object to control the precision. The
+ rounding and exponent range settings of this context are ignored. If <code>
+ HasFlags</code> of the context is true, will also store the flags resulting from
+ the operation (the flags are in addition to the pre-existing flags). Can be
+ null, in which case the precision is unlimited.
+
+**Returns:**
+
+* The integer part of the quotient of the two objects. The exponent
+ will be set to 0. Signals FlagDivideByZero and returns infinity if the
+ divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns
+ not-a-number (NaN) if the divisor and the dividend are 0, or if the result
+ doesn't fit the given precision.
+
 ### DivideToSameExponent
     public EDecimal DivideToSameExponent(EDecimal divisor, ERounding rounding)
+Divides this object by another decimal number and returns a result with the
+ same exponent as this object (the dividend).
+
+**Parameters:**
+
+* <code>divisor</code> - The number to divide by.
+
+* <code>rounding</code> - The rounding mode to use if the result must be scaled down
+ to have the same exponent as this value.
+
+**Returns:**
+
+* The quotient of the two numbers. Signals FlagDivideByZero and
+ returns infinity if the divisor is 0 and the dividend is nonzero. Signals
+ FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend
+ are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding
+ mode is ERounding.None and the result is not exact.
+
 ### equals
     public boolean equals(EDecimal other)
 Determines whether this object's significand, exponent, and properties are

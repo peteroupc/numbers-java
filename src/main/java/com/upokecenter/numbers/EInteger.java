@@ -3355,7 +3355,7 @@ maxDigitEstimate : retval +
      * the lowest set bit in the number's two's-complement form (see {@link
      * com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
      * @return The bit position of the lowest bit set in the number's absolute
-     * value, starting at 0. Returns -1 if this value == 0 || odd. Returns 2^63 - 1
+     * value, starting at 0. Returns -1 if this value is 0 or odd. Returns 2^63 - 1
      * ({@code Long.MAX_VALUE} in.NET or {@code Long.MAX_VALUE} in Java) if this
      * number is other than zero but the lowest set bit is at 2^63 - 1 or greater.
      * (Use {@code GetLowBitAsEInteger} instead if the application relies on the
@@ -3395,7 +3395,7 @@ maxDigitEstimate : retval +
      * position of the lowest set bit in the number's two's-complement form (see
      * {@link com.upokecenter.numbers.EDecimal "Forms of numbers"}).).
      * @return The bit position of the lowest bit set in the number's absolute
-     * value, starting at 0. Returns -1 if this value == 0 || odd.
+     * value, starting at 0. Returns -1 if this value is 0 or odd.
      */
     public EInteger GetLowBitAsEInteger() {
       return EInteger.FromInt64(this.GetLowBitAsInt64());
@@ -3498,7 +3498,7 @@ maxDigitEstimate : retval +
      * signed bit length of 63 or less, and all other integers have a signed bit
      * length of greater than 63.
      * @return The number of bits in this object's value, except for its sign.
-     * Returns 0 if this object's value == 0 || negative 1.
+     * Returns 0 if this object's value is 0 or negative 1.
      */
     public EInteger GetSignedBitLengthAsEInteger() {
       // NOTE: Currently can't be 2^63-1 or greater, due to int32 word counts
@@ -3515,7 +3515,7 @@ maxDigitEstimate : retval +
      * 63 or less, and all other integers have a signed bit length of greater than
      * 63.
      * @return The number of bits in this object's value, except for its sign.
-     * Returns 0 if this object's value == 0 || negative 1. If the return value
+     * Returns 0 if this object's value is 0 or negative 1. If the return value
      * would be greater than 2^63 - 1 ({@code Long.MAX_VALUE} in.NET or {@code
      * Long.MAX_VALUE} in Java), returns 2^63 - 1 instead. (Use {@code
      * GetSignedBitLengthAsEInteger} instead of this method if the application
@@ -3569,7 +3569,7 @@ maxDigitEstimate : retval +
      * length of 63 or less, and all other integers have a signed bit length of
      * greater than 63.
      * @return The number of bits in this object's value, except for its sign.
-     * Returns 0 if this object's value == 0 || negative 1.
+     * Returns 0 if this object's value is 0 or negative 1.
      * @throws ArithmeticException The return value would exceed the range of a
      * 32-bit signed integer.
      * @deprecated This method may overflow. Use GetSignedBitLengthAsEInteger instead.
@@ -5354,8 +5354,8 @@ this.Pow(EInteger.FromInt64(longPower));
 
     /**
      * Finds the square root of this instance's value, rounded down.
-     * @return The square root of this object's value. Returns 0 if this value == 0
-     * || less.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
      */
     public EInteger Sqrt() {
       EInteger[] srrem = this.SqrtRemInternal(false);
@@ -5366,7 +5366,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * Calculates the square root and the remainder.
      * @return An array of two arbitrary-precision integers: the first integer is
      * the square root, and the second is the difference between this value and the
-     * square of the first integer. Returns two zeros if this value == 0 || less,
+     * square of the first integer. Returns two zeros if this value is 0 or less,
      * or one and zero if this value equals 1.
      */
     public EInteger[] SqrtRem() {
@@ -5377,8 +5377,8 @@ this.Pow(EInteger.FromInt64(longPower));
      * Finds the nth root of this instance's value, rounded down.
      * @param root The root to find; must be 1 or greater. If this value is 2, this
      * method finds the square root; if 3, the cube root, and so on.
-     * @return The square root of this object's value. Returns 0 if this value == 0
-     * || less.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
      * @throws NullPointerException The parameter {@code root} is null.
      */
     public EInteger Root(EInteger root) {
@@ -5395,7 +5395,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * method finds the square root; if 3, the cube root, and so on.
      * @return An array of two arbitrary-precision integers: the first integer is
      * the nth root, and the second is the difference between this value and the
-     * nth power of the first integer. Returns two zeros if this value == 0 ||
+     * nth power of the first integer. Returns two zeros if this value is 0 or
      * less, or one and zero if this value equals 1.
      * @throws NullPointerException The parameter {@code root} is null.
      */
@@ -5410,8 +5410,8 @@ this.Pow(EInteger.FromInt64(longPower));
      * Finds the nth root of this instance's value, rounded down.
      * @param root The root to find; must be 1 or greater. If this value is 2, this
      * method finds the square root; if 3, the cube root, and so on.
-     * @return The square root of this object's value. Returns 0 if this value == 0
-     * || less.
+     * @return The square root of this object's value. Returns 0 if this value is 0
+     * or less.
      */
     public EInteger Root(int root) {
       EInteger[] srrem = this.RootRemInternal(EInteger.FromInt32(root), false);
@@ -5424,7 +5424,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * method finds the square root; if 3, the cube root, and so on.
      * @return An array of two arbitrary-precision integers: the first integer is
      * the nth root, and the second is the difference between this value and the
-     * nth power of the first integer. Returns two zeros if this value == 0 ||
+     * nth power of the first integer. Returns two zeros if this value is 0 or
      * less, or one and zero if this value equals 1.
      */
     public EInteger[] RootRem(int root) {

@@ -2279,7 +2279,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
             signedMant = this.helper.GetMantissa(powInt).Abs();
             if (powSign < 0) {
                // Use this line because in this case, where
-               // thisValue == 1 && power is a negative integer, the reciprocal of 1
+               // thisValue is 1 and power is a negative integer, the reciprocal of 1
                // is used, which will have an exponent of 0, according to the
                // General Decimal Arithmetic Specification
                return this.PowerIntegral(
