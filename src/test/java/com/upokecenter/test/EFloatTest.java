@@ -1781,9 +1781,9 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals(intstr,"-" + fpstr,ef.toString());
       }
       EFloat ef2 = EFloat.Create(1, 1024);
-      if (!(((Double)(Double)).isInfinite()))Assert.fail();
+      Assert.assertTrue(((Double)(ef2.ToDouble())).isInfinite());
       ef2 = EFloat.Create(-1, 1024);
-      if (!(((Double)(Double)).isInfinite()))Assert.fail();
+      Assert.assertTrue(((Double)(ef2.ToDouble())).isInfinite());
       ef2 = EFloat.Create(1, -1075);
       if (!(EFloat.FromDouble(ef2.ToDouble()).isZero()))Assert.fail();
       ef2 = EFloat.Create(-1, -1075);
@@ -2125,7 +2125,7 @@ for (int i = 1; i < 100; ++i) {
         return;
       }
       double expectedDouble = expected.ToDouble();
-      if (((Double)(Double)).isInfinite()) {
+      if (((Double)(expectedDouble)).isInfinite()) {
         return;
       }
       if (input.ToDouble() != expectedDouble) {
@@ -2164,7 +2164,7 @@ for (int i = 1; i < 100; ++i) {
         return;
       }
       float expectedSingle = expected.ToSingle();
-      if (((Float)(Single)).isInfinite()) {
+      if (((Float)(expectedSingle)).isInfinite()) {
         return;
       }
       String str = input.toString();
