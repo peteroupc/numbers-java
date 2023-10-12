@@ -5476,9 +5476,9 @@ this.Pow(EInteger.FromInt64(longPower));
         for (int i = 0; i < byteCount; i += 2, j++) {
           int index = littleEndian ? i : bytes.length - 1 - i;
           int index2 = littleEndian ? i + 1 : bytes.length - 2 - i;
-          ThisItem[index] = (byte) (byte)(this.words[j] & 0xff);
+          bytes[index] = (byte) (byte)(this.words[j] & 0xff);
           if (index2 >= 0 && index2 < byteArrayLength) {
-            ThisItem[index2] = (byte) (byte)((this.words[j] >> 8) & 0xff);
+            bytes[index2] = (byte) (byte)((this.words[j] >> 8) & 0xff);
           }
         }
         return bytes;
@@ -5507,15 +5507,15 @@ this.Pow(EInteger.FromInt64(longPower));
           byteCount = 1;
         }
         byte[] bytes = new byte[byteCount];
-        ThisItem[littleEndian ? bytes.length - 1 : 0] = (byte) (byte)0xff;
+        bytes[littleEndian ? bytes.length - 1 : 0] = (byte) (byte)0xff;
         byteCount = Math.min(byteCount, regdata.length * 2);
         int j = 0;
         for (int i = 0; i < byteCount; i += 2, j++) {
           int index = littleEndian ? i : bytes.length - 1 - i;
           int index2 = littleEndian ? i + 1 : bytes.length - 2 - i;
-          ThisItem[index] = (byte) (byte)(regdata[j] & 0xff);
+          bytes[index] = (byte) (byte)(regdata[j] & 0xff);
           if (index2 >= 0 && index2 < byteCount) {
-            ThisItem[index2] = (byte) (byte)((regdata[j] >> 8) & 0xff);
+            bytes[index2] = (byte) (byte)((regdata[j] >> 8) & 0xff);
           }
         }
         return bytes;

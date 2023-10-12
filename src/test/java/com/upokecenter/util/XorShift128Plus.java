@@ -43,27 +43,27 @@ package com.upokecenter.util;
       synchronized (this.syncRoot) {
         while (length >= 8) {
           long nv = this.NextValue();
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           nv >>= 8;
-          ThisItem[offset++] = (byte)((byte)nv);
+          bytes[offset++] = (byte)((byte)nv);
           length -= 8;
         }
         if (length != 0) {
           long nv = this.NextValue();
           while (length > 0) {
-            ThisItem[offset++] = (byte)((byte)nv);
+            bytes[offset++] = (byte)((byte)nv);
             nv >>= 8;
             --length;
           }
