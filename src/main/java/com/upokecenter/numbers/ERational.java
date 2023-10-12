@@ -402,7 +402,7 @@ this.unsignedNumerator.isValueZero();
      * @param ef The number to convert as an arbitrary-precision decimal number.
      * @return An arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code ef} is null.
-     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0.
+     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0
      */
     public static ERational FromEDecimal(EDecimal ef) {
       if (ef == null) {
@@ -449,7 +449,7 @@ PositiveInfinity) : CreateNaN(
      * floating-point number.
      * @return An arbitrary-precision rational number.
      * @throws NullPointerException The parameter {@code ef} is null.
-     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0.
+     * @throws IllegalArgumentException doesn't satisfy den.signum() &gt;= 0
      */
     public static ERational FromEFloat(EFloat ef) {
       if (ef == null) {

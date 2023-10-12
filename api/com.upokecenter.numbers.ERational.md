@@ -770,7 +770,7 @@ Converts an arbitrary-precision decimal number to a rational number.
 
 * <code>NullPointerException</code> - The parameter <code>ef</code> is null.
 
-* <code>IllegalArgumentException</code> - doesn't satisfy den.signum() &gt;= 0.
+* <code>IllegalArgumentException</code> - doesn't satisfy den.signum() &gt;= 0
 
 ### FromEFloat
     public static ERational FromEFloat(EFloat ef)
@@ -790,7 +790,7 @@ Converts an arbitrary-precision binary floating-point number to a rational
 
 * <code>NullPointerException</code> - The parameter <code>ef</code> is null.
 
-* <code>IllegalArgumentException</code> - doesn't satisfy den.signum() &gt;= 0.
+* <code>IllegalArgumentException</code> - doesn't satisfy den.signum() &gt;= 0
 
 ### FromEInteger
     public static ERational FromEInteger(EInteger bigint)

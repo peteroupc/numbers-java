@@ -6825,7 +6825,7 @@ import com.upokecenter.numbers.*;
       byte[] bytes = new byte[str.length()];
       for (int i = 0; i < str.length(); ++i) {
         byte b = (byte)(str.charAt(i) >= 0x80 ? (byte)'?' : (byte)str.charAt(i));
-        bytes[i] = (byte)b;
+        bytes[i] = b;
       }
       return bytes;
     }
