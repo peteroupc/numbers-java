@@ -1714,7 +1714,7 @@ import com.upokecenter.numbers.*;
       byte[] bytes = new byte[str.length()];
       for (int i = 0; i < str.length(); ++i) {
         char ch = str.charAt(i);
-        bytes[i] = (byte)ch;
+        ThisItem[i] = (byte) (byte)ch;
       }
       return bytes;
     }
@@ -2995,8 +2995,8 @@ import com.upokecenter.numbers.*;
       byte[] bytes = new byte[(size * 2) + 1];
       for (int i = 0; i < size; ++i) {
         int ex = r.UniformInt(0x10000) | 0x8000;
-        bytes[2 * i] = (byte)(ex & 0xff);
-        bytes[(2 * i) + 1] = (byte)((ex >> 8) & 0xff);
+        ThisItem[2 * i] = (byte) (byte)(ex & 0xff);
+        ThisItem[(2 * i) + 1] = (byte) (byte)((ex >> 8) & 0xff);
       }
       return EInteger.FromBytes(bytes, true);
     }
