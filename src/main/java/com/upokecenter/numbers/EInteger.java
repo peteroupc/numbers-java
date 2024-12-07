@@ -4449,8 +4449,8 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the left by
      * a number of bits given as an arbitrary-precision integer. A value of 1
-     * doubles this value, a value of 2 multiplies it by 4, a value of 3 by 8, a
-     * value of 4 by 16, and so on.
+     * doubles this value, a value of 2 multiplies it by 4, a value of 3 × by, a
+     * value of 4 &times; by, and so on.
      * @param eshift The number of bits to shift. Can be negative, in which case
      * this is the same as ShiftRight with the absolute value of this parameter.
      * @return An arbitrary-precision integer.
@@ -4475,7 +4475,7 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the left by
      * a number of bits. A value of 1 doubles this value, a value of 2 multiplies
-     * it by 4, a value of 3 by 8, a value of 4 by 16, and so on.
+     * it by 4, a value of 3 × by, a value of 4 × by, and so on.
      * @param numberBits The number of bits to shift. Can be negative, in which
      * case this is the same as shiftRight with the absolute value of this
      * parameter.

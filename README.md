@@ -22,7 +22,7 @@ project, add the following to the `dependencies` section in your `pom.xml` file:
 ```
 
 In other Java-based environments, the library can be referred to by its
-group ID (`com.github.peteroupc`), artifact ID (`numbers`), and version, as given above.
+group ID (`com.github.peteroupc`), artifact ID (`numbers`), and version, as given earlier.
 
 Documentation
 ------------
