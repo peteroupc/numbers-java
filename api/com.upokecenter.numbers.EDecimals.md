@@ -16,7 +16,7 @@ A class that implements additional operations on arbitrary-precision decimal
 
 * `static EDecimal BooleanToEDecimal(boolean b,
  EContext ec)`<br>
- Converts a boolean value (either true or false) to an arbitrary-precision
+ Converts a Boolean value (either true or false) to an arbitrary-precision
  decimal number.
 
 * `static EDecimal Canonical(EDecimal ed)`<br>
@@ -199,7 +199,7 @@ Creates an arbitrary-precision decimal number from a 32-bit signed integer.
 
 ### BooleanToEDecimal
     public static EDecimal BooleanToEDecimal(boolean b, EContext ec)
-Converts a boolean value (either true or false) to an arbitrary-precision
+Converts a Boolean value (either true or false) to an arbitrary-precision
  decimal number.
 
 **Parameters:**

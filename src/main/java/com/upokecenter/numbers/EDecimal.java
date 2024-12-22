@@ -886,7 +886,7 @@ rather than properties
     }
 
     /**
-     * Converts a boolean value (true or false) to an arbitrary-precision decimal
+     * Converts a Boolean value (true or false) to an arbitrary-precision decimal
      * number.
      * @param boolValue Either true or false.
      * @return The number 1 if {@code boolValue} is true; otherwise, 0.

@@ -4870,7 +4870,7 @@ Binary16SignifBits;
     }
 
     /**
-     * Converts a boolean value (either true or false) to an arbitrary-precision
+     * Converts a Boolean value (either true or false) to an arbitrary-precision
      * binary floating-point number.
      * @param boolValue Either true or false.
      * @return The number 1 if {@code boolValue} is true, otherwise, 0.

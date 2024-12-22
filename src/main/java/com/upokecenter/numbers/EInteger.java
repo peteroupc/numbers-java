@@ -361,7 +361,7 @@ licensed under the Unlicense: https://unlicense.org/
     }
 
     /**
-     * Converts a boolean value (true or false) to an arbitrary-precision integer.
+     * Converts a Boolean value (true or false) to an arbitrary-precision integer.
      * @param boolValue Either true or false.
      * @return The number 1 if {@code boolValue} is true; otherwise, 0.
      */

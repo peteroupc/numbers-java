@@ -499,7 +499,7 @@ Renamed to DivRemNaturalScale.
  0.
 
 * `static EDecimal FromBoolean(boolean boolValue)`<br>
- Converts a boolean value (true or false) to an arbitrary-precision decimal
+ Converts a Boolean value (true or false) to an arbitrary-precision decimal
  number.
 
 * `static EDecimal FromByte(byte inputByte)`<br>
@@ -1479,7 +1479,7 @@ Creates an arbitrary-precision decimal number from an arbitrary-precision
 
 ### FromBoolean
     public static EDecimal FromBoolean(boolean boolValue)
-Converts a boolean value (true or false) to an arbitrary-precision decimal
+Converts a Boolean value (true or false) to an arbitrary-precision decimal
  number.
 
 **Parameters:**

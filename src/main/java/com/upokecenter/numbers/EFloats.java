@@ -36,7 +36,7 @@ private EFloats() {
     }
 
     /**
-     * Converts a boolean value (either true or false) to an arbitrary-precision
+     * Converts a Boolean value (either true or false) to an arbitrary-precision
      * binary floating-point number.
      * @param b Either true or false.
      * @param ec A context used for rounding the result. Can be null.
@@ -46,7 +46,7 @@ private EFloats() {
     public static EFloat BooleanToEFloat(boolean b, EContext ec) {
       // NOTE: Not a miscellaneous operation in the General Decimal
       // Arithmetic Specification 1.70, but required since some of the
-      // miscellaneous operations here return booleans
+      // miscellaneous operations here return Boolean values
       return EFloat.FromInt32(b ? 1 : 0).RoundToPrecision(ec);
     }
 

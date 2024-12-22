@@ -15,7 +15,7 @@ A class that implements additional operations on arbitrary-precision binary
 
 * `static EFloat BooleanToEFloat(boolean b,
  EContext ec)`<br>
- Converts a boolean value (either true or false) to an arbitrary-precision
+ Converts a Boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
 
 * `static EFloat Canonical(EFloat ed)`<br>
@@ -199,7 +199,7 @@ Creates a binary floating-point number from a 32-bit signed integer.
 
 ### BooleanToEFloat
     public static EFloat BooleanToEFloat(boolean b, EContext ec)
-Converts a boolean value (either true or false) to an arbitrary-precision
+Converts a Boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
 
 **Parameters:**

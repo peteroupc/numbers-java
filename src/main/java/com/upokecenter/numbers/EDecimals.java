@@ -37,7 +37,7 @@ private EDecimals() {
     }
 
     /**
-     * Converts a boolean value (either true or false) to an arbitrary-precision
+     * Converts a Boolean value (either true or false) to an arbitrary-precision
      * decimal number.
      * @param b Either true or false.
      * @param ec A context used for rounding the result. Can be null.
@@ -47,7 +47,7 @@ private EDecimals() {
     public static EDecimal BooleanToEDecimal(boolean b, EContext ec) {
       // NOTE: Not a miscellaneous operation in the General Decimal
       // Arithmetic Specification 1.70, but required since some of the
-      // miscellaneous operations here return booleans
+      // miscellaneous operations here return Boolean values
       return EDecimal.FromInt32(b ? 1 : 0).RoundToPrecision(ec);
     }
 

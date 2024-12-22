@@ -151,7 +151,7 @@
  arbitrary-precision rational number.
 
 * `static ERational FromBoolean(boolean boolValue)`<br>
- Converts a boolean value (true or false) to an arbitrary-precision rational
+ Converts a Boolean value (true or false) to an arbitrary-precision rational
  number.
 
 * `static ERational FromByte(byte inputByte)`<br>
@@ -2297,7 +2297,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 ### FromBoolean
     public static ERational FromBoolean(boolean boolValue)
-Converts a boolean value (true or false) to an arbitrary-precision rational
+Converts a Boolean value (true or false) to an arbitrary-precision rational
  number.
 
 **Parameters:**

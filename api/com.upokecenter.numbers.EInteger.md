@@ -118,7 +118,7 @@ Renamed to ToInt64Unchecked.
  another one.
 
 * `static EInteger FromBoolean(boolean boolValue)`<br>
- Converts a boolean value (true or false) to an arbitrary-precision integer.
+ Converts a Boolean value (true or false) to an arbitrary-precision integer.
 
 * `static EInteger FromByte(byte inputByte)`<br>
  Converts a byte (from 0 to 255) to an arbitrary-precision integer.
@@ -629,7 +629,7 @@ Initializes an arbitrary-precision integer from an array of bytes.
 
 ### FromBoolean
     public static EInteger FromBoolean(boolean boolValue)
-Converts a boolean value (true or false) to an arbitrary-precision integer.
+Converts a Boolean value (true or false) to an arbitrary-precision integer.
 
 **Parameters:**
 

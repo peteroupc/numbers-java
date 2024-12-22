@@ -337,7 +337,7 @@ Renamed to DivRemNaturalScale.
  0.
 
 * `static EFloat FromBoolean(boolean boolValue)`<br>
- Converts a boolean value (either true or false) to an arbitrary-precision
+ Converts a Boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
 
 * `static EFloat FromByte(byte inputByte)`<br>
@@ -4678,7 +4678,7 @@ Converts this number's value to a 32-bit signed integer if it can fit in a
 
 ### FromBoolean
     public static EFloat FromBoolean(boolean boolValue)
-Converts a boolean value (either true or false) to an arbitrary-precision
+Converts a Boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
 
 **Parameters:**
