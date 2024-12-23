@@ -510,10 +510,10 @@ licensed under the Unlicense: https://unlicense.org/
      * Converts a string to an arbitrary-precision integer in a given radix.
      * @param str A string described by the FromRadixSubstring method.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case
+     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic uppercase
      * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16. Where a basic upper-case letter A to Z is allowed in
-     * the string, the corresponding basic lower-case letter (U+0061 to U+007a) is
+     * then A-F in radix 16. Where a basic uppercase letter A to Z is allowed in
+     * the string, the corresponding basic lowercase letter (U+0061 to U+007a) is
      * allowed instead.
      * @return An arbitrary-precision integer with the same value as the given
      * string.
@@ -536,10 +536,10 @@ licensed under the Unlicense: https://unlicense.org/
      * is not allowed to contain white space characters, including spaces. The
      * desired portion may start with any number of zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
-     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic upper-case
+     * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic uppercase
      * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9,
-     * then A-F in radix 16. Where a basic upper-case letter A to Z is allowed in
-     * the string, the corresponding basic lower-case letter (U+0061 to U+007a) is
+     * then A-F in radix 16. Where a basic uppercase letter A to Z is allowed in
+     * the string, the corresponding basic lowercase letter (U+0061 to U+007a) is
      * allowed instead.
      * @param index The index of the string that starts the string portion.
      * @param endIndex The index of the string that ends the string portion. The
@@ -631,10 +631,10 @@ licensed under the Unlicense: https://unlicense.org/
      * method.
      * @param radix A base from 2 to 36. Depending on the radix, the sequence of
      * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039) and then
-     * the basic upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
-     * radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case letter A
-     * to Z is allowed in the sequence of {@code char} s, the corresponding basic
-     * lower-case letter (U+0061 to U+007a) is allowed instead.
+     * the basic uppercase letters A to Z (U+0041 to U+005A). For example, 0-9 in
+     * radix 10, and 0-9, then A-F in radix 16. Where a basic uppercase letter A to
+     * Z is allowed in the sequence of {@code char} s, the corresponding basic
+     * lowercase letter (U+0061 to U+007a) is allowed instead.
      * @return An arbitrary-precision integer with the same value as the given
      * sequence of {@code char} s.
      * @throws NullPointerException The parameter {@code cs} is null.
@@ -659,10 +659,10 @@ licensed under the Unlicense: https://unlicense.org/
      * of zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the sequence of
      * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039) and then
-     * the basic upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in
-     * radix 10, and 0-9, then A-F in radix 16. Where a basic upper-case letter A
-     * to Z is allowed in the sequence of {@code char} s, the corresponding basic
-     * lower-case letter (U+0061 to U+007a) is allowed instead.
+     * the basic uppercase letters A to Z (U+0041 to U+005A). For example, 0-9 in
+     * radix 10, and 0-9, then A-F in radix 16. Where a basic uppercase letter A to
+     * Z is allowed in the sequence of {@code char} s, the corresponding basic
+     * lowercase letter (U+0061 to U+007a) is allowed instead.
      * @param index The index of the sequence of {@code char} s that starts the
      * desired portion.
      * @param endIndex The index of the sequence of {@code char} s that ends the
@@ -760,9 +760,9 @@ licensed under the Unlicense: https://unlicense.org/
      * FromRadixSubstring method.
      * @param radix A base from 2 to 36. Depending on the radix, the sequence of
      * bytes can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic
-     * upper-case letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10,
-     * and 0-9, then A-F in radix 16. Where a basic upper-case letter A to Z is
-     * allowed in the sequence of bytes, the corresponding basic lower-case letter
+     * uppercase letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10,
+     * and 0-9, then A-F in radix 16. Where a basic uppercase letter A to Z is
+     * allowed in the sequence of bytes, the corresponding basic lowercase letter
      * (U+0061 to U+007a) is allowed instead.
      * @return An arbitrary-precision integer with the same value as the given
      * sequence of bytes.
@@ -790,10 +790,10 @@ licensed under the Unlicense: https://unlicense.org/
      * start with any number of zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the sequence of
      * bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030 to
-     * U+0039) and then the basic upper-case letters A to Z (U+0041 to U+005A). For
+     * U+0039) and then the basic uppercase letters A to Z (U+0041 to U+005A). For
      * example, 0-9 in radix 10, and 0-9, then A-F in radix 16. Where a basic
-     * upper-case letter A to Z is allowed in the sequence of bytes (interpreted as
-     * text), the corresponding basic lower-case letter (U+0061 to U+007a) is
+     * uppercase letter A to Z is allowed in the sequence of bytes (interpreted as
+     * text), the corresponding basic lowercase letter (U+0061 to U+007a) is
      * allowed instead.
      * @param index The index of the sequence of bytes (interpreted as text) that
      * starts the desired portion.
@@ -5813,7 +5813,7 @@ this.Pow(EInteger.FromInt64(longPower));
      * @return A string representing the value of this object. If this value is 0,
      * returns "0". If negative, the string will begin with a minus sign ("-",
      * U+002D). Depending on the radix, the string will use the basic digits 0 to 9
-     * (U+0030 to U+0039) and then the basic upper-case letters A to Z (U+0041 to
+     * (U+0030 to U+0039) and then the basic uppercase letters A to Z (U+0041 to
      * U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.
      */
     public String ToRadixString(int radix) {

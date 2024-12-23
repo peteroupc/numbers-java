@@ -680,8 +680,8 @@ Binary16SignifAreaBits;
      * "Infinity", "INF", quiet NaN ("NaN") followed by any number of digits (these
      * digits may begin with any number of zeros), or signaling NaN ("sNaN")
      * followed by any number of digits (these digits may begin with any number of
-     * zeros), all where the letters can be any combination of basic upper-case
-     * and/or basic lower-case letters.</p> <p>All characters mentioned above are
+     * zeros), all where the letters can be any combination of basic uppercase
+     * and/or basic lowercase letters.</p> <p>All characters mentioned above are
      * the corresponding characters in the Basic Latin range. In particular, the
      * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
      * allowed to contain white space characters, including spaces.</p>
@@ -787,7 +787,7 @@ Binary16SignifAreaBits;
      * by any number of digits (these digits may begin with any number of zeros),
      * or signaling NaN ("sNaN") followed by any number of digits (these digits may
      * begin with any number of zeros), all where the letters can be any
-     * combination of basic upper-case and/or basic lower-case letters.</p> <p>All
+     * combination of basic uppercase and/or basic lowercase letters.</p> <p>All
      * characters mentioned above are the corresponding characters in the Basic
      * Latin range. In particular, the digits must be the basic digits 0 to 9
      * (U+0030 to U+0039). The sequence is not allowed to contain white space
@@ -894,8 +894,8 @@ Binary16SignifAreaBits;
      * "Infinity", "INF", quiet NaN ("NaN") followed by any number of digits (these
      * digits may begin with any number of zeros), or signaling NaN ("sNaN")
      * followed by any number of digits (these digits may begin with any number of
-     * zeros), all where the letters can be any combination of basic upper-case
-     * and/or basic lower-case letters.</p> <p>All characters mentioned above are
+     * zeros), all where the letters can be any combination of basic uppercase
+     * and/or basic lowercase letters.</p> <p>All characters mentioned above are
      * the corresponding characters in the Basic Latin range. In particular, the
      * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is
      * not allowed to contain white space characters, including spaces.</p>

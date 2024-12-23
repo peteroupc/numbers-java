@@ -3580,7 +3580,7 @@ RandomManageableEInteger(r);
       for (int i = 2; i <= 36; ++i) {
         for (int j = 0; j < 100; ++j) {
           StringAndBigInt sabi = StringAndBigInt.Generate(fr, i);
-          // Upper case result expected
+          // Uppercase result expected
           String expected = ToUpperCaseAscii(sabi.getStringValue());
           int k = 0;
           // Expects result with no unnecessary leading zeros
