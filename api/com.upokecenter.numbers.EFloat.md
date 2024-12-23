@@ -1280,7 +1280,7 @@ Converts an arbitrary-precision integer to the same value as a binary
  digits may begin with any number of zeros), or signaling NaN ("sNaN")
  followed by any number of digits (these digits may begin with any number of
  zeros), all where the letters can be any combination of basic uppercase
- and/or basic lowercase letters.</p> <p>All characters mentioned above are
+ and/or basic lowercase letters.</p> <p>All characters mentioned earlier are
  the corresponding characters in the Basic Latin range. In particular, the
  digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
  allowed to contain white space characters, including spaces.</p>
@@ -1417,7 +1417,7 @@ Creates a binary floating-point number from a text string that represents a
  or signaling NaN ("sNaN") followed by any number of digits (these digits may
  begin with any number of zeros), all where the letters can be any
  combination of basic uppercase and/or basic lowercase letters.</p> <p>All
- characters mentioned above are the corresponding characters in the Basic
+ characters mentioned earlier are the corresponding characters in the Basic
  Latin range. In particular, the digits must be the basic digits 0 to 9
  (U+0030 to U+0039). The sequence is not allowed to contain white space
  characters, including spaces.</p>
@@ -1553,7 +1553,7 @@ Creates a binary floating-point number from a sequence of <code>char</code> s
  digits may begin with any number of zeros), or signaling NaN ("sNaN")
  followed by any number of digits (these digits may begin with any number of
  zeros), all where the letters can be any combination of basic uppercase
- and/or basic lowercase letters.</p> <p>All characters mentioned above are
+ and/or basic lowercase letters.</p> <p>All characters mentioned earlier are
  the corresponding characters in the Basic Latin range. In particular, the
  digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is
  not allowed to contain white space characters, including spaces.</p>
@@ -3764,8 +3764,7 @@ Returns a binary floating-point number with the same value as this object
  additional digits are discarded to make it fit. Signals FlagInvalid and
  returns not-a-number (NaN) if the arithmetic context defines an exponent
  range, the new exponent must be changed to the given exponent when rounding,
- and the given exponent is outside of the valid range of the arithmetic
- context.
+ and the given exponent is outside the valid range of the arithmetic context.
 
 ### RoundToExponent
     public EFloat RoundToExponent(int exponentSmall, EContext ctx)
@@ -3796,8 +3795,7 @@ Returns a binary floating-point number with the same value as this object
  additional digits are discarded to make it fit. Signals FlagInvalid and
  returns not-a-number (NaN) if the arithmetic context defines an exponent
  range, the new exponent must be changed to the given exponent when rounding,
- and the given exponent is outside of the valid range of the arithmetic
- context.
+ and the given exponent is outside the valid range of the arithmetic context.
 
 ### RoundToExponentExact
     public EFloat RoundToExponentExact(EInteger exponent, EContext ctx)
@@ -3830,7 +3828,7 @@ Returns a binary floating-point number with the same value as this object
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
  changed to the given exponent when rounding, and the given exponent is
- outside of the valid range of the arithmetic context.
+ outside the valid range of the arithmetic context.
 
 ### RoundToExponentExact
     public EFloat RoundToExponentExact(EInteger exponent, ERounding rounding)
@@ -3885,7 +3883,7 @@ Returns a binary floating-point number with the same value as this object
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
  changed to the given exponent when rounding, and the given exponent is
- outside of the valid range of the arithmetic context.
+ outside the valid range of the arithmetic context.
 
 ### RoundToIntegerExact
     public EFloat RoundToIntegerExact(EContext ctx)
@@ -3909,7 +3907,7 @@ Returns a binary floating-point number with the same value as this object
  not-a-number (NaN) if the result can't fit the given precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
- changed to 0 when rounding, and 0 is outside of the valid range of the
+ changed to 0 when rounding, and 0 is outside the valid range of the
  arithmetic context.
 
 ### RoundToIntegerNoRoundedFlag
@@ -3937,7 +3935,7 @@ Returns a binary floating-point number with the same value as this object
  additional digits are discarded to make it fit. Signals FlagInvalid and
  returns not-a-number (NaN) if the arithmetic context defines an exponent
  range, the new exponent must be changed to 0 when rounding, and 0 is outside
- of the valid range of the arithmetic context.
+ the valid range of the arithmetic context.
 
 ### RoundToIntegralExact
     @Deprecated public EFloat RoundToIntegralExact(EContext ctx)
@@ -3960,7 +3958,7 @@ Returns a binary floating-point number with the same value as this object
  not-a-number (NaN) if the result can't fit the given precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
- changed to 0 when rounding, and 0 is outside of the valid range of the
+ changed to 0 when rounding, and 0 is outside the valid range of the
  arithmetic context.
 
 ### RoundToIntegralNoRoundedFlag
@@ -3986,7 +3984,7 @@ Returns a binary floating-point number with the same value as this object
  additional digits are discarded to make it fit. Signals FlagInvalid and
  returns not-a-number (NaN) if the arithmetic context defines an exponent
  range, the new exponent must be changed to 0 when rounding, and 0 is outside
- of the valid range of the arithmetic context.
+ the valid range of the arithmetic context.
 
 ### RoundToPrecision
     public EFloat RoundToPrecision(EContext ctx)

@@ -193,7 +193,7 @@ rather than properties
    * significand is zero.</li><li>If any other number, the exponent is this value
    * reduced by 1, then raised by EMin, and the highest bit of the significand is
    * one.</li></ul></li><li>C. Highest bit: If one, this is a negative
-   * number.</li></ul> <p>The elements described above are in the same order as
+   * number.</li></ul> <p>The elements described earlier are in the same order as
    * the order of each bit of each element, that is, either most significant
    * first or least significant first.</p> <p><b>32-bit binary floating-point
    * number</b> : A 32-bit binary number which is stored similarly to a <i>64-bit
@@ -209,7 +209,7 @@ rather than properties
    * to (2 <sup>96</sup> -1)).</li><li>Next 16 bits are unused.</li><li>Next 8
    * bits are the scale, stored as an 8-bit unsigned integer.</li><li>Next 7 bits
    * are unused.</li><li>If the highest bit is one, it's a negative
-   * number.</li></ul> <p>The elements described above are in the same order as
+   * number.</li></ul> <p>The elements described earlier are in the same order as
    * the order of each bit of each element, that is, either most significant
    * first or least significant first.</p>
    */
@@ -1239,7 +1239,7 @@ rather than properties
      * or signaling NaN ("sNaN" /"-sNaN") followed by any number of digits (these
      * digits may begin with any number of zeros), all where the letters can be any
      * combination of basic uppercase and/or basic lowercase letters.</p> <p>All
-     * characters mentioned above are the corresponding characters in the Basic
+     * characters mentioned earlier are the corresponding characters in the Basic
      * Latin range. In particular, the digits must be the basic digits 0 to 9
      * (U+0030 to U+0039). The sequence is not allowed to contain white space
      * characters, including spaces.</p>
@@ -1367,7 +1367,7 @@ rather than properties
      * ("sNaN" /"-sNaN") followed by any number of digits (these digits may begin
      * with any number of zeros), all where the letters can be any combination of
      * basic uppercase and/or basic lowercase letters.</p> <p>All characters
-     * mentioned above are the corresponding characters in the Basic Latin range.
+     * mentioned earlier are the corresponding characters in the Basic Latin range.
      * In particular, the digits must be the basic digits 0 to 9 (U+0030 to
      * U+0039). The sequence is not allowed to contain white space characters,
      * including spaces.</p>
@@ -1490,7 +1490,7 @@ rather than properties
      * /"-sNaN") followed by any number of digits (these digits may begin with any
      * number of zeros), all where the letters can be any combination of basic
      * uppercase and/or basic lowercase letters.</p> <p>All characters mentioned
-     * above are the corresponding characters in the Basic Latin range. In
+     * earlier are the corresponding characters in the Basic Latin range. In
      * particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039).
      * The string is not allowed to contain white space characters, including
      * spaces.</p>
@@ -4261,8 +4261,7 @@ rather than properties
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when rounding,
-     * and the given exponent is outside of the valid range of the arithmetic
-     * context.
+     * and the given exponent is outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponent(
       EInteger exponent,
@@ -4358,8 +4357,7 @@ rather than properties
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to the given exponent when rounding,
-     * and the given exponent is outside of the valid range of the arithmetic
-     * context.
+     * and the given exponent is outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponent(
       int exponentSmall,
@@ -4431,7 +4429,7 @@ rather than properties
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to the given exponent when rounding, and the given exponent is
-     * outside of the valid range of the arithmetic context.
+     * outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponentExact(
       EInteger exponent,
@@ -4464,7 +4462,7 @@ rather than properties
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to the given exponent when rounding, and the given exponent is
-     * outside of the valid range of the arithmetic context.
+     * outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponentExact(
       int exponentSmall,
@@ -4513,7 +4511,7 @@ rather than properties
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
-     * changed to 0 when rounding, and 0 is outside of the valid range of the
+     * changed to 0 when rounding, and 0 is outside the valid range of the
      * arithmetic context.
      */
     public EDecimal RoundToIntegerExact(EContext ctx) {
@@ -4538,7 +4536,7 @@ rather than properties
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is outside
-     * of the valid range of the arithmetic context.
+     * the valid range of the arithmetic context.
      */
     public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) {
       return GetMathValue(ctx)
@@ -4559,7 +4557,7 @@ rather than properties
      * not-a-number (NaN) if the result can't fit the given precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
-     * changed to 0 when rounding, and 0 is outside of the valid range of the
+     * changed to 0 when rounding, and 0 is outside the valid range of the
      * arithmetic context.
      * @deprecated Renamed to RoundToIntegerExact.
  */
@@ -4584,7 +4582,7 @@ rather than properties
      * additional digits are discarded to make it fit. Signals FlagInvalid and
      * returns not-a-number (NaN) if the arithmetic context defines an exponent
      * range, the new exponent must be changed to 0 when rounding, and 0 is outside
-     * of the valid range of the arithmetic context.
+     * the valid range of the arithmetic context.
      * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
  */
 @Deprecated
