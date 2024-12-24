@@ -16,7 +16,7 @@
  collection. This is relevant for applications that use many-bit-long numbers
  as secret parameters.</li><li>The methods in this class (especially those
  that involve arithmetic) are not guaranteed to be "constant-time"
- (non-data-dependent) for all relevant inputs. Certain attacks that involve
+ (nondata-dependent) for all relevant inputs. Certain attacks that involve
  encrypted communications have exploited the timing and other aspects of such
  communications to derive keying material or cleartext indirectly.</li></ul>
  <p>Applications should instead use dedicated security libraries to handle
@@ -589,7 +589,7 @@ Initializes an arbitrary-precision integer from an array of bytes.
  <code>0xC8</code>, so an additional 0 is added at the start to ensure it's
  interpreted as positive.)</li><li>To encode negative numbers, take the
  absolute value of the number, subtract by 1, encode the number into bytes,
- and toggle each bit of each byte. Any further bits that appear beyond the
+ and reverse each bit of each byte. Any further bits that appear beyond the
  most significant bit of the number will be all ones. For example, the number
  -450 can be encoded as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31,
  0x7b</code>. (Note that the second example contains a cleared high bit in <code>
@@ -2075,7 +2075,8 @@ Returns an arbitrary-precision integer with the bits shifted to the right.
 Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits given as an arbitrary-precision integer. A value of 1
  doubles this value, a value of 2 multiplies it by 4; a value of 3, by 8; a
- value of 4, by 16; and so on.
+ value of 4, by 16; and in general, a value of N, by 2^N, where N is 1 or
+ greater.
 
 **Parameters:**
 
@@ -2094,7 +2095,8 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
     public EInteger ShiftLeft(int numberBits)
 Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits. A value of 1 doubles this value, a value of 2 multiplies
- it by 4, a value of 3 × by, a value of 4 × by, and so on.
+ it by 4, a value of 3, by 8, a value of 4, by 16, and in general, a value of
+ N, by 2^N, where N is 1 or greater.
 
 **Parameters:**
 
@@ -2125,7 +2127,7 @@ Returns an arbitrary-precision integer with every bit flipped from this one
     public EInteger LowBits(long longBitCount)
 Extracts the lowest bits of this integer. This is equivalent to <code>
  And(2^longBitCount - 1)</code>, but is more efficient when this integer is
- non-negative and longBitCount's value is large.
+ nonnegative and longBitCount's value is large.
 
 **Parameters:**
 
@@ -2139,8 +2141,8 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 ### LowBits
     public EInteger LowBits(int bitCount)
 Extracts the lowest bits of this integer. This is equivalent to <code>
- And(2^bitCount - 1)</code>, but is more efficient when this integer is
- non-negative and bitCount's value is large.
+ And(2^bitCount - 1)</code>, but is more efficient when this integer is nonnegative
+ and bitCount's value is large.
 
 **Parameters:**
 
@@ -2155,7 +2157,7 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
     public EInteger LowBits(EInteger bigBitCount)
 Extracts the lowest bits of this integer. This is equivalent to <code>
  And(2^bigBitCount - 1)</code>, but is more efficient when this integer is
- non-negative and bigBitCount's value is large.
+ nonnegative and bigBitCount's value is large.
 
 **Parameters:**
 
@@ -2422,7 +2424,8 @@ Finds the nth root of this instance's value, rounded down.
 **Parameters:**
 
 * <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.
 
 **Returns:**
 
@@ -2440,7 +2443,8 @@ Calculates the nth root and the remainder.
 **Parameters:**
 
 * <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.
 
 **Returns:**
 
@@ -2460,7 +2464,8 @@ Finds the nth root of this instance's value, rounded down.
 **Parameters:**
 
 * <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.
 
 **Returns:**
 
@@ -2474,7 +2479,8 @@ Calculates the nth root and the remainder.
 **Parameters:**
 
 * <code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.
 
 **Returns:**
 

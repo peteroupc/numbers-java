@@ -51,7 +51,7 @@ rather than properties
    * negative zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b>
    * is generally used when a negative number is rounded to 0; it has the same
    * mathematical value as positive zero. <b>Infinity</b> is generally used when
-   * a non-zero number is divided by zero, or when a very high or very low number
+   * a nonzero number is divided by zero, or when a very high or very low number
    * can't be represented in a given exponent range. <b>Not-a-number</b> is
    * generally used to signal errors.</p> <p>This class implements the General
    * Decimal Arithmetic Specification version 1.70 except part of chapter 6(
@@ -102,7 +102,7 @@ rather than properties
    * timely fashion due to garbage collection. This is relevant for applications
    * that use many-digit-long numbers as secret parameters.</li><li>The methods
    * in this class (especially those that involve arithmetic) are not guaranteed
-   * to be "constant-time" (non-data-dependent) for all relevant inputs. Certain
+   * to be "constant-time" (nondata-dependent) for all relevant inputs. Certain
    * attacks that involve encrypted communications have exploited the timing and
    * other aspects of such communications to derive keying material or cleartext
    * indirectly.</li></ul> <p>Applications should instead use dedicated security
@@ -123,16 +123,16 @@ rather than properties
    * or {@code System.Decimal}). Such "native" types are often subject to
    * runtime settings that change how floating-point math behaves with them, and
    * these settings are often not accessible to .NET or Java
-   * code.</li><li>Non-associativity and intermediate precisions: In general,
+   * code.</li><li>Nonassociativity and intermediate precisions: In general,
    * EDecimal and EFloat use "unlimited" precision in their calculations unless
    * specified otherwise by an EContext object. However, by limiting the
    * precision of EDecimal, EFloat, and other floating-point numbers in this way,
    * operations such as addition and multiplication on three or more numbers can
-   * be <i>non-associative</i> , meaning the result can change depending on the
+   * be <i>nonassociative</i> , meaning the result can change depending on the
    * order in which those numbers are added or multiplied. This property means
    * that if an algorithm does not ensure such numbers are added or multiplied in
    * the same order every time, its results may not be reproducible across
-   * computers or across runs of the application. This non-associativity problem
+   * computers or across runs of the application. This nonassociativity problem
    * can happen, for example, if an application splits a calculation across
    * several threads and combines their results in the end. The problems with an
    * unspecified order of operations (in the same line of code) and intermediate
@@ -2486,9 +2486,8 @@ rather than properties
      * Divides this arbitrary-precision decimal floating-point number by another
      * arbitrary-precision decimal floating-point number and returns the result;
      * returns NaN instead if the result would have a nonterminating decimal
-     * expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not
-     * desired, use DivideToExponent, or use the Divide overload that takes an
-     * EContext.
+     * expansion (including 1/3, 1/12, 1/7, and 2/3); if this is not desired, use
+     * DivideToExponent, or use the Divide overload that takes an EContext.
      * @param divisor The number to divide by.
      * @return The result of dividing this arbitrary-precision decimal
      * floating-point number by another arbitrary-precision decimal floating-point
@@ -3610,9 +3609,9 @@ rather than properties
     /**
      * Divides this arbitrary-precision decimal floating-point number by a 64-bit
      * signed integer and returns the result; returns NaN instead if the result
-     * would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7,
-     * 2/3, and so on); if this is not desired, use DivideToExponent, or use the
-     * Divide overload that takes an EContext.
+     * would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and
+     * 2/3); if this is not desired, use DivideToExponent, or use the Divide
+     * overload that takes an EContext.
      * @param longValue The parameter {@code longValue} is a 64-bit signed integer.
      * @return The result of dividing this arbitrary-precision decimal
      * floating-point number by a 64-bit signed integer. Returns infinity if the
@@ -3676,9 +3675,9 @@ rather than properties
     /**
      * Divides this arbitrary-precision decimal floating-point number by a 32-bit
      * signed integer and returns the result; returns NaN instead if the result
-     * would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7,
-     * 2/3, and so on); if this is not desired, use DivideToExponent, or use the
-     * Divide overload that takes an EContext.
+     * would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and
+     * 2/3); if this is not desired, use DivideToExponent, or use the Divide
+     * overload that takes an EContext.
      * @param intValue A 32-bit signed integer, the divisor, to divide this object
      * by.
      * @return The result of dividing this arbitrary-precision decimal

@@ -36,7 +36,7 @@ licensed under the Unlicense: https://unlicense.org/
    * collection. This is relevant for applications that use many-bit-long numbers
    * as secret parameters.</li><li>The methods in this class (especially those
    * that involve arithmetic) are not guaranteed to be "constant-time"
-   * (non-data-dependent) for all relevant inputs. Certain attacks that involve
+   * (nondata-dependent) for all relevant inputs. Certain attacks that involve
    * encrypted communications have exploited the timing and other aspects of such
    * communications to derive keying material or cleartext indirectly.</li></ul>
    * <p>Applications should instead use dedicated security libraries to handle
@@ -247,7 +247,7 @@ licensed under the Unlicense: https://unlicense.org/
      * {@code 0xC8}, so an additional 0 is added at the start to ensure it's
      * interpreted as positive.)</li><li>To encode negative numbers, take the
      * absolute value of the number, subtract by 1, encode the number into bytes,
-     * and toggle each bit of each byte. Any further bits that appear beyond the
+     * and reverse each bit of each byte. Any further bits that appear beyond the
      * most significant bit of the number will be all ones. For example, the number
      * -450 can be encoded as {@code 0xfe, 0x70} and -52869 as {@code 0xff, 0x31,
      * 0x7b}. (Note that the second example contains a cleared high bit in {@code
@@ -1867,7 +1867,7 @@ licensed under the Unlicense: https://unlicense.org/
       int size = 0;
       for (i = blocksA - 1; i >= 0; --i) {
         int workAIndex = workPosA + (i * blocksB);
-        // Set the low part of the sub-dividend with the working
+        // Set the low part of the subdividend with the working
         // block of the dividend
         System.arraycopy(workA, workAIndex, tmprem, blocksB, blocksB);
         // Clear the quotient
@@ -1895,7 +1895,7 @@ licensed under the Unlicense: https://unlicense.org/
               size);
           }
         }
-        // Set the high part of the sub-dividend with the remainder
+        // Set the high part of the subdividend with the remainder
         System.arraycopy(tmprem, 0, tmprem, blocksB << 1, blocksB);
       }
       if (rem != null) {
@@ -4450,7 +4450,8 @@ this.Pow(EInteger.FromInt64(longPower));
      * Returns an arbitrary-precision integer with the bits shifted to the left by
      * a number of bits given as an arbitrary-precision integer. A value of 1
      * doubles this value, a value of 2 multiplies it by 4; a value of 3, by 8; a
-     * value of 4, by 16; and so on.
+     * value of 4, by 16; and in general, a value of N, by 2^N, where N is 1 or
+     * greater.
      * @param eshift The number of bits to shift. Can be negative, in which case
      * this is the same as ShiftRight with the absolute value of this parameter.
      * @return An arbitrary-precision integer.
@@ -4475,7 +4476,8 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Returns an arbitrary-precision integer with the bits shifted to the left by
      * a number of bits. A value of 1 doubles this value, a value of 2 multiplies
-     * it by 4, a value of 3 × by, a value of 4 × by, and so on.
+     * it by 4, a value of 3, by 8, a value of 4, by 16, and in general, a value of
+     * N, by 2^N, where N is 1 or greater.
      * @param numberBits The number of bits to shift. Can be negative, in which
      * case this is the same as shiftRight with the absolute value of this
      * parameter.
@@ -4594,7 +4596,7 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Extracts the lowest bits of this integer. This is equivalent to {@code
      * And(2^longBitCount - 1)}, but is more efficient when this integer is
-     * non-negative and longBitCount's value is large.
+     * nonnegative and longBitCount's value is large.
      * @param longBitCount The number of bits to extract from the lowest part of
      * this integer.
      * @return A value equivalent to {@code And(2^longBitCount - 1)}.
@@ -4611,8 +4613,8 @@ this.Pow(EInteger.FromInt64(longPower));
 
     /**
      * Extracts the lowest bits of this integer. This is equivalent to {@code
-     * And(2^bitCount - 1)}, but is more efficient when this integer is
-     * non-negative and bitCount's value is large.
+     * And(2^bitCount - 1)}, but is more efficient when this integer is nonnegative
+     * and bitCount's value is large.
      * @param bitCount The number of bits to extract from the lowest part of this
      * integer.
      * @return A value equivalent to {@code And(2^bitCount - 1)}.
@@ -4663,7 +4665,7 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Extracts the lowest bits of this integer. This is equivalent to {@code
      * And(2^bigBitCount - 1)}, but is more efficient when this integer is
-     * non-negative and bigBitCount's value is large.
+     * nonnegative and bigBitCount's value is large.
      * @param bigBitCount The number of bits to extract from the lowest part of
      * this integer.
      * @return A value equivalent to {@code And(2^bigBitCount - 1)}.
@@ -5375,7 +5377,8 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Finds the nth root of this instance's value, rounded down.
      * @param root The root to find; must be 1 or greater. If this value is 2, this
-     * method finds the square root; if 3, the cube root, and so on.
+     * method finds the square root; if 3, the cube root, and in general, if N, the
+     * N-th root.
      * @return The square root of this object's value. Returns 0 if this value is 0
      * or less.
      * @throws NullPointerException The parameter {@code root} is null.
@@ -5391,7 +5394,8 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Calculates the nth root and the remainder.
      * @param root The root to find; must be 1 or greater. If this value is 2, this
-     * method finds the square root; if 3, the cube root, and so on.
+     * method finds the square root; if 3, the cube root, and in general, if N, the
+     * N-th root.
      * @return An array of two arbitrary-precision integers: the first integer is
      * the nth root, and the second is the difference between this value and the
      * nth power of the first integer. Returns two zeros if this value is 0 or
@@ -5408,7 +5412,8 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Finds the nth root of this instance's value, rounded down.
      * @param root The root to find; must be 1 or greater. If this value is 2, this
-     * method finds the square root; if 3, the cube root, and so on.
+     * method finds the square root; if 3, the cube root, and in general, if N, the
+     * N-th root.
      * @return The square root of this object's value. Returns 0 if this value is 0
      * or less.
      */
@@ -5420,7 +5425,8 @@ this.Pow(EInteger.FromInt64(longPower));
     /**
      * Calculates the nth root and the remainder.
      * @param root The root to find; must be 1 or greater. If this value is 2, this
-     * method finds the square root; if 3, the cube root, and so on.
+     * method finds the square root; if 3, the cube root, and in general, if N, the
+     * N-th root.
      * @return An array of two arbitrary-precision integers: the first integer is
      * the nth root, and the second is the difference between this value and the
      * nth power of the first integer. Returns two zeros if this value is 0 or
