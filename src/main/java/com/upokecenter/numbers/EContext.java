@@ -53,7 +53,7 @@ licensed under the Unlicense: https://unlicense.org/
     public static final int FlagLostDigits = 256;
 
     /**
-     * Signals that the result is non-zero and the exponent is higher than the
+     * Signals that the result is nonzero and the exponent is higher than the
      * highest exponent allowed.
      */
     public static final int FlagOverflow = 16;

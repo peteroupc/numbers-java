@@ -139,8 +139,8 @@ A class that implements additional operations on arbitrary-precision binary
 * `static boolean SameQuantum(EFloat ed1,
  EFloat ed2)`<br>
  Returns whether two arbitrary-precision numbers have the same exponent, they
- both are not-a-number (NaN), or they both are infinity (positive and/or
- negative).
+ both are not-a-number (NaN), or they both are infinity (positive, negative,
+ or both).
 
 * `static EFloat ScaleB(EFloat ed,
  EFloat ed2,
@@ -286,12 +286,12 @@ Returns whether the given arbitrary-precision number object is a
  numbers. Can be null. If AdjustExponent of the given context is <code>
  true</code>, a nonzero number is normal if the number's exponent (when that number
  is expressed in scientific notation with one nonzero digit before the radix
- point) is at least the given context's EMax property (e.g., if EMax is -100,
- 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is
- not). If AdjustExponent of the given context is <code>false</code>, a nonzero
- number is subnormal if the number's Exponent property is at least given
- context's EMax property (e.g., if EMax is -100, 23456 * 10 <sup>-99</sup> is
- normal, but 23456 * 10 <sup>-102</sup> is not).</p>
+ point) is at least the given context's EMax property (for example, if EMax
+ is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+ <sup>-102</sup> is not). If AdjustExponent of the given context is <code>
+ false</code>, a nonzero number is subnormal if the number's Exponent property is
+ at least given context's EMax property (for example, if EMax is -100, 23456
+ * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).</p>
 
 **Returns:**
 
@@ -400,12 +400,13 @@ Finds the number class for an arbitrary-precision binary number object.
  numbers. Can be null. If AdjustExponent of the given context is <code>
  true</code>, a nonzero number is subnormal if the number's exponent (when that
  number is expressed in scientific notation with one nonzero digit before the
- radix point) is less than the given context's EMax property (e.g., if EMax
- is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
+ radix point) is less than the given context's EMax property (for example, if
+ EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
  <sup>-99</sup> is not). If AdjustExponent of the given context is <code>
  false</code>, a nonzero number is subnormal if the number's Exponent property is
- less than the given context's EMax property (e.g., if EMax is -100, 23456 *
- 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is not).</p>
+ less than the given context's EMax property (for example, if EMax is -100,
+ 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
+ not).</p>
 
 **Returns:**
 
@@ -712,8 +713,8 @@ Returns an arbitrary-precision number object with the same value as the
 ### SameQuantum
     public static boolean SameQuantum(EFloat ed1, EFloat ed2)
 Returns whether two arbitrary-precision numbers have the same exponent, they
- both are not-a-number (NaN), or they both are infinity (positive and/or
- negative).
+ both are not-a-number (NaN), or they both are infinity (positive, negative,
+ or both).
 
 **Parameters:**
 
@@ -725,7 +726,7 @@ Returns whether two arbitrary-precision numbers have the same exponent, they
 
 * Either <code>true</code> if the given arbitrary-precision numbers have
  the same exponent, they both are not-a-number (NaN), or they both are
- infinity (positive and/or negative); otherwise, <code>false</code>.
+ infinity (positive, negative, or both); otherwise, <code>false</code>.
 
 ### Trim
     public static EFloat Trim(EFloat ed1, EContext ec)
@@ -793,7 +794,7 @@ Returns an arbitrary-precision number with the same value as this one but
 ### And
     public static EFloat And(EFloat ed1, EFloat ed2, EContext ec)
 <p>Performs a logical AND operation on two binary numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative base-2
+ <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-2
  number with an Exponent property of 0 (examples include the base-2 numbers
  <code>01001</code> and <code>111001</code>). The logical AND operation sets each bit
  of the result to 1 if the corresponding bits of each logical operand are
@@ -820,7 +821,7 @@ Returns an arbitrary-precision number with the same value as this one but
 ### Invert
     public static EFloat Invert(EFloat ed1, EContext ec)
 <p>Performs a logical NOT operation on a binary number in the form of a
- <i>logical operand</i>. A <code>logical operand</code> is a non-negative base-2
+ <i>logical operand</i>. A <code>logical operand</code> is a nonnegative base-2
  number with an Exponent property of 0 (examples include <code>01001</code> and
  <code>111001</code>). The logical NOT operation sets each bit of the result to 1
  if the corresponding bit is 0, and to 0 otherwise; it can set no more bits
@@ -848,7 +849,7 @@ Returns an arbitrary-precision number with the same value as this one but
     public static EFloat Xor(EFloat ed1, EFloat ed2, EContext ec)
 <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in
  the form of <i>logical operands</i>. A <code>logical operand</code> is a
- non-negative base-2 number with an Exponent property of 0 (examples include
+ nonnegative base-2 number with an Exponent property of 0 (examples include
  the base-2 numbers <code>01001</code> and <code>111001</code>). The logical
  exclusive-OR operation sets each digit of the result to 1 if either
  corresponding digit of the logical operands, but not both, is 1, and to 0
@@ -875,7 +876,7 @@ Returns an arbitrary-precision number with the same value as this one but
 ### Or
     public static EFloat Or(EFloat ed1, EFloat ed2, EContext ec)
 <p>Performs a logical OR operation on two binary numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative base-2
+ <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-2
  number with an Exponent property of 0 (examples include the base-2 numbers
  <code>01001</code> and <code>111001</code>). The logical OR operation sets each bit
  of the result to 1 if either or both of the corresponding bits of each

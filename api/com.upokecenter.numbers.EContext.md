@@ -74,7 +74,7 @@
  an operation.
 
 * `static final int FlagOverflow`<br>
- Signals that the result is non-zero and the exponent is higher than the
+ Signals that the result is nonzero and the exponent is higher than the
  highest exponent allowed.
 
 * `static final int FlagRounded`<br>
@@ -261,7 +261,7 @@ Signals that an operand was rounded to a different mathematical value before
  an operation.
 ### FlagOverflow
     public static final int FlagOverflow
-Signals that the result is non-zero and the exponent is higher than the
+Signals that the result is nonzero and the exponent is higher than the
  highest exponent allowed.
 ### FlagRounded
     public static final int FlagRounded

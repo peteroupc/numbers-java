@@ -9,7 +9,7 @@ licensed under the Unlicense: https://unlicense.org/
 
   /**
    * Common interface for classes that shift a number of digits and record
-   * information on whether a non-zero digit was discarded this way.
+   * information on whether a nonzero digit was discarded this way.
    */
   interface IShiftAccumulator {
     EInteger getShiftedInt();

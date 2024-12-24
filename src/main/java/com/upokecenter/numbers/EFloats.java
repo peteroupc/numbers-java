@@ -111,12 +111,12 @@ private EFloats() {
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is normal if the number's exponent (when that number
      * is expressed in scientific notation with one nonzero digit before the radix
-     * point) is at least the given context's EMax property (e.g., if EMax is -100,
-     * 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is
-     * not). If AdjustExponent of the given context is {@code false}, a nonzero
-     * number is subnormal if the number's Exponent property is at least given
-     * context's EMax property (e.g., if EMax is -100, 23456 * 10 <sup>-99</sup> is
-     * normal, but 23456 * 10 <sup>-102</sup> is not).</p>
+     * point) is at least the given context's EMax property (for example, if EMax
+     * is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+     * <sup>-102</sup> is not). If AdjustExponent of the given context is {@code
+     * false}, a nonzero number is subnormal if the number's Exponent property is
+     * at least given context's EMax property (for example, if EMax is -100, 23456
+     * * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).</p>
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code true} if the given context is null or
      * HasExponentRange of the given context is {@code false}.
@@ -215,12 +215,13 @@ private EFloats() {
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is subnormal if the number's exponent (when that
      * number is expressed in scientific notation with one nonzero digit before the
-     * radix point) is less than the given context's EMax property (e.g., if EMax
-     * is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
+     * radix point) is less than the given context's EMax property (for example, if
+     * EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
      * <sup>-99</sup> is not). If AdjustExponent of the given context is {@code
      * false}, a nonzero number is subnormal if the number's Exponent property is
-     * less than the given context's EMax property (e.g., if EMax is -100, 23456 *
-     * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is not).</p>
+     * less than the given context's EMax property (for example, if EMax is -100,
+     * 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
+     * not).</p>
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code false} if the given context is null or
      * HasExponentRange of the given context is {@code false}.
@@ -637,13 +638,13 @@ private EFloats() {
 
     /**
      * Returns whether two arbitrary-precision numbers have the same exponent, they
-     * both are not-a-number (NaN), or they both are infinity (positive and/or
-     * negative).
+     * both are not-a-number (NaN), or they both are infinity (positive, negative,
+     * or both).
      * @param ed1 The first arbitrary-precision number.
      * @param ed2 The second arbitrary-precision number.
      * @return Either {@code true} if the given arbitrary-precision numbers have
      * the same exponent, they both are not-a-number (NaN), or they both are
-     * infinity (positive and/or negative); otherwise, {@code false}.
+     * infinity (positive, negative, or both); otherwise, {@code false}.
      */
     public static boolean SameQuantum(EFloat ed1, EFloat ed2) {
       if (ed1 == null || ed2 == null) {
@@ -784,7 +785,7 @@ private EFloats() {
 
     /**
      * <p>Performs a logical AND operation on two binary numbers in the form of
-     * <i>logical operands</i>. A {@code logical operand} is a non-negative base-2
+     * <i>logical operands</i>. A {@code logical operand} is a nonnegative base-2
      * number with an Exponent property of 0 (examples include the base-2 numbers
      * {@code 01001} and {@code 111001}). The logical AND operation sets each bit
      * of the result to 1 if the corresponding bits of each logical operand are
@@ -822,7 +823,7 @@ private EFloats() {
 
     /**
      * <p>Performs a logical NOT operation on a binary number in the form of a
-     * <i>logical operand</i>. A {@code logical operand} is a non-negative base-2
+     * <i>logical operand</i>. A {@code logical operand} is a nonnegative base-2
      * number with an Exponent property of 0 (examples include {@code 01001} and
      * {@code 111001}). The logical NOT operation sets each bit of the result to 1
      * if the corresponding bit is 0, and to 0 otherwise; it can set no more bits
@@ -862,7 +863,7 @@ private EFloats() {
     /**
      * <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in
      * the form of <i>logical operands</i>. A {@code logical operand} is a
-     * non-negative base-2 number with an Exponent property of 0 (examples include
+     * nonnegative base-2 number with an Exponent property of 0 (examples include
      * the base-2 numbers {@code 01001} and {@code 111001}). The logical
      * exclusive-OR operation sets each digit of the result to 1 if either
      * corresponding digit of the logical operands, but not both, is 1, and to 0
@@ -900,7 +901,7 @@ private EFloats() {
 
     /**
      * <p>Performs a logical OR operation on two binary numbers in the form of
-     * <i>logical operands</i>. A {@code logical operand} is a non-negative base-2
+     * <i>logical operands</i>. A {@code logical operand} is a nonnegative base-2
      * number with an Exponent property of 0 (examples include the base-2 numbers
      * {@code 01001} and {@code 111001}). The logical OR operation sets each bit
      * of the result to 1 if either or both of the corresponding bits of each

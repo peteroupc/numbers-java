@@ -243,7 +243,7 @@ private DecTestUtil() {
                   }
                 }
                 if ((c & 0xf800) != 0xd800) {
-                  // Non-surrogate
+                  // Nonsurrogate
                   sb.append((char)c);
                 } else if ((c & 0xfc00) == 0xd800) {
                   int ch = index >= str.length() ? -1 : str.charAt(index++);
@@ -1155,7 +1155,7 @@ private DecTestUtil() {
       } else if (op.equals("pow")) {
         IExtendedNumber d3 = op1.Pow(op2, ctx);
         // Check for cases that contradict the General Decimal
-        // Arithmetic spec
+        // Arithmetic specification
         if (op1.IsZeroValue() && op2.IsZeroValue()) {
           return 0;
         }
@@ -1246,7 +1246,7 @@ private DecTestUtil() {
         if (!op1.IsZeroValue()) {
           // ignore flags for zero operand, expects
           // divide by zero flag where general decimal
-          // spec doesn't set flags in this case
+          // specification doesn't set flags in this case
           AssertFlagsRestricted(expectedFlags, ctx.getFlags(), ln);
         }
       } else if (op.equals("exp")) {
@@ -1292,7 +1292,7 @@ private DecTestUtil() {
         if (!op1.IsZeroValue()) {
           // ignore flags for zero operand, expects
           // divide by zero flag where general decimal
-          // spec doesn't set flags in this case
+          // specification doesn't set flags in this case
           AssertFlagsRestricted(expectedFlags, ctx.getFlags(), ln);
         }
       } else if (op.equals("div")) {

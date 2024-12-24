@@ -3900,7 +3900,7 @@ import com.upokecenter.numbers.*;
           }
           return ed;
         } else if (exponent == 2047) {
-          throw new IllegalArgumentException("dbl is non-finite");
+          throw new IllegalArgumentException("dbl is nonfinite");
         } else {
           int e1 = exponent - 1;
           if (valueUlpTable[e1] == null) {
@@ -3935,7 +3935,7 @@ import com.upokecenter.numbers.*;
           }
           return ed;
         } else if (exponent == 255) {
-          throw new IllegalArgumentException("sng is non-finite");
+          throw new IllegalArgumentException("sng is nonfinite");
         } else {
           exponent += 924;
           if (valueUlpTable[exponent] == null) {

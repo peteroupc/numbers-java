@@ -112,12 +112,12 @@ private EDecimals() {
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is normal if the number's exponent (when that number
      * is expressed in scientific notation with one nonzero digit before the radix
-     * point) is at least the given context's EMax property (e.g., if EMax is -100,
-     * 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is
-     * not). If AdjustExponent of the given context is {@code false}, a nonzero
-     * number is subnormal if the number's Exponent property is at least given
-     * context's EMax property (e.g., if EMax is -100, 23456 * 10 <sup>-99</sup> is
-     * normal, but 23456 * 10 <sup>-102</sup> is not).</p>
+     * point) is at least the given context's EMax property (for example, if EMax
+     * is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+     * <sup>-102</sup> is not). If AdjustExponent of the given context is {@code
+     * false}, a nonzero number is subnormal if the number's Exponent property is
+     * at least given context's EMax property (for example, if EMax is -100, 23456
+     * * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).</p>
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code true} if the given context is null or
      * HasExponentRange of the given context is {@code false}.
@@ -232,12 +232,13 @@ private EDecimals() {
      * numbers. Can be null. If AdjustExponent of the given context is {@code
      * true}, a nonzero number is subnormal if the number's exponent (when that
      * number is expressed in scientific notation with one nonzero digit before the
-     * radix point) is less than the given context's EMax property (e.g., if EMax
-     * is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
+     * radix point) is less than the given context's EMax property (for example, if
+     * EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
      * <sup>-99</sup> is not). If AdjustExponent of the given context is {@code
      * false}, a nonzero number is subnormal if the number's Exponent property is
-     * less than the given context's EMax property (e.g., if EMax is -100, 23456 *
-     * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is not).</p>
+     * less than the given context's EMax property (for example, if EMax is -100,
+     * 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
+     * not).</p>
      * @return Either {@code true} if the given number is subnormal, or {@code
      * false} otherwise. Returns {@code false} if the given context is null or
      * HasExponentRange of the given context is {@code false}.
@@ -656,13 +657,13 @@ private EDecimals() {
 
     /**
      * Returns whether two arbitrary-precision numbers have the same exponent, they
-     * both are not-a-number (NaN), or they both are infinity (positive and/or
-     * negative).
+     * both are not-a-number (NaN), or they both are infinity (positive, negative,
+     * or both).
      * @param ed1 The first arbitrary-precision number.
      * @param ed2 The second arbitrary-precision number.
      * @return Either {@code true} if the given arbitrary-precision numbers have
      * the same exponent, they both are not-a-number (NaN), or they both are
-     * infinity (positive and/or negative); otherwise, {@code false}.
+     * infinity (positive, negative, or both); otherwise, {@code false}.
      */
     public static boolean SameQuantum(EDecimal ed1, EDecimal ed2) {
       if (ed1 == null || ed2 == null) {
@@ -800,9 +801,9 @@ private EDecimals() {
 
     /**
      * <p>Performs a logical AND operation on two decimal numbers in the form of
-     * <i>logical operands</i>. A {@code logical operand} is a non-negative base-10
+     * <i>logical operands</i>. A {@code logical operand} is a nonnegative base-10
      * number with an Exponent property of 0 and no other base-10 digits than 0 or
-     * 1 (examples include {@code 01001} and {@code 111001}, but not {@code 02001}
+     * 1 (examples include {@code 01001} and {@code 111001} , but not {@code 02001}
      * or {@code 99999}). The logical AND operation sets each digit of the result
      * to 1 if the corresponding digits of each logical operand are both 1, and to
      * 0 otherwise. For example, {@code 01001 AND 111010 = 01000}.</p>
@@ -838,7 +839,7 @@ private EDecimals() {
     /**
      * <p>Performs a logical NOT operation on an arbitrary-precision decimal number
      * in the form of a <i>logical operand</i>. A {@code logical operand} is a
-     * non-negative base-10 number with an Exponent property of 0 and no other
+     * nonnegative base-10 number with an Exponent property of 0 and no other
      * base-10 digits than 0 or 1 (examples include {@code 01001} and {@code
      * 111001} , but not {@code 02001} or {@code 99999}). The logical NOT
      * operation sets each digit of the result to 1 if the corresponding digit is
@@ -877,12 +878,12 @@ private EDecimals() {
     /**
      * <p>Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
      * the form of <i>logical operands</i>. A {@code logical operand} is a
-     * non-negative base-10 number with an exponent of 0 and no other base-10
-     * digits than 0 or 1 (examples include {@code 01001} and {@code 111001}, but
-     * not {@code 02001} or {@code 99999}). The logical exclusive-OR operation
-     * sets each digit of the result to 1 if either corresponding digit of the
-     * logical operands, but not both, is 1, and to 0 otherwise. For example,
-     * {@code 01001 XOR 111010 = 101010}.</p>
+     * nonnegative base-10 number with an exponent of 0 and no other base-10 digits
+     * than 0 or 1 (examples include {@code 01001} and {@code 111001}, but not
+     * {@code 02001} or {@code 99999}). The logical exclusive-OR operation sets
+     * each digit of the result to 1 if either corresponding digit of the logical
+     * operands, but not both, is 1, and to 0 otherwise. For example, {@code 01001
+     * XOR 111010 = 101010}.</p>
      * @param ed1 The first logical operand to the logical exclusive-OR operation.
      * @param ed2 The second logical operand to the logical exclusive-OR operation.
      * @param ec An arithmetic context to control the maximum precision of
@@ -912,9 +913,9 @@ private EDecimals() {
 
     /**
      * <p>Performs a logical OR operation on two decimal numbers in the form of
-     * <i>logical operands</i>. A {@code logical operand} is a non-negative base-10
+     * <i>logical operands</i>. A {@code logical operand} is a nonnegative base-10
      * number with an Exponent property of 0 and no other base-10 digits than 0 or
-     * 1 (examples include {@code 01001} and {@code 111001}, but not {@code 02001}
+     * 1 (examples include {@code 01001} and {@code 111001} , but not {@code 02001}
      * or {@code 99999}). The logical OR operation sets each digit of the result
      * to 1 if either or both of the corresponding digits of the logical operands
      * are 1, and to 0 otherwise. For example, {@code 01001 OR 111010 = 111011}.</p>

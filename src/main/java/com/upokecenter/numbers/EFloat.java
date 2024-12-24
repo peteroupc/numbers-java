@@ -60,14 +60,13 @@ licensed under the Unlicense: https://unlicense.org/
    * guaranteed to be cleared in a timely fashion due to garbage collection. This
    * is relevant for applications that use many-bit-long numbers as secret
    * parameters.</li><li>The methods in this class (especially those that involve
-   * arithmetic) are not guaranteed to be "constant-time" (non-data-dependent)
-   * for all relevant inputs. Certain attacks that involve encrypted
-   * communications have exploited the timing and other aspects of such
-   * communications to derive keying material or cleartext indirectly.</li></ul>
-   * <p>Applications should instead use dedicated security libraries to handle
-   * big numbers in security-sensitive algorithms.</p> <p><b>Reproducibility
-   * note</b></p> <p>See the reproducibility note in the EDecimal class's
-   * documentation.</p>
+   * arithmetic) are not guaranteed to be "constant-time" (nondata-dependent) for
+   * all relevant inputs. Certain attacks that involve encrypted communications
+   * have exploited the timing and other aspects of such communications to derive
+   * keying material or cleartext indirectly.</li></ul> <p>Applications should
+   * instead use dedicated security libraries to handle big numbers in
+   * security-sensitive algorithms.</p> <p><b>Reproducibility note</b></p> <p>See
+   * the reproducibility note in the EDecimal class's documentation.</p>
    */
 
   public final class EFloat implements Comparable<EFloat> {
@@ -680,10 +679,10 @@ Binary16SignifAreaBits;
      * "Infinity", "INF", quiet NaN ("NaN") followed by any number of digits (these
      * digits may begin with any number of zeros), or signaling NaN ("sNaN")
      * followed by any number of digits (these digits may begin with any number of
-     * zeros), all where the letters can be any combination of basic uppercase
-     * and/or basic lowercase letters.</p> <p>All characters mentioned earlier are
-     * the corresponding characters in the Basic Latin range. In particular, the
-     * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
+     * zeros), all where the letters can be any combination of basic uppercase and
+     * basic lowercase letters.</p> <p>All characters mentioned earlier are the
+     * corresponding characters in the Basic Latin range. In particular, the digits
+     * must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not
      * allowed to contain white space characters, including spaces.</p>
      * @param str The parameter {@code str} is a text string.
      * @param offset An index starting at 0 showing where the desired portion of
@@ -787,7 +786,7 @@ Binary16SignifAreaBits;
      * by any number of digits (these digits may begin with any number of zeros),
      * or signaling NaN ("sNaN") followed by any number of digits (these digits may
      * begin with any number of zeros), all where the letters can be any
-     * combination of basic uppercase and/or basic lowercase letters.</p> <p>All
+     * combination of basic uppercase and basic lowercase letters.</p> <p>All
      * characters mentioned earlier are the corresponding characters in the Basic
      * Latin range. In particular, the digits must be the basic digits 0 to 9
      * (U+0030 to U+0039). The sequence is not allowed to contain white space
@@ -894,11 +893,11 @@ Binary16SignifAreaBits;
      * "Infinity", "INF", quiet NaN ("NaN") followed by any number of digits (these
      * digits may begin with any number of zeros), or signaling NaN ("sNaN")
      * followed by any number of digits (these digits may begin with any number of
-     * zeros), all where the letters can be any combination of basic uppercase
-     * and/or basic lowercase letters.</p> <p>All characters mentioned earlier are
-     * the corresponding characters in the Basic Latin range. In particular, the
-     * digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is
-     * not allowed to contain white space characters, including spaces.</p>
+     * zeros), all where the letters can be any combination of basic uppercase and
+     * basic lowercase letters.</p> <p>All characters mentioned earlier are the
+     * corresponding characters in the Basic Latin range. In particular, the digits
+     * must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence is not
+     * allowed to contain white space characters, including spaces.</p>
      * @param bytes A sequence of bytes to convert to a binary floating-point
      * number.
      * @param offset An index starting at 0 showing where the desired portion of
