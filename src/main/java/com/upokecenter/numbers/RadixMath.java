@@ -2022,7 +2022,7 @@ licensed under the Unlicense: https://unlicense.org/
         if ((ctx2.getFlags() & (EContext.FlagOverflow |
               EContext.FlagUnderflow)) == 0) {
           // Don't set flags except on overflow or underflow,
-          // in accordance with the DecTest test cases
+          // per the DecTest test cases
           ctx2.setFlags(0);
         }
         if ((ctx2.getFlags() & EContext.FlagUnderflow) != 0) {
@@ -3905,7 +3905,7 @@ licensed under the Unlicense: https://unlicense.org/
     private static int CompareToHandleSpecial2(
       int thisFlags,
       int otherFlags) {
-      // Assumes either value is NaN and/or infinity
+      // Assumes either value is NaN or infinity
       {
         if ((thisFlags & BigNumberFlags.FlagNaN) != 0) {
           if ((otherFlags & BigNumberFlags.FlagNaN) != 0) {
@@ -5729,7 +5729,7 @@ licensed under the Unlicense: https://unlicense.org/
         }
       }
 
-      // Binary precision of potentially non-binary numbers
+      // Binary precision of potentially nonbinary numbers
       // binaryPrec means whether precision is the number of bits and not
       // digits
       boolean binaryPrec = ctx.isPrecisionInBits() && this.thisRadix != 2 &&
