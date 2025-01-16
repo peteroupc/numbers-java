@@ -4624,7 +4624,7 @@ Returns a number in which the value of this object is rounded to fit the
  maximum precision allowed if it has more significant digits than the maximum
  precision. The maximum precision allowed is given in an arithmetic context.
  This method is designed for preparing operands to a custom arithmetic
- operation in accordance with the "simplified" arithmetic given in Appendix A
+ operation per the "simplified" arithmetic given in Appendix A
  of the General Decimal Arithmetic Specification.
 
 **Parameters:**
