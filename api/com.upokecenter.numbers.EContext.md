@@ -243,92 +243,157 @@
 ## Field Details
 
 ### FlagClamped
+
     public static final int FlagClamped
+
 Signals that the exponent was adjusted to fit the exponent range.
+
 ### FlagDivideByZero
+
     public static final int FlagDivideByZero
+
 Signals a division of a nonzero number by zero.
+
 ### FlagInexact
+
     public static final int FlagInexact
+
 Signals that the result was rounded to a different mathematical value, but
  as close as possible to the original.
+
 ### FlagInvalid
+
     public static final int FlagInvalid
+
 Signals an invalid operation.
+
 ### FlagLostDigits
+
     public static final int FlagLostDigits
+
 Signals that an operand was rounded to a different mathematical value before
  an operation.
+
 ### FlagOverflow
+
     public static final int FlagOverflow
+
 Signals that the result is nonzero and the exponent is higher than the
  highest exponent allowed.
+
 ### FlagRounded
+
     public static final int FlagRounded
+
 Signals that the result was rounded to fit the precision; either the value
  or the exponent may have changed from the original.
+
 ### FlagSubnormal
+
     public static final int FlagSubnormal
+
 Signals that the result's exponent, before rounding, is lower than the
  lowest exponent allowed.
+
 ### FlagUnderflow
+
     public static final int FlagUnderflow
+
 Signals that the result's exponent, before rounding, is lower than the
  lowest exponent allowed, and the result was rounded to a different
  mathematical value, but as close as possible to the original.
+
 ### Basic
+
     public static final EContext Basic
+
 A basic arithmetic context, 9 digits precision, rounding mode half-up,
  unlimited exponent range. The default rounding mode is HalfUp.
+
 ### BigDecimalJava
+
     public static final EContext BigDecimalJava
+
 An arithmetic context for Java's BigDecimal format. The default rounding
  mode is HalfUp.
+
 ### Binary128
+
     public static final EContext Binary128
+
 An arithmetic context for the IEEE-754-2008 binary128 format, 113 bits
  precision. The default rounding mode is HalfEven.
+
 ### Binary16
+
     public static final EContext Binary16
+
 An arithmetic context for the IEEE-754-2008 binary16 format, 11 bits
  precision. The default rounding mode is HalfEven.
+
 ### Binary32
+
     public static final EContext Binary32
+
 An arithmetic context for the IEEE-754-2008 binary32 format, 24 bits
  precision. The default rounding mode is HalfEven.
+
 ### Binary64
+
     public static final EContext Binary64
+
 An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision. The default rounding mode is HalfEven.
+
 ### CliDecimal
+
     public static final EContext CliDecimal
+
 An arithmetic context for the.NET Framework decimal format (see <code>"Forms of numbers"</code>), 96 bits precision,
  and a valid exponent range of -28 to 0. The default rounding mode is
  HalfEven. (The <code>"Cli"</code> stands for "Common Language Infrastructure",
  which defined this format as the .NET Framework decimal format in version 1,
  but leaves it unspecified in later versions.).
+
 ### Decimal128
+
     public static final EContext Decimal128
+
 An arithmetic context for the IEEE-754-2008 decimal128 format. The default
  rounding mode is HalfEven.
+
 ### Decimal32
+
     public static final EContext Decimal32
+
 An arithmetic context for the IEEE-754-2008 decimal32 format. The default
  rounding mode is HalfEven.
+
 ### Decimal64
+
     public static final EContext Decimal64
+
 An arithmetic context for the IEEE-754-2008 decimal64 format. The default
  rounding mode is HalfEven.
+
 ### Unlimited
+
     public static final EContext Unlimited
+
 No specific (theoretical) limit on precision. Rounding mode HalfUp.
+
 ### UnlimitedHalfEven
+
     public static final EContext UnlimitedHalfEven
+
 No specific (theoretical) limit on precision. Rounding mode HalfEven.
+
 ## Method Details
 
 ### getAdjustExponent
+
     public final boolean getAdjustExponent()
+
 Gets a value indicating whether the EMax and EMin properties refer to the
  number's Exponent property adjusted to the number's precision, or just the
  number's Exponent property. The default value is true, meaning that EMax and
@@ -344,7 +409,9 @@ Gets a value indicating whether the EMax and EMin properties refer to the
  to just the number's Exponent property.
 
 ### getClampNormalExponents
+
     public final boolean getClampNormalExponents()
+
 Gets a value indicating whether a converted number's Exponent property will
  not be higher than EMax + 1 - Precision. If a number's exponent is higher
  than that value, but not high enough to cause overflow, the exponent is
@@ -358,7 +425,9 @@ Gets a value indicating whether a converted number's Exponent property will
  than EMax + 1 - Precision.
 
 ### getEMax
+
     public final EInteger getEMax()
+
 Gets the highest exponent possible when a converted number is expressed in
  scientific notation with one nonzero digit before the radix point. For
  example, with a precision of 3 and an EMax of 100, the maximum value
@@ -374,7 +443,9 @@ Gets the highest exponent possible when a converted number is expressed in
  Exponent property.) If HasExponentRange is false, this value will be 0.
 
 ### getEMin
+
     public final EInteger getEMin()
+
 Gets the lowest exponent possible when a converted number is expressed in
  scientific notation with one nonzero digit before the radix point. For
  example, with a precision of 3 and an EMin of -100, the next value that
@@ -392,7 +463,9 @@ Gets the lowest exponent possible when a converted number is expressed in
  HasExponentRange is false, this value will be 0.
 
 ### getFlags
+
     public final int getFlags()
+
 Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be 0. This
  value is a combination of bit fields. To retrieve a particular flag, use the
@@ -410,9 +483,13 @@ Gets the flags that are set from converting numbers according to this
  Inexact flag is set.
 
 ### setFlags
+
     public final void setFlags(int value)
+
 ### getHasExponentRange
+
     public final boolean getHasExponentRange()
+
 Gets a value indicating whether this context defines a minimum and maximum
  exponent. If false, converted exponents can have any exponent and operations
  can't cause overflow or underflow.
@@ -426,7 +503,9 @@ Gets a value indicating whether this context defines a minimum and maximum
  false</code>.
 
 ### getHasFlags
+
     public final boolean getHasFlags()
+
 Gets a value indicating whether this context has a mutable Flags field.
 
 **Returns:**
@@ -435,7 +514,9 @@ Gets a value indicating whether this context has a mutable Flags field.
  <code>false</code>.
 
 ### getHasMaxPrecision
+
     public final boolean getHasMaxPrecision()
+
 Gets a value indicating whether this context defines a maximum precision.
  This is the same as whether this context's Precision property is zero.
 
@@ -445,7 +526,9 @@ Gets a value indicating whether this context defines a maximum precision.
  <code>false</code>.
 
 ### isPrecisionInBits
+
     public final boolean isPrecisionInBits()
+
 Gets a value indicating whether this context's Precision property is in
  bits, rather than digits. The default is false.
 
@@ -457,7 +540,9 @@ Gets a value indicating whether this context's Precision property is in
  otherwise, <code>false</code>. The default is false.
 
 ### isSimplified
+
     public final boolean isSimplified()
+
 Gets a value indicating whether to use a "simplified" arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers are not
  allowed, and negative zero is treated the same as positive zero. For further
@@ -473,7 +558,9 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
  false</code> .
 
 ### getPrecision
+
     public final EInteger getPrecision()
+
 <p>Gets the maximum length of a converted number in digits, ignoring the
  radix point and exponent. For example, if precision is 3, a converted
  number's significand can range from 0 to 999 (up to three digits long). If
@@ -491,7 +578,9 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
  0, converted numbers can have any precision.
 
 ### getRounding
+
     public final ERounding getRounding()
+
 Gets the desired rounding mode when converting numbers that can't be
  represented in the given precision and exponent range.
 
@@ -501,7 +590,9 @@ Gets the desired rounding mode when converting numbers that can't be
  represented in the given precision and exponent range.
 
 ### getTraps
+
     public final int getTraps()
+
 <p>Gets the traps that are set for each flag in the context. Whenever a flag
  is signaled, even if <code>HasFlags</code> is false, and the flag's trap is
  enabled, the operation will throw a TrapException. </p> <p>For example, if
@@ -518,7 +609,9 @@ Gets the desired rounding mode when converting numbers that can't be
  equals.
 
 ### ForPrecision
+
     public static EContext ForPrecision(int precision)
+
 Creates a new arithmetic context using the given maximum number of digits,
  an unlimited exponent range, and the HalfUp rounding mode.
 
@@ -531,7 +624,9 @@ Creates a new arithmetic context using the given maximum number of digits,
 * A context object for arbitrary-precision arithmetic settings.
 
 ### ForPrecisionAndRounding
+
     public static EContext ForPrecisionAndRounding(int precision, ERounding rounding)
+
 Creates a new EContext object initialized with an unlimited exponent range,
  and the given rounding mode and maximum precision.
 
@@ -546,7 +641,9 @@ Creates a new EContext object initialized with an unlimited exponent range,
 * A context object for arbitrary-precision arithmetic settings.
 
 ### ForRounding
+
     public static EContext ForRounding(ERounding rounding)
+
 Creates a new EContext object initialized with an unlimited precision, an
  unlimited exponent range, and the given rounding mode.
 
@@ -559,7 +656,9 @@ Creates a new EContext object initialized with an unlimited precision, an
 * A context object for arbitrary-precision arithmetic settings.
 
 ### Copy
+
     public EContext Copy()
+
 Initializes a new EContext that is a copy of another EContext.
 
 **Returns:**
@@ -567,7 +666,9 @@ Initializes a new EContext that is a copy of another EContext.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### ExponentWithinRange
+
     public boolean ExponentWithinRange(EInteger exponent)
+
 Determines whether a number can have the given Exponent property under this
  arithmetic context.
 
@@ -588,7 +689,9 @@ Determines whether a number can have the given Exponent property under this
 * <code>NullPointerException</code> - The parameter <code>exponent</code> is null.
 
 ### toString
+
     public String toString()
+
 Returns this object in a text form intended to be read by humans. The value
  returned by this method is not intended to be parsed by computer programs,
  and the exact text of the value may change at any time between versions of
@@ -603,7 +706,9 @@ Returns this object in a text form intended to be read by humans. The value
 * A string representation of this object.
 
 ### getHasFlagsOrTraps
+
     public final boolean getHasFlagsOrTraps()
+
 Gets a value indicating whether this context has a mutable Flags field, one
  or more trap enablers, or both.
 
@@ -613,7 +718,9 @@ Gets a value indicating whether this context has a mutable Flags field, one
  trap enablers, or both; otherwise, <code>false</code>.
 
 ### WithAdjustExponent
+
     public EContext WithAdjustExponent(boolean adjustExponent)
+
 Copies this EContext and sets the copy's "AdjustExponent" property to the
  given value.
 
@@ -627,7 +734,9 @@ Copies this EContext and sets the copy's "AdjustExponent" property to the
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithBigExponentRange
+
     public EContext WithBigExponentRange(EInteger exponentMin, EInteger exponentMax)
+
 Copies this arithmetic context and sets the copy's exponent range.
 
 **Parameters:**
@@ -647,7 +756,9 @@ Copies this arithmetic context and sets the copy's exponent range.
 * <code>IllegalArgumentException</code> - ExponentMin greater than exponentMax".
 
 ### WithNoFlagsOrTraps
+
     public EContext WithNoFlagsOrTraps()
+
 Copies this EContext with <code>HasFlags</code> set to false, a Traps value of 0,
  and a Flags value of 0.
 
@@ -656,7 +767,9 @@ Copies this EContext with <code>HasFlags</code> set to false, a Traps value of 0
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithBigPrecision
+
     public EContext WithBigPrecision(EInteger bigintPrecision)
+
 Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
@@ -672,7 +785,9 @@ Copies this EContext and gives it a particular precision value.
 * <code>NullPointerException</code> - The parameter <code>bigintPrecision</code> is null.
 
 ### WithBlankFlags
+
     public EContext WithBlankFlags()
+
 Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
  0.
 
@@ -681,7 +796,9 @@ Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithExponentClamp
+
     public EContext WithExponentClamp(boolean clamp)
+
 Copies this arithmetic context and sets the copy's "ClampNormalExponents"
  flag to the given value.
 
@@ -694,7 +811,9 @@ Copies this arithmetic context and sets the copy's "ClampNormalExponents"
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithExponentRange
+
     public EContext WithExponentRange(int exponentMinSmall, int exponentMaxSmall)
+
 Copies this arithmetic context and sets the copy's exponent range.
 
 **Parameters:**
@@ -708,7 +827,9 @@ Copies this arithmetic context and sets the copy's exponent range.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithNoFlags
+
     public EContext WithNoFlags()
+
 Copies this EContext with <code>HasFlags</code> set to false and a Flags value of
  0.
 
@@ -717,7 +838,9 @@ Copies this EContext with <code>HasFlags</code> set to false and a Flags value o
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithPrecision
+
     public EContext WithPrecision(int precision)
+
 Copies this EContext and gives it a particular precision value.
 
 **Parameters:**
@@ -729,7 +852,9 @@ Copies this EContext and gives it a particular precision value.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithPrecisionInBits
+
     public EContext WithPrecisionInBits(boolean isPrecisionBits)
+
 Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
  given value.
 
@@ -743,7 +868,9 @@ Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithRounding
+
     public EContext WithRounding(ERounding rounding)
+
 Copies this EContext with the specified rounding mode.
 
 **Parameters:**
@@ -755,7 +882,9 @@ Copies this EContext with the specified rounding mode.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithSimplified
+
     public EContext WithSimplified(boolean simplified)
+
 Copies this EContext and sets the copy's "IsSimplified" property to the
  given value.
 
@@ -768,7 +897,9 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithTraps
+
     public EContext WithTraps(int traps)
+
 Copies this EContext with Traps set to the given value. (Also sets HasFlags
  on the copy to <code>True</code>, but this may change in version 2.0 of this
  library.).
@@ -783,7 +914,9 @@ Copies this EContext with Traps set to the given value. (Also sets HasFlags
 * A context object for arbitrary-precision arithmetic settings.
 
 ### WithUnlimitedExponents
+
     public EContext WithUnlimitedExponents()
+
 Copies this EContext with an unlimited exponent range.
 
 **Returns:**
@@ -791,7 +924,9 @@ Copies this EContext with an unlimited exponent range.
 * A context object for arbitrary-precision arithmetic settings.
 
 ### GetNontrapping
+
     public EContext GetNontrapping()
+
 Returns this context if it doesn't set traps, or a context without traps and
  with blank flags if it does, so that the resulting context does not cause
  trap exceptions to occur. This is not a general-purpose method; it is
@@ -803,7 +938,9 @@ Returns this context if it doesn't set traps, or a context without traps and
  with blank flags if it does.
 
 ### TriggerTraps
+
     public <T> T TriggerTraps(T result, EContext trappableContext)
+
 Throws trap exceptions if the given context has flags set that also have
  traps enabled for them in this context, and adds the given context's flags
  to this context if HasFlags for this context is true. This is not a

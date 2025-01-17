@@ -496,7 +496,9 @@ Use Pow instead.
 ## Method Details
 
 ### getOne
+
     public static EInteger getOne()
+
 Gets the number 1 as an arbitrary-precision integer.
 
 **Returns:**
@@ -504,7 +506,9 @@ Gets the number 1 as an arbitrary-precision integer.
 * The number 1 as an arbitrary-precision integer.
 
 ### getTen
+
     public static EInteger getTen()
+
 Gets the number 10 as an arbitrary-precision integer.
 
 **Returns:**
@@ -512,7 +516,9 @@ Gets the number 10 as an arbitrary-precision integer.
 * The number 10 as an arbitrary-precision integer.
 
 ### getZero
+
     public static EInteger getZero()
+
 Gets the number zero as an arbitrary-precision integer.
 
 **Returns:**
@@ -520,7 +526,9 @@ Gets the number zero as an arbitrary-precision integer.
 * The number zero as an arbitrary-precision integer.
 
 ### isEven
+
     public final boolean isEven()
+
 Gets a value indicating whether this value is even.
 
 **Returns:**
@@ -528,7 +536,9 @@ Gets a value indicating whether this value is even.
 * <code>true</code> if this value is even; otherwise, <code>false</code>.
 
 ### isPowerOfTwo
+
     public final boolean isPowerOfTwo()
+
 Gets a value indicating whether this object's value is a power of two, and
  greater than 0.
 
@@ -538,7 +548,9 @@ Gets a value indicating whether this object's value is a power of two, and
  than 0; otherwise, <code>false</code>.
 
 ### isZero
+
     public final boolean isZero()
+
 Gets a value indicating whether this value is 0.
 
 **Returns:**
@@ -546,7 +558,9 @@ Gets a value indicating whether this value is 0.
 * <code>true</code> if this value is 0; otherwise, <code>false</code>.
 
 ### signum
+
     public final int signum()
+
 Gets the sign of this object's value.
 
 **Returns:**
@@ -554,7 +568,9 @@ Gets the sign of this object's value.
 * The sign of this object's value.
 
 ### FromBytes
+
     public static EInteger FromBytes(byte[] bytes, boolean littleEndian)
+
 Initializes an arbitrary-precision integer from an array of bytes.
 
 **Parameters:**
@@ -578,7 +594,9 @@ Initializes an arbitrary-precision integer from an array of bytes.
 * <code>NullPointerException</code> - The parameter <code>bytes</code> is null.
 
 ### FromBytes
+
     public static EInteger FromBytes(byte[] bytes, int offset, int length, boolean littleEndian)
+
 <p>Initializes an arbitrary-precision integer from a portion of an array of
  bytes. The portion of the byte array is encoded using the following rules:
  </p><ul> <li>Positive numbers have the first byte's highest bit cleared, and
@@ -628,7 +646,9 @@ Initializes an arbitrary-precision integer from an array of bytes.
  minus <code>offset</code> is less than <code>length</code>.
 
 ### FromBoolean
+
     public static EInteger FromBoolean(boolean boolValue)
+
 Converts a Boolean value (true or false) to an arbitrary-precision integer.
 
 **Parameters:**
@@ -640,7 +660,9 @@ Converts a Boolean value (true or false) to an arbitrary-precision integer.
 * The number 1 if <code>boolValue</code> is true; otherwise, 0.
 
 ### FromInt32
+
     public static EInteger FromInt32(int intValue)
+
 Converts a 32-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
@@ -653,7 +675,9 @@ Converts a 32-bit signed integer to an arbitrary-precision integer.
  number.
 
 ### FromInt64AsUnsigned
+
     public static EInteger FromInt64AsUnsigned(long longerValue)
+
 Converts an unsigned integer expressed as a 64-bit signed integer to an
  arbitrary-precision integer.
 
@@ -670,7 +694,9 @@ Converts an unsigned integer expressed as a 64-bit signed integer to an
  than 0, the return value will store 2^64 plus this value instead.
 
 ### FromInt64
+
     public static EInteger FromInt64(long longerValue)
+
 Converts a 64-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**
@@ -684,7 +710,9 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.
  number.
 
 ### FromRadixString
+
     public static EInteger FromRadixString(String str, int radix)
+
 Converts a string to an arbitrary-precision integer in a given radix.
 
 **Parameters:**
@@ -710,7 +738,9 @@ Converts a string to an arbitrary-precision integer in a given radix.
 * <code>NumberFormatException</code> - The string is empty or in an invalid format.
 
 ### FromRadixSubstring
+
     public static EInteger FromRadixSubstring(String str, int radix, int index, int endIndex)
+
 Converts a portion of a string to an arbitrary-precision integer in a given
  radix.
 
@@ -746,7 +776,9 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 * <code>NumberFormatException</code> - The string portion is empty or in an invalid format.
 
 ### FromSubstring
+
     public static EInteger FromSubstring(char[] cs, int index, int endIndex)
+
 Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
  integer.
 
@@ -780,7 +812,9 @@ Converts a portion of a sequence of <code>char</code> s to an arbitrary-precisio
 * <code>NullPointerException</code> - The parameter <code>cs</code> is null.
 
 ### FromString
+
     public static EInteger FromString(char[] cs)
+
 Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
 
 **Parameters:**
@@ -804,7 +838,9 @@ Converts a sequence of <code>char</code> s to an arbitrary-precision integer.
 * <code>NullPointerException</code> - The parameter <code>cs</code> is null.
 
 ### FromRadixString
+
     public static EInteger FromRadixString(char[] cs, int radix)
+
 Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
  given radix.
 
@@ -833,7 +869,9 @@ Converts a sequence of <code>char</code> s to an arbitrary-precision integer in 
  invalid format.
 
 ### FromRadixSubstring
+
     public static EInteger FromRadixSubstring(char[] cs, int radix, int index, int endIndex)
+
 Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
  integer in a given radix.
 
@@ -871,7 +909,9 @@ Converts a portion of a sequence of <code>char</code> s to an arbitrary-precisio
 * <code>NumberFormatException</code> - The portion is empty or in an invalid format.
 
 ### FromSubstring
+
     public static EInteger FromSubstring(byte[] bytes, int index, int endIndex)
+
 Converts a portion of a sequence of bytes (interpreted as text) to an
  arbitrary-precision integer. Each byte in the sequence has to be a character
  in the Basic Latin range (0x00 to 0x7f or U+0000 to U+007F) of the Unicode
@@ -907,7 +947,9 @@ Converts a portion of a sequence of bytes (interpreted as text) to an
 * <code>NullPointerException</code> - The parameter <code>bytes</code> is null.
 
 ### FromString
+
     public static EInteger FromString(byte[] bytes)
+
 Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
  integer. Each byte in the sequence has to be a code point in the Basic Latin
  range (0x00 to 0x7f or U+0000 to U+007F) of the Unicode Standard.
@@ -933,7 +975,9 @@ Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>bytes</code> is null.
 
 ### FromRadixString
+
     public static EInteger FromRadixString(byte[] bytes, int radix)
+
 Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
  integer in a given radix. Each byte in the sequence has to be a character in
  the Basic Latin range (0x00 to 0x7f or U+0000 to U+007F) of the Unicode
@@ -964,7 +1008,9 @@ Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
  or in an invalid format.
 
 ### FromRadixSubstring
+
     public static EInteger FromRadixSubstring(byte[] bytes, int radix, int index, int endIndex)
+
 Converts a portion of a sequence of bytes (interpreted as text) to an
  arbitrary-precision integer in a given radix. Each byte in the sequence has
  to be a character in the Basic Latin range (0x00 to 0x7f or U+0000 to
@@ -1005,7 +1051,9 @@ Converts a portion of a sequence of bytes (interpreted as text) to an
 * <code>NumberFormatException</code> - The portion is empty or in an invalid format.
 
 ### FromString
+
     public static EInteger FromString(String str)
+
 Converts a string to an arbitrary-precision integer.
 
 **Parameters:**
@@ -1028,7 +1076,9 @@ Converts a string to an arbitrary-precision integer.
 * <code>NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### FromSubstring
+
     public static EInteger FromSubstring(String str, int index, int endIndex)
+
 Converts a portion of a string to an arbitrary-precision integer.
 
 **Parameters:**
@@ -1059,7 +1109,9 @@ Converts a portion of a string to an arbitrary-precision integer.
 * <code>NullPointerException</code> - The parameter <code>str</code> is null.
 
 ### Abs
+
     public EInteger Abs()
+
 Returns the absolute value of this object's value.
 
 **Returns:**
@@ -1067,7 +1119,9 @@ Returns the absolute value of this object's value.
 * This object's value with the sign removed.
 
 ### Add
+
     public EInteger Add(EInteger bigintAugend)
+
 Adds this arbitrary-precision integer and another arbitrary-precision
  integer and returns the result.
 
@@ -1085,7 +1139,9 @@ Adds this arbitrary-precision integer and another arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>bigintAugend</code> is null.
 
 ### AsInt32Checked
+
     @Deprecated public int AsInt32Checked()
+
 Converts this object's value to a 32-bit signed integer, throwing an
  exception if it can't fit.
 
@@ -1099,7 +1155,9 @@ Converts this object's value to a 32-bit signed integer, throwing an
  32-bit signed integer.
 
 ### AsInt32Unchecked
+
     @Deprecated public int AsInt32Unchecked()
+
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
  two's-complement form (see <code>"Forms of
@@ -1111,7 +1169,9 @@ Converts this object's value to a 32-bit signed integer. If the value can't
 * A 32-bit signed integer.
 
 ### AsInt64Checked
+
     @Deprecated public long AsInt64Checked()
+
 Converts this object's value to a 64-bit signed integer, throwing an
  exception if it can't fit.
 
@@ -1125,7 +1185,9 @@ Converts this object's value to a 64-bit signed integer, throwing an
  64-bit signed integer.
 
 ### AsInt64Unchecked
+
     @Deprecated public long AsInt64Unchecked()
+
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
  two's-complement form (see <code>"Forms of
@@ -1137,7 +1199,9 @@ Converts this object's value to a 64-bit signed integer. If the value can't
 * A 64-bit signed integer.
 
 ### CanFitInInt32
+
     public boolean CanFitInInt32()
+
 Returns whether this object's value can fit in a 32-bit signed integer.
 
 **Returns:**
@@ -1146,7 +1210,9 @@ Returns whether this object's value can fit in a 32-bit signed integer.
  2147483647; otherwise, <code>false</code>.
 
 ### CanFitInInt64
+
     public boolean CanFitInInt64()
+
 Returns whether this object's value can fit in a 64-bit signed integer.
 
 **Returns:**
@@ -1155,7 +1221,9 @@ Returns whether this object's value can fit in a 64-bit signed integer.
  through 9223372036854775807; otherwise, <code>false</code>.
 
 ### compareTo
+
     public int compareTo(EInteger other)
+
 Compares an arbitrary-precision integer with this instance.
 
 **Specified by:**
@@ -1173,7 +1241,9 @@ Compares an arbitrary-precision integer with this instance.
  returns a positive number if.
 
 ### Max
+
     public static EInteger Max(EInteger first, EInteger second)
+
 Returns the greater of two arbitrary-precision integers.
 
 **Parameters:**
@@ -1192,7 +1262,9 @@ Returns the greater of two arbitrary-precision integers.
  is null.
 
 ### Min
+
     public static EInteger Min(EInteger first, EInteger second)
+
 Returns the smaller of two arbitrary-precision integers.
 
 **Parameters:**
@@ -1211,7 +1283,9 @@ Returns the smaller of two arbitrary-precision integers.
  is null.
 
 ### MaxMagnitude
+
     public static EInteger MaxMagnitude(EInteger first, EInteger second)
+
 Of two arbitrary-precision integers, returns the one with the greater
  absolute value. If both integers have the same absolute value, this method
  has the same effect as Max.
@@ -1232,7 +1306,9 @@ Of two arbitrary-precision integers, returns the one with the greater
  is null.
 
 ### MinMagnitude
+
     public static EInteger MinMagnitude(EInteger first, EInteger second)
+
 Of two arbitrary-precision integers, returns the one with the smaller
  absolute value. If both integers have the same absolute value, this method
  has the same effect as Min.
@@ -1253,7 +1329,9 @@ Of two arbitrary-precision integers, returns the one with the smaller
  is null.
 
 ### Add
+
     public EInteger Add(int intValue)
+
 Adds this arbitrary-precision integer and a 32-bit signed integer and
  returns the result.
 
@@ -1267,7 +1345,9 @@ Adds this arbitrary-precision integer and a 32-bit signed integer and
  integer plus a 32-bit signed integer.
 
 ### Subtract
+
     public EInteger Subtract(int intValue)
+
 Subtracts a 32-bit signed integer from this arbitrary-precision integer and
  returns the result.
 
@@ -1281,7 +1361,9 @@ Subtracts a 32-bit signed integer from this arbitrary-precision integer and
  arbitrary-precision integer minus a 32-bit signed integer.
 
 ### Multiply
+
     public EInteger Multiply(int intValue)
+
 <p>Multiplies this arbitrary-precision integer by a 32-bit signed integer
  and returns the result.</p><pre>EInteger result =
  EInteger.FromString("5").Multiply(200);</pre> .
@@ -1296,7 +1378,9 @@ Subtracts a 32-bit signed integer from this arbitrary-precision integer and
  integer times a 32-bit signed integer.
 
 ### Divide
+
     public EInteger Divide(int intValue)
+
 Divides this arbitrary-precision integer by a 32-bit signed integer and
  returns the result. The result of the division is rounded down (the
  fractional part is discarded). Except if the result of the division is 0, it
@@ -1322,7 +1406,9 @@ Divides this arbitrary-precision integer by a 32-bit signed integer and
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 
 ### Remainder
+
     public EInteger Remainder(int intValue)
+
 Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 32-bit signed integer. The remainder is the number
  that remains when the absolute value of this arbitrary-precision integer is
@@ -1346,7 +1432,9 @@ Returns the remainder that would result when this arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>intValue</code> is null.
 
 ### compareTo
+
     public int compareTo(int intValue)
+
 Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
@@ -1359,7 +1447,9 @@ Compares an arbitrary-precision integer with this instance.
  less, or a positive number if this instance is greater.
 
 ### Divide
+
     public EInteger Divide(EInteger bigintDivisor)
+
 Divides this arbitrary-precision integer by another arbitrary-precision
  integer and returns the result. The result of the division is rounded down
  (the fractional part is discarded). Except if the result of the division is
@@ -1387,7 +1477,9 @@ Divides this arbitrary-precision integer by another arbitrary-precision
 * <code>ArithmeticException</code> - Attempted to divide by zero.
 
 ### DivRem
+
     public EInteger[] DivRem(int intDivisor)
+
 Divides this arbitrary-precision integer by a 32-bit signed integer and
  returns a two-item array containing the result of the division and the
  remainder, in that order. The result of the division is rounded down (the
@@ -1417,7 +1509,9 @@ Divides this arbitrary-precision integer by a 32-bit signed integer and
 * <code>ArithmeticException</code> - The parameter <code>intDivisor</code> is 0.
 
 ### Add
+
     public EInteger Add(long longValue)
+
 Adds this arbitrary-precision integer and a 64-bit signed integer and
  returns the result.
 
@@ -1431,7 +1525,9 @@ Adds this arbitrary-precision integer and a 64-bit signed integer and
  integer plus a 64-bit signed integer.
 
 ### Subtract
+
     public EInteger Subtract(long longValue)
+
 Subtracts a 64-bit signed integer from this arbitrary-precision integer and
  returns the result.
 
@@ -1445,7 +1541,9 @@ Subtracts a 64-bit signed integer from this arbitrary-precision integer and
  arbitrary-precision integer minus a 64-bit signed integer.
 
 ### Multiply
+
     public EInteger Multiply(long longValue)
+
 Multiplies this arbitrary-precision integer by a 64-bit signed integer and
  returns the result.
 
@@ -1459,7 +1557,9 @@ Multiplies this arbitrary-precision integer by a 64-bit signed integer and
  integer times a 64-bit signed integer.
 
 ### Divide
+
     public EInteger Divide(long longValue)
+
 Divides this arbitrary-precision integer by a 64-bit signed integer and
  returns the result. The result of the division is rounded down (the
  fractional part is discarded). Except if the result of the division is 0, it
@@ -1481,7 +1581,9 @@ Divides this arbitrary-precision integer by a 64-bit signed integer and
  both are positive or both are negative.
 
 ### Remainder
+
     public EInteger Remainder(long longValue)
+
 Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 64-bit signed integer. The remainder is the number
  that remains when the absolute value of this arbitrary-precision integer is
@@ -1499,7 +1601,9 @@ Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 64-bit signed integer.
 
 ### compareTo
+
     public int compareTo(long longValue)
+
 Compares an arbitrary-precision integer with this instance.
 
 **Parameters:**
@@ -1512,7 +1616,9 @@ Compares an arbitrary-precision integer with this instance.
  less, or a positive number if this instance is greater.
 
 ### DivRem
+
     public EInteger[] DivRem(long intDivisor)
+
 Divides this arbitrary-precision integer by a 64-bit signed integer and
  returns a two-item array containing the result of the division and the
  remainder, in that order. The result of the division is rounded down (the
@@ -1539,7 +1645,9 @@ Divides this arbitrary-precision integer by a 64-bit signed integer and
  Remainder method on the two operands.
 
 ### DivRem
+
     public EInteger[] DivRem(EInteger divisor)
+
 Divides this arbitrary-precision integer by another arbitrary-precision
  integer and returns a two-item array containing the result of the division
  and the remainder, in that order. The result of the division is rounded down
@@ -1571,7 +1679,9 @@ Divides this arbitrary-precision integer by another arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
 
 ### equals
+
     public boolean equals(Object obj)
+
 Determines whether this object and another object are equal and have the
  same type.
 
@@ -1589,7 +1699,9 @@ Determines whether this object and another object are equal and have the
  <code>false</code>.
 
 ### Gcd
+
     public EInteger Gcd(EInteger bigintSecond)
+
 Returns the greatest common divisor of this integer and the given integer.
  The greatest common divisor (GCD) is also known as the greatest common
  factor (GCF). This method works even if either or both integers are
@@ -1612,7 +1724,9 @@ Returns the greatest common divisor of this integer and the given integer.
 * <code>IllegalArgumentException</code> - BigPower is negative.
 
 ### GetDigitCountAsEInteger
+
     public EInteger GetDigitCountAsEInteger()
+
 Returns the number of decimal digits used by this integer, in the form of an
  arbitrary-precision integer.
 
@@ -1622,7 +1736,9 @@ Returns the number of decimal digits used by this integer, in the form of an
  if this number is 0.
 
 ### GetDigitCount
+
     @Deprecated public int GetDigitCount()
+
 Returns the number of decimal digits used by this integer.
 
 **Returns:**
@@ -1636,7 +1752,9 @@ Returns the number of decimal digits used by this integer.
  32-bit signed integer.
 
 ### GetDigitCountAsInt64
+
     public long GetDigitCountAsInt64()
+
 Returns the number of decimal digits used by this integer, in the form of a
  64-bit signed integer.
 
@@ -1649,7 +1767,9 @@ Returns the number of decimal digits used by this integer, in the form of a
  relies on the exact number of decimal digits.).
 
 ### hashCode
+
     public int hashCode()
+
 Returns the hash code for this instance. No application or process IDs are
  used in the hash code calculation.
 
@@ -1662,7 +1782,9 @@ Returns the hash code for this instance. No application or process IDs are
 * A 32-bit signed integer.
 
 ### GetLowBit
+
     @Deprecated public int GetLowBit()
+
 Gets the bit position of the lowest set bit in this number's absolute value.
  (This will also be the position of the lowest set bit in the number's
  two's-complement form (see <code>"Forms of
@@ -1674,7 +1796,9 @@ Gets the bit position of the lowest set bit in this number's absolute value.
  value, starting at 0. Returns -1 if this value is 0.
 
 ### GetLowBitAsInt64
+
     public long GetLowBitAsInt64()
+
 Gets the bit position of the lowest set bit in this number's absolute value,
  in the form of a 64-bit signed integer. (This will also be the position of
  the lowest set bit in the number's two's-complement form (see <code>"Forms of numbers"</code>).).
@@ -1689,7 +1813,9 @@ Gets the bit position of the lowest set bit in this number's absolute value,
  exact value of the lowest set bit position.).
 
 ### GetLowBitAsEInteger
+
     public EInteger GetLowBitAsEInteger()
+
 Gets the bit position of the lowest set bit in this number's absolute value,
  in the form of an arbitrary-precision integer. (This will also be the
  position of the lowest set bit in the number's two's-complement form (see
@@ -1701,7 +1827,9 @@ Gets the bit position of the lowest set bit in this number's absolute value,
  value, starting at 0. Returns -1 if this value is 0 or odd.
 
 ### GetSignedBit
+
     public boolean GetSignedBit(EInteger bigIndex)
+
 Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this object's
  value.
 
@@ -1721,7 +1849,9 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 * <code>NullPointerException</code> - The parameter <code>bigIndex</code> is null.
 
 ### GetSignedBit
+
     public boolean GetSignedBit(int index)
+
 Returns whether a bit is set in the two's-complement form (see <code>"Forms of numbers"</code>) of this object's
  value.
 
@@ -1737,7 +1867,9 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
  otherwise, <code>false</code>.
 
 ### GetSignedBitLengthAsEInteger
+
     public EInteger GetSignedBitLengthAsEInteger()
+
 Finds the minimum number of bits needed to represent this object's value,
  except for its sign, and returns that number of bits as an
  arbitrary-precision integer. If the value is negative, finds the number of
@@ -1753,7 +1885,9 @@ Finds the minimum number of bits needed to represent this object's value,
  Returns 0 if this object's value is 0 or negative 1.
 
 ### GetSignedBitLengthAsInt64
+
     public long GetSignedBitLengthAsInt64()
+
 Finds the minimum number of bits needed to represent this object's value,
  except for its sign, and returns that number of bits as a 64-bit signed
  integer. If the value is negative, finds the number of bits in the value
@@ -1773,7 +1907,9 @@ Finds the minimum number of bits needed to represent this object's value,
  relies on the exact number of bits.).
 
 ### GetSignedBitLength
+
     @Deprecated public int GetSignedBitLength()
+
 Finds the minimum number of bits needed to represent this object's value,
  except for its sign. If the value is negative, finds the number of bits in
  the value equal to this object's absolute value minus 1. For example, all
@@ -1793,7 +1929,9 @@ Finds the minimum number of bits needed to represent this object's value,
  32-bit signed integer.
 
 ### GetUnsignedBit
+
     public boolean GetUnsignedBit(EInteger bigIndex)
+
 Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
@@ -1811,7 +1949,9 @@ Returns whether a bit is set in this number's absolute value.
 * <code>NullPointerException</code> - The parameter <code>bigIndex</code> is null.
 
 ### GetUnsignedBit
+
     public boolean GetUnsignedBit(int index)
+
 Returns whether a bit is set in this number's absolute value.
 
 **Parameters:**
@@ -1825,7 +1965,9 @@ Returns whether a bit is set in this number's absolute value.
  value.
 
 ### GetUnsignedBitLengthAsEInteger
+
     public EInteger GetUnsignedBitLengthAsEInteger()
+
 Finds the minimum number of bits needed to represent this number's absolute
  value, and returns that number of bits as an arbitrary-precision integer.
  For example, all integers in the interval [-((2^63) - 1), (2^63) - 1] have
@@ -1839,7 +1981,9 @@ Finds the minimum number of bits needed to represent this number's absolute
  this object's value is 0, and returns 1 if the value is negative 1.
 
 ### GetUnsignedBitLengthAsInt64
+
     public long GetUnsignedBitLengthAsInt64()
+
 Finds the minimum number of bits needed to represent this number's absolute
  value, and returns that number of bits as a 64-bit signed integer. For
  example, all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
@@ -1857,7 +2001,9 @@ Finds the minimum number of bits needed to represent this number's absolute
  relies on the exact number of bits.).
 
 ### GetUnsignedBitLength
+
     @Deprecated public int GetUnsignedBitLength()
+
 Finds the minimum number of bits needed to represent this number's absolute
  value. For example, all integers in the interval [-((2^63) - 1), (2^63) - 1]
  have an unsigned bit length of 63 or less, and all other integers have an
@@ -1875,7 +2021,9 @@ Finds the minimum number of bits needed to represent this number's absolute
  32-bit signed integer.
 
 ### Mod
+
     public EInteger Mod(EInteger divisor)
+
 Finds the modulus remainder that results when this instance is divided by
  the value of an arbitrary-precision integer. The modulus remainder is the
  same as the normal remainder if the normal remainder is positive, and equals
@@ -1896,7 +2044,9 @@ Finds the modulus remainder that results when this instance is divided by
 * <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
 
 ### Mod
+
     public EInteger Mod(int smallDivisor)
+
 Finds the modulus remainder that results when this instance is divided by
  the value of another integer. The modulus remainder is the same as the
  normal remainder if the normal remainder is positive, and equals divisor
@@ -1915,7 +2065,9 @@ Finds the modulus remainder that results when this instance is divided by
 * <code>IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less than 0.
 
 ### ModPow
+
     public EInteger ModPow(EInteger pow, EInteger mod)
+
 Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.
 
@@ -1935,7 +2087,9 @@ Calculates the remainder when this arbitrary-precision integer raised to a
  null.
 
 ### Multiply
+
     public EInteger Multiply(EInteger bigintMult)
+
 Multiplies this arbitrary-precision integer by another arbitrary-precision
  integer and returns the result.
 
@@ -1953,7 +2107,9 @@ Multiplies this arbitrary-precision integer by another arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>bigintMult</code> is null.
 
 ### Negate
+
     public EInteger Negate()
+
 Gets the value of this object with the sign reversed.
 
 **Returns:**
@@ -1961,7 +2117,9 @@ Gets the value of this object with the sign reversed.
 * This object's value with the sign reversed.
 
 ### Pow
+
     public EInteger Pow(long longPower)
+
 Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
@@ -1977,7 +2135,9 @@ Raises an arbitrary-precision integer to a power.
 * <code>IllegalArgumentException</code> - BigPower is negative.
 
 ### Pow
+
     public EInteger Pow(EInteger bigPower)
+
 Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
@@ -1995,7 +2155,9 @@ Raises an arbitrary-precision integer to a power.
 * <code>IllegalArgumentException</code> - BigPower is negative.
 
 ### Pow
+
     public EInteger Pow(int powerSmall)
+
 Raises an arbitrary-precision integer to a power.
 
 **Parameters:**
@@ -2007,7 +2169,9 @@ Raises an arbitrary-precision integer to a power.
 * The result. Returns 1 if <code>powerSmall</code> is 0.
 
 ### PowBigIntVar
+
     @Deprecated public EInteger PowBigIntVar(EInteger power)
+
 Raises an arbitrary-precision integer to a power, which is given as another
  arbitrary-precision integer.
 
@@ -2026,7 +2190,9 @@ Raises an arbitrary-precision integer to a power, which is given as another
 * <code>NullPointerException</code> - The parameter <code>power</code> is null.
 
 ### Remainder
+
     public EInteger Remainder(EInteger divisor)
+
 Returns the remainder that would result when this arbitrary-precision
  integer is divided by another arbitrary-precision integer. The remainder is
  the number that remains when the absolute value of this arbitrary-precision
@@ -2050,7 +2216,9 @@ Returns the remainder that would result when this arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>divisor</code> is null.
 
 ### ShiftRight
+
     public EInteger ShiftRight(EInteger eshift)
+
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2071,7 +2239,9 @@ Returns an arbitrary-precision integer with the bits shifted to the right.
 * <code>NullPointerException</code> - The parameter <code>eshift</code> is null.
 
 ### ShiftLeft
+
     public EInteger ShiftLeft(EInteger eshift)
+
 Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits given as an arbitrary-precision integer. A value of 1
  doubles this value, a value of 2 multiplies it by 4; a value of 3, by 8; a
@@ -2092,7 +2262,9 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 * <code>NullPointerException</code> - The parameter <code>eshift</code> is null.
 
 ### ShiftLeft
+
     public EInteger ShiftLeft(int numberBits)
+
 Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits. A value of 1 doubles this value, a value of 2 multiplies
  it by 4, a value of 3, by 8, a value of 4, by 16, and in general, a value of
@@ -2109,7 +2281,9 @@ Returns an arbitrary-precision integer with the bits shifted to the left by
 * An arbitrary-precision integer.
 
 ### Not
+
     public EInteger Not()
+
 Returns an arbitrary-precision integer with every bit flipped from this one
  (also called an inversion or NOT operation).
 
@@ -2124,7 +2298,9 @@ Returns an arbitrary-precision integer with every bit flipped from this one
  11001 (or in decimal, NOT -26 = 25).
 
 ### LowBits
+
     public EInteger LowBits(long longBitCount)
+
 Extracts the lowest bits of this integer. This is equivalent to <code>
  And(2^longBitCount - 1)</code>, but is more efficient when this integer is
  nonnegative and longBitCount's value is large.
@@ -2139,7 +2315,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * A value equivalent to <code>And(2^longBitCount - 1)</code>.
 
 ### LowBits
+
     public EInteger LowBits(int bitCount)
+
 Extracts the lowest bits of this integer. This is equivalent to <code>
  And(2^bitCount - 1)</code>, but is more efficient when this integer is nonnegative
  and bitCount's value is large.
@@ -2154,7 +2332,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * A value equivalent to <code>And(2^bitCount - 1)</code>.
 
 ### LowBits
+
     public EInteger LowBits(EInteger bigBitCount)
+
 Extracts the lowest bits of this integer. This is equivalent to <code>
  And(2^bigBitCount - 1)</code>, but is more efficient when this integer is
  nonnegative and bigBitCount's value is large.
@@ -2173,7 +2353,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>bigBitCount</code> is null.
 
 ### And
+
     public EInteger And(EInteger other)
+
 <p>Does an AND operation between this arbitrary-precision integer and
  another one.</p> <p>Each arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2199,7 +2381,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### Or
+
     public EInteger Or(EInteger second)
+
 <p>Does an OR operation between this arbitrary-precision integer and another
  one.</p> <p>Each arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2225,7 +2409,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### AndNot
+
     public EInteger AndNot(EInteger second)
+
 <p>Does an AND NOT operation between this arbitrary-precision integer and
  another one.</p> <p>Each arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2251,7 +2437,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### OrNot
+
     public EInteger OrNot(EInteger second)
+
 <p>Does an OR NOT operation between this arbitrary-precision integer and
  another one.</p> <p>Each arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2277,7 +2465,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### Imp
+
     @Deprecated public EInteger Imp(EInteger second)
+
 <p>Does an OR NOT operation between this arbitrary-precision integer and
  another one.</p> <p>Each arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2303,7 +2493,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### XorNot
+
     public EInteger XorNot(EInteger second)
+
 <p>Does an XOR NOT operation (or equivalence operation, EQV operation, or
  exclusive-OR NOT operation) between this arbitrary-precision integer and
  another one.</p> <p>Each arbitrary-precision integer is treated as a
@@ -2330,7 +2522,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### Eqv
+
     public EInteger Eqv(EInteger second)
+
 <p>Does an XOR NOT operation (or equivalence operation, EQV operation, or
  exclusive-OR NOT operation) between this arbitrary-precision integer and
  another one.</p> <p>Each arbitrary-precision integer is treated as a
@@ -2357,7 +2551,9 @@ Extracts the lowest bits of this integer. This is equivalent to <code>
 * <code>NullPointerException</code> - The parameter <code>second</code> is null.
 
 ### Xor
+
     public EInteger Xor(EInteger other)
+
 Does an exclusive OR (XOR) operation between this arbitrary-precision
  integer and another one.
 
@@ -2380,7 +2576,9 @@ Does an exclusive OR (XOR) operation between this arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>other</code> is null.
 
 ### ShiftRight
+
     public EInteger ShiftRight(int numberBits)
+
 Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
  two's-complement form (see <code>"Forms of
@@ -2398,7 +2596,9 @@ Returns an arbitrary-precision integer with the bits shifted to the right.
 * An arbitrary-precision integer.
 
 ### Sqrt
+
     public EInteger Sqrt()
+
 Finds the square root of this instance's value, rounded down.
 
 **Returns:**
@@ -2407,7 +2607,9 @@ Finds the square root of this instance's value, rounded down.
  or less.
 
 ### SqrtRem
+
     public EInteger[] SqrtRem()
+
 Calculates the square root and the remainder.
 
 **Returns:**
@@ -2418,7 +2620,9 @@ Calculates the square root and the remainder.
  or one and zero if this value equals 1.
 
 ### Root
+
     public EInteger Root(EInteger root)
+
 Finds the nth root of this instance's value, rounded down.
 
 **Parameters:**
@@ -2437,7 +2641,9 @@ Finds the nth root of this instance's value, rounded down.
 * <code>NullPointerException</code> - The parameter <code>root</code> is null.
 
 ### RootRem
+
     public EInteger[] RootRem(EInteger root)
+
 Calculates the nth root and the remainder.
 
 **Parameters:**
@@ -2458,7 +2664,9 @@ Calculates the nth root and the remainder.
 * <code>NullPointerException</code> - The parameter <code>root</code> is null.
 
 ### Root
+
     public EInteger Root(int root)
+
 Finds the nth root of this instance's value, rounded down.
 
 **Parameters:**
@@ -2473,7 +2681,9 @@ Finds the nth root of this instance's value, rounded down.
  or less.
 
 ### RootRem
+
     public EInteger[] RootRem(int root)
+
 Calculates the nth root and the remainder.
 
 **Parameters:**
@@ -2490,7 +2700,9 @@ Calculates the nth root and the remainder.
  less, or one and zero if this value equals 1.
 
 ### Subtract
+
     public EInteger Subtract(EInteger subtrahend)
+
 Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer and returns the result.
 
@@ -2508,7 +2720,9 @@ Subtracts an arbitrary-precision integer from this arbitrary-precision
 * <code>NullPointerException</code> - The parameter <code>subtrahend</code> is null.
 
 ### ToBytes
+
     public byte[] ToBytes(boolean littleEndian)
+
 Returns a byte array of this integer's value. The byte array will take the
  number's two's-complement form (see <code>"Forms of numbers"</code>), using the fewest bytes necessary to store its value
  unambiguously. If this value is negative, the bits that appear beyond the
@@ -2527,7 +2741,9 @@ Returns a byte array of this integer's value. The byte array will take the
  single element 0.
 
 ### ToInt32Checked
+
     public int ToInt32Checked()
+
 Converts this object's value to a 32-bit signed integer, throwing an
  exception if it can't fit.
 
@@ -2541,7 +2757,9 @@ Converts this object's value to a 32-bit signed integer, throwing an
  32-bit signed integer.
 
 ### ToInt32Unchecked
+
     public int ToInt32Unchecked()
+
 Converts this object's value to a 32-bit signed integer. If the value can't
  fit in a 32-bit integer, returns the lower 32 bits of this object's
  two's-complement form (see <code>"Forms of
@@ -2553,7 +2771,9 @@ Converts this object's value to a 32-bit signed integer. If the value can't
 * A 32-bit signed integer.
 
 ### ToInt64Checked
+
     public long ToInt64Checked()
+
 Converts this object's value to a 64-bit signed integer, throwing an
  exception if it can't fit.
 
@@ -2567,7 +2787,9 @@ Converts this object's value to a 64-bit signed integer, throwing an
  64-bit signed integer.
 
 ### ToInt64Unchecked
+
     public long ToInt64Unchecked()
+
 Converts this object's value to a 64-bit signed integer. If the value can't
  fit in a 64-bit integer, returns the lower 64 bits of this object's
  two's-complement form (see <code>"Forms of
@@ -2579,7 +2801,9 @@ Converts this object's value to a 64-bit signed integer. If the value can't
 * A 64-bit signed integer.
 
 ### ToRadixString
+
     public String ToRadixString(int radix)
+
 Generates a string representing the value of this object, in the given
  radix.
 
@@ -2598,7 +2822,9 @@ Generates a string representing the value of this object, in the given
  U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.
 
 ### toString
+
     public String toString()
+
 Converts this object to a text string in base 10.
 
 **Overrides:**
@@ -2612,7 +2838,9 @@ Converts this object to a text string in base 10.
  string will use the basic digits 0 to 9 (U+0030 to U+0039).
 
 ### Increment
+
     public EInteger Increment()
+
 Returns one added to this arbitrary-precision integer.
 
 **Returns:**
@@ -2620,7 +2848,9 @@ Returns one added to this arbitrary-precision integer.
 * The given arbitrary-precision integer plus one.
 
 ### Decrement
+
     public EInteger Decrement()
+
 Returns one subtracted from this arbitrary-precision integer.
 
 **Returns:**
@@ -2628,7 +2858,9 @@ Returns one subtracted from this arbitrary-precision integer.
 * The given arbitrary-precision integer minus one.
 
 ### ToByteChecked
+
     public byte ToByteChecked()
+
 Converts this number's value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255).
 
@@ -2641,7 +2873,9 @@ Converts this number's value to a byte (from 0 to 255) if it can fit in a
 * <code>ArithmeticException</code> - This value is less than 0 or greater than 255.
 
 ### ToByteUnchecked
+
     public byte ToByteUnchecked()
+
 Converts this number to a byte (from 0 to 255), returning the
  least-significant bits of this number's two's-complement form.
 
@@ -2650,7 +2884,9 @@ Converts this number to a byte (from 0 to 255), returning the
 * This number, converted to a byte (from 0 to 255).
 
 ### FromByte
+
     public static EInteger FromByte(byte inputByte)
+
 Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 
 **Parameters:**
@@ -2662,7 +2898,9 @@ Converts a byte (from 0 to 255) to an arbitrary-precision integer.
 * This number's value as an arbitrary-precision integer.
 
 ### ToInt16Checked
+
     public short ToInt16Checked()
+
 Converts this number's value to a 16-bit signed integer if it can fit in a
  16-bit signed integer.
 
@@ -2676,7 +2914,9 @@ Converts this number's value to a 16-bit signed integer if it can fit in a
  32767.
 
 ### ToInt16Unchecked
+
     public short ToInt16Unchecked()
+
 Converts this number to a 16-bit signed integer, returning the
  least-significant bits of this number's two's-complement form.
 
@@ -2685,7 +2925,9 @@ Converts this number to a 16-bit signed integer, returning the
 * This number, converted to a 16-bit signed integer.
 
 ### FromInt16
+
     public static EInteger FromInt16(short inputInt16)
+
 Converts a 16-bit signed integer to an arbitrary-precision integer.
 
 **Parameters:**

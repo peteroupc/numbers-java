@@ -37,7 +37,9 @@
 ## Method Details
 
 ### getContext
+
     public final EContext getContext()
+
 Gets the arithmetic context used during the operation that triggered the
  trap. May be null.
 
@@ -47,7 +49,9 @@ Gets the arithmetic context used during the operation that triggered the
  trap. May be null.
 
 ### getResult
+
     public final Object getResult()
+
 Gets the defined result of the operation that caused the trap.
 
 **Returns:**
@@ -55,7 +59,9 @@ Gets the defined result of the operation that caused the trap.
 * The defined result of the operation that caused the trap.
 
 ### getError
+
     public final int getError()
+
 Gets the flag that specifies the primary kind of error in one or more
  operations (EContext.FlagXXX). This will only be one flag, such as <code>
  FlagInexact</code> or FlagSubnormal.
@@ -66,7 +72,9 @@ Gets the flag that specifies the primary kind of error in one or more
  operations.
 
 ### getErrors
+
     public final int getErrors()
+
 Gets the flags that were signaled as the result of one or more operations.
  This includes the flag specified in the "flag" parameter, but can include
  other flags. For instance, if "flag" is <code>EContext.FlagInexact</code>, this
@@ -77,7 +85,9 @@ Gets the flags that were signaled as the result of one or more operations.
 * The flags that specify the errors in one or more operations.
 
 ### HasError
+
     public boolean HasError(int flag)
+
 Returns whether this trap exception specifies all the flags given. (Flags
  are signaled in a trap exception as the result of one or more operations
  involving arbitrary-precision numbers, such as multiplication of two

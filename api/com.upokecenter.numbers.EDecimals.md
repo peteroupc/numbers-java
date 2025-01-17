@@ -168,7 +168,9 @@ A class that implements additional operations on arbitrary-precision decimal
 ## Method Details
 
 ### Radix
+
     public static EDecimal Radix(EContext ec)
+
 Returns the number 10, the decimal radix.
 
 **Parameters:**
@@ -182,7 +184,9 @@ Returns the number 10, the decimal radix.
  arithmetic context.
 
 ### Int32ToEDecimal
+
     public static EDecimal Int32ToEDecimal(int i32, EContext ec)
+
 Creates an arbitrary-precision decimal number from a 32-bit signed integer.
 
 **Parameters:**
@@ -198,7 +202,9 @@ Creates an arbitrary-precision decimal number from a 32-bit signed integer.
  value to the given integer.
 
 ### BooleanToEDecimal
+
     public static EDecimal BooleanToEDecimal(boolean b, EContext ec)
+
 Converts a Boolean value (either true or false) to an arbitrary-precision
  decimal number.
 
@@ -214,7 +220,9 @@ Converts a Boolean value (either true or false) to an arbitrary-precision
  result will be rounded as specified by the given context, if any.
 
 ### IsCanonical
+
     public static boolean IsCanonical(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is in a
  canonical form. For the current version of EDecimal, all EDecimal objects
  are in a canonical form.
@@ -228,7 +236,9 @@ Returns whether the given arbitrary-precision number object is in a
 * Always <code>true</code>.
 
 ### IsFinite
+
     public static boolean IsFinite(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is neither null
  nor infinity nor not-a-number (NaN).
 
@@ -243,7 +253,9 @@ Returns whether the given arbitrary-precision number object is neither null
  otherwise.
 
 ### IsInfinite
+
     public static boolean IsInfinite(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is positive or
  negative infinity.
 
@@ -257,7 +269,9 @@ Returns whether the given arbitrary-precision number object is positive or
  is positive or negative infinity, or <code>false</code> otherwise.
 
 ### IsNaN
+
     public static boolean IsNaN(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is a
  not-a-number (NaN).
 
@@ -270,7 +284,9 @@ Returns whether the given arbitrary-precision number object is a
 * Either <code>true</code> or <code>false</code>.
 
 ### IsNormal
+
     public static boolean IsNormal(EDecimal ed, EContext ec)
+
 <p>Returns whether the given number is a <i>normal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
@@ -300,7 +316,9 @@ Returns whether the given arbitrary-precision number object is a
  HasExponentRange of the given context is <code>false</code>.
 
 ### IsQuietNaN
+
     public static boolean IsQuietNaN(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is a quiet
  not-a-number (NaN).
 
@@ -313,7 +331,9 @@ Returns whether the given arbitrary-precision number object is a quiet
 * Either <code>true</code> or <code>false</code>.
 
 ### IsSigned
+
     public static boolean IsSigned(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or negative
  zero).
@@ -327,7 +347,9 @@ Returns whether the given arbitrary-precision number object is negative
 * Either <code>true</code> or <code>false</code>.
 
 ### IsSignalingNaN
+
     public static boolean IsSignalingNaN(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is a signaling
  not-a-number (NaN).
 
@@ -340,7 +362,9 @@ Returns whether the given arbitrary-precision number object is a signaling
 * Either <code>true</code> or <code>false</code>.
 
 ### NumberClassString
+
     public static String NumberClassString(int nc)
+
 Converts a number class identifier (ranging from 0 through 9) to a text
  string. An arbitrary-precision number object can belong in one of ten number
  classes.
@@ -361,7 +385,9 @@ Converts a number class identifier (ranging from 0 through 9) to a text
  than 9.
 
 ### NumberClass
+
     public static int NumberClass(EDecimal ed, EContext ec)
+
 Finds the number class for an arbitrary-precision decimal number object.
 
 **Parameters:**
@@ -385,7 +411,9 @@ Finds the number class for an arbitrary-precision decimal number object.
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### IsSubnormal
+
     public static boolean IsSubnormal(EDecimal ed, EContext ec)
+
 <p>Returns whether the given number is a <i>subnormal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
@@ -419,7 +447,9 @@ Finds the number class for an arbitrary-precision decimal number object.
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### IsZero
+
     public static boolean IsZero(EDecimal ed)
+
 Returns whether the given arbitrary-precision number object is zero
  (positive zero or negative zero).
 
@@ -433,7 +463,9 @@ Returns whether the given arbitrary-precision number object is zero
  or negative zero); otherwise, <code>false</code>.
 
 ### LogB
+
     public static EDecimal LogB(EDecimal ed, EContext ec)
+
 Returns the base-10 exponent of an arbitrary-precision decimal number (when
  that number is expressed in scientific notation with one digit before the
  radix point). For example, returns 3 for the numbers <code>6.66E + 3</code> and
@@ -459,7 +491,9 @@ Returns the base-10 exponent of an arbitrary-precision decimal number (when
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### ScaleB
+
     public static EDecimal ScaleB(EDecimal ed, EDecimal ed2, EContext ec)
+
 Finds an arbitrary-precision decimal number whose decimal point is moved a
  given number of places.
 
@@ -489,7 +523,9 @@ Finds an arbitrary-precision decimal number whose decimal point is moved a
  null.
 
 ### Shift
+
     public static EDecimal Shift(EDecimal ed, EDecimal ed2, EContext ec)
+
 Shifts the digits of an arbitrary-precision decimal number's significand.
 
 **Parameters:**
@@ -519,7 +555,9 @@ Shifts the digits of an arbitrary-precision decimal number's significand.
  null.
 
 ### Rotate
+
     public static EDecimal Rotate(EDecimal ed, EDecimal ed2, EContext ec)
+
 Rotates the digits of an arbitrary-precision decimal number's significand.
 
 **Parameters:**
@@ -556,7 +594,9 @@ Rotates the digits of an arbitrary-precision decimal number's significand.
  null.
 
 ### CompareTotal
+
     public static int CompareTotal(EDecimal ed, EDecimal other, EContext ec)
+
 <p>Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this method:
  </p> <ul> <li>For objects with the same value, the one with the higher
@@ -587,7 +627,9 @@ Rotates the digits of an arbitrary-precision decimal number's significand.
  is signaling NaN.
 
 ### CompareTotalMagnitude
+
     public static int CompareTotalMagnitude(EDecimal ed, EDecimal other, EContext ec)
+
 <p>Compares the absolute values of two arbitrary-precision number objects,
  imposing a total ordering on all possible values (ignoring their signs). In
  this method: </p> <ul> <li>For objects with the same value, the one with the
@@ -619,7 +661,9 @@ Rotates the digits of an arbitrary-precision decimal number's significand.
  signaling NaN.
 
 ### Copy
+
     public static EDecimal Copy(EDecimal ed)
+
 Creates a copy of the given arbitrary-precision number object.
 
 **Parameters:**
@@ -635,7 +679,9 @@ Creates a copy of the given arbitrary-precision number object.
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### Canonical
+
     public static EDecimal Canonical(EDecimal ed)
+
 Returns a canonical version of the given arbitrary-precision number object.
  In this method, this method behaves like the Copy method.
 
@@ -648,7 +694,9 @@ Returns a canonical version of the given arbitrary-precision number object.
 * A copy of the parameter <code>ed</code>.
 
 ### CopyAbs
+
     public static EDecimal CopyAbs(EDecimal ed)
+
 Returns an arbitrary-precision number object with the same value as the
  given number object but with a nonnegative sign (that is, the given number
  object's absolute value).
@@ -667,7 +715,9 @@ Returns an arbitrary-precision number object with the same value as the
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### CopyNegate
+
     public static EDecimal CopyNegate(EDecimal ed)
+
 Returns an arbitrary-precision number object with the sign reversed from the
  given number object.
 
@@ -685,7 +735,9 @@ Returns an arbitrary-precision number object with the sign reversed from the
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### CopySign
+
     public static EDecimal CopySign(EDecimal ed, EDecimal other)
+
 Returns an arbitrary-precision number object with the same value as the
  first given number object but with a the same sign (positive or negative) as
  the second given number object.
@@ -710,7 +762,9 @@ Returns an arbitrary-precision number object with the same value as the
  null.
 
 ### SameQuantum
+
     public static boolean SameQuantum(EDecimal ed1, EDecimal ed2)
+
 Returns whether two arbitrary-precision numbers have the same exponent, they
  both are not-a-number (NaN), or they both are infinity (positive, negative,
  or both).
@@ -728,7 +782,9 @@ Returns whether two arbitrary-precision numbers have the same exponent, they
  infinity (positive, negative, or both); otherwise, <code>false</code>.
 
 ### Trim
+
     public static EDecimal Trim(EDecimal ed1, EContext ec)
+
 Returns an arbitrary-precision number with the same value as this one but
  with certain trailing zeros removed from its significand. If the number's
  exponent is 0, it is returned unchanged (but may be rounded depending on the
@@ -751,7 +807,9 @@ Returns an arbitrary-precision number with the same value as this one but
  not-a-number (NaN) or infinity, it is generally returned unchanged.
 
 ### Rescale
+
     public static EDecimal Rescale(EDecimal ed, EDecimal scale, EContext ec)
+
 <p>Returns an arbitrary-precision decimal number with the same value as this
  object but with the given exponent, expressed as an arbitrary-precision
  decimal number. </p><p>Note that this is not always the same as rounding to
@@ -788,7 +846,9 @@ Returns an arbitrary-precision number with the same value as this one but
  given exponent is outside that range.
 
 ### And
+
     public static EDecimal And(EDecimal ed1, EDecimal ed2, EContext ec)
+
 <p>Performs a logical AND operation on two decimal numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-10
  number with an Exponent property of 0 and no other base-10 digits than 0 or
@@ -816,7 +876,9 @@ Returns an arbitrary-precision number with the same value as this one but
  <code>ed2</code>, or both are not logical operands.
 
 ### Invert
+
     public static EDecimal Invert(EDecimal ed1, EContext ec)
+
 <p>Performs a logical NOT operation on an arbitrary-precision decimal number
  in the form of a <i>logical operand</i>. A <code>logical operand</code> is a
  nonnegative base-10 number with an Exponent property of 0 and no other
@@ -845,7 +907,9 @@ Returns an arbitrary-precision number with the same value as this one but
  is not a logical operand.
 
 ### Xor
+
     public static EDecimal Xor(EDecimal ed1, EDecimal ed2, EContext ec)
+
 <p>Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
  the form of <i>logical operands</i>. A <code>logical operand</code> is a
  nonnegative base-10 number with an exponent of 0 and no other base-10 digits
@@ -872,7 +936,9 @@ Returns an arbitrary-precision number with the same value as this one but
 * An arbitrary-precision decimal floating-point number.
 
 ### Or
+
     public static EDecimal Or(EDecimal ed1, EDecimal ed2, EContext ec)
+
 <p>Performs a logical OR operation on two decimal numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-10
  number with an Exponent property of 0 and no other base-10 digits than 0 or

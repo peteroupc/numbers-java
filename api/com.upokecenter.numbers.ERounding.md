@@ -65,6 +65,9 @@ the order they are declared.
 ## Method Details
 
 ### values
+
     public static ERounding[] values()
+
 ### valueOf
+
     public static ERounding valueOf(String name)

@@ -168,7 +168,9 @@ A class that implements additional operations on arbitrary-precision binary
 ## Method Details
 
 ### Radix
+
     public static EFloat Radix(EContext ec)
+
 Returns the number 2, the binary radix.
 
 **Parameters:**
@@ -182,7 +184,9 @@ Returns the number 2, the binary radix.
  arithmetic context.
 
 ### Int32ToEFloat
+
     public static EFloat Int32ToEFloat(int i32, EContext ec)
+
 Creates a binary floating-point number from a 32-bit signed integer.
 
 **Parameters:**
@@ -198,7 +202,9 @@ Creates a binary floating-point number from a 32-bit signed integer.
  representable value to the given integer.
 
 ### BooleanToEFloat
+
     public static EFloat BooleanToEFloat(boolean b, EContext ec)
+
 Converts a Boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.
 
@@ -214,7 +220,9 @@ Converts a Boolean value (either true or false) to an arbitrary-precision
  result will be rounded as specified by the given context, if any.
 
 ### IsCanonical
+
     public static boolean IsCanonical(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is in a
  canonical form. For the current version of EFloat, all EFloat objects are in
  a canonical form.
@@ -228,7 +236,9 @@ Returns whether the given arbitrary-precision number object is in a
 * Always <code>true</code>.
 
 ### IsFinite
+
     public static boolean IsFinite(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is neither null
  nor infinity nor not-a-number (NaN).
 
@@ -243,7 +253,9 @@ Returns whether the given arbitrary-precision number object is neither null
  otherwise.
 
 ### IsInfinite
+
     public static boolean IsInfinite(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is positive or
  negative infinity.
 
@@ -257,7 +269,9 @@ Returns whether the given arbitrary-precision number object is positive or
  is positive or negative infinity, or <code>false</code> otherwise.
 
 ### IsNaN
+
     public static boolean IsNaN(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is a
  not-a-number (NaN).
 
@@ -270,7 +284,9 @@ Returns whether the given arbitrary-precision number object is a
 * Either <code>true</code> or <code>false</code>.
 
 ### IsNormal
+
     public static boolean IsNormal(EFloat ed, EContext ec)
+
 <p>Returns whether the given number is a <i>normal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
@@ -300,7 +316,9 @@ Returns whether the given arbitrary-precision number object is a
  HasExponentRange of the given context is <code>false</code>.
 
 ### IsQuietNaN
+
     public static boolean IsQuietNaN(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is a quiet
  not-a-number (NaN).
 
@@ -313,7 +331,9 @@ Returns whether the given arbitrary-precision number object is a quiet
 * Either <code>true</code> or <code>false</code>.
 
 ### IsSigned
+
     public static boolean IsSigned(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or negative
  zero).
@@ -327,7 +347,9 @@ Returns whether the given arbitrary-precision number object is negative
 * Either <code>true</code> or <code>false</code>.
 
 ### IsSignalingNaN
+
     public static boolean IsSignalingNaN(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is a signaling
  not-a-number (NaN).
 
@@ -340,7 +362,9 @@ Returns whether the given arbitrary-precision number object is a signaling
 * Either <code>true</code> or <code>false</code>.
 
 ### NumberClassString
+
     public static String NumberClassString(int nc)
+
 Converts a number class identifier (ranging from 0 through 9) to a text
  string. An arbitrary-precision number object can belong in one of ten number
  classes.
@@ -361,7 +385,9 @@ Converts a number class identifier (ranging from 0 through 9) to a text
  than 9.
 
 ### NumberClass
+
     public static int NumberClass(EFloat ed, EContext ec)
+
 Finds the number class for an arbitrary-precision binary number object.
 
 **Parameters:**
@@ -385,7 +411,9 @@ Finds the number class for an arbitrary-precision binary number object.
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### IsSubnormal
+
     public static boolean IsSubnormal(EFloat ed, EContext ec)
+
 <p>Returns whether the given number is a <i>subnormal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
@@ -419,7 +447,9 @@ Finds the number class for an arbitrary-precision binary number object.
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### IsZero
+
     public static boolean IsZero(EFloat ed)
+
 Returns whether the given arbitrary-precision number object is zero
  (positive zero or negative zero).
 
@@ -433,7 +463,9 @@ Returns whether the given arbitrary-precision number object is zero
  or negative zero); otherwise, <code>false</code>.
 
 ### LogB
+
     public static EFloat LogB(EFloat ed, EContext ec)
+
 Returns the base-2 exponent of an arbitrary-precision binary number (when
  that number is expressed in scientific notation with one nonzero digit
  before the radix point). For example, returns 3 for the numbers <code>1.11b
@@ -459,7 +491,9 @@ Returns the base-2 exponent of an arbitrary-precision binary number (when
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### ScaleB
+
     public static EFloat ScaleB(EFloat ed, EFloat ed2, EContext ec)
+
 Finds an arbitrary-precision binary number whose binary point is moved a
  given number of places.
 
@@ -489,7 +523,9 @@ Finds an arbitrary-precision binary number whose binary point is moved a
  null.
 
 ### Shift
+
     public static EFloat Shift(EFloat ed, EFloat ed2, EContext ec)
+
 Shifts the bits of an arbitrary-precision binary floating point number's
  significand.
 
@@ -521,7 +557,9 @@ Shifts the bits of an arbitrary-precision binary floating point number's
  null.
 
 ### Rotate
+
     public static EFloat Rotate(EFloat ed, EFloat ed2, EContext ec)
+
 Rotates the bits of an arbitrary-precision binary number's significand.
 
 **Parameters:**
@@ -557,7 +595,9 @@ Rotates the bits of an arbitrary-precision binary number's significand.
  null.
 
 ### CompareTotal
+
     public static int CompareTotal(EFloat ed, EFloat other, EContext ec)
+
 <p>Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this method:
  </p> <ul> <li>For objects with the same value, the one with the higher
@@ -588,7 +628,9 @@ Rotates the bits of an arbitrary-precision binary number's significand.
  is signaling NaN.
 
 ### CompareTotalMagnitude
+
     public static int CompareTotalMagnitude(EFloat ed, EFloat other, EContext ec)
+
 <p>Compares the absolute values of two arbitrary-precision number objects,
  imposing a total ordering on all possible values (ignoring their signs). In
  this method: </p> <ul> <li>For objects with the same value, the one with the
@@ -620,7 +662,9 @@ Rotates the bits of an arbitrary-precision binary number's significand.
  signaling NaN.
 
 ### Copy
+
     public static EFloat Copy(EFloat ed)
+
 Creates a copy of the given arbitrary-precision number object.
 
 **Parameters:**
@@ -636,7 +680,9 @@ Creates a copy of the given arbitrary-precision number object.
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### Canonical
+
     public static EFloat Canonical(EFloat ed)
+
 Returns a canonical version of the given arbitrary-precision number object.
  In this method, this method behaves like the Copy method.
 
@@ -649,7 +695,9 @@ Returns a canonical version of the given arbitrary-precision number object.
 * A copy of the parameter <code>ed</code>.
 
 ### CopyAbs
+
     public static EFloat CopyAbs(EFloat ed)
+
 Returns an arbitrary-precision number object with the same value as the
  given number object but with a nonnegative sign (that is, the given number
  object's absolute value).
@@ -668,7 +716,9 @@ Returns an arbitrary-precision number object with the same value as the
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### CopyNegate
+
     public static EFloat CopyNegate(EFloat ed)
+
 Returns an arbitrary-precision number object with the sign reversed from the
  given number object.
 
@@ -686,7 +736,9 @@ Returns an arbitrary-precision number object with the sign reversed from the
 * <code>NullPointerException</code> - The parameter <code>ed</code> is null.
 
 ### CopySign
+
     public static EFloat CopySign(EFloat ed, EFloat other)
+
 Returns an arbitrary-precision number object with the same value as the
  first given number object but with a the same sign (positive or negative) as
  the second given number object.
@@ -711,7 +763,9 @@ Returns an arbitrary-precision number object with the same value as the
  null.
 
 ### SameQuantum
+
     public static boolean SameQuantum(EFloat ed1, EFloat ed2)
+
 Returns whether two arbitrary-precision numbers have the same exponent, they
  both are not-a-number (NaN), or they both are infinity (positive, negative,
  or both).
@@ -729,7 +783,9 @@ Returns whether two arbitrary-precision numbers have the same exponent, they
  infinity (positive, negative, or both); otherwise, <code>false</code>.
 
 ### Trim
+
     public static EFloat Trim(EFloat ed1, EContext ec)
+
 Returns an arbitrary-precision number with the same value as this one but
  with certain trailing zeros removed from its significand. If the number's
  exponent is 0, it is returned unchanged (but may be rounded depending on the
@@ -752,7 +808,9 @@ Returns an arbitrary-precision number with the same value as this one but
  not-a-number (NaN) or infinity, it is generally returned unchanged.
 
 ### Rescale
+
     public static EFloat Rescale(EFloat ed, EFloat scale, EContext ec)
+
 <p>Returns an arbitrary-precision binary number with the same value as this
  object but with the given exponent, expressed as an arbitrary-precision
  binary number. </p><p>Note that this is not always the same as rounding to a
@@ -792,7 +850,9 @@ Returns an arbitrary-precision number with the same value as this one but
  given exponent is outside that range.
 
 ### And
+
     public static EFloat And(EFloat ed1, EFloat ed2, EContext ec)
+
 <p>Performs a logical AND operation on two binary numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-2
  number with an Exponent property of 0 (examples include the base-2 numbers
@@ -819,7 +879,9 @@ Returns an arbitrary-precision number with the same value as this one but
  <code>ed2</code>, or both are not logical operands.
 
 ### Invert
+
     public static EFloat Invert(EFloat ed1, EContext ec)
+
 <p>Performs a logical NOT operation on a binary number in the form of a
  <i>logical operand</i>. A <code>logical operand</code> is a nonnegative base-2
  number with an Exponent property of 0 (examples include <code>01001</code> and
@@ -846,7 +908,9 @@ Returns an arbitrary-precision number with the same value as this one but
  is not a logical operand.
 
 ### Xor
+
     public static EFloat Xor(EFloat ed1, EFloat ed2, EContext ec)
+
 <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in
  the form of <i>logical operands</i>. A <code>logical operand</code> is a
  nonnegative base-2 number with an Exponent property of 0 (examples include
@@ -874,7 +938,9 @@ Returns an arbitrary-precision number with the same value as this one but
  <code>ed1</code>, <code>ed2</code>, or both are not logical operands.
 
 ### Or
+
     public static EFloat Or(EFloat ed1, EFloat ed2, EContext ec)
+
 <p>Performs a logical OR operation on two binary numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-2
  number with an Exponent property of 0 (examples include the base-2 numbers
