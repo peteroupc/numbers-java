@@ -3486,8 +3486,8 @@ Binary16SignifAreaBits;
      * maximum precision allowed if it has more significant digits than the maximum
      * precision. The maximum precision allowed is given in an arithmetic context.
      * This method is designed for preparing operands to a custom arithmetic
-     * operation in accordance with the "simplified" arithmetic given in Appendix A
-     * of the General Decimal Arithmetic Specification.
+     * operation per the "simplified" arithmetic given in Appendix A of the General
+     * Decimal Arithmetic Specification.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in

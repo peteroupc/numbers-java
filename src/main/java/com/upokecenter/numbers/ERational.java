@@ -633,11 +633,11 @@ PositiveInfinity) : CreateNaN(
      * sequence of {@code char} s can also be "-INF", "-Infinity", "Infinity",
      * "INF", quiet NaN ("NaN" /"-NaN") followed by any number of digits, or
      * signaling NaN ("sNaN" /"-sNaN") followed by any number of digits, all in any
-     * combination of upper and lowercase.</p> <p>All characters mentioned earlier
-     * are the corresponding characters in the Basic Latin range. In particular,
-     * the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence
-     * of {@code char} s is not allowed to contain white space characters,
-     * including spaces.</p>
+     * combination of uppercase and lowercase.</p> <p>All characters mentioned
+     * earlier are the corresponding characters in the Basic Latin range. In
+     * particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039).
+     * The sequence of {@code char} s is not allowed to contain white space
+     * characters, including spaces.</p>
      * @param chars A sequence of {@code char} s, a portion of which represents a
      * number.
      * @param offset An index starting at 0 showing where the desired portion of
@@ -683,8 +683,8 @@ PositiveInfinity) : CreateNaN(
      * denominator is not given, it's equal to 1.</li></ul> <p>The sequence of
      * bytes can also be "-INF", "-Infinity", "Infinity", "INF", quiet NaN ("NaN"
      * /"-NaN") followed by any number of digits, or signaling NaN ("sNaN"
-     * /"-sNaN") followed by any number of digits, all in any combination of upper
-     * and lower case.</p> <p>All characters mentioned earlier are the
+     * /"-sNaN") followed by any number of digits, all in any combination of
+     * uppercase and lowercase.</p> <p>All characters mentioned earlier are the
      * corresponding characters in the Basic Latin range. In particular, the digits
      * must be the basic digits 0 to 9 (U+0030 to U+0039). The sequence of bytes is
      * not allowed to contain white space characters, including spaces.</p>
