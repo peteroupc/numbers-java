@@ -515,7 +515,7 @@ licensed under the Unlicense: https://unlicense.org/
      * then A-F in radix 16. Where a basic uppercase letter A to Z is allowed in
      * the string, the corresponding basic lowercase letter (U+0061 to U+007a) is
      * allowed instead.
-     * @return An arbitrary-precision integer with the same value as the given
+     * @return An arbitrary-precision integer with the same value as the specified
      * string.
      * @throws NullPointerException The parameter {@code str} is null.
      * @throws NumberFormatException The string is empty or in an invalid format.
@@ -531,10 +531,10 @@ licensed under the Unlicense: https://unlicense.org/
      * Converts a portion of a string to an arbitrary-precision integer in a given
      * radix.
      * @param str A text string. The desired portion of the string must contain
-     * only characters allowed by the given radix, except that it may start with a
-     * minus sign ("-", U+002D) to indicate a negative number. The desired portion
-     * is not allowed to contain white space characters, including spaces. The
-     * desired portion may start with any number of zeros.
+     * only characters allowed by the specified radix, except that it may start
+     * with a minus sign ("-", U+002D) to indicate a negative number. The desired
+     * portion is not allowed to contain white space characters, including spaces.
+     * The desired portion may start with any number of zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the string can use
      * the basic digits 0 to 9 (U+0030 to U+0039) and then the basic uppercase
      * letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9,
@@ -635,7 +635,7 @@ licensed under the Unlicense: https://unlicense.org/
      * radix 10, and 0-9, then A-F in radix 16. Where a basic uppercase letter A to
      * Z is allowed in the sequence of {@code char} s, the corresponding basic
      * lowercase letter (U+0061 to U+007a) is allowed instead.
-     * @return An arbitrary-precision integer with the same value as the given
+     * @return An arbitrary-precision integer with the same value as the specified
      * sequence of {@code char} s.
      * @throws NullPointerException The parameter {@code cs} is null.
      * @throws NumberFormatException The sequence of {@code char} s is empty or in an
@@ -652,11 +652,11 @@ licensed under the Unlicense: https://unlicense.org/
      * Converts a portion of a sequence of {@code char} s to an arbitrary-precision
      * integer in a given radix.
      * @param cs A text sequence of {@code char} s. The desired portion of the
-     * sequence of {@code char} s must contain only characters allowed by the given
-     * radix, except that it may start with a minus sign ("-", U+002D) to indicate
-     * a negative number. The desired portion is not allowed to contain white space
-     * characters, including spaces. The desired portion may start with any number
-     * of zeros.
+     * sequence of {@code char} s must contain only characters allowed by the
+     * specified radix, except that it may start with a minus sign ("-", U+002D) to
+     * indicate a negative number. The desired portion is not allowed to contain
+     * white space characters, including spaces. The desired portion may start with
+     * any number of zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the sequence of
      * {@code char} s can use the basic digits 0 to 9 (U+0030 to U+0039) and then
      * the basic uppercase letters A to Z (U+0041 to U+005A). For example, 0-9 in
@@ -764,7 +764,7 @@ licensed under the Unlicense: https://unlicense.org/
      * and 0-9, then A-F in radix 16. Where a basic uppercase letter A to Z is
      * allowed in the sequence of bytes, the corresponding basic lowercase letter
      * (U+0061 to U+007a) is allowed instead.
-     * @return An arbitrary-precision integer with the same value as the given
+     * @return An arbitrary-precision integer with the same value as the specified
      * sequence of bytes.
      * @throws NullPointerException The parameter {@code bytes} is null.
      * @throws NumberFormatException The sequence of bytes (interpreted as text) is empty
@@ -784,10 +784,10 @@ licensed under the Unlicense: https://unlicense.org/
      * U+007F) of the Unicode Standard.
      * @param bytes A sequence of bytes (interpreted as text). The desired portion
      * of the sequence of bytes (interpreted as text) must contain only characters
-     * allowed by the given radix, except that it may start with a minus sign ("-",
-     * U+002D) to indicate a negative number. The desired portion is not allowed to
-     * contain white space characters, including spaces. The desired portion may
-     * start with any number of zeros.
+     * allowed by the specified radix, except that it may start with a minus sign
+     * ("-", U+002D) to indicate a negative number. The desired portion is not
+     * allowed to contain white space characters, including spaces. The desired
+     * portion may start with any number of zeros.
      * @param radix A base from 2 to 36. Depending on the radix, the sequence of
      * bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030 to
      * U+0039) and then the basic uppercase letters A to Z (U+0041 to U+005A). For
@@ -2491,12 +2491,13 @@ licensed under the Unlicense: https://unlicense.org/
     }
 
     /**
-     * Returns the greatest common divisor of this integer and the given integer.
-     * The greatest common divisor (GCD) is also known as the greatest common
-     * factor (GCF). This method works even if either or both integers are
+     * Returns the greatest common divisor of this integer and the specified
+     * integer. The greatest common divisor (GCD) is also known as the greatest
+     * common factor (GCF). This method works even if either or both integers are
      * negative.
      * @param bigintSecond Another arbitrary-precision integer. Can be negative.
-     * @return The greatest common divisor of this integer and the given integer.
+     * @return The greatest common divisor of this integer and the specified
+     * integer.
      * @throws NullPointerException The parameter {@code bigintSecond} is null.
      * @throws ArithmeticException Attempted to divide by zero.
      * @throws IllegalArgumentException BigPower is negative.
@@ -3406,8 +3407,8 @@ maxDigitEstimate : retval +
      * value.
      * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
      * the least significant bit, 1 is the next least significant bit, and so on.
-     * @return {@code true} if the given bit is set in the two' s-complement form
-     * (see {@code com.upokecenter.numbers.EDecimal}) of this object's value;
+     * @return {@code true} if the specified bit is set in the two' s-complement
+     * form (see {@code com.upokecenter.numbers.EDecimal}) of this object's value;
      * otherwise, {@code false}.
      * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
@@ -3454,8 +3455,8 @@ maxDigitEstimate : retval +
      * value.
      * @param index The index, starting at 0, of the bit to test, where 0 is the
      * least significant bit, 1 is the next least significant bit, and so on.
-     * @return {@code true} if the given bit is set in the two' s-complement form
-     * (see {@code com.upokecenter.numbers.EDecimal}) of this object's value;
+     * @return {@code true} if the specified bit is set in the two' s-complement
+     * form (see {@code com.upokecenter.numbers.EDecimal}) of this object's value;
      * otherwise, {@code false}.
      */
     public boolean GetSignedBit(int index) {
@@ -3582,7 +3583,7 @@ maxDigitEstimate : retval +
      * Returns whether a bit is set in this number's absolute value.
      * @param bigIndex The index, starting at zero, of the bit to test, where 0 is
      * the least significant bit, 1 is the next least significant bit, and so on.
-     * @return {@code true} if the given bit is set in this number's absolute
+     * @return {@code true} if the specified bit is set in this number's absolute
      * value.
      * @throws NullPointerException The parameter {@code bigIndex} is null.
      */
@@ -3609,7 +3610,7 @@ maxDigitEstimate : retval +
      * Returns whether a bit is set in this number's absolute value.
      * @param index The index, starting at 0, of the bit to test, where 0 is the
      * least significant bit, 1 is the next least significant bit, and so on.
-     * @return {@code true} if the given bit is set in this number's absolute
+     * @return {@code true} if the specified bit is set in this number's absolute
      * value.
      */
     public boolean GetUnsignedBit(int index) {
@@ -5811,7 +5812,7 @@ this.Pow(EInteger.FromInt64(longPower));
     }
 
     /**
-     * Generates a string representing the value of this object, in the given
+     * Generates a string representing the value of this object, in the specified
      * radix.
      * @param radix A radix from 2 through 36. For example, to generate a
      * hexadecimal (base-16) string, specify 16. To generate a decimal (base-10)

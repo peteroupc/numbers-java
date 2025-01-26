@@ -794,10 +794,10 @@ Renamed to FromEFloat.
  object but with the sign reversed.
 
 * `EDecimal NextMinus(EContext ctx)`<br>
- Finds the largest value that's smaller than the given value.
+ Finds the largest value that's smaller than the specified value.
 
 * `EDecimal NextPlus(EContext ctx)`<br>
- Finds the smallest value that's greater than the given value.
+ Finds the smallest value that's greater than the specified value.
 
 * `EDecimal NextToward(EDecimal otherValue,
  EContext ctx)`<br>
@@ -808,23 +808,24 @@ Renamed to FromEFloat.
  Finds the constant π, the circumference of a circle divided by its diameter.
 
 * `EDecimal Plus(EContext ctx)`<br>
- Rounds this object's value to a given precision, using the given rounding
- mode and range of exponent, and also converts negative zero to positive
- zero.
+ Rounds this object's value to the specified precision, using the specified
+ rounding mode and range of exponent, and also converts negative zero to
+ positive zero.
 
 * `EDecimal Pow(int exponentSmall)`<br>
- Raises this object's value to the given exponent.
+ Raises this object's value to the specified exponent.
 
 * `EDecimal Pow(int exponentSmall,
  EContext ctx)`<br>
- Raises this object's value to the given exponent.
+ Raises this object's value to the specified exponent.
 
 * `EDecimal Pow(EDecimal exponent)`<br>
- Raises this object's value to the given exponent, using unlimited precision.
+ Raises this object's value to the specified exponent, using unlimited
+ precision.
 
 * `EDecimal Pow(EDecimal exponent,
  EContext ctx)`<br>
- Raises this object's value to the given exponent.
+ Raises this object's value to the specified exponent.
 
 * `EInteger Precision()`<br>
  Finds the number of digits in this number's significand.
@@ -875,14 +876,15 @@ Renamed to FromEFloat.
 
 * `EDecimal RemainderNear(EDecimal divisor,
  EContext ctx)`<br>
- Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object's value by another object's value.
+ Finds the distance to the closest multiple of the specified divisor,
+ based on the result of dividing this object's value by another object's
+ value.
 
 * `EDecimal RemainderNoRoundAfterDivide(EDecimal divisor,
  EContext ctx)`<br>
  Finds the remainder that results when dividing two arbitrary-precision
  decimal numbers, except the intermediate division is not adjusted to fit the
- precision of the given arithmetic context.
+ precision of the specified arithmetic context.
 
 * `EDecimal RoundToExponent(int exponentSmall)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
@@ -912,25 +914,25 @@ Renamed to FromEFloat.
 * `EDecimal RoundToExponent(EInteger exponent,
  ERounding rounding)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to a new exponent if necessary, using the given rounding
- mode.
+ object but rounded to a new exponent if necessary, using the specified
+ rounding mode.
 
 * `EDecimal RoundToExponentExact(int exponentSmall,
  EContext ctx)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to the given exponent represented as a 32-bit signed
+ object but rounded to the specified exponent represented as a 32-bit signed
  integer, and signals an inexact flag if the result would be inexact.
 
 * `EDecimal RoundToExponentExact(int exponentSmall,
  ERounding rounding)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to the given exponent represented as a 32-bit signed
+ object but rounded to the specified exponent represented as a 32-bit signed
  integer, and signals an inexact flag if the result would be inexact.
 
 * `EDecimal RoundToExponentExact(EInteger exponent,
  EContext ctx)`<br>
  Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to the given exponent represented as an
+ object but rounded to the specified exponent represented as an
  arbitrary-precision integer, and signals an inexact flag if the result would
  be inexact.
 
@@ -953,8 +955,8 @@ Renamed to RoundToIntegerExact.
 Renamed to RoundToIntegerNoRoundedFlag.
 
 * `EDecimal RoundToPrecision(EContext ctx)`<br>
- Rounds this object's value to a given precision, using the given rounding
- mode and range of exponent.
+ Rounds this object's value to the specified precision, using the specified
+ rounding mode and range of exponent.
 
 * `EDecimal ScaleByPowerOfTen(int places)`<br>
  Returns a number similar to this number but with the scale adjusted.
@@ -1109,11 +1111,11 @@ Renamed to ToEFloat.
 * `EInteger ToSizedEInteger(int maxBitLength)`<br>
  Converts this value to an arbitrary-precision integer by discarding its
  fractional part and checking whether the resulting integer overflows the
- given signed bit count.
+ specified signed bit count.
 
 * `EInteger ToSizedEIntegerIfExact(int maxBitLength)`<br>
  Converts this value to an arbitrary-precision integer, only if this number's
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.
 
 * `String toString()`<br>
@@ -1711,7 +1713,7 @@ Creates an arbitrary-precision decimal number from a sequence of <code>
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of <code>char</code> s.
+ specified sequence of <code>char</code> s.
 
 **Throws:**
 
@@ -1742,7 +1744,7 @@ Creates an arbitrary-precision decimal number from a sequence of <code>
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of <code>char</code> s.
+ specified sequence of <code>char</code> s.
 
 **Throws:**
 
@@ -1772,7 +1774,7 @@ Creates an arbitrary-precision decimal number from a sequence of <code>
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of <code>char</code> s.
+ specified sequence of <code>char</code> s.
 
 **Throws:**
 
@@ -1832,7 +1834,7 @@ Creates an arbitrary-precision decimal number from a sequence of <code>
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of <code>char</code> s.
+ specified sequence of <code>char</code> s.
 
 **Throws:**
 
@@ -1861,7 +1863,7 @@ Creates an arbitrary-precision decimal number from a sequence of bytes
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of bytes (interpreted as text).
+ specified sequence of bytes (interpreted as text).
 
 **Throws:**
 
@@ -1893,7 +1895,7 @@ Creates an arbitrary-precision decimal number from a sequence of bytes
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of bytes (interpreted as text).
+ specified sequence of bytes (interpreted as text).
 
 **Throws:**
 
@@ -1924,7 +1926,7 @@ Creates an arbitrary-precision decimal number from a sequence of bytes
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of bytes (interpreted as text).
+ specified sequence of bytes (interpreted as text).
 
 **Throws:**
 
@@ -1986,7 +1988,7 @@ Creates an arbitrary-precision decimal number from a sequence of bytes
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given sequence of bytes (interpreted as text).
+ specified sequence of bytes (interpreted as text).
 
 **Throws:**
 
@@ -2014,7 +2016,7 @@ Creates an arbitrary-precision decimal number from a text string that
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given string.
+ specified string.
 
 **Throws:**
 
@@ -2045,7 +2047,7 @@ Creates an arbitrary-precision decimal number from a text string that
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given string.
+ specified string.
 
 **Throws:**
 
@@ -2075,7 +2077,7 @@ Creates an arbitrary-precision decimal number from a text string that
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given string.
+ specified string.
 
 **Throws:**
 
@@ -2134,7 +2136,7 @@ Creates an arbitrary-precision decimal number from a text string that
 **Returns:**
 
 * An arbitrary-precision decimal number with the same value as the
- given string.
+ specified string.
 
 **Throws:**
 
@@ -2372,9 +2374,9 @@ Finds the constant π, the circumference of a circle divided by its diameter.
 
 **Returns:**
 
-* The constant π rounded to the given precision. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the
- precision is unlimited (the context's Precision property is 0).
+* The constant π rounded to the specified precision. Signals
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>ctx</code> is
+ null or the precision is unlimited (the context's Precision property is 0).
 
 ### Abs
 
@@ -2882,7 +2884,7 @@ Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and exponent range of the result. This context will be used only in the
  division portion of the remainder calculation; as a result, it's possible
  for the remainder to have a higher precision than given in this context.
- Flags will be set on the given context only if the context's <code>
+ Flags will be set on the specified context only if the context's <code>
  HasFlags</code> is true and the integer part of the division result doesn't fit
  the precision and exponent range without rounding. Can be null, in which the
  precision is unlimited and no additional rounding, other than the rounding
@@ -2935,7 +2937,7 @@ Divides this arbitrary-precision decimal floating-point number by another
  and exponent range of the result. This context will be used only in the
  division portion of the remainder calculation; as a result, it's possible
  for the remainder to have a higher precision than given in this context.
- Flags will be set on the given context only if the context's <code>
+ Flags will be set on the specified context only if the context's <code>
  HasFlags</code> is true and the integer part of the division result doesn't fit
  the precision and exponent range without rounding. Can be null, in which the
  precision is unlimited and no additional rounding, other than the rounding
@@ -2969,7 +2971,7 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  if the result must be scaled down to have the same exponent as this value.
  If the precision given in the context is other than 0, calls the Quantize
  method with both arguments equal to the result of the operation (and can
- signal FlagInvalid and return NaN if the result doesn't fit the given
+ signal FlagInvalid and return NaN if the result doesn't fit the specified
  precision). If <code>HasFlags</code> of the context is true, will also store the
  flags resulting from the operation (the flags are in addition to the
  pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3006,7 +3008,7 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  if the result must be scaled down to have the same exponent as this value.
  If the precision given in the context is other than 0, calls the Quantize
  method with both arguments equal to the result of the operation (and can
- signal FlagInvalid and return NaN if the result doesn't fit the given
+ signal FlagInvalid and return NaN if the result doesn't fit the specified
  precision). If <code>HasFlags</code> of the context is true, will also store the
  flags resulting from the operation (the flags are in addition to the
  pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3097,7 +3099,7 @@ Divides two arbitrary-precision decimal numbers, and gives a particular
  if the result must be scaled down to have the same exponent as this value.
  If the precision given in the context is other than 0, calls the Quantize
  method with both arguments equal to the result of the operation (and can
- signal FlagInvalid and return NaN if the result doesn't fit the given
+ signal FlagInvalid and return NaN if the result doesn't fit the specified
  precision). If <code>HasFlags</code> of the context is true, will also store the
  flags resulting from the operation (the flags are in addition to the
  pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3277,7 +3279,7 @@ Divides this object by another object, and returns the integer part of the
  will be set to 0. Signals FlagDivideByZero and returns infinity if the
  divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns
  not-a-number (NaN) if the divisor and the dividend are 0, or if the result
- doesn't fit the given precision.
+ doesn't fit the specified precision.
 
 ### DivideToSameExponent
 
@@ -3361,8 +3363,8 @@ Finds e (the base of natural logarithms) raised to the power of this
 **Returns:**
 
 * Exponential of this object. If this object's value is 1, returns an
- approximation to " e" within the given precision. Signals FlagInvalid and
- returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the
+ approximation to " e" within the specified precision. Signals FlagInvalid
+ and returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the
  precision is unlimited (the context's Precision property is 0).
 
 ### ExpM1
@@ -4068,7 +4070,7 @@ Returns an arbitrary-precision decimal number with the same value as this
 
     public EDecimal NextMinus(EContext ctx)
 
-Finds the largest value that's smaller than the given value.
+Finds the largest value that's smaller than the specified value.
 
 **Parameters:**
 
@@ -4080,16 +4082,16 @@ Finds the largest value that's smaller than the given value.
 
 **Returns:**
 
-* Returns the largest value that's less than the given value. Returns
- negative infinity if the result is negative infinity. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter <code>ctx</code> is null, the
- precision is 0, or <code>ctx</code> has an unlimited exponent range.
+* Returns the largest value that's less than the specified value.
+ Returns negative infinity if the result is negative infinity. Signals
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>ctx</code> is
+ null, the precision is 0, or <code>ctx</code> has an unlimited exponent range.
 
 ### NextPlus
 
     public EDecimal NextPlus(EContext ctx)
 
-Finds the smallest value that's greater than the given value.
+Finds the smallest value that's greater than the specified value.
 
 **Parameters:**
 
@@ -4101,7 +4103,7 @@ Finds the smallest value that's greater than the given value.
 
 **Returns:**
 
-* Returns the smallest value that's greater than the given
+* Returns the smallest value that's greater than the specified
  value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter
  <code>ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
  exponent range.
@@ -4136,11 +4138,11 @@ Finds the next value that is closer to the other object's value than this
 
     public EDecimal Plus(EContext ctx)
 
-Rounds this object's value to a given precision, using the given rounding
- mode and range of exponent, and also converts negative zero to positive
- zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is useful for
- triggering an invalid operation and returning not-a-number (NaN) for custom
- arithmetic operations.
+Rounds this object's value to the specified precision, using the specified
+ rounding mode and range of exponent, and also converts negative zero to
+ positive zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is useful
+ for triggering an invalid operation and returning not-a-number (NaN) for
+ custom arithmetic operations.
 
 **Parameters:**
 
@@ -4159,7 +4161,7 @@ Rounds this object's value to a given precision, using the given rounding
 
     public EDecimal Pow(EDecimal exponent, EContext ctx)
 
-Raises this object's value to the given exponent.
+Raises this object's value to the specified exponent.
 
 **Parameters:**
 
@@ -4185,7 +4187,8 @@ Raises this object's value to the given exponent.
 
     public EDecimal Pow(EDecimal exponent)
 
-Raises this object's value to the given exponent, using unlimited precision.
+Raises this object's value to the specified exponent, using unlimited
+ precision.
 
 **Parameters:**
 
@@ -4201,7 +4204,7 @@ Raises this object's value to the given exponent, using unlimited precision.
 
     public EDecimal Pow(int exponentSmall, EContext ctx)
 
-Raises this object's value to the given exponent.
+Raises this object's value to the specified exponent.
 
 **Parameters:**
 
@@ -4222,7 +4225,7 @@ Raises this object's value to the given exponent.
 
     public EDecimal Pow(int exponentSmall)
 
-Raises this object's value to the given exponent.
+Raises this object's value to the specified exponent.
 
 **Parameters:**
 
@@ -4285,8 +4288,8 @@ Finds the number of digits in this number's significand. Returns 1 if this
 * An arbitrary-precision decimal number with the same value as this
  object but with the exponent changed. Signals FlagInvalid and returns
  not-a-number (NaN) if this object is infinity, if the rounded result can't
- fit the given precision, or if the context defines an exponent range and the
- given exponent is outside that range.
+ fit the specified precision, or if the context defines an exponent range and
+ the specified exponent is outside that range.
 
 ### Quantize
 
@@ -4309,7 +4312,7 @@ Finds the number of digits in this number's significand. Returns 1 if this
  an integer.
 
 * <code>rounding</code> - A rounding mode to use in case the result needs to be
- rounded to fit the given exponent.
+ rounded to fit the specified exponent.
 
 **Returns:**
 
@@ -4359,8 +4362,8 @@ Finds the number of digits in this number's significand. Returns 1 if this
 * An arbitrary-precision decimal number with the same value as this
  object but with the exponent changed. Signals FlagInvalid and returns
  not-a-number (NaN) if this object is infinity, if the rounded result can't
- fit the given precision, or if the context defines an exponent range and the
- given exponent is outside that range.
+ fit the specified precision, or if the context defines an exponent range and
+ the specified exponent is outside that range.
 
 ### Quantize
 
@@ -4399,9 +4402,9 @@ Finds the number of digits in this number's significand. Returns 1 if this
 
 * An arbitrary-precision decimal number with the same value as this
  object but with the exponent changed. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision without
+ not-a-number (NaN) if the result can't fit the specified precision without
  rounding, or if the arithmetic context defines an exponent range and the
- given exponent is outside that range.
+ specified exponent is outside that range.
 
 ### Reduce
 
@@ -4457,7 +4460,7 @@ Returns the remainder that would result when this arbitrary-precision
  and the dividend (the other arbitrary-precision decimal floating-point
  number) is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if
  the divisor and the dividend are 0, or if the result of the division doesn't
- fit the given precision.
+ fit the specified precision.
 
 ### RemainderNoRoundAfterDivide
 
@@ -4465,7 +4468,7 @@ Returns the remainder that would result when this arbitrary-precision
 
 Finds the remainder that results when dividing two arbitrary-precision
  decimal numbers, except the intermediate division is not adjusted to fit the
- precision of the given arithmetic context. The value of this object is
+ precision of the specified arithmetic context. The value of this object is
  divided by the absolute value of the other object; the remainder has the
  same sign (positive or negative) as this object's value.
 
@@ -4483,7 +4486,7 @@ Finds the remainder that results when dividing two arbitrary-precision
 
 * The remainder of the two numbers. Signals FlagInvalid and returns
  not-a-number (NaN) if the divisor is 0, or if the result doesn't fit the
- given precision.
+ specified precision.
 
 ### RemainderNaturalScale
 
@@ -4515,7 +4518,7 @@ Calculates the remainder of a number by the formula "this" - (("this" /
  and exponent range of the result. This context will be used only in the
  division portion of the remainder calculation; as a result, it's possible
  for the return value to have a higher precision than given in this context.
- Flags will be set on the given context only if the context's <code>
+ Flags will be set on the specified context only if the context's <code>
  HasFlags</code> is true and the integer part of the division result doesn't fit
  the precision and exponent range without rounding. Can be null, in which the
  precision is unlimited and no additional rounding, other than the rounding
@@ -4529,10 +4532,10 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 
     public EDecimal RemainderNear(EDecimal divisor, EContext ctx)
 
-<p>Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object's value by another object's value.
- </p><ul> <li>If this and the other object divide evenly, the result is
- 0.</li><li>If the remainder's absolute value is less than half of the
+<p>Finds the distance to the closest multiple of the specified divisor,
+ based on the result of dividing this object's value by another object's
+ value. </p><ul> <li>If this and the other object divide evenly, the result
+ is 0.</li><li>If the remainder's absolute value is less than half of the
  divisor's absolute value, the result has the same sign as this object and
  will be the distance to the closest multiple.</li><li>If the remainder's
  absolute value is more than half of the divisor's absolute value, the result
@@ -4559,7 +4562,7 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 
 * The distance of the closest multiple. Signals FlagInvalid and
  returns not-a-number (NaN) if the divisor is 0, or either the result of
- integer division (the quotient) or the remainder wouldn't fit the given
+ integer division (the quotient) or the remainder wouldn't fit the specified
  precision.
 
 ### RoundToExponent
@@ -4568,7 +4571,7 @@ Calculates the remainder of a number by the formula "this" - (("this" /
 
 Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to a new exponent if necessary. The resulting number's
- Exponent property will not necessarily be the given exponent; use the
+ Exponent property will not necessarily be the specified exponent; use the
  Quantize method instead to give the result a particular exponent.
 
 **Parameters:**
@@ -4589,11 +4592,12 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable in the given precision. If the result can't fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to the given exponent when rounding,
- and the given exponent is outside the valid range of the arithmetic context.
+ representable in the specified precision. If the result can't fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to the specified
+ exponent when rounding, and the specified exponent is outside the valid
+ range of the arithmetic context.
 
 ### RoundToExponent
 
@@ -4602,8 +4606,8 @@ Returns an arbitrary-precision decimal number with the same value as this
 Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to a new exponent if necessary, using the HalfEven
  rounding mode. The resulting number's Exponent property will not necessarily
- be the given exponent; use the Quantize method instead to give the result a
- particular exponent.
+ be the specified exponent; use the Quantize method instead to give the
+ result a particular exponent.
 
 **Parameters:**
 
@@ -4617,17 +4621,17 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable for the given exponent.
+ representable for the specified exponent.
 
 ### RoundToExponent
 
     public EDecimal RoundToExponent(EInteger exponent, ERounding rounding)
 
 Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to a new exponent if necessary, using the given rounding
- mode. The resulting number's Exponent property will not necessarily be the
- given exponent; use the Quantize method instead to give the result a
- particular exponent.
+ object but rounded to a new exponent if necessary, using the specified
+ rounding mode. The resulting number's Exponent property will not necessarily
+ be the specified exponent; use the Quantize method instead to give the
+ result a particular exponent.
 
 **Parameters:**
 
@@ -4643,7 +4647,7 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable for the given exponent.
+ representable for the specified exponent.
 
 ### RoundToExponent
 
@@ -4652,8 +4656,8 @@ Returns an arbitrary-precision decimal number with the same value as this
 Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to a new exponent if necessary, using the HalfEven
  rounding mode. The resulting number's Exponent property will not necessarily
- be the given exponent; use the Quantize method instead to give the result a
- particular exponent.
+ be the specified exponent; use the Quantize method instead to give the
+ result a particular exponent.
 
 **Parameters:**
 
@@ -4667,7 +4671,7 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable for the given exponent.
+ representable for the specified exponent.
 
 ### RoundToExponent
 
@@ -4675,7 +4679,7 @@ Returns an arbitrary-precision decimal number with the same value as this
 
 Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to a new exponent if necessary. The resulting number's
- Exponent property will not necessarily be the given exponent; use the
+ Exponent property will not necessarily be the specified exponent; use the
  Quantize method instead to give the result a particular exponent.
 
 **Parameters:**
@@ -4696,11 +4700,12 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable in the given precision. If the result can't fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to the given exponent when rounding,
- and the given exponent is outside the valid range of the arithmetic context.
+ representable in the specified precision. If the result can't fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to the specified
+ exponent when rounding, and the specified exponent is outside the valid
+ range of the arithmetic context.
 
 ### RoundToExponent
 
@@ -4708,7 +4713,7 @@ Returns an arbitrary-precision decimal number with the same value as this
 
 Returns an arbitrary-precision decimal number with the same value as this
  object but rounded to a new exponent if necessary. The resulting number's
- Exponent property will not necessarily be the given exponent; use the
+ Exponent property will not necessarily be the specified exponent; use the
  Quantize method instead to give the result a particular exponent.
 
 **Parameters:**
@@ -4720,23 +4725,23 @@ Returns an arbitrary-precision decimal number with the same value as this
  means round to the thousand (10^3, 1000). A value of 0 rounds the number to
  an integer.
 
-* <code>rounding</code> - The desired mode to use to round the given number to the
- given exponent.
+* <code>rounding</code> - The desired mode to use to round the specified number to the
+ specified exponent.
 
 **Returns:**
 
-* An arbitrary-precision decimal number rounded to the given negative
- number of decimal places.
+* An arbitrary-precision decimal number rounded to the specified
+ negative number of decimal places.
 
 ### RoundToExponentExact
 
     public EDecimal RoundToExponentExact(EInteger exponent, EContext ctx)
 
 Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to the given exponent represented as an
+ object but rounded to the specified exponent represented as an
  arbitrary-precision integer, and signals an inexact flag if the result would
  be inexact. The resulting number's Exponent property will not necessarily be
- the given exponent; use the Quantize method instead to give the result a
+ the specified exponent; use the Quantize method instead to give the result a
  particular exponent.
 
 **Parameters:**
@@ -4757,21 +4762,21 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can't fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
- changed to the given exponent when rounding, and the given exponent is
- outside the valid range of the arithmetic context.
+ changed to the specified exponent when rounding, and the specified exponent
+ is outside the valid range of the arithmetic context.
 
 ### RoundToExponentExact
 
     public EDecimal RoundToExponentExact(int exponentSmall, EContext ctx)
 
 Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to the given exponent represented as a 32-bit signed
+ object but rounded to the specified exponent represented as a 32-bit signed
  integer, and signals an inexact flag if the result would be inexact. The
- resulting number's Exponent property will not necessarily be the given
+ resulting number's Exponent property will not necessarily be the specified
  exponent; use the Quantize method instead to give the result a particular
  exponent.
 
@@ -4793,21 +4798,21 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can't fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
- changed to the given exponent when rounding, and the given exponent is
- outside the valid range of the arithmetic context.
+ changed to the specified exponent when rounding, and the specified exponent
+ is outside the valid range of the arithmetic context.
 
 ### RoundToExponentExact
 
     public EDecimal RoundToExponentExact(int exponentSmall, ERounding rounding)
 
 Returns an arbitrary-precision decimal number with the same value as this
- object but rounded to the given exponent represented as a 32-bit signed
+ object but rounded to the specified exponent represented as a 32-bit signed
  integer, and signals an inexact flag if the result would be inexact. The
- resulting number's Exponent property will not necessarily be the given
+ resulting number's Exponent property will not necessarily be the specified
  exponent; use the Quantize method instead to give the result a particular
  exponent.
 
@@ -4825,7 +4830,7 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest value
- representable using the given exponent.
+ representable using the specified exponent.
 
 ### RoundToIntegerExact
 
@@ -4848,8 +4853,8 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest integer
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can't fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
  changed to 0 when rounding, and 0 is outside the valid range of the
@@ -4878,11 +4883,11 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest integer
- representable in the given precision. If the result can't fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to 0 when rounding, and 0 is outside
- the valid range of the arithmetic context.
+ representable in the specified precision. If the result can't fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to 0 when rounding, and
+ 0 is outside the valid range of the arithmetic context.
 
 ### RoundToIntegralExact
 
@@ -4903,8 +4908,8 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest integer
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can't fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
  changed to 0 when rounding, and 0 is outside the valid range of the
@@ -4931,18 +4936,18 @@ Returns an arbitrary-precision decimal number with the same value as this
 **Returns:**
 
 * An arbitrary-precision decimal number rounded to the closest integer
- representable in the given precision. If the result can't fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to 0 when rounding, and 0 is outside
- the valid range of the arithmetic context.
+ representable in the specified precision. If the result can't fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to 0 when rounding, and
+ 0 is outside the valid range of the arithmetic context.
 
 ### RoundToPrecision
 
     public EDecimal RoundToPrecision(EContext ctx)
 
-Rounds this object's value to a given precision, using the given rounding
- mode and range of exponent.
+Rounds this object's value to the specified precision, using the specified
+ rounding mode and range of exponent.
 
 **Parameters:**
 
@@ -4981,11 +4986,11 @@ Returns a number in which the value of this object is rounded to fit the
 
 **Returns:**
 
-* This object rounded to the given precision. Returns this object and
- signals no flags if <code>ctx</code> is null or specifies an unlimited precision,
- if this object is infinity or not-a-number (including signaling NaN), or if
- the number's value has no more significant digits than the maximum precision
- given in <code>ctx</code>.
+* This object rounded to the specified precision. Returns this object
+ and signals no flags if <code>ctx</code> is null or specifies an unlimited
+ precision, if this object is infinity or not-a-number (including signaling
+ NaN), or if the number's value has no more significant digits than the
+ maximum precision given in <code>ctx</code>.
 
 ### ScaleByPowerOfTen
 
@@ -5420,7 +5425,7 @@ Returns the unit in the last place. The significand will be 1 and the
 
 Converts this value to an arbitrary-precision integer by discarding its
  fractional part and checking whether the resulting integer overflows the
- given signed bit count.
+ specified signed bit count.
 
 **Parameters:**
 
@@ -5444,7 +5449,7 @@ Converts this value to an arbitrary-precision integer by discarding its
     public EInteger ToSizedEIntegerIfExact(int maxBitLength)
 
 Converts this value to an arbitrary-precision integer, only if this number's
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.
 
 **Parameters:**

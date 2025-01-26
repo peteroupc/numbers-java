@@ -19,7 +19,8 @@ A class that implements additional operations on arbitrary-precision binary
  binary floating-point number.
 
 * `static EFloat Canonical(EFloat ed)`<br>
- Returns a canonical version of the given arbitrary-precision number object.
+ Returns a canonical version of the specified arbitrary-precision number
+ object.
 
 * `static int CompareTotal(EFloat ed,
  EFloat other,
@@ -34,16 +35,16 @@ A class that implements additional operations on arbitrary-precision binary
  imposing a total ordering on all possible values (ignoring their signs).
 
 * `static EFloat Copy(EFloat ed)`<br>
- Creates a copy of the given arbitrary-precision number object.
+ Creates a copy of the specified arbitrary-precision number object.
 
 * `static EFloat CopyAbs(EFloat ed)`<br>
  Returns an arbitrary-precision number object with the same value as the
- given number object but with a nonnegative sign (that is, the given number
- object's absolute value).
+ specified number object but with a nonnegative sign (that is, the specified
+ number object's absolute value).
 
 * `static EFloat CopyNegate(EFloat ed)`<br>
  Returns an arbitrary-precision number object with the sign reversed from the
- given number object.
+ specified number object.
 
 * `static EFloat CopySign(EFloat ed,
  EFloat other)`<br>
@@ -61,44 +62,44 @@ A class that implements additional operations on arbitrary-precision binary
  logical operand.
 
 * `static boolean IsCanonical(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is in a
+ Returns whether the specified arbitrary-precision number object is in a
  canonical form.
 
 * `static boolean IsFinite(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is neither null
- nor infinity nor not-a-number (NaN).
+ Returns whether the specified arbitrary-precision number object is neither
+ null nor infinity nor not-a-number (NaN).
 
 * `static boolean IsInfinite(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is positive or
- negative infinity.
+ Returns whether the specified arbitrary-precision number object is positive
+ or negative infinity.
 
 * `static boolean IsNaN(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is a
+ Returns whether the specified arbitrary-precision number object is a
  not-a-number (NaN).
 
 * `static boolean IsNormal(EFloat ed,
  EContext ec)`<br>
- Returns whether the given number is a normal number.
+ Returns whether the specified number is a normal number.
 
 * `static boolean IsQuietNaN(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is a quiet
+ Returns whether the specified arbitrary-precision number object is a quiet
  not-a-number (NaN).
 
 * `static boolean IsSignalingNaN(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is a signaling
- not-a-number (NaN).
+ Returns whether the specified arbitrary-precision number object is a
+ signaling not-a-number (NaN).
 
 * `static boolean IsSigned(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is negative
+ Returns whether the specified arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or negative
  zero).
 
 * `static boolean IsSubnormal(EFloat ed,
  EContext ec)`<br>
- Returns whether the given number is a subnormal number.
+ Returns whether the specified number is a subnormal number.
 
 * `static boolean IsZero(EFloat ed)`<br>
- Returns whether the given arbitrary-precision number object is zero
+ Returns whether the specified arbitrary-precision number object is zero
  (positive zero or negative zero).
 
 * `static EFloat LogB(EFloat ed,
@@ -128,7 +129,7 @@ A class that implements additional operations on arbitrary-precision binary
  EFloat scale,
  EContext ec)`<br>
  Returns an arbitrary-precision binary number with the same value as this
- object but with the given exponent, expressed as an arbitrary-precision
+ object but with the specified exponent, expressed as an arbitrary-precision
  binary number.
 
 * `static EFloat Rotate(EFloat ed,
@@ -199,7 +200,7 @@ Creates a binary floating-point number from a 32-bit signed integer.
 **Returns:**
 
 * An arbitrary-precision binary floating-point number with the closest
- representable value to the given integer.
+ representable value to the specified integer.
 
 ### BooleanToEFloat
 
@@ -217,13 +218,13 @@ Converts a Boolean value (either true or false) to an arbitrary-precision
 **Returns:**
 
 * Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
- result will be rounded as specified by the given context, if any.
+ result will be rounded as specified by the specified context, if any.
 
 ### IsCanonical
 
     public static boolean IsCanonical(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is in a
+Returns whether the specified arbitrary-precision number object is in a
  canonical form. For the current version of EFloat, all EFloat objects are in
  a canonical form.
 
@@ -239,8 +240,8 @@ Returns whether the given arbitrary-precision number object is in a
 
     public static boolean IsFinite(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is neither null
- nor infinity nor not-a-number (NaN).
+Returns whether the specified arbitrary-precision number object is neither
+ null nor infinity nor not-a-number (NaN).
 
 **Parameters:**
 
@@ -248,16 +249,16 @@ Returns whether the given arbitrary-precision number object is neither null
 
 **Returns:**
 
-* Either <code>true</code> if the given arbitrary-precision number object
- is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
+* Either <code>true</code> if the specified arbitrary-precision number
+ object is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
  otherwise.
 
 ### IsInfinite
 
     public static boolean IsInfinite(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is positive or
- negative infinity.
+Returns whether the specified arbitrary-precision number object is positive
+ or negative infinity.
 
 **Parameters:**
 
@@ -265,14 +266,14 @@ Returns whether the given arbitrary-precision number object is positive or
 
 **Returns:**
 
-* Either <code>true</code> if the given arbitrary-precision number object
- is positive or negative infinity, or <code>false</code> otherwise.
+* Either <code>true</code> if the specified arbitrary-precision number
+ object is positive or negative infinity, or <code>false</code> otherwise.
 
 ### IsNaN
 
     public static boolean IsNaN(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is a
+Returns whether the specified arbitrary-precision number object is a
  not-a-number (NaN).
 
 **Parameters:**
@@ -287,7 +288,7 @@ Returns whether the given arbitrary-precision number object is a
 
     public static boolean IsNormal(EFloat ed, EContext ec)
 
-<p>Returns whether the given number is a <i>normal</i> number. A
+<p>Returns whether the specified number is a <i>normal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
  notation with one digit before the radix point) is less than the minimum
@@ -299,27 +300,28 @@ Returns whether the given arbitrary-precision number object is a
 * <code>ed</code> - An arbitrary-precision number object.
 
 * <code>ec</code> - <p>A context specifying the exponent range of arbitrary-precision
- numbers. Can be null. If AdjustExponent of the given context is <code>
+ numbers. Can be null. If AdjustExponent of the specified context is <code>
  true</code>, a nonzero number is normal if the number's exponent (when that number
  is expressed in scientific notation with one nonzero digit before the radix
- point) is at least the given context's EMax property (for example, if EMax
- is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
- <sup>-102</sup> is not). If AdjustExponent of the given context is <code>
- false</code>, a nonzero number is subnormal if the number's Exponent property is
- at least given context's EMax property (for example, if EMax is -100, 23456
- * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).</p>
+ point) is at least the specified context's EMax property (for example, if
+ EMax is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+ <sup>-102</sup> is not). If AdjustExponent of the specified context is
+ <code>false</code>, a nonzero number is subnormal if the number's Exponent
+ property is at least given context's EMax property (for example, if EMax is
+ -100, 23456 * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is
+ not).</p>
 
 **Returns:**
 
-* Either <code>true</code> if the given number is subnormal, or <code>
- false</code> otherwise. Returns <code>true</code> if the given context is null or
- HasExponentRange of the given context is <code>false</code>.
+* Either <code>true</code> if the specified number is subnormal, or <code>
+ false</code> otherwise. Returns <code>true</code> if the specified context is null or
+ HasExponentRange of the specified context is <code>false</code>.
 
 ### IsQuietNaN
 
     public static boolean IsQuietNaN(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is a quiet
+Returns whether the specified arbitrary-precision number object is a quiet
  not-a-number (NaN).
 
 **Parameters:**
@@ -334,7 +336,7 @@ Returns whether the given arbitrary-precision number object is a quiet
 
     public static boolean IsSigned(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is negative
+Returns whether the specified arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or negative
  zero).
 
@@ -350,8 +352,8 @@ Returns whether the given arbitrary-precision number object is negative
 
     public static boolean IsSignalingNaN(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is a signaling
- not-a-number (NaN).
+Returns whether the specified arbitrary-precision number object is a
+ signaling not-a-number (NaN).
 
 **Parameters:**
 
@@ -375,7 +377,7 @@ Converts a number class identifier (ranging from 0 through 9) to a text
 
 **Returns:**
 
-* A text string identifying the given number class as follows: 0 =
+* A text string identifying the specified number class as follows: 0 =
  "+Normal"; 1 = "-Normal", 2 = "+Subnormal", 3 = "-Subnormal", 4 = "+Zero", 5
  = "-Zero", 6 = "+Infinity", 7 = "-Infinity", 8 = "NaN", 9 = "sNaN".
 
@@ -400,11 +402,11 @@ Finds the number class for an arbitrary-precision binary number object.
 
 **Returns:**
 
-* A 32-bit signed integer identifying the given number object, number
- class as follows: 0 = positive normal; 1 = negative normal, 2 = positive
- subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative zero, 6 =
- positive infinity, 7 = negative infinity, 8 = quiet not-a-number (NaN), 9 =
- signaling NaN.
+* A 32-bit signed integer identifying the specified number object,
+ number class as follows: 0 = positive normal; 1 = negative normal, 2 =
+ positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative
+ zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet not-a-number
+ (NaN), 9 = signaling NaN.
 
 **Throws:**
 
@@ -414,7 +416,7 @@ Finds the number class for an arbitrary-precision binary number object.
 
     public static boolean IsSubnormal(EFloat ed, EContext ec)
 
-<p>Returns whether the given number is a <i>subnormal</i> number. A
+<p>Returns whether the specified number is a <i>subnormal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
  notation with one digit before the radix point) is less than the minimum
@@ -425,22 +427,22 @@ Finds the number class for an arbitrary-precision binary number object.
 * <code>ed</code> - An arbitrary-precision number object.
 
 * <code>ec</code> - <p>A context specifying the exponent range of arbitrary-precision
- numbers. Can be null. If AdjustExponent of the given context is <code>
+ numbers. Can be null. If AdjustExponent of the specified context is <code>
  true</code>, a nonzero number is subnormal if the number's exponent (when that
  number is expressed in scientific notation with one nonzero digit before the
- radix point) is less than the given context's EMax property (for example, if
- EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
- <sup>-99</sup> is not). If AdjustExponent of the given context is <code>
- false</code>, a nonzero number is subnormal if the number's Exponent property is
- less than the given context's EMax property (for example, if EMax is -100,
- 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
- not).</p>
+ radix point) is less than the specified context's EMax property (for
+ example, if EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but
+ 2.3456 * 10 <sup>-99</sup> is not). If AdjustExponent of the specified
+ context is <code>false</code>, a nonzero number is subnormal if the number's
+ Exponent property is less than the specified context's EMax property (for
+ example, if EMax is -100, 23456 * 10 <sup>-102</sup> is subnormal, but 23456
+ * 10 <sup>-99</sup> is not).</p>
 
 **Returns:**
 
-* Either <code>true</code> if the given number is subnormal, or <code>
- false</code> otherwise. Returns <code>false</code> if the given context is null or
- HasExponentRange of the given context is <code>false</code>.
+* Either <code>true</code> if the specified number is subnormal, or <code>
+ false</code> otherwise. Returns <code>false</code> if the specified context is null or
+ HasExponentRange of the specified context is <code>false</code>.
 
 **Throws:**
 
@@ -450,7 +452,7 @@ Finds the number class for an arbitrary-precision binary number object.
 
     public static boolean IsZero(EFloat ed)
 
-Returns whether the given arbitrary-precision number object is zero
+Returns whether the specified arbitrary-precision number object is zero
  (positive zero or negative zero).
 
 **Parameters:**
@@ -459,8 +461,8 @@ Returns whether the given arbitrary-precision number object is zero
 
 **Returns:**
 
-* <code>true</code> if the given number has a value of zero (positive zero
- or negative zero); otherwise, <code>false</code>.
+* <code>true</code> if the specified number has a value of zero (positive
+ zero or negative zero); otherwise, <code>false</code>.
 
 ### LogB
 
@@ -480,7 +482,7 @@ Returns the base-2 exponent of an arbitrary-precision binary number (when
 
 **Returns:**
 
-* The base-2 exponent of the given number (when that number is
+* The base-2 exponent of the specified number (when that number is
  expressed in scientific notation with one nonzero digit before the radix
  point). Signals DivideByZero and returns negative infinity if <code>ed</code> is
  zero. Returns positive infinity if <code>ed</code> is positive infinity or
@@ -510,12 +512,12 @@ Finds an arbitrary-precision binary number whose binary point is moved a
 **Returns:**
 
 * The given arbitrary-precision binary number whose binary point is
- moved the given number of places. Signals an invalid operation and returns
- not-a-number (NaN) if <code>ed2</code> is infinity or NaN, has an Exponent
- property other than 0. Signals an invalid operation and returns not-a-number
- (NaN) if <code>ec</code> defines a limited precision and exponent range and if
- <code>ed2</code> 's absolute value is greater than twice the sum of the context's
- EMax property and its Precision property.
+ moved the specified number of places. Signals an invalid operation and
+ returns not-a-number (NaN) if <code>ed2</code> is infinity or NaN, has an
+ Exponent property other than 0. Signals an invalid operation and returns
+ not-a-number (NaN) if <code>ec</code> defines a limited precision and exponent
+ range and if <code>ed2</code> 's absolute value is greater than twice the sum of
+ the context's EMax property and its Precision property.
 
 **Throws:**
 
@@ -537,8 +539,8 @@ Shifts the bits of an arbitrary-precision binary floating point number's
 * <code>ed2</code> - An arbitrary-precision number indicating the number of bits to
  shift the first operand's significand. Must be an integer with an exponent
  of 0. If this parameter is positive, the significand is shifted to the left
- by the given number of bits. If this parameter is negative, the significand
- is shifted to the right by the given number of bits.
+ by the specified number of bits. If this parameter is negative, the
+ significand is shifted to the right by the specified number of bits.
 
 * <code>ec</code> - An arithmetic context to control the precision of
  arbitrary-precision numbers. Can be null.
@@ -546,7 +548,7 @@ Shifts the bits of an arbitrary-precision binary floating point number's
 **Returns:**
 
 * An arbitrary-precision binary number whose significand is shifted
- the given number of bits. Signals an invalid operation and returns NaN
+ the specified number of bits. Signals an invalid operation and returns NaN
  (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is not an
  integer, is negative, has an exponent other than 0, or has an absolute value
  that exceeds the maximum precision specified in the context.
@@ -571,9 +573,9 @@ Rotates the bits of an arbitrary-precision binary number's significand.
 * <code>ed2</code> - An arbitrary-precision number indicating the number of bits to
  rotate the first operand's significand. Must be an integer with an exponent
  of 0. If this parameter is positive, the significand is shifted to the left
- by the given number of bits and the most-significant bits shifted out of the
- significand become the least-significant bits instead. If this parameter is
- negative, the number is shifted by the given number of bits and the
+ by the specified number of bits and the most-significant bits shifted out of
+ the significand become the least-significant bits instead. If this parameter
+ is negative, the number is shifted by the specified number of bits and the
  least-significant bits shifted out of the significand become the
  most-significant bits instead.
 
@@ -584,7 +586,7 @@ Rotates the bits of an arbitrary-precision binary number's significand.
 **Returns:**
 
 * An arbitrary-precision binary number whose significand is rotated
- the given number of bits. Signals an invalid operation and returns NaN
+ the specified number of bits. Signals an invalid operation and returns NaN
  (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is not an
  integer, is negative, has an exponent other than 0, or has an absolute value
  that exceeds the maximum precision specified in the context.
@@ -665,7 +667,7 @@ Rotates the bits of an arbitrary-precision binary number's significand.
 
     public static EFloat Copy(EFloat ed)
 
-Creates a copy of the given arbitrary-precision number object.
+Creates a copy of the specified arbitrary-precision number object.
 
 **Parameters:**
 
@@ -673,7 +675,7 @@ Creates a copy of the given arbitrary-precision number object.
 
 **Returns:**
 
-* A copy of the given arbitrary-precision number object.
+* A copy of the specified arbitrary-precision number object.
 
 **Throws:**
 
@@ -683,8 +685,8 @@ Creates a copy of the given arbitrary-precision number object.
 
     public static EFloat Canonical(EFloat ed)
 
-Returns a canonical version of the given arbitrary-precision number object.
- In this method, this method behaves like the Copy method.
+Returns a canonical version of the specified arbitrary-precision number
+ object. In this method, this method behaves like the Copy method.
 
 **Parameters:**
 
@@ -699,8 +701,8 @@ Returns a canonical version of the given arbitrary-precision number object.
     public static EFloat CopyAbs(EFloat ed)
 
 Returns an arbitrary-precision number object with the same value as the
- given number object but with a nonnegative sign (that is, the given number
- object's absolute value).
+ specified number object but with a nonnegative sign (that is, the specified
+ number object's absolute value).
 
 **Parameters:**
 
@@ -709,7 +711,7 @@ Returns an arbitrary-precision number object with the same value as the
 **Returns:**
 
 * An arbitrary-precision number object with the same value as the
- given number object but with a nonnegative sign.
+ specified number object but with a nonnegative sign.
 
 **Throws:**
 
@@ -720,7 +722,7 @@ Returns an arbitrary-precision number object with the same value as the
     public static EFloat CopyNegate(EFloat ed)
 
 Returns an arbitrary-precision number object with the sign reversed from the
- given number object.
+ specified number object.
 
 **Parameters:**
 
@@ -729,7 +731,7 @@ Returns an arbitrary-precision number object with the sign reversed from the
 **Returns:**
 
 * An arbitrary-precision number object with the sign reversed from the
- given number object.
+ specified number object.
 
 **Throws:**
 
@@ -778,8 +780,8 @@ Returns whether two arbitrary-precision numbers have the same exponent, they
 
 **Returns:**
 
-* Either <code>true</code> if the given arbitrary-precision numbers have
- the same exponent, they both are not-a-number (NaN), or they both are
+* Either <code>true</code> if the specified arbitrary-precision numbers
+ have the same exponent, they both are not-a-number (NaN), or they both are
  infinity (positive, negative, or both); otherwise, <code>false</code>.
 
 ### Trim
@@ -812,7 +814,7 @@ Returns an arbitrary-precision number with the same value as this one but
     public static EFloat Rescale(EFloat ed, EFloat scale, EContext ec)
 
 <p>Returns an arbitrary-precision binary number with the same value as this
- object but with the given exponent, expressed as an arbitrary-precision
+ object but with the specified exponent, expressed as an arbitrary-precision
  binary number. </p><p>Note that this is not always the same as rounding to a
  given number of binary places, since it can fail if the difference between
  this value's exponent and the desired exponent is too big, depending on the
@@ -845,9 +847,9 @@ Returns an arbitrary-precision number with the same value as this one but
 
 * An arbitrary-precision binary number with the same value as this
  object but with the exponent changed. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can't fit the given precision without
+ not-a-number (NaN) if the result can't fit the specified precision without
  rounding, or if the arithmetic context defines an exponent range and the
- given exponent is outside that range.
+ specified exponent is outside that range.
 
 ### And
 

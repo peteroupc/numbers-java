@@ -239,7 +239,7 @@ this.unsignedNumerator.isValueZero();
       }
 
     /**
-     * Creates a rational number with the given numerator and denominator.
+     * Creates a rational number with the specified numerator and denominator.
      * @param numeratorSmall The numerator.
      * @param denominatorSmall The denominator.
      * @return An arbitrary-precision rational number.
@@ -252,7 +252,7 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Creates a rational number with the given numerator and denominator.
+     * Creates a rational number with the specified numerator and denominator.
      * @param numeratorLong The numerator.
      * @param denominatorLong The denominator.
      * @return An arbitrary-precision rational number.
@@ -265,7 +265,7 @@ this.unsignedNumerator.isValueZero();
     }
 
     /**
-     * Creates a rational number with the given numerator and denominator.
+     * Creates a rational number with the specified numerator and denominator.
      * @param numerator The numerator.
      * @param denominator The denominator.
      * @return An arbitrary-precision rational number.
@@ -564,7 +564,7 @@ PositiveInfinity) : CreateNaN(
      * {@code FromString(string, int, int)} for more information.
      * @param str A string that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
-     * given string.
+     * specified string.
      * @throws NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      */
@@ -613,7 +613,7 @@ PositiveInfinity) : CreateNaN(
      * a number. See {@code FromString(string, int, int)} for more information.
      * @param chars A sequence of {@code char} s that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
-     * given sequence of {@code char} s.
+     * specified sequence of {@code char} s.
      * @throws NumberFormatException The parameter {@code chars} is not a correctly
      * formatted sequence of {@code char} s.
      */
@@ -664,7 +664,7 @@ PositiveInfinity) : CreateNaN(
      * See {@code FromString(string, int, int)} for more information.
      * @param bytes A sequence of bytes that represents a number.
      * @return An arbitrary-precision rational number with the same value as the
-     * given sequence of bytes.
+     * specified sequence of bytes.
      * @throws NumberFormatException The parameter {@code bytes} is not a correctly
      * formatted sequence of bytes.
      */
@@ -1861,7 +1861,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * Converts this value to an arbitrary-precision integer by dividing the
      * numerator by the denominator, discarding its fractional part, and checking
-     * whether the resulting integer overflows the given signed bit count.
+     * whether the resulting integer overflows the specified signed bit count.
      * @param maxBitLength The maximum number of signed bits the integer can have.
      * The integer's value may not be less than -(2^maxBitLength) or greater than
      * (2^maxBitLength) - 1.
@@ -1899,7 +1899,7 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * Converts this value to an arbitrary-precision integer, only if this number's
-     * value is an exact integer and that integer does not overflow the given
+     * value is an exact integer and that integer does not overflow the specified
      * signed bit count.
      * @param maxBitLength The maximum number of signed bits the integer can have.
      * The integer's value may not be less than -(2^maxBitLength) or greater than
@@ -2005,15 +2005,15 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * Converts this rational number to an arbitrary-precision decimal number and
-     * rounds the result to the given precision.
+     * rounds the result to the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is true, will
      * also store the flags resulting from the operation (the flags are in addition
      * to the pre-existing flags). Can be null, in which case the precision is
      * unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating decimal expansion.
+     * @return The value of the rational number, rounded to the specified
+     * precision. Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      */
     public EDecimal ToEDecimal(EContext ctx) {
       if (this.IsNaN()) {
@@ -2037,7 +2037,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * Converts this rational number to an arbitrary-precision decimal number, but
      * if the result would have a nonterminating decimal expansion, rounds that
-     * result to the given precision.
+     * result to the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if the
      * exact result would have a nonterminating decimal expansion. If HasFlags of
@@ -2096,15 +2096,15 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * Converts this rational number to an arbitrary-precision decimal number and
-     * rounds the result to the given precision.
+     * rounds the result to the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is true, will
      * also store the flags resulting from the operation (the flags are in addition
      * to the pre-existing flags). Can be null, in which case the precision is
      * unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating decimal expansion.
+     * @return The value of the rational number, rounded to the specified
+     * precision. Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating decimal expansion.
      * @deprecated Renamed to ToEDecimal.
  */
 @Deprecated
@@ -2115,7 +2115,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * Converts this rational number to an arbitrary-precision decimal number, but
      * if the result would have a nonterminating decimal expansion, rounds that
-     * result to the given precision.
+     * result to the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if the
      * exact result would have a nonterminating decimal expansion. If HasFlags of
@@ -2144,15 +2144,15 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * Converts this rational number to a binary floating-point number and rounds
-     * that result to the given precision.
+     * that result to the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is true, will
      * also store the flags resulting from the operation (the flags are in addition
      * to the pre-existing flags). Can be null, in which case the precision is
      * unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating binary expansion.
+     * @return The value of the rational number, rounded to the specified
+     * precision. Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      */
     public EFloat ToEFloat(EContext ctx) {
       if (this.IsNaN()) {
@@ -2176,7 +2176,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * Converts this rational number to a binary floating-point number, but if the
      * result would have a nonterminating binary expansion, rounds that result to
-     * the given precision.
+     * the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if the
      * exact result would have a nonterminating binary expansion. If HasFlags of
@@ -2233,15 +2233,15 @@ PositiveInfinity) : CreateNaN(
 
     /**
      * Converts this rational number to a binary floating-point number and rounds
-     * that result to the given precision.
+     * that result to the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. If HasFlags of the context is true, will
      * also store the flags resulting from the operation (the flags are in addition
      * to the pre-existing flags). Can be null, in which case the precision is
      * unlimited and no rounding is needed.
-     * @return The value of the rational number, rounded to the given precision.
-     * Returns not-a-number (NaN) if the context is null and the result can't be
-     * exact because it has a nonterminating binary expansion.
+     * @return The value of the rational number, rounded to the specified
+     * precision. Returns not-a-number (NaN) if the context is null and the result
+     * can't be exact because it has a nonterminating binary expansion.
      * @deprecated Renamed to ToEFloat.
  */
 @Deprecated
@@ -2252,7 +2252,7 @@ PositiveInfinity) : CreateNaN(
     /**
      * Converts this rational number to a binary floating-point number, but if the
      * result would have a nonterminating binary expansion, rounds that result to
-     * the given precision.
+     * the specified precision.
      * @param ctx An arithmetic context object to control the precision, rounding,
      * and exponent range of the result. This context will be used only if the
      * exact result would have a nonterminating binary expansion. If HasFlags of

@@ -27,7 +27,7 @@ private EDecimals() {
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.
      * @return An arbitrary-precision decimal number with the closest representable
-     * value to the given integer.
+     * value to the specified integer.
      */
     public static EDecimal Int32ToEDecimal(int i32, EContext ec) {
       // NOTE: Not a miscellaneous operation in the General Decimal
@@ -42,7 +42,7 @@ private EDecimals() {
      * @param b Either true or false.
      * @param ec A context used for rounding the result. Can be null.
      * @return Either 1 if {@code b} is true, or 0 if {@code b} is false.. The
-     * result will be rounded as specified by the given context, if any.
+     * result will be rounded as specified by the specified context, if any.
      */
     public static EDecimal BooleanToEDecimal(boolean b, EContext ec) {
       // NOTE: Not a miscellaneous operation in the General Decimal
@@ -52,7 +52,7 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is in a
+     * Returns whether the specified arbitrary-precision number object is in a
      * canonical form. For the current version of EDecimal, all EDecimal objects
      * are in a canonical form.
      * @param ed An arbitrary-precision number object.
@@ -68,11 +68,11 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is neither null
-     * nor infinity nor not-a-number (NaN).
+     * Returns whether the specified arbitrary-precision number object is neither
+     * null nor infinity nor not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
-     * @return Either {@code true} if the given arbitrary-precision number object
-     * is neither null nor infinity nor not-a-number (NaN), or {@code false}
+     * @return Either {@code true} if the specified arbitrary-precision number
+     * object is neither null nor infinity nor not-a-number (NaN), or {@code false}
      * otherwise.
      */
     public static boolean IsFinite(EDecimal ed) {
@@ -80,18 +80,18 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is positive or
-     * negative infinity.
+     * Returns whether the specified arbitrary-precision number object is positive
+     * or negative infinity.
      * @param ed An arbitrary-precision number object.
-     * @return Either {@code true} if the given arbitrary-precision number object
-     * is positive or negative infinity, or {@code false} otherwise.
+     * @return Either {@code true} if the specified arbitrary-precision number
+     * object is positive or negative infinity, or {@code false} otherwise.
      */
     public static boolean IsInfinite(EDecimal ed) {
       return ed != null && ed.IsInfinity();
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is a
+     * Returns whether the specified arbitrary-precision number object is a
      * not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
      * @return Either {@code true} or {@code false}.
@@ -101,7 +101,7 @@ private EDecimals() {
     }
 
     /**
-     * <p>Returns whether the given number is a <i>normal</i> number. A
+     * <p>Returns whether the specified number is a <i>normal</i> number. A
      * <i>subnormal number</i> is a nonzero finite number whose Exponent property
      * (or the number's exponent when that number is expressed in scientific
      * notation with one digit before the radix point) is less than the minimum
@@ -109,25 +109,26 @@ private EDecimals() {
      * finite, but not subnormal.</p>
      * @param ed An arbitrary-precision number object.
      * @param ec <p>A context specifying the exponent range of arbitrary-precision
-     * numbers. Can be null. If AdjustExponent of the given context is {@code
+     * numbers. Can be null. If AdjustExponent of the specified context is {@code
      * true}, a nonzero number is normal if the number's exponent (when that number
      * is expressed in scientific notation with one nonzero digit before the radix
-     * point) is at least the given context's EMax property (for example, if EMax
-     * is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
-     * <sup>-102</sup> is not). If AdjustExponent of the given context is {@code
-     * false}, a nonzero number is subnormal if the number's Exponent property is
-     * at least given context's EMax property (for example, if EMax is -100, 23456
-     * * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).</p>
-     * @return Either {@code true} if the given number is subnormal, or {@code
-     * false} otherwise. Returns {@code true} if the given context is null or
-     * HasExponentRange of the given context is {@code false}.
+     * point) is at least the specified context's EMax property (for example, if
+     * EMax is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+     * <sup>-102</sup> is not). If AdjustExponent of the specified context is
+     * {@code false}, a nonzero number is subnormal if the number's Exponent
+     * property is at least given context's EMax property (for example, if EMax is
+     * -100, 23456 * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is
+     * not).</p>
+     * @return Either {@code true} if the specified number is subnormal, or {@code
+     * false} otherwise. Returns {@code true} if the specified context is null or
+     * HasExponentRange of the specified context is {@code false}.
      */
     public static boolean IsNormal(EDecimal ed, EContext ec) {
       return ed != null && ed.isFinite() && !ed.isZero() && !IsSubnormal(ed, ec);
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is a quiet
+     * Returns whether the specified arbitrary-precision number object is a quiet
      * not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
      * @return Either {@code true} or {@code false}.
@@ -137,7 +138,7 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is negative
+     * Returns whether the specified arbitrary-precision number object is negative
      * (including negative infinity, negative not-a-number.get(NaN), or negative
      * zero).
      * @param ed An arbitrary-precision number object.
@@ -148,8 +149,8 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is a signaling
-     * not-a-number (NaN).
+     * Returns whether the specified arbitrary-precision number object is a
+     * signaling not-a-number (NaN).
      * @param ed An arbitrary-precision number object.
      * @return Either {@code true} or {@code false}.
      */
@@ -170,7 +171,7 @@ private EDecimals() {
      * string. An arbitrary-precision number object can belong in one of ten number
      * classes.
      * @param nc An integer identifying a number class.
-     * @return A text string identifying the given number class as follows: 0 =
+     * @return A text string identifying the specified number class as follows: 0 =
      * "+Normal"; 1 = "-Normal", 2 = "+Subnormal", 3 = "-Subnormal", 4 = "+Zero", 5
      * = "-Zero", 6 = "+Infinity", 7 = "-Infinity", 8 = "NaN", 9 = "sNaN".
      * @throws IllegalArgumentException The parameter {@code nc} is less than 0 or greater
@@ -194,11 +195,11 @@ private EDecimals() {
      * @param ec A context object that specifies the precision and exponent range
      * of arbitrary-precision numbers. This is used only to distinguish between
      * normal and subnormal numbers. Can be null.
-     * @return A 32-bit signed integer identifying the given number object, number
-     * class as follows: 0 = positive normal; 1 = negative normal, 2 = positive
-     * subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative zero, 6 =
-     * positive infinity, 7 = negative infinity, 8 = quiet not-a-number (NaN), 9 =
-     * signaling NaN.
+     * @return A 32-bit signed integer identifying the specified number object,
+     * number class as follows: 0 = positive normal; 1 = negative normal, 2 =
+     * positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative
+     * zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet not-a-number
+     * (NaN), 9 = signaling NaN.
      * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static int NumberClass(EDecimal ed, EContext ec) {
@@ -222,26 +223,26 @@ private EDecimals() {
     }
 
     /**
-     * <p>Returns whether the given number is a <i>subnormal</i> number. A
+     * <p>Returns whether the specified number is a <i>subnormal</i> number. A
      * <i>subnormal number</i> is a nonzero finite number whose Exponent property
      * (or the number's exponent when that number is expressed in scientific
      * notation with one digit before the radix point) is less than the minimum
      * possible exponent for that number.</p>
      * @param ed An arbitrary-precision number object.
      * @param ec <p>A context specifying the exponent range of arbitrary-precision
-     * numbers. Can be null. If AdjustExponent of the given context is {@code
+     * numbers. Can be null. If AdjustExponent of the specified context is {@code
      * true}, a nonzero number is subnormal if the number's exponent (when that
      * number is expressed in scientific notation with one nonzero digit before the
-     * radix point) is less than the given context's EMax property (for example, if
-     * EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
-     * <sup>-99</sup> is not). If AdjustExponent of the given context is {@code
-     * false}, a nonzero number is subnormal if the number's Exponent property is
-     * less than the given context's EMax property (for example, if EMax is -100,
-     * 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
-     * not).</p>
-     * @return Either {@code true} if the given number is subnormal, or {@code
-     * false} otherwise. Returns {@code false} if the given context is null or
-     * HasExponentRange of the given context is {@code false}.
+     * radix point) is less than the specified context's EMax property (for
+     * example, if EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but
+     * 2.3456 * 10 <sup>-99</sup> is not). If AdjustExponent of the specified
+     * context is {@code false}, a nonzero number is subnormal if the number's
+     * Exponent property is less than the specified context's EMax property (for
+     * example, if EMax is -100, 23456 * 10 <sup>-102</sup> is subnormal, but 23456
+     * * 10 <sup>-99</sup> is not).</p>
+     * @return Either {@code true} if the specified number is subnormal, or {@code
+     * false} otherwise. Returns {@code false} if the specified context is null or
+     * HasExponentRange of the specified context is {@code false}.
      * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static boolean IsSubnormal(EDecimal ed, EContext ec) {
@@ -260,11 +261,11 @@ private EDecimals() {
     }
 
     /**
-     * Returns whether the given arbitrary-precision number object is zero
+     * Returns whether the specified arbitrary-precision number object is zero
      * (positive zero or negative zero).
      * @param ed An arbitrary-precision number object.
-     * @return {@code true} if the given number has a value of zero (positive zero
-     * or negative zero); otherwise, {@code false}.
+     * @return {@code true} if the specified number has a value of zero (positive
+     * zero or negative zero); otherwise, {@code false}.
      */
     public static boolean IsZero(EDecimal ed) {
       return ed != null && ed.isZero();
@@ -278,7 +279,7 @@ private EDecimals() {
      * @param ed An arbitrary-precision decimal number.
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.
-     * @return The base-10 exponent of the given number (when that number is
+     * @return The base-10 exponent of the specified number (when that number is
      * expressed in scientific notation with one nonzero digit before the radix
      * point). Signals DivideByZero and returns negative infinity if {@code ed} is
      * zero. Returns positive infinity if {@code ed} is positive infinity or
@@ -311,12 +312,12 @@ private EDecimals() {
      * @param ec An arithmetic context to control the precision, rounding, and
      * exponent range of the result. Can be null.
      * @return The given arbitrary-precision decimal number whose decimal point is
-     * moved the given number of places. Signals an invalid operation and returns
-     * not-a-number (NaN) if {@code ed2} is infinity or NaN, has an Exponent
-     * property other than 0. Signals an invalid operation and returns not-a-number
-     * (NaN) if {@code ec} defines a limited precision and exponent range and if
-     * {@code ed2} 's absolute value is greater than twice the sum of the context's
-     * EMax property and its Precision property.
+     * moved the specified number of places. Signals an invalid operation and
+     * returns not-a-number (NaN) if {@code ed2} is infinity or NaN, has an
+     * Exponent property other than 0. Signals an invalid operation and returns
+     * not-a-number (NaN) if {@code ec} defines a limited precision and exponent
+     * range and if {@code ed2} 's absolute value is greater than twice the sum of
+     * the context's EMax property and its Precision property.
      * @throws NullPointerException The parameter {@code ed} or {@code ed2} is
      * null.
      */
@@ -361,12 +362,12 @@ private EDecimals() {
      * @param ed2 An arbitrary-precision number indicating the number of digits to
      * shift the first operand's significand. Must be an integer with an exponent
      * of 0. If this parameter is positive, the significand is shifted to the left
-     * by the given number of digits. If this parameter is negative, the
-     * significand is shifted to the right by the given number of digits.
+     * by the specified number of digits. If this parameter is negative, the
+     * significand is shifted to the right by the specified number of digits.
      * @param ec An arithmetic context to control the precision of
      * arbitrary-precision numbers. Can be null.
      * @return An arbitrary-precision decimal number whose significand is shifted
-     * the given number of digits. Signals an invalid operation and returns NaN
+     * the specified number of digits. Signals an invalid operation and returns NaN
      * (not-a-number) if {@code ed2} is a signaling NaN or if {@code ed2} is not an
      * integer, is negative, has an exponent other than 0, or has an absolute value
      * that exceeds the maximum precision specified in the context.
@@ -434,16 +435,16 @@ private EDecimals() {
      * @param ed2 An arbitrary-precision number indicating the number of digits to
      * rotate the first operand's significand. Must be an integer with an exponent
      * of 0. If this parameter is positive, the significand is shifted to the left
-     * by the given number of digits and the most-significant digits shifted out of
-     * the significand become the least-significant digits instead. If this
-     * parameter is negative, the significand is shifted to the right by the given
-     * number of digits and the least-significant digits shifted out of the
-     * significand become the most-significant digits instead.
+     * by the specified number of digits and the most-significant digits shifted
+     * out of the significand become the least-significant digits instead. If this
+     * parameter is negative, the significand is shifted to the right by the
+     * specified number of digits and the least-significant digits shifted out of
+     * the significand become the most-significant digits instead.
      * @param ec An arithmetic context to control the precision of
      * arbitrary-precision numbers. If this parameter is null or specifies an
      * unlimited precision, this method has the same behavior as {@code Shift}.
      * @return An arbitrary-precision decimal number whose significand is rotated
-     * the given number of digits. Signals an invalid operation and returns NaN
+     * the specified number of digits. Signals an invalid operation and returns NaN
      * (not-a-number) if {@code ed2} is a signaling NaN or if {@code ed2} is not an
      * integer, is negative, has an exponent other than 0, or has an absolute value
      * that exceeds the maximum precision specified in the context.
@@ -574,9 +575,9 @@ private EDecimals() {
     }
 
     /**
-     * Creates a copy of the given arbitrary-precision number object.
+     * Creates a copy of the specified arbitrary-precision number object.
      * @param ed An arbitrary-precision number object to copy.
-     * @return A copy of the given arbitrary-precision number object.
+     * @return A copy of the specified arbitrary-precision number object.
      * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EDecimal Copy(EDecimal ed) {
@@ -587,8 +588,8 @@ private EDecimals() {
     }
 
     /**
-     * Returns a canonical version of the given arbitrary-precision number object.
-     * In this method, this method behaves like the Copy method.
+     * Returns a canonical version of the specified arbitrary-precision number
+     * object. In this method, this method behaves like the Copy method.
      * @param ed An arbitrary-precision number object.
      * @return A copy of the parameter {@code ed}.
      */
@@ -598,11 +599,11 @@ private EDecimals() {
 
     /**
      * Returns an arbitrary-precision number object with the same value as the
-     * given number object but with a nonnegative sign (that is, the given number
-     * object's absolute value).
+     * specified number object but with a nonnegative sign (that is, the specified
+     * number object's absolute value).
      * @param ed An arbitrary-precision number object.
      * @return An arbitrary-precision number object with the same value as the
-     * given number object but with a nonnegative sign.
+     * specified number object but with a nonnegative sign.
      * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EDecimal CopyAbs(EDecimal ed) {
@@ -614,10 +615,10 @@ private EDecimals() {
 
     /**
      * Returns an arbitrary-precision number object with the sign reversed from the
-     * given number object.
+     * specified number object.
      * @param ed An arbitrary-precision number object.
      * @return An arbitrary-precision number object with the sign reversed from the
-     * given number object.
+     * specified number object.
      * @throws NullPointerException The parameter {@code ed} is null.
      */
     public static EDecimal CopyNegate(EDecimal ed) {
@@ -661,8 +662,8 @@ private EDecimals() {
      * or both).
      * @param ed1 The first arbitrary-precision number.
      * @param ed2 The second arbitrary-precision number.
-     * @return Either {@code true} if the given arbitrary-precision numbers have
-     * the same exponent, they both are not-a-number (NaN), or they both are
+     * @return Either {@code true} if the specified arbitrary-precision numbers
+     * have the same exponent, they both are not-a-number (NaN), or they both are
      * infinity (positive, negative, or both); otherwise, {@code false}.
      */
     public static boolean SameQuantum(EDecimal ed1, EDecimal ed2) {
@@ -744,7 +745,7 @@ private EDecimals() {
 
     /**
      * <p>Returns an arbitrary-precision decimal number with the same value as this
-     * object but with the given exponent, expressed as an arbitrary-precision
+     * object but with the specified exponent, expressed as an arbitrary-precision
      * decimal number. </p><p>Note that this is not always the same as rounding to
      * a given number of decimal places, since it can fail if the difference
      * between this value's exponent and the desired exponent is too big, depending
@@ -766,9 +767,9 @@ private EDecimals() {
      * @param ec The parameter {@code ec} is an EContext object.
      * @return An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the result can't fit the given precision without
+     * not-a-number (NaN) if the result can't fit the specified precision without
      * rounding, or if the arithmetic context defines an exponent range and the
-     * given exponent is outside that range.
+     * specified exponent is outside that range.
      */
     public static EDecimal Rescale(EDecimal ed, EDecimal scale, EContext ec) {
       if (ed == null || scale == null) {

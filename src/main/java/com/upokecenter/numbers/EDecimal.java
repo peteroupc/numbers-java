@@ -1166,7 +1166,7 @@ rather than properties
      * specifies a precision limit and exponent range.
      * @param chars A sequence that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of {@code char} s.
+     * specified sequence of {@code char} s.
      * @throws NumberFormatException The parameter {@code chars} is not a correctly
      * formatted number sequence.
      */
@@ -1188,7 +1188,7 @@ rather than properties
      * then calling {@code RoundToPrecision} on that EDecimal, especially if the
      * context specifies a precision limit and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of {@code char} s.
+     * specified sequence of {@code char} s.
      * @throws NullPointerException The parameter {@code chars} is null.
      */
     public static EDecimal FromString(char[] chars, EContext ctx) {
@@ -1208,7 +1208,7 @@ rather than properties
      * @param length The length, in code units, of the desired portion of {@code
      * chars} (but not more than {@code chars} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of {@code char} s.
+     * specified sequence of {@code char} s.
      * @throws NumberFormatException The parameter {@code chars} is not a correctly
      * formatted number sequence.
      * @throws NullPointerException The parameter {@code chars} is null.
@@ -1258,7 +1258,7 @@ rather than properties
      * then calling {@code RoundToPrecision} on that EDecimal, especially if the
      * context specifies a precision limit and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of {@code char} s.
+     * specified sequence of {@code char} s.
      * @throws NullPointerException The parameter {@code chars} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code chars} 's length, or {@code chars} 's length
@@ -1290,7 +1290,7 @@ rather than properties
      * range.
      * @param bytes A sequence that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of bytes (interpreted as text).
+     * specified sequence of bytes (interpreted as text).
      * @throws NumberFormatException The parameter {@code bytes} is not a correctly
      * formatted number sequence.
      */
@@ -1313,7 +1313,7 @@ rather than properties
      * then calling {@code RoundToPrecision} on that EDecimal, especially if the
      * context specifies a precision limit and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of bytes (interpreted as text).
+     * specified sequence of bytes (interpreted as text).
      * @throws NullPointerException The parameter {@code bytes} is null.
      */
     public static EDecimal FromString(byte[] bytes, EContext ctx) {
@@ -1334,7 +1334,7 @@ rather than properties
      * @param length The length, in bytes, of the desired portion of {@code bytes}
      * (but not more than {@code bytes} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of bytes (interpreted as text).
+     * specified sequence of bytes (interpreted as text).
      * @throws NumberFormatException The parameter {@code bytes} is not a correctly
      * formatted number sequence.
      * @throws NullPointerException The parameter {@code bytes} is null.
@@ -1386,7 +1386,7 @@ rather than properties
      * then calling {@code RoundToPrecision} on that EDecimal, especially if the
      * context specifies a precision limit and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given sequence of bytes (interpreted as text).
+     * specified sequence of bytes (interpreted as text).
      * @throws NullPointerException The parameter {@code bytes} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code bytes} 's length, or {@code bytes} 's length
@@ -1417,7 +1417,7 @@ rather than properties
      * precision limit and exponent range.
      * @param str A string that represents a number.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given string.
+     * specified string.
      * @throws NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      */
@@ -1439,7 +1439,7 @@ rather than properties
      * then calling {@code RoundToPrecision} on that EDecimal, especially if the
      * context specifies a precision limit and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given string.
+     * specified string.
      * @throws NullPointerException The parameter {@code str} is null.
      */
     public static EDecimal FromString(String str, EContext ctx) {
@@ -1459,7 +1459,7 @@ rather than properties
      * @param length The length, in code units, of the desired portion of {@code
      * str} (but not more than {@code str} 's length).
      * @return An arbitrary-precision decimal number with the same value as the
-     * given string.
+     * specified string.
      * @throws NumberFormatException The parameter {@code str} is not a correctly
      * formatted number string.
      * @throws NullPointerException The parameter {@code str} is null.
@@ -1508,7 +1508,7 @@ rather than properties
      * then calling {@code RoundToPrecision} on that EDecimal, especially if the
      * context specifies a precision limit and exponent range.
      * @return An arbitrary-precision decimal number with the same value as the
-     * given string.
+     * specified string.
      * @throws NullPointerException The parameter {@code str} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
      * than 0 or greater than {@code str} 's length, or {@code str} 's length minus
@@ -1835,9 +1835,9 @@ rather than properties
      * will also store the flags resulting from the operation (the flags are in
      * addition to the pre-existing flags). <i>This parameter can't be null, as π
      * can never be represented exactly.</i>.</p>
-     * @return The constant π rounded to the given precision. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null or the
-     * precision is unlimited (the context's Precision property is 0).
+     * @return The constant π rounded to the specified precision. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
+     * null or the precision is unlimited (the context's Precision property is 0).
      */
     public static EDecimal PI(EContext ctx) {
       return GetMathValue(ctx).Pi(ctx);
@@ -2554,7 +2554,7 @@ rather than properties
      * and exponent range of the result. This context will be used only in the
      * division portion of the remainder calculation; as a result, it's possible
      * for the remainder to have a higher precision than given in this context.
-     * Flags will be set on the given context only if the context's {@code
+     * Flags will be set on the specified context only if the context's {@code
      * HasFlags} is true and the integer part of the division result doesn't fit
      * the precision and exponent range without rounding. Can be null, in which the
      * precision is unlimited and no additional rounding, other than the rounding
@@ -2601,7 +2601,7 @@ rather than properties
      * and exponent range of the result. This context will be used only in the
      * division portion of the remainder calculation; as a result, it's possible
      * for the remainder to have a higher precision than given in this context.
-     * Flags will be set on the given context only if the context's {@code
+     * Flags will be set on the specified context only if the context's {@code
      * HasFlags} is true and the integer part of the division result doesn't fit
      * the precision and exponent range without rounding. Can be null, in which the
      * precision is unlimited and no additional rounding, other than the rounding
@@ -2636,7 +2636,7 @@ rather than properties
      * if the result must be scaled down to have the same exponent as this value.
      * If the precision given in the context is other than 0, calls the Quantize
      * method with both arguments equal to the result of the operation (and can
-     * signal FlagInvalid and return NaN if the result doesn't fit the given
+     * signal FlagInvalid and return NaN if the result doesn't fit the specified
      * precision). If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
@@ -2672,7 +2672,7 @@ rather than properties
      * if the result must be scaled down to have the same exponent as this value.
      * If the precision given in the context is other than 0, calls the Quantize
      * method with both arguments equal to the result of the operation (and can
-     * signal FlagInvalid and return NaN if the result doesn't fit the given
+     * signal FlagInvalid and return NaN if the result doesn't fit the specified
      * precision). If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
@@ -2760,7 +2760,7 @@ rather than properties
      * if the result must be scaled down to have the same exponent as this value.
      * If the precision given in the context is other than 0, calls the Quantize
      * method with both arguments equal to the result of the operation (and can
-     * signal FlagInvalid and return NaN if the result doesn't fit the given
+     * signal FlagInvalid and return NaN if the result doesn't fit the specified
      * precision). If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags). Can be null, in which case the default rounding mode is
@@ -2924,7 +2924,7 @@ rather than properties
      * will be set to 0. Signals FlagDivideByZero and returns infinity if the
      * divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor and the dividend are 0, or if the result
-     * doesn't fit the given precision.
+     * doesn't fit the specified precision.
      */
     public EDecimal DivideToIntegerZeroScale(
       EDecimal divisor,
@@ -2990,8 +2990,8 @@ rather than properties
      * General Decimal Arithmetic Specification, any rounding mode is
      * allowed.).</p>
      * @return Exponential of this object. If this object's value is 1, returns an
-     * approximation to " e" within the given precision. Signals FlagInvalid and
-     * returns not-a-number (NaN) if the parameter {@code ctx} is null or the
+     * approximation to " e" within the specified precision. Signals FlagInvalid
+     * and returns not-a-number (NaN) if the parameter {@code ctx} is null or the
      * precision is unlimited (the context's Precision property is 0).
      */
     public EDecimal Exp(EContext ctx) {
@@ -3797,29 +3797,29 @@ rather than properties
     }
 
     /**
-     * Finds the largest value that's smaller than the given value.
+     * Finds the largest value that's smaller than the specified value.
      * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags).
-     * @return Returns the largest value that's less than the given value. Returns
-     * negative infinity if the result is negative infinity. Signals FlagInvalid
-     * and returns not-a-number (NaN) if the parameter {@code ctx} is null, the
-     * precision is 0, or {@code ctx} has an unlimited exponent range.
+     * @return Returns the largest value that's less than the specified value.
+     * Returns negative infinity if the result is negative infinity. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the parameter {@code ctx} is
+     * null, the precision is 0, or {@code ctx} has an unlimited exponent range.
      */
     public EDecimal NextMinus(EContext ctx) {
       return GetMathValue(ctx).NextMinus(this, ctx);
     }
 
     /**
-     * Finds the smallest value that's greater than the given value.
+     * Finds the smallest value that's greater than the specified value.
      * @param ctx An arithmetic context object to control the precision and
      * exponent range of the result. The rounding mode from this context is
      * ignored. If {@code HasFlags} of the context is true, will also store the
      * flags resulting from the operation (the flags are in addition to the
      * pre-existing flags).
-     * @return Returns the smallest value that's greater than the given
+     * @return Returns the smallest value that's greater than the specified
      * value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter
      * {@code ctx} is null, the precision is 0, or {@code ctx} has an unlimited
      * exponent range.
@@ -3852,11 +3852,11 @@ rather than properties
     }
 
     /**
-     * Rounds this object's value to a given precision, using the given rounding
-     * mode and range of exponent, and also converts negative zero to positive
-     * zero. The idiom {@code EDecimal.SignalingNaN.Plus(ctx)} is useful for
-     * triggering an invalid operation and returning not-a-number (NaN) for custom
-     * arithmetic operations.
+     * Rounds this object's value to the specified precision, using the specified
+     * rounding mode and range of exponent, and also converts negative zero to
+     * positive zero. The idiom {@code EDecimal.SignalingNaN.Plus(ctx)} is useful
+     * for triggering an invalid operation and returning not-a-number (NaN) for
+     * custom arithmetic operations.
      * @param ctx A context for controlling the precision, rounding mode, and
      * exponent range. Can be null, in which case the precision is unlimited and
      * rounding isn't needed.
@@ -3870,7 +3870,7 @@ rather than properties
     }
 
     /**
-     * Raises this object's value to the given exponent.
+     * Raises this object's value to the specified exponent.
      * @param exponent An arbitrary-precision decimal number expressing the
      * exponent to raise this object's value to.
      * @param ctx An arithmetic context to control the precision, rounding, and
@@ -3890,7 +3890,8 @@ rather than properties
     }
 
     /**
-     * Raises this object's value to the given exponent, using unlimited precision.
+     * Raises this object's value to the specified exponent, using unlimited
+     * precision.
      * @param exponent An arbitrary-precision decimal number expressing the
      * exponent to raise this object's value to.
      * @return This^exponent. Returns not-a-number (NaN) if the exponent has a
@@ -3901,7 +3902,7 @@ rather than properties
     }
 
     /**
-     * Raises this object's value to the given exponent.
+     * Raises this object's value to the specified exponent.
      * @param exponentSmall The exponent to raise this object's value to.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
@@ -3916,7 +3917,7 @@ rather than properties
     }
 
     /**
-     * Raises this object's value to the given exponent.
+     * Raises this object's value to the specified exponent.
      * @param exponentSmall The exponent to raise this object's value to.
      * @return This^exponent. Returns not-a-number (NaN) if this object and
      * exponent are both 0.
@@ -3969,8 +3970,8 @@ rather than properties
      * @return An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and returns
      * not-a-number (NaN) if this object is infinity, if the rounded result can't
-     * fit the given precision, or if the context defines an exponent range and the
-     * given exponent is outside that range.
+     * fit the specified precision, or if the context defines an exponent range and
+     * the specified exponent is outside that range.
      */
     public EDecimal Quantize(
       EInteger desiredExponent,
@@ -3994,7 +3995,7 @@ rather than properties
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.
      * @param rounding A rounding mode to use in case the result needs to be
-     * rounded to fit the given exponent.
+     * rounded to fit the specified exponent.
      * @return An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Returns not-a-number (NaN) if this
      * object is infinity, or if the rounding mode is ERounding.None and the result
@@ -4045,8 +4046,8 @@ rather than properties
      * @return An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and returns
      * not-a-number (NaN) if this object is infinity, if the rounded result can't
-     * fit the given precision, or if the context defines an exponent range and the
-     * given exponent is outside that range.
+     * fit the specified precision, or if the context defines an exponent range and
+     * the specified exponent is outside that range.
      */
     public EDecimal Quantize(
       int desiredExponentInt,
@@ -4093,9 +4094,9 @@ rather than properties
      * HalfEven.
      * @return An arbitrary-precision decimal number with the same value as this
      * object but with the exponent changed. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the result can't fit the given precision without
+     * not-a-number (NaN) if the result can't fit the specified precision without
      * rounding, or if the arithmetic context defines an exponent range and the
-     * given exponent is outside that range.
+     * specified exponent is outside that range.
      */
     public EDecimal Quantize(
       EDecimal otherValue,
@@ -4142,7 +4143,7 @@ rather than properties
      * and the dividend (the other arbitrary-precision decimal floating-point
      * number) is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if
      * the divisor and the dividend are 0, or if the result of the division doesn't
-     * fit the given precision.
+     * fit the specified precision.
      */
     public EDecimal Remainder(
       EDecimal divisor,
@@ -4153,7 +4154,7 @@ rather than properties
     /**
      * Finds the remainder that results when dividing two arbitrary-precision
      * decimal numbers, except the intermediate division is not adjusted to fit the
-     * precision of the given arithmetic context. The value of this object is
+     * precision of the specified arithmetic context. The value of this object is
      * divided by the absolute value of the other object; the remainder has the
      * same sign (positive or negative) as this object's value.
      * @param divisor The number to divide by.
@@ -4164,7 +4165,7 @@ rather than properties
      * pre-existing flags). Can be null, in which the precision is unlimited.
      * @return The remainder of the two numbers. Signals FlagInvalid and returns
      * not-a-number (NaN) if the divisor is 0, or if the result doesn't fit the
-     * given precision.
+     * specified precision.
      */
     public EDecimal RemainderNoRoundAfterDivide(
       EDecimal divisor,
@@ -4190,7 +4191,7 @@ rather than properties
      * and exponent range of the result. This context will be used only in the
      * division portion of the remainder calculation; as a result, it's possible
      * for the return value to have a higher precision than given in this context.
-     * Flags will be set on the given context only if the context's {@code
+     * Flags will be set on the specified context only if the context's {@code
      * HasFlags} is true and the integer part of the division result doesn't fit
      * the precision and exponent range without rounding. Can be null, in which the
      * precision is unlimited and no additional rounding, other than the rounding
@@ -4206,10 +4207,10 @@ rather than properties
     }
 
     /**
-     * <p>Finds the distance to the closest multiple of the given divisor, based on
-     * the result of dividing this object's value by another object's value.
-     * </p><ul> <li>If this and the other object divide evenly, the result is
-     * 0.</li><li>If the remainder's absolute value is less than half of the
+     * <p>Finds the distance to the closest multiple of the specified divisor,
+     * based on the result of dividing this object's value by another object's
+     * value. </p><ul> <li>If this and the other object divide evenly, the result
+     * is 0.</li><li>If the remainder's absolute value is less than half of the
      * divisor's absolute value, the result has the same sign as this object and
      * will be the distance to the closest multiple.</li><li>If the remainder's
      * absolute value is more than half of the divisor's absolute value, the result
@@ -4229,7 +4230,7 @@ rather than properties
      * precision is unlimited.
      * @return The distance of the closest multiple. Signals FlagInvalid and
      * returns not-a-number (NaN) if the divisor is 0, or either the result of
-     * integer division (the quotient) or the remainder wouldn't fit the given
+     * integer division (the quotient) or the remainder wouldn't fit the specified
      * precision.
      */
     public EDecimal RemainderNear(
@@ -4242,7 +4243,7 @@ rather than properties
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
      * object but rounded to a new exponent if necessary. The resulting number's
-     * Exponent property will not necessarily be the given exponent; use the
+     * Exponent property will not necessarily be the specified exponent; use the
      * Quantize method instead to give the result a particular exponent.
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
@@ -4256,11 +4257,12 @@ rather than properties
      * addition to the pre-existing flags). Can be null, in which case the default
      * rounding mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable in the given precision. If the result can't fit the precision,
-     * additional digits are discarded to make it fit. Signals FlagInvalid and
-     * returns not-a-number (NaN) if the arithmetic context defines an exponent
-     * range, the new exponent must be changed to the given exponent when rounding,
-     * and the given exponent is outside the valid range of the arithmetic context.
+     * representable in the specified precision. If the result can't fit the
+     * precision, additional digits are discarded to make it fit. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+     * an exponent range, the new exponent must be changed to the specified
+     * exponent when rounding, and the specified exponent is outside the valid
+     * range of the arithmetic context.
      */
     public EDecimal RoundToExponent(
       EInteger exponent,
@@ -4273,8 +4275,8 @@ rather than properties
      * Returns an arbitrary-precision decimal number with the same value as this
      * object but rounded to a new exponent if necessary, using the HalfEven
      * rounding mode. The resulting number's Exponent property will not necessarily
-     * be the given exponent; use the Quantize method instead to give the result a
-     * particular exponent.
+     * be the specified exponent; use the Quantize method instead to give the
+     * result a particular exponent.
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
@@ -4282,7 +4284,7 @@ rather than properties
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable for the given exponent.
+     * representable for the specified exponent.
      */
     public EDecimal RoundToExponent(
       EInteger exponent) {
@@ -4293,10 +4295,10 @@ rather than properties
 
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
-     * object but rounded to a new exponent if necessary, using the given rounding
-     * mode. The resulting number's Exponent property will not necessarily be the
-     * given exponent; use the Quantize method instead to give the result a
-     * particular exponent.
+     * object but rounded to a new exponent if necessary, using the specified
+     * rounding mode. The resulting number's Exponent property will not necessarily
+     * be the specified exponent; use the Quantize method instead to give the
+     * result a particular exponent.
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
@@ -4305,7 +4307,7 @@ rather than properties
      * an integer.
      * @param rounding Desired mode for rounding this number's value.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable for the given exponent.
+     * representable for the specified exponent.
      */
     public EDecimal RoundToExponent(
       EInteger exponent,
@@ -4319,8 +4321,8 @@ rather than properties
      * Returns an arbitrary-precision decimal number with the same value as this
      * object but rounded to a new exponent if necessary, using the HalfEven
      * rounding mode. The resulting number's Exponent property will not necessarily
-     * be the given exponent; use the Quantize method instead to give the result a
-     * particular exponent.
+     * be the specified exponent; use the Quantize method instead to give the
+     * result a particular exponent.
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
      * number. Can also be positive, which eliminates lower-order places from the
@@ -4328,7 +4330,7 @@ rather than properties
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable for the given exponent.
+     * representable for the specified exponent.
      */
     public EDecimal RoundToExponent(
       int exponentSmall) {
@@ -4338,7 +4340,7 @@ rather than properties
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
      * object but rounded to a new exponent if necessary. The resulting number's
-     * Exponent property will not necessarily be the given exponent; use the
+     * Exponent property will not necessarily be the specified exponent; use the
      * Quantize method instead to give the result a particular exponent.
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
@@ -4352,11 +4354,12 @@ rather than properties
      * addition to the pre-existing flags). Can be null, in which case the default
      * rounding mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable in the given precision. If the result can't fit the precision,
-     * additional digits are discarded to make it fit. Signals FlagInvalid and
-     * returns not-a-number (NaN) if the arithmetic context defines an exponent
-     * range, the new exponent must be changed to the given exponent when rounding,
-     * and the given exponent is outside the valid range of the arithmetic context.
+     * representable in the specified precision. If the result can't fit the
+     * precision, additional digits are discarded to make it fit. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+     * an exponent range, the new exponent must be changed to the specified
+     * exponent when rounding, and the specified exponent is outside the valid
+     * range of the arithmetic context.
      */
     public EDecimal RoundToExponent(
       int exponentSmall,
@@ -4377,7 +4380,7 @@ rather than properties
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
      * object but rounded to a new exponent if necessary. The resulting number's
-     * Exponent property will not necessarily be the given exponent; use the
+     * Exponent property will not necessarily be the specified exponent; use the
      * Quantize method instead to give the result a particular exponent.
      * @param exponentSmall The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
@@ -4385,10 +4388,10 @@ rather than properties
      * number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3
      * means round to the thousand (10^3, 1000). A value of 0 rounds the number to
      * an integer.
-     * @param rounding The desired mode to use to round the given number to the
-     * given exponent.
-     * @return An arbitrary-precision decimal number rounded to the given negative
-     * number of decimal places.
+     * @param rounding The desired mode to use to round the specified number to the
+     * specified exponent.
+     * @return An arbitrary-precision decimal number rounded to the specified
+     * negative number of decimal places.
      */
     public EDecimal RoundToExponent(
       int exponentSmall,
@@ -4406,10 +4409,10 @@ rather than properties
 
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
-     * object but rounded to the given exponent represented as an
+     * object but rounded to the specified exponent represented as an
      * arbitrary-precision integer, and signals an inexact flag if the result would
      * be inexact. The resulting number's Exponent property will not necessarily be
-     * the given exponent; use the Quantize method instead to give the result a
+     * the specified exponent; use the Quantize method instead to give the result a
      * particular exponent.
      * @param exponent The minimum exponent the result can have. This is the
      * maximum number of fractional digits in the result, expressed as a negative
@@ -4423,12 +4426,12 @@ rather than properties
      * addition to the pre-existing flags). Can be null, in which case the default
      * rounding mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable in the given precision. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the result can't fit the given precision without
+     * representable in the specified precision. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the result can't fit the specified precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
-     * changed to the given exponent when rounding, and the given exponent is
-     * outside the valid range of the arithmetic context.
+     * changed to the specified exponent when rounding, and the specified exponent
+     * is outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponentExact(
       EInteger exponent,
@@ -4439,9 +4442,9 @@ rather than properties
 
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
-     * object but rounded to the given exponent represented as a 32-bit signed
+     * object but rounded to the specified exponent represented as a 32-bit signed
      * integer, and signals an inexact flag if the result would be inexact. The
-     * resulting number's Exponent property will not necessarily be the given
+     * resulting number's Exponent property will not necessarily be the specified
      * exponent; use the Quantize method instead to give the result a particular
      * exponent.
      * @param exponentSmall The minimum exponent the result can have. This is the
@@ -4456,12 +4459,12 @@ rather than properties
      * addition to the pre-existing flags). Can be null, in which case the default
      * rounding mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable in the given precision. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the result can't fit the given precision without
+     * representable in the specified precision. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the result can't fit the specified precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
-     * changed to the given exponent when rounding, and the given exponent is
-     * outside the valid range of the arithmetic context.
+     * changed to the specified exponent when rounding, and the specified exponent
+     * is outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToExponentExact(
       int exponentSmall,
@@ -4471,9 +4474,9 @@ rather than properties
 
     /**
      * Returns an arbitrary-precision decimal number with the same value as this
-     * object but rounded to the given exponent represented as a 32-bit signed
+     * object but rounded to the specified exponent represented as a 32-bit signed
      * integer, and signals an inexact flag if the result would be inexact. The
-     * resulting number's Exponent property will not necessarily be the given
+     * resulting number's Exponent property will not necessarily be the specified
      * exponent; use the Quantize method instead to give the result a particular
      * exponent.
      * @param exponentSmall The minimum exponent the result can have. This is the
@@ -4484,7 +4487,7 @@ rather than properties
      * an integer.
      * @param rounding Desired mode for rounding this object's value.
      * @return An arbitrary-precision decimal number rounded to the closest value
-     * representable using the given exponent.
+     * representable using the specified exponent.
      */
     public EDecimal RoundToExponentExact(
       int exponentSmall,
@@ -4506,8 +4509,8 @@ rather than properties
      * addition to the pre-existing flags). Can be null, in which case the default
      * rounding mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest integer
-     * representable in the given precision. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the result can't fit the given precision without
+     * representable in the specified precision. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the result can't fit the specified precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to 0 when rounding, and 0 is outside the valid range of the
@@ -4531,11 +4534,11 @@ rather than properties
      * and RoundToExponentExact). Can be null, in which case the default rounding
      * mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest integer
-     * representable in the given precision. If the result can't fit the precision,
-     * additional digits are discarded to make it fit. Signals FlagInvalid and
-     * returns not-a-number (NaN) if the arithmetic context defines an exponent
-     * range, the new exponent must be changed to 0 when rounding, and 0 is outside
-     * the valid range of the arithmetic context.
+     * representable in the specified precision. If the result can't fit the
+     * precision, additional digits are discarded to make it fit. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+     * an exponent range, the new exponent must be changed to 0 when rounding, and
+     * 0 is outside the valid range of the arithmetic context.
      */
     public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) {
       return GetMathValue(ctx)
@@ -4552,8 +4555,8 @@ rather than properties
      * addition to the pre-existing flags). Can be null, in which case the default
      * rounding mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest integer
-     * representable in the given precision. Signals FlagInvalid and returns
-     * not-a-number (NaN) if the result can't fit the given precision without
+     * representable in the specified precision. Signals FlagInvalid and returns
+     * not-a-number (NaN) if the result can't fit the specified precision without
      * rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
      * arithmetic context defines an exponent range, the new exponent must be
      * changed to 0 when rounding, and 0 is outside the valid range of the
@@ -4577,11 +4580,11 @@ rather than properties
      * and RoundToExponentExact). Can be null, in which case the default rounding
      * mode is HalfEven.
      * @return An arbitrary-precision decimal number rounded to the closest integer
-     * representable in the given precision. If the result can't fit the precision,
-     * additional digits are discarded to make it fit. Signals FlagInvalid and
-     * returns not-a-number (NaN) if the arithmetic context defines an exponent
-     * range, the new exponent must be changed to 0 when rounding, and 0 is outside
-     * the valid range of the arithmetic context.
+     * representable in the specified precision. If the result can't fit the
+     * precision, additional digits are discarded to make it fit. Signals
+     * FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+     * an exponent range, the new exponent must be changed to 0 when rounding, and
+     * 0 is outside the valid range of the arithmetic context.
      * @deprecated Renamed to RoundToIntegerNoRoundedFlag.
  */
 @Deprecated
@@ -4591,8 +4594,8 @@ rather than properties
     }
 
     /**
-     * Rounds this object's value to a given precision, using the given rounding
-     * mode and range of exponent.
+     * Rounds this object's value to the specified precision, using the specified
+     * rounding mode and range of exponent.
      * @param ctx An arithmetic context to control the precision, rounding, and
      * exponent range of the result. If {@code HasFlags} of the context is true,
      * will also store the flags resulting from the operation (the flags are in
@@ -4620,11 +4623,11 @@ rather than properties
      * precision is unlimited. Signals the flag LostDigits if the input number has
      * greater precision than allowed and was rounded to a different numerical
      * value in order to fit the precision.
-     * @return This object rounded to the given precision. Returns this object and
-     * signals no flags if {@code ctx} is null or specifies an unlimited precision,
-     * if this object is infinity or not-a-number (including signaling NaN), or if
-     * the number's value has no more significant digits than the maximum precision
-     * given in {@code ctx}.
+     * @return This object rounded to the specified precision. Returns this object
+     * and signals no flags if {@code ctx} is null or specifies an unlimited
+     * precision, if this object is infinity or not-a-number (including signaling
+     * NaN), or if the number's value has no more significant digits than the
+     * maximum precision given in {@code ctx}.
      */
     public EDecimal PreRound(EContext ctx) {
       return NumberUtility.PreRound(this, ctx, GetMathValue(ctx));
@@ -5601,7 +5604,7 @@ EFloat.Binary32SignifAreaBits;
     /**
      * Converts this value to an arbitrary-precision integer by discarding its
      * fractional part and checking whether the resulting integer overflows the
-     * given signed bit count.
+     * specified signed bit count.
      * @param maxBitLength The maximum number of signed bits the integer can have.
      * The integer's value may not be less than -(2^maxBitLength) or greater than
      * (2^maxBitLength) - 1.
@@ -5617,7 +5620,7 @@ EFloat.Binary32SignifAreaBits;
 
     /**
      * Converts this value to an arbitrary-precision integer, only if this number's
-     * value is an exact integer and that integer does not overflow the given
+     * value is an exact integer and that integer does not overflow the specified
      * signed bit count.
      * @param maxBitLength The maximum number of signed bits the integer can have.
      * The integer's value may not be less than -(2^maxBitLength) or greater than

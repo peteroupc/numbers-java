@@ -104,21 +104,21 @@
  Initializes a new EContext that is a copy of another EContext.
 
 * `boolean ExponentWithinRange(EInteger exponent)`<br>
- Determines whether a number can have the given Exponent property under this
- arithmetic context.
+ Determines whether a number can have the specified Exponent property under
+ this arithmetic context.
 
 * `static EContext ForPrecision(int precision)`<br>
- Creates a new arithmetic context using the given maximum number of digits,
- an unlimited exponent range, and the HalfUp rounding mode.
+ Creates a new arithmetic context using the specified maximum number of
+ digits, an unlimited exponent range, and the HalfUp rounding mode.
 
 * `static EContext ForPrecisionAndRounding(int precision,
  ERounding rounding)`<br>
  Creates a new EContext object initialized with an unlimited exponent range,
- and the given rounding mode and maximum precision.
+ and the specified rounding mode and maximum precision.
 
 * `static EContext ForRounding(ERounding rounding)`<br>
  Creates a new EContext object initialized with an unlimited precision, an
- unlimited exponent range, and the given rounding mode.
+ unlimited exponent range, and the specified rounding mode.
 
 * `final boolean getAdjustExponent()`<br>
  Gets a value indicating whether the EMax and EMin properties refer to the
@@ -166,7 +166,7 @@
 
 * `final ERounding getRounding()`<br>
  Gets the desired rounding mode when converting numbers that can't be
- represented in the given precision and exponent range.
+ represented in the specified precision and exponent range.
 
 * `final int getTraps()`<br>
  Gets the traps that are set for each flag in the context.
@@ -185,13 +185,13 @@
 
 * `<T> T TriggerTraps(T result,
  EContext trappableContext)`<br>
- Throws trap exceptions if the given context has flags set that also have
- traps enabled for them in this context, and adds the given context's flags
- to this context if HasFlags for this context is true.
+ Throws trap exceptions if the specified context has flags set that also have
+ traps enabled for them in this context, and adds the specified context's
+ flags to this context if HasFlags for this context is true.
 
 * `EContext WithAdjustExponent(boolean adjustExponent)`<br>
  Copies this EContext and sets the copy's "AdjustExponent" property to the
- given value.
+ specified value.
 
 * `EContext WithBigExponentRange(EInteger exponentMin,
  EInteger exponentMax)`<br>
@@ -206,7 +206,7 @@
 
 * `EContext WithExponentClamp(boolean clamp)`<br>
  Copies this arithmetic context and sets the copy's "ClampNormalExponents"
- flag to the given value.
+ flag to the specified value.
 
 * `EContext WithExponentRange(int exponentMinSmall,
  int exponentMaxSmall)`<br>
@@ -225,17 +225,17 @@
 
 * `EContext WithPrecisionInBits(boolean isPrecisionBits)`<br>
  Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
- given value.
+ specified value.
 
 * `EContext WithRounding(ERounding rounding)`<br>
  Copies this EContext with the specified rounding mode.
 
 * `EContext WithSimplified(boolean simplified)`<br>
  Copies this EContext and sets the copy's "IsSimplified" property to the
- given value.
+ specified value.
 
 * `EContext WithTraps(int traps)`<br>
- Copies this EContext with Traps set to the given value.
+ Copies this EContext with Traps set to the specified value.
 
 * `EContext WithUnlimitedExponents()`<br>
  Copies this EContext with an unlimited exponent range.
@@ -582,12 +582,12 @@ Gets a value indicating whether to use a "simplified" arithmetic. In the
     public final ERounding getRounding()
 
 Gets the desired rounding mode when converting numbers that can't be
- represented in the given precision and exponent range.
+ represented in the specified precision and exponent range.
 
 **Returns:**
 
 * The desired rounding mode when converting numbers that can't be
- represented in the given precision and exponent range.
+ represented in the specified precision and exponent range.
 
 ### getTraps
 
@@ -612,8 +612,8 @@ Gets the desired rounding mode when converting numbers that can't be
 
     public static EContext ForPrecision(int precision)
 
-Creates a new arithmetic context using the given maximum number of digits,
- an unlimited exponent range, and the HalfUp rounding mode.
+Creates a new arithmetic context using the specified maximum number of
+ digits, an unlimited exponent range, and the HalfUp rounding mode.
 
 **Parameters:**
 
@@ -628,7 +628,7 @@ Creates a new arithmetic context using the given maximum number of digits,
     public static EContext ForPrecisionAndRounding(int precision, ERounding rounding)
 
 Creates a new EContext object initialized with an unlimited exponent range,
- and the given rounding mode and maximum precision.
+ and the specified rounding mode and maximum precision.
 
 **Parameters:**
 
@@ -645,7 +645,7 @@ Creates a new EContext object initialized with an unlimited exponent range,
     public static EContext ForRounding(ERounding rounding)
 
 Creates a new EContext object initialized with an unlimited precision, an
- unlimited exponent range, and the given rounding mode.
+ unlimited exponent range, and the specified rounding mode.
 
 **Parameters:**
 
@@ -669,8 +669,8 @@ Initializes a new EContext that is a copy of another EContext.
 
     public boolean ExponentWithinRange(EInteger exponent)
 
-Determines whether a number can have the given Exponent property under this
- arithmetic context.
+Determines whether a number can have the specified Exponent property under
+ this arithmetic context.
 
 **Parameters:**
 
@@ -679,10 +679,10 @@ Determines whether a number can have the given Exponent property under this
 
 **Returns:**
 
-* <code>true</code> if a number can have the given Exponent property under
- this arithmetic context; otherwise, <code>false</code>. If this context allows
- unlimited precision, returns true for the exponent EMax and any exponent
- less than EMax.
+* <code>true</code> if a number can have the specified Exponent property
+ under this arithmetic context; otherwise, <code>false</code>. If this context
+ allows unlimited precision, returns true for the exponent EMax and any
+ exponent less than EMax.
 
 **Throws:**
 
@@ -722,7 +722,7 @@ Gets a value indicating whether this context has a mutable Flags field, one
     public EContext WithAdjustExponent(boolean adjustExponent)
 
 Copies this EContext and sets the copy's "AdjustExponent" property to the
- given value.
+ specified value.
 
 **Parameters:**
 
@@ -800,7 +800,7 @@ Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
     public EContext WithExponentClamp(boolean clamp)
 
 Copies this arithmetic context and sets the copy's "ClampNormalExponents"
- flag to the given value.
+ flag to the specified value.
 
 **Parameters:**
 
@@ -856,7 +856,7 @@ Copies this EContext and gives it a particular precision value.
     public EContext WithPrecisionInBits(boolean isPrecisionBits)
 
 Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
- given value.
+ specified value.
 
 **Parameters:**
 
@@ -886,7 +886,7 @@ Copies this EContext with the specified rounding mode.
     public EContext WithSimplified(boolean simplified)
 
 Copies this EContext and sets the copy's "IsSimplified" property to the
- given value.
+ specified value.
 
 **Parameters:**
 
@@ -900,9 +900,9 @@ Copies this EContext and sets the copy's "IsSimplified" property to the
 
     public EContext WithTraps(int traps)
 
-Copies this EContext with Traps set to the given value. (Also sets HasFlags
- on the copy to <code>True</code>, but this may change in version 2.0 of this
- library.).
+Copies this EContext with Traps set to the specified value. (Also sets
+ HasFlags on the copy to <code>True</code>, but this may change in version 2.0 of
+ this library.).
 
 **Parameters:**
 
@@ -941,9 +941,9 @@ Returns this context if it doesn't set traps, or a context without traps and
 
     public <T> T TriggerTraps(T result, EContext trappableContext)
 
-Throws trap exceptions if the given context has flags set that also have
- traps enabled for them in this context, and adds the given context's flags
- to this context if HasFlags for this context is true. This is not a
+Throws trap exceptions if the specified context has flags set that also have
+ traps enabled for them in this context, and adds the specified context's
+ flags to this context if HasFlags for this context is true. This is not a
  general-purpose method; it is intended to support custom implementations of
  arithmetic operations.
 

@@ -108,15 +108,15 @@
 
 * `static ERational Create(int numeratorSmall,
  int denominatorSmall)`<br>
- Creates a rational number with the given numerator and denominator.
+ Creates a rational number with the specified numerator and denominator.
 
 * `static ERational Create(long numeratorLong,
  long denominatorLong)`<br>
- Creates a rational number with the given numerator and denominator.
+ Creates a rational number with the specified numerator and denominator.
 
 * `static ERational Create(EInteger numerator,
  EInteger denominator)`<br>
- Creates a rational number with the given numerator and denominator.
+ Creates a rational number with the specified numerator and denominator.
 
 * `static ERational CreateNaN(EInteger diag)`<br>
  Creates a not-a-number arbitrary-precision rational number.
@@ -367,24 +367,24 @@ Renamed to FromEFloat.
 
 * `EDecimal ToEDecimal(EContext ctx)`<br>
  Converts this rational number to an arbitrary-precision decimal number and
- rounds the result to the given precision.
+ rounds the result to the specified precision.
 
 * `EDecimal ToEDecimalExactIfPossible(EContext ctx)`<br>
  Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds that
- result to the given precision.
+ result to the specified precision.
 
 * `EFloat ToEFloat()`<br>
  Converts this rational number to a binary floating-point number.
 
 * `EFloat ToEFloat(EContext ctx)`<br>
  Converts this rational number to a binary floating-point number and rounds
- that result to the given precision.
+ that result to the specified precision.
 
 * `EFloat ToEFloatExactIfPossible(EContext ctx)`<br>
  Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that result to
- the given precision.
+ the specified precision.
 
 * `EInteger ToEInteger()`<br>
  Converts this value to an arbitrary-precision integer by dividing the
@@ -483,11 +483,11 @@ Renamed to ToEFloatExactIfPossible.
 * `EInteger ToSizedEInteger(int maxBitLength)`<br>
  Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator, discarding its fractional part, and checking
- whether the resulting integer overflows the given signed bit count.
+ whether the resulting integer overflows the specified signed bit count.
 
 * `EInteger ToSizedEIntegerIfExact(int maxBitLength)`<br>
  Converts this value to an arbitrary-precision integer, only if this number's
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.
 
 * `String toString()`<br>
@@ -649,7 +649,7 @@ Gets this object's numerator with the sign removed.
 
     public static ERational Create(int numeratorSmall, int denominatorSmall)
 
-Creates a rational number with the given numerator and denominator.
+Creates a rational number with the specified numerator and denominator.
 
 **Parameters:**
 
@@ -669,7 +669,7 @@ Creates a rational number with the given numerator and denominator.
 
     public static ERational Create(long numeratorLong, long denominatorLong)
 
-Creates a rational number with the given numerator and denominator.
+Creates a rational number with the specified numerator and denominator.
 
 **Parameters:**
 
@@ -689,7 +689,7 @@ Creates a rational number with the given numerator and denominator.
 
     public static ERational Create(EInteger numerator, EInteger denominator)
 
-Creates a rational number with the given numerator and denominator.
+Creates a rational number with the specified numerator and denominator.
 
 **Parameters:**
 
@@ -965,7 +965,7 @@ Creates a rational number from a text string that represents a number. See
 **Returns:**
 
 * An arbitrary-precision rational number with the same value as the
- given string.
+ specified string.
 
 **Throws:**
 
@@ -1031,7 +1031,7 @@ Creates a rational number from a sequence of <code>char</code> s that represents
 **Returns:**
 
 * An arbitrary-precision rational number with the same value as the
- given sequence of <code>char</code> s.
+ specified sequence of <code>char</code> s.
 
 **Throws:**
 
@@ -1099,7 +1099,7 @@ Creates a rational number from a sequence of bytes that represents a number.
 **Returns:**
 
 * An arbitrary-precision rational number with the same value as the
- given sequence of bytes.
+ specified sequence of bytes.
 
 **Throws:**
 
@@ -1822,7 +1822,7 @@ Converts this value to its form in lowest terms. For example, (8/4) becomes
 
 Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator, discarding its fractional part, and checking
- whether the resulting integer overflows the given signed bit count.
+ whether the resulting integer overflows the specified signed bit count.
 
 **Parameters:**
 
@@ -1846,7 +1846,7 @@ Converts this value to an arbitrary-precision integer by dividing the
     public EInteger ToSizedEIntegerIfExact(int maxBitLength)
 
 Converts this value to an arbitrary-precision integer, only if this number's
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.
 
 **Parameters:**
@@ -1932,7 +1932,7 @@ Converts this rational number to an arbitrary-precision decimal number.
     public EDecimal ToEDecimal(EContext ctx)
 
 Converts this rational number to an arbitrary-precision decimal number and
- rounds the result to the given precision.
+ rounds the result to the specified precision.
 
 **Parameters:**
 
@@ -1944,9 +1944,9 @@ Converts this rational number to an arbitrary-precision decimal number and
 
 **Returns:**
 
-* The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can't be
- exact because it has a nonterminating decimal expansion.
+* The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can't be exact because it has a nonterminating decimal expansion.
 
 ### ToEDecimalExactIfPossible
 
@@ -1954,7 +1954,7 @@ Converts this rational number to an arbitrary-precision decimal number and
 
 Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds that
- result to the given precision.
+ result to the specified precision.
 
 **Parameters:**
 
@@ -1988,7 +1988,7 @@ Converts this rational number to an arbitrary-precision decimal number.
     @Deprecated public EDecimal ToExtendedDecimal(EContext ctx)
 
 Converts this rational number to an arbitrary-precision decimal number and
- rounds the result to the given precision.
+ rounds the result to the specified precision.
 
 **Parameters:**
 
@@ -2000,9 +2000,9 @@ Converts this rational number to an arbitrary-precision decimal number and
 
 **Returns:**
 
-* The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can't be
- exact because it has a nonterminating decimal expansion.
+* The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can't be exact because it has a nonterminating decimal expansion.
 
 ### ToExtendedDecimalExactIfPossible
 
@@ -2010,7 +2010,7 @@ Converts this rational number to an arbitrary-precision decimal number and
 
 Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds that
- result to the given precision.
+ result to the specified precision.
 
 **Parameters:**
 
@@ -2044,7 +2044,7 @@ Converts this rational number to a binary floating-point number.
     public EFloat ToEFloat(EContext ctx)
 
 Converts this rational number to a binary floating-point number and rounds
- that result to the given precision.
+ that result to the specified precision.
 
 **Parameters:**
 
@@ -2056,9 +2056,9 @@ Converts this rational number to a binary floating-point number and rounds
 
 **Returns:**
 
-* The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can't be
- exact because it has a nonterminating binary expansion.
+* The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can't be exact because it has a nonterminating binary expansion.
 
 ### ToEFloatExactIfPossible
 
@@ -2066,7 +2066,7 @@ Converts this rational number to a binary floating-point number and rounds
 
 Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that result to
- the given precision.
+ the specified precision.
 
 **Parameters:**
 
@@ -2100,7 +2100,7 @@ Converts this rational number to a binary floating-point number.
     @Deprecated public EFloat ToExtendedFloat(EContext ctx)
 
 Converts this rational number to a binary floating-point number and rounds
- that result to the given precision.
+ that result to the specified precision.
 
 **Parameters:**
 
@@ -2112,9 +2112,9 @@ Converts this rational number to a binary floating-point number and rounds
 
 **Returns:**
 
-* The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can't be
- exact because it has a nonterminating binary expansion.
+* The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can't be exact because it has a nonterminating binary expansion.
 
 ### ToExtendedFloatExactIfPossible
 
@@ -2122,7 +2122,7 @@ Converts this rational number to a binary floating-point number and rounds
 
 Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that result to
- the given precision.
+ the specified precision.
 
 **Parameters:**
 

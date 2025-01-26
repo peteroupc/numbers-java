@@ -479,9 +479,9 @@ public final void setFlags(int value) {
 
     /**
      * Gets the desired rounding mode when converting numbers that can't be
-     * represented in the given precision and exponent range.
+     * represented in the specified precision and exponent range.
      * @return The desired rounding mode when converting numbers that can't be
-     * represented in the given precision and exponent range.
+     * represented in the specified precision and exponent range.
      */
     public final ERounding getRounding() {
         return this.rounding;
@@ -505,8 +505,8 @@ public final void setFlags(int value) {
       }
 
     /**
-     * Creates a new arithmetic context using the given maximum number of digits,
-     * an unlimited exponent range, and the HalfUp rounding mode.
+     * Creates a new arithmetic context using the specified maximum number of
+     * digits, an unlimited exponent range, and the HalfUp rounding mode.
      * @param precision Maximum number of digits (precision).
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -521,7 +521,7 @@ public final void setFlags(int value) {
 
     /**
      * Creates a new EContext object initialized with an unlimited exponent range,
-     * and the given rounding mode and maximum precision.
+     * and the specified rounding mode and maximum precision.
      * @param precision Maximum number of digits (precision).
      * @param rounding The parameter {@code rounding} is an ERounding object.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -553,7 +553,7 @@ public final void setFlags(int value) {
 
     /**
      * Creates a new EContext object initialized with an unlimited precision, an
-     * unlimited exponent range, and the given rounding mode.
+     * unlimited exponent range, and the specified rounding mode.
      * @param rounding The rounding mode for the new precision context.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -593,14 +593,14 @@ public final void setFlags(int value) {
     }
 
     /**
-     * Determines whether a number can have the given Exponent property under this
-     * arithmetic context.
+     * Determines whether a number can have the specified Exponent property under
+     * this arithmetic context.
      * @param exponent An arbitrary-precision integer indicating the desired
      * exponent.
-     * @return {@code true} if a number can have the given Exponent property under
-     * this arithmetic context; otherwise, {@code false}. If this context allows
-     * unlimited precision, returns true for the exponent EMax and any exponent
-     * less than EMax.
+     * @return {@code true} if a number can have the specified Exponent property
+     * under this arithmetic context; otherwise, {@code false}. If this context
+     * allows unlimited precision, returns true for the exponent EMax and any
+     * exponent less than EMax.
      * @throws NullPointerException The parameter {@code exponent} is null.
      */
     public boolean ExponentWithinRange(EInteger exponent) {
@@ -658,7 +658,7 @@ this.simplified +
 
     /**
      * Copies this EContext and sets the copy's "AdjustExponent" property to the
-     * given value.
+     * specified value.
      * @param adjustExponent The new value of the "AdjustExponent" property for the
      * copy.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -771,7 +771,7 @@ this.simplified +
 
     /**
      * Copies this arithmetic context and sets the copy's "ClampNormalExponents"
-     * flag to the given value.
+     * flag to the specified value.
      * @param clamp The desired value of the "ClampNormalExponents" flag.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -837,7 +837,7 @@ this.simplified +
 
     /**
      * Copies this EContext and sets the copy's "IsPrecisionInBits" property to the
-     * given value.
+     * specified value.
      * @param isPrecisionBits The new value of the "IsPrecisionInBits" property for
      * the copy.
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -881,7 +881,7 @@ this.simplified +
 
     /**
      * Copies this EContext and sets the copy's "IsSimplified" property to the
-     * given value.
+     * specified value.
      * @param simplified Desired value of the IsSimplified property.
      * @return A context object for arbitrary-precision arithmetic settings.
      */
@@ -902,9 +902,9 @@ this.simplified +
     }
 
     /**
-     * Copies this EContext with Traps set to the given value. (Also sets HasFlags
-     * on the copy to {@code True}, but this may change in version 2.0 of this
-     * library.).
+     * Copies this EContext with Traps set to the specified value. (Also sets
+     * HasFlags on the copy to {@code True}, but this may change in version 2.0 of
+     * this library.).
      * @param traps Flags representing the traps to enable. See the property
      * "Traps".
      * @return A context object for arbitrary-precision arithmetic settings.
@@ -960,9 +960,9 @@ this.simplified +
     }
 
   /**
-   * Throws trap exceptions if the given context has flags set that also have
-   * traps enabled for them in this context, and adds the given context's flags
-   * to this context if HasFlags for this context is true. This is not a
+   * Throws trap exceptions if the specified context has flags set that also have
+   * traps enabled for them in this context, and adds the specified context's
+   * flags to this context if HasFlags for this context is true. This is not a
    * general-purpose method; it is intended to support custom implementations of
    * arithmetic operations.
    * @param result The result of the operation.

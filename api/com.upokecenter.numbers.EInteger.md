@@ -210,7 +210,8 @@ Renamed to ToInt64Unchecked.
  Converts a portion of a string to an arbitrary-precision integer.
 
 * `EInteger Gcd(EInteger bigintSecond)`<br>
- Returns the greatest common divisor of this integer and the given integer.
+ Returns the greatest common divisor of this integer and the specified
+ integer.
 
 * `int GetDigitCount()`<br>
  Deprecated.
@@ -478,7 +479,7 @@ Use Pow instead.
  Converts this object's value to a 64-bit signed integer.
 
 * `String ToRadixString(int radix)`<br>
- Generates a string representing the value of this object, in the given
+ Generates a string representing the value of this object, in the specified
  radix.
 
 * `String toString()`<br>
@@ -728,7 +729,7 @@ Converts a string to an arbitrary-precision integer in a given radix.
 
 **Returns:**
 
-* An arbitrary-precision integer with the same value as the given
+* An arbitrary-precision integer with the same value as the specified
  string.
 
 **Throws:**
@@ -747,10 +748,10 @@ Converts a portion of a string to an arbitrary-precision integer in a given
 **Parameters:**
 
 * <code>str</code> - A text string. The desired portion of the string must contain
- only characters allowed by the given radix, except that it may start with a
- minus sign ("-", U+002D) to indicate a negative number. The desired portion
- is not allowed to contain white space characters, including spaces. The
- desired portion may start with any number of zeros.
+ only characters allowed by the specified radix, except that it may start
+ with a minus sign ("-", U+002D) to indicate a negative number. The desired
+ portion is not allowed to contain white space characters, including spaces.
+ The desired portion may start with any number of zeros.
 
 * <code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
  the basic digits 0 to 9 (U+0030 to U+0039) and then the basic uppercase
@@ -858,7 +859,7 @@ Converts a sequence of <code>char</code> s to an arbitrary-precision integer in 
 
 **Returns:**
 
-* An arbitrary-precision integer with the same value as the given
+* An arbitrary-precision integer with the same value as the specified
  sequence of <code>char</code> s.
 
 **Throws:**
@@ -878,11 +879,11 @@ Converts a portion of a sequence of <code>char</code> s to an arbitrary-precisio
 **Parameters:**
 
 * <code>cs</code> - A text sequence of <code>char</code> s. The desired portion of the
- sequence of <code>char</code> s must contain only characters allowed by the given
- radix, except that it may start with a minus sign ("-", U+002D) to indicate
- a negative number. The desired portion is not allowed to contain white space
- characters, including spaces. The desired portion may start with any number
- of zeros.
+ sequence of <code>char</code> s must contain only characters allowed by the
+ specified radix, except that it may start with a minus sign ("-", U+002D) to
+ indicate a negative number. The desired portion is not allowed to contain
+ white space characters, including spaces. The desired portion may start with
+ any number of zeros.
 
 * <code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
  <code>char</code> s can use the basic digits 0 to 9 (U+0030 to U+0039) and then
@@ -997,7 +998,7 @@ Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
 
 **Returns:**
 
-* An arbitrary-precision integer with the same value as the given
+* An arbitrary-precision integer with the same value as the specified
  sequence of bytes.
 
 **Throws:**
@@ -1020,10 +1021,10 @@ Converts a portion of a sequence of bytes (interpreted as text) to an
 
 * <code>bytes</code> - A sequence of bytes (interpreted as text). The desired portion
  of the sequence of bytes (interpreted as text) must contain only characters
- allowed by the given radix, except that it may start with a minus sign ("-",
- U+002D) to indicate a negative number. The desired portion is not allowed to
- contain white space characters, including spaces. The desired portion may
- start with any number of zeros.
+ allowed by the specified radix, except that it may start with a minus sign
+ ("-", U+002D) to indicate a negative number. The desired portion is not
+ allowed to contain white space characters, including spaces. The desired
+ portion may start with any number of zeros.
 
 * <code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
  bytes (interpreted as text) can use the basic digits 0 to 9 (U+0030 to
@@ -1702,9 +1703,9 @@ Determines whether this object and another object are equal and have the
 
     public EInteger Gcd(EInteger bigintSecond)
 
-Returns the greatest common divisor of this integer and the given integer.
- The greatest common divisor (GCD) is also known as the greatest common
- factor (GCF). This method works even if either or both integers are
+Returns the greatest common divisor of this integer and the specified
+ integer. The greatest common divisor (GCD) is also known as the greatest
+ common factor (GCF). This method works even if either or both integers are
  negative.
 
 **Parameters:**
@@ -1713,7 +1714,8 @@ Returns the greatest common divisor of this integer and the given integer.
 
 **Returns:**
 
-* The greatest common divisor of this integer and the given integer.
+* The greatest common divisor of this integer and the specified
+ integer.
 
 **Throws:**
 
@@ -1840,8 +1842,8 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Returns:**
 
-* <code>true</code> if the given bit is set in the two' s-complement form
- (see <code>com.upokecenter.numbers.EDecimal</code>) of this object's value;
+* <code>true</code> if the specified bit is set in the two' s-complement
+ form (see <code>com.upokecenter.numbers.EDecimal</code>) of this object's value;
  otherwise, <code>false</code>.
 
 **Throws:**
@@ -1862,8 +1864,8 @@ Returns whether a bit is set in the two's-complement form (see <code>"Forms of n
 
 **Returns:**
 
-* <code>true</code> if the given bit is set in the two' s-complement form
- (see <code>com.upokecenter.numbers.EDecimal</code>) of this object's value;
+* <code>true</code> if the specified bit is set in the two' s-complement
+ form (see <code>com.upokecenter.numbers.EDecimal</code>) of this object's value;
  otherwise, <code>false</code>.
 
 ### GetSignedBitLengthAsEInteger
@@ -1941,7 +1943,7 @@ Returns whether a bit is set in this number's absolute value.
 
 **Returns:**
 
-* <code>true</code> if the given bit is set in this number's absolute
+* <code>true</code> if the specified bit is set in this number's absolute
  value.
 
 **Throws:**
@@ -1961,7 +1963,7 @@ Returns whether a bit is set in this number's absolute value.
 
 **Returns:**
 
-* <code>true</code> if the given bit is set in this number's absolute
+* <code>true</code> if the specified bit is set in this number's absolute
  value.
 
 ### GetUnsignedBitLengthAsEInteger
@@ -2804,7 +2806,7 @@ Converts this object's value to a 64-bit signed integer. If the value can't
 
     public String ToRadixString(int radix)
 
-Generates a string representing the value of this object, in the given
+Generates a string representing the value of this object, in the specified
  radix.
 
 **Parameters:**
