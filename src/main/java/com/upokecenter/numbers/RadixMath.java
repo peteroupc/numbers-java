@@ -6416,7 +6416,7 @@ licensed under the Unlicense: https://unlicense.org/
             (roundingOnOverflow == ERounding.Ceiling && neg) ||
             (roundingOnOverflow == ERounding.Floor && !neg))) {
           // Set to the highest possible value for
-          // the given precision
+          // the specified precision
           EInteger overflowMant = EInteger.FromInt32(0);
           FastInteger fastPrecision = FastInteger.FromBig(ctx.getPrecision());
           overflowMant = this.TryMultiplyByRadixPower(

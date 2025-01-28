@@ -34,7 +34,7 @@ package com.upokecenter.util;
     }
 
     /**
-     * Returns either true or false, depending on the given probability.
+     * Returns either true or false, depending on the specified probability.
      * @param p A probability from 0 through 1. 0 means always false, and 1 means
      * always true.
      * @return A Boolean object.
@@ -58,7 +58,7 @@ package com.upokecenter.util;
     }
 
     /**
-     * Conceptually, generates either 1 or 0 the given number of times, where
+     * Conceptually, generates either 1 or 0 the specified number of times, where
      * either number is equally likely, and counts the number of 1's generated.
      * @param trials The number of times to generate a random number, conceptually.
      * @return A 32-bit signed integer.
@@ -77,8 +77,8 @@ package com.upokecenter.util;
     }
 
     /**
-     * Conceptually, generates either 1 or 0 the given number of times, where a 1
-     * is generated at the given probability, and counts the number of 1's
+     * Conceptually, generates either 1 or 0 the specified number of times, where a
+     * 1 is generated at the specified probability, and counts the number of 1's
      * generated.
      * @param trials The number of times to generate a random number, conceptually.
      * @param p The probability for each trial to succeed, from 0 (never) to 1
@@ -197,7 +197,7 @@ package com.upokecenter.util;
 
     /**
      * Conceptually, generates either 1 or 0 until a 1 is generated, and counts the
-     * number of 0's generated. A 1 is generated at the given probability.
+     * number of 0's generated. A 1 is generated at the specified probability.
      * @param p A 64-bit floating-point number.
      * @return The number of failures until a success happens.
      */
@@ -246,8 +246,8 @@ package com.upokecenter.util;
     }
 
     /**
-     * Generates a logarithmic normally-distributed number with the given mean and
-     * standard deviation.
+     * Generates a logarithmic normally-distributed number with the specified mean
+     * and standard deviation.
      * @param mean The desired mean.
      * @param sd Standard deviation.
      * @return A 64-bit floating-point number.
@@ -257,9 +257,9 @@ package com.upokecenter.util;
     }
 
     /**
-     * Conceptually, generates either 1 or 0 until the given number of 1's are
+     * Conceptually, generates either 1 or 0 until the specified number of 1's are
      * generated, and counts the number of 0's generated. A 1 is generated at the
-     * given probability.
+     * specified probability.
      * @param trials The number of 1's to generate before the process stops.
      * @param p The probability for each trial to succeed, from 0 (never) to 1
      * (always).
@@ -317,9 +317,9 @@ package com.upokecenter.util;
     }
 
     /**
-     * Conceptually, generates either 1 or 0 the given number of times until the
-     * given number of 1's are generated, and counts the number of 0's generated.
-     * Either number has an equal probability of being generated.
+     * Conceptually, generates either 1 or 0 the specified number of times until
+     * the specified number of 1's are generated, and counts the number of 0's
+     * generated. Either number has an equal probability of being generated.
      * @param trials The number of 1's to generate before the process stops.
      * @return The number of 0's generated. Returns Integer.MAX_VALUE if "p" is 0.
      */
@@ -355,7 +355,7 @@ package com.upokecenter.util;
     }
 
     /**
-     * Generates a normally-distributed number with the given mean and standard
+     * Generates a normally-distributed number with the specified mean and standard
      * deviation.
      * @param mean The desired mean.
      * @param sd Standard deviation.
@@ -367,8 +367,8 @@ package com.upokecenter.util;
 
     /**
      * Generates a random integer such that the average of random numbers
-     * approaches the given mean number when this method is called repeatedly with
-     * the same mean.
+     * approaches the specified mean number when this method is called repeatedly
+     * with the same mean.
      * @param mean The expected mean of the random numbers.
      * @return A 32-bit signed integer.
      */
@@ -405,7 +405,7 @@ package com.upokecenter.util;
 
     /**
      * Returns a uniformly-distributed 64-bit floating-point number from 0 and up,
-     * but less than the given number.
+     * but less than the specified number.
      * @param max Number that the randomly-generated number will be less than.
      * @return A 64-bit floating-point number.
      */
@@ -501,7 +501,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
 
     /**
      * Generates a random 32-bit signed integer 0 or greater and less than the
-     * given number.
+     * specified number.
      * @param maxExclusive One plus the largest possible value of the random
      * number.
      * @return A 32-bit signed integer.
@@ -576,7 +576,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
 
     /**
      * Generates a random 32-bit signed integer 0 or greater and less than the
-     * given number.
+     * specified number.
      * @param maxExclusive One plus the largest possible value of the random
      * number.
      * @return A 64-bit signed integer.
