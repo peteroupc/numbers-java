@@ -54,8 +54,7 @@ private EIntegerByteArrayString() {
           return null;
         } else {
           throw new IllegalArgumentException("endIndex(" + endIndex + ") is more" +
-            "\u0020 than " +
-            cs.length);
+            "\u0020 than " + cs.length);
         }
       }
       if (endIndex < index) {
@@ -63,8 +62,7 @@ private EIntegerByteArrayString() {
           return null;
         } else {
           throw new IllegalArgumentException("endIndex(" + endIndex + ") is less" +
-            "\u0020 than " +
-            index);
+            "\u0020 than " + index);
         }
       }
       if (index == endIndex) {
@@ -285,7 +283,8 @@ private EIntegerByteArrayString() {
           eia = eia.Multiply(mult);
         }
         eia = eia.Add(eib);
-        // System.out.println("index={0} {1} {2} [pow={3}] [pow={4} ms, muladd={5} ms]",
+        // System.out.println("index={0} {1} {2} [pow={3}] [pow={4} ms, muladd={5}
+        // ms]",
         // index, midIndex, endIndex, endIndex-midIndex, swPow.getElapsedMilliseconds(),
         // swMulAdd.getElapsedMilliseconds());
         if (negative) {

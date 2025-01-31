@@ -653,9 +653,8 @@ private TestCommon() {
       }
       if (bytes.length - offset < length) {
         throw new IllegalArgumentException("\"bytes\" + \"'s length minus \" +" +
-          "\u0020offset (" + (bytes.length - offset) + ") is not greater or
-          equal to " +
-          length);
+          "\u0020offset (" + (bytes.length - offset) + ") is not greater or" +
+          "\u0020 equal to " + length);
       }
       StringBuilder sb = new StringBuilder();
       String ValueHex = "0123456789ABCDEF";
@@ -706,9 +705,8 @@ private TestCommon() {
       }
       if (arr1.length - offset < length) {
         throw new IllegalArgumentException("\"arr1\" + \"'s length minus \" +" +
-          "\u0020offset (" + (arr1.length - offset) + ") is not greater or
-          equal to " +
-          length);
+          "\u0020offset (" + (arr1.length - offset) + ") is not greater or" +
+          "\u0020 equal to " + length);
       }
       if (arr2 == null) {
         throw new NullPointerException("arr2");
@@ -731,9 +729,8 @@ private TestCommon() {
       }
       if (arr2.length - offset2 < length2) {
         throw new IllegalArgumentException("\"arr2\"'s length minus " +
-          "\u0020offset2 (" + (arr2.length - offset2) + ") is not greater or
-          equal to " +
-          length2);
+          "\u0020offset2 (" + (arr2.length - offset2) + ") is not greater or" +
+          "\u0020 equal to " + length2);
       }
       if (length != length2) {
         return false;

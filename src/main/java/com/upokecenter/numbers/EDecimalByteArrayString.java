@@ -1090,7 +1090,8 @@ private EDecimalByteArrayString() {
           // System.out.println("precchop=" + (precchop));
           if (haveDecimalPoint) {
             int decdigits = decimalDigitEnd - decimalDigitStart;
-            // System.out.println("decdigits=" + decdigits + " decprecchop=" + (decdigits));
+            // System.out.println("decdigits=" + decdigits + " decprecchop=" +
+            // (decdigits));
             decimalDigitEnd -= nondec;
             int remain = precchop - nondec;
             digitEnd -= remain;

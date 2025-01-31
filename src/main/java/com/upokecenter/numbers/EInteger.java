@@ -3269,8 +3269,7 @@ licensed under the Unlicense: https://unlicense.org/
                     int minDigitEstimate = minDigits + 4;
                     retval += ei.Abs().compareTo(NumberUtility.FindPowerOfTen(
                       minDigitEstimate)) >= 0 ? retval + maxDigitEstimate :
-                      retval +
-                      minDigitEstimate;
+                      retval + minDigitEstimate;
                     done = true;
                     break;
                   }

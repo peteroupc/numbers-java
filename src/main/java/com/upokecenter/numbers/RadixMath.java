@@ -1522,7 +1522,8 @@ licensed under the Unlicense: https://unlicense.org/
             EInteger bigintRoots = PowerOfTwo(roots);
             // Multiply back 2^X, where X is the number
             // of square root calls
-            /* System.out.println("After LnInternal Mult<ctxdiv> " +this.Multiply(
+            /* System.out.println("After LnInternal Mult<ctxdiv> "
+            +this.Multiply(
                 thisValue,
                 this.helper.CreateNewWithFlags(bigintRoots, EInteger.FromInt32(0), 0),
                 ctxdiv));
