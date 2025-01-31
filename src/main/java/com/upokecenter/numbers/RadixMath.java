@@ -141,10 +141,10 @@ licensed under the Unlicense: https://unlicense.org/
       EContext ctx) {
       T retval = null;
       if ((expcmp == 0 || (op1Exponent.CanFitInInt32() &&
-            op2Exponent.CanFitInInt32())) &&
+        op2Exponent.CanFitInInt32())) &&
         op1Mantissa.CanFitInInt32() && op2Mantissa.CanFitInInt32() &&
         (thisFlags & BigNumberFlags.FlagNegative) == (otherFlags &
-          BigNumberFlags.FlagNegative)) {
+        BigNumberFlags.FlagNegative)) {
         int negflag = thisFlags & BigNumberFlags.FlagNegative;
         int e1int = 0;
         int e2int = 0;
@@ -155,9 +155,9 @@ licensed under the Unlicense: https://unlicense.org/
         int m1, m2;
         boolean haveRetval = false;
         if (expcmp == 0 || (e1int >= SafeMin32 && e1int <= SafeMax32 &&
-            e2int >= SafeMin32 && e2int <= SafeMax32)) {
+          e2int >= SafeMin32 && e2int <= SafeMax32)) {
           int ediff = (expcmp == 0) ? 0 : ((e1int > e2int) ? (e1int - e2int) :
-              (e2int - e1int));
+            (e2int - e1int));
           int radix = this.thisRadix;
           if (expcmp == 0) {
             m1 = op1Mantissa.ToInt32();
@@ -284,7 +284,7 @@ licensed under the Unlicense: https://unlicense.org/
         resultExponent = expcmp < 0 ? op1Exponent : op2Exponent;
       }
       if ((expcmp == 0 || (op1Exponent.CanFitInInt32() &&
-            op2Exponent.CanFitInInt32())) &&
+        op2Exponent.CanFitInInt32())) &&
         op1Mantissa.CanFitInInt32() && op2Mantissa.CanFitInInt32() &&
         (thisFlags & BigNumberFlags.FlagNegative) == 0 &&
         (otherFlags & BigNumberFlags.FlagNegative) != 0 &&
@@ -299,9 +299,9 @@ licensed under the Unlicense: https://unlicense.org/
         int m1, m2;
         boolean haveRetval = false;
         if (expcmp == 0 || (e1int >= SafeMin32 && e1int <= SafeMax32 &&
-            e2int >= SafeMin32 && e2int <= SafeMax32)) {
+          e2int >= SafeMin32 && e2int <= SafeMax32)) {
           int ediff = (expcmp == 0) ? 0 : ((e1int > e2int) ? (e1int - e2int) :
-              (e2int - e1int));
+            (e2int - e1int));
           int radix = this.thisRadix;
           if (expcmp == 0) {
             m1 = op1Mantissa.ToInt32();
@@ -382,10 +382,10 @@ licensed under the Unlicense: https://unlicense.org/
       EContext ctx) {
       T retval = null;
       if ((expcmp == 0 || (op1Exponent.CanFitInInt64() &&
-            op2Exponent.CanFitInInt64())) &&
+        op2Exponent.CanFitInInt64())) &&
         op1Mantissa.CanFitInInt64() && op2Mantissa.CanFitInInt64() &&
         (thisFlags & BigNumberFlags.FlagNegative) == (otherFlags &
-          BigNumberFlags.FlagNegative)) {
+        BigNumberFlags.FlagNegative)) {
         int negflag = thisFlags & BigNumberFlags.FlagNegative;
         long e1long = 0;
         long e2long = 0;
@@ -396,9 +396,9 @@ licensed under the Unlicense: https://unlicense.org/
         long m1, m2;
         boolean haveRetval = false;
         if (expcmp == 0 || (e1long >= SafeMin64 && e1long <= SafeMax64 &&
-            e2long >= SafeMin64 && e2long <= SafeMax64)) {
+          e2long >= SafeMin64 && e2long <= SafeMax64)) {
           long ediffLong = (expcmp == 0) ? 0 : ((e1long > e2long) ?
-              (e1long - e2long) : (e2long - e1long));
+            (e1long - e2long) : (e2long - e1long));
           int radix = this.thisRadix;
           if (expcmp == 0) {
             m1 = op1Mantissa.ToInt64();
@@ -521,7 +521,7 @@ licensed under the Unlicense: https://unlicense.org/
         resultExponent = expcmp < 0 ? op1Exponent : op2Exponent;
       }
       if ((expcmp == 0 || (op1Exponent.CanFitInInt64() &&
-            op2Exponent.CanFitInInt64())) &&
+        op2Exponent.CanFitInInt64())) &&
         op1Mantissa.CanFitInInt64() && op2Mantissa.CanFitInInt64() &&
         (thisFlags & BigNumberFlags.FlagNegative) == 0 &&
         (otherFlags & BigNumberFlags.FlagNegative) != 0 &&
@@ -536,9 +536,9 @@ licensed under the Unlicense: https://unlicense.org/
         long m1, m2;
         boolean haveRetval = false;
         if (expcmp == 0 || (e1long >= SafeMin64 && e1long <= SafeMax64 &&
-            e2long >= SafeMin64 && e2long <= SafeMax64)) {
+          e2long >= SafeMin64 && e2long <= SafeMax64)) {
           long ediffLong = (expcmp == 0) ? 0 : ((e1long > e2long) ?
-              (e1long - e2long) : (e2long - e1long));
+            (e1long - e2long) : (e2long - e1long));
           int radix = this.thisRadix;
           if (expcmp == 0) {
             m1 = op1Mantissa.ToInt64();
@@ -609,7 +609,7 @@ licensed under the Unlicense: https://unlicense.org/
         if ((thisFlags & BigNumberFlags.FlagInfinity) != 0) {
           if ((otherFlags & BigNumberFlags.FlagInfinity) != 0) {
             if ((thisFlags & BigNumberFlags.FlagNegative) != (otherFlags &
-                BigNumberFlags.FlagNegative)) {
+              BigNumberFlags.FlagNegative)) {
               return this.SignalInvalid(ctx);
             }
           }
@@ -722,8 +722,8 @@ licensed under the Unlicense: https://unlicense.org/
       }
       int cmp = CompareToInternal(thisValue, otherValue, false, this.helper);
       return (cmp == -2) ? this.SignalInvalidWithMessage(
-          ctx,
-          "Out of memory ") :
+        ctx,
+        "Out of memory ") :
         this.ValueOf(this.compareTo(thisValue, otherValue), null);
     }
 
@@ -778,7 +778,7 @@ licensed under the Unlicense: https://unlicense.org/
         .SubtractBig(this.helper.GetExponent(divisor));
       EContext ctx2 =
         EContext.ForRounding(ERounding.Down).WithBigPrecision(ctx == null ?
-          EInteger.FromInt32(0) : ctx.getPrecision()).WithBlankFlags();
+        EInteger.FromInt32(0) : ctx.getPrecision()).WithBlankFlags();
       T ret = this.DivideInternal(
           thisValue,
           divisor,
@@ -786,7 +786,7 @@ licensed under the Unlicense: https://unlicense.org/
           IntegerModeFixedScale,
           EInteger.FromInt32(0));
       if ((ctx2.getFlags() & (EContext.FlagInvalid |
-            EContext.FlagDivideByZero)) != 0) {
+        EContext.FlagDivideByZero)) != 0) {
         if (ctx != null && ctx.getHasFlags()) {
           ctx.setFlags(ctx.getFlags()|(EContext.FlagInvalid | EContext.FlagDivideByZero));
         }
@@ -886,7 +886,7 @@ licensed under the Unlicense: https://unlicense.org/
           IntegerModeFixedScale,
           EInteger.FromInt32(0));
       if ((ctx2.getFlags() & (EContext.FlagInvalid |
-            EContext.FlagDivideByZero)) != 0) {
+        EContext.FlagDivideByZero)) != 0) {
         if (ctx.getHasFlags()) {
           ctx.setFlags(ctx.getFlags()|(ctx2.getFlags() & (EContext.FlagInvalid |
               EContext.FlagDivideByZero)));
@@ -1378,7 +1378,7 @@ licensed under the Unlicense: https://unlicense.org/
             if (this.compareTo(thisValue, closeToOne) >= 0) {
               // This value is close to 1, so use a higher working precision
               error = this.helper.GetDigitLength(this.helper.GetMantissa(
-                    thisValue));
+                thisValue));
               error = error.Copy();
               error.AddInt(6);
               error.AddBig(ctx.getPrecision());
@@ -1413,8 +1413,8 @@ licensed under the Unlicense: https://unlicense.org/
           if (this.compareTo(thisValue, two) > 0 &&
             this.helper.GetRadix() == 2) {
             T half = this.Divide(this.helper.ValueOf(1),
-                this.helper.ValueOf(2),
-                EContext.Unlimited);
+              this.helper.ValueOf(2),
+              EContext.Unlimited);
             FastIntegerFixed fmant = this.helper.GetMantissaFastInt(thisValue);
             EInteger fexp =
               this.helper.GetExponentFastInt(thisValue).ToEInteger();
@@ -1426,13 +1426,13 @@ licensed under the Unlicense: https://unlicense.org/
             T reduced = null;
             if (fexp.signum() > 0) {
               reduced = this.helper.CreateNewWithFlags(fmant.ToEInteger(),
-                  adjval,
-                  0);
+                adjval,
+                0);
               adjbits = fexp.Add(fbits);
             } else {
               reduced = this.helper.CreateNewWithFlags(fmant.ToEInteger(),
-                  adjval,
-                  0);
+                adjval,
+                0);
               adjbits = fexp.Add(fbits);
             }
             T addval = adjbits.signum() < 0 ? this.helper.CreateNewWithFlags(
@@ -1468,7 +1468,7 @@ licensed under the Unlicense: https://unlicense.org/
             // System.out.println("bounds "+bounds[1]+" ctxprec="+ctx.getPrecision());
             error = new FastInteger(10);
             if (this.compareTo(thisValue,
-                this.helper.ValueOf(10000000)) >= 0) {
+              this.helper.ValueOf(10000000)) >= 0) {
               if (this.helper.GetRadix() == 2) {
                 error = new FastInteger(32);
               }
@@ -1506,10 +1506,10 @@ licensed under the Unlicense: https://unlicense.org/
             // System.out.println("rootcount="+roots);
             // Find -Ln(1/thisValue)
             /*if (thisValue instanceof EDecimal) {
-   System.out.println("LnInternalCloseToOne C " + ((((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble()));
- } else {
- System.out.println("LnInternalCloseToOne C " + ((((thisValue instanceof EFloat) ? (EFloat)thisValue : null))?.ToDouble()));
-}
+            System.out.println("LnInternalCloseToOne C " + ((((thisValue instanceof EDecimal) ? (EDecimal)thisValue : null))?.ToDouble()));
+            } else {
+            System.out.println("LnInternalCloseToOne C " + ((((thisValue instanceof EFloat) ? (EFloat)thisValue : null))?.ToDouble()));
+            }
             */ thisValue = this.Divide(one, thisValue, ctxdiv);
             // System.out.println("LnInternalCloseToOne C prec " + ctxdiv.getPrecision());
             thisValue = this.LnInternalCloseToOne2(
@@ -1548,7 +1548,7 @@ licensed under the Unlicense: https://unlicense.org/
             T closeToOne = this.Add(one, smallfrac, null);
             if (this.compareTo(thisValue, closeToOne) < 0) {
               error = this.helper.GetDigitLength(this.helper.GetMantissa(
-                    thisValue));
+                thisValue));
               error = error.Copy();
               error.AddInt(6);
               error.AddBig(ctx.getPrecision());
@@ -1606,16 +1606,16 @@ licensed under the Unlicense: https://unlicense.org/
       }
       int flagNegA = this.helper.GetFlags(a) & BigNumberFlags.FlagNegative;
       return (flagNegA != (this.helper.GetFlags(b) &
-            BigNumberFlags.FlagNegative)) ? ((flagNegA != 0) ?
+        BigNumberFlags.FlagNegative)) ? ((flagNegA != 0) ?
           this.RoundToPrecision(b, ctx) : this.RoundToPrecision(a, ctx)) :
         ((flagNegA == 0) ? (this.helper.GetExponent(a).compareTo(
-              this.helper.GetExponent(
-                b)) > 0 ? this.RoundToPrecision(a, ctx) :
-            this.RoundToPrecision(b, ctx)) : (this.helper.GetExponent(
-              a).compareTo(
-              this.helper.GetExponent(
-                b)) > 0 ? this.RoundToPrecision(b, ctx) :
-            this.RoundToPrecision(a, ctx)));
+        this.helper.GetExponent(
+          b)) > 0 ? this.RoundToPrecision(a, ctx) :
+        this.RoundToPrecision(b, ctx)) : (this.helper.GetExponent(
+        a).compareTo(
+          this.helper.GetExponent(
+            b)) > 0 ? this.RoundToPrecision(b, ctx) :
+        this.RoundToPrecision(a, ctx)));
     }
 
     public T MaxMagnitude(T a, T b, EContext ctx) {
@@ -1632,11 +1632,11 @@ licensed under the Unlicense: https://unlicense.org/
       }
       int cmp = this.compareTo(this.AbsRaw(a), this.AbsRaw(b));
       return (cmp == 0) ? this.Max(a, b, ctx) : ((cmp > 0) ?
-          this.RoundToPrecision(
-            a,
-            ctx) : this.RoundToPrecision(
-            b,
-            ctx));
+        this.RoundToPrecision(
+          a,
+          ctx) : this.RoundToPrecision(
+          b,
+          ctx));
     }
 
     public T Min(T a, T b, EContext ctx) {
@@ -1658,16 +1658,16 @@ licensed under the Unlicense: https://unlicense.org/
       }
       int signANeg = this.helper.GetFlags(a) & BigNumberFlags.FlagNegative;
       return (signANeg != (this.helper.GetFlags(b) &
-            BigNumberFlags.FlagNegative)) ? ((signANeg != 0) ?
+        BigNumberFlags.FlagNegative)) ? ((signANeg != 0) ?
           this.RoundToPrecision(a, ctx) : this.RoundToPrecision(b, ctx)) :
         ((signANeg == 0) ? (this.helper.GetExponent(a).compareTo(
-              this.helper.GetExponent(
-                b)) > 0 ? this.RoundToPrecision(b, ctx) :
-            this.RoundToPrecision(a, ctx)) : (this.helper.GetExponent(
-              a).compareTo(
-              this.helper.GetExponent(
-                b)) > 0 ? this.RoundToPrecision(a, ctx) :
-            this.RoundToPrecision(b, ctx)));
+        this.helper.GetExponent(
+          b)) > 0 ? this.RoundToPrecision(b, ctx) :
+        this.RoundToPrecision(a, ctx)) : (this.helper.GetExponent(
+        a).compareTo(
+          this.helper.GetExponent(
+            b)) > 0 ? this.RoundToPrecision(a, ctx) :
+        this.RoundToPrecision(b, ctx)));
     }
 
     public T MinMagnitude(T a, T b, EContext ctx) {
@@ -1684,11 +1684,11 @@ licensed under the Unlicense: https://unlicense.org/
       }
       int cmp = this.compareTo(this.AbsRaw(a), this.AbsRaw(b));
       return (cmp == 0) ? this.Min(a, b, ctx) : ((cmp < 0) ?
-          this.RoundToPrecision(
-            a,
-            ctx) : this.RoundToPrecision(
-            b,
-            ctx));
+        this.RoundToPrecision(
+          a,
+          ctx) : this.RoundToPrecision(
+          b,
+          ctx));
     }
 
     public T Multiply(T thisValue, T other, EContext ctx) {
@@ -1704,7 +1704,7 @@ licensed under the Unlicense: https://unlicense.org/
           boolean negflag = ((thisFlags & BigNumberFlags.FlagNegative) != 0) ^
             ((otherFlags & BigNumberFlags.FlagNegative) != 0);
           return ((otherFlags & BigNumberFlags.FlagSpecial) == 0 &&
-              this.helper.GetMantissa(other).isZero()) ? this.SignalInvalid(
+            this.helper.GetMantissa(other).isZero()) ? this.SignalInvalid(
               ctx) : this.EnsureSign(
               thisValue,
               negflag);
@@ -1714,7 +1714,7 @@ licensed under the Unlicense: https://unlicense.org/
           boolean negflag = ((thisFlags & BigNumberFlags.FlagNegative) != 0) ^
             ((otherFlags & BigNumberFlags.FlagNegative) != 0);
           return ((thisFlags & BigNumberFlags.FlagSpecial) == 0 &&
-              this.helper.GetMantissa(thisValue).isZero()) ?
+            this.helper.GetMantissa(thisValue).isZero()) ?
             this.SignalInvalid(ctx) : this.EnsureSign(other, negflag);
         }
       }
@@ -1725,7 +1725,7 @@ licensed under the Unlicense: https://unlicense.org/
       // (this.helper.GetExponent(thisValue)) + " -> " + mantissaOp2 +", " +
       // (bigintOp2));
       thisFlags = (thisFlags & BigNumberFlags.FlagNegative) ^ (otherFlags &
-          BigNumberFlags.FlagNegative);
+        BigNumberFlags.FlagNegative);
       T ret =
         this.helper.CreateNewWithFlags(
           this.helper.GetMantissa(thisValue).Multiply(mantissaOp2),
@@ -1970,7 +1970,7 @@ licensed under the Unlicense: https://unlicense.org/
       } else {
         if ((thisFlags & BigNumberFlags.FlagInfinity) != 0) {
           if ((thisFlags & (BigNumberFlags.FlagInfinity |
-                BigNumberFlags.FlagNegative)) == (otherFlags &
+            BigNumberFlags.FlagNegative)) == (otherFlags &
               (BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative))) {
             // both values are the same infinity
             return thisValue;
@@ -2017,10 +2017,10 @@ licensed under the Unlicense: https://unlicense.org/
             (cmp > 0) ? BigNumberFlags.FlagNegative : 0);
         T val = thisValue;
         ctx2 = ctx.WithRounding((cmp > 0) ? ERounding.Floor :
-            ERounding.Ceiling).WithBlankFlags();
+          ERounding.Ceiling).WithBlankFlags();
         val = this.Add(val, quantum, ctx2);
         if ((ctx2.getFlags() & (EContext.FlagOverflow |
-              EContext.FlagUnderflow)) == 0) {
+          EContext.FlagUnderflow)) == 0) {
           // Don't set flags except on overflow or underflow,
           // per the DecTest test cases
           ctx2.setFlags(0);
@@ -2097,7 +2097,7 @@ licensed under the Unlicense: https://unlicense.org/
           if (guessCmp == 0) {
             more = false;
           } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
-              guessCmp < 0)) {
+            guessCmp < 0)) {
             // Guesses are vacillating
             ++vacillations;
             more &= vacillations <= 3;
@@ -2224,7 +2224,7 @@ licensed under the Unlicense: https://unlicense.org/
         return thisValue;
       }
       if ((!isPowIntegral || powSign < 0) && (ctx == null ||
-          !ctx.getHasMaxPrecision())) {
+        !ctx.getHasMaxPrecision())) {
         // TODO: In next major version, support the case when:
         // - ctx is null or has unlimited precision, and
         // - thisValue is less than 0.
@@ -2243,18 +2243,18 @@ licensed under the Unlicense: https://unlicense.org/
         // This value is infinity
         int negflag = isResultNegative ? BigNumberFlags.FlagNegative : 0;
         return (powSign > 0) ? this.RoundToPrecision(
-            this.helper.CreateNewWithFlags(
-              EInteger.FromInt32(0),
-              EInteger.FromInt32(0),
-              negflag | BigNumberFlags.FlagInfinity),
-            ctx) : ((powSign < 0) ? this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(
-                EInteger.FromInt32(0),
-                EInteger.FromInt32(0),
-                negflag),
-              ctx) : this.RoundToPrecision(
-              this.helper.CreateNewWithFlags(EInteger.FromInt32(1), EInteger.FromInt32(0), 0),
-              ctx));
+          this.helper.CreateNewWithFlags(
+            EInteger.FromInt32(0),
+            EInteger.FromInt32(0),
+            negflag | BigNumberFlags.FlagInfinity),
+          ctx) : ((powSign < 0) ? this.RoundToPrecision(
+          this.helper.CreateNewWithFlags(
+            EInteger.FromInt32(0),
+            EInteger.FromInt32(0),
+            negflag),
+          ctx) : this.RoundToPrecision(
+            this.helper.CreateNewWithFlags(EInteger.FromInt32(1), EInteger.FromInt32(0), 0),
+            ctx));
       }
       if (powSign == 0) {
         return
@@ -2277,16 +2277,16 @@ licensed under the Unlicense: https://unlicense.org/
             }
             signedMant = this.helper.GetMantissa(powInt).Abs();
             if (powSign < 0) {
-               // Use this line because in this case, where
-               // thisValue is 1 and power is a negative integer, the reciprocal of 1
-               // is used, which will have an exponent of 0, according to the
-               // General Decimal Arithmetic Specification
-               return this.PowerIntegral(
-                   this.helper.ValueOf(1),
-                   signedMant,
-                   ctx);
+              // Use this line because in this case, where
+              // thisValue is 1 and power is a negative integer, the reciprocal of 1
+              // is used, which will have an exponent of 0, according to the
+              // General Decimal Arithmetic Specification
+              return this.PowerIntegral(
+                  this.helper.ValueOf(1),
+                  signedMant,
+                  ctx);
             } else {
-               return this.PowerIntegral(thisValue, signedMant, ctx);
+              return this.PowerIntegral(thisValue, signedMant, ctx);
             }
           }
         }
@@ -2335,12 +2335,12 @@ licensed under the Unlicense: https://unlicense.org/
       // Special case for 0.5
       if (this.thisRadix == 10 || this.thisRadix == 2) {
         T half = (this.thisRadix == 10) ? this.helper.CreateNewWithFlags(
-            EInteger.FromInt64(5),
+          EInteger.FromInt64(5),
+          ValueMinusOne,
+          0) : this.helper.CreateNewWithFlags(
+            EInteger.FromInt32(1),
             ValueMinusOne,
-            0) : this.helper.CreateNewWithFlags(
-              EInteger.FromInt32(1),
-              ValueMinusOne,
-              0);
+            0);
         if (this.compareTo(pow, half) == 0 &&
           this.IsWithinExponentRangeForPow(pow, ctx) &&
           this.IsWithinExponentRangeForPow(thisValue, ctx)) {
@@ -2359,8 +2359,8 @@ licensed under the Unlicense: https://unlicense.org/
         }
       }
       EInteger upperBoundInt = NumberUtility.IntegerDigitLengthUpperBound(
-         this.helper,
-         powInt);
+          this.helper,
+          powInt);
       upperBoundInt = EInteger.Min(EInteger.FromInt32(50), upperBoundInt);
       EInteger guardDigits = this.WorkingDigits(EInteger.FromInt32(15));
       guardDigits = guardDigits.Add(upperBoundInt);
@@ -2389,7 +2389,7 @@ licensed under the Unlicense: https://unlicense.org/
       lnresult = this.Exp(lnresult, ctxdiv);
       // System.out.println("after exp.="+lnresult);
       if ((ctxdiv.getFlags() & (EContext.FlagClamped |
-            EContext.FlagOverflow)) != 0) {
+        EContext.FlagOverflow)) != 0) {
         if (!this.IsWithinExponentRangeForPow(thisValue, ctx)) {
           return this.SignalInvalid(ctx);
         }
@@ -2471,7 +2471,7 @@ licensed under the Unlicense: https://unlicense.org/
           FastInteger.FromBig(expThis).SubtractBig(expOther);
         if (tmpctx.getPrecision().signum() > 0 &&
           radixPower.compareTo(FastInteger.FromBig(tmpctx.getPrecision())
-            .AddInt(10)) > 0) {
+          .AddInt(10)) > 0) {
           // Radix power is much too high for the current precision
           // System.out.println("result too high for prec:" +
           // tmpctx.getPrecision() + " radixPower= " + radixPower);
@@ -2491,7 +2491,7 @@ licensed under the Unlicense: https://unlicense.org/
         // Other exponent is greater
         // System.out.println("other exp greater");
         FastInteger shift = FastInteger.FromBig(expOther).SubtractBig(
-            expThis);
+          expThis);
         ret = this.RoundToPrecisionInternal(
             thisValue,
             0,
@@ -2583,7 +2583,7 @@ licensed under the Unlicense: https://unlicense.org/
       ctx2 = ctx2.WithBlankFlags();
       ret = this.RoundToPrecision(ret, ctx2);
       if ((ctx2.getFlags() & (EContext.FlagRounded |
-            EContext.FlagInvalid)) != 0) {
+        EContext.FlagInvalid)) != 0) {
         return this.SignalInvalid(ctx);
       }
       ctx2 = ctx == null ? EContext.UnlimitedHalfEven.WithBlankFlags() :
@@ -2598,8 +2598,8 @@ licensed under the Unlicense: https://unlicense.org/
       if (this.helper.GetFlags(ret2) == 0 &&
         this.helper.GetMantissa(ret2).isZero()) {
         ret2 = this.EnsureSign(
-          ret2,
-          (this.helper.GetFlags(thisValue) & BigNumberFlags.FlagNegative) != 0);
+            ret2,
+            (this.helper.GetFlags(thisValue) & BigNumberFlags.FlagNegative) != 0);
       }
       TransferFlags(
         ctx,
@@ -2815,7 +2815,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (ctx.getHasFlags()) {
         if (ctx.getClampNormalExponents() &&
           !this.helper.GetExponent(retval).equals(idealExp) && (ctxtmp.getFlags() &
-            EContext.FlagInexact) == 0) {
+          EContext.FlagInexact) == 0) {
           ctx.setFlags(ctx.getFlags()|(EContext.FlagClamped));
         }
         rounded |= (ctxtmp.getFlags() & EContext.FlagOverflow) != 0;
@@ -2946,7 +2946,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (ctx.getHasFlags()) {
         if (ctx.getClampNormalExponents() &&
           !this.helper.GetExponent(retval).equals(idealExp) && (ctxtmp.getFlags() &
-            EContext.FlagInexact) == 0) {
+          EContext.FlagInexact) == 0) {
           ctx.setFlags(ctx.getFlags()|(EContext.FlagClamped));
         }
         rounded |= (ctxtmp.getFlags() & EContext.FlagOverflow) != 0;
@@ -3098,8 +3098,8 @@ licensed under the Unlicense: https://unlicense.org/
       long bitExp2 = op2Exponent.GetUnsignedBitLengthAsInt64();
       if (bitExp1 < Long.MAX_VALUE && bitExp2 < Long.MAX_VALUE &&
         helper.GetRadix() <= 10 && op1Exponent.signum() == op2Exponent.signum() && (
-          (bitExp2 > bitExp1 && (bitExp2 - bitExp1) > 128) ||
-          (bitExp1 > bitExp2 && (bitExp1 - bitExp2) > 128))) {
+        (bitExp2 > bitExp1 && (bitExp2 - bitExp1) > 128) ||
+        (bitExp1 > bitExp2 && (bitExp1 - bitExp2) > 128))) {
         // Bit difference in two exponents means exponent difference
         // is so big that the digit counts of the two significands
         // can't keep up (that is, exponent difference is greater than 2^128,
@@ -3128,18 +3128,18 @@ licensed under the Unlicense: https://unlicense.org/
         FastInteger[] op2DigitBounds =
           NumberUtility.DigitLengthBounds(helper, op2MantAbs);
         FastInteger op2ExpUpperBound = fastOp2Exp.Copy().Add(
-            op2DigitBounds[1]);
+          op2DigitBounds[1]);
         FastInteger op1ExpLowerBound = fastOp1Exp.Copy().Add(
-            op1DigitBounds[0]);
+          op1DigitBounds[0]);
         if (op2ExpUpperBound.compareTo(op1ExpLowerBound) < 0) {
           // Operand 2's magnitude can't reach highest digit of operand 1,
           // meaning operand 1 has a greater magnitude
           return signA < 0 ? -1 : 1;
         }
         FastInteger op1ExpUpperBound = fastOp1Exp.Copy().Add(
-            op1DigitBounds[1]);
+          op1DigitBounds[1]);
         FastInteger op2ExpLowerBound = fastOp2Exp.Copy().Add(
-            op2DigitBounds[0]);
+          op2DigitBounds[0]);
         // System.out.println("1ub="+op1ExpUpperBound +
         // " 2lb="+op2ExpLowerBound);
         if (op1ExpUpperBound.compareTo(op2ExpLowerBound) < 0) {
@@ -3182,7 +3182,7 @@ licensed under the Unlicense: https://unlicense.org/
                 // raised without affecting the result
                 FastInteger tmp = fastOp2Exp.Copy()
                   .SubtractInt(8).Subtract(digitLength1).Subtract(
-                    maxPrecision);
+                  maxPrecision);
                 FastInteger newDiff = tmp.Copy().Subtract(fastOp2Exp).Abs();
                 if (newDiff.compareTo(expdiff) < 0) {
                   // At this point, both operands have the same sign
@@ -3207,7 +3207,7 @@ licensed under the Unlicense: https://unlicense.org/
                 // raised without affecting the result
                 FastInteger tmp = fastOp1Exp.Copy()
                   .SubtractInt(8).Subtract(digitLength2).Subtract(
-                    maxPrecision);
+                  maxPrecision);
                 FastInteger newDiff = tmp.Copy().Subtract(fastOp1Exp).Abs();
                 if (newDiff.compareTo(expdiff) < 0) {
                   // At this point, both operands have the same sign
@@ -3308,7 +3308,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (helper.GetRadix() <= 10) {
         int radix = helper.GetRadix();
         eiBitCount = eiBitCount.Add(eidiffBigInt.Multiply(BitsPerDigit[radix])
-            .Divide(100));
+          .Divide(100));
         // System.out.println(""+eiBitCount);
         if (eiBitCount.compareTo(Integer.MAX_VALUE) > 0) {
           return null;
@@ -3335,7 +3335,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (helper.GetRadix() <= 10) {
         int radix = helper.GetRadix();
         eiBitCount = eiBitCount.Add(eidiffBigInt.Multiply(BitsPerDigit[radix])
-            .Divide(100));
+          .Divide(100));
         // System.out.println(""+eiBitCount);
         if (eiBitCount.compareTo(Integer.MAX_VALUE) > 0) {
           return null;
@@ -3356,7 +3356,7 @@ licensed under the Unlicense: https://unlicense.org/
       EContext ctxSrc) {
       if (ctxDst != null && ctxDst.getHasFlags()) {
         if ((ctxSrc.getFlags() & (EContext.FlagInvalid |
-              EContext.FlagDivideByZero)) != 0) {
+          EContext.FlagDivideByZero)) != 0) {
           ctxDst.setFlags(ctxDst.getFlags()|(ctxSrc.getFlags() & (EContext.FlagInvalid |
               EContext.FlagDivideByZero)));
         } else {
@@ -3411,7 +3411,7 @@ licensed under the Unlicense: https://unlicense.org/
           negResult = neg1 ^ neg2;
           if (negResult) {
             negResult &= (neg1 && neg2) || ((neg1 ^ neg2) && ctx != null &&
-                ctx.getRounding() == ERounding.Floor);
+              ctx.getRounding() == ERounding.Floor);
           }
         } else {
           negResult = neg1;
@@ -3423,7 +3423,7 @@ licensed under the Unlicense: https://unlicense.org/
         if (negResult && mant1.isValueZero()) {
           // Result is negative zero
           negResult &= (neg1 && neg2) || ((neg1 ^ neg2) && ctx != null &&
-              ctx.getRounding() == ERounding.Floor);
+            ctx.getRounding() == ERounding.Floor);
         }
       }
       // System.out.println("mant1= " + mant1 + " exp= " + exponent +" neg= "+
@@ -3464,7 +3464,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (negResult && mant1.isZero()) {
         // Result is negative zero
         negResult &= (neg1 && neg2) || ((neg1 ^ neg2) && ctx != null &&
-            ctx.getRounding() == ERounding.Floor);
+          ctx.getRounding() == ERounding.Floor);
       }
       // System.out.println("mant1= " + mant1 + " exp= " + exponent +" neg= "+
       // (negResult));
@@ -3502,7 +3502,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (negResult && fmant1.isValueZero()) {
         // Result is negative zero
         negResult &= (neg1 && neg2) || ((neg1 ^ neg2) && ctx != null &&
-            ctx.getRounding() == ERounding.Floor);
+          ctx.getRounding() == ERounding.Floor);
       }
       return this.helper.CreateNewWithFlagsFastInt(
           fmant1,
@@ -3543,9 +3543,9 @@ licensed under the Unlicense: https://unlicense.org/
         boolean op2IsZero = op2Mantissa.isValueZero();
         boolean op1IsZero = op1Mantissa.isValueZero();
         int thisSign = op1IsZero ? 0 : (((thisFlags &
-                BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
+          BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
         int otherSign = op2IsZero ? 0 : (((otherFlags &
-                BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
+          BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
         boolean moreDistantThanPrecision = expdiff.compareTo(ctx.getPrecision()) > 0;
         // If exponent difference is greater than the precision
         if (moreDistantThanPrecision) {
@@ -3828,19 +3828,19 @@ licensed under the Unlicense: https://unlicense.org/
         FastInteger digitLength2 =
           this.helper.GetDigitLength(op2Mantissa.ToEInteger());
         FastInteger maxDigitLength = (digitLength1.compareTo(digitLength2) >
-            0) ? digitLength1 :
+          0) ? digitLength1 :
 
           digitLength2;
         maxDigitLength.SubtractBig(ctx.getPrecision());
         // System.out.println("retval= " + retval + " maxdl=" +
         // maxDigitLength + " prec= " + (ctx.getPrecision()));
         return (maxDigitLength.signum() > 0) ? this.RoundToPrecisionInternal(
-            retval,
-            0,
-            0,
-            maxDigitLength,
-            false,
-            ctx) : this.RoundToPrecision(retval, ctx);
+          retval,
+          0,
+          0,
+          maxDigitLength,
+          false,
+          ctx) : this.RoundToPrecision(retval, ctx);
         // System.out.println("retval now " + retval);
       } else {
         return IsNullOrSimpleContext(ctx) ? retval :
@@ -3882,21 +3882,21 @@ licensed under the Unlicense: https://unlicense.org/
         if ((thisFlags & BigNumberFlags.FlagInfinity) != 0) {
           // thisValue is infinity
           return ((thisFlags & (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative)) == (otherFlags &
-                (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative))) ? this.ValueOf(0, null) :
+            BigNumberFlags.FlagNegative)) == (otherFlags &
+              (BigNumberFlags.FlagInfinity |
+                BigNumberFlags.FlagNegative))) ? this.ValueOf(0, null) :
             (((thisFlags & BigNumberFlags.FlagNegative) == 0) ? this.ValueOf(
-                1,
-                null) : this.ValueOf(-1, null));
+            1,
+            null) : this.ValueOf(-1, null));
         }
         if ((otherFlags & BigNumberFlags.FlagInfinity) != 0) {
           // the other value is infinity
           return ((thisFlags & (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative)) == (otherFlags &
-                (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative))) ? this.ValueOf(0, null) :
+            BigNumberFlags.FlagNegative)) == (otherFlags &
+              (BigNumberFlags.FlagInfinity |
+                BigNumberFlags.FlagNegative))) ? this.ValueOf(0, null) :
             (((otherFlags & BigNumberFlags.FlagNegative) == 0) ?
-              this.ValueOf(-1, null) : this.ValueOf(1, null));
+            this.ValueOf(-1, null) : this.ValueOf(1, null));
         }
       }
       return null;
@@ -3921,17 +3921,17 @@ licensed under the Unlicense: https://unlicense.org/
         if ((thisFlags & BigNumberFlags.FlagInfinity) != 0) {
           // thisValue is infinity
           return ((thisFlags & (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative)) == (otherFlags &
-                (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative))) ? 0 :
+            BigNumberFlags.FlagNegative)) == (otherFlags &
+              (BigNumberFlags.FlagInfinity |
+                BigNumberFlags.FlagNegative))) ? 0 :
             (((thisFlags & BigNumberFlags.FlagNegative) == 0) ? 1 : -1);
         }
         if ((otherFlags & BigNumberFlags.FlagInfinity) != 0) {
           // the other value is infinity
           return ((thisFlags & (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative)) == (otherFlags &
-                (BigNumberFlags.FlagInfinity |
-                  BigNumberFlags.FlagNegative))) ? 0 :
+            BigNumberFlags.FlagNegative)) == (otherFlags &
+              (BigNumberFlags.FlagInfinity |
+                BigNumberFlags.FlagNegative))) ? 0 :
             (((otherFlags & BigNumberFlags.FlagNegative) == 0) ? -1 : 1);
         }
       }
@@ -4030,8 +4030,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.SignalInvalid(ctx);
         }
         boolean flagsNeg = ((this.helper.GetFlags(thisValue) &
-              BigNumberFlags.FlagNegative) != 0) ^
-          ((this.helper.GetFlags(divisor) &
+          BigNumberFlags.FlagNegative) != 0) ^ ((this.helper.GetFlags(divisor) &
               BigNumberFlags.FlagNegative) != 0);
         return this.SignalDivideByZero(ctx, flagsNeg);
       }
@@ -4040,7 +4039,7 @@ licensed under the Unlicense: https://unlicense.org/
         T retval = null;
         if (integerMode == IntegerModeFixedScale) {
           int newflags = (this.helper.GetFlags(thisValue) &
-              BigNumberFlags.FlagNegative) ^ (this.helper.GetFlags(divisor) &
+            BigNumberFlags.FlagNegative) ^ (this.helper.GetFlags(divisor) &
               BigNumberFlags.FlagNegative);
           retval = this.helper.CreateNewWithFlags(
               EInteger.FromInt32(0),
@@ -4050,7 +4049,7 @@ licensed under the Unlicense: https://unlicense.org/
           EInteger dividendExp = this.helper.GetExponent(thisValue);
           EInteger divisorExp = this.helper.GetExponent(divisor);
           int newflags = (this.helper.GetFlags(thisValue) &
-              BigNumberFlags.FlagNegative) ^ (this.helper.GetFlags(divisor) &
+            BigNumberFlags.FlagNegative) ^ (this.helper.GetFlags(divisor) &
               BigNumberFlags.FlagNegative);
           retval = this.helper.CreateNewWithFlags(
               EInteger.FromInt32(0),
@@ -4066,7 +4065,7 @@ licensed under the Unlicense: https://unlicense.org/
           this.helper.GetExponentFastInt(thisValue);
         FastIntegerFixed expDivisor = this.helper.GetExponentFastInt(divisor);
         boolean resultNeg = (this.helper.GetFlags(thisValue) &
-            BigNumberFlags.FlagNegative) != (this.helper.GetFlags(divisor) &
+          BigNumberFlags.FlagNegative) != (this.helper.GetFlags(divisor) &
             BigNumberFlags.FlagNegative);
         FastInteger expdiff = FastIntegerFixed.Subtract(expDividend,
             expDivisor).ToFastInteger();
@@ -4151,7 +4150,7 @@ licensed under the Unlicense: https://unlicense.org/
             int divdCount = (int)absdivd.GetUnsignedBitLengthAsInt64();
             int divsCount = (int)mantissaDivisor.GetUnsignedBitLengthAsInt64();
             int dividendShift = (divdCount <= divsCount) ? ((divsCount -
-                  divdCount) + maxprec + 1) : Math.max(0,
+              divdCount) + maxprec + 1) : Math.max(0,
                 (maxprec + 1) - (divdCount - divsCount));
             absdivd = absdivd.ShiftLeft(dividendShift);
             EInteger[] divrem3 = absdivd.DivRem(absdivs);
@@ -4259,7 +4258,7 @@ licensed under the Unlicense: https://unlicense.org/
                 shift.SetInt(0);
               } else {
                 FastInteger shiftCalc = divisBounds[0].Copy().Subtract(
-                    dividBounds[1]).AddInt(2).Add(shift);
+                  dividBounds[1]).AddInt(2).Add(shift);
                 if (shiftCalc.CompareToInt(0) <= 0) {
                   // No need to shift
                   shift.SetInt(0);
@@ -4440,7 +4439,7 @@ licensed under the Unlicense: https://unlicense.org/
           return result;
         }
         if ((thisFlags & BigNumberFlags.FlagInfinity) != 0 && (otherFlags &
-            BigNumberFlags.FlagInfinity) != 0) {
+          BigNumberFlags.FlagInfinity) != 0) {
           // Attempt to divide infinity by infinity
           return this.SignalInvalid(ctx);
         }
@@ -4550,7 +4549,7 @@ licensed under the Unlicense: https://unlicense.org/
           if (guessCmp == 0) {
             more = false;
           } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
-              guessCmp < 0)) {
+            guessCmp < 0)) {
             // Guesses are vacillating
             ++vacillations;
             more &= vacillations <= maxvac ||
@@ -4627,7 +4626,7 @@ licensed under the Unlicense: https://unlicense.org/
           if (guessCmp == 0) {
             more = false;
           } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
-              guessCmp < 0)) {
+            guessCmp < 0)) {
             // Guesses are vacillating
             ++vacillations;
             more &= vacillations <= 3 || guessCmp <= 0;
@@ -4686,9 +4685,9 @@ licensed under the Unlicense: https://unlicense.org/
       // Check this value then the other value for quiet NaN
       return ((thisFlags & BigNumberFlags.FlagQuietNaN) != 0) ?
         this.ReturnQuietNaN(thisValue, ctx) : (((otherFlags &
-              BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
-                other,
-                ctx) : null);
+        BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
+          other,
+          ctx) : null);
     }
 
     private boolean IsFinite(T val) {
@@ -4768,7 +4767,7 @@ licensed under the Unlicense: https://unlicense.org/
         if (guessCmp == 0) {
           more = false;
         } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
-            guessCmp < 0)) {
+          guessCmp < 0)) {
           // Guesses are vacillating
           ++vacillations;
           more &= !overprec || vacillations <= 3 || guessCmp <= 0;
@@ -4819,7 +4818,7 @@ licensed under the Unlicense: https://unlicense.org/
           if (guessCmp == 0) {
             more = false;
           } else if ((guessCmp > 0 && lastCompare < 0) || (lastCompare > 0 &&
-              guessCmp < 0)) {
+            guessCmp < 0)) {
             // Guesses are vacillating
             ++vacillations;
             more &= vacillations <= 3 || guessCmp <= 0;
@@ -4890,9 +4889,9 @@ licensed under the Unlicense: https://unlicense.org/
               otherValue;
           }
           return isMinOp ? (((otherFlags & BigNumberFlags.FlagNegative) ==
-                0) ? this.RoundToPrecision(thisValue, ctx) :
-              otherValue) : (((otherFlags & BigNumberFlags.FlagNegative) !=
-                0) ? this.RoundToPrecision(thisValue, ctx) : otherValue);
+            0) ? this.RoundToPrecision(thisValue, ctx) :
+            otherValue) : (((otherFlags & BigNumberFlags.FlagNegative) !=
+            0) ? this.RoundToPrecision(thisValue, ctx) : otherValue);
         }
       }
       return null;
@@ -5055,7 +5054,7 @@ licensed under the Unlicense: https://unlicense.org/
       FastInteger idealExp) {
       T ret = this.RoundToPrecision(thisValue, ctx);
       if (ret != null && (this.helper.GetFlags(ret) &
-          BigNumberFlags.FlagSpecial) == 0) {
+        BigNumberFlags.FlagSpecial) == 0) {
         EInteger bigmant = this.helper.GetMantissa(ret);
         FastInteger exp = FastInteger.FromBig(this.helper.GetExponent(ret));
         int radix = this.thisRadix;
@@ -5151,7 +5150,7 @@ licensed under the Unlicense: https://unlicense.org/
             (this.thisRadix >= 10 && !ctx.isPrecisionInBits() &&
               ctx.getPrecision().compareTo(10) >= 0) ||
             ((this.thisRadix >= 2 || ctx.isPrecisionInBits()) &&
-              ctx.getPrecision().compareTo(32) >= 0)));
+        ctx.getPrecision().compareTo(32) >= 0)));
     }
 
     private boolean RoundGivenAccum(
@@ -5176,7 +5175,7 @@ licensed under the Unlicense: https://unlicense.org/
         }
       } else if (rounding == ERounding.HalfDown) {
         incremented |= lastDiscarded > (radix / 2) || (lastDiscarded ==
-            (radix / 2) && olderDiscarded != 0);
+          (radix / 2) && olderDiscarded != 0);
       } else if (rounding == ERounding.Ceiling) {
         incremented |= !neg && (lastDiscarded | olderDiscarded) != 0;
       } else if (rounding == ERounding.Floor) {
@@ -5225,7 +5224,7 @@ licensed under the Unlicense: https://unlicense.org/
         }
       } else if (rounding == ERounding.HalfDown) {
         incremented |= lastDiscarded > (radix / 2) || (lastDiscarded ==
-            (radix / 2) && olderDiscarded != 0);
+          (radix / 2) && olderDiscarded != 0);
       } else if (rounding == ERounding.Ceiling) {
         incremented |= !neg && (lastDiscarded | olderDiscarded) != 0;
       } else if (rounding == ERounding.Floor) {
@@ -5275,7 +5274,7 @@ licensed under the Unlicense: https://unlicense.org/
         }
       } else if (rounding == ERounding.HalfDown) {
         incremented |= lastDiscarded > (radix / 2) || (lastDiscarded ==
-            (radix / 2) && olderDiscarded != 0);
+          (radix / 2) && olderDiscarded != 0);
       } else if (rounding == ERounding.Ceiling) {
         incremented |= !neg && (lastDiscarded | olderDiscarded) != 0;
       } else if (rounding == ERounding.Floor) {
@@ -5341,8 +5340,8 @@ licensed under the Unlicense: https://unlicense.org/
       if (unlimitedPrecisionExp && (lastDiscarded | olderDiscarded) == 0 &&
         (shift == null || shift.isValueZero())) {
         if (!(adjustNegativeZero &&
-            (thisFlags & BigNumberFlags.FlagNegative) != 0 &&
-            this.helper.GetMantissa(thisValue).isZero())) {
+          (thisFlags & BigNumberFlags.FlagNegative) != 0 &&
+          this.helper.GetMantissa(thisValue).isZero())) {
           return thisValue;
         }
       }
@@ -5375,11 +5374,11 @@ licensed under the Unlicense: https://unlicense.org/
             return thisValue;
           }
           if (!this.RoundGivenDigits(
-              lastDiscarded,
-              olderDiscarded,
-              er,
-              negative,
-              FastInteger.FromBig(this.helper.GetMantissa(thisValue)))) {
+            lastDiscarded,
+            olderDiscarded,
+            er,
+            negative,
+            FastInteger.FromBig(this.helper.GetMantissa(thisValue)))) {
             return thisValue;
           } else {
             FastIntegerFixed bm = this.helper.GetMantissaFastInt(thisValue);
@@ -5416,7 +5415,7 @@ licensed under the Unlicense: https://unlicense.org/
       if (this.thisRadix == 2 && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
         ctx.getPrecision().compareTo(53) <= 0 && ctx.getEMin().compareTo(-2000) >= 0 &&
         ctx.getEMax().compareTo(2000) < 0 && (shift == null ||
-          shift.CompareToInt(64) < 0)) {
+        shift.CompareToInt(64) < 0)) {
         int intPrecision = ctx.getPrecision().ToInt32Checked();
         int intEMax = ctx.getEMax().ToInt32Checked();
         int intEMin = ctx.getEMin().ToInt32Checked();
@@ -5435,7 +5434,7 @@ licensed under the Unlicense: https://unlicense.org/
           // NOTE: At this point, the number won't be infinity or NaN
           if (shift == null || shift.isValueZero()) {
             if (adjustNegativeZero && (thisFlags &
-                BigNumberFlags.FlagNegative) !=
+              BigNumberFlags.FlagNegative) !=
               0 && mantlong == 0 && (ctx.getRounding() != ERounding.Floor)) {
               // Change negative zero to positive zero
               // except if the rounding mode is Floor
@@ -5451,11 +5450,11 @@ licensed under the Unlicense: https://unlicense.org/
               }
               // NOTE: accum includes lastDiscarded and olderDiscarded
               if (!this.RoundGivenDigits(
-                  lastDiscarded,
-                  olderDiscarded,
-                  ctx.getRounding(),
-                  (thisFlags & BigNumberFlags.FlagNegative) != 0,
-                  mantlong)) {
+                lastDiscarded,
+                olderDiscarded,
+                ctx.getRounding(),
+                (thisFlags & BigNumberFlags.FlagNegative) != 0,
+                mantlong)) {
                 stillWithinPrecision = true;
               } else {
                 withRounding = true;
@@ -5463,7 +5462,7 @@ licensed under the Unlicense: https://unlicense.org/
                 intDigitCount = NumberUtility.BitLength(mantlong);
                 if (intDigitCount < intPrecision ||
                   (intDigitCount == intPrecision && (this.thisRadix & 1) == 0 &&
-                    (mantlong & 1) != 0)) {
+                  (mantlong & 1) != 0)) {
                   stillWithinPrecision = true;
                 } else {
                   long radixPower = 1L << intPrecision;
@@ -5518,7 +5517,7 @@ licensed under the Unlicense: https://unlicense.org/
             olderDiscarded |= lastDiscarded;
             // Get the bottommost shift minus 1 bits
             olderDiscarded |= (bitShift > 1 && (mantlong <<
-                  (64 - bitShift + 1)) != 0) ? 1 : 0;
+              (64 - bitShift + 1)) != 0) ? 1 : 0;
             // Get the bit just above that bit
             lastDiscarded = (int)((mantlong >> (bitShift - 1)) & 0x01);
             olderDiscarded = (olderDiscarded != 0) ? 1 : 0;
@@ -5532,7 +5531,7 @@ licensed under the Unlicense: https://unlicense.org/
             } else {
               // bottommost intShift minus 1 bits
               olderDiscarded |= (intShift > 1 && (mantlong <<
-                    (64 - intShift + 1)) != 0) ? 1 : 0;
+                (64 - intShift + 1)) != 0) ? 1 : 0;
               lastDiscarded = (int)((mantlong >> (intShift - 1)) & 0x01);
               mantlong >>= intShift;
             }
@@ -5571,11 +5570,11 @@ licensed under the Unlicense: https://unlicense.org/
             if (ctx.getHasFlags() && mantlong != 0) {
               int newAdjExponent = adjustedExp;
               if (this.RoundGivenDigits(
-                  lastDiscarded,
-                  olderDiscarded,
-                  rounding,
-                  neg,
-                  mantlong)) {
+                lastDiscarded,
+                olderDiscarded,
+                rounding,
+                neg,
+                mantlong)) {
                 long intEarlyRounded = mantlong + 1;
                 if ((intEarlyRounded >> intPrecision) != 0) {
                   newAdjExponent = ctx.getAdjustExponent() ?
@@ -5603,7 +5602,7 @@ licensed under the Unlicense: https://unlicense.org/
                 } else {
                   // bottommost expdiff minus 1 bits
                   olderDiscarded |= (intExpDiff > 1 && (mantlong <<
-                        (64 - intExpDiff + 1)) != 0) ? 1 : 0;
+                    (64 - intExpDiff + 1)) != 0) ? 1 : 0;
                   lastDiscarded = (int)((mantlong >> (intExpDiff - 1)) & 0x01);
                   mantlong >>= intExpDiff;
                 }
@@ -5630,11 +5629,11 @@ licensed under the Unlicense: https://unlicense.org/
                   }
                 }
                 if (this.RoundGivenDigits(
-                    lastDiscarded,
-                    olderDiscarded,
-                    rounding,
-                    neg,
-                    mantlong)) {
+                  lastDiscarded,
+                  olderDiscarded,
+                  rounding,
+                  neg,
+                  mantlong)) {
                   ++mantlong;
                 }
               }
@@ -5643,7 +5642,7 @@ licensed under the Unlicense: https://unlicense.org/
                   flags |= EContext.FlagClamped;
                 }
                 if ((flags & (EContext.FlagSubnormal |
-                      EContext.FlagInexact)) == (EContext.FlagSubnormal |
+                  EContext.FlagInexact)) == (EContext.FlagSubnormal |
                     EContext.FlagInexact)) {
                   flags |= EContext.FlagUnderflow |
                     EContext.FlagRounded;
@@ -5672,11 +5671,11 @@ licensed under the Unlicense: https://unlicense.org/
                 }
               }
               if (this.RoundGivenDigits(
-                  lastDiscarded,
-                  olderDiscarded,
-                  rounding,
-                  neg,
-                  mantlong)) {
+                lastDiscarded,
+                olderDiscarded,
+                rounding,
+                neg,
+                mantlong)) {
                 ++mantlong;
                 // Check if mantissa's precision is now greater
                 // than the one set by the context
@@ -5779,9 +5778,9 @@ licensed under the Unlicense: https://unlicense.org/
               ctx.setFlags(ctx.getFlags()|(EContext.FlagInexact | EContext.FlagRounded));
             }
             if (!this.RoundGivenAccum(
-                accum,
-                ctx.getRounding(),
-                (thisFlags & BigNumberFlags.FlagNegative) != 0)) {
+              accum,
+              ctx.getRounding(),
+              (thisFlags & BigNumberFlags.FlagNegative) != 0)) {
               stillWithinPrecision = true;
             } else {
               withRounding = true;
@@ -5790,7 +5789,7 @@ licensed under the Unlicense: https://unlicense.org/
               int precisionCmp = digitCount.compareTo(fastPrecision);
               if (precisionCmp < 0 ||
                 (precisionCmp == 0 && (this.thisRadix & 1) == 0 &&
-                  !mantabs.isEvenNumber())) {
+                !mantabs.isEvenNumber())) {
                 stillWithinPrecision = true;
               } else {
                 EInteger radixPower =
@@ -5926,7 +5925,7 @@ licensed under the Unlicense: https://unlicense.org/
       }
       if (binaryPrec) {
         while (bitLength.compareTo(
-            accum.getShiftedInt().GetUnsignedBitLengthAsEInteger()) < 0) {
+          accum.getShiftedInt().GetUnsignedBitLengthAsEInteger()) < 0) {
           accum.ShiftRightInt(1);
         }
       }
@@ -5953,7 +5952,7 @@ licensed under the Unlicense: https://unlicense.org/
           }
 
           if (bitLength.compareTo(
-              currMantissa.GetUnsignedBitLengthAsEInteger()) < 0) {
+            currMantissa.GetUnsignedBitLengthAsEInteger()) < 0) {
             // Mantissa too high, treat as overflow
             adjExponent.Increment();
           }
@@ -5990,7 +5989,7 @@ licensed under the Unlicense: https://unlicense.org/
           if (this.RoundGivenAccum(accum, rounding, neg)) {
             EInteger earlyRounded = accum.getShiftedInt().Add(EInteger.FromInt32(1));
             if (!unlimitedPrec && (earlyRounded.isEven() ||
-                (this.thisRadix & 1) != 0)) {
+              (this.thisRadix & 1) != 0)) {
               FastInteger newDigitLength =
                 this.helper.GetDigitLength(earlyRounded);
               // Ensure newDigitLength doesn't exceed precision
@@ -6046,7 +6045,7 @@ licensed under the Unlicense: https://unlicense.org/
               flags |= EContext.FlagClamped;
             }
             if ((flags & (EContext.FlagSubnormal |
-                  EContext.FlagInexact)) == (EContext.FlagSubnormal |
+              EContext.FlagInexact)) == (EContext.FlagSubnormal |
                 EContext.FlagInexact)) {
               flags |= EContext.FlagUnderflow |
                 EContext.FlagRounded;
@@ -6088,7 +6087,7 @@ licensed under the Unlicense: https://unlicense.org/
               (bigmantissaEInteger.isEven() || (this.thisRadix & 1) != 0) &&
               (binaryPrec || accum.GetDigitLength().compareTo(fastPrecision) >=
 
-                0)) {
+              0)) {
               accum = this.helper.CreateShiftAccumulatorWithDigits(
                   bigmantissaEInteger,
                   0,
@@ -6102,7 +6101,7 @@ licensed under the Unlicense: https://unlicense.org/
                   nonHalfRounding);
                 if (binaryPrec) {
                   while (bitLength.compareTo(
-                      accum.getShiftedInt().GetUnsignedBitLengthAsEInteger()) < 0) {
+                    accum.getShiftedInt().GetUnsignedBitLengthAsEInteger()) < 0) {
                     accum.ShiftRightInt(1);
                   }
                 }
@@ -6139,7 +6138,7 @@ licensed under the Unlicense: https://unlicense.org/
                   "Result requires too much memory");
             }
             if (bitLength.compareTo(
-                currMantissa.GetUnsignedBitLengthAsEInteger()) < 0) {
+              currMantissa.GetUnsignedBitLengthAsEInteger()) < 0) {
               // Mantissa too high, treat as overflow
               adjExponent.Increment();
             }
@@ -6507,12 +6506,12 @@ licensed under the Unlicense: https://unlicense.org/
           return null;
         }
         return FastIntegerFixed.FromBig(this.helper.MultiplyByRadixPower(
-              bi.ToEInteger(),
-              FastInteger.FromBig(radixPower.ToEInteger())));
+          bi.ToEInteger(),
+          FastInteger.FromBig(radixPower.ToEInteger())));
       } else {
         return FastIntegerFixed.FromBig(this.helper.MultiplyByRadixPower(
-              bi.ToEInteger(),
-              new FastInteger(radixPower.ToInt32())));
+          bi.ToEInteger(),
+          new FastInteger(radixPower.ToInt32())));
       }
     }
 
@@ -6532,8 +6531,8 @@ licensed under the Unlicense: https://unlicense.org/
         }
       }
       return FastIntegerFixed.FromBig(this.helper.MultiplyByRadixPower(
-            bi.ToEInteger(),
-            radixPower));
+        bi.ToEInteger(),
+        radixPower));
     }
 
     private T ValueOf(int value, EContext ctx) {

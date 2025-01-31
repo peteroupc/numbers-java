@@ -9,8 +9,7 @@ package com.upokecenter.util;
    * multiple threads, as long as the underlying random byte generator is as
    * well.</p>
    */
-  public final class RandomGenerator implements IRandomGenExtended
-  {
+  public final class RandomGenerator implements IRandomGenExtended {
     private final IRandomGen valueIrg;
     private final Object valueNormalLock = new Object();
     private boolean valueHaveLastNormal;
@@ -134,7 +133,7 @@ package com.upokecenter.util;
     public double ChiSquared(int df) {
       if (df <= 0) {
  throw new IllegalArgumentException("df(" + df + ") is not" +
-"\u0020greater than 0");
+        "\u0020greater than 0");
 }
  return this.Gamma(df * 0.5, 2);
     }
@@ -156,7 +155,7 @@ package com.upokecenter.util;
     public double Gamma(double a, double b) {
       if (b <= 0) {
  throw new IllegalArgumentException("b(" + b + ") is not" +
-"\u0020greater than 0");
+        "\u0020greater than 0");
 }
  return this.Gamma(a) * b;
     }
@@ -398,7 +397,7 @@ package com.upokecenter.util;
     public double Uniform(double min, double max) {
       if (min >= max) {
  throw new IllegalArgumentException("min(" + min + ") is not less than " +
-          max);
+        max);
 }
  return min + ((max - min) * this.Uniform());
     }
@@ -451,7 +450,8 @@ package com.upokecenter.util;
       } else {
         long diff = maxExclusive - minInclusive;
         return diff <= Integer.MAX_VALUE ? minInclusive +
-this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
+          this.UniformInt((int)diff) : (int)(minInclusive +
+          this.UniformLong(diff));
       }
     }
 
@@ -474,7 +474,7 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
         return minInclusive + this.UniformLong(maxExclusive - minInclusive);
       } else {
         if ((maxExclusive < 0 && Long.MAX_VALUE + maxExclusive <
-            minInclusive) ||
+          minInclusive) ||
           (maxExclusive > 0 && Long.MIN_VALUE + maxExclusive > minInclusive) ||
           minInclusive - maxExclusive < 0) {
           byte[] b = new byte[8];
@@ -520,43 +520,43 @@ this.UniformInt((int)diff) : (int)(minInclusive + this.UniformLong(diff));
       byte[] b = new byte[4];
       switch (maxExclusive) {
         case 2: {
-            this.valueIrg.GetBytes(b, 0, 1);
-            return b[0] & 1;
-          }
+          this.valueIrg.GetBytes(b, 0, 1);
+          return b[0] & 1;
+        }
         case 256: {
-            this.valueIrg.GetBytes(b, 0, 1);
-            return b[0] & 1;
-          }
+          this.valueIrg.GetBytes(b, 0, 1);
+          return b[0] & 1;
+        }
         default: {
+          while (true) {
+            int ib;
+            if (maxExclusive == 0x1000000) {
+              this.valueIrg.GetBytes(b, 0, 3);
+              ib = b[0] & 0xff;
+              ib |= (b[1] & 0xff) << 8;
+              ib |= (b[2] & 0xff) << 16;
+              return ib;
+            }
+            if (maxExclusive == 0x10000) {
+              this.valueIrg.GetBytes(b, 0, 2);
+              ib = b[0] & 0xff;
+              ib |= (b[1] & 0xff) << 8;
+              return ib;
+            }
+            int maxexc;
+            maxexc = Integer.MAX_VALUE / maxExclusive * maxExclusive;
             while (true) {
-              int ib;
-              if (maxExclusive == 0x1000000) {
-                this.valueIrg.GetBytes(b, 0, 3);
-                ib = b[0] & 0xff;
-                ib |= (b[1] & 0xff) << 8;
-                ib |= (b[2] & 0xff) << 16;
-                return ib;
-              }
-              if (maxExclusive == 0x10000) {
-                this.valueIrg.GetBytes(b, 0, 2);
-                ib = b[0] & 0xff;
-                ib |= (b[1] & 0xff) << 8;
-                return ib;
-              }
-              int maxexc;
-              maxexc = Integer.MAX_VALUE / maxExclusive * maxExclusive;
-              while (true) {
-                this.valueIrg.GetBytes(b, 0, 4);
-                ib = b[0] & 0xff;
-                ib |= (b[1] & 0xff) << 8;
-                ib |= (b[2] & 0xff) << 16;
-                ib |= (b[3] & 0x7f) << 24;
-                if (ib < maxexc) {
-                  return ib % maxExclusive;
-                }
+              this.valueIrg.GetBytes(b, 0, 4);
+              ib = b[0] & 0xff;
+              ib |= (b[1] & 0xff) << 8;
+              ib |= (b[2] & 0xff) << 16;
+              ib |= (b[3] & 0x7f) << 24;
+              if (ib < maxexc) {
+                return ib % maxExclusive;
               }
             }
           }
+        }
       }
     }
 

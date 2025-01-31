@@ -79,21 +79,21 @@ licensed under the Unlicense: https://unlicense.org/
     static final int Binary32SignifBits = 24;
     static final int Binary32SignifAreaBits = Binary32SignifBits - 1;
     static final int Binary32ExponentArea = Binary32Bits - BinarySignArea
-- Binary32SignifAreaBits;
+      - Binary32SignifAreaBits;
     static final int Binary32EMin = -((1 << (Binary32ExponentArea - 1)) - 2) -
-Binary32SignifAreaBits;
+      Binary32SignifAreaBits;
     static final int Binary32Infinity =
-((1 << Binary32ExponentArea) - 1) << Binary32SignifAreaBits;
+      ((1 << Binary32ExponentArea) - 1) << Binary32SignifAreaBits;
 
     static final int Binary16Bits = 16;
     static final int Binary16SignifBits = 11;
     static final int Binary16SignifAreaBits = Binary16SignifBits - 1;
     static final int Binary16ExponentArea = Binary16Bits - BinarySignArea
-- Binary16SignifAreaBits;
+      - Binary16SignifAreaBits;
     static final int Binary16EMin = -((1 << (Binary16ExponentArea - 1)) - 2) -
-Binary16SignifAreaBits;
+      Binary16SignifAreaBits;
     static final int Binary16Infinity =
-((1 << Binary16ExponentArea) - 1) << Binary16SignifAreaBits;
+      ((1 << Binary16ExponentArea) - 1) << Binary16SignifAreaBits;
 
     /**
      * A not-a-number value.
@@ -232,7 +232,7 @@ Binary16SignifAreaBits;
      */
     public final boolean isFinite() {
         return (this.flags & (BigNumberFlags.FlagInfinity |
-              BigNumberFlags.FlagNaN)) == 0;
+          BigNumberFlags.FlagNaN)) == 0;
       }
 
     /**
@@ -274,7 +274,7 @@ Binary16SignifAreaBits;
      */
     public final int signum() {
         return (((this.flags & BigNumberFlags.FlagSpecial) == 0) &&
-            this.unsignedMantissa.isValueZero()) ? 0 :
+          this.unsignedMantissa.isValueZero()) ? 0 :
           (((this.flags & BigNumberFlags.FlagNegative) != 0) ? -1 : 1);
       }
 
@@ -449,7 +449,7 @@ Binary16SignifAreaBits;
             (byte)((mantissaLong < 0) ? BigNumberFlags.FlagNegative : 0));
       } else {
         FastIntegerFixed fi = FastIntegerFixed.FromInt64(Math.abs(
-              mantissaLong));
+          mantissaLong));
         return new EFloat(
             fi,
             FastIntegerFixed.FromInt64(exponentLong),
@@ -2279,7 +2279,7 @@ Binary16SignifAreaBits;
      */
     public boolean IsNaN() {
       return (this.flags & (BigNumberFlags.FlagQuietNaN |
-            BigNumberFlags.FlagSignalingNaN)) != 0;
+        BigNumberFlags.FlagSignalingNaN)) != 0;
     }
 
     /**
@@ -2289,7 +2289,7 @@ Binary16SignifAreaBits;
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
-            BigNumberFlags.FlagNegative)) ==
+        BigNumberFlags.FlagNegative)) ==
         (BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
     }
 
@@ -2300,7 +2300,7 @@ Binary16SignifAreaBits;
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
-            BigNumberFlags.FlagNegative)) == BigNumberFlags.FlagInfinity;
+        BigNumberFlags.FlagNegative)) == BigNumberFlags.FlagInfinity;
     }
 
     /**
@@ -2472,7 +2472,7 @@ Binary16SignifAreaBits;
       } else if (ctx.isSimplified()) {
         EContext tmpctx = ctx.WithSimplified(false).WithBlankFlags();
         EFloat ret = value.PreRound(ctx).LogN(baseValue.PreRound(ctx),
-            tmpctx);
+          tmpctx);
         if (ctx.getHasFlags()) {
           int flags = ctx.getFlags();
           ctx.setFlags(flags | tmpctx.getFlags());
@@ -2507,7 +2507,7 @@ Binary16SignifAreaBits;
           flags |= EContext.FlagRounded | EContext.FlagInexact;
           if (baseValue.Pow(ret).CompareToValue(value) == 0) {
             EFloat rtmp = ret.Quantize(EFloat.FromInt32(1),
-                ctx.WithNoFlags());
+              ctx.WithNoFlags());
             if (!rtmp.IsNaN()) {
               flags &= ~(EContext.FlagRounded | EContext.FlagInexact);
               ret = rtmp;
@@ -3193,8 +3193,8 @@ Binary16SignifAreaBits;
       EFloat divisor,
       EContext ctx) {
       return this.Subtract(
-        this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
-        ctx);
+          this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
+          ctx);
     }
 
     /**
@@ -3686,7 +3686,7 @@ Binary16SignifAreaBits;
     public static EFloat FromSingleBits(int value) {
       boolean neg = (value >> (Binary32Bits - 1)) != 0;
       int floatExponent = (int)((value >> Binary32SignifAreaBits) &
-((1 << Binary32ExponentArea) - 1));
+        ((1 << Binary32ExponentArea) - 1));
       int valueFpMantissa = value & ((1 << Binary32SignifAreaBits) - 1);
       EInteger bigmant;
       if (floatExponent == ((1 << Binary32ExponentArea) - 1)) {
@@ -3695,11 +3695,11 @@ Binary16SignifAreaBits;
         }
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (valueFpMantissa & (1 << (Binary32SignifAreaBits - 1))) !=
-0;
+          0;
         valueFpMantissa &= (1 << (Binary32SignifAreaBits - 1)) - 1;
         bigmant = EInteger.FromInt32(valueFpMantissa);
         value = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
-            BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
+          BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
         if (bigmant.isZero() && !neg) {
           return quiet ? NaN : SignalingNaN;
         }
@@ -3744,7 +3744,7 @@ Binary16SignifAreaBits;
       int ivalue = ((int)value) & 0xffff;
       boolean neg = (ivalue >> (Binary16Bits - 1)) != 0;
       int floatExponent = (int)((ivalue >> Binary16SignifAreaBits) &
-((1 << Binary16ExponentArea) - 1));
+        ((1 << Binary16ExponentArea) - 1));
       int valueFpMantissa = ivalue & ((1 << Binary16SignifAreaBits) - 1);
       EInteger bigmant;
       if (floatExponent == ((1 << Binary16ExponentArea) - 1)) {
@@ -3753,11 +3753,11 @@ Binary16SignifAreaBits;
         }
         // Treat high bit of mantissa as quiet/signaling bit
         boolean quiet = (valueFpMantissa & (1 << (Binary16SignifAreaBits - 1))) !=
-0;
+          0;
         valueFpMantissa &= (1 << (Binary16SignifAreaBits - 1)) - 1;
         bigmant = EInteger.FromInt32(valueFpMantissa);
         ivalue = (neg ? BigNumberFlags.FlagNegative : 0) | (quiet ?
-            BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
+          BigNumberFlags.FlagQuietNaN : BigNumberFlags.FlagSignalingNaN);
         if (bigmant.isZero() && !neg) {
           return quiet ? NaN : SignalingNaN;
         }
@@ -3839,7 +3839,7 @@ Binary16SignifAreaBits;
       // Check whether rounding can be avoided for common cases
       // where the value already fits a single
       int exponentZone = ((1 << (Binary32ExponentArea - 1)) - 2) -
-Binary32SignifBits;
+        Binary32SignifBits;
       if (!thisValue.isFinite() ||
         thisValue.unsignedMantissa.CompareToInt(1 << Binary32SignifBits) >= 0 ||
         thisValue.exponent.CompareToInt(-exponentZone) < 0 ||
@@ -3938,7 +3938,7 @@ Binary32SignifBits;
       // Check whether rounding can be avoided for common cases
       // where the value already fits a single
       int exponentZone = ((1 << (Binary16ExponentArea - 1)) - 2) -
-Binary16SignifBits;
+        Binary16SignifBits;
       if (!thisValue.isFinite() ||
         thisValue.unsignedMantissa.CompareToInt(1 << Binary16SignifBits) >= 0 ||
         thisValue.exponent.CompareToInt(-exponentZone) < 0 ||
@@ -4228,7 +4228,7 @@ Binary16SignifBits;
         // number of decimal digits of the maximum possible
         // decimal significand, to speed up further rounding
         EInteger roundedPrec = ctx.getPrecision().ShiftRight(1).Add(
-            EInteger.FromInt32(3));
+          EInteger.FromInt32(3));
         EInteger dmant = dec.getUnsignedMantissa();
         EInteger dexp = dec.getExponent();
         boolean dneg = dec.isNegative();
@@ -4386,7 +4386,7 @@ Binary16SignifBits;
         BitShiftAccumulator acc = new BitShiftAccumulator(bigmantissa, 0, 0);
         acc.ShiftRight(bigexponent);
         if (exact && (acc.getLastDiscardedDigit() != 0 || acc.getOlderDiscardedDigits() !=
-            0)) {
+          0)) {
           // Some digits were discarded
           throw new ArithmeticException("Not an exact integer");
         }
@@ -4668,8 +4668,8 @@ Binary16SignifBits;
         EInteger exponent,
         int flags) {
         return new EFloat(FastIntegerFixed.FromBig(mantissa),
-            FastIntegerFixed.FromBig(exponent),
-            (byte)flags);
+          FastIntegerFixed.FromBig(exponent),
+          (byte)flags);
       }
 
       public EFloat CreateNewWithFlagsFastInt(
@@ -4957,7 +4957,7 @@ Binary16SignifBits;
      */
     public static EFloat FromInt64AsUnsigned(long longerValue) {
       return longerValue >= 0 ? FromInt64(longerValue) :
-           FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
+        FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
     }
 
     /**

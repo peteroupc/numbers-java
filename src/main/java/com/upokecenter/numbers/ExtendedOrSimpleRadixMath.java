@@ -85,7 +85,7 @@ licensed under the Unlicense: https://unlicense.org/
 
     public T Exp(T thisValue, EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ? this.ext.Exp(thisValue,
-  ctx) : this.simp.Exp(thisValue, ctx);
+        ctx) : this.simp.Exp(thisValue, ctx);
     }
 
     public T SquareRoot(T thisValue, EContext ctx) {
@@ -100,8 +100,8 @@ licensed under the Unlicense: https://unlicense.org/
     public T NextMinus(T thisValue, EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
         this.ext.NextMinus(thisValue, ctx) : this.simp.NextMinus(
-          thisValue,
-          ctx);
+        thisValue,
+        ctx);
     }
 
     public T NextToward(T thisValue, T otherValue, EContext ctx) {
@@ -113,7 +113,7 @@ licensed under the Unlicense: https://unlicense.org/
     public T NextPlus(T thisValue, EContext ctx) {
       return (ctx == null || !ctx.isSimplified()) ?
         this.ext.NextPlus(thisValue, ctx) : this.simp.NextPlus(thisValue,
-  ctx);
+        ctx);
     }
 
     public T DivideToExponent(

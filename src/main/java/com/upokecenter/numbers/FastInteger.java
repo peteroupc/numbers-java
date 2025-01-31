@@ -50,7 +50,7 @@ licensed under the Unlicense: https://unlicense.org/
       MutableNumber(int val) {
         if (val < 0) {
           throw new IllegalArgumentException("val(" + val + ") is less than " +
-"0 ");
+            "0 ");
         }
         this.data = new int[4];
         this.wordCount = (val == 0) ? 0 : 1;
@@ -60,7 +60,7 @@ licensed under the Unlicense: https://unlicense.org/
       MutableNumber SetInt(int val) {
         if (val < 0) {
           throw new IllegalArgumentException("val(" + val + ") is less than " +
-"0 ");
+            "0 ");
         }
         this.wordCount = (val == 0) ? 0 : 1;
         this.data[0] = val;
@@ -88,7 +88,7 @@ licensed under the Unlicense: https://unlicense.org/
 
       boolean CanFitInInt32() {
         return this.wordCount == 0 || (this.wordCount == 1 && (this.data[0] >>
-              31) == 0);
+          31) == 0);
       }
 
       int ToInt32() {
@@ -171,7 +171,7 @@ licensed under the Unlicense: https://unlicense.org/
                 x1 = ((int)(result2 | (result3 << 16)));
                 int x2 = (x0 + carry);
                 if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
-                      Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
+                  Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
                   // Carry in addition
                   x1 = (x1 + 1);
                 }
@@ -221,7 +221,7 @@ licensed under the Unlicense: https://unlicense.org/
                 x1 = ((int)(result2 | (result3 << 16)));
                 int x2 = (x0 + carry);
                 if (((x2 >> 31) == (x0 >> 31)) ? ((x2 & Integer.MAX_VALUE) < (x0 &
-                      Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
+                  Integer.MAX_VALUE)) : ((x2 >> 31) == 0)) {
                   // Carry in addition
                   x1 = (x1 + 1);
                 }
@@ -271,8 +271,8 @@ licensed under the Unlicense: https://unlicense.org/
           return 0;
         }
         return (((this.data[0] >> 31) == (val >> 31)) ? ((this.data[0] &
-                Integer.MAX_VALUE) < (val & Integer.MAX_VALUE)) :
-            ((this.data[0] >> 31) == 0)) ? -1 : 1;
+          Integer.MAX_VALUE) < (val & Integer.MAX_VALUE)) :
+          ((this.data[0] >> 31) == 0)) ? -1 : 1;
       }
 
       MutableNumber SubtractInt(int other) {
@@ -299,15 +299,15 @@ licensed under the Unlicense: https://unlicense.org/
             int a = this.data[0];
             u = a - other;
             borrow = ((((a >> 31) == (u >> 31)) ?
-                  ((a & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
-                  ((a >> 31) == 0)) || (a == u && other != 0)) ? 1 : 0;
+              ((a & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
+              ((a >> 31) == 0)) || (a == u && other != 0)) ? 1 : 0;
             this.data[0] = (int)u;
             if (borrow != 0) {
               for (int i = 1; i < this.wordCount; ++i) {
                 u = this.data[i] - borrow;
                 borrow = (((this.data[i] >> 31) == (u >> 31)) ?
-                    ((this.data[i] & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
-                    ((this.data[i] >> 31) == 0)) ? 1 : 0;
+                  ((this.data[i] & Integer.MAX_VALUE) < (u & Integer.MAX_VALUE)) :
+                  ((this.data[i] >> 31) == 0)) ? 1 : 0;
                 this.data[i] = (int)u;
               }
             }
@@ -343,9 +343,9 @@ licensed under the Unlicense: https://unlicense.org/
               int a = this.data[i];
               u = (a - other.data[i]) - borrow;
               borrow = ((((a >> 31) == (u >> 31)) ? ((a & Integer.MAX_VALUE) <
-                      (u & Integer.MAX_VALUE)) :
-                    ((a >> 31) == 0)) || (a == u && other.data[i] !=
-                    0)) ? 1 : 0;
+                (u & Integer.MAX_VALUE)) :
+                ((a >> 31) == 0)) || (a == u && other.data[i] !=
+                  0)) ? 1 : 0;
               this.data[i] = (int)u;
             }
             if (borrow != 0) {
@@ -354,8 +354,8 @@ licensed under the Unlicense: https://unlicense.org/
                 int b = i >= other.wordCount ? 0 : other.data[i];
                 u = (a - b) - borrow;
                 borrow = ((((a >> 31) == (u >> 31)) ? ((a & Integer.MAX_VALUE) <
-                        (u & Integer.MAX_VALUE)) :
-                      ((a >> 31) == 0)) || (a == u && b != 0)) ? 1 : 0;
+                  (u & Integer.MAX_VALUE)) :
+                  ((a >> 31) == 0)) || (a == u && b != 0)) ? 1 : 0;
                 this.data[i] = (int)u;
               }
             }
@@ -410,8 +410,8 @@ licensed under the Unlicense: https://unlicense.org/
               int a = this.data[i];
               u = (a + augend) + carry;
               carry = ((((u >> 31) == (a >> 31)) ? ((u & Integer.MAX_VALUE) < (a &
-                        Integer.MAX_VALUE)) :
-                    ((u >> 31) == 0)) || (u == a && augend != 0)) ? 1 : 0;
+                Integer.MAX_VALUE)) :
+                ((u >> 31) == 0)) || (u == a && augend != 0)) ? 1 : 0;
               this.data[i] = u;
               if (carry == 0) {
                 return this;
@@ -478,7 +478,7 @@ licensed under the Unlicense: https://unlicense.org/
 
     static FastInteger FromInt64(long longVal) {
       return (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) ? new
-FastInteger((int)longVal) : FromBig(EInteger.FromInt64(longVal));
+        FastInteger((int)longVal) : FromBig(EInteger.FromInt64(longVal));
     }
 
     static FastInteger FromBig(EInteger bigintVal) {
@@ -486,7 +486,7 @@ FastInteger((int)longVal) : FromBig(EInteger.FromInt64(longVal));
         return new FastInteger(bigintVal.ToInt32Unchecked());
       }
       if (bigintVal.signum() > 0 && bigintVal.GetUnsignedBitLengthAsInt64() <
-2048) {
+        2048) {
         // Limit bit length because of the overhead of copying
         // to a mutable number
         FastInteger fi = new FastInteger(0);
@@ -509,20 +509,22 @@ FastInteger((int)longVal) : FromBig(EInteger.FromInt64(longVal));
           return this.mnum.ToInt32();
         case 2:
           return this.largeValue.ToInt32Checked();
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
     public int compareTo(EInteger ei) {
-switch (this.integerMode) {
- case 0:
-   return -ei.compareTo(this.smallValue);
- case 1:
-   return this.ToEInteger().compareTo(ei);
- case 2:
-   return this.largeValue.compareTo(ei);
- default: throw new IllegalStateException();
-}
+      switch (this.integerMode) {
+        case 0:
+          return -ei.compareTo(this.smallValue);
+        case 1:
+          return this.ToEInteger().compareTo(ei);
+        case 2:
+          return this.largeValue.compareTo(ei);
+        default:
+          throw new IllegalStateException();
+      }
     }
 
     public int compareTo(FastInteger val) {
@@ -530,7 +532,7 @@ switch (this.integerMode) {
         case (0 << 2) | 0: {
           int vsv = val.smallValue;
           return (this.smallValue == vsv) ? 0 : (this.smallValue < vsv ? -1 :
-              1);
+            1);
         }
         case (0 << 2) | 1:
           return -val.mnum.CompareToInt(this.smallValue);
@@ -546,7 +548,8 @@ switch (this.integerMode) {
         case (2 << 2) | 1:
         case (2 << 2) | 2:
           return this.largeValue.compareTo(val.ToEInteger());
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
@@ -568,7 +571,7 @@ switch (this.integerMode) {
 
     static int[] GetLastWords(EInteger bigint, int numWords32Bit) {
       return MutableNumber.FromEInteger(bigint).GetLastWordsInternal(
-  numWords32Bit);
+        numWords32Bit);
     }
 
     FastInteger SetInt(int val) {
@@ -622,7 +625,8 @@ switch (this.integerMode) {
           case 2:
             this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
             break;
-          default: throw new IllegalStateException();
+          default:
+            throw new IllegalStateException();
         }
       }
       return this;
@@ -640,7 +644,7 @@ switch (this.integerMode) {
             this.integerMode = 1;
             this.mnum =
               MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
-            } else {
+          } else {
             this.smallValue = -this.smallValue;
           }
           break;
@@ -687,10 +691,10 @@ switch (this.integerMode) {
           break;
         case 1:
           if (val.integerMode == 1 && this.mnum.compareTo(val.mnum) >= 0 &&
-              val.mnum.CompareToInt(0) >= 0) {
+            val.mnum.CompareToInt(0) >= 0) {
             this.mnum.Subtract(val.mnum);
           } else if (val.integerMode == 0 && val.smallValue >= 0 &&
-              this.mnum.CompareToInt(val.smallValue) >= 0) {
+            this.mnum.CompareToInt(val.smallValue) >= 0) {
             this.mnum.SubtractInt(val.smallValue);
           } else {
             this.integerMode = 2;
@@ -703,7 +707,8 @@ switch (this.integerMode) {
           valValue = val.ToEInteger();
           this.largeValue = this.largeValue.Subtract(valValue);
           break;
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
       return this;
     }
@@ -790,9 +795,9 @@ switch (this.integerMode) {
         case 0:
           if (val.integerMode == 0) {
             if ((this.smallValue < 0 && (int)val.smallValue < Integer.MIN_VALUE
-                - this.smallValue) ||
+              - this.smallValue) ||
               (this.smallValue > 0 && (int)val.smallValue > Integer.MAX_VALUE
-                - this.smallValue)) {
+              - this.smallValue)) {
               // would overflow
               if (val.smallValue >= 0) {
                 this.integerMode = 1;
@@ -827,7 +832,8 @@ switch (this.integerMode) {
           valValue = val.ToEInteger();
           this.largeValue = this.largeValue.Add(valValue);
           break;
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
       return this;
     }
@@ -897,7 +903,7 @@ switch (this.integerMode) {
               this.integerMode = 1;
               this.mnum =
                 MutableNumber.FromEInteger(ValueNegativeInt32MinValue);
-              } else {
+            } else {
               this.smallValue /= divisor;
             }
             break;
@@ -934,7 +940,8 @@ switch (this.integerMode) {
           return ei.ShiftLeft(this.mnum.ToEInteger());
         case 2:
           return ei.ShiftLeft(this.largeValue);
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
@@ -953,13 +960,13 @@ switch (this.integerMode) {
 
     FastInteger AddInt64(long longVal) {
       return longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE ?
-         this.AddInt((int)longVal) : this.AddBig(EInteger.FromInt64(longVal));
+        this.AddInt((int)longVal) : this.AddBig(EInteger.FromInt64(longVal));
     }
 
     FastInteger SubtractInt64(long longVal) {
       return longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE ?
-         this.SubtractInt((int)longVal) :
-this.SubtractBig(EInteger.FromInt64(longVal));
+        this.SubtractInt((int)longVal) :
+        this.SubtractBig(EInteger.FromInt64(longVal));
     }
 
     FastInteger AddInt(int val) {
@@ -967,7 +974,7 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       switch (this.integerMode) {
         case 0:
           if ((this.smallValue < 0 && (int)val < Integer.MIN_VALUE -
-              this.smallValue) || (this.smallValue > 0 && (int)val >
+            this.smallValue) || (this.smallValue > 0 && (int)val >
               Integer.MAX_VALUE - this.smallValue)) {
             // would overflow
             if (val >= 0) {
@@ -997,7 +1004,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
           valValue = EInteger.FromInt32(val);
           this.largeValue = this.largeValue.Add(valValue);
           break;
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
       return this;
     }
@@ -1010,7 +1018,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
           return this.mnum.CanFitInInt32();
         case 2:
           return this.largeValue.CanFitInInt32();
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
@@ -1023,7 +1032,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
         case 2:
           return this.largeValue.CanFitInInt64();
 
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
@@ -1036,7 +1046,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
         case 2:
           return this.largeValue.ToInt64Unchecked();
 
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
@@ -1055,11 +1066,11 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       int count;
       if (value < 100000) {
         if (neg) {
-         chars = new char[6];
-         count = 5;
-       } else {
-         chars = new char[5];
-         count = 4;
+          chars = new char[6];
+          count = 5;
+        } else {
+          chars = new char[5];
+          count = 4;
         }
         while (value > 9) {
           int intdivvalue = ((((value >> 1) * 52429) >> 18) & 16383);
@@ -1157,7 +1168,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
           return this.mnum.ToEInteger().toString();
         case 2:
           return this.largeValue.toString();
-        default: return "";
+        default:
+          return "";
       }
     }
 
@@ -1169,7 +1181,7 @@ this.SubtractBig(EInteger.FromInt64(longVal));
         switch (this.integerMode) {
           case 0:
             return (this.smallValue == 0) ? 0 : ((this.smallValue < 0) ? -1 :
-                1);
+              1);
           case 1:
             return this.mnum.signum();
           case 2:
@@ -1196,12 +1208,13 @@ this.SubtractBig(EInteger.FromInt64(longVal));
       switch (this.integerMode) {
         case 0:
           return (val == this.smallValue) ? 0 : (this.smallValue < val ? -1 :
-              1);
+            1);
         case 1:
           return this.mnum.ToEInteger().compareTo(EInteger.FromInt32(val));
         case 2:
           return this.largeValue.compareTo(EInteger.FromInt32(val));
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
 
@@ -1213,7 +1226,8 @@ this.SubtractBig(EInteger.FromInt64(longVal));
           return this.mnum.ToEInteger();
         case 2:
           return this.largeValue;
-        default: throw new IllegalStateException();
+        default:
+          throw new IllegalStateException();
       }
     }
   }

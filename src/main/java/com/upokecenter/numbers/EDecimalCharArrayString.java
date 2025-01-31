@@ -22,16 +22,18 @@ private EDecimalCharArrayString() {
       if (tmpoffset < 0) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
-"\u0020less" + "\u0020than " + "0");
-}
+        } else {
+          throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+            "\u0020less" + "\u0020than " + "0");
+        }
       }
       if (tmpoffset > chars.length) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
-"\u0020more" + "\u0020than " + chars.length);
-}
+        } else {
+          throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+            "\u0020more" + "\u0020than " + chars.length);
+        }
       }
       if (length <= 0) {
         if (length == 0) {
@@ -44,23 +46,26 @@ private EDecimalCharArrayString() {
         if (!throwException) {
           return null;
         } else {
-  throw new NumberFormatException("length(" + length + ") is less than " + "0");
- }
+          throw new NumberFormatException("length(" + length + ") is less than " +
+            "0");
+        }
       }
       if (length > chars.length) {
         if (!throwException) {
           return null;
         } else {
-  throw new NumberFormatException("length(" + length + ") is more than " +
-chars.length);
- }
+          throw new NumberFormatException("length(" + length + ") is more than " +
+            chars.length);
+        }
       }
       if (chars.length - tmpoffset < length) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("chars's length minus " +
-tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
-}
+        } else {
+          throw new NumberFormatException("chars's length minus " +
+            tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " +
+            length);
+        }
       }
       boolean negative = false;
       int endStr = tmpoffset + length;
@@ -90,12 +95,12 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       int i = tmpoffset;
       if (c < '0' || c > '9') {
         EDecimal ed = ParseSpecialValue(
-          chars,
-          i,
-          endStr,
-          negative,
-          ctx,
-          throwException);
+            chars,
+            i,
+            endStr,
+            negative,
+            ctx,
+            throwException);
         if (ed != null) {
           return ed;
         }
@@ -103,20 +108,20 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
         !ctx.isSimplified()) {
         return ParseOrdinaryNumberLimitedPrecision(
-          chars,
-          i,
-          endStr,
-          negative,
-          ctx,
-          throwException);
+            chars,
+            i,
+            endStr,
+            negative,
+            ctx,
+            throwException);
       } else {
         return ParseOrdinaryNumber(
-          chars,
-          i,
-          endStr,
-          negative,
-          ctx,
-          throwException);
+            chars,
+            i,
+            endStr,
+            negative,
+            ctx,
+            throwException);
       }
     }
 
@@ -136,11 +141,10 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
           (chars[i + 1] == 'N' || chars[i + 1] == 'n') &&
           (chars[i + 2] == 'F' || chars[i + 2] == 'f') &&
           (chars[i + 3] == 'I' || chars[i + 3] == 'i') && (chars[i + 4] ==
-            'N' ||
-            chars[i + 4] == 'n') && (chars[i + 5] == 'I' || chars[i + 5] ==
+          'N' || chars[i + 4] == 'n') && (chars[i + 5] == 'I' || chars[i + 5] ==
             'i') &&
           (chars[i + 6] == 'T' || chars[i + 6] == 't') && (chars[i + 7] ==
-            'Y' || chars[i + 7] == 'y')) {
+          'Y' || chars[i + 7] == 'y')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
             if (!throwException) {
               return null;
@@ -155,7 +159,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       if (i + 3 == endStr) {
         if ((chars[i] == 'I' || chars[i] == 'i') &&
           (chars[i + 1] == 'N' || chars[i + 1] == 'n') && (chars[i + 2] ==
-            'F' || chars[i + 2] == 'f')) {
+          'F' || chars[i + 2] == 'f')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
             if (!throwException) {
               return null;
@@ -170,8 +174,8 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       if (i + 3 <= endStr) {
         // Quiet NaN
         if ((chars[i] == 'N' || chars[i] == 'n') && (chars[i + 1] == 'A' ||
-            chars[i +
-              1] == 'a') && (chars[i + 2] == 'N' || chars[i + 2] == 'n')) {
+          chars[i +
+            1] == 'a') && (chars[i + 2] == 'N' || chars[i + 2] == 'n')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
             if (!throwException) {
               return null;
@@ -183,9 +187,9 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
             BigNumberFlags.FlagQuietNaN;
           if (i + 3 == endStr) {
             return (!negative) ? EDecimal.NaN : new EDecimal(
-                FastIntegerFixed.Zero,
-                FastIntegerFixed.Zero,
-                (byte)flags2);
+              FastIntegerFixed.Zero,
+              FastIntegerFixed.Zero,
+              (byte)flags2);
           }
           i += 3;
           FastInteger digitCount = new FastInteger(0);
@@ -242,8 +246,8 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       if (i + 4 <= endStr) {
         // Signaling NaN
         if ((chars[i] == 'S' || chars[i] == 's') && (chars[i + 1] == 'N' ||
-            chars[i +
-              1] == 'n') && (chars[i + 2] == 'A' || chars[i + 2] == 'a') &&
+          chars[i +
+            1] == 'n') && (chars[i + 2] == 'A' || chars[i + 2] == 'a') &&
           (chars[i + 3] == 'N' || chars[i + 3] == 'n')) {
           if (ctx != null && ctx.isSimplified() && i < endStr) {
             if (!throwException) {
@@ -362,7 +366,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
           haveDigits = true;
           haveNonzeroDigit |= thisdigit != 0;
           if (beyondMax || (precisionPlusTwo.compareTo(decimalPrec) < 0 &&
-              mantissaLong == Long.MAX_VALUE)) {
+            mantissaLong == Long.MAX_VALUE)) {
             // Well beyond maximum precision, significand is
             // max or bigger
             beyondMax = true;
@@ -387,7 +391,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
             digitEnd = i + 1;
           }
           if (mantissaLong < 922337203685477580L ||
-               (mantissaLong == 922337203685477580L && thisdigit <= 7)) {
+            (mantissaLong == 922337203685477580L && thisdigit <= 7)) {
             mantissaLong *= 10;
             mantissaLong += thisdigit;
           } else {
@@ -589,7 +593,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
           // String portion is a single digit
           int si = (int)(tch - '0');
           return negative ? ((si == 0) ? EDecimal.NegativeZero :
-              EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
+            EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
         }
       }
       digitStart = i;
@@ -830,7 +834,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       FastIntegerFixed fastIntScale;
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
-          newScaleInt) : FastIntegerFixed.FromBig(newScale);
+        newScaleInt) : FastIntegerFixed.FromBig(newScale);
       if (mant == null) {
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);
       } else if (mant.CanFitInInt32()) {
@@ -855,11 +859,11 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       boolean throwException) {
       if (ctx == null) {
         return ParseOrdinaryNumberNoContext(
-          chars,
-          i,
-          endStr,
-          negative,
-          throwException);
+            chars,
+            i,
+            endStr,
+            negative,
+            throwException);
       }
       // NOTE: Negative sign at beginning was omitted
       // from the sequence portion
@@ -879,7 +883,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
           EDecimal cret;
           int si = (int)(tch - '0');
           cret = negative ? ((si == 0) ? EDecimal.NegativeZero :
-              EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
+            EDecimal.FromCache(-si)) : EDecimal.FromCache(si);
           if (ctx != null) {
             cret = EDecimal.GetMathValue(ctx).RoundAfterConversion(cret, ctx);
           }
@@ -947,7 +951,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
               if (thisdigit >= 1 && thisdigit < 5) {
                 ignoreNextDigit = true;
               } else if (thisdigit > 5 || (thisdigit == 5 &&
-                  ctx.getRounding() == ERounding.HalfUp)) {
+                ctx.getRounding() == ERounding.HalfUp)) {
                 roundHalf = false;
                 roundUp = true;
                 ignoreNextDigit = true;
@@ -1034,12 +1038,12 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
         realDecimalEnd = i;
       }
       if (zerorun > 0 && lastdigit == 0 && (ctx == null ||
-          !ctx.getHasFlagsOrTraps())) {
+        !ctx.getHasFlagsOrTraps())) {
         decimalPrec -= zerorun;
         int nondec = 0;
         // NOTE: This check is apparently needed for correctness
         if (ctx == null || (!ctx.getHasMaxPrecision() ||
-            decimalPrec - ctx.getPrecision().ToInt32Checked() > zerorun)) {
+          decimalPrec - ctx.getPrecision().ToInt32Checked() > zerorun)) {
           if (haveDecimalPoint) {
             int decdigits = decimalDigitEnd - decimalDigitStart;
             nondec = Math.min(decdigits, zerorun);
@@ -1185,7 +1189,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
         }
       }
       if (ctx != null && (mantInt > MaxSafeInt || (haveExponent &&
-            expInt > MaxSafeInt)) && ctx.getHasExponentRange()) {
+        expInt > MaxSafeInt)) && ctx.getHasExponentRange()) {
         EInteger ns;
         if (expInt <= MaxSafeInt && ctx != null) {
           ns = (newScale == null) ? (EInteger.FromInt32(newScaleInt)) : newScale;
@@ -1210,7 +1214,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
             decimalPrec,
             ns);
         if (mantInt == 0 && (expwithin == 1 || expwithin == 2 ||
-            expwithin == 3)) {
+          expwithin == 3)) {
           // Significand is zero
           ret = new EDecimal(
             FastIntegerFixed.FromInt32(0),
@@ -1319,7 +1323,7 @@ tmpoffset + "(" + (chars.length - tmpoffset) + ") is less than " + length);
       FastIntegerFixed fastIntScale;
       FastIntegerFixed fastIntMant;
       fastIntScale = (newScale == null) ? FastIntegerFixed.FromInt32(
-          newScaleInt) : FastIntegerFixed.FromBig(newScale);
+        newScaleInt) : FastIntegerFixed.FromBig(newScale);
       // System.out.println("fim="+ Chop(mant) + ", exp=" + fastIntScale);
       if (mant == null) {
         fastIntMant = FastIntegerFixed.FromInt32(mantInt);

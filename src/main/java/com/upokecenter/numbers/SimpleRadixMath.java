@@ -77,7 +77,8 @@ licensed under the Unlicense: https://unlicense.org/
           if ((ctxSrc.getFlags() & EContext.FlagSubnormal) != 0) {
             // Treat subnormal numbers as underflows
             ctxDest.setFlags(ctxDest.getFlags()|(EContext.FlagUnderflow |
-EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
+              EContext.FlagSubnormal | EContext.FlagInexact |
+              EContext.FlagRounded));
           }
         }
       }
@@ -87,9 +88,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       EInteger mant = this.GetHelper().GetMantissa(thisValue).Abs();
       if (mant.isZero()) {
         return afterQuantize ? this.GetHelper().CreateNewWithFlags(
-            mant,
-            this.GetHelper().GetExponent(thisValue),
-            0) : this.wrapper.RoundToPrecision(
+          mant,
+          this.GetHelper().GetExponent(thisValue),
+          0) : this.wrapper.RoundToPrecision(
             this.GetHelper().ValueOf(0),
             ctxDest);
       }
@@ -122,16 +123,16 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
         if (afterDivision) {
           int radix = this.GetHelper().GetRadix();
           mant = NumberUtility.ReduceTrailingZeros(
-            mant,
-            fastExp,
-            radix,
-            null,
-            null,
-            null);
-          thisValue = this.GetHelper().CreateNewWithFlags(
               mant,
-              fastExp.ToEInteger(),
-              thisFlags);
+              fastExp,
+              radix,
+              null,
+              null,
+              null);
+          thisValue = this.GetHelper().CreateNewWithFlags(
+            mant,
+            fastExp.ToEInteger(),
+            thisFlags);
         }
       } else if (afterDivision && exp.signum() < 0) {
         FastInteger fastExp = FastInteger.FromBig(exp);
@@ -139,9 +140,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
         mant = NumberUtility.ReduceTrailingZeros(
             mant, fastExp, radix, null, null, new FastInteger(0));
         thisValue = this.GetHelper().CreateNewWithFlags(
-            mant,
-            fastExp.ToEInteger(),
-            thisFlags);
+          mant,
+          fastExp.ToEInteger(),
+          thisFlags);
       }
       return thisValue;
     }
@@ -151,8 +152,8 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       boolean mantChanged = false;
       if (!mant.isZero() && ctx != null && ctx.getHasMaxPrecision()) {
         EInteger limit = this.GetHelper().MultiplyByRadixPower(
-            EInteger.FromInt32(1),
-            FastInteger.FromBig(ctx.getPrecision()));
+          EInteger.FromInt32(1),
+          FastInteger.FromBig(ctx.getPrecision()));
         if (mant.compareTo(limit) >= 0) {
           mant = mant.Remainder(limit);
           mantChanged = true;
@@ -180,9 +181,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       // Check this value then the other value for quiet NaN
       return ((thisFlags & BigNumberFlags.FlagQuietNaN) != 0) ?
         this.ReturnQuietNaN(thisValue, ctx) : (((otherFlags &
-              BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
-                other,
-                ctx) : null);
+        BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
+          other,
+          ctx) : null);
     }
 
     private T CheckNotANumber3(
@@ -206,11 +207,11 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       // Check this value then the other value for quiet NaN
       return ((thisFlags & BigNumberFlags.FlagQuietNaN) != 0) ?
         this.ReturnQuietNaN(thisValue, ctx) : (((otherFlags &
-              BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
-                other,
-                ctx) :
-          (((other2Flags & BigNumberFlags.FlagQuietNaN) !=
-              0) ? this.ReturnQuietNaN(other, ctx) : null));
+        BigNumberFlags.FlagQuietNaN) != 0) ? this.ReturnQuietNaN(
+          other,
+          ctx) :
+        (((other2Flags & BigNumberFlags.FlagQuietNaN) !=
+        0) ? this.ReturnQuietNaN(other, ctx) : null));
     }
 
     private T SignalingNaNInvalid(T value, EContext ctx) {
@@ -244,9 +245,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       thisValue = this.PreRound(thisValue, ctx2);
       divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.DivideToIntegerNaturalScale(
-        thisValue,
-        divisor,
-        ctx2);
+          thisValue,
+          divisor,
+          ctx2);
       return this.PostProcessAfterDivision(thisValue, ctx, ctx2);
     }
 
@@ -262,9 +263,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       thisValue = this.PreRound(thisValue, ctx2);
       divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.DivideToIntegerZeroScale(
-        thisValue,
-        divisor,
-        ctx2);
+          thisValue,
+          divisor,
+          ctx2);
       return this.PostProcessAfterDivision(thisValue, ctx, ctx2);
     }
 
@@ -303,10 +304,10 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       thisValue = this.PreRound(thisValue, ctx2);
       divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.Remainder(
-        thisValue,
-        divisor,
-        ctx2,
-        roundAfterDivide);
+          thisValue,
+          divisor,
+          ctx2,
+          roundAfterDivide);
       return this.PostProcess(thisValue, ctx, ctx2);
     }
 
@@ -433,10 +434,10 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       thisValue = this.PreRound(thisValue, ctx2);
       divisor = this.PreRound(divisor, ctx2);
       thisValue = this.wrapper.DivideToExponent(
-        thisValue,
-        divisor,
-        desiredExponent,
-        ctx2);
+          thisValue,
+          divisor,
+          desiredExponent,
+          ctx2);
       return this.PostProcessAfterDivision(thisValue, ctx, ctx2);
     }
 
@@ -547,10 +548,10 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
         thisValue = this.RoundToPrecision(thisValue, ctx2);
       } else {
         thisValue = !zeroB ? this.wrapper.MultiplyAndAdd(
-          thisValue,
-          multiplicand,
-          augend,
-          ctx2) : this.wrapper.Multiply(thisValue, multiplicand, ctx2);
+            thisValue,
+            multiplicand,
+            augend,
+            ctx2) : this.wrapper.Multiply(thisValue, multiplicand, ctx2);
       }
       return this.PostProcess(thisValue, ctx, ctx2);
     }
@@ -624,9 +625,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       EContext ctx2 = GetContextWithFlags(ctx);
       thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.RoundToExponentSimple(
-        thisValue,
-        expOther,
-        ctx2);
+          thisValue,
+          expOther,
+          ctx2);
       return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
     }
 
@@ -641,9 +642,9 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       EContext ctx2 = GetContextWithFlags(ctx);
       thisValue = this.PreRound(thisValue, ctx2);
       thisValue = this.wrapper.RoundToExponentNoRoundedFlag(
-        thisValue,
-        exponent,
-        ctx);
+          thisValue,
+          exponent,
+          ctx);
       return this.PostProcessAfterQuantize(thisValue, ctx, ctx2);
     }
 
@@ -705,10 +706,10 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       thisValue = this.PreRound(thisValue, ctx);
       otherValue = this.PreRound(otherValue, ctx);
       return this.wrapper.CompareToWithContext(
-        thisValue,
-        otherValue,
-        treatQuietNansAsSignaling,
-        ctx);
+          thisValue,
+          otherValue,
+          treatQuietNansAsSignaling,
+          ctx);
     }
 
     public int compareTo(T thisValue, T otherValue) {
@@ -728,7 +729,7 @@ EContext.FlagSubnormal | EContext.FlagInexact | EContext.FlagRounded));
       }
       if (this.GetHelper().GetSign(thisValue) == 0) {
         return this.wrapper.RoundToPrecision(this.GetHelper().ValueOf(0),
-  ctx);
+          ctx);
       }
       EContext ctx2 = GetContextWithFlags(ctx);
       thisValue = this.wrapper.RoundToPrecision(thisValue, ctx2);

@@ -15,52 +15,57 @@ private EIntegerCharArrayString() {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("radix(" + radix + ") is less than 2");
- }
+          throw new IllegalArgumentException("radix(" + radix + ") is less than 2");
+        }
       }
       if (radix > 36) {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("radix(" + radix + ") is more than 36");
- }
+          throw new IllegalArgumentException("radix(" + radix + ") is more than 36");
+        }
       }
       if (index < 0) {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("index(" + index + ") is less than " + "0");
- }
+          throw new IllegalArgumentException("index(" + index + ") is less than " +
+            "0");
+        }
       }
       if (index > cs.length) {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("index(" + index + ") is more than " + cs.length);
- }
+          throw new IllegalArgumentException("index(" + index + ") is more than " +
+            cs.length);
+        }
       }
       if (endIndex < 0) {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("endIndex(" + endIndex + ") is less than 0");
- }
+          throw new IllegalArgumentException("endIndex(" + endIndex + ") is less" +
+            "\u0020 than 0");
+        }
       }
       if (endIndex > cs.length) {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("endIndex(" + endIndex + ") is more than " +
-cs.length);
- }
+          throw new IllegalArgumentException("endIndex(" + endIndex + ") is more" +
+            "\u0020 than " +
+            cs.length);
+        }
       }
       if (endIndex < index) {
         if (!throwException) {
           return null;
         } else {
-  throw new IllegalArgumentException("endIndex(" + endIndex + ") is less than " +
-index);
- }
+          throw new IllegalArgumentException("endIndex(" + endIndex + ") is less" +
+            "\u0020 than " +
+            index);
+        }
       }
       if (index == endIndex) {
         if (!throwException) {
@@ -174,9 +179,9 @@ index);
         }
         int count = EInteger.CountWords(bigint);
         return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-            count,
-            bigint,
-            negative);
+          count,
+          bigint,
+          negative);
       } else if (radix == 2) {
         // Special case for binary radix
         int leftover = effectiveLength & 15;
@@ -229,17 +234,17 @@ index);
         }
         int count = EInteger.CountWords(bigint);
         return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-            count,
-            bigint,
-            negative);
+          count,
+          bigint,
+          negative);
       } else {
         return FromRadixSubstringGeneral(
-          cs,
-          radix,
-          index,
-          endIndex,
-          negative,
-          throwException);
+            cs,
+            radix,
+            index,
+            endIndex,
+            negative,
+            throwException);
       }
     }
 
@@ -253,20 +258,20 @@ index);
       if (endIndex - index > 72) {
         int midIndex = index + ((endIndex - index) / 2);
         EInteger eia = FromRadixSubstringGeneral(
-          cs,
-          radix,
-          index,
-          midIndex,
-          false,
-          throwException);
+            cs,
+            radix,
+            index,
+            midIndex,
+            false,
+            throwException);
         // System.out.println("eia="+eia);
         EInteger eib = FromRadixSubstringGeneral(
-          cs,
-          radix,
-          midIndex,
-          endIndex,
-          false,
-          throwException);
+            cs,
+            radix,
+            midIndex,
+            endIndex,
+            false,
+            throwException);
         // System.out.println("eib="+eib);
         EInteger mult = null;
         int intpow = endIndex - midIndex;
@@ -290,12 +295,12 @@ index);
         return eia;
       } else {
         return FromRadixSubstringInner(
-          cs,
-          radix,
-          index,
-          endIndex,
-          negative,
-          throwException);
+            cs,
+            radix,
+            index,
+            endIndex,
+            negative,
+            throwException);
       }
     }
 
@@ -406,7 +411,7 @@ index);
             for (int j = 0; j < bn; ++j) {
               int p;
               p = ((((int)bigint[j]) & ShortMask) *
-                  10000);
+                10000);
               int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
@@ -442,10 +447,10 @@ index);
             if (d <= overf) {
               bigint[0] = ((short)(d + digit));
             } else if (EInteger.IncrementWords(
-                bigint,
-                0,
-                bigint.length,
-                (short)digit) != 0) {
+              bigint,
+              0,
+              bigint.length,
+              (short)digit) != 0) {
               bigint = EInteger.GrowForCarry(bigint, (short)1);
             }
           }
@@ -472,9 +477,9 @@ index);
           } else {
             if (haveSmallInt) {
               bigint[0] = ((short)(smallInt &
-                    ShortMask));
+                ShortMask));
               bigint[1] = ((short)((smallInt >> 16) &
-                    ShortMask));
+                ShortMask));
               haveSmallInt = false;
             }
             // Multiply by the radix
@@ -483,7 +488,7 @@ index);
             for (int j = 0; j < n; ++j) {
               int p;
               p = ((((int)bigint[j]) & ShortMask) *
-                  radix);
+                radix);
               int p2 = ((int)carry) & ShortMask;
               p = (p + p2);
               bigint[j] = ((short)p);
@@ -498,10 +503,10 @@ index);
               if (d <= maxShortPlusOneMinusRadix) {
                 bigint[0] = ((short)(d + digit));
               } else if (EInteger.IncrementWords(
-                  bigint,
-                  0,
-                  bigint.length,
-                  (short)digit) != 0) {
+                bigint,
+                0,
+                bigint.length,
+                (short)digit) != 0) {
                 bigint = EInteger.GrowForCarry(bigint, (short)1);
               }
             }
@@ -510,13 +515,13 @@ index);
         if (haveSmallInt) {
           bigint[0] = ((short)(smallInt & ShortMask));
           bigint[1] = ((short)((smallInt >> 16) &
-                ShortMask));
+            ShortMask));
         }
       }
       int count = EInteger.CountWords(bigint);
       return (count == 0) ? EInteger.FromInt32(0) : new EInteger(
-          count,
-          bigint,
-          negative);
+        count,
+        bigint,
+        negative);
     }
   }

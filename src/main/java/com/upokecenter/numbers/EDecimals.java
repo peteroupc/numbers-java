@@ -252,7 +252,7 @@ private EDecimals() {
       if (ed.isFinite() && ec != null && !ed.isZero() && ec.getHasExponentRange()) {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
-              ec.getEMin()) < 0;
+            ec.getEMin()) < 0;
         } else {
           return ed.getExponent().compareTo(ec.getEMin()) < 0;
         }
@@ -540,7 +540,7 @@ private EDecimals() {
      */
     public static int CompareTotal(EDecimal ed, EDecimal other, EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
-          ed.CompareToTotal(other, ec));
+        ed.CompareToTotal(other, ec));
     }
 
     /**
@@ -571,7 +571,7 @@ private EDecimals() {
       EDecimal other,
       EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
-          ed.CompareToTotalMagnitude(other, ec));
+        ed.CompareToTotalMagnitude(other, ec));
     }
 
     /**
@@ -674,7 +674,7 @@ private EDecimals() {
         return ed1.getExponent().equals(ed2.getExponent());
       } else {
         return (ed1.IsNaN() && ed2.IsNaN()) || (ed1.IsInfinity() &&
-            ed2.IsInfinity());
+          ed2.IsInfinity());
       }
     }
 
@@ -700,10 +700,10 @@ private EDecimals() {
       }
       if (ed.IsSignalingNaN()) {
         return EDecimal.CreateNaN(
-          ed.getUnsignedMantissa(),
-          true,
-          ed.isNegative(),
-          ec);
+            ed.getUnsignedMantissa(),
+            true,
+            ed.isNegative(),
+            ec);
       }
       if (ed.isFinite()) {
         if (ed.isZero()) {
@@ -834,7 +834,7 @@ private EDecimals() {
         smaller[i] &= bigger[i];
       }
       return EDecimal.FromEInteger(ToLogical(smaller,
-            10)).RoundToPrecision(ec);
+        10)).RoundToPrecision(ec);
     }
 
     /**
@@ -873,7 +873,7 @@ private EDecimals() {
         bigger[i] ^= smaller[i];
       }
       return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(
-  ec);
+        ec);
     }
 
     /**
@@ -909,7 +909,7 @@ private EDecimals() {
         bigger[i] ^= smaller[i];
       }
       return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(
-  ec);
+        ec);
     }
 
     /**
@@ -946,7 +946,7 @@ private EDecimals() {
         bigger[i] |= smaller[i];
       }
       return EDecimal.FromEInteger(ToLogical(bigger, 10)).RoundToPrecision(
-  ec);
+        ec);
     }
 
     static EInteger ToLogical(byte[] bytes, int iradix) {
@@ -1012,9 +1012,9 @@ private EDecimals() {
       }
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
           ed.getMantissa().signum() < 0) ? null : FromLogical(
-            ed.getUnsignedMantissa(),
-            ec,
-            iradix);
+          ed.getUnsignedMantissa(),
+          ec,
+          iradix);
     }
 
     static byte[] FromLogical(EFloat ed, EContext ec, int iradix) {
@@ -1025,8 +1025,8 @@ private EDecimals() {
       // IsPrecisionInBits here
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
           ed.getMantissa().signum() < 0) ? null : FromLogical(
-            ed.getUnsignedMantissa(),
-            ec,
-            iradix);
+          ed.getUnsignedMantissa(),
+          ec,
+          iradix);
     }
   }

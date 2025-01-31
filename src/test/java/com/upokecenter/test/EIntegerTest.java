@@ -416,42 +416,42 @@ import com.upokecenter.numbers.*;
 
     @Test
     public void TestAnd() {
-       EInteger eiand = EInteger.FromInt32(1).ShiftLeft(1).Subtract(1);
-       EInteger ei1 = EInteger.FromInt32(102).And(eiand);
-       Assert.assertEquals(EInteger.FromInt32(0), ei1);
+      EInteger eiand = EInteger.FromInt32(1).ShiftLeft(1).Subtract(1);
+      EInteger ei1 = EInteger.FromInt32(102).And(eiand);
+      Assert.assertEquals(EInteger.FromInt32(0), ei1);
     }
 
     @Test
     public void TestLowBitsSpecific1() {
-       EInteger ei1 = EInteger.FromInt32(123).LowBits(1);
-       Assert.assertEquals(EInteger.FromInt32(1), ei1);
+      EInteger ei1 = EInteger.FromInt32(123).LowBits(1);
+      Assert.assertEquals(EInteger.FromInt32(1), ei1);
     }
 
     @Test
     public void TestLowBits() {
-       RandomGenerator r = new RandomGenerator();
-       int[] ints = { 0, 1, 3, 5, 16, 32, 33, 37, 100, 1000, 10000, 100000 };
-       EInteger eia = EInteger.FromInt32(1).ShiftLeft(100);
-       EInteger eib = EInteger.FromInt32(1).ShiftLeft(1000);
-       EInteger eic = EInteger.FromInt32(1).ShiftLeft(10000);
-       for (int i = 0; i < 10000; ++i) {
-          EInteger ei = RandomObjects.RandomEInteger(r).Abs();
-          for (int j = 0; j < ints.length; ++j) {
-             EInteger ei1 = ei.And(EInteger.FromInt32(1).ShiftLeft(ints[j]).Subtract(1));
-             EInteger ei2 = ei.LowBits(ints[j]);
-             EInteger ei3 = ei.LowBits(EInteger.FromInt32(ints[j]));
-             EInteger ei4 = ei.LowBits((long)ints[j]);
-             LowBitsAssertEqual(ei1, ei2, ei, ints[j], "ei2");
-             LowBitsAssertEqual(ei1, ei3, ei, ints[j], "ei3");
-             LowBitsAssertEqual(ei1, ei4, ei, ints[j], "ei4");
-             ei1 = ei.LowBits(eia);
-             LowBitsAssertEqual(ei, ei1, ei, ints[j], "eia");
-             ei1 = ei.LowBits(eib);
-             LowBitsAssertEqual(ei, ei1, ei, ints[j], "eib");
-             ei1 = ei.LowBits(eic);
-             LowBitsAssertEqual(ei, ei1, ei, ints[j], "eic");
-          }
-       }
+      RandomGenerator r = new RandomGenerator();
+      int[] ints = { 0, 1, 3, 5, 16, 32, 33, 37, 100, 1000, 10000, 100000 };
+      EInteger eia = EInteger.FromInt32(1).ShiftLeft(100);
+      EInteger eib = EInteger.FromInt32(1).ShiftLeft(1000);
+      EInteger eic = EInteger.FromInt32(1).ShiftLeft(10000);
+      for (int i = 0; i < 10000; ++i) {
+        EInteger ei = RandomObjects.RandomEInteger(r).Abs();
+        for (int j = 0; j < ints.length; ++j) {
+          EInteger ei1 = ei.And(EInteger.FromInt32(1).ShiftLeft(ints[j]).Subtract(1));
+          EInteger ei2 = ei.LowBits(ints[j]);
+          EInteger ei3 = ei.LowBits(EInteger.FromInt32(ints[j]));
+          EInteger ei4 = ei.LowBits((long)ints[j]);
+          LowBitsAssertEqual(ei1, ei2, ei, ints[j], "ei2");
+          LowBitsAssertEqual(ei1, ei3, ei, ints[j], "ei3");
+          LowBitsAssertEqual(ei1, ei4, ei, ints[j], "ei4");
+          ei1 = ei.LowBits(eia);
+          LowBitsAssertEqual(ei, ei1, ei, ints[j], "eia");
+          ei1 = ei.LowBits(eib);
+          LowBitsAssertEqual(ei, ei1, ei, ints[j], "eib");
+          ei1 = ei.LowBits(eic);
+          LowBitsAssertEqual(ei, ei1, ei, ints[j], "eic");
+        }
+      }
     }
 
     @Test
@@ -831,7 +831,7 @@ import com.upokecenter.numbers.*;
       }
       try {
         EInteger.FromInt32(1).ModPow(EInteger.FromString("0"), EInteger.FromString(
-            "0"));
+          "0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -851,7 +851,7 @@ import com.upokecenter.numbers.*;
       }
       try {
         EInteger.FromInt32(1).ModPow(EInteger.FromString("1"), EInteger.FromString(
-            "0"));
+          "0"));
         Assert.fail("Should have failed");
       } catch (IllegalArgumentException ex) {
         // NOTE: Intentionally empty
@@ -1178,19 +1178,19 @@ import com.upokecenter.numbers.*;
       {
         Object objectTemp =
 
-  EInteger.FromString("9461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
+          EInteger.FromString("9461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
         Object objectTemp2 =
 
-  EInteger.FromString("9461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
+          EInteger.FromString("9461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       {
         Object objectTemp =
 
-  EInteger.FromString("9461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
+          EInteger.FromString("9461540475412139260145553670698466186015902447450593622262751970123371581303298477485466592231565609");
         Object objectTemp2 =
 
-  EInteger.FromString("1809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474");
+          EInteger.FromString("1809476049361792727571247490438259768858020288404502743164967883090669271207537395819291033916115474");
         if ((objectTemp).equals(objectTemp2)) {
  Assert.fail((objectTemp)+" may not be equal to "+(objectTemp2));
 }
@@ -1375,17 +1375,16 @@ import com.upokecenter.numbers.*;
       }
       if (littleEndian) {
         if (!(length == 1 || (
-              !(bytes[offset + length - 1] == 0x00 && ((int)bytes[offset +
-                length - 2] & 0x80) == 0) && !(bytes[offset + length - 1] ==
-                (byte)0xff &&
-                ((int)bytes[offset + length - 2] & 0x80) != 0)))) {
+          !(bytes[offset + length - 1] == 0x00 && ((int)bytes[offset +
+          length - 2] & 0x80) == 0) && !(bytes[offset + length - 1] ==
+            (byte)0xff && ((int)bytes[offset + length - 2] & 0x80) != 0)))) {
           return false;
         }
       } else {
         if (!(length == 1 || (
-              !(bytes[offset] == 0x00 && ((int)bytes[offset + 1] & 0x80) ==
-                0) && !(bytes[offset] == (byte)0xff && ((int)bytes[offset + 1] &
-                  0x80) != 0)))) {
+          !(bytes[offset] == 0x00 && ((int)bytes[offset + 1] & 0x80) ==
+          0) && !(bytes[offset] == (byte)0xff && ((int)bytes[offset + 1] &
+          0x80) != 0)))) {
           return false;
         }
       }
@@ -1752,8 +1751,8 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestFromStringInnerMinus() {
       String str = TestCommon.Repeat("1", 1000) + "-" + TestCommon.Repeat(
-          "2",
-          999);
+        "2",
+        999);
       try {
         EInteger.FromString(str);
         Assert.fail("Should have failed");
@@ -1784,8 +1783,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       str = "-" + TestCommon.Repeat("1", 1000) + "-" + TestCommon.Repeat(
-          "2",
-          999);
+        "2",
+        999);
       try {
         EInteger.FromString(str);
         Assert.fail("Should have failed");
@@ -1796,8 +1795,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       str = "-" + TestCommon.Repeat("1", 999) + "-" + TestCommon.Repeat(
-          "2",
-          1000);
+        "2",
+        1000);
       try {
         EInteger.FromString(str);
         Assert.fail("Should have failed");
@@ -1808,8 +1807,8 @@ import com.upokecenter.numbers.*;
         throw new IllegalStateException("", ex);
       }
       str = "-" + TestCommon.Repeat("1", 1001) + "-" + TestCommon.Repeat(
-          "2",
-          998);
+        "2",
+        998);
       try {
         EInteger.FromString(str);
         Assert.fail("Should have failed");
@@ -1950,7 +1949,7 @@ import com.upokecenter.numbers.*;
     public void TestGcdHang() {
       {
         String stringTemp = EInteger.FromString("781631509928000000").Gcd(
-            EInteger.FromString("1000000")).toString();
+          EInteger.FromString("1000000")).toString();
         Assert.assertEquals(
           "1000000",
           stringTemp);
@@ -1970,14 +1969,14 @@ import com.upokecenter.numbers.*;
       }
       {
         String stringTemp = EInteger.FromInt32(0).Gcd(EInteger.FromString(
-              "244")).toString();
+          "244")).toString();
         Assert.assertEquals(
           "244",
           stringTemp);
       }
       {
         String stringTemp = EInteger.FromInt32(0).Gcd(EInteger.FromString(
-              "-244")).toString();
+          "-244")).toString();
         Assert.assertEquals(
           "244",
           stringTemp);
@@ -2005,7 +2004,7 @@ import com.upokecenter.numbers.*;
       }
       {
         String stringTemp = EInteger.FromInt32(1).Gcd(EInteger.FromString(
-              "-244")).toString();
+          "-244")).toString();
         Assert.assertEquals(
           "1",
           stringTemp);
@@ -2026,22 +2025,22 @@ import com.upokecenter.numbers.*;
       }
       {
         String stringTemp = EInteger.FromString("15").Gcd(
-            EInteger.FromString(
-              "15")).toString();
+          EInteger.FromString(
+            "15")).toString();
         Assert.assertEquals(
           "15",
           stringTemp);
       }
       {
         String stringTemp = EInteger.FromString("-15").Gcd(
-            EInteger.FromString("15")).toString();
+          EInteger.FromString("15")).toString();
         Assert.assertEquals(
           "15",
           stringTemp);
       }
       {
         String stringTemp = EInteger.FromString("15").Gcd(
-            EInteger.FromString("-15")).toString();
+          EInteger.FromString("-15")).toString();
         Assert.assertEquals(
           "15",
           stringTemp);
@@ -2055,22 +2054,22 @@ import com.upokecenter.numbers.*;
       }
       EInteger ei1 =
 
-  EInteger.FromString("1088692579850251977918382727683876451288883451475551838663907953515213777772897669");
+        EInteger.FromString("1088692579850251977918382727683876451288883451475551838663907953515213777772897669");
       EInteger ei2 =
 
-  EInteger.FromString("734154292316019508508581520803142368704146796235662433292652");
+        EInteger.FromString("734154292316019508508581520803142368704146796235662433292652");
       TestGcdPair(ei1, ei2, EInteger.FromInt32(1));
 
       ei1 =
 
-  EInteger.FromString("390162357953126476870450846332252625209515327296852766");
+        EInteger.FromString("390162357953126476870450846332252625209515327296852766");
       ei2 = EInteger.FromString("854818964073568437308435317723736629914");
       TestGcdPair(ei1, ei2, EInteger.FromInt32(2));
       ei1 = EInteger.FromString("1669589419950395927580");
 
       ei2 =
 
-  EInteger.FromString("1391147381889193092596558363578727285498500460445439101064428207862760");
+        EInteger.FromString("1391147381889193092596558363578727285498500460445439101064428207862760");
       TestGcdPair(ei1, ei2, EInteger.FromInt32(20));
       int prime = 0;
       RandomGenerator rand = new RandomGenerator();
@@ -2181,10 +2180,10 @@ import com.upokecenter.numbers.*;
     public void TestGcdSpecific1() {
       EInteger eia =
 
-  EInteger.FromString("31087445093332925259488531187214798679962746631365434956607825050983640030004626432697");
+        EInteger.FromString("31087445093332925259488531187214798679962746631365434956607825050983640030004626432697");
       EInteger eib =
 
-  EInteger.FromString("634110413245973045752985332739706355633747812352917054306813756224650904");
+        EInteger.FromString("634110413245973045752985332739706355633747812352917054306813756224650904");
       EInteger gcd = EInteger.FromString("1");
       TestGcdPair(eia, eib, gcd);
     }
@@ -2193,10 +2192,10 @@ import com.upokecenter.numbers.*;
     public void TestGcdSpecific2() {
       EInteger eia =
 
-  EInteger.FromString("34919464185156438130737093950000449414901433260046574365653671833127498045928977578356713");
+        EInteger.FromString("34919464185156438130737093950000449414901433260046574365653671833127498045928977578356713");
       EInteger eib =
 
-  EInteger.FromString("164193664625099565521863251759922447177022769597753704347721217067439342602815077739234");
+        EInteger.FromString("164193664625099565521863251759922447177022769597753704347721217067439342602815077739234");
       EInteger gcd = EInteger.FromString("1");
       TestGcdPair(eia, eib, gcd);
     }
@@ -2204,10 +2203,10 @@ import com.upokecenter.numbers.*;
     public void TestGcdSpecific3() {
       EInteger eia =
 
-  EInteger.FromString("103862788645466657156274316837043801135780275578563880187476945864288161266");
+        EInteger.FromString("103862788645466657156274316837043801135780275578563880187476945864288161266");
       EInteger eib =
 
-  EInteger.FromString("49380347741774569630130462581871110923545066914152503189431047757");
+        EInteger.FromString("49380347741774569630130462581871110923545066914152503189431047757");
       EInteger gcd = EInteger.FromString("1");
       TestGcdPair(eia, eib, gcd);
     }
@@ -2215,10 +2214,10 @@ import com.upokecenter.numbers.*;
     public void TestGcdSpecific6() {
       EInteger eia =
 
-  EInteger.FromString("4478588462902174856284550822841587751257736243593417026536878393910594570150960");
+        EInteger.FromString("4478588462902174856284550822841587751257736243593417026536878393910594570150960");
       EInteger eib =
 
-  EInteger.FromString("200436597645961750509884674543137682538095599306199896499547606239076266894278634228");
+        EInteger.FromString("200436597645961750509884674543137682538095599306199896499547606239076266894278634228");
       EInteger gcd = EInteger.FromString("4");
       TestGcdPair(eia, eib, gcd);
     }
@@ -2226,10 +2225,10 @@ import com.upokecenter.numbers.*;
     public void TestGcdSpecific4() {
       EInteger eia =
 
-  EInteger.FromString("479324527105721205395276387652685206399828597662080440776635747462472972671572622295");
+        EInteger.FromString("479324527105721205395276387652685206399828597662080440776635747462472972671572622295");
       EInteger eib =
 
-  EInteger.FromString("838212340549242323846978901107367041041509191230401720028242035196388222327176688904324510590144");
+        EInteger.FromString("838212340549242323846978901107367041041509191230401720028242035196388222327176688904324510590144");
       EInteger gcd = EInteger.FromString("11");
       TestGcdPair(eia, eib, gcd);
     }
@@ -3028,7 +3027,7 @@ import com.upokecenter.numbers.*;
       EInteger ei = EInteger.FromInt32(0xffff);
       for (int i = 1; i < size; ++i) {
         ei = (i % 2 == 0) ? ei.ShiftLeft(16).Add(EInteger.FromInt32(
-              0xffff)) : ei.ShiftLeft(16);
+          0xffff)) : ei.ShiftLeft(16);
       }
       return ei;
     }
@@ -3039,14 +3038,14 @@ import com.upokecenter.numbers.*;
 
       strParam =
 
-  "D28E831580A0A69BD2259283B7E894A5B766C1FC9C93E776AB78E226A66983788A36C8458A1EAB8DA505CBFBCD41F7A4953CF426CCB884CCFF85B189D2759102C0CCF7A3DE909AE486B38A6DEC0B86FBE95DA041D8FEC163D24D95CEECCDBC7DE2FD88A99CF9A25AB3078E4BBFE3A2BBAD61C53CEA68E40BA3D7D66296C6CE66A6E4DC32E1A0F020DAD8820C9A698282EB5ADDC9CFF8F42ED565";
+        "D28E831580A0A69BD2259283B7E894A5B766C1FC9C93E776AB78E226A66983788A36C8458A1EAB8DA505CBFBCD41F7A4953CF426CCB884CCFF85B189D2759102C0CCF7A3DE909AE486B38A6DEC0B86FBE95DA041D8FEC163D24D95CEECCDBC7DE2FD88A99CF9A25AB3078E4BBFE3A2BBAD61C53CEA68E40BA3D7D66296C6CE66A6E4DC32E1A0F020DAD8820C9A698282EB5ADDC9CFF8F42ED565";
       {
         EInteger valueEObjectTemp = EInteger.FromRadixString(
             strParam,
             16);
         strParam =
 
-  "E29BE968D480A9FEE535E95FD35DD081868CDF4ED961B2148530A98AD961D4249920AE57AF49E6E1BB50940FD710E5C598249829FA8886C6A63D853BC52CE8D1D2E8B6EF927DC5AF9D14F3AFA2669EC4DAB7FD88F15BACB79149";
+          "E29BE968D480A9FEE535E95FD35DD081868CDF4ED961B2148530A98AD961D4249920AE57AF49E6E1BB50940FD710E5C598249829FA8886C6A63D853BC52CE8D1D2E8B6EF927DC5AF9D14F3AFA2669EC4DAB7FD88F15BACB79149";
         EInteger valueEObjectTemp2 = EInteger.FromRadixString(
             strParam,
             16);
@@ -3078,20 +3077,20 @@ import com.upokecenter.numbers.*;
         TestMultiplyDivideOne(ei1, ei2);
       }
       EInteger eia = EInteger.FromRadixString(
-        "C66BE66EC212C77883DAFEB9F73C914BF88E9DEB897CB817EBA7DBC7D0ABEB55A164EAFB9C9A856A8532D901FADC85E7EEC28A329670968AE45AEECDC050F12AA34CBF75B0DC81C588CEE8CDE6138704D73E958DF5FEED5E80C4D86BD0C2D60C8DFCFF72B43BBBF2A3B68760DF35E3F1B1588584971CE9EF983D8678D7C8BB84D196C37585FC8B4FC8F88CDCA65B843F8DBAA4F0F324D003B0AAD4EACA04961EBF63936FFF29F459B0A197D79B38B5B8E31C9E88FA67BD97C2F9DBE8B926D06FF80E8D7AB0D5E7D1C0B2E4DED8FA8EA4E96C9597ABB9F801B9CA8F98F4088990AFB58427A57BBDC983B1",
-        16);
+          "C66BE66EC212C77883DAFEB9F73C914BF88E9DEB897CB817EBA7DBC7D0ABEB55A164EAFB9C9A856A8532D901FADC85E7EEC28A329670968AE45AEECDC050F12AA34CBF75B0DC81C588CEE8CDE6138704D73E958DF5FEED5E80C4D86BD0C2D60C8DFCFF72B43BBBF2A3B68760DF35E3F1B1588584971CE9EF983D8678D7C8BB84D196C37585FC8B4FC8F88CDCA65B843F8DBAA4F0F324D003B0AAD4EACA04961EBF63936FFF29F459B0A197D79B38B5B8E31C9E88FA67BD97C2F9DBE8B926D06FF80E8D7AB0D5E7D1C0B2E4DED8FA8EA4E96C9597ABB9F801B9CA8F98F4088990AFB58427A57BBDC983B1",
+          16);
       EInteger eib = EInteger.FromRadixString(
-        "EB7E892CD29F9B4182F58769C12BD885B7D7DE038074F48ACCAA9F6CFB63D6CCF1D4C603C5A08721F2F3F81FD380F847AE37EEC8FCF39C87A351F816E9D4EDF3B6C9AB0A958FC3FEF04BA3B38D4BF005A29A9D83F8B9F850BB36C9568C99CF3FFFDE9977BFD7D62AF597E4E8D483DE5FF323B0C49732EE23CC4EAA0EEF4AF47FE4BCB0D1C081F315CBE2D892DCA8F3E9A3AFA4CAE67082EBBDC9A59AB82D96009BC5CC8492699F89E21CD8A3F6DE8E86",
-        16);
+          "EB7E892CD29F9B4182F58769C12BD885B7D7DE038074F48ACCAA9F6CFB63D6CCF1D4C603C5A08721F2F3F81FD380F847AE37EEC8FCF39C87A351F816E9D4EDF3B6C9AB0A958FC3FEF04BA3B38D4BF005A29A9D83F8B9F850BB36C9568C99CF3FFFDE9977BFD7D62AF597E4E8D483DE5FF323B0C49732EE23CC4EAA0EEF4AF47FE4BCB0D1C081F315CBE2D892DCA8F3E9A3AFA4CAE67082EBBDC9A59AB82D96009BC5CC8492699F89E21CD8A3F6DE8E86",
+          16);
       TestMultiplyDivideOne(eia, eib);
       {
         String str1 =
 
-  "10101000100010101010101000100000101000001010000000000000001000001000001010001010100010100010100000000000101010001000101010000000001000100000101000000000100010100000000010100010000000101010001000101000001000101010100000000010001010001010100010000000101010100000000010100000000010100000100010101010001010100000100000100010100000001010001010101000000000001010000010000010100010100010001010001010001010101000101000001000000000000000000000000010000000101000001000001000000010000010001000101010101000100010100010100000100000101000100010101010100000000000100000101000000000001010101000100000100000001000000000001010101000000010100000100000000010000000001000101010001010001";
+          "10101000100010101010101000100000101000001010000000000000001000001000001010001010100010100010100000000000101010001000101010000000001000100000101000000000100010100000000010100010000000101010001000101000001000101010100000000010001010001010100010000000101010100000000010100000000010100000100010101010001010100000100000100010100000001010001010101000000000001010000010000010100010100010001010001010001010101000101000001000000000000000000000000010000000101000001000001000000010000010001000101010101000100010100010100000100000101000100010101010100000000000100000101000000000001010101000100000100000001000000000001010101000000010100000100000000010000000001000101010001010001";
 
         String str2 =
 
-  "101010101000101010100000000010100000101000001010001000000000101000101010000000100010001000100010000000001010101010100010101010000010000000100000100000100010001010001010100000000000100010001000000000001010000000100000000000100010001000101000001010101000000010000010100010100000100010000000001000101010001000001000101000101000000000001010001010001000000000101010100000001000001010000010100010101000001000101000001000000000000010100010100010001010001000001010000010100000000";
+          "101010101000101010100000000010100000101000001010001000000000101000101010000000100010001000100010000000001010101010100010101010000010000000100000100000100010001010001010100000000000100010001000000000001010000000100000000000100010001000101000001010101000000010000010100010100000100010000000001000101010001000001000101000101000000000001010001010001000000000101010100000001000001010000010100010101000001000101000001000000000000010100010100010001010001000001010000010100000000";
 
         EInteger objectTemp = EInteger.FromRadixString(
             str1,
@@ -3104,9 +3103,9 @@ import com.upokecenter.numbers.*;
       {
         EInteger ei1, ei2;
         ei1 = EInteger.FromString(
-  "44461738044811866704570272160729755524383493147516085922742403681586307620758054502667856562873477505768158700319760453047044081412393321568753479912147358343844563186048273758088945022589574729044743021988362306225753942249201773678443992606696524197361479929661991788310321409367753462284203449631729626517511224343015354155975783754763572354740724506742793459644155837703671449155713000260325445046273385372701820583016334341594713806706345456633635125343104401883366671083569152");
+            "44461738044811866704570272160729755524383493147516085922742403681586307620758054502667856562873477505768158700319760453047044081412393321568753479912147358343844563186048273758088945022589574729044743021988362306225753942249201773678443992606696524197361479929661991788310321409367753462284203449631729626517511224343015354155975783754763572354740724506742793459644155837703671449155713000260325445046273385372701820583016334341594713806706345456633635125343104401883366671083569152");
         ei2 = EInteger.FromString(
-  "6667912688606651657935168942074070387623462798286393292334546164025938697493268465740399785103348978411106010660409247384863031649363973174034406552719188394559243700794785023362300512913065060420313203793021880700852215978918600154969735168");
+            "6667912688606651657935168942074070387623462798286393292334546164025938697493268465740399785103348978411106010660409247384863031649363973174034406552719188394559243700794785023362300512913065060420313203793021880700852215978918600154969735168");
         TestMultiplyDivideOne(ei1, ei2);
       }
     }
@@ -3393,7 +3392,7 @@ import com.upokecenter.numbers.*;
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000 + 100; ++i) {
         EInteger bigintA = (i < 100) ? EInteger.FromInt32(i) :
-RandomManageableEInteger(r);
+          RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3467,7 +3466,7 @@ RandomManageableEInteger(r);
           System.out.println(i);
         }
         EInteger bigintA = (i < 100) ? EInteger.FromInt32(i) :
-RandomManageableEInteger(r);
+          RandomManageableEInteger(r);
         if (bigintA.signum() < 0) {
           bigintA = bigintA.Negate();
         }
@@ -3894,7 +3893,7 @@ RandomManageableEInteger(r);
       // bi2 = VBString(333333);
       bi = EInteger.FromString("1").ShiftLeft(740000).Subtract(EInteger.FromInt32(1));
       bi2 = EInteger.FromString("1").ShiftLeft(333330).Subtract(
-          EInteger.FromInt32(1));
+        EInteger.FromInt32(1));
       r = bi.Divide(bi2);
       EInteger r2 = bi.Divide(bi2);
       Assert.assertEquals(r, r2);

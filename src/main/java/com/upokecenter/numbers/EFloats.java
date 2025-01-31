@@ -235,7 +235,7 @@ private EFloats() {
       if (ed.isFinite() && ec != null && !ed.isZero() && ec.getHasExponentRange()) {
         if (ec.getAdjustExponent()) {
           return ed.getExponent().Add(ed.Precision().Subtract(1)).compareTo(
-              ec.getEMin()) < 0;
+            ec.getEMin()) < 0;
         } else {
           return ed.getExponent().compareTo(ec.getEMin()) < 0;
         }
@@ -463,7 +463,7 @@ private EFloats() {
       EInteger mant = ed.getUnsignedMantissa();
       EInteger mantprec = ed.Precision();
       if (ec != null && ec.getHasMaxPrecision() && mantprec.compareTo(
-  ec.getPrecision()) > 0) {
+        ec.getPrecision()) > 0) {
         mant = mant.Remainder(EInteger.FromInt32(1).ShiftLeft(ec.getPrecision()));
         mantprec = ec.getPrecision();
       }
@@ -521,7 +521,7 @@ private EFloats() {
      */
     public static int CompareTotal(EFloat ed, EFloat other, EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
-          ed.CompareToTotal(other, ec));
+        ed.CompareToTotal(other, ec));
     }
 
     /**
@@ -552,7 +552,7 @@ private EFloats() {
       EFloat other,
       EContext ec) {
       return (ed == null) ? (other == null ? 0 : -1) : ((other == null) ? 1 :
-          ed.CompareToTotalMagnitude(other, ec));
+        ed.CompareToTotalMagnitude(other, ec));
     }
 
     /**
@@ -655,7 +655,7 @@ private EFloats() {
         return ed1.getExponent().equals(ed2.getExponent());
       } else {
         return (ed1.IsNaN() && ed2.IsNaN()) || (ed1.IsInfinity() &&
-            ed2.IsInfinity());
+          ed2.IsInfinity());
       }
     }
 
@@ -681,10 +681,10 @@ private EFloats() {
       }
       if (ed.IsSignalingNaN()) {
         return EFloat.CreateNaN(
-          ed.getUnsignedMantissa(),
-          true,
-          ed.isNegative(),
-          ec);
+            ed.getUnsignedMantissa(),
+            true,
+            ed.isNegative(),
+            ec);
       }
       if (ed.isFinite()) {
         if (ed.isZero()) {

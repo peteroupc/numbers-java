@@ -59,12 +59,12 @@ import com.upokecenter.numbers.*;
     @Test
     public void TestExponentWithinRange() {
       if (!(EContext.Unlimited.ExponentWithinRange(
-  EInteger.FromString(
-            "-9999999"))))Assert.fail();
+        EInteger.FromString(
+          "-9999999"))))Assert.fail();
 
       if (!(EContext.Unlimited.ExponentWithinRange(
-  EInteger.FromString(
-            "9999999"))))Assert.fail();
+        EInteger.FromString(
+          "9999999"))))Assert.fail();
       try {
         EContext.Unlimited.ExponentWithinRange(null);
         Assert.fail("Should have failed");
@@ -141,14 +141,14 @@ import com.upokecenter.numbers.*;
         Object objectTemp = EDecimal.PositiveInfinity;
         Object objectTemp2 = EDecimal.FromString(
             "96148154858060747311034406200").RoundToPrecision(
-  EContext.CliDecimal);
+            EContext.CliDecimal);
         Assert.assertEquals(objectTemp, objectTemp2);
       }
       {
         Object objectTemp = EDecimal.PositiveInfinity;
         Object objectTemp2 = EDecimal.FromString(
             "90246605365627217170000000000").RoundToPrecision(
-  EContext.CliDecimal);
+            EContext.CliDecimal);
         Assert.assertEquals(objectTemp, objectTemp2);
       }
     }

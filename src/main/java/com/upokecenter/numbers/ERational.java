@@ -37,9 +37,9 @@ licensed under the Unlicense: https://unlicense.org/
 
     public static final ERational NegativeInfinity =
       new ERational(
-        FastIntegerFixed.Zero,
-        FastIntegerFixed.One,
-        (byte)(BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative));
+      FastIntegerFixed.Zero,
+      FastIntegerFixed.One,
+      (byte)(BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative));
 
     /**
      * A rational number for negative zero.
@@ -47,9 +47,9 @@ licensed under the Unlicense: https://unlicense.org/
 
     public static final ERational NegativeZero =
       new ERational(
-          FastIntegerFixed.Zero,
-          FastIntegerFixed.One,
-          (byte)BigNumberFlags.FlagNegative);
+      FastIntegerFixed.Zero,
+      FastIntegerFixed.One,
+      (byte)BigNumberFlags.FlagNegative);
 
     /**
      * The rational number one.
@@ -63,9 +63,9 @@ licensed under the Unlicense: https://unlicense.org/
 
     public static final ERational PositiveInfinity =
       new ERational(
-        FastIntegerFixed.Zero,
-        FastIntegerFixed.One,
-        (byte)BigNumberFlags.FlagInfinity);
+      FastIntegerFixed.Zero,
+      FastIntegerFixed.One,
+      (byte)BigNumberFlags.FlagInfinity);
 
     /**
      * A signaling not-a-number value.
@@ -73,9 +73,9 @@ licensed under the Unlicense: https://unlicense.org/
 
     public static final ERational SignalingNaN =
       new ERational(
-        FastIntegerFixed.Zero,
-        FastIntegerFixed.One,
-        (byte)BigNumberFlags.FlagSignalingNaN);
+      FastIntegerFixed.Zero,
+      FastIntegerFixed.One,
+      (byte)BigNumberFlags.FlagSignalingNaN);
 
     /**
      * The rational number ten.
@@ -186,8 +186,7 @@ licensed under the Unlicense: https://unlicense.org/
      */
     public final boolean isZero() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
-                BigNumberFlags.FlagNaN)) == 0) &&
-this.unsignedNumerator.isValueZero();
+          BigNumberFlags.FlagNaN)) == 0) && this.unsignedNumerator.isValueZero();
       }
 
     /**
@@ -200,7 +199,7 @@ this.unsignedNumerator.isValueZero();
         return false;
       }
       if (this.denominator.isEvenNumber() &&
-           !this.unsignedNumerator.isEvenNumber()) {
+        !this.unsignedNumerator.isEvenNumber()) {
         // Even denominator, odd numerator, so not an integer
         return false;
       }
@@ -225,7 +224,7 @@ this.unsignedNumerator.isValueZero();
      */
     public final int signum() {
         return ((this.flags & (BigNumberFlags.FlagInfinity |
-                BigNumberFlags.FlagNaN)) != 0) ? (this.isNegative() ? -1 : 1) :
+          BigNumberFlags.FlagNaN)) != 0) ? (this.isNegative() ? -1 : 1) :
           (this.unsignedNumerator.isValueZero() ? 0 : (this.isNegative() ? -1 : 1));
       }
 
@@ -296,9 +295,9 @@ this.unsignedNumerator.isValueZero();
         denominator = denominator.Negate();
       }
       return new ERational(
-         FastIntegerFixed.FromBig(numerator),
-         FastIntegerFixed.FromBig(denominator),
-         bflags);
+          FastIntegerFixed.FromBig(numerator),
+          FastIntegerFixed.FromBig(denominator),
+          bflags);
     }
 
     /**
@@ -348,8 +347,8 @@ this.unsignedNumerator.isValueZero();
       flags |= signaling ? BigNumberFlags.FlagSignalingNaN :
         BigNumberFlags.FlagQuietNaN;
       return new ERational(FastIntegerFixed.FromBig(diag),
-  FastIntegerFixed.One,
-  (byte)flags);
+        FastIntegerFixed.One,
+        (byte)flags);
     }
 
     /**
@@ -409,10 +408,10 @@ this.unsignedNumerator.isValueZero();
       }
       if (!ef.isFinite()) {
         return ef.IsInfinity() ? (ef.isNegative() ? NegativeInfinity :
-PositiveInfinity) : CreateNaN(
-                 ef.getUnsignedMantissa(),
-                 ef.IsSignalingNaN(),
-                 ef.isNegative());
+          PositiveInfinity) : CreateNaN(
+            ef.getUnsignedMantissa(),
+            ef.IsSignalingNaN(),
+            ef.isNegative());
       }
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
@@ -456,10 +455,10 @@ PositiveInfinity) : CreateNaN(
       }
       if (!ef.isFinite()) {
         return ef.IsInfinity() ? (ef.isNegative() ? NegativeInfinity :
-PositiveInfinity) : CreateNaN(
-                 ef.getUnsignedMantissa(),
-                 ef.IsSignalingNaN(),
-                 ef.isNegative());
+          PositiveInfinity) : CreateNaN(
+            ef.getUnsignedMantissa(),
+            ef.IsSignalingNaN(),
+            ef.isNegative());
       }
       EInteger num = ef.getMantissa();
       EInteger exp = ef.getExponent();
@@ -605,7 +604,7 @@ PositiveInfinity) : CreateNaN(
       String str,
       int offset,
       int length) {
-       return ERationalTextString.FromString(str, offset, length, true);
+      return ERationalTextString.FromString(str, offset, length, true);
     }
 
     /**
@@ -656,7 +655,7 @@ PositiveInfinity) : CreateNaN(
       char[] chars,
       int offset,
       int length) {
-       return ERationalCharArrayString.FromString(chars, offset, length, true);
+      return ERationalCharArrayString.FromString(chars, offset, length, true);
     }
 
     /**
@@ -705,7 +704,7 @@ PositiveInfinity) : CreateNaN(
       byte[] bytes,
       int offset,
       int length) {
-       return ERationalByteArrayString.FromString(bytes, offset, length, true);
+      return ERationalByteArrayString.FromString(bytes, offset, length, true);
     }
 
     /**
@@ -877,7 +876,7 @@ PositiveInfinity) : CreateNaN(
       }
       if (this.IsInfinity()) {
         return otherValue.IsInfinity() ? ((this.isNegative() ==
-              otherValue.isNegative()) ? this : NaN) : this;
+          otherValue.isNegative()) ? this : NaN) : this;
       }
       if (otherValue.IsInfinity()) {
         return otherValue;
@@ -990,9 +989,9 @@ PositiveInfinity) : CreateNaN(
       }
       // Compare the number of bits of the products
       EInteger bitsADUpper = ea.GetUnsignedBitLengthAsEInteger().Add(
-          ed.GetUnsignedBitLengthAsEInteger());
+        ed.GetUnsignedBitLengthAsEInteger());
       EInteger bitsBCUpper = eb.GetUnsignedBitLengthAsEInteger().Add(
-          ec.GetUnsignedBitLengthAsEInteger());
+        ec.GetUnsignedBitLengthAsEInteger());
       EInteger bitsADLower = bitsADUpper.Subtract(1);
       EInteger bitsBCLower = bitsBCUpper.Subtract(1);
       if (bitsADLower.compareTo(bitsBCUpper) > 0) {
@@ -1031,14 +1030,14 @@ PositiveInfinity) : CreateNaN(
       if (cmp == 0) {
         if (first.isNegative()) {
           return (!second.isNegative()) ? second :
-(first.getDenominator().compareTo(second.getDenominator()) > 0 ?
+            (first.getDenominator().compareTo(second.getDenominator()) > 0 ?
 
-              first : second);
+            first : second);
         } else {
           return second.isNegative() ? first :
-(first.getDenominator().compareTo(second.getDenominator()) < 0 ?
+            (first.getDenominator().compareTo(second.getDenominator()) < 0 ?
 
-              first : second);
+            first : second);
         }
       }
       return cmp > 0 ? first : second;
@@ -1091,8 +1090,8 @@ PositiveInfinity) : CreateNaN(
       if (cmp == 0) {
         if (first.isNegative()) {
           return (!second.isNegative()) ? first : (
-              first.getDenominator().compareTo(second.getDenominator()) < 0 ?
-              first : second);
+            first.getDenominator().compareTo(second.getDenominator()) < 0 ?
+            first : second);
         } else {
           return second.isNegative() ? second : (
               first.getDenominator().compareTo(second.getDenominator()) > 0 ?
@@ -1267,8 +1266,8 @@ PositiveInfinity) : CreateNaN(
           return this.isNegative() ? 1 : -1;
         }
         thisIntDec = EFloat.FromEInteger(this.getUnsignedNumerator()).Divide(
-            EFloat.FromEInteger(this.getDenominator()),
-            EContext.ForPrecisionAndRounding(256, ERounding.Down));
+          EFloat.FromEInteger(this.getDenominator()),
+          EContext.ForPrecisionAndRounding(256, ERounding.Down));
         if (thisIntDec.compareTo(otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
@@ -1380,8 +1379,8 @@ PositiveInfinity) : CreateNaN(
         // Conservative approximation of this rational number's absolute value,
         // as a decimal number. The true value will be greater or equal.
         thisIntDec = EDecimal.FromEInteger(this.getUnsignedNumerator()).Divide(
-            EDecimal.FromEInteger(this.getDenominator()),
-            EContext.ForPrecisionAndRounding(20, ERounding.Down));
+          EDecimal.FromEInteger(this.getDenominator()),
+          EContext.ForPrecisionAndRounding(20, ERounding.Down));
         if (thisIntDec.compareTo(otherAbs) > 0) {
           // Truncated absolute value is greater than other's untruncated
           // absolute value
@@ -1456,7 +1455,7 @@ PositiveInfinity) : CreateNaN(
       boolean resultNeg = this.isNegative() ^ otherValue.isNegative();
       if (this.IsInfinity()) {
         return otherValue.IsInfinity() ? NaN : (resultNeg ? NegativeInfinity :
-            PositiveInfinity);
+          PositiveInfinity);
       }
       if (otherValue.IsInfinity()) {
         return resultNeg ? NegativeZero : Zero;
@@ -1552,7 +1551,7 @@ PositiveInfinity) : CreateNaN(
      */
     public boolean IsNegativeInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
-            BigNumberFlags.FlagNegative)) ==
+        BigNumberFlags.FlagNegative)) ==
         (BigNumberFlags.FlagInfinity | BigNumberFlags.FlagNegative);
     }
 
@@ -1563,7 +1562,7 @@ PositiveInfinity) : CreateNaN(
      */
     public boolean IsPositiveInfinity() {
       return (this.flags & (BigNumberFlags.FlagInfinity |
-            BigNumberFlags.FlagNegative)) == BigNumberFlags.FlagInfinity;
+        BigNumberFlags.FlagNegative)) == BigNumberFlags.FlagInfinity;
     }
 
     /**
@@ -1887,7 +1886,7 @@ PositiveInfinity) : CreateNaN(
       EInteger numBits = unum.GetUnsignedBitLengthAsEInteger();
       EInteger denBits = uden.GetUnsignedBitLengthAsEInteger();
       if (numBits.Subtract(2).Subtract(denBits).compareTo(maxBitLength) >
-0) {
+        0) {
         throw new ArithmeticException("Value out of range");
       }
       unum = this.ToEInteger();
@@ -1929,7 +1928,7 @@ PositiveInfinity) : CreateNaN(
       EInteger numBits = unum.GetUnsignedBitLengthAsEInteger();
       EInteger denBits = uden.GetUnsignedBitLengthAsEInteger();
       if (numBits.Subtract(2).Subtract(denBits).compareTo(maxBitLength) >
-0) {
+        0) {
         throw new ArithmeticException("Value out of range");
       }
       unum = this.ToEIntegerIfExact();
@@ -1979,7 +1978,7 @@ PositiveInfinity) : CreateNaN(
         throw new ArithmeticException("Value is infinity or NaN");
       }
       if (this.denominator.isEvenNumber() &&
-           !this.unsignedNumerator.isEvenNumber()) {
+        !this.unsignedNumerator.isEvenNumber()) {
         // Even denominator, odd numerator, so not an integer
         throw new ArithmeticException("Value is not an integer");
       }
@@ -2317,7 +2316,7 @@ PositiveInfinity) : CreateNaN(
         }
       }
       return (this.unsignedNumerator.isValueZero() && this.isNegative()) ? ("-0/" +
-          this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
+        this.getDenominator()) : (this.getNumerator() + "/" + this.getDenominator());
     }
 
     /**
@@ -2700,7 +2699,7 @@ PositiveInfinity) : CreateNaN(
      */
     public static ERational FromInt64AsUnsigned(long longerValue) {
       return longerValue >= 0 ? FromInt64(longerValue) :
-           FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
+        FromEInteger(EInteger.FromInt64AsUnsigned(longerValue));
     }
 
     /**

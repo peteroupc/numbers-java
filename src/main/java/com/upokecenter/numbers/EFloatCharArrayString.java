@@ -19,38 +19,42 @@ private EFloatCharArrayString() {
       if (offset < 0) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("offset(" + offset + ") is not" +
-"\u0020greater" + "\u0020or equal to 0");
-}
+        } else {
+          throw new NumberFormatException("offset(" + offset + ") is not" +
+            "\u0020greater" + "\u0020or equal to 0");
+        }
       }
       if (offset > chars.length) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("offset(" + offset + ") is not" +
-"\u0020less" + "\u0020or" + "\u0020equal to " + chars.length);
-}
+        } else {
+          throw new NumberFormatException("offset(" + offset + ") is not" +
+            "\u0020less" + "\u0020or" + "\u0020equal to " + chars.length);
+        }
       }
       if (length < 0) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("length(" + length + ") is not" +
-"\u0020greater or" + "\u0020equal to 0");
-}
+        } else {
+          throw new NumberFormatException("length(" + length + ") is not" +
+            "\u0020greater or" + "\u0020equal to 0");
+        }
       }
       if (length > chars.length) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("length(" + length + ") is not" +
-"\u0020less" + "\u0020or" + "\u0020equal to " + chars.length);
-}
+        } else {
+          throw new NumberFormatException("length(" + length + ") is not" +
+            "\u0020less" + "\u0020or" + "\u0020equal to " + chars.length);
+        }
       }
       if (chars.length - offset < length) {
         if (!throwException) {
           return null;
         } else {
-  throw new NumberFormatException("str's length minus " + offset + "(" +
-(chars.length - offset) + ") is not greater or equal to " + length);
- }
+          throw new NumberFormatException("str's length minus " + offset + "(" +
+            (chars.length - offset) + ") is not greater or equal to " + length);
+        }
       }
       EContext b64 = EContext.Binary64;
       if (ctx != null && ctx.getHasMaxPrecision() && ctx.getHasExponentRange() &&
@@ -70,13 +74,13 @@ private EFloatCharArrayString() {
           ++tmpoffset;
         }
         if (tmpoffset < endpos && ((chars[tmpoffset] >= '0' &&
-              chars[tmpoffset] <= '9') || chars[tmpoffset] == '.')) {
+          chars[tmpoffset] <= '9') || chars[tmpoffset] == '.')) {
           EFloat ef = DoubleEFloatFromString(
-            chars,
-            offset,
-            length,
-            ctx,
-            throwException);
+              chars,
+              offset,
+              length,
+              ctx,
+              throwException);
           if (ef != null) {
             return ef;
           }
@@ -176,7 +180,7 @@ private EFloatCharArrayString() {
             digitEnd = i + 1;
           }
           if (mantissaLong < 922337203685477580L ||
-               (mantissaLong == 922337203685477580L && thisdigit <= 7)) {
+            (mantissaLong == 922337203685477580L && thisdigit <= 7)) {
             mantissaLong *= 10;
             mantissaLong += thisdigit;
           } else {

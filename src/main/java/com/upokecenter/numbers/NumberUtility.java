@@ -162,7 +162,7 @@ private NumberUtility() {
         synchronized (this.outputs) {
           for (int i = 0; i < this.size; ++i) {
             if (this.inputs[i].compareTo(bi) <= 0 && (minValue == null ||
-                this.inputs[i].compareTo(minValue) >= 0)) {
+              this.inputs[i].compareTo(minValue) >= 0)) {
               // System.out.println("Have cached power (" + inputs[i] + "," + bi + ") ");
               ret = new EInteger[2];
               ret[0] = this.inputs[i];
@@ -336,14 +336,14 @@ private NumberUtility() {
         return v.Multiply(ValueBigIntPowersOfTen[precision]);
       }
       return (precision <= 94) ?
-v.Multiply(FindPowerOfFive(precision)).ShiftLeft(precision) :
-MultiplyByPowerOfFive(v, precision).ShiftLeft(precision);
+        v.Multiply(FindPowerOfFive(precision)).ShiftLeft(precision) :
+        MultiplyByPowerOfFive(v, precision).ShiftLeft(precision);
     }
 
     static EInteger MultiplyByPowerOfTen(EInteger v, EInteger
-eprecision) {
+      eprecision) {
       return (eprecision.signum() < 0 || v.isZero()) ? EInteger.FromInt32(0) :
-MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
+        MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
     }
 
     static EInteger MultiplyByPowerOfFive(EInteger v, int precision) {
@@ -380,8 +380,8 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
     static EInteger MultiplyByPowerOfFive(EInteger v, EInteger
       epower) {
       return epower.CanFitInInt32() ? MultiplyByPowerOfFive(v,
-          epower.ToInt32Checked()) : v.Multiply(FindPowerOfFiveFromBig(
-            epower));
+        epower.ToInt32Checked()) : v.Multiply(FindPowerOfFiveFromBig(
+        epower));
     }
     static EInteger FindPowerOfFiveFromBig(EInteger diff) {
       int sign = diff.signum();
@@ -402,7 +402,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
           if (otherPower == null) {
             // NOTE: Assumes powprec is 2 or greater and is a power of 2
             EInteger prevPower = FindPowerOfFiveFromBig(epowprec.ShiftRight(
-                  1));
+              1));
             otherPower = prevPower.Multiply(prevPower);
             ValuePowerOfFiveCache.AddPower(epowprec, otherPower);
           }
@@ -618,119 +618,118 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
     }
 
     public static int DecimalDigitLength(int v2) {
-        if (v2 < 100000) {
-          return (v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
-                3 : ((v2 >= 10) ? 2 : 1)));
-        } else {
-          return (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
-                  10000000) ? 8 : ((v2 >= 1000000) ? 7 : 6)));
-        }
+      if (v2 < 100000) {
+        return (v2 >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
+          3 : ((v2 >= 10) ? 2 : 1)));
+      } else {
+        return (v2 >= 1000000000) ? 10 : ((v2 >= 100000000) ? 9 : ((v2 >=
+          10000000) ? 8 : ((v2 >= 1000000) ? 7 : 6)));
+      }
     }
 
     public static int DecimalDigitLength(long value) {
       if (value >= 1000000000L) {
         return (value >= 1000000000000000000L) ? 19 : ((value >=
-              100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
-              17 : ((value >= 1000000000000000L) ? 16 :
-                ((value >= 100000000000000L) ? 15 : ((value
-                      >= 10000000000000L) ?
-                    14 : ((value >= 1000000000000L) ? 13 : ((value
-                          >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
-                          11 : ((value >= 1000000000L) ? 10 : 9)))))))));
+          100000000000000000L) ? 18 : ((value >= 10000000000000000L) ?
+            17 : ((value >= 1000000000000000L) ? 16 :
+          ((value >= 100000000000000L) ? 15 : ((value
+          >= 10000000000000L) ? 14 : ((value >= 1000000000000L) ? 13 : ((value
+          >= 100000000000L) ? 12 : ((value >= 10000000000L) ?
+            11 : ((value >= 1000000000L) ? 10 : 9)))))))));
       } else {
         int v2 = (int)value;
         return (v2 >= 100000000) ? 9 : ((v2 >= 10000000) ? 8 : ((v2 >=
-                1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
-                    >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
-                      3 : ((v2 >= 10) ? 2 : 1)))))));
+          1000000) ? 7 : ((v2 >= 100000) ? 6 : ((v2
+          >= 10000) ? 5 : ((v2 >= 1000) ? 4 : ((v2 >= 100) ?
+          3 : ((v2 >= 10) ? 2 : 1)))))));
       }
     }
 
     public static EInteger[] DecimalDigitLengthBoundsAsEI(EInteger ei) {
-        long longBitLength = ei.GetUnsignedBitLengthAsInt64();
-        if (longBitLength < 33) {
-          // Can easily be calculated without estimation
-          EInteger eintcnt = EInteger.FromInt32((int)ei.GetDigitCountAsInt64());
+      long longBitLength = ei.GetUnsignedBitLengthAsInt64();
+      if (longBitLength < 33) {
+        // Can easily be calculated without estimation
+        EInteger eintcnt = EInteger.FromInt32((int)ei.GetDigitCountAsInt64());
+        return new EInteger[] { eintcnt, eintcnt };
+      } else if (longBitLength <= 2135) {
+        int bitlen = (int)longBitLength;
+        // Approximation of ln(2)/ln(10)
+        int minDigits = 1 + (((bitlen - 1) * 631305) >> 21);
+        int maxDigits = 1 + ((bitlen * 631305) >> 21);
+        if (minDigits == maxDigits) {
+          EInteger eintcnt = EInteger.FromInt32(minDigits);
           return new EInteger[] { eintcnt, eintcnt };
-        } else if (longBitLength <= 2135) {
-          int bitlen = (int)longBitLength;
-          // Approximation of ln(2)/ln(10)
-          int minDigits = 1 + (((bitlen - 1) * 631305) >> 21);
-          int maxDigits = 1 + ((bitlen * 631305) >> 21);
-          if (minDigits == maxDigits) {
-            EInteger eintcnt = EInteger.FromInt32(minDigits);
-            return new EInteger[] { eintcnt, eintcnt };
-          } else {
-            return new EInteger[] {
-              EInteger.FromInt32(minDigits), // lower bound
-              EInteger.FromInt32(maxDigits), // upper bound
-            };
-          }
-        } else if (longBitLength <= 6432162) {
-          int bitlen = (int)longBitLength;
-          // Approximation of ln(2)/ln(10)
-          int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
-          int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
-          if (minDigits == maxDigits) {
-            EInteger eintcnt = EInteger.FromInt32(minDigits);
-            return new EInteger[] { eintcnt, eintcnt };
-          } else {
-            return new EInteger[] {
-              EInteger.FromInt32(minDigits), // lower bound
-              EInteger.FromInt32(maxDigits), // upper bound
-            };
-          }
         } else {
-          FastInteger[] fis = DecimalDigitLengthBounds(ei);
-          return new EInteger[] { fis[0].ToEInteger(), fis[1].ToEInteger() };
+          return new EInteger[] {
+            EInteger.FromInt32(minDigits), // lower bound
+            EInteger.FromInt32(maxDigits), // upper bound
+          };
         }
+      } else if (longBitLength <= 6432162) {
+        int bitlen = (int)longBitLength;
+        // Approximation of ln(2)/ln(10)
+        int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
+        int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
+        if (minDigits == maxDigits) {
+          EInteger eintcnt = EInteger.FromInt32(minDigits);
+          return new EInteger[] { eintcnt, eintcnt };
+        } else {
+          return new EInteger[] {
+            EInteger.FromInt32(minDigits), // lower bound
+            EInteger.FromInt32(maxDigits), // upper bound
+          };
+        }
+      } else {
+        FastInteger[] fis = DecimalDigitLengthBounds(ei);
+        return new EInteger[] { fis[0].ToEInteger(), fis[1].ToEInteger() };
+      }
     }
 
     public static FastInteger[] DecimalDigitLengthBounds(EInteger ei) {
-        long longBitLength = ei.GetUnsignedBitLengthAsInt64();
-        if (longBitLength < 33) {
-          // Can easily be calculated without estimation
-          FastInteger fi = new FastInteger((int)ei.GetDigitCountAsInt64());
+      long longBitLength = ei.GetUnsignedBitLengthAsInt64();
+      if (longBitLength < 33) {
+        // Can easily be calculated without estimation
+        FastInteger fi = new FastInteger((int)ei.GetDigitCountAsInt64());
+        return new FastInteger[] { fi, fi };
+      } else if (longBitLength <= 2135) {
+        int bitlen = (int)longBitLength;
+        int minDigits = 1 + (((bitlen - 1) * 631305) >> 21);
+        int maxDigits = 1 + ((bitlen * 631305) >> 21);
+        if (minDigits == maxDigits) {
+          FastInteger fi = new FastInteger(minDigits);
           return new FastInteger[] { fi, fi };
-        } else if (longBitLength <= 2135) {
-          int bitlen = (int)longBitLength;
-          int minDigits = 1 + (((bitlen - 1) * 631305) >> 21);
-          int maxDigits = 1 + ((bitlen * 631305) >> 21);
-          if (minDigits == maxDigits) {
-            FastInteger fi = new FastInteger(minDigits);
-            return new FastInteger[] { fi, fi };
-          } else {
-            return new FastInteger[] {
-              new FastInteger(minDigits), // lower bound
-              new FastInteger(maxDigits), // upper bound
-            };
-          }
-        } else if (longBitLength <= 6432162) {
-          int bitlen = (int)longBitLength;
-          // Approximation of ln(2)/ln(10)
-          int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
-          int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
-          if (minDigits == maxDigits) {
-            FastInteger fi = new FastInteger(minDigits);
-            return new FastInteger[] { fi, fi };
-          } else {
-            return new FastInteger[] {
-              new FastInteger(minDigits), // lower bound
-              new FastInteger(maxDigits), // upper bound
-            };
-          }
         } else {
-          // Bit length is big enough that these bounds will
-          // overestimate or underestimate the true base-10 digit length
-          // as appropriate.
-          EInteger bigBitLength = ei.GetUnsignedBitLengthAsEInteger();
-          EInteger lowerBound = bigBitLength.Multiply(100).Divide(335);
-          EInteger upperBound = bigBitLength.Divide(3);
           return new FastInteger[] {
-            FastInteger.FromBig(lowerBound), // lower bound
-            FastInteger.FromBig(upperBound), // upper bound
+            new FastInteger(minDigits), // lower bound
+            new FastInteger(maxDigits), // upper bound
           };
         }
+      } else if (longBitLength <= 6432162) {
+        int bitlen = (int)longBitLength;
+        // Approximation of ln(2)/ln(10)
+        int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >> 41);
+        int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
+        if (minDigits == maxDigits) {
+          FastInteger fi = new FastInteger(minDigits);
+          return new FastInteger[] { fi, fi };
+        } else {
+          return new FastInteger[] {
+            new FastInteger(minDigits), // lower bound
+            new FastInteger(maxDigits), // upper bound
+          };
+        }
+      } else {
+        // Bit length is big enough that these bounds will
+        // overestimate or underestimate the true base-10 digit length
+        // as appropriate.
+        EInteger bigBitLength = ei.GetUnsignedBitLengthAsEInteger();
+        EInteger lowerBound = bigBitLength.Multiply(100).Divide(335);
+        EInteger upperBound = bigBitLength.Divide(3);
+        return new FastInteger[] {
+          FastInteger.FromBig(lowerBound), // lower bound
+          FastInteger.FromBig(upperBound), // upper bound
+        };
+      }
     }
 
     public static <THelper> FastInteger[] DigitLengthBounds(
@@ -758,9 +757,9 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
           if (radix == 2) {
             return FastIntegerFixed.FromInt32((int)BitLength(Math.abs(ifei)));
           } else if (radix == 10) {
-              return FastIntegerFixed.FromInt32(
-                 (int)DecimalDigitLength(Math.abs(ifei)));
-           }
+            return FastIntegerFixed.FromInt32(
+                (int)DecimalDigitLength(Math.abs(ifei)));
+          }
         }
       } else {
         if (radix == 2) {
@@ -774,7 +773,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
           if (i64 < 33) {
             // Can easily be calculated without estimation
             return FastIntegerFixed.FromInt32(
-              (int)ei.GetDigitCountAsInt64());
+                (int)ei.GetDigitCountAsInt64());
           } else if (i64 <= 2135) {
             int bitlen = (int)i64;
             // Approximation of ln(2)/ln(10)
@@ -787,7 +786,7 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
             int bitlen = (int)i64;
             // Approximation of ln(2)/ln(10)
             int minDigits = 1 + (int)(((long)(bitlen - 1) * 661971961083L) >>
-41);
+              41);
             int maxDigits = 1 + (int)(((long)bitlen * 661971961083L) >> 41);
             if (minDigits == maxDigits) {
               return FastIntegerFixed.FromInt32(minDigits);
@@ -820,36 +819,36 @@ MultiplyByPowerOfFive(v, eprecision).ShiftLeft(eprecision);
     }
 
     public static <THelper> EInteger IntegerDigitLengthUpperBound(
-       IRadixMathHelper<THelper> helper,
-       THelper val) {
-       // Gets an upper bound on the number of digits in the integer
-       // part of the specified number 'val'.
-       int flags = helper.GetFlags(val);
-       if ((flags & BigNumberFlags.FlagSpecial) != 0) {
-          // Infinity and NaN are not supported
-          throw new UnsupportedOperationException();
-       }
-       EInteger expo = helper.GetExponent(val);
-       EInteger mant = helper.GetMantissa(val).Abs();
-       if (expo.signum() <= 0) {
-          // Exponent Y in X*digits^Y is 0 or negative, so upper bound
-          // of significand's digit count works by itself.
-          return DigitLengthUpperBound(helper, mant).ToEInteger();
-       } else {
-          return DigitLengthUpperBound(helper, mant).ToEInteger().Add(expo);
-       }
+      IRadixMathHelper<THelper> helper,
+      THelper val) {
+      // Gets an upper bound on the number of digits in the integer
+      // part of the specified number 'val'.
+      int flags = helper.GetFlags(val);
+      if ((flags & BigNumberFlags.FlagSpecial) != 0) {
+        // Infinity and NaN are not supported
+        throw new UnsupportedOperationException();
+      }
+      EInteger expo = helper.GetExponent(val);
+      EInteger mant = helper.GetMantissa(val).Abs();
+      if (expo.signum() <= 0) {
+        // Exponent Y in X*digits^Y is 0 or negative, so upper bound
+        // of significand's digit count works by itself.
+        return DigitLengthUpperBound(helper, mant).ToEInteger();
+      } else {
+        return DigitLengthUpperBound(helper, mant).ToEInteger().Add(expo);
+      }
     }
 
     public static <THelper> FastIntegerFixed DigitLengthFixed(
       IRadixMathHelper<THelper> helper,
       FastIntegerFixed fei) {
-       FastIntegerFixed fastpath = FastPathDigitLength(fei, helper.GetRadix());
-       if (fastpath != null) {
-         return fastpath;
-       }
-       FastInteger fi = helper.GetDigitLength(fei.ToEInteger());
-       FastIntegerFixed fif = FastIntegerFixed.FromFastInteger(fi);
-       return fif;
+      FastIntegerFixed fastpath = FastPathDigitLength(fei, helper.GetRadix());
+      if (fastpath != null) {
+        return fastpath;
+      }
+      FastInteger fi = helper.GetDigitLength(fei.ToEInteger());
+      FastIntegerFixed fif = FastIntegerFixed.FromFastInteger(fi);
+      return fif;
     }
 
     public static <THelper> FastInteger DigitLengthUpperBound(

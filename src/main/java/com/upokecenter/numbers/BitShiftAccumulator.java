@@ -30,7 +30,7 @@ licensed under the Unlicense: https://unlicense.org/
     }
 
     public FastInteger OverestimateDigitLength() {
-       return this.GetDigitLength();
+      return this.GetDigitLength();
     }
 
     private static void VerifyKnownLength() {
@@ -108,7 +108,7 @@ licensed under the Unlicense: https://unlicense.org/
     public int ShiftedIntMod(int mod) {
       if (mod < 1) {
         throw new IllegalArgumentException("mod (" + mod +
-           ") is not greater or equal to 1");
+          ") is not greater or equal to 1");
       }
       switch (mod) {
         case 1:
@@ -244,7 +244,7 @@ licensed under the Unlicense: https://unlicense.org/
               // the last one is set
               this.bitsAfterLeftmost |= 1;
               this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
-0;
+                0;
             } else if (lowestSetBit.compareTo(bs - 1) > 0) {
               // Means all discarded bits are zero
               this.bitLeftmost = 0;
@@ -258,7 +258,7 @@ licensed under the Unlicense: https://unlicense.org/
               // the last one is set
               this.bitsAfterLeftmost |= 1;
               this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
-0;
+                0;
             } else if (lowestSet > bs - 1) {
               // Means all discarded bits are zero
               this.bitLeftmost = 0;
@@ -295,12 +295,12 @@ licensed under the Unlicense: https://unlicense.org/
         return new FastInteger(kb);
       }
       if (this.shiftedBigInt.isZero()) {
-         { return new FastInteger(1);
+        { return new FastInteger(1);
+        }
       }
-}
       long sbe = this.shiftedBigInt.GetSignedBitLengthAsInt64();
       return (sbe < Integer.MAX_VALUE) ? new FastInteger((int)sbe) :
-FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
+        FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
     }
 
     private void ShiftBigToBits(int bits) {
@@ -349,7 +349,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
               // the last one is set
               this.bitsAfterLeftmost |= 1;
               this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
-0;
+                0;
             } else if (lowestSetBit.compareTo(bs - 1) > 0) {
               // Means all discarded bits are zero
               this.bitLeftmost = 0;
@@ -363,7 +363,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
               // the last one is set
               this.bitsAfterLeftmost |= 1;
               this.bitLeftmost = this.shiftedBigInt.GetSignedBit(bs - 1) ? 1 :
-0;
+                0;
             } else if (lowestSet > bs - 1) {
               // Means all discarded bits are zero
               this.bitLeftmost = 0;
@@ -422,7 +422,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
       this.bitsAfterLeftmost |= this.bitLeftmost;
       // Get the bottommost shift minus 1 bits
       this.bitsAfterLeftmost |= (shift > 1 && (this.shiftedSmall <<
-            (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
+        (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
       // Get the bit just above that bit
       this.bitLeftmost = (int)((this.shiftedSmall >> (shift - 1)) & 0x01);
       this.shiftedSmall >>= shift;
@@ -464,7 +464,7 @@ FastInteger.FromBig(this.shiftedBigInt.GetSignedBitLengthAsEInteger());
         this.bitsAfterLeftmost |= this.bitLeftmost;
         // Get the bottommost shift minus 1 bits
         this.bitsAfterLeftmost |= (shift > 1 && (this.shiftedSmall <<
-              (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
+          (SmallBitLength - shift + 1)) != 0) ? 1 : 0;
         // Get the bit just above that bit
         this.bitLeftmost = (int)((this.shiftedSmall >> (shift - 1)) & 0x01);
         this.bitsAfterLeftmost = (this.bitsAfterLeftmost != 0) ? 1 : 0;

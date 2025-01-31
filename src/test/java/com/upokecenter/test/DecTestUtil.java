@@ -13,7 +13,7 @@ private DecTestUtil() {
 }
     private static final String TestLineRegex =
 
-  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
+      "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
 
     private static final Pattern ValuePropertyLine = Pattern.compile(
       "^(\\w+)\\:\\s*(\\S+).*");
@@ -490,9 +490,9 @@ private DecTestUtil() {
         IExtendedNumber c,
         EContext ctx) {
         return Create(this.ed.MultiplyAndSubtract(
-              ToValue(b),
-              ToValue(c),
-              ctx));
+          ToValue(b),
+          ToValue(c),
+          ctx));
       }
 
       public boolean IsQuietNaN() {
@@ -515,7 +515,7 @@ private DecTestUtil() {
         DecimalNumber dn = ((other instanceof DecimalNumber) ? (DecimalNumber)other : null);
         EDecimal dned = dn == null ? null : dn.ed;
         return (this.ed == null) ? ((dned == null) ? 0 : -1) : (dned == null ?
-            1 : this.ed.compareTo(dned));
+          1 : this.ed.compareTo(dned));
       }
     }
 
@@ -526,7 +526,7 @@ private DecTestUtil() {
         BinaryNumber dn = ((other instanceof BinaryNumber) ? (BinaryNumber)other : null);
         EFloat dned = dn == null ? null : dn.ef;
         return (this.ef == null) ? ((dned == null) ? 0 : -1) : (dned == null ?
-            1 : this.ef.compareTo(dned));
+          1 : this.ef.compareTo(dned));
       }
 
       public static BinaryNumber Create(EFloat dec) {
@@ -711,9 +711,9 @@ private DecTestUtil() {
           int mantissa = words[0] & 0x7fffff;
           if (exponent == 255) {
             return (mantissa == 0) ? Create(neg ? EFloat.NegativeInfinity :
-                EFloat.PositiveInfinity) : (((mantissa &
-                    0x00400000) != 0) ? Create(EFloat.NaN) :
-                Create(EFloat.SignalingNaN));
+              EFloat.PositiveInfinity) : (((mantissa &
+              0x00400000) != 0) ? Create(EFloat.NaN) :
+              Create(EFloat.SignalingNaN));
           }
           if (exponent == 0) {
             if (mantissa == 0) {
@@ -744,10 +744,10 @@ private DecTestUtil() {
           int mantissaNonzero = mantissa | words[1];
           if (exponent == 2047) {
             return (mantissaNonzero == 0) ? Create(neg ?
-                EFloat.NegativeInfinity : EFloat.PositiveInfinity) :
+              EFloat.NegativeInfinity : EFloat.PositiveInfinity) :
               (((mantissa & 0x00080000) != 0) ? Create(EFloat.NaN) :
 
-                Create(EFloat.SignalingNaN));
+              Create(EFloat.SignalingNaN));
           }
           if (exponent == 0) {
             if (mantissaNonzero == 0) {
@@ -785,10 +785,10 @@ private DecTestUtil() {
           int mantissaNonzero = mantissa | words[3] | words[1] | words[2];
           if (exponent == 0x7fff) {
             return (mantissaNonzero == 0) ? Create(neg ?
-                EFloat.NegativeInfinity : EFloat.PositiveInfinity) :
+              EFloat.NegativeInfinity : EFloat.PositiveInfinity) :
               (((mantissa & 0x00008000) != 0) ? Create(EFloat.NaN) :
 
-                Create(EFloat.SignalingNaN));
+              Create(EFloat.SignalingNaN));
           }
           if (exponent == 0) {
             if (mantissaNonzero == 0) {
@@ -910,7 +910,7 @@ private DecTestUtil() {
             EInteger.FromInt64(2),
             ToValue(this).getExponent());
         return ToValue(this).Subtract(ToValue(bn)).Abs().compareTo(
-            ulpdiff) <= 0;
+          ulpdiff) <= 0;
       }
 
       public void ComparePrint(IExtendedNumber bn) {
@@ -973,7 +973,7 @@ private DecTestUtil() {
       }
       // NOTE: ix < 2 includes cases where space is not found
       if (ix < 2 || (ln.charAt(ix - 1) != 'd' && ln.charAt(ix - 1) != 's' &&
-          ln.charAt(ix - 1) != 'q')) {
+        ln.charAt(ix - 1) != 'q')) {
         return 0;
       }
       String[] chunks = SplitAtSpaceRuns(ln);
@@ -1170,7 +1170,7 @@ private DecTestUtil() {
           return 0;
         }
         if (op2.IsInfinity() && op1.Abs(null).equals(
-            BinaryNumber.FromString("1"))) {
+          BinaryNumber.FromString("1"))) {
           return 0;
         }
         expectedFlags &= ~EContext.FlagDivideByZero;
@@ -1484,7 +1484,7 @@ private DecTestUtil() {
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-                EContext.FlagInvalid)) == 0) {
+            EContext.FlagInvalid)) == 0) {
             d3 = op1.Add(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1502,7 +1502,7 @@ private DecTestUtil() {
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-                EContext.FlagInvalid)) == 0) {
+            EContext.FlagInvalid)) == 0) {
             d3 = op1.Subtract(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1520,7 +1520,7 @@ private DecTestUtil() {
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-                EContext.FlagInvalid)) == 0) {
+            EContext.FlagInvalid)) == 0) {
             d3 = op1.Multiply(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1538,7 +1538,7 @@ private DecTestUtil() {
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-                EContext.FlagInvalid)) == 0) {
+            EContext.FlagInvalid)) == 0) {
             d3 = op1.Divide(op2, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1556,16 +1556,16 @@ private DecTestUtil() {
           Assert.assertEquals(ln, result, d3);
         }
         if (binaryFP && (
-            (op1.IsQuietNaN() && (op2.IsSignalingNaN() ||
-                op3.IsSignalingNaN())) ||
-            (op2.IsQuietNaN() && op3.IsSignalingNaN()))) {
+          (op1.IsQuietNaN() && (op2.IsSignalingNaN() ||
+          op3.IsSignalingNaN())) ||
+          (op2.IsQuietNaN() && op3.IsSignalingNaN()))) {
           // Don't check flags for binary test cases involving quiet
           // NaN followed by signaling NaN, as the semantics for
           // the invalid operation flag in those cases are different
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-                EContext.FlagInvalid)) == 0) {
+            EContext.FlagInvalid)) == 0) {
             d3 = op1.MultiplyAndAdd(op2, op3, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1583,7 +1583,7 @@ private DecTestUtil() {
           // than in the General Decimal Arithmetic Specification
         } else {
           if (exactResultCheck && (expectedFlags & (EContext.FlagInexact |
-                EContext.FlagInvalid)) == 0) {
+            EContext.FlagInvalid)) == 0) {
             d3 = op1.MultiplyAndSubtract(op2, op3, null);
             TestCommon.CompareTestEqual(result, d3, ln);
           }
@@ -1619,8 +1619,8 @@ private DecTestUtil() {
 
     private static String TrimQuotes(String str) {
       return (str == null || str.length() == 0 || (
-            str.charAt(0) != '\'' && str.charAt(0) != '\"' && str.charAt(str.length() - 1) != '\'' &&
-            str.charAt(str.length() - 1) != '\"')) ? str :
+        str.charAt(0) != '\'' && str.charAt(0) != '\"' && str.charAt(str.length() - 1) != '\'' &&
+        str.charAt(str.length() - 1) != '\"')) ? str :
         ValueQuotes.matcher(str).replaceAll("");
     }
 
@@ -1691,14 +1691,14 @@ private DecTestUtil() {
         // Skip tests that take null as input or output;
         // also skip tests that take a hex number format
         if (Contains(input1, "#") ||
-                 Contains(input2, "#") ||
-                 Contains(input3, "#") ||
-                 Contains(output, "#")) {
+          Contains(input2, "#") ||
+          Contains(input3, "#") ||
+          Contains(output, "#")) {
           return;
         }
         if (!extended && (Contains(input1, "sNaN") ||
-            Contains(input2, "sNaN") || Contains(input3, "sNaN") ||
-            Contains(output, "sNaN"))) {
+          Contains(input2, "sNaN") || Contains(input3, "sNaN") ||
+          Contains(output, "sNaN"))) {
           System.out.println(ln);
         }
         if (name.equals("S")) {
@@ -1806,12 +1806,12 @@ private DecTestUtil() {
 
         ctx = EContext.ForPrecision(precision)
           .WithExponentClamp(clamp).WithExponentRange(
-            minexponent,
-            maxexponent);
+          minexponent,
+          maxexponent);
         rounding = ToLowerCaseAscii(GetKeyOrDefault(
-              context,
-              "rounding",
-              "half_even"));
+          context,
+          "rounding",
+          "half_even"));
         if (rounding.equals("half_up")) {
           ctx = ctx.WithRounding(ERounding.HalfUp);
         }

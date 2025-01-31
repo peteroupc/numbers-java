@@ -21,38 +21,43 @@ private ERationalTextString() {
       if (tmpoffset < 0) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
-"\u0020less" + "\u0020than " + "0");
-}
+        } else {
+          throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+            "\u0020less" + "\u0020than " + "0");
+        }
       }
       if (tmpoffset > chars.length()) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("offset(" + tmpoffset + ") is" +
-"\u0020more" + "\u0020than " + chars.length());
-}
+        } else {
+          throw new NumberFormatException("offset(" + tmpoffset + ") is" +
+            "\u0020more" + "\u0020than " + chars.length());
+        }
       }
       if (length < 0) {
         if (!throwException) {
           return null;
         } else {
-  throw new NumberFormatException("length(" + length + ") is less than " + "0");
- }
+          throw new NumberFormatException("length(" + length + ") is less than " +
+            "0");
+        }
       }
       if (length > chars.length()) {
         if (!throwException) {
           return null;
         } else {
-  throw new NumberFormatException("length(" + length + ") is more than " +
-chars.length());
- }
+          throw new NumberFormatException("length(" + length + ") is more than " +
+            chars.length());
+        }
       }
       if (chars.length() - tmpoffset < length) {
         if (!throwException) {
           return null;
-        } else { throw new NumberFormatException("chars's length minus " +
-tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " + length);
-}
+        } else {
+          throw new NumberFormatException("chars's length minus " +
+            tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " +
+            length);
+        }
       }
       if (length == 0) {
         if (!throwException) {
@@ -79,11 +84,10 @@ tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " + length);
           (chars.charAt(i + 1) == 'N' || chars.charAt(i + 1) == 'n') &&
           (chars.charAt(i + 2) == 'F' || chars.charAt(i + 2) == 'f') &&
           (chars.charAt(i + 3) == 'I' || chars.charAt(i + 3) == 'i') && (chars.charAt(i + 4) ==
-            'N' ||
-            chars.charAt(i + 4) == 'n') && (chars.charAt(i + 5) == 'I' || chars.charAt(i + 5) ==
+          'N' || chars.charAt(i + 4) == 'n') && (chars.charAt(i + 5) == 'I' || chars.charAt(i + 5) ==
             'i') &&
           (chars.charAt(i + 6) == 'T' || chars.charAt(i + 6) == 't') && (chars.charAt(i + 7) ==
-            'Y' || chars.charAt(i + 7) == 'y')) {
+          'Y' || chars.charAt(i + 7) == 'y')) {
           return negative ? ERational.NegativeInfinity :
             ERational.PositiveInfinity;
         }
@@ -91,7 +95,7 @@ tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " + length);
       if (i + 3 == endStr) {
         if ((chars.charAt(i) == 'I' || chars.charAt(i) == 'i') &&
           (chars.charAt(i + 1) == 'N' || chars.charAt(i + 1) == 'n') && (chars.charAt(i + 2) ==
-            'F' || chars.charAt(i + 2) == 'f')) {
+          'F' || chars.charAt(i + 2) == 'f')) {
           return negative ? ERational.NegativeInfinity :
             ERational.PositiveInfinity;
         }
@@ -100,8 +104,8 @@ tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " + length);
       if (i + 3 <= endStr) {
         // Quiet NaN
         if ((chars.charAt(i) == 'N' || chars.charAt(i) == 'n') && (chars.charAt(i + 1) == 'A' ||
-            chars.charAt(i +
-              1) == 'a') && (chars.charAt(i + 2) == 'N' || chars.charAt(i + 2) == 'n')) {
+          chars.charAt(i +
+            1) == 'a') && (chars.charAt(i + 2) == 'N' || chars.charAt(i + 2) == 'n')) {
           if (i + 3 == endStr) {
             return (!negative) ? ERational.NaN : ERational.NaN.Negate();
           }
@@ -136,8 +140,8 @@ tmpoffset + "(" + (chars.length() - tmpoffset) + ") is less than " + length);
       if (i + 4 <= endStr) {
         // Signaling NaN
         if ((chars.charAt(i) == 'S' || chars.charAt(i) == 's') && (chars.charAt(i + 1) == 'N' ||
-            chars.charAt(i +
-              1) == 'n') && (chars.charAt(i + 2) == 'A' || chars.charAt(i + 2) == 'a') &&
+          chars.charAt(i +
+            1) == 'n') && (chars.charAt(i + 2) == 'A' || chars.charAt(i + 2) == 'a') &&
           (chars.charAt(i + 3) == 'N' || chars.charAt(i + 3) == 'n')) {
           if (i + 4 == endStr) {
             return (!negative) ? ERational.SignalingNaN :
