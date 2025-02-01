@@ -6110,13 +6110,13 @@ import com.upokecenter.numbers.*;
         throw new NullPointerException("ec");
       }
       if (ec.getHasMaxPrecision()) {
-        sb.append(".WithPrecision(" + ec.getPrecision().toString() + ")");
+        sb.append(".WithPrecision(" + ec.Precision.toString() + ")");
       }
       if (ec.getHasExponentRange()) {
         sb.append(".WithExponentRange(" + ec.getEMin().toString() + "," +
-          "\u0020" + ec.getEMax().toString() + ")");
+          "\u0020" + ec.EMax.toString() + ")");
       }
-      sb.append(".WithRounding(ERounding." + ec.getRounding() + ")");
+      sb.append(".WithRounding(ERounding." + ec.Rounding + ")");
       sb.append(".WithAdjustExponent(" + (ec.getAdjustExponent() ? "true" :
         "false") + ")");
       sb.append(".WithExponentClamp(" + (ec.getClampNormalExponents() ? "true" :
@@ -6127,7 +6127,7 @@ import com.upokecenter.numbers.*;
         sb.append(".WithBlankFlags()");
       }
       if (ec.getTraps() != 0) {
-        sb.append(".WithTraps(" + TestCommon.IntToString(ec.getTraps()) + ")");
+        sb.append(".WithTraps(" + TestCommon.IntToString(ec.Traps) + ")");
       }
       return sb.toString();
     }
