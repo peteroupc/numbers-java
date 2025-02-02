@@ -2553,9 +2553,10 @@ licensed under the Unlicense: https://unlicense.org/
           thisValue,
           this.NegateRaw(this.Multiply(ret, divisor, null)),
           ctx2);
+      int negFlag = BigNumberFlags.FlagNegative;
       ret = this.EnsureSign(
           ret,
-          (this.helper.GetFlags(thisValue) & BigNumberFlags.FlagNegative) != 0);
+          (this.helper.GetFlags(thisValue) & negFlag) != 0);
 
       TransferFlags(
         ctx,
@@ -2598,9 +2599,10 @@ licensed under the Unlicense: https://unlicense.org/
       }
       if (this.helper.GetFlags(ret2) == 0 &&
         this.helper.GetMantissa(ret2).isZero()) {
+        int negFlag = BigNumberFlags.FlagNegative;
         ret2 = this.EnsureSign(
             ret2,
-            (this.helper.GetFlags(thisValue) & BigNumberFlags.FlagNegative) != 0);
+            (this.helper.GetFlags(thisValue) & negFlag) != 0);
       }
       TransferFlags(
         ctx,
@@ -3887,8 +3889,8 @@ licensed under the Unlicense: https://unlicense.org/
               (BigNumberFlags.FlagInfinity |
                 BigNumberFlags.FlagNegative))) ? this.ValueOf(0, null) :
             (((thisFlags & BigNumberFlags.FlagNegative) == 0) ? this.ValueOf(
-            1,
-            null) : this.ValueOf(-1, null));
+              1,
+              null) : this.ValueOf(-1, null));
         }
         if ((otherFlags & BigNumberFlags.FlagInfinity) != 0) {
           // the other value is infinity
