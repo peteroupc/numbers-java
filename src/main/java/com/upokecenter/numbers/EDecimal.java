@@ -4202,8 +4202,8 @@ rather than properties
       EDecimal divisor,
       EContext ctx) {
       return this.Subtract(
-          this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
-          ctx);
+        this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
+        ctx);
     }
 
     /**
@@ -5187,8 +5187,7 @@ rather than properties
               return (short)smallmantissa;
             }
           }
-          */
-        }
+          */ }
         if (this.exponent.CompareToInt(39) > 0) {
           // Very high exponent, treat as infinity
           return this.isNegative() ? ((short)(EFloat.Binary16Infinity +

@@ -13,7 +13,7 @@ private DecTestUtil() {
 }
     private static final String TestLineRegex =
 
-      "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
+  "^([A-Za-z0-9_]+)\\s+([A-Za-z0-9_\\-]+)\\s+(\\'[^\\']*\\'|\\S+)\\s+(?:(\\S+)\\s+)?(?:(\\S+)\\s+)?->\\s+(\\S+)\\s*(.*)";
 
     private static final Pattern ValuePropertyLine = Pattern.compile(
       "^(\\w+)\\:\\s*(\\S+).*");
@@ -1691,9 +1691,9 @@ private DecTestUtil() {
         // Skip tests that take null as input or output;
         // also skip tests that take a hex number format
         if (Contains(input1, "#") ||
-          Contains(input2, "#") ||
-          Contains(input3, "#") ||
-          Contains(output, "#")) {
+                 Contains(input2, "#") ||
+                 Contains(input3, "#") ||
+                 Contains(output, "#")) {
           return;
         }
         if (!extended && (Contains(input1, "sNaN") ||
@@ -1806,8 +1806,8 @@ private DecTestUtil() {
 
         ctx = EContext.ForPrecision(precision)
           .WithExponentClamp(clamp).WithExponentRange(
-          minexponent,
-          maxexponent);
+            minexponent,
+            maxexponent);
         rounding = ToLowerCaseAscii(GetKeyOrDefault(
           context,
           "rounding",

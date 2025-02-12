@@ -3193,8 +3193,8 @@ licensed under the Unlicense: https://unlicense.org/
       EFloat divisor,
       EContext ctx) {
       return this.Subtract(
-          this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
-          ctx);
+        this.DivideToIntegerNaturalScale(divisor, null).Multiply(divisor, null),
+        ctx);
     }
 
     /**

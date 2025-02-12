@@ -1012,9 +1012,9 @@ private EDecimals() {
       }
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
           ed.getMantissa().signum() < 0) ? null : FromLogical(
-          ed.getUnsignedMantissa(),
-          ec,
-          iradix);
+            ed.getUnsignedMantissa(),
+            ec,
+            iradix);
     }
 
     static byte[] FromLogical(EFloat ed, EContext ec, int iradix) {
@@ -1025,8 +1025,8 @@ private EDecimals() {
       // IsPrecisionInBits here
       return (!ed.isFinite() || ed.isNegative() || ed.getExponent().signum() != 0 ||
           ed.getMantissa().signum() < 0) ? null : FromLogical(
-          ed.getUnsignedMantissa(),
-          ec,
-          iradix);
+            ed.getUnsignedMantissa(),
+            ec,
+            iradix);
     }
   }

@@ -73,8 +73,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
           return this.smallValue == fi.smallValue;
         case LargeValue:
           return this.largeValue.equals(fi.largeValue);
-        default:
-          return true;
+        default: return true;
       }
     }
 
@@ -297,8 +296,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
               IntegerMode.LargeValue,
               0,
               this.largeValue.Negate());
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -308,8 +306,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
           return -evalue.compareTo(this.smallValue);
         case LargeValue:
           return this.largeValue.compareTo(evalue);
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -319,8 +316,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
           return -fint.CompareToInt(this.smallValue);
         case LargeValue:
           return -fint.compareTo(this.largeValue);
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -348,8 +344,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
           return FromInt32(this.smallValue);
         case LargeValue:
           return FastIntegerFixed.FromBig(this.largeValue);
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -379,8 +374,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
           return FastInteger.IntToString(this.smallValue);
         case LargeValue:
           return this.largeValue.toString();
-        default:
-          return "";
+        default: return "";
       }
     }
 
@@ -438,8 +432,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
             valLong ? -1 : 1);
         case LargeValue:
           return this.largeValue.compareTo(valLong);
-        default:
-          return 0;
+        default: return 0;
       }
     }
 
@@ -450,8 +443,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
             1);
         case LargeValue:
           return this.largeValue.compareTo(EInteger.FromInt32(val));
-        default:
-          return 0;
+        default: return 0;
       }
     }
 
@@ -461,8 +453,7 @@ private int v; IntegerMode(int v) { this.v = v; }}
           return EInteger.FromInt32(this.smallValue);
         case LargeValue:
           return this.largeValue;
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
   }

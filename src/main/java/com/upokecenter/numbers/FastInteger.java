@@ -509,8 +509,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.mnum.ToInt32();
         case 2:
           return this.largeValue.ToInt32Checked();
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -522,8 +521,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.ToEInteger().compareTo(ei);
         case 2:
           return this.largeValue.compareTo(ei);
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -548,8 +546,7 @@ licensed under the Unlicense: https://unlicense.org/
         case (2 << 2) | 1:
         case (2 << 2) | 2:
           return this.largeValue.compareTo(val.ToEInteger());
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -625,8 +622,7 @@ licensed under the Unlicense: https://unlicense.org/
           case 2:
             this.largeValue = this.largeValue.Multiply(EInteger.FromInt32(val));
             break;
-          default:
-            throw new IllegalStateException();
+          default: throw new IllegalStateException();
         }
       }
       return this;
@@ -707,8 +703,7 @@ licensed under the Unlicense: https://unlicense.org/
           valValue = val.ToEInteger();
           this.largeValue = this.largeValue.Subtract(valValue);
           break;
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
       return this;
     }
@@ -832,8 +827,7 @@ licensed under the Unlicense: https://unlicense.org/
           valValue = val.ToEInteger();
           this.largeValue = this.largeValue.Add(valValue);
           break;
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
       return this;
     }
@@ -940,8 +934,7 @@ licensed under the Unlicense: https://unlicense.org/
           return ei.ShiftLeft(this.mnum.ToEInteger());
         case 2:
           return ei.ShiftLeft(this.largeValue);
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1004,8 +997,7 @@ licensed under the Unlicense: https://unlicense.org/
           valValue = EInteger.FromInt32(val);
           this.largeValue = this.largeValue.Add(valValue);
           break;
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
       return this;
     }
@@ -1018,8 +1010,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.mnum.CanFitInInt32();
         case 2:
           return this.largeValue.CanFitInInt32();
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1032,8 +1023,7 @@ licensed under the Unlicense: https://unlicense.org/
         case 2:
           return this.largeValue.CanFitInInt64();
 
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1046,8 +1036,7 @@ licensed under the Unlicense: https://unlicense.org/
         case 2:
           return this.largeValue.ToInt64Unchecked();
 
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1168,8 +1157,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.mnum.ToEInteger().toString();
         case 2:
           return this.largeValue.toString();
-        default:
-          return "";
+        default: return "";
       }
     }
 
@@ -1213,8 +1201,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.mnum.ToEInteger().compareTo(EInteger.FromInt32(val));
         case 2:
           return this.largeValue.compareTo(EInteger.FromInt32(val));
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
 
@@ -1226,8 +1213,7 @@ licensed under the Unlicense: https://unlicense.org/
           return this.mnum.ToEInteger();
         case 2:
           return this.largeValue;
-        default:
-          throw new IllegalStateException();
+        default: throw new IllegalStateException();
       }
     }
   }
