@@ -97,7 +97,7 @@ import com.upokecenter.numbers.*;
     public void TestCompareToBinary2Test() {
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        TestCompareToBinary2(RandomObjects.RandomEFloat(rg));
+        TestCompareToBinary2(RandomNumerics.RandomEFloat(rg));
       }
     }
     @Test
@@ -165,9 +165,9 @@ import com.upokecenter.numbers.*;
     public void TestCompareTo() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomEFloat(r);
-        EFloat bigintB = RandomObjects.RandomEFloat(r);
-        EFloat bigintC = RandomObjects.RandomEFloat(r);
+        EFloat bigintA = RandomNumerics.RandomEFloat(r);
+        EFloat bigintB = RandomNumerics.RandomEFloat(r);
+        EFloat bigintC = RandomNumerics.RandomEFloat(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       TestCommon.CompareTestLess(EFloat.Zero, EFloat.NaN);
@@ -275,8 +275,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
-        EFloat ed1 = RandomObjects.RandomEFloat(fr);
-        EFloat ed2 = RandomObjects.RandomEFloat(fr);
+        EFloat ed1 = RandomNumerics.RandomEFloat(fr);
+        EFloat ed2 = RandomNumerics.RandomEFloat(fr);
         if (!ed1.isFinite() || !ed2.isFinite()) {
           continue;
         }
@@ -355,8 +355,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomEFloat(r);
-        EFloat bigintB = RandomObjects.RandomEFloat(r);
+        EFloat bigintA = RandomNumerics.RandomEFloat(r);
+        EFloat bigintB = RandomNumerics.RandomEFloat(r);
         TestCommon.AssertEqualsHashCode(bigintA, bigintB);
       }
     }
@@ -647,7 +647,7 @@ import com.upokecenter.numbers.*;
     public void TestFloatDecimalRoundTrip() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
-        EFloat ef = RandomObjects.RandomEFloat(r);
+        EFloat ef = RandomNumerics.RandomEFloat(r);
         EDecimal ed = ef.ToEDecimal();
         EFloat ef2 = ed.ToEFloat();
         // Tests that values converted from float to decimal and
@@ -1422,8 +1422,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomEFloat(r);
-        EFloat bigintB = RandomObjects.RandomEFloat(r);
+        EFloat bigintA = RandomNumerics.RandomEFloat(r);
+        EFloat bigintB = RandomNumerics.RandomEFloat(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -1490,8 +1490,8 @@ import com.upokecenter.numbers.*;
 
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EFloat bigintA = RandomObjects.RandomEFloat(r);
-        EFloat bigintB = RandomObjects.RandomEFloat(r);
+        EFloat bigintA = RandomNumerics.RandomEFloat(r);
+        EFloat bigintB = RandomNumerics.RandomEFloat(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -1655,7 +1655,7 @@ import com.upokecenter.numbers.*;
         EInteger.FromString("36410213260593956497280175692088585748480"));
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger ei = RandomObjects.RandomEInteger(rg);
+        EInteger ei = RandomNumerics.RandomEInteger(rg);
         TestIntegerDoubleSingleOne(ei);
       }
     }
@@ -1868,7 +1868,7 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EInteger ei = RandomObjects.RandomEInteger(rg);
+        EInteger ei = RandomNumerics.RandomEInteger(rg);
         EInteger thresh = EInteger.FromInt64(6999999999999999999L);
         if (ei.Abs().compareTo(thresh) < 0) {
           ei = ei.Add(ei.signum() < 0 ? thresh.Negate() : thresh);
@@ -2944,7 +2944,7 @@ import com.upokecenter.numbers.*;
     public void TestConversions() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 20000; ++i) {
-        EFloat enumber = RandomObjects.RandomEFloat(fr);
+        EFloat enumber = RandomNumerics.RandomEFloat(fr);
         TestConversionsOne(enumber);
       }
     }
@@ -3426,7 +3426,7 @@ import com.upokecenter.numbers.*;
       }
       for (int i = 0; i < 1000; ++i) {
         RandomGenerator rg = new RandomGenerator();
-        EInteger ei = RandomObjects.RandomEInteger(rg);
+        EInteger ei = RandomNumerics.RandomEInteger(rg);
         int expo = rg.UniformInt(20);
         EFloat ed = EFloat.FromEInteger(ei).ScaleByPowerOfTwo(
           expo).MovePointLeft(expo);
@@ -3530,7 +3530,7 @@ import com.upokecenter.numbers.*;
       for (int i = 0; i < 100000; ++i) {
         boolean b = rg.UniformInt(2) == 0;
         TestSizedEIntegerOne(
-          RandomObjects.RandomEFloat(rg),
+          RandomNumerics.RandomEFloat(rg),
           b,
           rg.UniformInt(129));
       }
@@ -3676,7 +3676,7 @@ import com.upokecenter.numbers.*;
     public void TestToString() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EFloat dec = RandomObjects.RandomEFloat(fr);
+        EFloat dec = RandomNumerics.RandomEFloat(fr);
         if (dec.isFinite()) {
           EDecimal ed = EDecimal.FromString(dec.toString());
           Assert.assertEquals(0, ed.CompareToBinary(dec));

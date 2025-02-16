@@ -170,7 +170,7 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 100000; ++i) {
-        TestSizedEIntegerOne(RandomObjects.RandomERational(rg),
+        TestSizedEIntegerOne(RandomNumerics.RandomERational(rg),
           rg.UniformInt(2) == 0,
           rg.UniformInt(129));
       }
@@ -291,8 +291,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger ei1 = RandomObjects.RandomEInteger(fr);
-        EInteger ei2 = RandomObjects.RandomEInteger(fr).Abs();
+        EInteger ei1 = RandomNumerics.RandomEInteger(fr);
+        EInteger ei2 = RandomNumerics.RandomEInteger(fr).Abs();
         if (ei2.isZero()) {
           ei2 = EInteger.FromInt32(1);
         }
@@ -317,15 +317,15 @@ import com.upokecenter.numbers.*;
     public void TestCompareTo() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        ERational bigintA = RandomObjects.RandomERational(r);
-        ERational bigintB = RandomObjects.RandomERational(r);
-        ERational bigintC = RandomObjects.RandomERational(r);
+        ERational bigintA = RandomNumerics.RandomERational(r);
+        ERational bigintB = RandomNumerics.RandomERational(r);
+        ERational bigintC = RandomNumerics.RandomERational(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       TestCommon.CompareTestLess(ERational.Zero, ERational.NaN);
       ERational rat, rat2;
       for (int i = 0; i < 100; ++i) {
-        EInteger num = RandomObjects.RandomEInteger(r);
+        EInteger num = RandomNumerics.RandomEInteger(r);
         if (num.isZero()) {
           // Skip if number is 0; 0/1 and 0/2 are
           // equal in that case
@@ -341,8 +341,8 @@ import com.upokecenter.numbers.*;
         ERational.Create(EInteger.FromInt32(1), EInteger.FromInt64(2)),
         ERational.Create(EInteger.FromInt64(4), EInteger.FromInt32(1)));
       for (int i = 0; i < 100; ++i) {
-        EInteger num = RandomObjects.RandomEInteger(r);
-        EInteger den = RandomObjects.RandomEInteger(r);
+        EInteger num = RandomNumerics.RandomEInteger(r);
+        EInteger den = RandomNumerics.RandomEInteger(r);
         if (den.isZero()) {
           den = EInteger.FromInt32(1);
         }
@@ -350,7 +350,7 @@ import com.upokecenter.numbers.*;
         for (int j = 0; j < 10; ++j) {
           EInteger num2 = num;
           EInteger den2 = den;
-          EInteger mult = RandomObjects.RandomEInteger(r);
+          EInteger mult = RandomNumerics.RandomEInteger(r);
           if (mult.isZero() || mult.equals(EInteger.FromInt32(1))) {
             mult = EInteger.FromInt64(2);
           }
@@ -369,10 +369,10 @@ import com.upokecenter.numbers.*;
     public void TestCompareToDecimal() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 100; ++i) {
-        ERational er = RandomObjects.RandomERational(fr);
+        ERational er = RandomNumerics.RandomERational(fr);
         int exp = -100000 + fr.UniformInt(200000);
         EDecimal ed = EDecimal.Create(
-            RandomObjects.RandomEInteger(fr),
+            RandomNumerics.RandomEInteger(fr),
             EInteger.FromInt32(exp));
         ERational er2 = ERational.FromEDecimal(ed);
         int c2r = er.compareTo(er2);
@@ -430,8 +430,8 @@ import com.upokecenter.numbers.*;
     public void TestDivide() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        ERational er = RandomObjects.RandomERational(fr);
-        ERational er2 = RandomObjects.RandomERational(fr);
+        ERational er = RandomNumerics.RandomERational(fr);
+        ERational er2 = RandomNumerics.RandomERational(fr);
         if (er2.isZero() || !er2.isFinite()) {
           continue;
         }
@@ -487,7 +487,7 @@ import com.upokecenter.numbers.*;
       for (int i = 0; i < 20000; ++i) {
         boolean isNum, isTruncated, isInteger;
         EInteger eint;
-        ERational enumber = RandomObjects.RandomERational(fr);
+        ERational enumber = RandomNumerics.RandomERational(fr);
         boolean numDenClose = !enumber.isFinite() ||
           enumber.getNumerator().GetUnsignedBitLengthAsEInteger()
           .Subtract(enumber.getDenominator().GetUnsignedBitLengthAsEInteger())
@@ -1126,10 +1126,10 @@ import com.upokecenter.numbers.*;
         ERational er;
         ERational er2;
         er = ERational.Create(
-            RandomObjects.RandomEInteger(fr),
+            RandomNumerics.RandomEInteger(fr),
             EInteger.FromInt32(1));
         er2 = ERational.Create(
-            RandomObjects.RandomEInteger(fr),
+            RandomNumerics.RandomEInteger(fr),
             EInteger.FromInt32(1));
         if (er2.isZero() || !er2.isFinite()) {
           continue;
@@ -1335,7 +1335,7 @@ import com.upokecenter.numbers.*;
     public void TestToEFloat() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        ERational er = RandomObjects.RandomERational(r);
+        ERational er = RandomNumerics.RandomERational(r);
         if (!er.isFinite()) {
           continue;
         }
@@ -1479,7 +1479,7 @@ import com.upokecenter.numbers.*;
       RandomGenerator fr = new RandomGenerator();
       ERational dec;
       for (int i = 0; i < 1000; ++i) {
-        dec = RandomObjects.RandomERational(fr);
+        dec = RandomNumerics.RandomERational(fr);
         ExtraTest.TestStringEqualRoundTrip(dec);
       }
       dec = ERational.FromString("-0/500");

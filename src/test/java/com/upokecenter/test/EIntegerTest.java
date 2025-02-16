@@ -112,7 +112,7 @@ import com.upokecenter.numbers.*;
     private static EInteger RandomManageableEInteger(IRandomGenExtended rg) {
       EInteger ei;
       while (true) {
-        ei = RandomObjects.RandomEInteger(rg);
+        ei = RandomNumerics.RandomEInteger(rg);
         if (ei.GetUnsignedBitLengthAsInt64() <= 16 * 3000) {
           return ei;
         }
@@ -435,7 +435,7 @@ import com.upokecenter.numbers.*;
       EInteger eib = EInteger.FromInt32(1).ShiftLeft(1000);
       EInteger eic = EInteger.FromInt32(1).ShiftLeft(10000);
       for (int i = 0; i < 10000; ++i) {
-        EInteger ei = RandomObjects.RandomEInteger(r).Abs();
+        EInteger ei = RandomNumerics.RandomEInteger(r).Abs();
         for (int j = 0; j < ints.length; ++j) {
           EInteger ei1 = ei.And(EInteger.FromInt32(1).ShiftLeft(ints[j]).Subtract(1));
           EInteger ei2 = ei.LowBits(ints[j]);
@@ -458,8 +458,8 @@ import com.upokecenter.numbers.*;
     public void TestAddSubtract() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        EInteger bigintB = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
+        EInteger bigintB = RandomNumerics.RandomEInteger(r);
         EInteger bigintC = bigintA.Add(bigintB);
         EInteger bigintD = bigintC.Subtract(bigintB);
         if (!bigintD.equals(bigintA)) {
@@ -476,7 +476,7 @@ import com.upokecenter.numbers.*;
         }
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         int smallIntB = r.UniformInt(0x7fffffff);
         EInteger bigintC = bigintA.Add(smallIntB);
         EInteger bigintD = bigintC.Subtract(smallIntB);
@@ -875,7 +875,7 @@ import com.upokecenter.numbers.*;
     public void TestCanFitInInt() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 2000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         Assert.assertEquals(
           bigintA.CanFitInInt32(),
           bigintA.GetSignedBitLengthAsEInteger().compareTo(31) <= 0);
@@ -982,9 +982,9 @@ import com.upokecenter.numbers.*;
     public void TestCompareTo() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        EInteger bigintB = RandomObjects.RandomEInteger(r);
-        EInteger bigintC = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
+        EInteger bigintB = RandomNumerics.RandomEInteger(r);
+        EInteger bigintC = RandomNumerics.RandomEInteger(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
         TestCommon.CompareTestConsistency(bigintA, bigintB, bigintC);
       }
@@ -1206,8 +1206,8 @@ import com.upokecenter.numbers.*;
         EInteger.FromInt32(1));
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        EInteger bigintB = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
+        EInteger bigintB = RandomNumerics.RandomEInteger(r);
         TestCommon.AssertEqualsHashCode(bigintA, bigintB);
       }
     }
@@ -2082,7 +2082,7 @@ import com.upokecenter.numbers.*;
           }
         }
         EInteger bigprime = EInteger.FromInt32(prime);
-        EInteger ba = RandomObjects.RandomEInteger(rand);
+        EInteger ba = RandomNumerics.RandomEInteger(rand);
         if (ba.isZero()) {
           continue;
         }
@@ -2248,7 +2248,7 @@ import com.upokecenter.numbers.*;
         Assert.assertEquals(39, integerTemp2);
       }
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         String str = bigintA.Abs().toString();
         Assert.assertEquals(str, EInteger.FromInt32(str.length()), bigintA.GetDigitCountAsEInteger());
       }
@@ -2665,7 +2665,7 @@ import com.upokecenter.numbers.*;
     public void TestIsEven() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         EInteger mod = bigintA.Remainder(EInteger.FromInt64(2));
         Assert.assertEquals(mod.isZero(), bigintA.isEven());
         if (bigintA.isEven()) {
@@ -3168,13 +3168,13 @@ import com.upokecenter.numbers.*;
         TestMultiplyDivideOne(bigA, bigB);
       }
       for (int i = 0; i < 100; ++i) {
-        EInteger bigA = RandomObjects.RandomEInteger(r);
-        EInteger bigB = RandomObjects.RandomEInteger(r);
+        EInteger bigA = RandomNumerics.RandomEInteger(r);
+        EInteger bigB = RandomNumerics.RandomEInteger(r);
         TestMultiplyDivideOne(bigA, bigB);
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger bigA = RandomObjects.RandomEIntegerSmall(r);
-        EInteger bigB = RandomObjects.RandomEIntegerSmall(r);
+        EInteger bigA = RandomNumerics.RandomEIntegerSmall(r);
+        EInteger bigB = RandomNumerics.RandomEIntegerSmall(r);
         TestMultiplyDivideOne(bigA, bigB);
       }
       TestMultiplyDivideOne(EInteger.FromInt32(-985), EInteger.FromInt32(0));
@@ -3288,7 +3288,7 @@ import com.upokecenter.numbers.*;
       TestCommon.CompareTestEqualAndConsistent(bigint.ShiftLeft(-12), bigint.ShiftRight(12));
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         EInteger bigintB = bigintA;
         for (int j = 0; j < 100; ++j) {
           EInteger ba = bigintA;
@@ -3321,7 +3321,7 @@ import com.upokecenter.numbers.*;
         }
       }
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         bigintA = bigintA.Abs();
         EInteger bigintB = bigintA;
         for (int j = 0; j < 100; ++j) {
@@ -3626,14 +3626,14 @@ import com.upokecenter.numbers.*;
       AssertBigIntegersEqual("898989", other);
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         ExtraTest.TestStringEqualRoundTrip(bigintA);
       }
       // Test serialization of relatively big numbers
       for (int i = 0; i < 20; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         bigintA = bigintA.ShiftLeft(r.UniformInt(2000) + (16 * 500));
-        bigintA = bigintA.Subtract(RandomObjects.RandomEInteger(r));
+        bigintA = bigintA.Subtract(RandomNumerics.RandomEInteger(r));
         ExtraTest.TestStringEqualRoundTrip(bigintA);
       }
     }

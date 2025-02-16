@@ -115,8 +115,8 @@ import com.upokecenter.numbers.*;
         EInteger exp1 = EInteger.FromInt32(exp)
           .Add(EInteger.FromInt32(fr.UniformInt(32) - 16));
         EInteger exp2 = exp1.Add(EInteger.FromInt32(fr.UniformInt(18) - 9));
-        EInteger mant1 = RandomObjects.RandomEInteger(fr);
-        EInteger mant2 = RandomObjects.RandomEInteger(fr);
+        EInteger mant1 = RandomNumerics.RandomEInteger(fr);
+        EInteger mant2 = RandomNumerics.RandomEInteger(fr);
         EDecimal decA = EDecimal.Create(mant1, exp1);
         EDecimal decB = EDecimal.Create(mant2, exp2);
         EDecimal decC = decA.Add(decB);
@@ -179,15 +179,15 @@ import com.upokecenter.numbers.*;
     public void TestCompareTo() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintC = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintA = RandomNumerics.RandomEDecimal(r);
+        EDecimal bigintB = RandomNumerics.RandomEDecimal(r);
+        EDecimal bigintC = RandomNumerics.RandomEDecimal(r);
         TestCommon.CompareTestRelations(bigintA, bigintB, bigintC);
       }
       // Test equivalence of EInteger and EDecimal for integers
       for (int i = 0; i < 3000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
-        EInteger bigintB = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
+        EInteger bigintB = RandomNumerics.RandomEInteger(r);
         EInteger bigintC = bigintA.Add(bigintB);
         EDecimal ba1 = EDecimal.FromEInteger(bigintA)
           .Add(EDecimal.FromEInteger(bigintB));
@@ -266,7 +266,7 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 30000; ++i) {
-        EInteger bigintA = RandomObjects.RandomEInteger(r);
+        EInteger bigintA = RandomNumerics.RandomEInteger(r);
         int cmp = EDecimal.FromEInteger(bigintA).CompareToBinary(
           EFloat.FromEInteger(bigintA));
         Assert.assertEquals(0, cmp);
@@ -518,7 +518,7 @@ import com.upokecenter.numbers.*;
       TestConversionsOne(EDecimal.FromString("4766857907817990.0000000000"));
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
-        EDecimal enumber = RandomObjects.RandomEDecimal(fr);
+        EDecimal enumber = RandomNumerics.RandomEDecimal(fr);
         TestConversionsOne(enumber);
       }
       TestConversionsOne(EDecimal.FromString("-0.8995"));
@@ -1321,8 +1321,8 @@ import com.upokecenter.numbers.*;
       EDecimalTest.TestDivideOne(ed1, ed2);
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
-        ed1 = RandomObjects.RandomEDecimal(fr);
-        ed2 = RandomObjects.RandomEDecimal(fr);
+        ed1 = RandomNumerics.RandomEDecimal(fr);
+        ed2 = RandomNumerics.RandomEDecimal(fr);
         TestDivideOne(ed1, ed2);
       }
       try {
@@ -1422,8 +1422,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintA = RandomNumerics.RandomEDecimal(r);
+        EDecimal bigintB = RandomNumerics.RandomEDecimal(r);
         TestCommon.AssertEqualsHashCode(bigintA, bigintB);
       }
     }
@@ -1732,7 +1732,7 @@ import com.upokecenter.numbers.*;
     public void TestFromEInteger() {
       RandomGenerator fr = new RandomGenerator();
       for (int i = 0; i < 5000; ++i) {
-        EInteger ei = RandomObjects.RandomEInteger(fr);
+        EInteger ei = RandomNumerics.RandomEInteger(fr);
         EDecimal edec = EDecimal.FromEInteger(ei);
         Assert.assertEquals(EInteger.FromInt32(0), edec.getExponent());
         Assert.assertEquals(ei, edec.getMantissa());
@@ -2841,8 +2841,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintA = RandomNumerics.RandomEDecimal(r);
+        EDecimal bigintB = RandomNumerics.RandomEDecimal(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -2908,8 +2908,8 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 500; ++i) {
-        EDecimal bigintA = RandomObjects.RandomEDecimal(r);
-        EDecimal bigintB = RandomObjects.RandomEDecimal(r);
+        EDecimal bigintA = RandomNumerics.RandomEDecimal(r);
+        EDecimal bigintB = RandomNumerics.RandomEDecimal(r);
         if (!bigintA.isFinite() || !bigintB.isFinite()) {
           continue;
         }
@@ -3121,7 +3121,7 @@ import com.upokecenter.numbers.*;
     public void TestCopySign() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EDecimal ed = RandomObjects.RandomEDecimal(r);
+        EDecimal ed = RandomNumerics.RandomEDecimal(r);
         ed = ed.CopySign(EDecimal.Zero);
         if (ed.isNegative()) {
  Assert.fail();
@@ -3172,7 +3172,7 @@ import com.upokecenter.numbers.*;
     public void TestNegate() {
       RandomGenerator r = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EDecimal ed = RandomObjects.RandomEDecimal(r);
+        EDecimal ed = RandomNumerics.RandomEDecimal(r);
         ed = ed.CopySign(EDecimal.Zero);
         if (!(ed.Negate().isNegative())) {
  Assert.fail();
@@ -3690,7 +3690,7 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 75000; ++i) {
-        EDecimal ed = RandomObjects.RandomEDecimal(rg);
+        EDecimal ed = RandomNumerics.RandomEDecimal(rg);
         boolean bv = rg.UniformInt(2) == 0;
         int msb = rg.UniformInt(129);
         try {
@@ -3702,7 +3702,7 @@ import com.upokecenter.numbers.*;
         }
       }
       for (int i = 0; i < 10000; ++i) {
-        EInteger ei = RandomObjects.RandomEInteger(rg);
+        EInteger ei = RandomNumerics.RandomEInteger(rg);
         int expo = rg.UniformInt(20);
         boolean bv = rg.UniformInt(2) == 0;
         int msb = rg.UniformInt(129);
@@ -3847,7 +3847,7 @@ import com.upokecenter.numbers.*;
       }
       RandomGenerator rg = new RandomGenerator();
       for (int i = 0; i < 1000; ++i) {
-        EInteger ei = RandomObjects.RandomEInteger(rg);
+        EInteger ei = RandomNumerics.RandomEInteger(rg);
         int expo = rg.UniformInt(20);
         EDecimal ed = EDecimal.FromEInteger(ei)
           .ScaleByPowerOfTen(expo).MovePointLeft(expo);
@@ -4023,7 +4023,7 @@ import com.upokecenter.numbers.*;
  }
       for (int i = 0; i < 100000; ++i) {
         EDecimal edec;
-        edec = RandomObjects.RandomEDecimal(fr);
+        edec = RandomNumerics.RandomEDecimal(fr);
         if (edec.isFinite()) {
           dbl = edec.ToDouble();
           if (((dbl) == Double.NEGATIVE_INFINITY)) {
@@ -5543,7 +5543,7 @@ import com.upokecenter.numbers.*;
  }
       for (int i = 0; i < 100000; ++i) {
         EDecimal edec;
-        edec = RandomObjects.RandomEDecimal(fr);
+        edec = RandomNumerics.RandomEDecimal(fr);
         if (edec.isFinite()) {
           sng = edec.ToSingle();
           if (((sng) == Float.NEGATIVE_INFINITY)) {
