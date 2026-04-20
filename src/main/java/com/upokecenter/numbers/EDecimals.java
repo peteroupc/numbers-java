@@ -978,7 +978,7 @@ private EDecimals() {
         null;
       EInteger bytecount = prec.ShiftRight(3).Add(1);
       if (bytecount.compareTo(0x7fffffff) > 0) {
-        return null; // Out of memory
+        return null; // Out of system memory
       }
       int bitindex = 0;
       byte[] bytes = new byte[bytecount.ToInt32Checked()];

@@ -70,80 +70,80 @@ rather than properties
    * the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw
    * an exception too, unless the flag's trap is enabled in the arithmetic
    * context (see EContext's Traps property).</p> <p>If an operation requires
-   * creating an intermediate value that might be too big to fit in memory (or
-   * might require more than 2 gigabytes of memory to store -- due to the current
-   * use of a 32-bit integer internally as a length), the operation may signal an
-   * invalid-operation flag and return not-a-number (NaN). In certain rare cases,
-   * the compareTo method may throw OutOfMemoryError (called OutOfMemoryError in
-   * Java) in the same circumstances.</p> <p><b>Serialization</b> </p> <p>An
-   * arbitrary-precision decimal value can be serialized (converted to a stable
-   * format) in one of the following ways:</p> <ul><li>By calling the toString()
-   * method, which will always return distinct strings for distinct
-   * arbitrary-precision decimal values.</li><li>By calling the UnsignedMantissa,
-   * Exponent, and IsNegative properties, and calling the IsInfinity, IsQuietNaN,
-   * and IsSignalingNaN methods. The return values combined will uniquely
-   * identify a particular arbitrary-precision decimal value.</li></ul>
-   * <p><b>Thread safety</b> </p> <p>Instances of this class are immutable, so
-   * they are inherently safe for use by multiple threads. Multiple instances of
-   * this object with the same properties are interchangeable, so they should not
-   * be compared using the "==" operator (which might only check if each side of
-   * the operator is the same instance).</p> <p><b>Comparison considerations</b>
-   * </p> <p>This class's natural ordering (under the compareTo method) is not
-   * consistent with the Equals method. This means that two values that compare
-   * as equal under the compareTo method might not be equal under the Equals
-   * method. The compareTo method compares the mathematical values of the two
-   * instances passed to it (and considers two different NaN values as equal),
-   * while two instances with the same mathematical value, but different
-   * exponents, will be considered unequal under the Equals method.</p>
-   * <p><b>Security note</b> </p> <p>It is not recommended to implement
-   * security-sensitive algorithms using the methods in this class, for several
-   * reasons:</p> <ul><li>{@code EDecimal} objects are immutable, so they can't
-   * be modified, and the memory they occupy is not guaranteed to be cleared in a
-   * timely fashion due to garbage collection. This is relevant for applications
-   * that use many-digit-long numbers as secret parameters.</li><li>The methods
-   * in this class (especially those that involve arithmetic) are not guaranteed
-   * to be "constant-time" (nondata-dependent) for all relevant inputs. Certain
-   * attacks that involve encrypted communications have exploited the timing and
-   * other aspects of such communications to derive keying material or cleartext
-   * indirectly.</li></ul> <p>Applications should instead use dedicated security
-   * libraries to handle big numbers in security-sensitive algorithms.</p>
-   * <p><b>Reproducibility note</b> </p> <p>Some applications, such as
-   * simulations, care about results that are reproducible, bit for bit, across
-   * computers and across runs of the application. Bruce Dawson, in
-   * "Floating-Point Determinism" ({@code https://randomascii.wordpress.com/}
-   * {@code 2013/07/16/floating-point-determinism/}), identified many
-   * reproducibility issues with floating-point numbers, and here is how they
-   * relate to the EDecimal and EFloat classes of this library:</p>
-   * <ul><li>Runtime floating-point settings: All the settings that change how
-   * EDecimal and EFloat behave are given as parameters to the appropriate
-   * methods, especially via EContext objects, which specify the precision,
-   * rounding, and exponent range of numbers, among other things. The EDecimal
-   * and EFloat classes avoid the use of "native" floating-point data types
-   * (except for methods that convert to or from {@code float} , {@code double} ,
-   * or {@code System.Decimal}). Such "native" types are often subject to
-   * runtime settings that change how floating-point math behaves with them, and
-   * these settings are often not accessible to .NET or Java
-   * code.</li><li>Nonassociativity and intermediate precisions: In general,
-   * EDecimal and EFloat use "unlimited" precision in their calculations unless
-   * specified otherwise by an EContext object. However, by limiting the
-   * precision of EDecimal, EFloat, and other floating-point numbers in this way,
-   * operations such as addition and multiplication on three or more numbers can
-   * be <i>nonassociative</i> , meaning the result can change depending on the
-   * order in which those numbers are added or multiplied. This property means
-   * that if an algorithm does not ensure such numbers are added or multiplied in
-   * the same order every time, its results may not be reproducible across
-   * computers or across runs of the application. This nonassociativity problem
-   * can happen, for example, if an application splits a calculation across
-   * several threads and combines their results in the end. The problems with an
-   * unspecified order of operations (in the same line of code) and intermediate
-   * precisions (problems present in C and C++, for example) don't exist with
-   * method calls to EDecimal and EFloat methods, especially since they require
-   * limited-precision support to be declared explicitly via
-   * EContext.</li><li>fmadd instruction: EDecimal and EFloat include a
-   * MultiplyAndAdd method with the same semantics as in the General Decimal
-   * Arithmetic Specification, which requires delivering correctly rounded
-   * results for this method.</li><li>Square root estimate: Not applicable since
-   * EDecimal and EFloat don't include any estimates to square
+   * creating an intermediate value that might be too big to fit in system memory
+   * (or might require more than 2 gigabytes of system memory to store -- due to
+   * the current use of a 32-bit integer internally as a length), the operation
+   * may signal an invalid-operation flag and return not-a-number (NaN). In
+   * certain rare cases, the compareTo method may throw OutOfMemoryError (called
+   * OutOfMemoryError in Java) in the same circumstances.</p>
+   * <p><b>Serialization</b> </p> <p>An arbitrary-precision decimal value can be
+   * serialized (converted to a stable format) in one of the following ways:</p>
+   * <ul><li>By calling the toString() method, which will always return distinct
+   * strings for distinct arbitrary-precision decimal values.</li><li>By calling
+   * the UnsignedMantissa, Exponent, and IsNegative properties, and calling the
+   * IsInfinity, IsQuietNaN, and IsSignalingNaN methods. The return values
+   * combined will uniquely identify a particular arbitrary-precision decimal
+   * value.</li></ul> <p><b>Thread safety</b> </p> <p>Instances of this class are
+   * immutable, so they are inherently safe for use by multiple threads. Multiple
+   * instances of this object with the same properties are interchangeable, so
+   * they should not be compared using the "==" operator (which might only check
+   * if each side of the operator is the same instance).</p> <p><b>Comparison
+   * considerations</b> </p> <p>This class's natural ordering (under the
+   * compareTo method) is not consistent with the Equals method. This means that
+   * two values that compare as equal under the compareTo method might not be
+   * equal under the Equals method. The compareTo method compares the
+   * mathematical values of the two instances passed to it (and considers two
+   * different NaN values as equal), while two instances with the same
+   * mathematical value, but different exponents, will be considered unequal
+   * under the Equals method.</p> <p><b>Security note</b> </p> <p>It is not
+   * recommended to implement security-sensitive algorithms using the methods in
+   * this class, for several reasons:</p> <ul><li> {@code EDecimal} objects are
+   * immutable, so they can't be modified, and the memory they occupy is not
+   * guaranteed to be cleared in a timely fashion due to garbage collection. This
+   * is relevant for applications that use many-digit-long numbers as secret
+   * parameters.</li><li>The methods in this class (especially those that involve
+   * arithmetic) are not guaranteed to be "constant-time" (nondata-dependent) for
+   * all relevant inputs. Certain attacks that involve encrypted communications
+   * have exploited the timing and other aspects of such communications to derive
+   * keying material or cleartext indirectly.</li></ul> <p>Applications should
+   * instead use dedicated security libraries to handle big numbers in
+   * security-sensitive algorithms.</p> <p><b>Reproducibility note</b> </p>
+   * <p>Some applications, such as simulations, care about results that are
+   * reproducible, bit for bit, across computers and across runs of the
+   * application. Bruce Dawson, in "Floating-Point Determinism" ({@code
+   * https://randomascii.wordpress.com/} {@code
+   * 2013/07/16/floating-point-determinism/}), identified many reproducibility
+   * issues with floating-point numbers, and here is how they relate to the
+   * EDecimal and EFloat classes of this library:</p> <ul><li>Runtime
+   * floating-point settings: All the settings that change how EDecimal and
+   * EFloat behave are given as parameters to the appropriate methods, especially
+   * via EContext objects, which specify the precision, rounding, and exponent
+   * range of numbers, among other things. The EDecimal and EFloat classes avoid
+   * the use of "native" floating-point data types (except for methods that
+   * convert to or from {@code float} , {@code double} , or {@code
+   * System.Decimal}). Such "native" types are often subject to runtime settings
+   * that change how floating-point math behaves with them, and these settings
+   * are often not accessible to .NET or Java code.</li><li>Nonassociativity and
+   * intermediate precisions: In general, EDecimal and EFloat use "unlimited"
+   * precision in their calculations unless specified otherwise by an EContext
+   * object. However, by limiting the precision of EDecimal, EFloat, and other
+   * floating-point numbers in this way, operations such as addition and
+   * multiplication on three or more numbers can be <i>nonassociative</i> ,
+   * meaning the result can change depending on the order in which those numbers
+   * are added or multiplied. This property means that if an algorithm does not
+   * ensure such numbers are added or multiplied in the same order every time,
+   * its results may not be reproducible across computers or across runs of the
+   * application. This nonassociativity problem can happen, for example, if an
+   * application splits a calculation across several threads and combines their
+   * results in the end. The problems with an unspecified order of operations (in
+   * the same line of code) and intermediate precisions (problems present in C
+   * and C++, for example) don't exist with method calls to EDecimal and EFloat
+   * methods, especially since they require limited-precision support to be
+   * declared explicitly via EContext.</li><li>fmadd instruction: EDecimal and
+   * EFloat include a MultiplyAndAdd method with the same semantics as in the
+   * General Decimal Arithmetic Specification, which requires delivering
+   * correctly rounded results for this method.</li><li>Square root estimate: Not
+   * applicable since EDecimal and EFloat don't include any estimates to square
    * root.</li><li>Transcendental functions: This includes logarithms,
    * exponentials, and the Pi method. For these functions, results are not
    * guaranteed to always be correctly rounded. When using transcendentals, an
@@ -4984,9 +4984,9 @@ rather than properties
      * Converts this value to an arbitrary-precision integer, discarding the
      * fractional part in this value. Note that depending on the value, especially
      * the exponent, generating the arbitrary-precision integer may require a huge
-     * amount of memory. Use the ToSizedEInteger method to convert a number to an
-     * EInteger only if the integer fits in a bounded bit range; that method will
-     * throw an exception on overflow.
+     * amount of system memory. Use the ToSizedEInteger method to convert a number
+     * to an EInteger only if the integer fits in a bounded bit range; that method
+     * will throw an exception on overflow.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
@@ -5001,9 +5001,9 @@ rather than properties
      * Converts this value to an arbitrary-precision integer, checking whether the
      * fractional part of the value would be lost. Note that depending on the
      * value, especially the exponent, generating the arbitrary-precision integer
-     * may require a huge amount of memory. Use the ToSizedEIntegerIfExact method
-     * to convert a number to an EInteger only if the integer fits in a bounded bit
-     * range; that method will throw an exception on overflow.
+     * may require a huge amount of system memory. Use the ToSizedEIntegerIfExact
+     * method to convert a number to an EInteger only if the integer fits in a
+     * bounded bit range; that method will throw an exception on overflow.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
@@ -5019,9 +5019,9 @@ rather than properties
      * Converts this value to an arbitrary-precision integer, checking whether the
      * fractional part of the value would be lost. Note that depending on the
      * value, especially the exponent, generating the arbitrary-precision integer
-     * may require a huge amount of memory. Use the ToSizedEIntegerIfExact method
-     * to convert a number to an EInteger only if the integer fits in a bounded bit
-     * range; that method will throw an exception on overflow.
+     * may require a huge amount of system memory. Use the ToSizedEIntegerIfExact
+     * method to convert a number to an EInteger only if the integer fits in a
+     * bounded bit range; that method will throw an exception on overflow.
      * @return An arbitrary-precision integer.
      * @throws ArithmeticException This object's value is infinity or not-a-number
      * (NaN).
