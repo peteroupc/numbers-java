@@ -30,7 +30,7 @@
  IsSignalingNaN methods. The return values combined will uniquely identify a
  particular arbitrary-precision binary floating-point number value.</li></ul>
  <p>If an operation requires creating an intermediate value that might be too
- big to fit in memory (or might require more than 2 gigabytes of memory to
+ big to fit in system memory (or might require more than 2 gigabytes of system memory to
  store -- due to the current use of a 32-bit integer internally as a length),
  the operation may signal an invalid-operation flag and return not-a-number
  (NaN). In certain rare cases, the compareTo method may throw
@@ -4643,8 +4643,7 @@ Converts this value to an arbitrary-precision decimal number.
 Converts this value to an arbitrary-precision integer. Any fractional part
  of this value will be discarded when converting to an arbitrary-precision
  integer. Note that depending on the value, especially the exponent,
- generating the arbitrary-precision integer may require a huge amount of
- memory. Use the ToSizedEInteger method to convert a number to an EInteger
+ generating the arbitrary-precision integer may require a huge amount of system memory. Use the ToSizedEInteger method to convert a number to an EInteger
  only if the integer fits in a bounded bit range; that method will throw an
  exception on overflow.
 
@@ -4664,7 +4663,7 @@ Converts this value to an arbitrary-precision integer. Any fractional part
 Converts this value to an arbitrary-precision integer, checking whether the
  value contains a fractional part. Note that depending on the value,
  especially the exponent, generating the arbitrary-precision integer may
- require a huge amount of memory. Use the ToSizedEIntegerIfExact method to
+ require a huge amount of system memory. Use the ToSizedEIntegerIfExact method to
  convert a number to an EInteger only if the integer fits in a bounded bit
  range; that method will throw an exception on overflow.
 
@@ -4686,7 +4685,7 @@ Converts this value to an arbitrary-precision integer, checking whether the
 Converts this value to an arbitrary-precision integer, checking whether the
  value contains a fractional part. Note that depending on the value,
  especially the exponent, generating the arbitrary-precision integer may
- require a huge amount of memory. Use the ToSizedEIntegerIfExact method to
+ require a huge amount of system memory. Use the ToSizedEIntegerIfExact method to
  convert a number to an EInteger only if the integer fits in a bounded bit
  range; that method will throw an exception on overflow.
 

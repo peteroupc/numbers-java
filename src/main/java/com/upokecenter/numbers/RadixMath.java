@@ -723,7 +723,7 @@ licensed under the Unlicense: https://unlicense.org/
       int cmp = CompareToInternal(thisValue, otherValue, false, this.helper);
       return (cmp == -2) ? this.SignalInvalidWithMessage(
         ctx,
-        "Out of memory ") :
+        "Out of system memory ") :
         this.ValueOf(this.compareTo(thisValue, otherValue), null);
     }
 
